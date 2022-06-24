@@ -1,0 +1,19 @@
+{
+  "name": "com.cutehacks.duperagent",
+  "description": "A QML implementation of the SuperAgent HTTP client.",
+  "author": {
+    "name": "Jason Barron",
+    "email": "jason@cutehacks.com"
+  },
+  "repository": {
+    "type": "GITHUB",
+    "url": "https://github.com/Cutehacks/duperagent.git"
+  },
+  "version": {
+    "label": "1.5.0"
+  },
+  "dependencies": [
+  ],
+  "license": "MIT",
+  "webpage": "https://github.com/Cutehacks/duperagent"
+}

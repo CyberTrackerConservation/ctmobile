@@ -1,0 +1,9 @@
+{
+    "Keys": ["ct_gps"],
+    "Provider": "ct_gps",
+    "Position": true,
+    "Satellite": true,
+    "Monitor": false,
+    "Priority": 0,
+    "Testable": false
+}

@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CFBundleIdentifier</key>
+        <string>org.cybertracker.mobile</string>
+	<key>CFBundleName</key>
+        <string>CyberTracker</string>
+	<key>NSCameraUsageDescription</key>
+	<string>Access to the camera is needed to capture photos for observations</string>
+	<key>NSLocationWhenInUseUsageDescription</key>
+	<string>Access to location is needed to use maps and to capture geo-referenced data</string>
+	<key>NSMicrophoneUsageDescription</key>
+	<string>Access to the microphone is needed to record audio for observations.</string>
+	<key>NSPhotoLibraryAddUsageDescription</key>
+	<string>App would like to save images taken with camera.</string>
+        <key>CFBundleIconFile</key>
+        <string>AppIcon.icns</string>
+        <key>NSPhotoLibraryUsageDescription</key>
+	<string>App would like to access the library.</string>
+</dict>
+</plist>

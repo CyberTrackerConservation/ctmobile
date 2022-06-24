@@ -1,0 +1,5 @@
+Clone github repo: https://github.com/KDAB/android_openssl
+Checkout the appropriate tag: git checkout tags/5.12.4_5.13.0
+Note that when we move past 5.12.4, then we should just use the master branch, i.e. no tags.
+
+This guy also seems to have built the static versions: https://teskalabs.com/blog/openssl-binary-distribution-for-developers-static-library
