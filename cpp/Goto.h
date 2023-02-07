@@ -1,5 +1,6 @@
 #pragma once
 #include "pch.h"
+#include "Location.h"
 
 class GotoManager: public QObject
 {
@@ -20,16 +21,8 @@ public:
     ~GotoManager();
 
     Q_INVOKABLE void setTarget(const QString& title, const QVariantList& path, int pathIndex);
-    Q_INVOKABLE QVariantList findPath(int id);
 
-    Q_INVOKABLE bool bootstrap(const QString& zipFilePath);
-
-    QVariantList& getLayers();
-    void removeLayer(const QString& id);
-
-    void recalculate(const QVariantMap& lastLocation);
-
-    void install(const QVariantMap& layer);
+    void recalculate(Location* location);
 
 signals:
     void gotoTargetChanged(const QString& title);
@@ -37,14 +30,4 @@ signals:
 private:
     void loadState();
     void saveState();
-
-    QVariantList m_cache;
-    QVariantList m_paths;
-    double m_symbolScale = 1;
-    QVariantMap transform(const QVariantMap& source);
-    QVariantMap makePointSymbol(const QVariantMap& style);
-    QVariantMap buildLayerPoints(const QVariantMap& source, QRectF* extentOut);
-    QVariantMap makeLineSymbol(const QVariantMap& style);
-    QVariantList buildLayerPolylines(const QVariantMap& source, QRectF* extentOut);
-    bool getZipContents(const QString& zipFile, QVariantMap& contents);
 };

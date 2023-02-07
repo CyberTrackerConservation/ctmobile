@@ -14,7 +14,7 @@ class ODKProvider : public Provider
 public:
     ODKProvider(QObject *parent = nullptr);
 
-    bool connectToProject(bool newBuild) override;
+    bool connectToProject(bool newBuild, bool* formChangedOut) override;
 
     bool requireUsername() const override;
 
@@ -26,11 +26,11 @@ public:
     
     bool finalizePackage(const QString& packageFilesPath) const override;
 
-    Q_INVOKABLE void submitData();
+    bool canSubmitData() const override;
+    void submitData() override;
 
 private:
     Element* parseLabel(Element* parentElement, const QString& fieldUid, const QVariant& label);
     void parseForm(const QVariantMap& formMap, RecordField* recordField, const QVariantMap& fieldMap);
     void parseField(const QVariantMap& formMap, RecordField* recordField, const QString& uid, const QString& type, const QVariantMap& fieldMap, const QVariantMap& fieldBind);
-    bool sendSighting(Form* form, const QString& sightingUid);
 };

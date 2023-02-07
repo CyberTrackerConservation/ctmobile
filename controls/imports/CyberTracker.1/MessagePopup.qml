@@ -38,8 +38,8 @@ PopupBase {
         RoundButton {
             Layout.alignment: Qt.AlignHCenter
             icon.source: "qrc:/icons/ok.svg"
-            icon.width: 40
-            icon.height: 40
+            icon.width: Style.toolButtonSize
+            icon.height: Style.toolButtonSize
             onClicked: {
                 popup.close()
                 popup.clicked()

@@ -7,18 +7,10 @@ C.ContentPage {
     id: page
 
     property string elementUid
-    property string bannerText: ""
-
-    onElementUidChanged: {
-        form.setFieldValue("reportUid", elementUid)
-    }
+    property string banner: ""
 
     Component.onCompleted: {
-        let ts = form.sighting.createTime
-        if (ts !== "") {
-            let dt = App.timeManager.getDateText(ts)
-            let tt = App.timeManager.getTimeText(ts)
-            page.bannerText = qsTr("Editing report saved on ") + dt + " " + tt;
+        if (page.banner !== "") {
             listView.highlightRangeMode = ListView.NoHighlightRange
             listView.positionViewAtBeginning()
         }
@@ -26,10 +18,8 @@ C.ContentPage {
 
     header: C.PageHeader {
         text: form.getElementName(elementUid)
-
         menuIcon: "qrc:/icons/check.svg"
         menuVisible: true
-
         onMenuClicked: {
             if (listView.validate()) {
                 let f = form
@@ -44,15 +34,11 @@ C.ContentPage {
         id: listView
 
         recordUid: form.rootRecordUid
-        filterElementUid: {
-            let locationVisible = form.getSetting("locationReports", {})[page.elementUid]
-            form.setGlobal("LOCATION_VISIBLE", locationVisible === undefined || locationVisible === true)
-            return page.elementUid
-        }
+        filterElementUid: page.elementUid
 
         header: Rectangle {
             width: page.width
-            height: page.bannerText === "" ? 0 : page.header.height
+            height: page.banner === "" ? 0 : page.header.height
             color: Material.color(Material.Green, Material.Shade300)
 
             Label {
@@ -61,7 +47,7 @@ C.ContentPage {
                 fontSizeMode: Label.Fit
                 horizontalAlignment: Qt.AlignHCenter
                 verticalAlignment: Qt.AlignVCenter
-                text: page.bannerText
+                text: page.banner
             }
         }
     }

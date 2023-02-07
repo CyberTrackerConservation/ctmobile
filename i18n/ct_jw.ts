@@ -6,7 +6,7 @@
     <message>
       <location filename="../src/controls/imports/CyberTracker/Controls.1/AboutPopup.qml" line="49" />
       <source>Powered by</source>
-      <translation type="unfinished">Didukung dening</translation>
+      <translation type="unfinished">Didukung karo</translation>
     </message>
   </context>
   <context>
@@ -29,42 +29,42 @@
     <message>
       <location filename="../src/engine/App.cpp" line="395" />
       <source>Streets</source>
-      <translation type="unfinished">Jalanan</translation>
+      <translation type="unfinished">Dalan-dalan</translation>
     </message>
     <message>
       <location filename="../src/engine/App.cpp" line="396" />
       <source>Streets (vector)</source>
-      <translation type="unfinished">Jalanan (vektor)</translation>
+      <translation type="unfinished">Jalan (vektor)</translation>
     </message>
     <message>
       <location filename="../src/engine/App.cpp" line="397" />
       <source>Streets - night (vector)</source>
-      <translation type="unfinished">Jalanan - wengi (vektor)</translation>
+      <translation type="unfinished">Jalan - wengi (vektor)</translation>
     </message>
     <message>
       <location filename="../src/engine/App.cpp" line="398" />
       <source>Imagery</source>
-      <translation type="unfinished">Gambaran</translation>
+      <translation type="unfinished">Citraan</translation>
     </message>
     <message>
       <location filename="../src/engine/App.cpp" line="399" />
       <source>Dark gray canvas (Vector)</source>
-      <translation type="unfinished">Kanvas abu-abu gelap (Vektor)</translation>
+      <translation type="unfinished">Kanvas abu-abu tua (Vektor)</translation>
     </message>
     <message>
       <location filename="../src/engine/App.cpp" line="400" />
       <source>Light gray canvas</source>
-      <translation type="unfinished">Kanvas abu-abu sing entheng</translation>
+      <translation type="unfinished">Kanvas abu-abu entheng</translation>
     </message>
     <message>
       <location filename="../src/engine/App.cpp" line="401" />
       <source>Light gray canvas (Vector)</source>
-      <translation type="unfinished">Kanvas abu-abu sing entheng (Vektor)</translation>
+      <translation type="unfinished">Kanvas abu-abu muda (Vektor)</translation>
     </message>
     <message>
       <location filename="../src/engine/App.cpp" line="402" />
       <source>Navigation (vector)</source>
-      <translation type="unfinished">Pandhu arah (vektor)</translation>
+      <translation type="unfinished">Navigasi (vektor)</translation>
     </message>
     <message>
       <location filename="../src/engine/App.cpp" line="403" />
@@ -92,17 +92,17 @@
     <message>
       <location filename="../qml/BugReport.qml" line="68" />
       <source>Report a bug</source>
-      <translation type="unfinished">Laporake kewan omo</translation>
+      <translation type="unfinished">Lapor bug</translation>
     </message>
     <message>
       <location filename="../qml/BugReport.qml" line="86" />
       <source>Describe the issue</source>
-      <translation type="unfinished">Nggambarake Jeksa Agung bisa ngetokake</translation>
+      <translation type="unfinished">Njlèntrèhaké masalah</translation>
     </message>
     <message>
       <location filename="../qml/BugReport.qml" line="87" />
       <source>Tap ✓ in the top right corner</source>
-      <translation type="unfinished">Tutul ✓ ing pojok sisih ndhuwur</translation>
+      <translation type="unfinished">Tutul ✓ ing pojok tengen ndhuwur</translation>
     </message>
     <message>
       <location filename="../qml/BugReport.qml" line="88" />
@@ -131,7 +131,7 @@
     <message>
       <location filename="../qml/ConnectDropbox.qml" line="15" />
       <source>Connect to Dropbox</source>
-      <translation type="unfinished">Sambungake menyang Dropbox</translation>
+      <translation type="unfinished">Nyambung menyang Dropbox</translation>
     </message>
   </context>
   <context>
@@ -147,7 +147,7 @@
     <message>
       <location filename="../src/controls/imports/CyberTracker/Controls.1/DelegateFieldEdit.qml" line="58" />
       <source>Location</source>
-      <translation type="unfinished">Lokasi</translation>
+      <translation type="unfinished">Panggonan</translation>
     </message>
   </context>
   <context>
@@ -173,22 +173,22 @@
     <message>
       <location filename="../src/providers/SMART/Globals.qml" line="30" />
       <source>Patrol end</source>
-      <translation type="unfinished">Pungkasan patroli</translation>
+      <translation type="unfinished">Patroli rampung</translation>
     </message>
     <message>
       <location filename="../src/providers/SMART/Globals.qml" line="31" />
       <source>Patrol pause</source>
-      <translation type="unfinished">Ngaso ngaso</translation>
+      <translation type="unfinished">Patroli ngaso</translation>
     </message>
     <message>
       <location filename="../src/providers/SMART/Globals.qml" line="32" />
       <source>Patrol resume</source>
-      <translation type="unfinished">Patrol nerusake</translation>
+      <translation type="unfinished">Patroli maneh</translation>
     </message>
     <message>
       <location filename="../src/providers/SMART/Globals.qml" line="33" />
       <source>Patrol change</source>
-      <translation type="unfinished">Pangowahan patroli</translation>
+      <translation type="unfinished">Ganti patroli</translation>
     </message>
     <message>
       <location filename="../src/providers/SMART/Globals.qml" line="34" />
@@ -206,12 +206,12 @@
     <message>
       <location filename="../src/providers/SMART/HistoryPage.qml" line="83" />
       <source>Incident</source>
-      <translation type="unfinished">Kejadian</translation>
+      <translation type="unfinished">Kedadeyan</translation>
     </message>
     <message>
       <location filename="../src/providers/SMART/HistoryPage.qml" line="91" />
       <source>Sighting</source>
-      <translation type="unfinished">Ngarsane</translation>
+      <translation type="unfinished">Sighting</translation>
     </message>
     <message>
       <location filename="../src/providers/SMART/HistoryPage.qml" line="98" />
@@ -221,17 +221,17 @@
     <message>
       <location filename="../src/providers/SMART/HistoryPage.qml" line="150" />
       <source>No patrol sightings</source>
-      <translation type="unfinished">Ora ana pandhangan patroli</translation>
+      <translation type="unfinished">Ora ana patroli</translation>
     </message>
     <message>
       <location filename="../src/providers/SMART/HistoryPage.qml" line="172" />
       <source>No independent incidents</source>
-      <translation type="unfinished">Ora kedadosan mandiri</translation>
+      <translation type="unfinished">Ora ana kedadeyan independen</translation>
     </message>
     <message>
       <location filename="../src/providers/SMART/HistoryPage.qml" line="190" />
       <source>No sighting selected</source>
-      <translation type="unfinished">Ora ana sing dipilih</translation>
+      <translation type="unfinished">Ora ana penampakan sing dipilih</translation>
     </message>
   </context>
   <context>
@@ -247,7 +247,7 @@
     <message>
       <location filename="../src/providers/SMART/LocationPage.qml" line="90" />
       <source>Acquiring location</source>
-      <translation type="unfinished">Entuk lokasi</translation>
+      <translation type="unfinished">Njupuk lokasi</translation>
     </message>
   </context>
   <context>
@@ -284,7 +284,7 @@
     <message>
       <location filename="../qml/Main.qml" line="66" />
       <source>Project will be permanently removed</source>
-      <translation type="unfinished">Proyek bakal dicopot kanthi permanen</translation>
+      <translation type="unfinished">Proyek bakal dibusak kanthi permanen</translation>
     </message>
     <message>
       <location filename="../qml/Main.qml" line="76" />
@@ -301,7 +301,7 @@
       <location filename="../qml/Main.qml" line="123" />
       <location filename="../qml/Main.qml" line="164" />
       <source>Yes</source>
-      <translation type="unfinished">Ya</translation>
+      <translation type="unfinished">Ya wis</translation>
     </message>
     <message>
       <location filename="../qml/Main.qml" line="137" />
@@ -312,27 +312,27 @@
     <message>
       <location filename="../qml/Main.qml" line="239" />
       <source>Connect to Dropbox</source>
-      <translation type="unfinished">Sambungake menyang Dropbox</translation>
+      <translation type="unfinished">Nyambung menyang Dropbox</translation>
     </message>
     <message>
       <location filename="../qml/Main.qml" line="250" />
       <source>Connect to EarthRanger</source>
-      <translation type="unfinished">Nyambung menyang EarthRanger</translation>
+      <translation type="unfinished">Sambungake menyang EarthRanger</translation>
     </message>
     <message>
       <location filename="../qml/Main.qml" line="261" />
       <source>Connect to SMART</source>
-      <translation type="unfinished">Sambung menyang SMART</translation>
+      <translation type="unfinished">Sambungake menyang SMART</translation>
     </message>
     <message>
       <location filename="../qml/Main.qml" line="273" />
       <source>Sync projects</source>
-      <translation type="unfinished">Proyek sink</translation>
+      <translation type="unfinished">Nyelarasake proyek</translation>
     </message>
     <message>
       <location filename="../qml/Main.qml" line="308" />
       <source>Connect</source>
-      <translation type="unfinished">Sambungake</translation>
+      <translation type="unfinished">Nyambung</translation>
     </message>
     <message>
       <location filename="../qml/Main.qml" line="321" />
@@ -347,7 +347,7 @@
     <message>
       <location filename="../qml/Main.qml" line="347" />
       <source>Bug</source>
-      <translation type="unfinished">Wadon</translation>
+      <translation type="unfinished">Bug</translation>
     </message>
   </context>
   <context>
@@ -361,7 +361,7 @@
     <message>
       <location filename="../src/providers/SMART/MainPage.qml" line="51" />
       <source>Project will be permanently removed</source>
-      <translation type="unfinished">Proyek bakal dicopot kanthi permanen</translation>
+      <translation type="unfinished">Proyek bakal dibusak kanthi permanen</translation>
     </message>
     <message>
       <location filename="../src/providers/SMART/MainPage.qml" line="61" />
@@ -378,7 +378,7 @@
       <location filename="../src/providers/SMART/MainPage.qml" line="108" />
       <location filename="../src/providers/SMART/MainPage.qml" line="149" />
       <source>Yes</source>
-      <translation type="unfinished">Ya</translation>
+      <translation type="unfinished">Ya wis</translation>
     </message>
     <message>
       <location filename="../src/providers/SMART/MainPage.qml" line="122" />
@@ -404,7 +404,7 @@
     <message>
       <location filename="../src/providers/SMART/MainPage.qml" line="296" />
       <source>Bug</source>
-      <translation type="unfinished">Wadon</translation>
+      <translation type="unfinished">Bug</translation>
     </message>
   </context>
   <context>
@@ -412,17 +412,17 @@
     <message>
       <location filename="../qml/Maps.qml" line="21" />
       <source>Inspect</source>
-      <translation type="unfinished">Centhang</translation>
+      <translation type="unfinished">Priksa</translation>
     </message>
     <message>
       <location filename="../qml/Maps.qml" line="21" />
       <source>Compass</source>
-      <translation type="unfinished">Kuwasa</translation>
+      <translation type="unfinished">Kompas</translation>
     </message>
     <message>
       <location filename="../qml/Maps.qml" line="473" />
       <source>No sighting selected</source>
-      <translation type="unfinished">Ora ana sing dipilih</translation>
+      <translation type="unfinished">Ora ana penampakan sing dipilih</translation>
     </message>
     <message>
       <location filename="../qml/Maps.qml" line="509" />
@@ -445,12 +445,12 @@
     <message>
       <location filename="../src/providers/SMART/MetadataPage.qml" line="37" />
       <source>Resume patrol</source>
-      <translation type="unfinished">Nerusake patroli</translation>
+      <translation type="unfinished">Diterusake patroli</translation>
     </message>
     <message>
       <location filename="../src/providers/SMART/MetadataPage.qml" line="39" />
       <source>Change patrol</source>
-      <translation type="unfinished">Ngganti patroli</translation>
+      <translation type="unfinished">Ganti patroli</translation>
     </message>
   </context>
   <context>
@@ -504,7 +504,7 @@
     <message>
       <location filename="../qml/Settings.qml" line="444" />
       <source>Font size</source>
-      <translation type="unfinished">Ukuran font</translation>
+      <translation type="unfinished">Gedene tulisan</translation>
     </message>
     <message>
       <location filename="../qml/Settings.qml" line="468" />
@@ -514,17 +514,17 @@
     <message>
       <location filename="../qml/Settings.qml" line="476" />
       <source>Decimal degrees</source>
-      <translation type="unfinished">Derajat minimal</translation>
+      <translation type="unfinished">Derajat desimal</translation>
     </message>
     <message>
       <location filename="../qml/Settings.qml" line="476" />
       <source>Degrees minutes seconds</source>
-      <translation type="unfinished">Derajat sawetara menit</translation>
+      <translation type="unfinished">Derajat menit detik</translation>
     </message>
     <message>
       <location filename="../qml/Settings.qml" line="476" />
       <source>Degrees decimal minutes</source>
-      <translation type="unfinished">Menehi drajat desai menit</translation>
+      <translation type="unfinished">Derajat menit desimal</translation>
     </message>
     <message>
       <location filename="../qml/Settings.qml" line="492" />
@@ -544,12 +544,12 @@
     <message>
       <location filename="../qml/Settings.qml" line="549" />
       <source>Kiosk mode</source>
-      <translation type="unfinished">Mode Kiosk</translation>
+      <translation type="unfinished">Mode kios</translation>
     </message>
     <message>
       <location filename="../qml/Settings.qml" line="582" />
       <source>Exit pin</source>
-      <translation type="unfinished">Metu pin</translation>
+      <translation type="unfinished">Pin metu</translation>
     </message>
     <message>
       <location filename="../qml/Settings.qml" line="617" />
@@ -559,17 +559,17 @@
     <message>
       <location filename="../qml/Settings.qml" line="626" />
       <source>Generate track file using</source>
-      <translation type="unfinished">Nggawe file trek nggunakake</translation>
+      <translation type="unfinished">Generate file trek nggunakake</translation>
     </message>
     <message>
       <location filename="../qml/Settings.qml" line="633" />
       <source>Copy to the Download folder</source>
-      <translation type="unfinished">Salin menyang folder Download</translation>
+      <translation type="unfinished">Nyalin menyang folder Download</translation>
     </message>
     <message>
       <location filename="../qml/Settings.qml" line="640" />
       <source>Restart</source>
-      <translation type="unfinished">Wiwiti maneh</translation>
+      <translation type="unfinished">Baleni meneh</translation>
     </message>
   </context>
   <context>
@@ -598,7 +598,7 @@
     <message>
       <location filename="../src/providers/SMART/SettingsPage.qml" line="62" />
       <source>Incident language</source>
-      <translation type="unfinished">Basa kedadosan</translation>
+      <translation type="unfinished">Basa kedadean</translation>
     </message>
   </context>
   <context>
@@ -653,7 +653,7 @@
     <message>
       <location filename="../src/providers/SMART/SightingHomePage.qml" line="382" />
       <source>Tap to add</source>
-      <translation type="unfinished">Tutul kanggo ditambahake</translation>
+      <translation type="unfinished">Tutul kanggo nambah</translation>
     </message>
     <message>
       <location filename="../src/providers/SMART/SightingHomePage.qml" line="430" />
@@ -678,17 +678,17 @@
     <message>
       <location filename="../src/providers/SMART/SightingHomePage.qml" line="494" />
       <source>End patrol</source>
-      <translation type="unfinished">Pungkasane patroli</translation>
+      <translation type="unfinished">Mungkasi patroli</translation>
     </message>
     <message>
       <location filename="../src/providers/SMART/SightingHomePage.qml" line="505" />
       <source>Pause patrol</source>
-      <translation type="unfinished">Ngaso ronda</translation>
+      <translation type="unfinished">Ngaso patroli</translation>
     </message>
     <message>
       <location filename="../src/providers/SMART/SightingHomePage.qml" line="517" />
       <source>Change patrol</source>
-      <translation type="unfinished">Ngganti patroli</translation>
+      <translation type="unfinished">Ganti patroli</translation>
     </message>
   </context>
   <context>
@@ -723,12 +723,12 @@
     <message>
       <location filename="../src/providers/SMART/StartPage.qml" line="16" />
       <source>Uploaded data has been cleared</source>
-      <translation type="unfinished">Data sing wis diunggah wis dirilis</translation>
+      <translation type="unfinished">Data sing diunggah wis dibusak</translation>
     </message>
     <message>
       <location filename="../src/providers/SMART/StartPage.qml" line="23" />
       <source>Nothing to export</source>
-      <translation type="unfinished">Apa-apa sing kudu diekspor</translation>
+      <translation type="unfinished">Ora ana sing diekspor</translation>
     </message>
     <message>
       <location filename="../src/providers/SMART/StartPage.qml" line="49" />
@@ -763,12 +763,12 @@
     <message>
       <location filename="../src/providers/SMART/StartPage.qml" line="142" />
       <source>Resume Patrol</source>
-      <translation type="unfinished">Nerusake Patrol</translation>
+      <translation type="unfinished">Terusake Patroli</translation>
     </message>
     <message>
       <location filename="../src/providers/SMART/StartPage.qml" line="142" />
       <source>Start Patrol</source>
-      <translation type="unfinished">Miwiti Patroli</translation>
+      <translation type="unfinished">Mulai Patroli</translation>
     </message>
   </context>
   <context>

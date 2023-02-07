@@ -71,6 +71,7 @@ bool FieldBinding::ready()
 
     if (!m_form->hasRecord(m_recordUid))
     {
+        qDebug() << "FieldBinding: invalid recordUid: " << m_recordUid;
         reset();
         m_usedBeforeComplete = m_usedBeforeComplete || !m_complete;
         return false;
@@ -406,4 +407,3 @@ void FieldBinding::onRecordChildValueChanged(const QString& recordUid, const QSt
         emit changed();
     }
 }
-

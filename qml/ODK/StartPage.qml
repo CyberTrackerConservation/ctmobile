@@ -13,89 +13,40 @@ C.ContentPage {
         text: form.project.title
         menuIcon: "qrc:/icons/settings.svg"
         menuVisible: true
-
         onMenuClicked: {
-            form.pushPage("qrc:/ODK/SettingsPage.qml")
+            form.pushPage("qrc:/imports/CyberTracker.1/FormSettingsPage.qml")
         }
     }
 
-    footer: ColumnLayout {
+    footer: RowLayout {
         spacing: 0
-        width: parent.width
+        width: page.width
 
-        Rectangle {
-            Layout.fillWidth: true
-            height: 2
-            color: "transparent"
-
-            Rectangle {
-                x: 0
-                y: 0
-                width: parent.width
-                height: 2
-                color: Material.theme === Material.Dark ? "#FFFFFF" : "#000000"
-                opacity: 0.12
-            }
+        C.FooterButton {
+            text: qsTr("Submit")
+            enabled: listView.canSubmit
+            icon.source: "qrc:/icons/upload_multiple.svg"
+            onClicked: listView.submit()
         }
 
-        RowLayout {
-            id: buttonRow
-            spacing: 0
-            Layout.fillWidth: true
-            property int buttonCount: 5
-            property int buttonWidth: page.width / buttonCount
-            property var buttonColor: Material.theme === Material.Dark ? Material.foreground : Material.primary
+        C.FooterButton {
+            text: qsTr("Map")
+            icon.source: "qrc:/icons/map_outline.svg"
+            onClicked: form.pushPage("qrc:/MapsPage.qml")
+        }
 
-            ToolButton {
-                id: submitButton
-                Layout.preferredWidth: buttonRow.buttonWidth
-                Layout.fillWidth: true
-                Layout.fillHeight: true
-                text: qsTr("Submit")
-                enabled: getSubmitEnabled()
-                font.pixelSize: App.settings.font10
-                font.capitalization: Font.MixedCase
-                display: Button.TextUnderIcon
-                icon.source: "qrc:/icons/upload_multiple.svg"
-                Material.foreground: buttonRow.buttonColor
-                onClicked: popupSubmit.open()
-            }
-
-            ToolButton {
-                id: mapButton
-                Layout.preferredWidth: buttonRow.buttonWidth
-                Layout.fillWidth: true
-                Layout.fillHeight: true
-                text: qsTr("Map")
-                font.pixelSize: App.settings.font10
-                font.capitalization: Font.MixedCase
-                display: Button.TextUnderIcon
-                icon.source: "qrc:/icons/map_outline.svg"
-                Material.foreground: buttonRow.buttonColor
-                onClicked: form.pushPage("qrc:/MapsPage.qml")
-            }
-
-            ToolButton {
-                id: newButton
-                Layout.preferredWidth: buttonRow.buttonWidth
-                Layout.fillWidth: true
-                Layout.fillHeight: true
-                text: qsTr("New")
-                font.pixelSize: App.settings.font10
-                font.capitalization: Font.MixedCase
-                display: Button.TextUnderIcon
-                icon.source: "qrc:/icons/plus.svg"
-                Material.foreground: buttonRow.buttonColor
-                enabled: form.provider.parserError === ""
-                onClicked: {
-                    form.newSighting()
-                    form.snapCreateTime()
-                    form.saveSighting()
-                    if (form.project.wizardMode) {
-                        form.pushWizardPage(form.rootRecordUid)
-                    } else {
-                        form.pushPage("qrc:/ODK/FormPage.qml")
-                    }
+        C.FooterButton {
+            text: qsTr("New")
+            icon.source: "qrc:/icons/plus.svg"
+            enabled: form.provider.parserError === ""
+            onClicked: {
+                form.newSighting()
+                form.snapCreateTime()
+                form.saveSighting()
+                if (form.project.wizardMode) {
+                    form.pushWizardPage(form.rootRecordUid, {})
+                } else {
+                    form.pushPage("qrc:/ODK/FormPage.qml")
                 }
             }
         }
@@ -107,128 +58,55 @@ C.ContentPage {
         padding: parent.width / 4
         opacity: 0.15
         contentItem: Image {
-            source: App.projectManager.getFileUrl(form.project.uid, form.project.icon)
+            source: form.project.icon !== "" ? App.projectManager.getFileUrl(form.project.uid, form.project.icon) : ""
             fillMode: Image.PreserveAspectFit
         }
     }
 
-    C.ListViewV {
+    C.FormSightingsListView {
         id: listView
-        anchors.fill: parent
-        model: C.SightingListModel {
-            id: sightingListModel
-            onCountChanged: submitButton.enabled = getSubmitEnabled()
-            onDataChanged: submitButton.enabled = getSubmitEnabled()
+
+        anchors {
+            left: parent.left
+            right: parent.right
+            top: parent.top
+            bottom: locationTrackingState.visible ? locationTrackingState.top : parent.bottom
         }
 
-        delegate: ItemDelegate {
-            id: d
+        showNoData: false
 
-            Binding { target: background; property: "color"; value: Utils.changeAlpha(C.Style.colorContent, 50) }
-            width: ListView.view.width
-            enabled: !modelData.submitted
-            opacity: enabled ? 1.0 : 0.5
-
-            contentItem: RowLayout {
-                id: row
-
-                ColumnLayout {
-                    id: col
-
-                    Label {
-                        Layout.fillWidth: true
-                        text: modelData.summary
-                        font.bold: true
-                        font.pixelSize: App.settings.font16
-                        elide: Label.ElideRight
-                        maximumLineCount: 1
-                    }
-
-                    Label {
-                        Layout.fillWidth: true
-                        text: App.formatDateTime(modelData.updateTime)
-                        opacity: 0.5
-                        font.pixelSize: App.settings.font10
-                        fontSizeMode: Label.Fit
-                    }
-                }
-
-                Image {
-                    width: col.height * 0.5
-                    sourceSize.width: width
-                    source: {
-                        if (modelData.submitted) {
-                            return "qrc:/icons/cloud_upload_outline.svg"
-                        } else if (modelData.completed) {
-                            return "qrc:/icons/check_bold.svg"
-                        } else {
-                            return "qrc:/icons/dots_horizontal.svg"
-                        }
-                    }
-                    opacity: 0.8
-                    layer {
-                        enabled: true
-                        effect: ColorOverlay {
-                            color: Material.foreground
-                        }
-                    }
-                }
-            }
-
-            onPressAndHold: {
-                if (!modelData.submitted) {
-                    popupLongPress.open({ sighting: modelData })
-                }
-            }
-
-            onClicked: {
-                if (!modelData.submitted) {
-                    editSighting(modelData)
-                }
-            }
+        onClicked: function (sighting, index) {
+            editSighting(sighting)
         }
     }
 
-    C.PopupLoader {
-        id: popupLongPress
-
-        popupComponent: Component {
-            C.OptionsPopup {
-                property var sighting
-
-                text: getSightingTitle(sighting)
-                model: [
-                    { text: qsTr("Continue editing"), icon: "qrc:/icons/pencil_outline.svg" },
-                    { text: qsTr("Delete sighting"), icon: "qrc:/icons/delete_outline.svg", delay: true }
-                ]
-
-                onClicked: function (index) {
-                    switch (index) {
-                    case 0:
-                        editSighting(sighting)
-                        break
-
-                    case 1:
-                        deleteSighting(sighting)
-                        showToast(qsTr("Sighting deleted"))
-                        break
-                    }
-                }
-            }
+    ColumnLayout {
+        id: locationTrackingState
+        spacing: 0
+        anchors {
+            left: parent.left
+            right: parent.right
+            bottom: parent.bottom
         }
-    }
 
-    C.PopupLoader {
-        id: popupSubmit
-        popupComponent: Component {
-            C.ConfirmPopup {
-                icon: "qrc:/icons/upload_multiple.svg"
-                text: qsTr("Submit data?")
-                onConfirmed: {
-                    form.provider.submitData()
-                    submitButton.enabled = getSubmitEnabled()
-                }
-            }
+        visible: form.trackStreamer.running || form.pointStreamer.running
+
+        Rectangle {
+            Layout.fillWidth: true
+            height: 2
+            color: Material.theme === Material.Dark ? "#FFFFFF" : "#000000"
+            opacity: 0.125
+        }
+
+        Button {
+            Layout.fillWidth: true
+            enabled: false
+            flat: true
+            display: Button.TextBesideIcon
+            font.capitalization: Font.MixedCase
+            font.pixelSize: App.settings.font14
+            icon.source: form.trackStreamer.running ? form.trackStreamer.rateIcon : form.pointStreamer.rateIcon
+            text: form.trackStreamer.running ? form.trackStreamer.rateFullText : form.pointStreamer.rateFullText
         }
     }
 
@@ -238,38 +116,15 @@ C.ContentPage {
         }
     }
 
-    function getSubmitEnabled() {
-        let result = false
-        for (let i = 0; i < sightingListModel.count; i++) {
-            if (!sightingListModel.get(i).submitted && sightingListModel.get(i).completed) {
-                result = true
-                break
-            }
-        }
-
-        return result
-    }
-
-    function getSightingTitle(sighting) {
-        let title = sighting === undefined ? "" : sighting.summary
-        return title === "" ? "??" : title
-    }
-
     function editSighting(sighting) {
-        popupLongPress.close()
         form.loadSighting(sighting.rootRecordUid)
         form.setPageStack([{ pageUrl: form.startPage}])
 
+        form.wizard.reset()
         if (form.project.wizardMode) {
-            form.pushWizardPage(form.rootRecordUid)
+            form.pushWizardIndexPage(form.rootRecordUid, {})
         } else {
-            form.wizard.reset()
             form.pushPage("qrc:/ODK/FormPage.qml")
         }
-    }
-
-    function deleteSighting(sighting) {
-        popupLongPress.close()
-        form.removeSighting(sighting.rootRecordUid)
     }
 }

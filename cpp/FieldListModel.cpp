@@ -262,7 +262,7 @@ void FieldListProxyModel::rebuild()
         // Field list comes from Element::fieldUids.
         fieldUids = m_form->getElementFieldList(m_filterElementUid);
     }
-    else
+    else if (!m_recordUid.isEmpty())
     {
         // Field list comes from the fields in the record.
         auto recordFieldUid = m_form->sighting()->getRecord(m_recordUid)->recordFieldUid();

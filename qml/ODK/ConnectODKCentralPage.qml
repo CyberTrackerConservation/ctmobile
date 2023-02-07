@@ -17,7 +17,7 @@ C.ContentPage {
     }
 
     header: C.PageHeader {
-        text: "ODK Central Connect"
+        text: "ODK Central " + qsTr("Connect")
     }
 
     C.LoginItem {

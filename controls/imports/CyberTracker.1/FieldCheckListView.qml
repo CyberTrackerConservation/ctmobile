@@ -25,6 +25,7 @@ Item {
 
         ItemDelegate {
             Layout.fillWidth: true
+            padding: 6 // Same as HorizontalDivider.
             contentItem: TextField {
                 id: searchFilter
                 Layout.fillWidth: true
@@ -64,11 +65,9 @@ Item {
 
                         Item { height: Style.minRowHeight }
 
-                        Image {
-                            fillMode: Image.PreserveAspectFit
+                        SquareIcon {
                             source: form.getElementIcon(modelData.uid)
-                            sourceSize.width: controlLabel.implicitHeight * 1.3
-                            sourceSize.height: controlLabel.implicitHeight * 1.3
+                            size: Style.minRowHeight
                         }
 
                         Label {

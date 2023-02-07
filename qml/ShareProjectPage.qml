@@ -16,18 +16,23 @@ C.ContentPage {
         text: project.title
     }
 
-    Component.onCompleted: rebuild()
-
     ColumnLayout {
         id: column
         anchors.centerIn: parent
-        width: parent.width * 0.85
-        spacing: 32
+        width: parent.width * 0.9
+        height: parent.height * 0.9
 
         Image {
             id: qrCodeImage
             Layout.fillWidth: true
-            height: width
+            Layout.fillHeight: true
+            fillMode: Image.PreserveAspectFit
+            source: {
+                authSwitch.checked
+                let data = App.projectManager.getShareUrl(project.uid, authSwitch.checked)
+                let size = Math.min(width, height)
+                return size !== 0 ? "data:image/png;base64," + Utils.renderQRCodeToPng(data, size, size) : ""
+            }
         }
 
         Switch {
@@ -38,68 +43,39 @@ C.ContentPage {
             text: qsTr("Require login")
             font.pixelSize: App.settings.font14
             visible: App.projectManager.canShareAuth(project.uid)
-            onClicked: rebuild()
         }
     }
 
-    footer: ColumnLayout {
+    footer: RowLayout {
         spacing: 0
 
-        Rectangle {
-            Layout.fillWidth: true
-            height: 2
-            color: Material.theme === Material.Dark ? "#FFFFFF" : "#000000"
-            opacity: Material.theme === Material.Dark ? 0.12 : 0.12
+        C.FooterButton {
+            text: qsTr("Share link")
+            icon.source: "qrc:/icons/link.svg"
+            onClicked: {
+                let qrCodeData = App.projectManager.getShareUrl(project.uid, authSwitch.checked)
+
+                if (App.desktopOS) {
+                    App.copyToClipboard(qrCodeData)
+                    showToast(qsTr("Copied to clipboard"))
+                    return
+                }
+
+                App.share(qrCodeData, project.title)
+            }
         }
 
-        RowLayout {
-            id: buttonRow
-            spacing: 0
-            Layout.fillWidth: true
-            property int buttonCount: 2
-            property int buttonWidth: page.width / buttonCount
-            property var buttonColor: Material.theme === Material.Dark ? Material.foreground : Material.primary
-
-            ToolButton {
-                Layout.preferredWidth: buttonRow.buttonWidth
-                Layout.fillHeight: true
-                text: qsTr("Share link")
-                icon.source: "qrc:/icons/link.svg"
-                font.pixelSize: App.settings.font10
-                font.capitalization: Font.MixedCase
-                display: Button.TextUnderIcon
-                Material.foreground: buttonRow.buttonColor
-                onClicked: {
-                    let qrCodeData = App.projectManager.getShareUrl(project.uid, authSwitch.checked)
-
-                    if (App.desktopOS) {
-                        App.copyToClipboard(qrCodeData)
-                        showToast(qsTr("Copied to clipboard"))
-                        return
-                    }
-
-                    App.share(qrCodeData, project.title)
+        C.FooterButton {
+            text: qsTr("Share QR code")
+            icon.source: "qrc:/icons/qrcode.svg"
+            onClicked: {
+                if (App.desktopOS) {
+                    fileDialogQRCode.open()
+                    return
                 }
-            }
 
-            ToolButton {
-                Layout.preferredWidth: buttonRow.buttonWidth
-                Layout.fillHeight: true
-                text: qsTr("Share QR code")
-                icon.source: "qrc:/icons/qrcode.svg"
-                font.pixelSize: App.settings.font10
-                font.capitalization: Font.MixedCase
-                display: Button.TextUnderIcon
-                Material.foreground: buttonRow.buttonColor
-                onClicked: {
-                    if (App.desktopOS) {
-                        fileDialogQRCode.open()
-                        return
-                    }
-
-                    let qrCodeFile = App.projectManager.createQRCode(project.uid, authSwitch.checked)
-                    App.sendFile(qrCodeFile, project.title)
-                }
+                let qrCodeFile = App.projectManager.createQRCode(project.uid, authSwitch.checked)
+                App.sendFile(qrCodeFile, project.title)
             }
         }
     }
@@ -123,10 +99,5 @@ C.ContentPage {
 
             Utils.removeFile(qrCodeFile)
         }
-    }
-
-    function rebuild() {
-        let data = App.projectManager.getShareUrl(project.uid, authSwitch.checked)
-        qrCodeImage.source = "data:image/png;base64," + Utils.renderQRCodeToPng(data, qrCodeImage.width, qrCodeImage.width)
     }
 }

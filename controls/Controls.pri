@@ -13,12 +13,14 @@ HEADERS += \
     $$PWD/ControlsPlugin.h \
     $$PWD/Skyplot.h \
     $$PWD/Sketchpad.h \
+    $$PWD/SquareImage.h \
 
 
 SOURCES += \
     $$PWD/ControlsPlugin.cpp \
     $$PWD/Skyplot.cpp \
     $$PWD/Sketchpad.cpp \
+    $$PWD/SquareImage.cpp \
 
 RESOURCES += \
     $$PWD/Controls.qrc

@@ -7,6 +7,7 @@
 namespace {
 static App* s_instance;
 static ShareUtils* s_shareUtils;
+static QtMessageHandler s_lastMessageHandler;
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -57,6 +58,10 @@ extern "C"
 
 void logHandler(QtMsgType type, const QMessageLogContext &context, const QString& msg)
 {
+    s_lastMessageHandler(type, context, msg);
+
+    emit App::instance()->consoleMessage(msg);
+
     QFile outFile(s_instance->logFilePath());
     outFile.open(QIODevice::WriteOnly | QIODevice::Append);
 
@@ -77,11 +82,11 @@ void logHandler(QtMsgType type, const QMessageLogContext &context, const QString
     case QtWarningMsg:
         txt = QString("Warning: %1 %2 %3:").arg(context.file).arg(context.line).arg(context.function);
         ts << timestamp << txt << "\t" << QString(msg) << Qt::endl;
-    break;
+        break;
     case QtCriticalMsg:
         txt = QString("Critical: %1 %2 %3:").arg(context.file).arg(context.line).arg(context.function);
         ts << timestamp << txt << "\t" << QString(msg) << Qt::endl;
-    break;
+        break;
     case QtFatalMsg:
         txt = QString("Fatal: %1 %2 %3:").arg(context.file).arg(context.line).arg(context.function);
         ts << timestamp << txt << "\t" << QString(msg) << Qt::endl;
@@ -112,6 +117,7 @@ App::App(QGuiApplication* guiApplication, QQmlApplicationEngine* qmlEngine, cons
 {
     qFatalIf(s_instance != nullptr, "App already initialized");
     s_instance = this;
+    m_sessionId = QUuid::createUuid().toString(QUuid::Id128);
 
 #if defined(QT_DEBUG)
     m_debugBuild = true;
@@ -124,6 +130,8 @@ App::App(QGuiApplication* guiApplication, QQmlApplicationEngine* qmlEngine, cons
 
     m_mobileOS = OS_MOBILE;
     m_desktopOS = OS_DESKTOP;
+
+    m_fixedFontFamily = QFontDatabase::systemFont(QFontDatabase::FixedFont).family();
 
     m_guiApplication = guiApplication;
     m_qmlEngine = qmlEngine;
@@ -157,12 +165,13 @@ App::App(QGuiApplication* guiApplication, QQmlApplicationEngine* qmlEngine, cons
         QFile::rename(currLogFilePath, prevLogFilePath);
     }
 
-    if (!m_debugBuild)
-    {
-        qInstallMessageHandler(logHandler);
-    }
+    // Install a custom message handler.
+    s_lastMessageHandler = qInstallMessageHandler(logHandler);
 
     qDebug() << "Version: " << m_buildString;
+
+    // INI path.
+    m_iniPath = QDir::cleanPath(m_rootPath + "/Settings.ini");
 
     // Temp path.
     m_tempPath = QDir::cleanPath(m_cachePath + "/Temp");
@@ -173,15 +182,15 @@ App::App(QGuiApplication* guiApplication, QQmlApplicationEngine* qmlEngine, cons
     m_workPath = QDir::cleanPath(m_rootPath + "/Work");
     qFatalIf(!Utils::ensurePath(m_workPath), "Failed to create work path");
 
-    // Offline map path.
-    m_offlineMapPath = QDir::cleanPath(m_rootPath + "/OfflineMap");
-    qFatalIf(!Utils::ensurePath(m_offlineMapPath), "Failed to create offline map cache path");
-
     // Map tile cache.
     m_mapTileCachePath = QDir::cleanPath(m_cachePath + "/MapTiles");
     qFatalIf(!Utils::ensurePath(m_mapTileCachePath), "Failed to create map tile cache path");
     m_mbTilesReader = new MBTilesReader(this);
     m_mbTilesReader->set_cachePath(m_mapTileCachePath);
+
+    // Map markers cache.
+    m_mapMarkerCachePath = QDir::cleanPath(m_cachePath + "/MapMarkers");
+    qFatalIf(!Utils::ensurePath(m_mapMarkerCachePath), "Failed to create map tile cache path");
 
     // Goto path.
     m_gotoPath = QDir::cleanPath(m_rootPath + "/Goto");
@@ -230,6 +239,9 @@ App::App(QGuiApplication* guiApplication, QQmlApplicationEngine* qmlEngine, cons
     connect(m_settings, &Settings::locationAccuracyMetersChanged, this, &App::locationAccuracyChanged);
     locationAccuracyChanged();
 
+    // TimeManager.
+    m_timeManager = new TimeManager(this);
+
     // Database.
     m_database = new Database(QDir::cleanPath(m_rootPath + "/Projects.db"), this);
 
@@ -239,8 +251,8 @@ App::App(QGuiApplication* guiApplication, QQmlApplicationEngine* qmlEngine, cons
     // ProjectManager.
     m_projectManager = new ProjectManager(QDir::cleanPath(m_rootPath + "/Projects"), this);
 
-    // TimeManager.
-    m_timeManager = new TimeManager(this);
+    // OfflineMapMananager.
+    m_offlineMapManager = new OfflineMapManager(QDir::cleanPath(m_rootPath + "/OfflineMaps"), this);
 
     // TaskManager.
     m_taskManager = new TaskManager(this);
@@ -257,11 +269,15 @@ App::App(QGuiApplication* guiApplication, QQmlApplicationEngine* qmlEngine, cons
     // DeviceId: cleanup from the time I made it a string guid.
     if (m_settings->deviceId().isEmpty())
     {
-        m_settings->set_deviceId(QUuid::createUuid().toString(QUuid::Id128));
+        auto deviceId = QString();
+        #if defined(Q_OS_ANDROID)
+            deviceId = QtAndroid::androidActivity().callObjectMethod("getDeviceId", "()Ljava/lang/String;").toString();
+        #endif
+        m_settings->set_deviceId(deviceId.isEmpty() ? QUuid::createUuid().toString(QUuid::Id128) : deviceId);
     }
 
     // Last location.
-    m_lastLocation["t"] = 0;
+    m_lastLocation = new Location(this);
     m_lastLocationText = "??";
     m_lastLocationRecent = false;
     m_lastLocationRecentTimer.setInterval(5000);
@@ -269,7 +285,7 @@ App::App(QGuiApplication* guiApplication, QQmlApplicationEngine* qmlEngine, cons
     m_lastLocationAccurate = false;
     connect(&m_lastLocationRecentTimer, &QTimer::timeout, this, [&]()
     {
-        update_lastLocationRecent(m_lastLocation.value("c").toInt() < m_lastLocationCounter);
+        update_lastLocationRecent(false);
     });
 
     m_positionInfoSourceName = "ct_gps";
@@ -358,6 +374,12 @@ void App::registerConnector(const QString& name, ConnectorFactory connectorFacto
 
 Connector* App::createConnector(const QString& name, QObject* parent)
 {
+    if (name.isEmpty())
+    {
+        qDebug() << "Error - connector not specified";
+        return nullptr;
+    }
+
     qFatalIf(!m_connectors.contains(name), "Connector not found: " + name);
     return m_connectors[name](parent);
 }
@@ -376,6 +398,13 @@ void App::registerProvider(const QString& name, ProviderFactory providerFactory)
 Provider* App::createProvider(const QString& name, QObject* parentForm)
 {
     qFatalIf(qobject_cast<Form*>(parentForm) == nullptr, "Parent should be a Form");
+
+    if (name.isEmpty())
+    {
+        qDebug() << "Error - Provider not specified";
+        return nullptr;
+    }
+
     qFatalIf(!m_providers.contains(name), "Provider not found: " + name);
     return m_providers[name](parentForm);
 }
@@ -551,7 +580,7 @@ QString App::getLocationText(double x, double y, QVariant z)
             // Round to the nearest integer and render.
             ux = qFloor(qFabs(ux) + 0.5);
             uy = qFloor(qFabs(uy) + 0.5);
-            result = QString("%1%2 - %3E, %4N").arg(zone).arg(north ? 'N' : 'S').arg(ux, 0, 'f', 0).arg(uy, 0, 'f', 0);
+            result = QString("%1%2 - %3E %4").arg(zone).arg(north ? 'N' : 'S').arg(ux, 0, 'f', 0).arg(uy, 0, 'f', 0);
         }
         break;
 
@@ -559,7 +588,7 @@ QString App::getLocationText(double x, double y, QVariant z)
         result = coordinate.toString(QGeoCoordinate::DegreesWithHemisphere);
     }
 
-    if (z.isValid() && !qIsNaN(z.toDouble()))
+    if (z.isValid() && !std::isnan(z.toDouble()))
     {
         result = result + ", " + getDistanceText(z.toDouble());
     }
@@ -569,14 +598,11 @@ QString App::getLocationText(double x, double y, QVariant z)
 
 void App::positionUpdated(const QGeoPositionInfo& update)
 {
-    auto location = Utils::decodeLocation(update);
-
-    // Compute time errors.
-    m_timeManager->computeTimeError(QGeoPositionInfoSource::PositioningMethod::SatellitePositioningMethods, location.x, location.y, location.s, location.t);
+    auto location = new Location(update, this);
 
     // Compute magnetic declination.
     float magneticDeclination = 0.0;
-    getMagneticDeclination(location.y, location.x, location.z, &magneticDeclination);
+    getMagneticDeclination(location->y(), location->x(), location->z(), &magneticDeclination);
     m_settings->set_magneticDeclination(magneticDeclination);
 
     // Compute UTM zone.
@@ -584,44 +610,30 @@ void App::positionUpdated(const QGeoPositionInfo& update)
     auto uy = 0.0;
     auto zone = 0;
     auto north = false;
-    Utils::latLonToUTMXY(location.y, location.x, &ux, &uy, &zone, &north);
+    Utils::latLonToUTMXY(location->y(), location->x(), &ux, &uy, &zone, &north);
     m_settings->set_utmZone(zone);
     m_settings->set_utmHemi(north ? "N" : "S");
 
     // Update the compass based on the GPS heading if simulation is active.
-    if (!qIsNaN(location.d))
+    if (!std::isnan(location->direction()))
     {
-        m_compass->set_simulatedAzimuth(location.d - magneticDeclination);
+        m_compass->set_simulatedAzimuth(location->direction() - magneticDeclination);
     }
 
-    // Update last location.
-    auto lastLocation = location.toMap();
-    lastLocation["ts"] = m_timeManager->formatDateTime(location.t);
+    // Recalculate goto data.
+    m_gotoManager->recalculate(location);
 
     // Keep lastLocationRecent up to date.
     update_lastLocationRecent(true);
     m_lastLocationRecentTimer.start();
 
     // Keep lastLocationAccurate up to date.
-    update_lastLocationAccurate(!qIsNaN(location.a) && location.a <= m_settings->locationAccuracyMeters());
+    update_lastLocationAccurate(location->isAccurate());
 
-    // Recalculate goto data.
-    m_gotoManager->recalculate(lastLocation);
-
-    // Change and signal - only if the change is significant.
-    static auto s_lastX = std::numeric_limits<double>::max();
-    static auto s_lastY = std::numeric_limits<double>::max();
-    if (Utils::distanceInMeters(s_lastY, s_lastX, location.y, location.x) >= 0.1)
-    {
-        update_lastLocation(lastLocation);
-        update_lastLocationText(getLocationText(location.x, location.y));
-    }
-    else
-    {
-        m_lastLocation = lastLocation;
-    }
-    s_lastX = location.x;
-    s_lastY = location.y;
+    // Change and signal.
+    delete m_lastLocation;
+    update_lastLocation(location);
+    update_lastLocationText(getLocationText(location->x(), location->y()));
 }
 
 void App::languageCodeChanged()
@@ -653,6 +665,9 @@ void App::languageCodeChanged()
         qApp->installTranslator(&m_translator);
         m_qmlEngine->retranslate();
     }
+
+    // Refresh the battery text.
+    setBatteryState(m_batteryLevel, m_batteryCharging);
 }
 
 void App::simulateGPSChanged()
@@ -736,6 +751,7 @@ QString App::createBugReport(const QString& description)
     qFatalIf(QFile::exists(reportPath) && !QFile::remove(reportPath), "Failed to delete old report");
 
     auto tempPath = QDir::cleanPath(m_tempPath + "/" + reportName);
+    QDir(tempPath).removeRecursively();
     qFatalIf(!Utils::ensurePath(tempPath), "Failed to create output folder");
 
     // Copy files to the temp folder.
@@ -744,7 +760,7 @@ QString App::createBugReport(const QString& description)
     QFile::copy(m_logFilePath, tempPath + "/Log_" + m_buildString + ".txt");
     QFile::copy(m_rootPath + "/Log.old.txt", tempPath + "/Log.old.txt");
     Utils::copyPath(m_exportPath, tempPath + "/ExportData");
-    Utils::copyPath(m_rootPath + "/Projects", tempPath + "/Projects");
+    Utils::copyPath(m_rootPath + "/Projects", tempPath + "/Projects", QStringList { "map.mbtiles" }); // Exclude map.mbtiles.
     Utils::copyPath(m_backupPath, tempPath + "/Backup");
     Utils::copyPath(m_workPath, tempPath + "/Work");
 
@@ -775,8 +791,7 @@ QString App::createBugReport(const QString& description)
         Utils::mediaScan(reportPath);
     }
 
-    auto dir = QDir(tempPath);
-    dir.removeRecursively();
+    QDir(tempPath).removeRecursively();
 
     return result;
 }
@@ -910,6 +925,15 @@ bool App::requestPermissions(const QString& projectUid)
             }
         }
     }
+
+    if (result && project->androidBackgroundLocation())
+    {
+        result = requestPermissionBackgroundLocation();
+        if (!result)
+        {
+            emit showMessageBox(tr("Permission request"), tr("This project requires background GPS access. Please allow this request in order to proceed."));
+        }
+    }
 #else
     Q_UNUSED(projectUid)
 #endif
@@ -926,6 +950,18 @@ bool App::requestPermissionLocation()
 {
     return requestPermission("ACCESS_FINE_LOCATION", tr("Access to GPS is required for this feature to work. Please allow the request in order to proceed.")) &&
            requestPermission("ACCESS_COARSE_LOCATION", tr("Access to GPS is required for this feature to work. Please allow the request in order to proceed."));
+}
+
+bool App::requestPermissionBackgroundLocation()
+{
+#if defined(Q_OS_ANDROID)
+    if (QtAndroid::androidSdkVersion() >= 29)
+    {
+        return requestPermission("ACCESS_BACKGROUND_LOCATION", tr("Background access to GPS is required. Please allow the request in order to proceed."));
+    }
+#endif
+
+    return true;
 }
 
 bool App::requestPermissionReadExternalStorage()
@@ -957,10 +993,14 @@ void App::setBatteryState(int level, bool charging)
     // Round up.
     level = std::min(100, level + 5);
 
+    // Update icon.
     icon += QString::number((level / 10) * 10);
     icon += ".svg";
-
     update_batteryIcon(icon);
+
+    // Update text.
+    auto text = QString("%1 - %2%3").arg(tr("Battery level"), QString::number(level), "%");
+    update_batteryText(text);
 }
 
 QString App::formatDate(const QDate& date) const
@@ -983,17 +1023,16 @@ QString App::formatDateTime(const QDateTime& dateTime) const
     return m_locale.toString(dateTime, m_settings->dateTimeFormat());
 }
 
-QString App::downloadFile(const QString& url, const QString& username, const QString& password)
+QString App::downloadFile(const QString& url, const QString& username, const QString& password, const QString& token, const QString& tokenType)
 {
     QNetworkRequest request;
     QEventLoop eventLoop;
     bool success = false;
 
-    auto result = m_tempPath + "/" + QUuid::createUuid().toString(QUuid::Id128);
-
     // Setup the target file.
+    auto result = m_tempPath + "/" + QUuid::createUuid().toString(QUuid::Id128);
     QFile::remove(result);
-    qFatalIf(QFile::exists(result), "Target zip cannot be deleted");
+    qFatalIf(QFile::exists(result), "Target cannot be deleted");
     QFile file(result);
     if (!file.open(QIODevice::WriteOnly))
     {
@@ -1001,12 +1040,19 @@ QString App::downloadFile(const QString& url, const QString& username, const QSt
         return QString();
     }
 
+    // Auth.
     if (!username.isEmpty() && !password.isEmpty())
     {
         auto auth = "Basic " + (username + ":" + password).toLocal8Bit().toBase64();
         request.setRawHeader("Authorization", auth);
     }
 
+    if (!token.isEmpty())
+    {
+        request.setRawHeader("Authorization", QString(tokenType + " " + token).toUtf8());
+    }
+
+    // Start.
     initProgress("App", "Download", { 100 });
 
     auto finalUrl = Utils::redirectOnlineDriveUrl(url);
@@ -1054,9 +1100,21 @@ QString App::downloadFile(const QString& url, const QString& username, const QSt
     if (!success)
     {
         QFile::remove(result);
-        result.clear();
+        return QString();
     }
 
+    // Keep the suffix from the original name.
+    auto suffix = QFileInfo(finalUrl).suffix();
+    if (!suffix.isEmpty())
+    {
+        auto newName = result + "." + suffix;
+        if (QFile::rename(result, newName))
+        {
+            result = newName;
+        }
+    }
+
+    // Success.
     return result;
 }
 
@@ -1092,7 +1150,7 @@ QString App::copyToMedia(const QString& filePathUrl)
     QFileInfo fileInfo(filePath);
     if (fileInfo.exists())
     {
-        auto mediaFilename = QUuid::createUuid().toString(QUuid::Id128) + "." + QMimeDatabase().mimeTypeForFile(filePath).preferredSuffix();
+        auto mediaFilename = QUuid::createUuid().toString(QUuid::Id128) + "." + Utils::mimeDatabase()->mimeTypeForFile(filePath).preferredSuffix();
         if (QFile::copy(filePath, m_mediaPath + "/" + mediaFilename))
         {
             return mediaFilename;
@@ -1147,6 +1205,12 @@ QUrl App::getMediaFileUrl(const QString& filename) const
     }
 
     return QUrl::fromLocalFile(getMediaFilePath(filename));
+}
+
+QString App::getMediaMimeType(const QString& filename) const
+{
+    auto mimeType = Utils::mimeDatabase()->mimeTypeForFile(getMediaFilePath(filename));
+    return mimeType.isValid() ? mimeType.name().toLatin1() : QString();
 }
 
 void App::garbageCollectMedia() const
@@ -1318,9 +1382,9 @@ void App::runQRCode(const QString& tag)
     setCommandLine(tag);
 }
 
-QVariantMap App::runCommandLine()
+QVariantMap App::runCommandLine(const QString& customCommandLine)
 {
-    auto commandLine = m_commandLine;
+    auto commandLine = customCommandLine.isEmpty() ? m_commandLine : customCommandLine;
 
     // Success if nothing to do.
     if (commandLine.isEmpty())
@@ -1332,25 +1396,28 @@ QVariantMap App::runCommandLine()
     if (commandLine.endsWith(".zip", Qt::CaseInsensitive))
     {
         // Remove file scheme.
-        auto filePath = Utils::urlToLocalFile(commandLine);
+        auto filePathUrl = commandLine;
+        auto tempFilePath = QString();
 
         // Download if needed.
-        if (filePath.startsWith("https://", Qt::CaseInsensitive))
+        if (filePathUrl.startsWith("https://", Qt::CaseInsensitive))
         {
-            filePath = App::instance()->downloadFile(filePath);
-            if (filePath.isEmpty())
+            auto tempFilePath = App::instance()->downloadFile(filePathUrl);
+            if (tempFilePath.isEmpty())
             {
                 return ApiResult::ErrorMap(tr("Download failed"));
             }
+
+            filePathUrl = QUrl::fromLocalFile(tempFilePath).toString();
         }
 
         // Install package.
-        auto result = m_projectManager->installPackage(filePath);
+        auto result = installPackage(filePathUrl, true);
 
         // Cleanup source if in temp.
-        if (filePath.startsWith(m_tempPath, Qt::CaseInsensitive))
+        if (!tempFilePath.isEmpty())
         {
-            QFile::remove(filePath);
+            QFile::remove(tempFilePath);
         }
 
         result["launch"] = true;
@@ -1435,6 +1502,47 @@ QVariantMap App::runCommandLine()
     return ApiResult::ErrorMap(tr("Unknown command"));
 }
 
+QVariantMap App::installPackage(const QString& filePathUrl, bool showToasts)
+{
+    auto filePath = Utils::urlToLocalFile(filePathUrl);
+    auto result = ApiResult();
+
+    // Install offline map.
+    if (m_offlineMapManager->canInstallPackage(filePath))
+    {
+        result = m_offlineMapManager->installPackage(filePath);
+    }
+    // Install project.
+    else if (m_projectManager->canInstallPackage(filePath))
+    {
+        result = m_projectManager->installPackage(filePath);
+    }
+    // Not installable.
+    else
+    {
+        result = ApiResult::Error(tr("Not an installable package"));
+    }
+
+    // Emit results.
+    if (showToasts)
+    {
+        if (result.success)
+        {
+            emit showToast(tr("Install successful"));
+        }
+        else if (result.expected)
+        {
+            emit showToast(result.errorString);
+        }
+        else
+        {
+            emit showError(result.errorString);
+        }
+    }
+
+    return result.toMap();
+}
+
 void App::clearComponentCache()
 {
     m_qmlEngine->clearComponentCache();
@@ -1463,6 +1571,16 @@ QString App::lookupLanguageCode(const QString& languageName)
     return m_languageLookup.value(languageName.toLower());
 }
 
+QString App::getDirectionText(double directionDegrees) const
+{
+    if (std::isnan(directionDegrees))
+    {
+        return "?";
+    }
+
+    return QString("%1%2").arg(QString::number((int)directionDegrees), "°");
+}
+
 QString App::getDistanceText(double distanceMeters) const
 {
     auto result = QString();
@@ -1476,7 +1594,7 @@ QString App::getDistanceText(double distanceMeters) const
     {
         if (distanceMeters < 1000)
         {
-            result = QString("%1 meters").arg(m_locale.toString(distanceMeters, 'f', 0));
+            result = QString("%1 m").arg(m_locale.toString(distanceMeters, 'f', 0));
         }
         else
         {
@@ -1489,7 +1607,7 @@ QString App::getDistanceText(double distanceMeters) const
         auto distanceFt = distanceMeters * 3.28084;
         if (distanceFt < 1000)
         {
-            result = QString("%1 feet").arg(m_locale.toString(distanceFt, 'f', 0));
+            result = QString("%1 ft").arg(m_locale.toString(distanceFt, 'f', 0));
         }
         else
         {
@@ -1548,7 +1666,7 @@ QString App::getAreaText(double areaMeters) const
 
         if (areaFt < 43560) // square feet.
         {
-            return QString("%1 %2%3").arg(m_locale.toString(areaFt, 'f', 1), "feet", QChar(0x00B2));
+            return QString("%1 %2%3").arg(m_locale.toString(areaFt, 'f', 1), "ft", QChar(0x00B2));
         }
         else if (areaAc < 640) // acres.
         {
@@ -1560,6 +1678,30 @@ QString App::getAreaText(double areaMeters) const
             return QString("%1 mi%2").arg(m_locale.toString(areaMi, 'f', 1), QChar(0x00B2));
         }
     }
+}
+
+QString App::getTimeText(int timeSeconds) const
+{
+    auto arg1 = 0;
+    auto arg2 = QString();
+
+    if (timeSeconds < 60)
+    {
+        arg1 = timeSeconds;
+        arg2 = arg1 == 1 ? tr("second") : tr("seconds");
+    }
+    else if (timeSeconds < 60 * 60 || timeSeconds % 60 != 0)
+    {
+        arg1 = timeSeconds / 60;
+        arg2 = arg1 == 1 ? tr("minute") : tr("minutes");
+    }
+    else
+    {
+        arg1 = timeSeconds / (60 * 60);
+        arg2 = arg1 == 1 ? tr("hour") : tr("hours");
+    }
+
+    return QString("%1 %2").arg(arg1).arg(arg2);
 }
 
 void App::setAlarm(const QString& alarmId, int seconds)
@@ -1624,6 +1766,11 @@ void App::processAlarms()
     }
 }
 
+double App::scaleByFontSize(double value) const
+{
+    return (value * settings()->fontSize()) / 100.0;
+}
+
 void App::share(const QUrl& url, const QString& text)
 {
     if (!s_shareUtils)
@@ -1636,21 +1783,24 @@ void App::share(const QUrl& url, const QString& text)
 
 void App::sendFile(const QString& filePath, const QString& title)
 {
-    qFatalIf(!QFile::exists(filePath), "File does not exist");
+    auto actualFilePath = Utils::decodeFilePath(filePath);
+    qFatalIf(!QFile::exists(actualFilePath), "File does not exist");
 
-    auto mimeType = QMimeDatabase().mimeTypeForFile(filePath).name();
+    auto mimeType = Utils::mimeDatabase()->mimeTypeForFile(actualFilePath).name();
 
     if (!s_shareUtils)
     {
         s_shareUtils = new ShareUtils(this);
     }
 
-    s_shareUtils->sendFile(filePath, title, mimeType, 0);
+    s_shareUtils->sendFile(actualFilePath, title, mimeType, 0);
 }
 
 void App::registerExportFile(const QString& filePath, const QVariantMap& data)
 {
-    m_database->addExport(filePath, data);
+    auto packedFilePath = Utils::encodeFilePath(filePath);
+    m_database->addExport(packedFilePath, data);
+    Utils::mediaScan(filePath);
 
     emit exportFilesChanged();
 }
@@ -1660,14 +1810,15 @@ void App::removeExportFile(const QString& filePath)
     auto data = QVariantMap();
     m_database->loadExport(filePath, &data);
 
-    if (data.isEmpty() || !QFile::exists(filePath))
+    auto actualFilePath = Utils::decodeFilePath(filePath);
+    if (data.isEmpty() || !QFile::exists(actualFilePath))
     {
         emit showError(tr("Export missing"));
         return;
     }
 
     m_database->removeExport(filePath);
-    QFile::rename(filePath, m_backupPath + "/" + QFileInfo(filePath).fileName());
+    QFile::rename(actualFilePath, m_backupPath + "/" + QFileInfo(actualFilePath).fileName());
     Utils::enforceFolderQuota(m_backupPath, 64);
 
     emit showToast(QString(tr("%1 deleted").arg(data["name"].toString())));
@@ -1685,7 +1836,6 @@ QVariantList App::buildExportFilesModel(const QString& projectUid, const QString
     for (auto it = exportFiles.constBegin(); it != exportFiles.constEnd(); it++)
     {
         auto filePath = *it;
-        QFile file(filePath);
 
         // Filter if not interested.
         auto fileInfo = QVariantMap();
@@ -1701,6 +1851,8 @@ QVariantList App::buildExportFilesModel(const QString& projectUid, const QString
         }
 
         // Cleanup if file missing.
+        auto actualFilePath = Utils::decodeFilePath(filePath);
+        QFile file(actualFilePath);
         if (!file.exists())
         {
             m_database->removeExport(filePath);
@@ -1745,4 +1897,135 @@ QVariantList App::buildExportFilesModel(const QString& projectUid, const QString
     }
 
     return result;
+}
+
+QString App::renderSvgToPng(const QString& svgUrl, int width, int height) const
+{
+    QFileInfo fileInfo(svgUrl);
+
+    auto targetFilePath = QString("%1/%2_%3_%4.png").arg(m_tempPath, fileInfo.baseName(), QString::number(width), QString::number(height));
+    if (!QFile::exists(targetFilePath))
+    {
+        Utils::renderSvgToPngFile(svgUrl, targetFilePath, width, height);
+    }
+
+    return QUrl::fromLocalFile(targetFilePath).toString();
+}
+
+QVariantMap App::esriCreateLocationService(const QString& username, const QString& serviceName, const QString& serviceDescription, const QString& token) const
+{
+    QFile file1(":/Esri/CreateService.json");
+    if (!file1.open(QFile::ReadOnly | QFile::Text))
+    {
+        return ApiResult::ErrorMap(tr("Failed to load service template"));
+    }
+
+    auto serviceDefinition = QString(file1.readAll());
+    serviceDefinition.replace("{name}", QString(serviceName).replace(' ', '_'));
+    serviceDefinition.replace("{description}", serviceDescription.isEmpty() ? "CyberTracker Location Tracking service" : serviceDescription);
+    qFatalIf(QJsonDocument::fromJson(serviceDefinition.toLatin1()).object().isEmpty(), "Bad service JSON");
+
+    QFile file2(":/Esri/CreateLayers.json");
+    if (!file2.open(QFile::ReadOnly | QFile::Text))
+    {
+        return Utils::HttpResponse::Error("Failed to load layers template").toMap();
+    }
+
+    auto layersDefinition = QString(file2.readAll());
+    qFatalIf(QJsonDocument::fromJson(layersDefinition.toLatin1()).object().isEmpty(), "Bad layers JSON");
+
+    auto serviceUrl = QString();
+    auto response = Utils::esriBuildService(m_networkAccessManager, username, serviceDefinition, layersDefinition, token, &serviceUrl);
+    if (!response.success)
+    {
+        return ApiResult::ErrorMap(response.errorString);
+    }
+
+    auto result = ApiResult::SuccessMap();
+    result.insert("serviceUrl", serviceUrl);
+    return result;
+}
+
+QString App::renderMapMarker(const QString& url, const QColor& color, int size) const
+{
+    auto darkTheme = settings()->darkTheme();
+    auto filePath = QString("%1/%2-%3-%4%5.png").arg(m_mapMarkerCachePath, QFileInfo(url).baseName(), QString::number(size), color.name(), darkTheme ? "d" : "");
+    if (QFile::exists(filePath))
+    {
+        return filePath;
+    }
+
+    if (!Utils::renderMapMarker(url, filePath, color, darkTheme ? Qt::white : Qt::black, size, size))
+    {
+        qDebug() << "Failed to render svg: " << url;
+        return "";
+    }
+
+    return filePath;
+}
+
+QString App::renderMapCallout(const QString& url, int size) const
+{
+    auto darkTheme = settings()->darkTheme();
+
+    auto filePath = QString("%1/%2-%3.png").arg(m_mapMarkerCachePath, QFileInfo(url).baseName()).arg(size).arg(darkTheme ? "d" : "");
+    if (QFile::exists(filePath))
+    {
+        return filePath;
+    }
+
+    auto color = darkTheme ? Qt::black : Qt::white;
+    auto outlineColor = darkTheme ? Qt::white : Qt::black;
+
+    if (!Utils::renderMapCallout(url, filePath, color, outlineColor, size))
+    {
+        qDebug() << "Failed to render callout: " << url;
+        return "";
+    }
+
+    return filePath;
+}
+
+QVariantMap App::createMapCalloutSymbol(const QString& filePath) const
+{
+    auto size = scaleByFontSize(32);
+
+    return QVariantMap
+    {
+        { "symbolType", "PictureMarkerSymbol" },
+        { "angle", 0.0 },
+        { "type", "esriPMS" },
+        { "url", renderMapCallout(filePath, size) },
+        { "width", (int)size },
+        { "height", (int)size },
+        { "yoffset", size / 2 }
+    };
+}
+
+QVariantMap App::createMapPointSymbol(const QString& url, const QColor& color) const
+{
+    auto size = scaleByFontSize(32);
+
+    return QVariantMap
+    {
+        { "symbolType", "PictureMarkerSymbol" },
+        { "angle", 0.0 },
+        { "type", "esriPMS" },
+        { "url", renderMapMarker(url, color, size) },
+        { "width", (int)size },
+        { "height", (int)size },
+        { "yoffset", size / 2 }
+    };
+}
+
+QVariantMap App::createMapLineSymbol(const QColor& color) const
+{
+    return QVariantMap
+    {
+        { "symbolType", "SimpleLineSymbol" },
+        { "color", QVariantList { color.red(), color.green(), color.blue(), color.alpha() } },
+        { "style", "esriSLSShortDot" },
+        { "type", "esriSLS" },
+        { "width", scaleByFontSize(1.75) }
+    };
 }

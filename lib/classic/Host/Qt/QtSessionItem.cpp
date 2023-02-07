@@ -3,7 +3,7 @@
 #include "App.h"
 
 CtClassicSessionItem::CtClassicSessionItem(QQuickItem *parent)
-    : QQuickPaintedItem(parent)
+    : QQuickPaintedItem(parent), m_ownerForm(nullptr)
 {
     setAcceptHoverEvents(true);
     setAcceptedMouseButtons(Qt::AllButtons);
@@ -38,19 +38,19 @@ void CtClassicSessionItem::componentComplete()
     //QQmlParserStatus::componentComplete();
 }
 
-void CtClassicSessionItem::connectToProject(const QString& projectUid)
+void CtClassicSessionItem::connectToProject(Form* form)
 {
-    auto project = App::instance()->projectManager()->loadPtr(projectUid);
+    m_ownerForm = form;
 
     m_projectDir = Utils::classicRoot();
-    m_projectUid = projectUid;
-    m_projectApp = project->connectorParams()["app"].toString();
+    m_projectUid = form->projectUid();
+    m_projectApp = form->project()->connectorParams()["app"].toString();
 
     m_dpi = qMax(96, App::instance()->dpi());
     qDebug() << "Width: " << width() << " Height: " << height() << " DPI: " << m_dpi;
 
     int autoScale = qMin(500, qMax(100, m_dpi));
-    autoScale = (autoScale * App::instance()->settings()->fontSize()) / 100;
+    autoScale = App::instance()->scaleByFontSize(autoScale);
 
     m_scaleX = m_scaleY = m_scaleBorder = autoScale;
     m_scaleHitSize = (42 * autoScale) / 100;

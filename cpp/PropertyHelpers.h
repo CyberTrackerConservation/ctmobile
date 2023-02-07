@@ -183,6 +183,13 @@ public:
     static bool equals(const QVariantList& a, const QVariantList& b) { return a == b; }
 };
 
+template <> class variantType<QStringList>
+{
+public:
+    static QStringList toType(const QVariant& value) { return value.toStringList(); }
+    static bool equals(const QStringList& a, const QStringList& b) { return a == b; }
+};
+
 #define QML_SETTING(type, name, defaultValue) \
     protected: \
         Q_PROPERTY (type name READ name WRITE set_##name NOTIFY name##Changed) \

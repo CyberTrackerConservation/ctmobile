@@ -139,6 +139,7 @@ public:
     VOID DrawUpload(BOOL Filled, FXRECT *pRect, COLOR BackColor, COLOR ForeColor, BOOL Invert, BOOL Transparent = FALSE);
     VOID DrawHeading(FXRECT *pRect, COLOR BackColor, COLOR ForeColor, BOOL Invert, INT Heading, BOOL Transparent = FALSE);
     VOID DrawBusy(FXRECT *pRect, COLOR BackColor, COLOR ForeColor, BOOL Invert); 
+    VOID DrawShare(FXRECT *pRect, COLOR BackColor, COLOR ForeColor, BOOL Invert, BOOL Transparent = FALSE);
 
     // Dynamic shapes
     UINT DrawTime(FXDATETIME *pDateTime, FXRECT *pRect, FXFONTRESOURCE *pFont, UINT AlignFlags, COLOR BackColor, COLOR ForeColor, BOOL Invert, BOOL Transparent);

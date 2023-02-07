@@ -10,6 +10,7 @@ C.Sketchpad {
     property alias recordUid: fieldBinding.recordUid
     property alias fieldUid: fieldBinding.fieldUid
 
+    baseLine: false
     penColor: Material.foreground
 
     Component.onCompleted: {
@@ -27,36 +28,16 @@ C.Sketchpad {
     }
 
     RoundButton {
-        id: clearSketch
-
-        anchors.right: parent.right
-        anchors.bottom: parent.bottom
-
-        icon.source: "qrc:/icons/delete_outline.svg"
-        icon.height: 48
-        icon.width: 48
-        icon.color: "white"
-        radius: width / 2
-        background: Item {
-            id: clearSketchBackground
-
-            property color color
-
-            Rectangle {
-                anchors.fill: parent
-                radius: clearSketch.radius
-                color: Utils.changeAlpha(clearSketchBackground.color, 128)
-            }
-
-            Rectangle {
-                anchors.centerIn: parent
-                color: clearSketchBackground.color
-                radius: clearSketch.radius
-                width: parent.width - 10
-                height: parent.height - 10
-            }
+        anchors {
+            bottom: parent.bottom
+            horizontalCenter: parent.horizontalCenter
         }
 
+        icon.source: "qrc:/icons/delete_outline.svg"
+        icon.width: Style.toolButtonSize
+        icon.height: Style.toolButtonSize
+        icon.color: Utils.changeAlpha(Material.foreground, 128)
+        enabled: !fieldBinding.isEmpty
         onClicked: {
             root.clear()
             resetField();

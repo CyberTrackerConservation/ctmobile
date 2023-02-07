@@ -62,6 +62,7 @@ public:
 
     BaseField* field() const;
     QString fieldUid() const;
+    QString parentFieldUid() const;
 
     QString name() const;
     QVariant value() const;
@@ -155,6 +156,8 @@ public:
     int index() const;
 
     void enumFieldValues(const std::function<void(const FieldValue& fieldValue, bool* stopOut)>& fieldValueCallback) const;
+
+    void setRecordUid(const QString& value);
     void remapRecordUids(const std::function<QString(const QString& recordUid)>& lookup);
 
     bool hasFieldValue(const QString& fieldUid) const;
@@ -228,6 +231,7 @@ public:
 
     bool hasRecords() const;
     bool hasRecord(const QString& recordUid) const;
+    bool hasRecordChanged(const QString& recordUid) const;
     QStringList recordUids() const;
 
     void enumFieldValues(

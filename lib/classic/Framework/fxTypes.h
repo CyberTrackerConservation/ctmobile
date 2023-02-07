@@ -38,6 +38,7 @@ const UINT MAGIC_PROFILE	= 'PROF';
 const UINT MAGIC_TRAVELMODE = 'TRAM';
 const UINT MAGIC_JSONID     = 'JSON';
 const UINT MAGIC_ALERT      = 'ALRT';
+const UINT MAGIC_FIELD      = 'FILD';
 
 #define MEDIA_PREFIX        "media://"
 
@@ -303,6 +304,14 @@ struct FXFONTRESOURCE
     UINT16 Style;
 };
 
+struct FXFIELDRESOURCE
+{
+    UINT Magic;
+    CHAR Name[256];
+    GUID ElementId;
+    UINT32 DataType;
+};
+
 // Define Screen
 struct FXSCREENDATA
 {
@@ -381,8 +390,8 @@ struct FXRESOURCEHEADER
     UINT ObjectCount;
     UINT FirstDialog;
     UINT DialogCount;
-    UINT FirstFont;
-    UINT FontCount;
+    UINT FirstField;
+    UINT FieldCount;
     UINT NextScreenList;
     UINT NextScreenCount;
     UINT GotosOffset;
@@ -417,6 +426,7 @@ struct FXDATABASEHEADER
 #define FXSENDDATA_PROTOCOL_BACKUP  5
 #define FXSENDDATA_PROTOCOL_HTTPZ   6
 #define FXSENDDATA_PROTOCOL_ESRI    7
+#define FXSENDDATA_PROTOCOL_AZURE   8
 
 struct FXEXPORTFILEINFO
 {

@@ -2,7 +2,7 @@ import QtQml 2.12
 import QtQuick 2.12
 import QtQuick.Layouts 1.12
 import QtQuick.Controls 2.12
-import Esri.ArcGISRuntime 100.14 as Esri
+import Esri.ArcGISRuntime 100.15 as Esri
 import QtQuick.Controls.Material 2.12
 import QtLocation 5.12
 import QtSensors 5.12
@@ -54,7 +54,7 @@ C.ContentPage {
         }
 
         color: "transparent"
-        implicitHeight: toolbarInternal.implicitHeight
+        implicitHeight: Math.max(toolbarInternal.implicitHeight, titleRow.implicitHeight)
 
         ToolBar {
             id: toolbarInternal
@@ -62,7 +62,8 @@ C.ContentPage {
         }
 
         Row {
-            anchors.fill: parent
+            id: titleRow
+            width: parent.width
             spacing: 0
 
             ToolButton {
@@ -100,142 +101,77 @@ C.ContentPage {
                 icon.width: C.Style.toolButtonSize
                 icon.height: C.Style.toolButtonSize
                 icon.color: pageHeader.textColor
-                onClicked: page.state = page.state === "moreDataShow" ? "moreDataHide" : "moreDataShow"
+                icon.source: App.settings.mapMoreDataVisible ? "qrc:/icons/chevron_up.svg" : "qrc:/icons/chevron_down.svg"
+                onClicked: {
+                    App.settings.mapMoreDataVisible = !App.settings.mapMoreDataVisible
+                }
             }
         }
     }
 
     // Footer.
-    footer: ColumnLayout {
+    footer: RowLayout {
         spacing: 0
-        width: parent.width
 
-        Rectangle {
-            Layout.fillWidth: true
-            height: 2
-            color: Material.theme === Material.Dark ? "#FFFFFF" : "#000000"
-            opacity: Material.theme === Material.Dark ? 0.12 : 0.12
+        ButtonGroup { id: buttonGroup }
+
+        C.FooterButton {
+            icon.source: "qrc:/icons/layers_outline.svg"
+            text: qsTr("Layers")
+            separatorRight: true
+            onClicked: {
+                if (typeof(formPageStack) !== "undefined") {
+                    form.pushPage("qrc:/MapLayersPage.qml", {})
+                } else {
+                    appPageStack.push("qrc:/MapLayersPage.qml", {}, StackView.Immediate)
+                }
+            }
         }
 
-        RowLayout {
-            id: buttonRow
-            spacing: 0
-            Layout.fillWidth: true
-            property int buttonCount: 5
-            property int buttonWidth: page.width / buttonCount
-            property var buttonColor: Material.theme === Material.Dark ? Material.foreground : Material.primary
-
-            ToolButton {
-                Layout.preferredWidth: buttonRow.buttonWidth
-                Layout.fillWidth: true
-                Layout.fillHeight: true
-                icon.source: "qrc:/icons/layers_outline.svg"
-                Material.foreground: buttonRow.buttonColor
-                display: Button.TextUnderIcon
-                text: qsTr("Layers")
-                font.pixelSize: App.settings.font10
-                font.capitalization: Font.MixedCase
-                onClicked: {
-                    if (typeof(formPageStack) !== "undefined") {
-                        form.pushPage("qrc:/MapLayersPage.qml", {})
-                    } else {
-                        appPageStack.push("qrc:/MapLayersPage.qml", {}, StackView.Immediate)
-                    }
-                }
+        C.FooterButton {
+            id: buttonPan
+            ButtonGroup.group: buttonGroup
+            checkable: true
+            checked: App.settings.mapPanMode === Esri.Enums.LocationDisplayAutoPanModeOff
+            icon.source: "qrc:/icons/pan.svg"
+            text: qsTr("Pan")
+            onClicked: {
+                mapView.locationDisplay.autoPanMode = Esri.Enums.LocationDisplayAutoPanModeOff
             }
+        }
 
-            ButtonGroup {
-                id: buttonGroupAutoPanMode
+        C.FooterButton {
+            id: buttonFollow
+            ButtonGroup.group: buttonGroup
+            checkable: true
+            checked: App.settings.mapPanMode === Esri.Enums.LocationDisplayAutoPanModeRecenter
+            icon.source: checked ? "qrc:/icons/gps_fixed.svg" : "qrc:/icons/gps_not_fixed.svg"
+            text: qsTr("Follow")
+            onClicked: {
+                mapView.locationDisplay.autoPanMode = Esri.Enums.LocationDisplayAutoPanModeRecenter
             }
+        }
 
-            Rectangle {
-                width: 2
-                Layout.fillHeight: true
-                color: Material.theme === Material.Dark ? "#FFFFFF" : "#000000"
-                opacity: Material.theme === Material.Dark ? 0.12 : 0.12
+        C.FooterButton {
+            id: buttonFollowNav
+            ButtonGroup.group: buttonGroup
+            checkable: true
+            checked: App.settings.mapPanMode === Esri.Enums.LocationDisplayAutoPanModeNavigation
+            icon.source: checked ? "qrc:/icons/navigation2.svg" : "qrc:/icons/navigation2_empty.svg"
+            text: qsTr("Goto")
+            onClicked: {
+                mapView.locationDisplay.autoPanMode = Esri.Enums.LocationDisplayAutoPanModeNavigation
+                setMoreDataPageIndex(2)
             }
+        }
 
-            ToolButton {
-                id: buttonPan
-                ButtonGroup.group: buttonGroupAutoPanMode
-                checkable: true
-                checked: mapView.locationDisplay.autoPanMode === Esri.Enums.LocationDisplayAutoPanModeOff
-                Layout.preferredWidth: buttonRow.buttonWidth
-                Layout.fillWidth: true
-                Layout.fillHeight: true
-                icon.source: "qrc:/icons/pan.svg"
-                Material.foreground: buttonRow.buttonColor
-                display: Button.TextUnderIcon
-                text: qsTr("Pan")
-                font.pixelSize: App.settings.font10
-                font.capitalization: Font.MixedCase
-                onClicked: mapView.locationDisplay.autoPanMode = Esri.Enums.LocationDisplayAutoPanModeOff
-            }
-
-            ToolButton {
-                id: buttonFollow
-                ButtonGroup.group: buttonGroupAutoPanMode
-                checkable: true
-                checked: mapView.locationDisplay.autoPanMode === Esri.Enums.LocationDisplayAutoPanModeRecenter
-                Layout.preferredWidth: buttonRow.buttonWidth
-                Layout.fillWidth: true
-                Layout.fillHeight: true
-                icon.source: checked ? "qrc:/icons/gps_fixed.svg" : "qrc:/icons/gps_not_fixed.svg"
-                Material.foreground: buttonRow.buttonColor
-                display: Button.TextUnderIcon
-                text: qsTr("Follow")
-                font.pixelSize: App.settings.font10
-                font.capitalization: Font.MixedCase
-                onClicked: mapView.locationDisplay.autoPanMode = Esri.Enums.LocationDisplayAutoPanModeRecenter
-            }
-
-            ToolButton {
-                id: buttonFollowNav
-                ButtonGroup.group: buttonGroupAutoPanMode
-                checkable: true
-                checked: mapView.locationDisplay.autoPanMode === Esri.Enums.LocationDisplayAutoPanModeNavigation
-                Layout.preferredWidth: buttonRow.buttonWidth
-                Layout.fillWidth: true
-                Layout.fillHeight: true
-                icon.source: checked ? "qrc:/icons/navigation2.svg" : "qrc:/icons/navigation2_empty.svg"
-                Material.foreground: buttonRow.buttonColor
-                display: Button.TextUnderIcon
-                text: qsTr("Goto")
-                font.pixelSize: App.settings.font10
-                font.capitalization: Font.MixedCase
-                onClicked: {
-                    mapView.locationDisplay.autoPanMode = Esri.Enums.LocationDisplayAutoPanModeNavigation
-                    moreDataSwipeView.currentIndex = 2
-                    page.state = "moreDataShow"
-                }
-            }
-
-            Rectangle {
-                width: 2
-                Layout.fillHeight: true
-                color: Material.theme === Material.Dark ? "#FFFFFF" : "#000000"
-                opacity: Material.theme === Material.Dark ? 0.12 : 0.12
-            }
-
-            ToolButton {
-                id: buttonMore
-                Layout.preferredWidth: buttonRow.buttonWidth
-                Layout.fillWidth: true
-                Layout.fillHeight: true
-                icon.source: "qrc:/icons/dots_horizontal.svg"
-                Material.foreground: buttonRow.buttonColor
-                display: Button.TextUnderIcon
-                text: qsTr("More")
-                font.pixelSize: App.settings.font10
-                font.capitalization: Font.MixedCase
-                onClicked: {
-                    if (page.state === "moreDataShow") {
-                        page.state = "moreDataHide"
-                        return
-                    }
-
-                    popupData.open()
-                }
+        C.FooterButton {
+            id: buttonMore
+            icon.source: "qrc:/icons/dots_horizontal.svg"
+            text: qsTr("More")
+            separatorLeft: true
+            onClicked: {
+                popupData.open()
             }
         }
     }
@@ -254,8 +190,8 @@ C.ContentPage {
                 ]
 
                 onClicked: function (index) {
-                    App.settings.mapMoreDataViewIndex = index
-                    page.state = "moreDataShow"
+                    setMoreDataPageIndex(index)
+                    App.settings.mapMoreDataVisible = true
                 }
             }
         }
@@ -267,6 +203,7 @@ C.ContentPage {
         y: pageHeader.height
         width: page.width
         height: moreDataSwipeView.height + moreDataPageIndicator.height
+        visible: App.settings.mapMoreDataVisible
 
         Rectangle {
             anchors.fill: parent
@@ -289,7 +226,13 @@ C.ContentPage {
             width: parent.width
             height: popupLocationData.implicitHeight + 16
 
-            onCurrentIndexChanged: App.settings.mapMoreDataViewIndex = moreDataSwipeView.currentIndex
+            Component.onCompleted: {
+                setMoreDataPageIndex(App.settings.mapMoreDataViewIndex)
+            }
+
+            onCurrentIndexChanged: {
+                setMoreDataPageIndex(currentIndex)
+            }
 
             Item {
                 width: parent.height
@@ -309,9 +252,9 @@ C.ContentPage {
 
                 C.Skyplot {
                     anchors.centerIn: parent
-                    width: moreDataSwipeView.height - 8
-                    height: moreDataSwipeView.height - 8
-                    active: moreDataSwipeView.currentIndex === 1
+                    width: Math.min(moreDataSwipeView.height, page.width) - 16
+                    height: Math.min(moreDataSwipeView.height, page.width) - 16
+                    active: moreDataSwipeView.currentIndex === 1 // index of "skyplot" tab.
                     satNumbersVisible: false
                     legendVisible: false
                 }
@@ -329,8 +272,7 @@ C.ContentPage {
                         target: App.gotoManager
 
                         function onGotoTargetChanged(title) {
-                            moreDataSwipeView.currentIndex = 2 // index of "goto" tab
-                            page.state = title !== "" ? "moreDataShow" : "moreDataHide"
+                            setMoreDataPageIndex(2) // index of "goto" tab.
                         }
                     }
                 }
@@ -338,39 +280,15 @@ C.ContentPage {
         }
     }
 
-    state: ""
-    states: [
-        State {
-            name: "moreDataHide"
-            StateChangeScript {
-                script: {
-                    buttonMore.checked = false
-                    App.settings.mapMoreDataVisible = false
-                    popupMoreData.visible = false
-                    toggleMoreButton.icon.source = "qrc:/icons/chevron_down.svg"
-                }
-            }
-        },
-        State {
-            name: "moreDataShow"
-            StateChangeScript {
-                script: {
-                    buttonMore.checked = true
-                    App.settings.mapMoreDataVisible = true
-
-                    // Disable swipe animation.
-                    moreDataSwipeView.contentItem.highlightMoveDuration = 0
-                    moreDataSwipeView.contentItem.highlightMoveVelocity = -1
-                    moreDataSwipeView.currentIndex = App.settings.mapMoreDataViewIndex
-
-                    popupMoreData.visible = true
-                    toggleMoreButton.icon.source = "qrc:/icons/chevron_up.svg"
-                }
-            }
+    function setMoreDataPageIndex(index) {
+        if (App.settings.mapMoreDataViewIndex !== index) {
+            App.settings.mapMoreDataViewIndex = index
         }
-    ]
 
-    Component.onCompleted: {
-        page.state = App.settings.mapMoreDataVisible ? "moreDataShow" : "moreDataHide"
+        if (moreDataSwipeView.currentIndex !== index) {
+            moreDataSwipeView.contentItem.highlightMoveDuration = 0
+            moreDataSwipeView.contentItem.highlightMoveVelocity = -1
+            moreDataSwipeView.currentIndex = index
+        }
     }
 }

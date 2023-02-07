@@ -603,12 +603,13 @@ void extractResource(const QString& resource, const QString& targetPath)
     }
 }
 
-void copyPath(const QString& src, const QString& dst)
+bool copyPath(const QString& src, const QString& dst, const QStringList& excludes)
 {
     auto dir = QDir(src);
     if (!dir.exists())
     {
-        return;
+        qDebug() << "src path does not exist: " << src;
+        return false;
     }
 
     foreach (QString d, dir.entryList(QDir::Dirs | QDir::NoDotAndDotDot))
@@ -616,7 +617,7 @@ void copyPath(const QString& src, const QString& dst)
         auto dstPath = dst + QDir::separator() + d;
         if (dir.mkpath(dstPath))
         {
-            copyPath(src+ QDir::separator() + d, dstPath);
+            copyPath(src+ QDir::separator() + d, dstPath, excludes);
         }
         else
         {
@@ -624,11 +625,28 @@ void copyPath(const QString& src, const QString& dst)
         }
     }
 
-    dir.mkpath(dst);
+    if (!dir.mkpath(dst))
+    {
+        qDebug() << "dst path failed to create: " << dst;
+        return false;
+    }
+
     foreach (QString f, dir.entryList(QDir::Files))
     {
-        QFile::copy(src + QDir::separator() + f, dst + QDir::separator() + f);
+        if (excludes.contains(f, Qt::CaseInsensitive))
+        {
+            qDebug() << "Excluded file: " << f;
+            continue;
+        }
+
+        if (!QFile::copy(src + QDir::separator() + f, dst + QDir::separator() + f))
+        {
+            qDebug() << "Failed to copy file: " << f;
+            return false;
+        }
     }
+
+    return true;
 }
 
 QString removeTrailingSlash(const QString& string)
@@ -749,14 +767,62 @@ bool networkAvailable(QNetworkAccessManager* networkAccessManager)
     return pingUrl(networkAccessManager, "https://google.com");
 }
 
-HttpResponse httpGet(QNetworkAccessManager* networkAccessManager, const QString& url, const QString& username, const QString& password)
+QByteArray makeMultiPartBoundary()
+{
+    return (QString("------" + QString::number(QDateTime::currentMSecsSinceEpoch())).toLatin1());
+}
+
+HttpResponse httpGetHead(QNetworkAccessManager* networkAccessManager, const QString& url)
 {
     auto result = HttpResponse();
 
     QNetworkRequest request;
     QEventLoop eventLoop;
 
-    std::unique_ptr<QNetworkAccessManager>(network);
+    auto finalUrl = url;
+    for (;;)
+    {
+        request.setUrl(finalUrl);
+        auto reply = std::unique_ptr<QNetworkReply>(networkAccessManager->head(request));
+        reply->ignoreSslErrors();
+
+        QObject::connect(reply.get(), &QNetworkReply::finished, &eventLoop, &QEventLoop::quit);
+        eventLoop.exec();
+
+        auto redirectUrl = reply->attribute(QNetworkRequest::RedirectionTargetAttribute);
+        if (redirectUrl.isValid())
+        {
+            finalUrl = redirectUrl.toString();
+            continue;
+        }
+
+        result.success = reply->error() == QNetworkReply::NoError;
+        result.status = reply->attribute(QNetworkRequest::HttpStatusCodeAttribute).toInt();
+        result.reason = reply->attribute(QNetworkRequest::HttpReasonPhraseAttribute).toString();
+        result.etag = reply->header(QNetworkRequest::ETagHeader).toString();
+        result.location = reply->header(QNetworkRequest::LocationHeader).toString();
+        result.url = finalUrl;
+        result.errorString = reply->errorString();
+        result.data = reply->isOpen() ? QByteArray(reply->readAll()) : QByteArray();
+
+        if (!result.success)
+        {
+            qDebug() << "HTTP error: " << result.errorString;
+            qDebug() << "HTTP error: " << result.data;
+        }
+
+        break;
+    }
+
+    return result;
+}
+
+HttpResponse httpGet(QNetworkAccessManager* networkAccessManager, const QString& url, const QString& username, const QString& password)
+{
+    auto result = HttpResponse();
+
+    QNetworkRequest request;
+    QEventLoop eventLoop;
 
     if (!username.isEmpty() && !password.isEmpty())
     {
@@ -786,6 +852,7 @@ HttpResponse httpGet(QNetworkAccessManager* networkAccessManager, const QString&
         result.reason = reply->attribute(QNetworkRequest::HttpReasonPhraseAttribute).toString();
         result.etag = reply->header(QNetworkRequest::ETagHeader).toString();
         result.location = reply->header(QNetworkRequest::LocationHeader).toString();
+        result.url = finalUrl;
         result.errorString = reply->errorString();
         result.data = reply->isOpen() ? QByteArray(reply->readAll()) : QByteArray();
 
@@ -834,6 +901,7 @@ HttpResponse httpGetWithToken(QNetworkAccessManager* networkAccessManager, const
         result.reason = reply->attribute(QNetworkRequest::HttpReasonPhraseAttribute).toString();
         result.etag = reply->header(QNetworkRequest::ETagHeader).toString();
         result.location = reply->header(QNetworkRequest::LocationHeader).toString();
+        result.url = finalUrl;
         result.errorString = reply->errorString();
         result.data = reply->isOpen() ? QByteArray(reply->readAll()) : QByteArray();
 
@@ -886,6 +954,7 @@ HttpResponse httpPostJson(QNetworkAccessManager* networkAccessManager, const QSt
     result.reason = reply->attribute(QNetworkRequest::HttpReasonPhraseAttribute).toString();
     result.etag = reply->header(QNetworkRequest::ETagHeader).toString();
     result.location = reply->header(QNetworkRequest::LocationHeader).toString();
+    result.url = url;
     result.errorString = reply->errorString();
     result.data = reply->isOpen() ? QByteArray(reply->readAll()) : QByteArray();
 
@@ -926,6 +995,7 @@ HttpResponse httpPostData(QNetworkAccessManager* networkAccessManager, const QSt
     result.reason = reply->attribute(QNetworkRequest::HttpReasonPhraseAttribute).toString();
     result.etag = reply->header(QNetworkRequest::ETagHeader).toString();
     result.location = reply->header(QNetworkRequest::LocationHeader).toString();
+    result.url = url;
     result.errorString = reply->errorString();
     result.data = reply->isOpen() ? QByteArray(reply->readAll()) : QByteArray();
 
@@ -962,6 +1032,7 @@ HttpResponse httpPostQuery(QNetworkAccessManager* networkAccessManager, const QS
     result.reason = reply->attribute(QNetworkRequest::HttpReasonPhraseAttribute).toString();
     result.etag = reply->header(QNetworkRequest::ETagHeader).toString();
     result.location = reply->header(QNetworkRequest::LocationHeader).toString();
+    result.url = url;
     result.errorString = reply->errorString();
     result.data = reply->isOpen() ? QByteArray(reply->readAll()) : QByteArray();
 
@@ -989,6 +1060,8 @@ HttpResponse httpPostMultiPart(QNetworkAccessManager* networkAccessManager, cons
 {
     auto result = HttpResponse();
 
+    multiPart->setBoundary(Utils::makeMultiPartBoundary());
+
     QNetworkRequest request;
     QEventLoop eventLoop;
     request.setRawHeader("Connection", "keep-alive");
@@ -1007,6 +1080,7 @@ HttpResponse httpPostMultiPart(QNetworkAccessManager* networkAccessManager, cons
     result.reason = reply->attribute(QNetworkRequest::HttpReasonPhraseAttribute).toString();
     result.etag = reply->header(QNetworkRequest::ETagHeader).toString();
     result.location = reply->header(QNetworkRequest::LocationHeader).toString();
+    result.url = url;
     result.errorString = reply->errorString();
     result.data = reply->isOpen() ? QByteArray(reply->readAll()) : QByteArray();
 
@@ -1019,7 +1093,7 @@ HttpResponse httpPostMultiPart(QNetworkAccessManager* networkAccessManager, cons
     return result;
 }
 
-bool httpAcquireOAuthToken(QNetworkAccessManager* networkAccessManager, const QString& server, const QString& clientId, const QString& username, const QString& password, QString* outAccessToken, QString* outRefreshToken)
+HttpResponse httpAcquireOAuthToken(QNetworkAccessManager* networkAccessManager, const QString& server, const QString& clientId, const QString& username, const QString& password, QString* outAccessToken, QString* outRefreshToken)
 {
     auto query = QUrlQuery();
     query.addQueryItem("grant_type", "password");
@@ -1030,22 +1104,27 @@ bool httpAcquireOAuthToken(QNetworkAccessManager* networkAccessManager, const QS
     auto response = httpPostQuery(networkAccessManager, trimUrl(server) + "/oauth2/token", query);
     if (!response.success)
     {
-        return false;
+        return response;
     }
 
     auto jsonObj = QJsonDocument::fromJson(response.data).object();
     *outAccessToken = jsonObj["access_token"].toString();
     *outRefreshToken = jsonObj["refresh_token"].toString();
 
-    return !outAccessToken->isEmpty() && !outRefreshToken->isEmpty();
+    response.success = !outAccessToken->isEmpty() && !outRefreshToken->isEmpty();
+    response.errorString = "Unknown error";
+
+    return response;
 }
 
-bool httpRefreshOAuthToken(QNetworkAccessManager* networkAccessManager, const QString& server, const QString& clientId, const QString& refreshToken, QString* outAccessToken, QString* outRefreshToken)
+HttpResponse httpRefreshOAuthToken(QNetworkAccessManager* networkAccessManager, const QString& server, const QString& clientId, const QString& refreshToken, QString* outAccessToken, QString* outRefreshToken)
 {
+    auto response = HttpResponse();
+
     if (refreshToken.isEmpty())
     {
         qDebug() << "Refresh token not found";
-        return false;
+        return response;
     }
 
     auto oldRefreshToken = refreshToken;
@@ -1055,11 +1134,11 @@ bool httpRefreshOAuthToken(QNetworkAccessManager* networkAccessManager, const QS
     query.addQueryItem("refresh_token", refreshToken);
     query.addQueryItem("client_id", clientId);
 
-    auto response = httpPostQuery(networkAccessManager, trimUrl(server) + "/oauth2/token", query);
+    response = httpPostQuery(networkAccessManager, trimUrl(server) + "/oauth2/token", query);
     if (!response.success)
     {
         qDebug() << "Refresh auth token failed: " << response.status << " " << response.data;
-        return false;
+        return response;
     }
 
     auto jsonObj = QJsonDocument::fromJson(response.data).object();
@@ -1072,7 +1151,10 @@ bool httpRefreshOAuthToken(QNetworkAccessManager* networkAccessManager, const QS
         *outRefreshToken = oldRefreshToken;
     }
 
-    return !outAccessToken->isEmpty() && !outRefreshToken->isEmpty();
+    response.success = !outAccessToken->isEmpty() && !outRefreshToken->isEmpty();
+    response.errorString = "Unknown error";
+
+    return response;
 }
 
 void enforceFolderQuota(const QString& folder, int maxFileCount)
@@ -1170,6 +1252,158 @@ bool reorientImageFile(const QString& filePath, int resolutionX, int resolutionY
 #endif
 
     return pixmap.save(filePath);
+}
+
+bool renderMapCallout(const QString& iconFilePath, const QString& targetFilePath, const QColor& color, const QColor& outlineColor, int size)
+{
+    if (!QFile::exists(iconFilePath))
+    {
+        qDebug() << "renderIcon: file not found";
+        return false;
+    }
+
+    auto spacer = size / 8;
+    auto iconSize = size - spacer;
+
+    auto image = QImage(QSize(size, size), QImage::Format_ARGB32);
+    image.fill(Qt::transparent);
+
+    QPainter painter(&image);
+
+    QPainterPath path;
+    auto iconRect = QRect(spacer / 2, 0, iconSize, iconSize);
+    path.moveTo(iconRect.topLeft());
+    path.lineTo(iconRect.topRight());
+    path.lineTo(iconRect.bottomRight());
+    path.lineTo(iconRect.center().x() + spacer, iconRect.bottom());
+    path.lineTo(iconRect.center().x(), size - 1);
+    path.lineTo(iconRect.center().x() - spacer, iconRect.bottom());
+    path.lineTo(iconRect.bottomLeft());
+    path.lineTo(iconRect.topLeft());
+    path.closeSubpath();
+
+    painter.setPen(outlineColor);
+    painter.setBrush(color);
+    painter.drawPath(path);
+
+    QImage icon(iconFilePath);
+    iconRect.adjust(2, 2, -2, -2);
+    auto iconScaled = icon.scaled(iconRect.width(), iconRect.height(), Qt::KeepAspectRatio, Qt::SmoothTransformation);
+
+    auto targetRect = iconScaled.rect();
+    targetRect.moveCenter(iconRect.center());
+    painter.drawImage(targetRect, iconScaled);
+
+    return image.save(targetFilePath);
+}
+
+bool renderMapMarker(const QString& url, const QString& targetFilePath, const QColor& color, const QColor& outlineColor, int width, int height)
+{
+    QFile file(url);
+    if (!file.open(QIODevice::ReadOnly))
+    {
+        return false;
+    }
+
+    auto svgData = QString(file.readAll());
+    svgData.replace("fill:#000000", "fill:" + color.name(QColor::HexRgb));
+    svgData.replace("stroke:#ffffff", "stroke:" + outlineColor.name(QColor::HexRgb));
+    QSvgRenderer renderer(svgData.toLatin1());
+
+    auto image = QImage(QSize(width, width), QImage::Format_ARGB32);
+    image.fill(Qt::transparent);
+
+    QPainter painter(&image);
+    renderer.render(&painter, QRect(0, 0, width, height));
+
+    return image.save(targetFilePath);
+}
+
+QString renderSvgToPng(const QString& url, int width, int height)
+{
+    QFile file(url);
+    if (!file.open(QFile::ReadOnly))
+    {
+        return QString();
+    }
+
+    QSvgRenderer renderer(file.readAll());
+    QImage image(width, height, QImage::Format_ARGB32);
+    image.fill(QColor(0, 0, 0, 0));
+
+    QPainter painter(&image);
+    renderer.render(&painter);
+
+    QBuffer buffer;
+    image.save(&buffer);
+
+    return buffer.data();
+}
+
+bool renderSvgToPngFile(const QString& url, const QString& targetFilePath, int width, int height)
+{
+    QFile file(url);
+    if (!file.open(QFile::ReadOnly))
+    {
+        return false;
+    }
+
+    QSvgRenderer renderer(file.readAll());
+    QImage image(width, height, QImage::Format_ARGB32);
+    image.fill(QColor(0, 0, 0, 0));
+
+    QPainter painter(&image);
+    renderer.render(&painter);
+
+    image.save(targetFilePath);
+
+    return true;
+}
+
+bool renderSquarePixmap(QPixmap* pixmap, const QString& filePath, int width, int height)
+{
+    if (pixmap->width() != width || pixmap->height() != height)
+    {
+        *pixmap = QPixmap::fromImage(QImage(width, height, QImage::Format_ARGB32));
+    }
+
+    QImageReader imageReader(filePath);
+    imageReader.setAutoTransform(true);
+    auto scaledSize = imageReader.size().scaled(QSize(width, height), Qt::KeepAspectRatio);
+    auto targetRect = QRectF((width - scaledSize.width()) / 2, (height - scaledSize.height()) / 2, scaledSize.width(), scaledSize.height());
+
+    pixmap->fill(Qt::transparent);
+    QPainter painter(pixmap);
+
+    auto suffix = QFileInfo(filePath).suffix().toLower();
+    if (suffix == "svg")
+    {
+        QFile file(filePath);
+        if (!file.open(QFile::ReadOnly))
+        {
+            return false;
+        }
+
+        QSvgRenderer renderer(file.readAll());
+        renderer.render(&painter, targetRect);
+    }
+    else
+    {
+        auto pixmap = QPixmap::fromImage(imageReader.read());
+
+        if (pixmap.width() > pixmap.height())
+        {
+            pixmap = pixmap.scaledToWidth(width, Qt::SmoothTransformation);
+        }
+        else
+        {
+            pixmap = pixmap.scaledToHeight(height, Qt::SmoothTransformation);
+        }
+
+        painter.drawPixmap(targetRect.toRect(), pixmap);
+    }
+
+    return true;
 }
 
 QString renderPointsToSvg(const QVariantList& points, const QColor& color, int penWidth, bool fill)
@@ -1415,6 +1649,28 @@ bool compareLastPathComponents(const QString& path1, const QString& path2)
     return view1 == view2;
 }
 
+QVariant getParam(const QVariantMap& params, const QString& key, const QVariant& defaultValue)
+{
+    if (!key.contains('.'))
+    {
+        return params.value(key, defaultValue);
+    }
+
+    // Drill through objects, so keys can be of the form X.Y.Z = v.
+    auto curr = params;
+    auto keys = key.split('.');
+    for (auto i = 0; i < keys.count() - 1; i++)
+    {
+        curr = curr[keys[i]].toMap();
+        if (curr.isEmpty())
+        {
+            return defaultValue;
+        }
+    }
+
+    return curr.value(keys.last(), defaultValue);
+}
+
 QString androidGetExternalFilesDir()
 {
 #if defined (Q_OS_ANDROID)
@@ -1455,26 +1711,6 @@ QString classicRoot()
 #elif defined(Q_OS_ANDROID)
     return androidGetExternalFilesDir() + "/cybertracker";
 #endif
-}
-
-LocationMap decodeLocation(const QGeoPositionInfo& update)
-{
-    auto result = LocationMap();
-
-    auto f = [&](QGeoPositionInfo::Attribute attribute) -> double
-    {
-        return update.hasAttribute(attribute) ? update.attribute(attribute) : std::numeric_limits<double>::quiet_NaN();
-    };
-
-    result.x = update.coordinate().longitude();
-    result.y = update.coordinate().latitude();
-    result.z = update.coordinate().altitude();
-    result.s = f(QGeoPositionInfo::GroundSpeed);
-    result.d = f(QGeoPositionInfo::Direction);
-    result.a = f(QGeoPositionInfo::HorizontalAccuracy);
-    result.t = update.timestamp().toMSecsSinceEpoch();
-
-    return result;
 }
 
 QString encodeTimestamp(const QDateTime& dateTime)
@@ -1645,6 +1881,175 @@ void UTMXYToLatLon(double x, double y, int zone, bool north, double* latOut, dou
     {
         qDebug() << "Exception converting from UTM: " << e.what();
     }
+}
+
+static auto FILE_PATH_MAP = QMap<QString, QString>
+{
+    { QStandardPaths::writableLocation(QStandardPaths::StandardLocation::DesktopLocation), "%DESKTOP%" },
+    { QStandardPaths::writableLocation(QStandardPaths::StandardLocation::AppDataLocation), "%APPDATA%" },
+    { QStandardPaths::writableLocation(QStandardPaths::StandardLocation::CacheLocation), "%CACHE%" },
+    { QStandardPaths::writableLocation(QStandardPaths::StandardLocation::DownloadLocation), "%DOWNLOAD%" },
+    { QStandardPaths::writableLocation(QStandardPaths::StandardLocation::DocumentsLocation), "%DOCUMENTS%" },
+    { QStandardPaths::writableLocation(QStandardPaths::StandardLocation::PicturesLocation), "%PICTURES%" },
+    #if defined (Q_OS_ANDROID)
+        { androidGetExternalFilesDir(), "%ANDROID_EXTERNAL%" }
+    #endif
+};
+
+QString encodeFilePath(const QString& filePath)
+{
+    for (auto it = FILE_PATH_MAP.constKeyValueBegin(); it != FILE_PATH_MAP.constKeyValueEnd(); it++)
+    {
+        if (filePath.startsWith(it->first))
+        {
+            auto result = filePath;
+            return result.replace(it->first, it->second);
+        }
+    }
+
+    return filePath;
+}
+
+QString decodeFilePath(const QString& filePath)
+{
+    for (auto it = FILE_PATH_MAP.constKeyValueBegin(); it != FILE_PATH_MAP.constKeyValueEnd(); it++)
+    {
+        if (filePath.startsWith(it->second))
+        {
+            auto result = filePath;
+            return result.replace(it->second, it->first);
+        }
+    }
+
+    // Hack to recover file paths on iOS.
+    if (!QFile::exists(filePath))
+    {
+        for (auto it = FILE_PATH_MAP.constKeyValueBegin(); it != FILE_PATH_MAP.constKeyValueEnd(); it++)
+        {
+            if (filePath.length() <= it->first.length())
+            {
+                continue;
+            }
+
+            auto testFilePath = QString(filePath).replace(0, it->first.length(), it->first);
+            if (QFile::exists(testFilePath))
+            {
+                qDebug() << "Decoding '" << filePath << "' as '" << testFilePath << "'";
+                return testFilePath;
+            }
+        }
+    }
+
+    // No decoding.
+    return filePath;
+}
+
+static QMimeDatabase* s_mimeDatabase;
+
+QMimeDatabase* mimeDatabase()
+{
+    if (s_mimeDatabase == nullptr)
+    {
+        s_mimeDatabase = new QMimeDatabase();
+    }
+
+    return s_mimeDatabase;
+}
+
+void enumFiles(const QString& folder, std::function<void(const QFileInfo& fileInfo)> callback)
+{
+    auto fileInfos = QDir(folder).entryInfoList(QDir::Files, QDir::Name);
+    for (auto fileInfoIt = fileInfos.constBegin(); fileInfoIt != fileInfos.constEnd(); fileInfoIt++)
+    {
+        callback(*fileInfoIt);
+    }
+}
+
+void enumFolders(const QString& folder, std::function<void(const QFileInfo& fileInfo)> callback)
+{
+    auto dirInfos = QDir(folder).entryInfoList(QDir::Dirs | QDir::NoDotAndDotDot, QDir::Time);
+    for (auto dirInfoIt = dirInfos.constBegin(); dirInfoIt != dirInfos.constEnd(); dirInfoIt++)
+    {
+        callback(*dirInfoIt);
+    }
+}
+
+QString computeFileHash(const QString& filePath)
+{
+    QFile file(filePath);
+    if (!file.open(QFile::ReadOnly))
+    {
+        qDebug() << "Failed to open file: " << file.errorString();
+        return "";
+    }
+
+    auto cryptHash = std::unique_ptr<QCryptographicHash>(new QCryptographicHash(QCryptographicHash::Md5));
+    while (!file.atEnd())
+    {
+        cryptHash->addData(file.read(1024 * 1024));
+    }
+
+    return QString(cryptHash->result().toHex());
+}
+
+QString computeFolderHash(const QString& folder)
+{
+    auto fileItems = QStringList();
+    enumFiles(folder, [&](const QFileInfo& fileInfo)
+    {
+        fileItems.append(fileInfo.fileName().toLower());
+
+        auto fileSize = fileInfo.size();
+        if (fileSize < 65536)
+        {
+            fileItems.append(computeFileHash(fileInfo.filePath()));
+        }
+        else
+        {
+            fileItems.append(QString::number(fileSize));
+        }
+    });
+
+    if (fileItems.isEmpty())
+    {
+        return QString();
+    }
+
+    return QString(QCryptographicHash::hash((fileItems.join('_').toLatin1()),QCryptographicHash::Md5).toHex());
+}
+
+bool isMapLayerSuffix(const QString& suffix)
+{
+    return isMapLayerVector(suffix) || isMapLayerRaster(suffix);
+}
+
+bool isMapLayerVector(const QString& suffix)
+{
+    auto s_vectorExtensions = QStringList { "shp", "kml", "geojson" };
+    return s_vectorExtensions.contains(suffix.toLower());
+}
+
+bool isMapLayerRaster(const QString& suffix)
+{
+    auto s_rasterExtensions = QStringList { "tpk", "vtpk", "img", "i12", "dt0", "dt1", "dt2", "tc2", "geotiff", "tif", "tiff", "hr1", "jpg", "jpeg", "jp2", "ntf", "png", "i21", "mbtiles", "wms" };
+    return s_rasterExtensions.contains(suffix.toLower());
+}
+
+QStringList buildMapLayerList(const QString& folder)
+{
+    auto results = QStringList();
+
+    enumFiles(folder, [&](const QFileInfo& fileInfo)
+    {
+        if (!isMapLayerSuffix(fileInfo.suffix()))
+        {
+            return;
+        }
+
+        results.append(fileInfo.filePath());
+    });
+
+    return results;
 }
 
 }

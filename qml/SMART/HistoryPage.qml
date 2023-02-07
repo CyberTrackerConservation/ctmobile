@@ -19,82 +19,47 @@ C.ContentPage {
         }
     }
 
-    ButtonGroup {
-        buttons: buttonRow.children
-    }
-
-    footer: ColumnLayout {
+    footer: RowLayout {
+        id: buttonRow
         spacing: 0
-        width: parent.width
+        visible: !form.editing
 
-        Rectangle {
-            Layout.fillWidth: true
-            height: 2
-            color: Material.theme === Material.Dark ? "#FFFFFF" : "#000000"
-            opacity: Material.theme === Material.Dark ? 0.12 : 0.12
+        ButtonGroup { id: buttonGroup }
+
+        Component.onCompleted: {
+            let count = 0
+            count += form.provider.hasCollect ? 1 : 0
+            count += form.provider.hasIncident ? 1 : 0
+            count += form.provider.hasPatrol ? 1 : 0
+
+            page.footer.visible = count > 1
         }
 
-        RowLayout {
-            id: buttonRow
-            spacing: 0
-            visible: !form.editing
-            Layout.fillWidth: true
-            property int buttonCount: {
-                var result = 0
-                result += form.provider.hasCollect ? 1 : 0
-                result += form.provider.hasIncident ? 1 : 0
-                result += form.provider.hasPatrol ? 1 : 0
-                page.footer.visible = result > 1
-                return result
-            }
+        C.FooterButton {
+            ButtonGroup.group: buttonGroup
+            text: qsTr("Collect")
+            checkable: true
+            icon.source: checked ? "qrc:/icons/assignment_turned_in_fill.svg" : "qrc:/icons/assignment_turned_in_outline.svg"
+            visible: form.provider.hasCollect
+            onClicked: stackLayout.currentIndex = 0
+        }
 
-            property int buttonWidth: page.width / buttonCount
-            property var buttonColor: Material.theme === Material.Dark ? Material.foreground : Material.primary
+        C.FooterButton {
+            ButtonGroup.group: buttonGroup
+            text: form.provider.getPatrolText()
+            checkable: true
+            icon.source: "qrc:/icons/shoe_print.svg"
+            visible: form.provider.hasPatrol
+            onClicked: stackLayout.currentIndex = 1
+        }
 
-            ToolButton {
-                Layout.preferredWidth: buttonRow.buttonWidth
-                Layout.fillWidth: true
-                Layout.fillHeight: true
-                text: qsTr("Collect")
-                checkable: true
-                font.pixelSize: App.settings.font10
-                font.capitalization: Font.MixedCase
-                display: Button.TextUnderIcon
-                icon.source: checked ? "qrc:/icons/assignment_turned_in_fill.svg" : "qrc:/icons/assignment_turned_in_outline.svg"
-                Material.foreground: buttonRow.buttonColor
-                visible: form.provider.hasCollect
-                onClicked: stackLayout.currentIndex = 0
-            }
-
-            ToolButton {
-                Layout.preferredWidth: buttonRow.buttonWidth
-                Layout.fillWidth: true
-                Layout.fillHeight: true
-                text: form.provider.getPatrolText()
-                checkable: true
-                font.pixelSize: App.settings.font10
-                font.capitalization: Font.MixedCase
-                display: Button.TextUnderIcon
-                icon.source: "qrc:/icons/shoe_print.svg"
-                Material.foreground: buttonRow.buttonColor
-                visible: form.provider.hasPatrol
-                onClicked: stackLayout.currentIndex = 1
-            }
-
-            ToolButton {
-                Layout.preferredWidth: buttonRow.buttonWidth
-                Layout.fillWidth: true
-                Layout.fillHeight: true
-                text: qsTr("Incidents")
-                checkable: true
-                font.pixelSize: App.settings.font10
-                font.capitalization: Font.MixedCase
-                display: Button.TextUnderIcon
-                icon.source: checked ? "qrc:/icons/assignment_turned_in_fill.svg" : "qrc:/icons/assignment_turned_in_outline.svg"
-                Material.foreground: buttonRow.buttonColor
-                visible: form.provider.hasIncident
-                onClicked: stackLayout.currentIndex = 2
-            }
+        C.FooterButton {
+            ButtonGroup.group: buttonGroup
+            text: qsTr("Incidents")
+            checkable: true
+            icon.source: checked ? "qrc:/icons/assignment_turned_in_fill.svg" : "qrc:/icons/assignment_turned_in_outline.svg"
+            visible: form.provider.hasIncident
+            onClicked: stackLayout.currentIndex = 2
         }
     }
 
@@ -125,25 +90,12 @@ C.ContentPage {
             width: parent.width
             height: parent.height
 
-            C.ListViewV {
+            C.FormSightingsListView {
                 id: listViewCollect
                 anchors.fill: parent
-
-                model: C.SightingListModel {}
-                delegate: HistoryRowDelegate {
-                    form: formCollect
-                    onClicked: pushSightingPage(listViewCollect.model, model.index)
+                onClicked: function (sighting, index) {
+                    pushSightingPage(model, index)
                 }
-            }
-
-            Label {
-                anchors.fill: parent
-                text: qsTr("No data")
-                horizontalAlignment: Text.AlignHCenter
-                verticalAlignment: Text.AlignVCenter
-                visible: formCollect.connected && listViewCollect.model.count === 0
-                opacity: 0.5
-                font.pixelSize: App.settings.font20
             }
         }
 
@@ -155,24 +107,12 @@ C.ContentPage {
             width: parent.width
             height: parent.height
 
-            C.ListViewV {
+            C.FormSightingsListView {
                 id: listViewPatrol
                 anchors.fill: parent
-                model: C.SightingListModel {}
-                delegate: HistoryRowDelegate {
-                    form: formPatrol
-                    onClicked: pushSightingPage(listViewPatrol.model, model.index)
+                onClicked: function (sighting, index) {
+                    pushSightingPage(model, index)
                 }
-            }
-
-            Label {
-                anchors.fill: parent
-                text: qsTr("No data")
-                horizontalAlignment: Text.AlignHCenter
-                verticalAlignment: Text.AlignVCenter
-                visible: formPatrol.connected && listViewPatrol.model.count === 0
-                opacity: 0.5
-                font.pixelSize: App.settings.font20
             }
         }
 
@@ -184,24 +124,12 @@ C.ContentPage {
             width: parent.width
             height: parent.height
 
-            C.ListViewV {
+            C.FormSightingsListView {
                 id: listViewIncident
                 anchors.fill: parent
-                model: C.SightingListModel {}
-                delegate: HistoryRowDelegate {
-                    form: formIncident
-                    onClicked: pushSightingPage(listViewIncident.model, model.index)
+                onClicked: function (sighting, index) {
+                    pushSightingPage(model, index)
                 }
-            }
-
-            Label {
-                anchors.fill: parent
-                text: qsTr("No data")
-                horizontalAlignment: Text.AlignHCenter
-                verticalAlignment: Text.AlignVCenter
-                visible: formIncident.connected && listViewIncident.model.count === 0
-                opacity: 0.5
-                font.pixelSize: App.settings.font20
             }
         }
     }

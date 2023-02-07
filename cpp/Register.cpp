@@ -11,6 +11,7 @@
 #include "MBTilesReader.h"
 #include "WaveFileRecorder.h"
 #include "Location.h"
+#include "OfflineMap.h"
 
 // Models.
 #include "FieldListModel.h"
@@ -26,6 +27,7 @@
 #include "EarthRanger/EarthRangerConnector.h"
 #include "SMART/SMARTConnector.h"
 #include "Classic/ClassicConnector.h"
+#include "CTO/CTOConnector.h"
 #include "Esri/EsriConnector.h"
 #include "KoBo/KoBoConnector.h"
 #include "ODK/ODKConnector.h"
@@ -54,11 +56,13 @@ void registerEngine(QGuiApplication* guiApplication, QQmlApplicationEngine* qmlE
     qmlRegisterUncreatableType<TimeManager>(ENGINE_URI, maj, min, "TimeManager", UNCREATABLE_MESSAGE);
     qmlRegisterUncreatableType<TaskManager>(ENGINE_URI, maj, min, "TaskManager", UNCREATABLE_MESSAGE);
     qmlRegisterUncreatableType<ProjectManager>(ENGINE_URI, maj, min, "ProjectManager", UNCREATABLE_MESSAGE);
+    qmlRegisterUncreatableType<OfflineMapManager>(ENGINE_URI, maj, min, "OfflineMapManager", UNCREATABLE_MESSAGE);
     qmlRegisterUncreatableType<ElementManager>(ENGINE_URI, maj, min, "ElementManager", UNCREATABLE_MESSAGE);
     qmlRegisterUncreatableType<LocationStreamer>(ENGINE_URI, maj, min, "LocationStreamer", UNCREATABLE_MESSAGE);
     qmlRegisterUncreatableType<FieldManager>(ENGINE_URI, maj, min, "FieldManager", UNCREATABLE_MESSAGE);
     qmlRegisterUncreatableType<Database>(ENGINE_URI, maj, min, "Database", UNCREATABLE_MESSAGE);
     qmlRegisterUncreatableType<Sighting>(ENGINE_URI, maj, min, "Sighting", UNCREATABLE_MESSAGE);
+    qmlRegisterUncreatableType<Location>(ENGINE_URI, maj, min, "Location", UNCREATABLE_MESSAGE);
     qmlRegisterUncreatableType<RecordManager>(ENGINE_URI, maj, min, "RecordManager", UNCREATABLE_MESSAGE);
     qmlRegisterUncreatableType<Record>(ENGINE_URI, maj, min, "Record", UNCREATABLE_MESSAGE);
     qmlRegisterUncreatableType<FieldValue>(ENGINE_URI, maj, min, "FieldValue", UNCREATABLE_MESSAGE);
@@ -83,6 +87,7 @@ void registerEngine(QGuiApplication* guiApplication, QQmlApplicationEngine* qmlE
     qmlRegisterType<PhotoField>(ENGINE_URI, maj, min, "PhotoField");
     qmlRegisterType<AudioField>(ENGINE_URI, maj, min, "AudioField");
     qmlRegisterType<SketchField>(ENGINE_URI, maj, min, "SketchField");
+    qmlRegisterType<FileField>(ENGINE_URI, maj, min, "FileField");
     qmlRegisterType<CalculateField>(ENGINE_URI, maj, min, "CalculateField");
 
     qmlRegisterType<FieldBinding>(ENGINE_URI, maj, min, "FieldBinding");
@@ -140,6 +145,11 @@ Connector* createClassicConnector(QObject *parent)
     return new ClassicConnector(parent);
 }
 
+Connector* createCTOConnector(QObject *parent)
+{
+    return new CTOConnector(parent);
+}
+
 Connector* createEsriConnector(QObject *parent)
 {
     return new EsriConnector(parent);
@@ -162,6 +172,7 @@ void registerConnectors(QQmlEngine* /*engine*/)
     app->registerConnector(EARTH_RANGER_CONNECTOR, &createEarthRangerConnector);
     app->registerConnector(SMART_CONNECTOR, &createSMARTConnector);
     app->registerConnector(CLASSIC_CONNECTOR, &createClassicConnector);
+    app->registerConnector(CTO_CONNECTOR, &createCTOConnector);
     app->registerConnector(ESRI_CONNECTOR, &createEsriConnector);
     app->registerConnector(KOBO_CONNECTOR, &createKoBoConnector);
     app->registerConnector(ODK_CONNECTOR, &createODKConnector);

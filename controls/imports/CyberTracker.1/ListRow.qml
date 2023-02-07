@@ -3,12 +3,13 @@ import QtQuick.Controls 2.12
 import QtQuick.Layouts 1.12
 import QtGraphicalEffects 1.0
 import QtQuick.Controls.Material 2.12
+import CyberTracker 1.0 as C
 
 RowLayout {
     id: root
 
     property string iconSource
-    property var iconOpacity: 1.0
+    property double iconOpacity: 1.0
     property var iconColor
     property string text
     property string subText
@@ -23,23 +24,15 @@ RowLayout {
 
     signal toolButtonClicked
 
+    Binding { target: background; property: "color"; value: colorContent || Style.colorContent }
+
     opacity: parent.enabled ? 1.0 : 0.5
 
-    Image {
-        id: image
+    C.SquareIcon {
+        size: Style.iconSize48
+        recolor: root.iconColor !== undefined
         source: root.iconSource
         opacity: root.iconOpacity
-        sourceSize.height: 48
-        sourceSize.width: 48
-        width: 48
-        visible: root.iconSource !== ""
-
-        layer {
-            enabled: iconColor !== undefined
-            effect: ColorOverlay {
-                color: iconColor
-            }
-        }
     }
 
     ColumnLayout {
@@ -69,6 +62,8 @@ RowLayout {
     ToolButton {
         visible: root.toolButton
         icon.source: root.toolButtonIconSource
+        icon.width: Style.toolButtonSize
+        icon.height: Style.toolButtonSize
         opacity: 0.5
         onClicked: root.toolButtonClicked()
     }

@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<kml xmlns="http://www.opengis.net/kml/2.2">
+    <Document id="root_doc">
+        <Schema name="Point" id="point">
+            <SimpleField name="uid" type="string">
+                <displayName>Id</displayName>
+            </SimpleField>
+            <SimpleField name="a" type="float">
+                <displayName>Accuracy (m)</displayName>
+            </SimpleField>
+            <SimpleField name="c" type="int">
+                <displayName>Counter</displayName>
+            </SimpleField>
+            <SimpleField name="d" type="float">
+                <displayName>Direction (degrees)</displayName>
+            </SimpleField>
+            <SimpleField name="df" type="int">
+                <displayName>Distance filter (m)</displayName>
+            </SimpleField>
+            <SimpleField name="i" type="int">
+                <displayName>Update interval (s)</displayName>
+            </SimpleField>
+            <SimpleField name="s" type="float">
+                <displayName>Speed (km/h)</displayName>
+            </SimpleField>
+            <SimpleField name="z" type="float">
+                <displayName>Altitude (m)</displayName>
+            </SimpleField>
+        </Schema>
+        <Style id="point">
+            <IconStyle>
+                <Icon>
+                    <href>http://maps.google.com/mapfiles/kml/paddle/wht-circle.png</href>
+                </Icon>
+            </IconStyle>
+            <LabelStyle>
+                <scale>0</scale>
+            </LabelStyle>
+        </Style>
+        <Schema name="Line" id="line">
+            <SimpleField name="count" type="int">
+                <displayName>Point count</displayName>
+            </SimpleField>
+            <SimpleField name="deviceId" type="string">
+                <displayName>Device id</displayName>
+            </SimpleField>
+            <SimpleField name="distance" type="float">
+                <displayName>Distance (m)</displayName>
+            </SimpleField>
+            <SimpleField name="speedAvg" type="float">
+                <displayName>Average speed (km/h)</displayName>
+            </SimpleField>
+            <SimpleField name="speedMax" type="float">
+                <displayName>Maximum speed (km/h)</displayName>
+            </SimpleField>
+            <SimpleField name="speedMin" type="float">
+                <displayName>Minimum speed (km/h)</displayName>
+            </SimpleField>
+            <SimpleField name="timeStart" type="string">
+                <displayName>Start time</displayName>
+            </SimpleField>
+            <SimpleField name="timeStop" type="string">
+                <displayName>Stop time</displayName>
+            </SimpleField>
+            <SimpleField name="username" type="string">
+                <displayName>Username</displayName>
+            </SimpleField>
+        </Schema>
+        <Folder>
+            <name>{appid} track</name>
+            <Placemarks />
+        </Folder>
+    </Document>
+</kml>

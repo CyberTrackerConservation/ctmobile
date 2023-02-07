@@ -298,7 +298,7 @@ ArcGisClient::SendResponse ArcGisClient::sendAttachment(const QString& serviceUr
     }
 
     QHttpMultiPart multipart(QHttpMultiPart::FormDataType);
-    multipart.setBoundary("------WebKitFormBoundarytoHka8LUGjq34sBN");
+    multipart.setBoundary(Utils::makeMultiPartBoundary());
 
     auto part1 = QHttpPart();
     part1.setHeader(QNetworkRequest::KnownHeaders::ContentDispositionHeader, "form-data; name=\"f\"");

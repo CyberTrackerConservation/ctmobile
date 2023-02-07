@@ -23,6 +23,36 @@ C.ContentPage {
 
             ItemDelegate {
                 Layout.fillWidth: true
+                Layout.minimumHeight: C.Style.minRowHeight
+                contentItem: RowLayout {
+                    Label {
+                        Layout.fillWidth: true
+                        text: qsTr("System settings")
+                        font.pixelSize: App.settings.font14
+                        font.capitalization: Font.MixedCase
+                        font.bold: false
+                        wrapMode: Label.WordWrap
+                    }
+
+                    C.SquareIcon {
+                        source: "qrc:/icons/cogs.svg"
+                        recolor: true
+                        opacity: 0.5
+                    }
+
+                    C.ChevronRight {}
+                }
+
+                onClicked: {
+                    form.pushPage("qrc:/SettingsPage.qml")
+                }
+
+                C.HorizontalDivider {}
+            }
+
+            ItemDelegate {
+                Layout.fillWidth: true
+                Layout.minimumHeight: C.Style.minRowHeight
 
                 contentItem: RowLayout {
                     width: parent.width
@@ -73,7 +103,7 @@ C.ContentPage {
 
             ItemDelegate {
                 Layout.fillWidth: true
-                Layout.minimumHeight: row0.height
+                Layout.minimumHeight: C.Style.minRowHeight
 
                 contentItem: RowLayout {
                      width: parent.width
@@ -122,9 +152,9 @@ C.ContentPage {
 
             ItemDelegate {
                 Layout.fillWidth: true
-                Layout.minimumHeight: row0.height
+                Layout.minimumHeight: C.Style.minRowHeight
 
-               contentItem: RowLayout {
+                contentItem: RowLayout {
                     width: parent.width
                     height: parent.height
 
@@ -140,7 +170,7 @@ C.ContentPage {
                         }
 
                         Label {
-                            property string reportedBy: form.provider.reportedBy
+                            property string reportedBy: form.project.reportedBy
                             property bool reportedByValid: reportedBy !== ""
                             text: reportedByValid ? form.getElementName(reportedBy) : qsTr("Unknown")
                             color: reportedByValid ? Material.foreground : "red"
@@ -161,8 +191,9 @@ C.ContentPage {
             }
 
             ItemDelegate {
-                id: row0
                 Layout.fillWidth: true
+                Layout.minimumHeight: C.Style.minRowHeight
+
                 contentItem: RowLayout {
                     Label {
                         Layout.fillWidth: true
@@ -175,7 +206,9 @@ C.ContentPage {
                         id: checkMergeCategories
                         Layout.alignment: Qt.AlignRight
                         checked: form.getSetting("mergeCategories", false)
-                        onClicked: form.setSetting("mergeCategories", checked)
+                        onCheckedChanged: {
+                            form.setSetting("mergeCategories", checked)
+                        }
                     }
                 }
 
@@ -189,7 +222,44 @@ C.ContentPage {
 
             ItemDelegate {
                 Layout.fillWidth: true
-                Layout.minimumHeight: row0.height
+                Layout.minimumHeight: C.Style.minRowHeight
+
+                contentItem: RowLayout {
+                    ColumnLayout {
+                        Layout.fillWidth: true
+
+                        Label {
+                            Layout.fillWidth: true
+                            font.pixelSize: App.settings.font14
+                            text: qsTr("Page mode")
+                            elide: Text.ElideRight
+                            wrapMode: Label.WordWrap
+                        }
+
+                        Label {
+                            Layout.fillWidth: true
+                            font.pixelSize: App.settings.font12
+                            opacity: 0.5
+                            text: qsTr("One page per question")
+                            elide: Text.ElideRight
+                            wrapMode: Label.WordWrap
+                        }
+                    }
+
+                    Switch {
+                        checked: form.project.wizardMode
+                        onCheckedChanged: {
+                            form.project.wizardMode = checked
+                        }
+                    }
+                }
+
+                C.HorizontalDivider {}
+            }
+
+            ItemDelegate {
+                Layout.fillWidth: true
+                Layout.minimumHeight: C.Style.minRowHeight
 
                 contentItem: RowLayout {
                     Label {

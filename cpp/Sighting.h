@@ -1,6 +1,7 @@
 #pragma once
 #include "pch.h"
 #include "Record.h"
+#include "Location.h"
 #include "Evaluator.h"
 
 class Sighting: public QObject
@@ -15,16 +16,18 @@ class Sighting: public QObject
     Q_PROPERTY (QString username READ username CONSTANT)
     Q_PROPERTY (QString createTime READ createTime CONSTANT)
     Q_PROPERTY (QString updateTime READ updateTime CONSTANT)
-    Q_PROPERTY (QVariantMap location READ location CONSTANT)
-    Q_PROPERTY (QString summary READ summary CONSTANT)
+    Q_PROPERTY (QVariantMap location READ locationMap CONSTANT)
+    Q_PROPERTY (QString summaryText READ summaryText CONSTANT)
+    Q_PROPERTY (QUrl summaryIcon READ summaryIcon CONSTANT)
 
     Q_PROPERTY (QVariantMap symbols READ symbols CONSTANT)
     Q_PROPERTY (QVariantMap controlStates READ controlStates CONSTANT)
     Q_PROPERTY (QVariantMap variables READ variables CONSTANT)
+    Q_PROPERTY (QString trackFile READ trackFile CONSTANT)
 
     Q_PROPERTY (QVariantList pageStack READ pageStack CONSTANT)
     Q_PROPERTY (QString wizardRecordUid READ wizardRecordUid CONSTANT)
-    Q_PROPERTY (QStringList wizardFieldUids READ wizardFieldUids CONSTANT)
+    Q_PROPERTY (QVariantMap wizardRules READ wizardRules CONSTANT)
     Q_PROPERTY (QVariantList wizardPageStack READ wizardPageStack CONSTANT)
 
 public:
@@ -37,6 +40,7 @@ public:
     static constexpr uint32_t DB_SUBMITTED_FLAG = 0x00000020;
     static constexpr uint32_t DB_READONLY_FLAG  = 0x00000040;
     static constexpr uint32_t DB_COMPLETED_FLAG = 0x00000080;
+    static constexpr uint32_t DB_SNAPPED_FLAG   = 0x00000100;
 
     explicit Sighting(QObject* parent = nullptr);
     explicit Sighting(const QVariantMap& data, QObject* parent);
@@ -56,20 +60,27 @@ public:
     QString username() const;
     QString createTime() const;
     QString updateTime() const;
-    QVariantMap location() const;
-    QString summary() const;
+    QVariantMap locationMap() const;
+    std::unique_ptr<Location> locationPtr() const;
+    QString summaryText(bool fieldNames = false) const;
+    QUrl summaryIcon() const;
+    QUrl statusIcon(int flags) const;
 
     QVariantMap symbols() const;
     QVariantMap controlStates() const;
     QVariantMap variables() const;
 
+    QString trackFile() const;
+    void set_trackFile(const QString& value);
+
     QVariantList pageStack() const;
     void set_pageStack(const QVariantList& value);
+    QString lastPageUrl() const;
 
     QString wizardRecordUid() const;
     void set_wizardRecordUid(const QString& value);
-    QStringList wizardFieldUids() const;
-    void set_wizardFieldUids(const QStringList& value);
+    QVariantMap wizardRules() const;
+    void set_wizardRules(const QVariantMap& value);
     QVariantList wizardPageStack() const;
     void set_wizardPageStack(const QVariantList& value);
 
@@ -103,7 +114,15 @@ public:
     QVariant getFieldValue(const QString& recordUid, const QString& fieldUid, const QVariant& defaultValue) const;
     void setFieldValue(const QString& recordUid, const QString& fieldUid, const QVariant& value);
     void resetFieldValue(const QString& recordUid, const QString& fieldUid);
+    void setFieldState(const QString& recordUid, const QString& fieldUid, FieldState state);
     void resetRecord(const QString& recordUid);
+
+    QVariant getFieldParameter(const QString& recordUid, const QString& fieldUid, const QString& key, const QVariant& defaultValue = QVariant()) const;
+    QString getSnapLocationFieldUid() const;
+    QString getTrackFileFieldUid(QString* formatOut = nullptr) const;
+    QVariantList findSaveTargets(const QString& recordUid, const QString& fieldUid) const;
+    QVariantMap findSnapLocation(const QString& recordUid, const QString& fieldUid) const;
+    QVariantMap findTrackSetting() const;
 
 private:
     RecordManager* m_recordManager = nullptr;
@@ -113,10 +132,11 @@ private:
     QString m_updateTime;
     QVariantList m_pageStack;
     QString m_wizardRecordUid;
-    QStringList m_wizardFieldUids;
+    QVariantMap m_wizardRules;
     QVariantList m_wizardPageStack;
     QVariantMap m_controlStates;
     QVariantMap m_variables;
+    QString m_trackFile;
 
 signals:
     void recalculated(const FieldValueChanges& fieldValueChanges, const FieldValueChanges& recordChildValueChanges);

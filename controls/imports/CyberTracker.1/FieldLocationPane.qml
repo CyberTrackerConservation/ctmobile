@@ -18,8 +18,6 @@ Pane {
     contentWidth: parent.width
     contentHeight: content.implicitHeight
 
-    Binding { target: background; property: "color"; value: Style.colorContent }
-
     C.FieldBinding {
         id: fieldBinding
         recordUid: pane.recordUid
@@ -32,7 +30,7 @@ Pane {
         spacing: 8
 
         property var location: fieldBinding.value
-        property bool hasTimestamp: content.location !== undefined && content.location.t !== undefined && content.location.t !== null
+        property bool hasTimestamp: content.location !== undefined && content.location.ts !== undefined && content.location.ts !== null
         property bool hasAltitude: content.location !== undefined && content.location.z !== undefined && content.location.z !== null && !isNaN(content.location.z)
         property bool hasDirection: content.location !== undefined && content.location.d !== undefined && content.location.d !== null && !isNaN(content.location.d)
         property bool hasAccuracy: content.location !== undefined && content.location.a !== undefined && content.location.a !== null && !isNaN(content.location.a)
@@ -209,53 +207,51 @@ Pane {
             visible: fieldLocation.active
         }
 
-        HorizontalDivider {}
-
         RowLayout {
             id: buttonRow
-            Layout.preferredWidth: parent.width * 0.75
             Layout.alignment: Qt.AlignHCenter
-            spacing: 0
+            spacing: parent.width / 8
+            property var buttonColor: Utils.changeAlpha(Material.foreground, 128)
 
-            property int buttonWidth: buttonRow.width / (fieldBinding.field.allowManual ? 3 : 2)
-            property var buttonColor: Material.foreground
-
-            ToolButton {
-                Layout.preferredWidth: buttonRow.buttonWidth
-                text: fieldLocation.active ? qsTr("Stop") : qsTr("Refresh")
-                font.capitalization: Font.AllUppercase
-                font.pixelSize: App.settings.font12
-                icon.source: fieldLocation.active ? "qrc:/icons/cancel.svg" : "qrc:/icons/gps_fixed.svg"
+            RoundButton {
+                display: RoundButton.IconOnly
+                font.pixelSize: App.settings.font10
+                font.capitalization: Font.MixedCase
+                icon.source: fieldLocation.active ? "qrc:/icons/cancel.svg" : "qrc:/icons/refresh.svg"
                 icon.color: buttonRow.buttonColor
+                icon.width: Style.toolButtonSize
+                icon.height: Style.toolButtonSize
                 onClicked: {
                     fieldBinding.resetValue()
                     fieldLocation.active = !fieldLocation.active
                 }
             }
 
-            ToolButton {
-                Layout.preferredWidth: buttonRow.buttonWidth
-                text: qsTr("Map")
-                font.capitalization: Font.AllUppercase
-                font.pixelSize: App.settings.font12
-                icon.source: "qrc:/icons/edit_location_outline.svg"
-                enabled: !fieldLocation.active
-                opacity: enabled ? 1.0 : 0.5
-                icon.color: buttonRow.buttonColor
-                visible: fieldBinding.field.allowManual
-                onClicked: form.pushPage(Qt.resolvedUrl("FieldLocationPage.qml"), { recordUid: pane.recordUid, fieldUid: pane.fieldUid } )
-            }
-
-            ToolButton {
-                Layout.preferredWidth: buttonRow.buttonWidth
-                text: qsTr("Reset")
+            RoundButton {
+                display: RoundButton.IconOnly
+                font.pixelSize: App.settings.font10
+                font.capitalization: Font.MixedCase
                 icon.source: "qrc:/icons/delete_outline.svg"
                 icon.color: buttonRow.buttonColor
+                icon.width: Style.toolButtonSize
+                icon.height: Style.toolButtonSize
                 enabled: !fieldLocation.active && !fieldBinding.isEmpty
                 opacity: enabled ? 1.0 : 0.5
-                font.capitalization: Font.AllUppercase
-                font.pixelSize: App.settings.font12
                 onClicked: fieldBinding.resetValue()
+            }
+
+            RoundButton {
+                display: ToolButton.IconOnly
+                font.pixelSize: App.settings.font10
+                font.capitalization: Font.MixedCase
+                icon.source: "qrc:/icons/edit_location_outline.svg"
+                icon.color: buttonRow.buttonColor
+                icon.width: Style.toolButtonSize
+                icon.height: Style.toolButtonSize
+                enabled: !fieldLocation.active
+                opacity: enabled ? 1.0 : 0.5
+                visible: fieldBinding.field.allowManual
+                onClicked: form.pushPage(Qt.resolvedUrl("FieldLocationPage.qml"), { recordUid: pane.recordUid, fieldUid: pane.fieldUid } )
             }
         }
     }

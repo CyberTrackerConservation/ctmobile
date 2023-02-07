@@ -1,8 +1,8 @@
 #include "EsriConnector.h"
 #include "EsriProvider.h"
 #include "App.h"
-#include "XlsForm.h"
 #include "jlcompress.h"
+#include "XlsForm.h"
 
 EsriConnector::EsriConnector(QObject *parent) : Connector(parent)
 {
@@ -42,6 +42,11 @@ QVariantMap EsriConnector::getShareData(Project* project, bool auth) const
     return result;
 }
 
+bool EsriConnector::canLogin(Project* /*project*/) const
+{
+    return true;
+}
+
 bool EsriConnector::loggedIn(Project* project) const
 {
     return !project->accessToken().isEmpty();
@@ -51,12 +56,11 @@ bool EsriConnector::login(Project* project, const QString& /*server*/, const QSt
 {
     auto accessToken = QString();
     auto refreshToken = QString();
-    auto errorString = QString();
 
     auto result = Utils::esriAcquireOAuthToken(App::instance()->networkAccessManager(), username, password, &accessToken, &refreshToken);
     if (!result.success)
     {
-        qDebug() << "Login failed: " << errorString;
+        qDebug() << "Login failed: " << result.errorString;
         return false;
     }
 
@@ -109,6 +113,29 @@ ApiResult EsriConnector::bootstrap(const QVariantMap& params)
     return bootstrapUpdate(projectUid);
 }
 
+bool EsriConnector::refreshAccessToken(QNetworkAccessManager* networkAccessManager, Project* project)
+{
+    auto accessToken = project->accessToken();
+    auto refreshToken = project->refreshToken();
+
+    auto clientId = App::instance()->config()["esriClientId"].toString();
+    auto response = Utils::esriDecodeResponse(Utils::httpRefreshOAuthToken(networkAccessManager, "https://www.arcgis.com/sharing/rest", clientId, refreshToken, &accessToken, &refreshToken));
+    if (!response.success)
+    {
+        if (response.status == 401 || response.status == 498)
+        {
+            logout(project);
+        }
+
+        return false;
+    }
+
+    project->set_accessToken(accessToken);
+    project->set_refreshToken(refreshToken);
+
+    return true;
+}
+
 ApiResult EsriConnector::hasUpdate(QNetworkAccessManager* networkAccessManager, Project* project)
 {
     // Fetch the survey metadata.
@@ -116,8 +143,16 @@ ApiResult EsriConnector::hasUpdate(QNetworkAccessManager* networkAccessManager, 
     auto surveyId = connectorParams["surveyId"].toString();
     auto surveyMap = QVariantMap();
 
-    auto surveyResult = Utils::esriFetchSurvey(networkAccessManager, surveyId, project->accessToken(), &surveyMap);
-    if (!surveyResult.success)
+    auto response = Utils::esriFetchSurvey(networkAccessManager, surveyId, project->accessToken(), &surveyMap);
+    if (!response.success && (response.status == 401 || response.status == 498))
+    {
+        if (refreshAccessToken(networkAccessManager, project))
+        {
+            response = Utils::esriFetchSurvey(networkAccessManager, surveyId, project->accessToken(), &surveyMap);
+        }
+    }
+
+    if (!response.success)
     {
         return Failure(tr("Could not retrieve survey"));
     }
@@ -131,7 +166,7 @@ ApiResult EsriConnector::hasUpdate(QNetworkAccessManager* networkAccessManager, 
     return UpdateAvailable();
 }
 
-bool EsriConnector::canUpdate(Project* project)
+bool EsriConnector::canUpdate(Project* project) const
 {
     return loggedIn(project);
 }
@@ -150,17 +185,24 @@ ApiResult EsriConnector::update(Project *project)
     }
 
     // Skip updates if there are any unsent sightings.
-    auto sightingUids = QStringList();
-    m_database->getSightings(project->uid(), "", Sighting::DB_SIGHTING_FLAG, &sightingUids);
-    if (sightingUids.count() > 0)
+//    auto sightingUids = QStringList();
+//    m_database->getSightings(project->uid(), "", Sighting::DB_SIGHTING_FLAG, &sightingUids);
+//    if (sightingUids.count() > 0)
+//    {
+//        return Failure(tr("Unsent data"));
+//    }
+
+    // Update.
+    auto networkAccessManager = App::instance()->networkAccessManager();
+
+    // Refresh the access token.
+    if (!refreshAccessToken(networkAccessManager, project))
     {
-        return Failure(tr("Unsent data"));
+        return Failure(tr("Login required"));
     }
 
-    auto networkAccessManager = App::instance()->networkAccessManager();
-    auto accessToken = project->accessToken();
-
     // Fetch the survey metadata.
+    auto accessToken = project->accessToken();
     auto connectorParams = project->connectorParams();
     auto surveyId = connectorParams["surveyId"].toString();
     auto surveyMap = QVariantMap();
@@ -249,11 +291,13 @@ ApiResult EsriConnector::update(Project *project)
         }
     }
 
-    if (!formFile.rename(formFile.fileName(), updateFolder + "/form.xlsx"))
+    auto formFilePath = updateFolder + "/form.xlsx";
+    if (!formFile.rename(formFile.fileName(), formFilePath))
     {
         return Failure(tr("Failed to copy form file"));
     }
 
+    // Update.
     auto iconPath = "esriInfo/media/logo.svg";
     if (QFile::exists(updateFolder + "/" + iconPath))
     {
@@ -279,7 +323,49 @@ ApiResult EsriConnector::update(Project *project)
     androidPermissions << "ACCESS_COARSE_LOCATION";
     updateProject.set_androidPermissions(androidPermissions);
 
+    // Apply form global configuration.
+    auto settings = QVariantMap();
+    if (!XlsFormParser::parseSettings(formFilePath, &settings))
+    {
+        return Failure(tr("Failed to read form settings sheet"));
+    }
+
+    XlsFormParser::configureProject(&updateProject, settings);
+
+    // Finalize location tracking.
+    auto locationServiceUrl = updateProject.esriLocationServiceUrl();
+    if (!locationServiceUrl.isEmpty())
+    {
+        auto esriLocationServiceState = QVariantMap();
+        auto response = Utils::esriInitLocationTracking(networkAccessManager, locationServiceUrl, accessToken, &esriLocationServiceState);
+        if (!response.success)
+        {
+            return Failure(response.errorString);
+        }
+
+        updateProject.set_esriLocationServiceState(esriLocationServiceState);
+    }
+    else
+    {
+        updateProject.set_esriLocationServiceUrl("");
+        updateProject.set_esriLocationServiceState(QVariantMap());
+    }
+
+    // Commit.
     updateProject.saveToQmlFile(updateFolder + "/Project.qml");
 
+    // Reset the project.
+    m_projectManager->reset(projectUid, true);
+
     return Success();
+}
+
+
+void EsriConnector::reset(Project* project)
+{
+    auto path = m_projectManager->getFilePath(project->uid());
+
+    QFile::remove(path + "/Elements.qml");
+    QFile::remove(path + "/Fields.qml");
+    QFile::remove(path + "/Settings.json");
 }

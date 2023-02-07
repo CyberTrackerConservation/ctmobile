@@ -61,7 +61,14 @@ Database::Database(const QString& filePath, QObject* parent): QObject(parent)
         qFatalIf(!success, "Failed to create tasks table 1");
         success = query.exec();
         qFatalIf(!success, "Failed to create tasks table 2");
-        
+
+        success = query.prepare("DROP INDEX taskIndex");    // Tasks names can be duplicated.
+        if (success)
+        {
+            success = query.exec();
+            qFatalIf(!success, "Failed to create tasks table 3");
+        }
+
         // Add attachments to sightings table.
         success = query.prepare("ALTER TABLE sightings ADD attachments TEXT");
         if (success)
@@ -358,34 +365,100 @@ void Database::deleteSightings(const QString& projectUid, const QString& stateSp
     qFatalIf(!success, "Failed to delete sightings 2");
 }
 
-void Database::getSightings(const QString& projectUid, const QString& stateSpace, uint flags, QStringList* outUids) const
+void Database::enumSightings(const QString& projectUid, const QString& stateSpace, uint flagsAny, std::function<void(const QString& uid, uint flags, const QVariantMap& data, const QStringList& attachments)> callback) const
 {
     verifyThread();
-    outUids->clear();
 
     auto query = QSqlQuery(m_db);
     auto success = false;
+    auto flagsSql = QString("(flags & (:flagsAny) <> 0)");
 
     if (stateSpace == "*")
     {
-        success = query.prepare("SELECT uid FROM sightings WHERE (projectUid = (:projectUid)) AND (flags & (:flags) <> 0) ORDER BY rowid");
+        success = query.prepare("SELECT uid, flags, data, attachments FROM sightings WHERE (projectUid = (:projectUid)) AND " + flagsSql + " ORDER BY rowid");
     }
     else
     {
-        success = query.prepare("SELECT uid FROM sightings WHERE (projectUid = (:projectUid)) AND (stateSpace = (:stateSpace)) AND (flags & (:flags) <> 0) ORDER BY rowid");
+        success = query.prepare("SELECT uid, flags, data, attachments FROM sightings WHERE (projectUid = (:projectUid)) AND (stateSpace = (:stateSpace)) AND " + flagsSql + " ORDER BY rowid");
         query.bindValue(":stateSpace", stateSpace.isNull() ? "" : stateSpace);
     }
 
     qFatalIf(!success, "Failed to get sightings 1");
     query.bindValue(":projectUid", projectUid);
-    query.bindValue(":flags", flags);
+    query.bindValue(":flagsAny", flagsAny);
     success = query.exec();
     qFatalIf(!success, "Failed to get sightings 2");
 
     while (query.next())
     {
-        outUids->append(query.value(0).toString());
+        auto uid = query.value(0).toString();
+        auto flags = query.value(1).toUInt();
+
+        auto dataBlob = query.value(2).toByteArray();
+        qFatalIf(dataBlob.isEmpty(), "Failed to read sighting");
+        auto data = Utils::variantMapFromBlob(dataBlob);
+
+        auto attachments = query.value(3).toString().split(';');
+
+        callback(uid, flags, data, attachments);
     }
+}
+
+void Database::enumSightings(const QString& projectUid, const QString& stateSpace, uint flagsOn, uint flagsOff, std::function<void(const QString& uid, uint flags, const QVariantMap& data, const QStringList& attachments)> callback) const
+{
+    verifyThread();
+    auto query = QSqlQuery(m_db);
+    auto success = false;
+    auto flagsSql = QString("(flags & (:flagsOn) = (:flagsOn)) AND (flags & (:flagsOff) = 0)");
+
+    if (stateSpace == "*")
+    {
+        success = query.prepare("SELECT uid, flags, data, attachments FROM sightings WHERE (projectUid = (:projectUid)) AND " + flagsSql + " ORDER BY rowid");
+    }
+    else
+    {
+        success = query.prepare("SELECT uid, flags, data, attachments FROM sightings WHERE (projectUid = (:projectUid)) AND (stateSpace = (:stateSpace)) AND " + flagsSql + " ORDER BY rowid");
+        query.bindValue(":stateSpace", stateSpace.isNull() ? "" : stateSpace);
+    }
+
+    qFatalIf(!success, "Failed to get sightings 1");
+    query.bindValue(":projectUid", projectUid);
+    query.bindValue(":flagsOn", flagsOn);
+    query.bindValue(":flagsOff", flagsOff);
+    success = query.exec();
+    qFatalIf(!success, "Failed to get sightings 2");
+
+    while (query.next())
+    {
+        auto uid = query.value(0).toString();
+        auto flags = query.value(1).toUInt();
+
+        auto dataBlob = query.value(2).toByteArray();
+        qFatalIf(dataBlob.isEmpty(), "Failed to read sighting");
+        auto data = Utils::variantMapFromBlob(dataBlob);
+
+        auto attachments = query.value(3).toString().split(';');
+
+        callback(uid, flags, data, attachments);
+    }
+}
+
+void Database::getSightings(const QString& projectUid, const QString& stateSpace, uint flagsAny, QStringList* uidsOut) const
+{
+    uidsOut->clear();
+    enumSightings(projectUid, stateSpace, flagsAny, [&](const QString& uid, uint /*flags*/, const QVariantMap& /*data*/, const QStringList& /*attachments*/)
+    {
+        uidsOut->append(uid);
+    });
+}
+
+void Database::getSightings(const QString& projectUid, const QString& stateSpace, uint flagsOn, uint flagsOff, QStringList* uidsOut) const
+{
+    uidsOut->clear();
+    enumSightings(projectUid, stateSpace, flagsOn, flagsOff, [&](const QString& uid, uint /*flags*/, const QVariantMap& /*data*/, const QStringList& /*attachments*/)
+    {
+        uidsOut->append(uid);
+    });
 }
 
 uint Database::getSightingFlags(const QString& projectUid, const QString& uid) const
@@ -428,6 +501,26 @@ void Database::setSightingFlags(const QString& projectUid, const QString& uid, u
 
     success = query.exec();
     qFatalIf(!success, "Failed to set sighting flags 3");
+}
+
+void Database::setSightingFlags(const QString& projectUid, const QString& stateSpace, uint matchFlagsOn, uint matchFlagsOff, uint flags)
+{
+    verifyThread();
+    auto query = QSqlQuery(m_db);
+    auto success = false;
+    auto flagsSql = QString("(flags & (:flagsOn) = (:flagsOn)) AND (flags & (:flagsOff) = 0)");
+
+    success = query.prepare("UPDATE sightings SET flags = flags | :flags WHERE (projectUid = (:projectUid)) AND (stateSpace = (:stateSpace)) AND " + flagsSql);
+    qFatalIf(!success, "Failed to set sighting flags 1");
+
+    query.bindValue(":projectUid", projectUid);
+    query.bindValue(":stateSpace", stateSpace);
+    query.bindValue(":flagsOn", matchFlagsOn);
+    query.bindValue(":flagsOff", matchFlagsOff);
+    query.bindValue(":flags", flags);
+
+    success = query.exec();
+    qFatalIf(!success, "Failed to set sighting flags 2");
 }
 
 void Database::setSightingFlagsAll(const QString& projectUid, uint flags, bool on)
@@ -514,10 +607,20 @@ void Database::deleteFormState(const QString& projectUid, const QString& stateSp
     verifyThread();
 
     auto query = QSqlQuery(m_db);
-    auto success = query.prepare("DELETE FROM formState WHERE (projectUid = (:projectUid)) AND (stateSpace = (:stateSpace))");
+    auto success = false;
+
+    if (stateSpace == "*")
+    {
+        success = query.prepare("DELETE FROM formState WHERE (projectUid = (:projectUid))");
+    }
+    else
+    {
+        success = query.prepare("DELETE FROM formState WHERE (projectUid = (:projectUid)) AND (stateSpace = (:stateSpace))");
+        query.bindValue(":stateSpace", stateSpace.isNull() ? "" : stateSpace);
+    }
+
     qFatalIf(!success, "Failed to delete formState 1");
     query.bindValue(":projectUid", projectUid);
-    query.bindValue(":stateSpace", stateSpace.isNull() ? "" : stateSpace);
     query.exec();   // Will fail if the formState is not present.
 }
 
@@ -627,6 +730,26 @@ void Database::getTasks(const QString& projectUid, int stateMask, QStringList* o
     {
         outUids->append(query.value(0).toString());
         outParentUids->append(query.value(1).toString());
+    }
+}
+
+void Database::getLastTask(const QString& projectUid, QString* outUid) const
+{
+    verifyThread();
+    outUid->clear();
+
+    auto query = QSqlQuery(m_db);
+    auto success = false;
+
+    success = query.prepare("SELECT uid FROM tasks WHERE (projectUid = (:projectUid)) ORDER BY rowid DESC LIMIT 1");
+    qFatalIf(!success, "Failed to get last task 1");
+    query.bindValue(":projectUid", projectUid);
+    success = query.exec();
+    qFatalIf(!success, "Failed to get last task 2");
+
+    if (query.next())
+    {
+        *outUid = query.value(0).toString();
     }
 }
 

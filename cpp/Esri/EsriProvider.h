@@ -14,9 +14,12 @@ class EsriProvider : public Provider
 public:
     EsriProvider(QObject *parent = nullptr);
 
-    bool connectToProject(bool newBuild) override;
+    bool connectToProject(bool newBuild, bool* formChangedOut) override;
 
     bool requireUsername() const override;
+
+    bool supportLocationPoint() const override;
+    bool supportLocationTrack() const override;
 
     QUrl getStartPage() override;
     void getElements(ElementManager* elementManager) override;
@@ -26,10 +29,14 @@ public:
 
     bool finalizePackage(const QString& packageFilesPath) const override;
 
-    Q_INVOKABLE void submitData();
+    void submitData() override;
 
 private:
     void setFieldTags(const QString& serviceInfoFilePath, const QString& fieldsFilePath);
-    QVariantList buildSightingPayload(Form* form, const QString& sightingUid, QVariantMap* attachmentsMapOut);
-    bool sendSighting(Form* form, const QString& sightingUid);
+    QVariantList buildSightingPayload(Sighting* sighting, QVariantMap* attachmentsMapOut);
+    QVariantMap buildLocationPayload(const QString& uid, const QVariantMap& location) const;
+    bool sendSighting(Sighting* sighting);
+    void sendLocations(const QStringList& locationUids, const QVariantList& payloadItems);
+    void sendLastLocation(Location* location);
+    void sendTrackFile(Sighting* sighting);
 };

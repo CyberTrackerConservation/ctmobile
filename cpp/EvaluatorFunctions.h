@@ -1,6 +1,7 @@
 #pragma once
 #include "pch.h"
 #include "App.h"
+#include <regex>
 
 //--------------------------------------------------------------------------------------------------
 // Helpers.
@@ -267,9 +268,20 @@ bool f_regex(const QVariantList& params, QVariant& result)
 
     if (params[0].isValid())
     {
-        auto re = QRegularExpression(params[1].toString(), QRegularExpression::PatternOption::DotMatchesEverythingOption);
-        auto match = re.match(params[0].toString());
-        result = match.hasMatch();
+        auto expr = params[1].toString();
+        if (!expr.contains("\\u")) // Default to PCRE2, unless "\uFFFF" is present.
+        {
+            auto re = QRegularExpression(expr, QRegularExpression::PatternOption::DotMatchesEverythingOption);
+            auto match = re.match(params[0].toString());
+            result = match.hasMatch();
+        }
+        else // Use std regex for support of "\uFFFF" format.
+        {
+            auto re = std::wregex(expr.toStdWString());
+            auto m = std::wsmatch();
+            auto v = params[0].toString().toStdWString();
+            result = std::regex_match(v, m, re);
+        }
     }
 
     return true;

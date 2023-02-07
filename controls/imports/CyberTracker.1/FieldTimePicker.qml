@@ -12,10 +12,9 @@ Pane {
     property alias fieldUid: fieldBinding.fieldUid
 
     property int fontPixelSize: App.settings.font16
-    property string value: App.timeManager.currentDateTimeISO()
     signal valueUpdated(var value)
 
-    background: Rectangle { color: Style.colorContent }
+    Material.background: colorContent || Style.colorContent
     contentWidth: row.implicitWidth
     contentHeight: row.implicitHeight
     padding: 10
@@ -65,6 +64,7 @@ Pane {
             width: root.fontPixelSize * 3
             model: 12
             delegate: delegateComponent
+            currentIndex: Utils.decodeTimestamp(fieldBinding.getValue(internal.initialValue)).h % 12
             onCurrentIndexChanged: snapTime()
         }
 
@@ -73,6 +73,7 @@ Pane {
             width: root.fontPixelSize * 3
             model: 60
             delegate: delegateComponent
+            currentIndex: Utils.decodeTimestamp(fieldBinding.getValue(internal.initialValue)).m
             onCurrentIndexChanged: snapTime()
         }
 
@@ -81,6 +82,7 @@ Pane {
             width: root.fontPixelSize * 3
             model: [App.locale.amText, App.locale.pmText]
             delegate: delegateComponent
+            currentIndex: Utils.decodeTimestamp(fieldBinding.getValue(internal.initialValue)).h < 12 ? 0 : 1
             onCurrentIndexChanged: snapTime()
         }
     }
@@ -88,12 +90,13 @@ Pane {
     QtObject {
         id: internal
         property bool mutex: true
+        property string initialValue: App.timeManager.currentDateTimeISO()
     }
 
     Component.onCompleted: {
-        value = fieldBinding.getValue(value)
+        let value = fieldBinding.getValue(internal.initialValue)
         fieldBinding.setValue(value)
-        setupForTime(value)
+        internal.mutex = false
     }
 
     function formatText(count, modelData) {
@@ -105,34 +108,12 @@ Pane {
         return data.toString().length < 2 ? "0" + data : data;
     }
 
-    function setupForTime(value) {
-        internal.mutex = true
-        try {
-            let time = Utils.decodeTimestamp(value)
-
-            let hoursIndex = time.h % 12
-            hoursTumbler.positionViewAtIndex(hoursIndex, Tumbler.Center)
-            hoursTumbler.currentIndex = hoursIndex
-
-            let minutesIndex = time.m
-            minutesTumbler.positionViewAtIndex(minutesIndex, Tumbler.Center)
-            minutesTumbler.currentIndex = minutesIndex
-
-            let amPmIndex = time.h < 12 ? 0 : 1
-            amPmTumbler.positionViewAtIndex(amPmIndex, Tumbler.Beginning)
-            amPmTumbler.currentIndex = amPmIndex
-
-        } finally {
-            internal.mutex = false
-        }
-    }
-
     function snapTime() {
         if (internal.mutex) {
             return
         }
 
-        value = fieldBinding.value
+        let value = fieldBinding.value
 
         let hours = hoursTumbler.currentIndex + (amPmTumbler.currentIndex === 1 ? 12 : 0)
         let minutes = minutesTumbler.currentIndex

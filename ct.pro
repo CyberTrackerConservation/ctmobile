@@ -57,6 +57,7 @@ HEADERS += \
     cpp/Location.h \
     cpp/MapLayerListModel.h \
     cpp/MBTilesReader.h \
+    cpp/OfflineMap.h \
     cpp/Project.h \
     cpp/ProjectListModel.h \
     cpp/PropertyHelpers.h \
@@ -71,6 +72,7 @@ HEADERS += \
     cpp/Task.h \
     cpp/Telemetry.h \
     cpp/TimeManager.h \
+    cpp/TrackFile.h \
     cpp/Utils.h \
     cpp/UtilsShare.h \
     cpp/VariantListModel.h \
@@ -80,6 +82,7 @@ HEADERS += \
     cpp/Classic/pch.h \
     cpp/Classic/ClassicConnector.h \
     cpp/Classic/ClassicProvider.h \
+    cpp/CTO/CTOConnector.h \
     cpp/EarthRanger/pch.h \
     cpp/EarthRanger/EarthRangerConnector.h \
     cpp/EarthRanger/EarthRangerProvider.h \
@@ -116,6 +119,7 @@ SOURCES += \
     cpp/Main.cpp \
     cpp/MapLayerListModel.cpp \
     cpp/MBTilesReader.cpp \
+    cpp/OfflineMap.cpp \
     cpp/Project.cpp \
     cpp/ProjectListModel.cpp \
     cpp/ProviderInterface.cpp \
@@ -129,6 +133,7 @@ SOURCES += \
     cpp/Task.cpp \
     cpp/Telemetry.cpp \
     cpp/TimeManager.cpp \
+    cpp/TrackFile.cpp \
     cpp/Utils.cpp \
     cpp/UtilsEsri.cpp \
     cpp/VariantListModel.cpp \
@@ -137,6 +142,7 @@ SOURCES += \
     cpp/XlsForm.cpp \
     cpp/Classic/ClassicConnector.cpp \
     cpp/Classic/ClassicProvider.cpp \
+    cpp/CTO/CTOConnector.cpp \
     cpp/EarthRanger/EarthRangerConnector.cpp \
     cpp/EarthRanger/EarthRangerProvider.cpp \
     cpp/Esri/EsriConnector.cpp \
@@ -153,11 +159,13 @@ lupdate_only {
     SOURCES += \
         $$PWD/qml/*.qml \
         $$PWD/qml/Classic/*.qml \
+        $$PWD/qml/CTO/*.qml \
         $$PWD/qml/EarthRanger/*.qml \
         $$PWD/qml/Esri/*.qml \
         $$PWD/qml/KoBo/*.qml \
         $$PWD/qml/ODK/*.qml \
         $$PWD/qml/SMART/*.qml \
+        $$PWD/qml/Wizard/*.qml \
 }
 
 RESOURCES += \

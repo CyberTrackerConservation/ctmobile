@@ -1,6 +1,10 @@
 #include "pch.h"
 #include "Form.h"
 #include "App.h"
+#include "TrackFile.h"
+#include "qtcsv/stringdata.h"
+#include "qtcsv/csvwriter.h"
+#include <jlcompress.h>
 
 Form::Form(QObject* /*parent*/)
 {
@@ -19,7 +23,9 @@ Form::Form(QObject* /*parent*/)
     m_elementManager = new ElementManager(this);
     m_fieldManager = new FieldManager(this);
     m_trackStreamer = new LocationStreamer(this);
+    m_trackStreamer->set_rateLabel(tr("Track"));
     m_pointStreamer = new LocationStreamer(this);
+    m_pointStreamer->set_rateLabel(tr("Location"));
     m_sighting = new Sighting(QVariantMap {}, this);
     m_wizard = new Wizard(this);
 
@@ -85,30 +91,24 @@ Form::Form(QObject* /*parent*/)
     });
 
     // Add a location point to the database.
-    connect(m_trackStreamer, &LocationStreamer::positionUpdated, this, [&](const QGeoPositionInfo& /*update*/)
+    connect(m_trackStreamer, &LocationStreamer::locationUpdated, this, [&](Location* update)
     {
         if (m_connected)
         {
-            auto locationUid = QString();
-            auto locationMap = App::instance()->lastLocation();
-            locationMap["c"] = m_trackStreamer->counter();
+            auto locationUid = QUuid::createUuid().toString(QUuid::Id128);
 
-            if (m_saveTrack)
-            {
-                locationUid = QUuid::createUuid().toString(QUuid::Id128);
-                m_database->saveSighting(m_project->uid(), m_stateSpace, locationUid, Sighting::DB_LOCATION_FLAG, locationMap, QStringList());
-            }
+            m_database->saveSighting(m_project->uid(), m_stateSpace, locationUid, Sighting::DB_LOCATION_FLAG, update->toMap(), QStringList());
 
-            emit locationTrack(locationMap, locationUid);
+            emit locationTrack(update, locationUid);
         }
     });
 
     // Emit a point.
-    connect(m_pointStreamer, &LocationStreamer::positionUpdated, this, [&](const QGeoPositionInfo& /*update*/)
+    connect(m_pointStreamer, &LocationStreamer::locationUpdated, this, [&](Location* update)
     {
         if (m_connected)
         {
-            emit locationPoint(App::instance()->lastLocation());
+            emit locationPoint(update);
         }
     });
 
@@ -118,6 +118,15 @@ Form::Form(QObject* /*parent*/)
         if (m_connected && m_provider->name() == providerName && m_projectUid == projectUid)
         {
             emit providerEvent(name, value);
+        }
+    });
+
+    // Process alarms.
+    connect(App::instance(), &App::alarmFired, this, [&](const QString& alarmId)
+    {
+        if (m_connected && alarmId == m_submitAlarmId)
+        {
+            processAutoSubmit();
         }
     });
 
@@ -156,6 +165,14 @@ Form::Form(QObject* /*parent*/)
         if (matchToThis(this, projectUid, stateSpace))
         {
             emit sightingModified(sightingUid);
+        }
+    });
+
+    connect(App::instance(), &App::sightingFlagsChanged, this, [&, this](const QString& projectUid, const QString& sightingUid, const QString& stateSpace)
+    {
+        if (matchToThis(this, projectUid, stateSpace))
+        {
+            emit sightingFlagsChanged(sightingUid);
         }
     });
 }
@@ -224,6 +241,11 @@ bool Form::notifyProvider(const QVariantMap& message)
 
 QUrl Form::getPage(const QString& pageName) const
 {
+    if (pageName.isEmpty())
+    {
+        return QUrl();
+    }
+
     return QUrl::fromLocalFile(m_projectManager->getFilePath(m_project->uid(), pageName));
 }
 
@@ -239,7 +261,8 @@ void Form::connectToProject(const QString& projectUid, const QString& editSighti
     m_provider = app->createProviderPtr(m_project->provider(), this);
 
     // Connect to the provider and tell it if this is a new build.
-    m_provider->connectToProject(m_project->lastBuildString() != app->buildString());
+    auto formChanged = false;
+    m_provider->connectToProject(m_project->lastBuildString() != app->buildString(), &formChanged);
     m_project->set_lastBuildString(app->buildString());
 
     // Pick up the language code from the project settings.
@@ -253,16 +276,16 @@ void Form::connectToProject(const QString& projectUid, const QString& editSighti
 
     // Populate the GPS time requirement: disable for simulation and iOS.
     #if defined(Q_OS_IOS)
-        m_useGPSTime = false;
+        m_requireGPSTime = false;
     #else
-        m_useGPSTime = m_provider->getUseGPSTime() && !app->settings()->simulateGPS();
+        m_requireGPSTime = m_provider->requireGPSTime() && !app->settings()->simulateGPS();
     #endif
-    m_timeManager->set_correctionEnabled(m_useGPSTime);
+    m_timeManager->set_correctionEnabled(m_requireGPSTime);
 
     static bool once = true;
     if (once)
     {
-        qDebug() << "useGPSTime: " << m_useGPSTime;
+        qDebug() << "requireGPSTime: " << m_requireGPSTime;
         once = false;
     }
 
@@ -272,10 +295,7 @@ void Form::connectToProject(const QString& projectUid, const QString& editSighti
     update_editing(!editSightingUid.isEmpty());
 
     // Load the state.
-    loadState();
-
-    // Ensure calculations are fresh.
-    m_sighting->recalculate();
+    loadState(formChanged);
 
     // Update wizard buttons.
     m_wizard->updateButtons();
@@ -283,16 +303,39 @@ void Form::connectToProject(const QString& projectUid, const QString& editSighti
     // Set the start page.
     update_startPage(m_project->startPage().isEmpty() ? m_provider->getStartPage() : getPage(m_project->startPage()));
 
+    // Auto-initialize the wizard if in immersive mode.
+    if (m_project->immersive())
+    {
+        if (m_wizard->recordUid() != m_sighting->rootRecordUid())
+        {
+            m_wizard->init(m_sighting->rootRecordUid());
+        }
+
+        if (editing())
+        {
+            m_sighting->set_pageStack(QVariantList());
+        }
+
+        update_startPage(editing() ? Wizard::indexPageUrl() : Wizard::pageUrl());
+    }
+
+    // Reset the page stack if things have changed.
+    if (firstPageUrl() != m_startPage.toString())
+    {
+        setPageStack(QVariantList());
+    }
+
     // Set connected and notify listeners.
     update_connected(true);
 
     // Set the user name requirement.
     update_requireUsername(m_provider->requireUsername());
 
-    // Resume any paused tasks.
+    // Add runtime behavior.
     if (!m_readonly && !m_editing)
     {
         app->taskManager()->resumePausedTasks(m_project->uid());
+        processAutoSubmit();
     }
 }
 
@@ -362,7 +405,7 @@ std::unique_ptr<Sighting> Form::createSightingPtr(const QString& sightingUid) co
     return createSightingPtr(data);
 }
 
-void Form::loadState()
+void Form::loadState(bool formChanged)
 {
     auto formState = QVariantMap();
 
@@ -398,7 +441,161 @@ void Form::loadState()
     {
         m_trackStreamer->loadState(formState.value("trackStreamer", QVariantMap()).toMap());
         m_pointStreamer->loadState(formState.value("pointStreamer", QVariantMap()).toMap());
+
+        // Pick up project location autosend settings.
+        if (m_project->sendLocationInterval() != 0)
+        {
+            m_pointStreamer->start(m_project->sendLocationInterval() * 1000);
+        }
     }
+
+    // Recalculate to bring back field flags that may not have been stored.
+    m_sighting->recalculate();
+
+    // Reset the wizard on form change.
+    if (formChanged)
+    {
+        if (!m_sighting->wizardRecordUid().isEmpty())
+        {
+            m_wizard->init(m_sighting->wizardRecordUid());
+        }
+    }
+}
+
+bool Form::snapTrack()
+{
+    if (!m_connected || m_readonly || m_editing)
+    {
+        qDebug() << "snapTrack failed: " << m_connected << m_readonly << m_editing;
+        return false;
+    }
+
+    // Build a track file of all unsnapped locations.
+    auto trackFilename = "track.db";
+    auto trackFilePath = App::instance()->tempPath() + "/" + trackFilename;
+    QFile::remove(trackFilePath);
+
+    auto trackFile = std::unique_ptr<TrackFile>(new TrackFile(trackFilePath));
+
+    trackFile->batchAddInit(App::instance()->settings()->deviceId(), App::instance()->settings()->username());
+    m_database->enumSightings(m_projectUid, m_stateSpace, Sighting::DB_LOCATION_FLAG /* ON */, Sighting::DB_SNAPPED_FLAG /* OFF */,
+        [&](const QString& uid, uint /*flags*/, const QVariantMap& data, const QStringList& /*attachments*/)
+        {
+            trackFile->batchAddLocation(uid, data);
+        });
+
+    auto counter = trackFile->batchAddDone();
+    trackFile.reset();
+
+    // No points found.
+    if (counter == 0)
+    {
+        qDebug() << "snapTrack: no points";
+        QFile::remove(trackFilePath);
+        return true;
+    }
+
+    // trackFileField was specified, so export to the requested format and fill it in.
+    auto trackFileFormat = QString();
+    auto trackFileFieldUid = m_sighting->getTrackFileFieldUid(&trackFileFormat);
+    if (!trackFileFieldUid.isEmpty())
+    {
+        TrackFile trackFile(trackFilePath);
+        auto exportedFilePath = trackFile.exportFile(trackFileFormat, true);
+        if (!exportedFilePath.isEmpty())
+        {
+            auto mediaFilename = App::instance()->moveToMedia(QUrl::fromLocalFile(exportedFilePath).toString());
+            m_sighting->setRootFieldValue(trackFileFieldUid, mediaFilename);
+        }
+        else
+        {
+            qDebug() << "snapTrack: failed to snap track to format: " << trackFileFormat;
+        }
+    }
+
+    // Move the file to the media path and add it to the sighting.
+    auto mediaFilename = App::instance()->moveToMedia(QUrl::fromLocalFile(trackFilePath).toString());
+    m_sighting->set_trackFile(mediaFilename);
+
+    // Save the sighting state.
+    saveState();
+
+    // Mark the locations as snapped.
+    m_database->setSightingFlags(m_projectUid, m_stateSpace, Sighting::DB_LOCATION_FLAG /* ON */, Sighting::DB_COMPLETED_FLAG /* OFF */, Sighting::DB_SNAPPED_FLAG);
+
+    // Success.
+    return true;
+}
+
+bool Form::canSubmitData() const
+{
+    auto uids = QStringList();
+    m_database->getSightings(m_projectUid, m_stateSpace, Sighting::DB_SIGHTING_FLAG | Sighting::DB_COMPLETED_FLAG /* ON */, Sighting::DB_SUBMITTED_FLAG /* OFF */, &uids);
+
+    return !uids.isEmpty() && m_provider->canSubmitData();
+}
+
+void Form::submitData()
+{
+    if (!m_connected || m_readonly || m_editing)
+    {
+        qDebug() << "submitData failed: " << m_connected << m_readonly << m_editing;
+        return;
+    }
+
+    m_project->set_lastSubmit(m_timeManager->currentDateTimeISO());
+    m_provider->submitData();
+}
+
+int Form::getPendingUploadCount() const
+{
+    auto uids = QStringList();
+    m_database->getSightings(m_projectUid, m_stateSpace, Sighting::DB_SUBMITTED_FLAG /* ON */, Sighting::DB_UPLOADED_FLAG /* OFF */, &uids);
+
+    return uids.length();
+}
+
+void Form::processAutoSubmit()
+{
+    // Turn off the alarm.
+    if (!m_submitAlarmId.isEmpty())
+    {
+        App::instance()->killAlarm(m_submitAlarmId);
+        m_submitAlarmId.clear();
+    }
+
+    // Auto send is off.
+    auto submitInterval = m_project->submitInterval();
+    if (submitInterval == 0)
+    {
+        return;
+    }
+
+    // Initialize lastSubmit timestamp.
+    auto now = m_timeManager->currentDateTimeISO();
+    auto lastSubmit = m_project->lastSubmit();
+    if (lastSubmit.isEmpty())
+    {
+        m_project->set_lastSubmit(now);
+    }
+
+    // Check for nothing to submit.
+    if (!canSubmitData())
+    {
+        return;
+    }
+
+    // Check for timeout.
+    auto delta = Utils::timestampDeltaMs(lastSubmit, now);
+    if (delta >= (m_project->submitInterval() - 1) * 1000)
+    {
+        submitData();
+        return;
+    }
+
+    // Timeout not yet reached: start the alarm.
+    m_submitAlarmId = "auto-submit-alarm-" + m_projectUid + m_stateSpace;
+    App::instance()->setAlarm(m_submitAlarmId, submitInterval);
 }
 
 void Form::saveState()
@@ -472,12 +669,12 @@ QStringList Form::getElementFieldList(const QString& elementUid) const
     return result;
 }
 
-QVariantList Form::buildSightingView(const QString& sightingUid)
+QVariantList Form::buildSightingView(const QString& sightingUid) const
 {
     return m_provider->buildSightingView(createSightingPtr(sightingUid).get());
 }
 
-QVariantMap Form::buildSightingMapLayer(const QString& layerUid, const std::function<QVariantMap(const Sighting* sighting)>& getSymbol)
+QVariantMap Form::buildSightingMapLayer(const QString& layerUid, const std::function<QVariantMap(Sighting* sighting)>& getSymbol) const
 {
     auto spatialReference = QVariantMap();
     spatialReference["wkid"] = 4326;
@@ -495,12 +692,12 @@ QVariantMap Form::buildSightingMapLayer(const QString& layerUid, const std::func
     for (auto it = sightingUids.constBegin(); it != sightingUids.constEnd(); it++)
     {
         auto sighting = createSightingPtr(*it);
-        auto locationData = sighting->location();
+        auto location = sighting->locationPtr();
 
-        if (Utils::locationValid(locationData))
+        if (location->isValid())
         {
-            auto x = locationData.value("x").toDouble();
-            auto y = locationData.value("y").toDouble();
+            auto x = location->x();
+            auto y = location->y();
             extentRect = extentRect.united(Utils::pointToRect(x, y));
             point["x"] = x;
             point["y"] = y;
@@ -531,7 +728,7 @@ QVariantMap Form::buildSightingMapLayer(const QString& layerUid, const std::func
     };
 }
 
-QVariantMap Form::buildTrackMapLayer(const QString& layerUid, const QVariantMap& symbol, bool filterToLastSegment)
+QVariantMap Form::buildTrackMapLayer(const QString& layerUid, const QVariantMap& symbol) const
 {
     auto extentRect = QRectF();
     auto point = QVariantList();
@@ -541,26 +738,15 @@ QVariantMap Form::buildTrackMapLayer(const QString& layerUid, const QVariantMap&
 
     auto partList = QVariantList();
     auto part = QVariantList();
+    auto lastCounter = std::numeric_limits<int>::max();
+    auto hasData = false;
 
-    auto locationUids = QStringList();
-    m_database->getSightings(m_project->uid(), m_stateSpace, Sighting::DB_LOCATION_FLAG, &locationUids);
-
-    auto startIndex = filterToLastSegment ? locationUids.length() - 2 : 0;
-
-    for (auto i = startIndex; i < locationUids.length(); i++)
+    m_database->enumSightings(m_projectUid, m_stateSpace, Sighting::DB_LOCATION_FLAG, [&](const QString& /*uid*/, int /*flags*/, const QVariantMap& data, const QStringList& /*attachments*/)
     {
-        auto locationUid = locationUids[i];
-        auto locationMap = QVariantMap();
-        m_database->loadSighting(m_project->uid(), locationUid, &locationMap);
+        hasData = true;
+        auto counter = data["c"].toInt();
 
-        if (!Utils::locationValid(locationMap))
-        {
-            continue;
-        }
-
-        auto counter = locationMap["c"].toInt();
-
-        if ((counter == 0) && (part.count() > 0))
+        if ((counter < lastCounter) && (part.count() > 0))
         {
             if (part.count() > 1)
             {
@@ -569,25 +755,20 @@ QVariantMap Form::buildTrackMapLayer(const QString& layerUid, const QVariantMap&
             part.clear();
         }
 
-        auto x = locationMap.value("x").toDouble();
-        auto y = locationMap.value("y").toDouble();
+        lastCounter = counter;
+
+        auto x = data.value("x").toDouble();
+        auto y = data.value("y").toDouble();
         extentRect = extentRect.united(Utils::pointToRect(x, y));
         point[0] = x;
         point[1] = y;
         part.append(QVariant::fromValue(point));
-    }
+    });
 
     if (part.count() > 1)
     {
         partList.append(QVariant::fromValue(part));
     }
-
-    auto spatialReference = QVariantMap();
-    spatialReference["wkid"] = 4326;
-
-    auto geometry = QVariantMap();
-    geometry["spatialReference"] = spatialReference;
-    geometry["paths"] = partList;
 
     return QVariantMap
     {
@@ -596,7 +777,12 @@ QVariantMap Form::buildTrackMapLayer(const QString& layerUid, const QVariantMap&
         { "name", layerUid },
         { "symbol", symbol },
         { "geometryType", "Polyline" },
-        { "geometry", geometry },
+        { "geometry", QVariantMap
+            {
+                { "spatialReference", QVariantMap {{ "wkid", 4326 }} },
+                { "paths", partList }
+            } 
+        },
         { "extent", QVariantMap
             {
                 { "spatialReference", QVariantMap {{ "wkid", 4326 }} },
@@ -606,6 +792,7 @@ QVariantMap Form::buildTrackMapLayer(const QString& layerUid, const QVariantMap&
                 { "ymax", extentRect.bottom() },
             }
         },
+        { "lastPoint", hasData ? QVariant::fromValue(point) : QVariant() },
     };
 }
 
@@ -629,6 +816,26 @@ Provider* Form::provider() const
     return m_provider.get();
 }
 
+bool Form::supportLocationPoint() const
+{
+    return m_provider->supportLocationPoint();
+}
+
+bool Form::supportLocationTrack() const
+{
+    return m_provider->supportLocationTrack();
+}
+
+bool Form::supportSightingEdit() const
+{
+    return m_provider->supportSightingEdit();
+}
+
+bool Form::supportSightingDelete() const
+{
+    return m_provider->supportSightingDelete();
+}
+
 QVariant Form::providerAsVariant()
 {
     return QVariant::fromValue<Provider*>(m_provider.get());
@@ -643,6 +850,7 @@ void Form::saveSighting(Sighting* sighting, bool autoSaveTrack)
 {
     if (m_readonly)
     {
+        qDebug() << "saveSighting called on readonly sighting";
         return;
     }
 
@@ -653,6 +861,7 @@ void Form::saveSighting(Sighting* sighting, bool autoSaveTrack)
         sighting->snapCreateTime(now);
     }
     sighting->snapUpdateTime(now);
+    sighting->recalculate();
 
     // Cleanup any stray records.
     sighting->recordManager()->garbageCollect();
@@ -662,25 +871,24 @@ void Form::saveSighting(Sighting* sighting, bool autoSaveTrack)
     auto sightingData = sighting->save(&attachments);
 
     // If the track streamer is running, emit a location for the sighting if available.
-    if (!m_editing && m_trackStreamer->running() && m_trackStreamer->updateInterval() != 0)
+    if (!m_editing && autoSaveTrack && m_trackStreamer->running() && m_trackStreamer->updateInterval() != 0)
     {
-        auto locationMap = sighting->location();
-        if (Utils::locationValid(locationMap))
+        auto location = sighting->locationPtr();
+        if (location->isValid())
         {
-            m_saveTrack = autoSaveTrack;    // Picked up by positionUpdated to determine whether to write a location.
+            // Pick up the timestamp from the sighting, not the location.
+            location->set_timestamp(sighting->createTime());
 
             // Note we cannot just emit a locationSaved, because that would bypass the location streamer,
             // which tracks things like distance covered.
-            m_trackStreamer->pushUpdate(locationMap);
-
-            m_saveTrack = true;             // Restore to default.
+            m_trackStreamer->pushUpdate(location.get());
         }
     }
 
     // Give the provider a chance to make any final changes.
     m_provider->finalizeSighting(sightingData);
 
-    // Update the completed flag if it is already set.
+    // Update the completed flag. If already set, turn it off if the sighting is no longer valid.
     auto sightingUid = sighting->rootRecordUid();
     if (isSightingCompleted(sightingUid))
     {
@@ -832,6 +1040,23 @@ bool Form::isSightingCompleted(const QString& sightingUid) const
            m_database->getSightingFlags(m_project->uid(), sightingUid) & Sighting::DB_COMPLETED_FLAG;
 }
 
+void Form::setSightingFlag(const QString& sightingUid, uint flag, bool on)
+{
+    if (m_readonly)
+    {
+        return;
+    }
+
+    auto oldValue = m_database->getSightingFlags(m_projectUid, sightingUid);
+    m_database->setSightingFlags(m_projectUid, sightingUid, flag, on);
+    auto newValue = m_database->getSightingFlags(m_projectUid, sightingUid);
+
+    if (oldValue != newValue)
+    {
+        emit App::instance()->sightingFlagsChanged(m_projectUid, sightingUid, m_stateSpace);
+    }
+}
+
 void Form::markSightingCompleted()
 {
     if (m_readonly)
@@ -841,7 +1066,11 @@ void Form::markSightingCompleted()
 
     auto sightingUid = m_sighting->rootRecordUid();
     auto valid = m_sighting->getRecord(sightingUid)->isValid();
-    m_database->setSightingFlags(m_projectUid, sightingUid, Sighting::DB_COMPLETED_FLAG, valid);
+
+    setSightingFlag(sightingUid, Sighting::DB_COMPLETED_FLAG, valid);
+
+    // Process auto submit.
+    processAutoSubmit();
 }
 
 void Form::removeExportedSightings()
@@ -852,6 +1081,21 @@ void Form::removeExportedSightings()
 void Form::removeUploadedSightings()
 {
     App::instance()->removeSightingsByFlag(m_projectUid, m_stateSpace, Sighting::DB_UPLOADED_FLAG);
+}
+
+QString Form::getSightingSummaryText(Sighting* sighting) const
+{
+    return m_provider->getSightingSummaryText(sighting);
+}
+
+QUrl Form::getSightingSummaryIcon(Sighting* sighting) const
+{
+    return m_provider->getSightingSummaryIcon(sighting);
+}
+
+QUrl Form::getSightingStatusIcon(Sighting* sighting, int flags) const
+{
+    return m_provider->getSightingStatusIcon(sighting, flags);
 }
 
 QVariant Form::getSetting(const QString& name, const QVariant& defaultValue) const
@@ -872,6 +1116,17 @@ QVariant Form::getGlobal(const QString& name, const QVariant& defaultValue) cons
 void Form::setGlobal(const QString& name, QVariant value)
 {
     m_globals[name] = value;
+    m_sighting->recalculate();
+}
+
+QVariant Form::getSightingVariable(const QString& name, const QVariant& defaultValue) const
+{
+    return m_sighting->getVariable(name, defaultValue);
+}
+
+void Form::setSightingVariable(const QString& name, QVariant value)
+{
+    m_sighting->setVariable(name, value);
     m_sighting->recalculate();
 }
 
@@ -984,28 +1239,9 @@ QString Form::getRecordSummary(const QString& recordUid) const
     return getRecord(recordUid)->summary();
 }
 
-QVariant Form::getFieldParameter(const QString& recordUid, const QString& fieldUid, const QString& name, const QVariant& defaultValue) const
+QVariant Form::getFieldParameter(const QString& recordUid, const QString& fieldUid, const QString& key, const QVariant& defaultValue) const
 {
-    auto field = fieldUid.isEmpty() ? getRecord(recordUid)->recordField() : m_fieldManager->getField(fieldUid);
-    auto rootField = m_fieldManager->rootField();
-
-    while (field)
-    {
-        auto value = field->getParameter(name);
-        if (value.isValid())
-        {
-            return value;
-        }
-
-        if (field == rootField)
-        {
-            break;
-        }
-
-        field = field->parentField();
-    }
-
-    return defaultValue;
+    return m_sighting->getFieldParameter(recordUid, fieldUid, key, defaultValue);
 }
 
 QVariant Form::getFieldValue(const QString& recordUid, const QString& fieldUid, const QVariant& defaultValue) const
@@ -1028,14 +1264,24 @@ void Form::setFieldValue(const QString& fieldUid, const QVariant& value)
     setFieldValue(m_sighting->rootRecordUid(), fieldUid, value);
 }
 
-QString Form::getFieldDisplayValue(const QString& recordUid, const QString& fieldUid, const QString& defaultValue) const
-{
-    return getRecord(recordUid)->getFieldDisplayValue(fieldUid, defaultValue);
-}
-
 void Form::resetFieldValue(const QString& recordUid, const QString& fieldUid)
 {
     return m_sighting->resetFieldValue(recordUid, fieldUid);
+}
+
+void Form::resetFieldValue(const QString& fieldUid)
+{
+    resetFieldValue(m_sighting->rootRecordUid(), fieldUid);
+}
+
+void Form::setFieldState(const QString& recordUid, const QString& fieldUid, int state)
+{
+    m_sighting->setFieldState(recordUid, fieldUid, (FieldState)state);
+}
+
+void Form::setFieldState(const QString& fieldUid, int state)
+{
+    setFieldState(m_sighting->rootRecordUid(), fieldUid, state);
 }
 
 void Form::resetRecord(const QString& recordUid)
@@ -1043,9 +1289,9 @@ void Form::resetRecord(const QString& recordUid)
     m_sighting->resetRecord(recordUid);
 }
 
-void Form::resetFieldValue(const QString& fieldUid)
+QString Form::getFieldDisplayValue(const QString& recordUid, const QString& fieldUid, const QString& defaultValue) const
 {
-    resetFieldValue(m_sighting->rootRecordUid(), fieldUid);
+    return getRecord(recordUid)->getFieldDisplayValue(fieldUid, defaultValue);
 }
 
 bool Form::getFieldRequired(const QString& recordUid, const QString& fieldUid) const
@@ -1082,6 +1328,8 @@ QString Form::newRecord(const QString& parentRecordUid, const QString& recordFie
 {
     auto recordUid = m_sighting->newRecord(parentRecordUid, recordFieldUid);
 
+    m_sighting->getRecord(parentRecordUid)->setFieldState(recordFieldUid, FieldState::UserSet);
+
     emit recordCreated(recordUid);
 
     return recordUid;
@@ -1089,7 +1337,12 @@ QString Form::newRecord(const QString& parentRecordUid, const QString& recordFie
 
 void Form::deleteRecord(const QString& recordUid)
 {
+    auto parentRecordUid = getParentRecordUid(recordUid);
+    auto recordFieldUid = getRecordFieldUid(recordUid);
+
     m_sighting->deleteRecord(recordUid);
+
+    m_sighting->getRecord(parentRecordUid)->setFieldState(recordFieldUid, FieldState::UserSet);
 
     emit recordDeleted(recordUid);
 }
@@ -1099,7 +1352,12 @@ bool Form::hasRecord(const QString& recordUid) const
     return m_sighting->recordManager()->hasRecord(recordUid);
 }
 
-QVariantList Form::getPageStack()
+bool Form::hasRecordChanged(const QString& recordUid) const
+{
+    return m_sighting->recordManager()->hasRecordChanged(recordUid);
+}
+
+QVariantList Form::getPageStack() const
 {
     if (m_sighting->pageStack().isEmpty())
     {
@@ -1114,6 +1372,74 @@ QVariantList Form::getPageStack()
 void Form::setPageStack(const QVariantList& value)
 {
     m_sighting->set_pageStack(value);
+}
+
+QString Form::firstPageUrl() const
+{
+    return getPageStack().constFirst().toMap().value("pageUrl").toString();
+}
+
+QString Form::lastPageUrl() const
+{
+    return getPageStack().constLast().toMap().value("pageUrl").toString();
+}
+
+QVariantMap Form::getSaveCommands(const QString& recordUid, const QString& fieldUid) const
+{
+    return QVariantMap
+    {
+        { "saveTargets", m_sighting->findSaveTargets(recordUid, fieldUid) },
+        { "snapLocation", m_sighting->findSnapLocation(recordUid, fieldUid) },
+    };
+}
+
+void Form::applyTrackCommand()
+{
+    if (m_editing)
+    {
+        return;
+    }
+
+    if (isSightingCompleted(rootRecordUid()))
+    {
+        return;
+    }
+
+    auto trackSetting = m_sighting->findTrackSetting();
+    if (trackSetting.isEmpty())
+    {
+        return;
+    }
+
+    if (!supportLocationTrack())
+    {
+        emit App::instance()->showError(tr("Missing track field or service"));
+        return;
+    }
+
+    if (trackSetting.value("snapTrack").toBool())
+    {
+        snapTrack();
+    }
+
+    auto updateIntervalSeconds = trackSetting.value("updateIntervalSeconds", -1).toInt();
+    if (updateIntervalSeconds == -1)
+    {
+        return;
+    }
+
+    auto distanceFilterMeters = trackSetting.value("distanceFilterMeters", 0).toInt();
+
+    if (updateIntervalSeconds > 0)
+    {
+        m_trackStreamer->start(updateIntervalSeconds * 1000, distanceFilterMeters);
+        return;
+    }
+
+    if (updateIntervalSeconds == 0)
+    {
+        m_trackStreamer->stop();
+    }
 }
 
 void Form::pushPage(const QString& pageUrl, const QVariantMap& params, int transition)
@@ -1144,20 +1470,42 @@ void Form::pushFormPage(const QVariantMap& params, int transition)
     pushPage(FORM_PAGE, params, transition);
 }
 
-void Form::pushWizardPage(const QString& recordUid, const QStringList& fieldUids, int transition)
+void Form::pushWizardPage(const QString& recordUid, const QVariantMap& rules, int transition)
 {
-    if (m_sighting->wizardRecordUid() != recordUid || m_sighting->wizardPageStack().isEmpty())
+    // Overwrite any existing wizard state if the wizard record is different.
+    if (!m_sighting->wizardRecordUid().isEmpty() && m_sighting->wizardRecordUid() != recordUid)
     {
         m_wizard->reset();
-        m_sighting->set_wizardRecordUid(recordUid);
-        m_sighting->set_wizardFieldUids(fieldUids);
-        m_wizard->first(recordUid, transition);
     }
-    else
+
+    // Set the record and rules.
+    m_sighting->set_wizardRules(rules);
+    m_sighting->set_wizardRecordUid(recordUid);
+
+    // If the stack is empty, go to the first record.
+    if (m_sighting->wizardPageStack().isEmpty())
     {
-        auto nextPageParams = m_sighting->wizardPageStack().constLast().toMap();
-        pushPage(m_wizard->pageUrl(), nextPageParams, transition);
+        m_wizard->first(recordUid, Wizard::TRANSITION_NO_REBUILD);
     }
+
+    // Push the page.
+    pushPage(Wizard::pageUrl(), QVariantMap(), transition);
+}
+
+void Form::pushWizardIndexPage(const QString& recordUid, const QVariantMap& rules, int transition)
+{
+    // Overwrite any existing wizard state if the wizard record is different.
+    if (!m_sighting->wizardRecordUid().isEmpty() && m_sighting->wizardRecordUid() != recordUid)
+    {
+        m_wizard->reset();
+    }
+
+    // Set the record and rules.
+    m_sighting->set_wizardRecordUid(recordUid);
+    m_sighting->set_wizardRules(rules);
+
+    // Push the page.
+    m_wizard->index(recordUid, m_wizard->lastPageFieldUid(), transition);
 }
 
 void Form::popPage(int transition)
@@ -1206,8 +1554,21 @@ void Form::popPage(int transition)
     }
 }
 
+void Form::popPageBack(int transition)
+{
+    popPage(transition);
+
+    emit pagePopBack();
+}
+
 void Form::popPages(int count)
 {
+    if (count == -1)
+    {
+        popPagesToStart();
+        return;
+    }
+
     for (auto i = 0; i < count; i++)
     {
         popPage(0);
@@ -1277,4 +1638,206 @@ void Form::dumpPages(const QString& description)
 QVariant Form::evaluate(const QString& expression, const QString& contextRecordUid, const QString& contextFieldUid, const QVariantMap& variables) const
 {
     return m_sighting->evaluate(expression, contextRecordUid, contextFieldUid, &variables);
+}
+
+void Form::setImmersive(bool value)
+{
+    if (m_project->immersive() == value)
+    {
+        return;
+    }
+
+    if (m_readonly || m_editing)
+    {
+        qDebug() << "Immersive mode cannot be changed while readonly or editing";
+        return;
+    }
+
+    // Avoid data loss by saving
+    if (!m_sighting->wizardRecordUid().isEmpty() && !m_wizard->autoSave())
+    {
+        saveSighting();
+    }
+
+    // Reset so next form load will start in the right mode.
+    m_sighting->reset();
+    m_sighting->recordManager()->newRecord("", "");
+    m_sighting->set_pageStack(QVariantList());
+    m_sighting->recalculate();
+    saveState();
+
+    // Set the project value.
+    m_project->set_immersive(value);
+}
+
+QVariantMap Form::exportToCSV(bool cleanup)
+{
+    auto success = false;
+    auto app = App::instance();
+    auto now = m_timeManager->currentDateTime();
+    auto exportFileInfo = ExportFileInfo { m_project->uid(), m_project->provider(), m_project->title(), now.toString("yyyy-MM-dd hh:mm:ss") };
+
+    auto tempPath = QDir::cleanPath(app->tempPath() + "/snapDataToCSV");
+    QDir(tempPath).removeRecursively();
+    qFatalIf(!Utils::ensurePath(tempPath), "Failed to create output folder");
+
+    // Export sighting CSV.
+    auto sightingHeaderRow = QStringList { "deviceId", "id", "timestamp", "latitude", "longitude", "altitude", "accuracy" };
+
+    QtCSV::StringData sightingRows;
+    app->database()->enumSightings(m_projectUid, m_stateSpace, Sighting::DB_SIGHTING_FLAG /* ON */, Sighting::DB_EXPORTED_FLAG /* OFF */, [&](const QString& sightingUid, uint /*flags*/, const QVariantMap& data, const QStringList& /*attachments*/)
+    {
+        auto sighting = createSightingPtr(data);
+        sighting->recalculate();
+
+        if (exportFileInfo.startTime.isEmpty())
+        {
+            exportFileInfo.startTime = sighting->createTime();
+        }
+        exportFileInfo.stopTime = sighting->createTime();
+
+        auto dataRow = QStringList { sighting->deviceId(), sightingUid, sighting->createTime() };
+        auto location = sighting->locationPtr();
+        dataRow.append(QString::number(location->y()));
+        dataRow.append(QString::number(location->x()));
+        dataRow.append(QString::number(location->z()));
+        dataRow.append(QString::number(location->accuracy()));
+
+        auto record = sighting->recordManager()->getRecord(sightingUid);
+        record->enumFieldValues([&](const FieldValue& fieldValue, bool* /*stopOut*/)
+        {
+            if (!fieldValue.isVisible())
+            {
+                return;
+            }
+
+            if (exportFileInfo.sightingCount == 0)
+            {
+                sightingHeaderRow.append(fieldValue.exportUid());
+            }
+
+            auto value = fieldValue.xmlValue();
+
+            if (!value.isEmpty())
+            {
+                value.replace("\n\r", " ");
+                value.replace('\n', ' ');
+                value.remove('\r');
+            }
+
+            value = value.trimmed();
+
+            // Since Classic does not reconstruct element lists, we have to look up Elements.
+            if (!value.isEmpty())
+            {
+                auto element = m_elementManager->getElement(value);
+                if (element != nullptr)
+                {
+                    if (!element->exportUid().isEmpty())
+                    {
+                        value = element->exportUid();
+                    }
+                    else
+                    {
+                        value = element->name();
+                    }
+                }
+            }
+
+            dataRow.append(value);
+        });
+
+        auto attachments = sighting->recordManager()->attachments();
+        for (auto it = attachments.constBegin(); it != attachments.constEnd(); it++)
+        {
+            auto filename = *it;
+            if (!QFile::copy(app->getMediaFilePath(filename), tempPath + "/" + filename))
+            {
+                qDebug() << "Failed to copy media file: " << filename;
+            }
+        }
+
+        sightingRows.addRow(dataRow);
+        exportFileInfo.sightingCount++;
+    });
+
+    if (exportFileInfo.sightingCount > 0)
+    {
+        success = QtCSV::Writer::write(tempPath + "/sighting.csv", sightingRows, ",", "\"", QtCSV::Writer::REWRITE, sightingHeaderRow);
+        if (!success)
+        {
+            return ApiResult::ErrorMap(tr("CSV sighting export failed"));
+        }
+    }
+
+    // Export location CSV.
+    QtCSV::StringData locationRows;
+
+    auto lastStopTime = Utils::decodeTimestampMSecs(exportFileInfo.stopTime);
+
+    app->database()->enumSightings(m_projectUid, m_stateSpace, Sighting::DB_LOCATION_FLAG /* ON */, Sighting::DB_EXPORTED_FLAG /* OFF */, [&](const QString& locationUid, uint /*flags*/, const QVariantMap& data, const QStringList& /*attachments*/)
+    {
+        Location location(data);
+
+        if (exportFileInfo.startTime.isEmpty())
+        {
+            exportFileInfo.startTime = location.timestamp();
+        }
+
+        if (Utils::decodeTimestampMSecs(location.timestamp()) > lastStopTime)
+        {
+            exportFileInfo.stopTime = location.timestamp();
+        }
+
+        locationRows.addRow(QStringList {
+            location.deviceId(),
+            locationUid,
+            location.timestamp(),
+            QString::number(location.y()),
+            QString::number(location.x()),
+            QString::number(location.z()),
+            QString::number(location.accuracy()),
+            QString::number(location.speed()),
+            QString::number(location.counter()),
+        });
+
+        exportFileInfo.locationCount++;
+    });
+
+    if (exportFileInfo.locationCount > 0)
+    {
+        auto locationHeaderRow = QStringList { "deviceId", "id", "timestamp", "latitude", "longitude", "altitude", "accuracy", "speed", "counter" };
+        success = QtCSV::Writer::write(tempPath + "/location.csv", locationRows, ",", "\"", QtCSV::Writer::REWRITE, locationHeaderRow);
+        if (!success)
+        {
+            return ApiResult::ErrorMap(tr("CSV location export failed"));
+        }
+    }
+
+    // Nothing to export.
+    if (exportFileInfo.sightingCount == 0 && exportFileInfo.locationCount == 0)
+    {
+        QDir(tempPath).removeRecursively();
+        return ApiResult::ExpectedMap(tr("No new data"));
+    }
+
+    // Build a zip.
+    auto exportFilePath = QString("%1/%2-export-%3.zip").arg(app->exportPath(), m_provider->name(), now.toString("yyyyMMdd-hhmmss"));
+    success = JlCompress::compressDir(exportFilePath, tempPath, true);
+    if (!success)
+    {
+        return ApiResult::ErrorMap(tr("Failed to compress file"));
+    }
+
+    // Success.
+    app->registerExportFile(exportFilePath, exportFileInfo.toMap());
+    m_database->setSightingFlagsAll(m_projectUid, Sighting::DB_EXPORTED_FLAG);
+
+    // Cleanup if requested.
+    if (cleanup)
+    {
+        m_database->deleteSightings(m_projectUid, m_stateSpace, Sighting::DB_EXPORTED_FLAG);
+    }
+
+    return ApiResult::SuccessMap();
 }

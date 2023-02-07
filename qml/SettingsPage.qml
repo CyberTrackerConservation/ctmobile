@@ -20,7 +20,7 @@ C.ContentPage {
 
     header: C.PageHeader {
         text: qsTr("Settings")
-        backVisible: false
+        backVisible: appPageStack.depth > 1
     }
 
     Flickable {
@@ -36,73 +36,64 @@ C.ContentPage {
 
             ItemDelegate {
                 Layout.fillWidth: true
-                onClicked: Qt.openUrlExternally(App.config.webPageUrl)
-                contentItem: ColumnLayout {
-                    Layout.fillWidth: true
-                    Image {
-                        Layout.alignment: Qt.AlignHCenter
-                        source: App.config.logo
-                        sourceSize.height: 80
-                    }
-
+                Layout.minimumHeight: C.Style.minRowHeight
+                contentItem: RowLayout {
                     Label {
                         Layout.fillWidth: true
-                        text: App.config.title
+                        text: qsTr("About")
                         font.pixelSize: App.settings.font14
-                        font.preferShaping: !text.includes("Cy") // Hack to fix iOS bug
-                        font.bold: true
-                        horizontalAlignment: Text.AlignHCenter
+                        font.capitalization: Font.MixedCase
+                        font.bold: false
+                        wrapMode: Label.WordWrap
                     }
 
+                    C.SquareIcon {
+                        source: "qrc:/icons/info.svg"
+                        recolor: true
+                        opacity: 0.5
+                    }
+
+                    C.ChevronRight {}
+                }
+
+                onClicked: {
+                    if (typeof(formPageStack) !== "undefined") {
+                        form.pushPage("qrc:/AboutPage.qml")
+                    } else {
+                        appPageStack.push("qrc:/AboutPage.qml")
+                    }
+                }
+
+                C.HorizontalDivider {}
+            }
+
+            ItemDelegate {
+                Layout.fillWidth: true
+                Layout.minimumHeight: C.Style.minRowHeight
+                contentItem: RowLayout {
                     Label {
                         Layout.fillWidth: true
-                        text: "<html><style type=\"text/css\"></style><a href=\"" + App.config.webPageUrl + "\">" + App.config.webPageTitle + "</a></html>"
-                        font.pixelSize: App.settings.font12
-                        font.preferShaping: !text.includes("Cy") // Hack to fix iOS bug
-                        horizontalAlignment: Text.AlignHCenter
+                        text: qsTr("Offline maps")
+                        font.pixelSize: App.settings.font14
+                        font.capitalization: Font.MixedCase
+                        font.bold: false
+                        wrapMode: Label.WordWrap
                     }
 
-                    Label {
-                        Layout.fillWidth: true
-                        text: App.buildString
-                        font.pixelSize: App.settings.font12
-                        horizontalAlignment: Text.AlignHCenter
+                    C.SquareIcon {
+                        source: "qrc:/icons/map_plus.svg"
+                        recolor: true
+                        opacity: 0.5
                     }
 
-                    ColumnLayout {
-                        width: parent.width
+                    C.ChevronRight {}
+                }
 
-                        Item {
-                            implicitHeight: 8
-                        }
-
-                        Label {
-                            Layout.fillWidth: true
-                            text: qsTr("Powered by") + " CyberTracker, ArcGIS & Qt"
-                            font.pixelSize: App.settings.font12
-                            font.bold: true
-                            font.preferShaping: !text.includes("Cy") // Hack to fix iOS bug
-                            horizontalAlignment: Text.AlignHCenter
-                            wrapMode: Label.WordWrap
-                        }
-
-                        RowLayout {
-                            Layout.alignment: Qt.AlignHCenter
-                            Image {
-                                source: "qrc:/app/appicon.svg"
-                                sourceSize.width: 32
-                                sourceSize.height: 32
-                            }
-                            Image {
-                                source: "qrc:/app/esrilogo.svg"
-                                sourceSize.height: 32
-                            }
-
-                            Image {
-                                source: "qrc:/app/qtlogo.svg"
-                                sourceSize.height: 32
-                            }
-                        }
+                onClicked: {
+                    if (typeof(formPageStack) !== "undefined") {
+                        form.pushPage("qrc:/OfflineMapPage.qml")
+                    } else {
+                        appPageStack.push("qrc:/OfflineMapPage.qml")
                     }
                 }
 
@@ -111,53 +102,7 @@ C.ContentPage {
 
             ItemDelegate {
                 Layout.fillWidth: true
-                onClicked: Qt.openUrlExternally(App.config.privacyStatementUrl)
-                contentItem: Label {
-                    font.pixelSize: App.settings.font14
-                    horizontalAlignment: Label.AlignHCenter
-                    verticalAlignment: Label.AlignVCenter
-                    text: "<html><style type=\"text/css\"></style><a href=\"" + App.config.privacyStatementUrl + "\">" + qsTr("Privacy Statement") + "</a></html>"
-                }
-
-                C.HorizontalDivider {}
-            }
-
-            ItemDelegate {
-                Layout.fillWidth: true
-                onClicked: Qt.openUrlExternally(App.config.licenseUrl)
-                contentItem: Label {
-                    font.pixelSize: App.settings.font14
-                    horizontalAlignment: Label.AlignHCenter
-                    verticalAlignment: Label.AlignVCenter
-                    text: "<html><style type=\"text/css\"></style><a href=\"" + App.config.licenseUrlUrl + "\">" + qsTr("Software License") + "</a></html>"
-                }
-
-                C.HorizontalDivider {}
-            }
-
-            ItemDelegate {
-                Layout.fillWidth: true
-                Layout.minimumHeight: row0.height
-                contentItem: Button {
-                    text: qsTr("Check for project updates")
-                    font.pixelSize: App.settings.font14
-                    font.capitalization: Font.MixedCase
-                    icon.source: "qrc:/icons/autorenew.svg"
-
-                    onClicked: {
-                        busyCover.doWork = syncProjects
-                        busyCover.start()
-                    }
-                }
-
-                visible: App.config.updateConnectors
-
-                C.HorizontalDivider {}
-            }
-
-            ItemDelegate {
-                Layout.fillWidth: true
-                Layout.minimumHeight: row0.height
+                Layout.minimumHeight: C.Style.minRowHeight
                 visible: App.config.allowCollectAs
                 contentItem: RowLayout {
                     ColumnLayout {
@@ -166,6 +111,7 @@ C.ContentPage {
                             text: qsTr("Collect as")
                             font.pixelSize: App.settings.font14
                             font.capitalization: Font.MixedCase
+                            font.bold: false
                             wrapMode: Label.WordWrap
                         }
 
@@ -179,29 +125,29 @@ C.ContentPage {
                         }
                     }
 
-                    Image {
+                    C.SquareIcon {
                         source: "qrc:/icons/account.svg"
-                        layer {
-                            enabled: true
-                            effect: ColorOverlay {
-                                color: Material.foreground
-                            }
-                        }
+                        recolor: true
+                        opacity: 0.5
                     }
 
                     C.ChevronRight {}
                 }
 
                 onClicked: {
-                    appPageStack.push("qrc:/imports/CyberTracker.1/UsernamePage.qml")
+                    if (typeof(formPageStack) !== "undefined") {
+                        form.pushPage("qrc:/imports/CyberTracker.1/UsernamePage.qml", { required: form.project.username === "" })
+                    } else {
+                        appPageStack.push("qrc:/imports/CyberTracker.1/UsernamePage.qml")
+                    }
                 }
 
                 C.HorizontalDivider {}
             }
 
             ItemDelegate {
-                id: row0
                 Layout.fillWidth: true
+                Layout.minimumHeight: C.Style.minRowHeight
                 contentItem: RowLayout {
                     Label {
                         Layout.preferredWidth: page.width / 3
@@ -211,7 +157,9 @@ C.ContentPage {
                     }
 
                     ComboBox {
+                        id: comboLanguage
                         Layout.fillWidth: true
+                        Layout.fillHeight: true
                         font.pixelSize: App.settings.font14
 
                         onActivated: {
@@ -237,6 +185,12 @@ C.ContentPage {
                             model = modelArray
                             currentIndex = modelIndex
                         }
+
+                        delegate: ItemDelegate {
+                            width: comboLanguage.width
+                            font.pixelSize: App.settings.font14
+                            text: modelData
+                        }
                     }
                 }
 
@@ -245,7 +199,7 @@ C.ContentPage {
 
             ItemDelegate {
                 Layout.fillWidth: true
-                Layout.minimumHeight: row0.height
+                Layout.minimumHeight: C.Style.minRowHeight
                 contentItem: RowLayout {
                     spacing: 0
                     Label {
@@ -258,16 +212,10 @@ C.ContentPage {
                     Switch {
                         id: checkTheme
                         Layout.alignment: Qt.AlignRight
-                        font.pixelSize: App.settings.font14
                         checked: App.settings.darkTheme
-                        onClicked: App.settings.darkTheme = checkTheme.checked
-                    }
-                }
-
-                onClicked: {
-                    if (App.config.fullRowCheck) {
-                        checkTheme.checked = !checkTheme.checked
-                        checkTheme.clicked()
+                        onCheckedChanged: {
+                            App.settings.darkTheme = checkTheme.checked
+                        }
                     }
                 }
 
@@ -276,7 +224,32 @@ C.ContentPage {
 
             ItemDelegate {
                 Layout.fillWidth: true
-                Layout.minimumHeight: row0.height
+                Layout.minimumHeight: C.Style.minRowHeight
+                contentItem: RowLayout {
+                    spacing: 0
+                    Label {
+                        Layout.fillWidth: true
+                        text: qsTr("Toolbar captions")
+                        font.pixelSize: App.settings.font14
+                        wrapMode: Label.WordWrap
+                    }
+
+                    Switch {
+                        id: checkFooterText
+                        Layout.alignment: Qt.AlignRight
+                        checked: App.settings.footerText
+                        onCheckedChanged: {
+                            App.settings.footerText = checkFooterText.checked
+                        }
+                    }
+                }
+
+                C.HorizontalDivider {}
+            }
+
+            ItemDelegate {
+                Layout.fillWidth: true
+                Layout.minimumHeight: C.Style.minRowHeight
                 contentItem: RowLayout {
                     spacing: 0
 
@@ -291,14 +264,9 @@ C.ContentPage {
                         id: checkMetricUnits
                         Layout.alignment: Qt.AlignRight
                         checked: App.settings.metricUnits
-                        onClicked: App.settings.metricUnits = checkMetricUnits.checked
-                    }
-                }
-
-                onClicked: {
-                    if (App.config.fullRowCheck) {
-                        checkMetricUnits.checked = !checkMetricUnits.checked
-                        checkMetricUnits.clicked()
+                        onCheckedChanged: {
+                            App.settings.metricUnits = checkMetricUnits.checked
+                        }
                     }
                 }
 
@@ -307,7 +275,7 @@ C.ContentPage {
 
             ItemDelegate {
                 Layout.fillWidth: true
-                Layout.minimumHeight: row0.height
+                Layout.minimumHeight: C.Style.minRowHeight
                 visible: Qt.platform.os === "android"
                 contentItem: RowLayout {
                     spacing: 0
@@ -323,17 +291,10 @@ C.ContentPage {
                         id: checkFullScreen
                         Layout.alignment: Qt.AlignRight
                         checked: App.settings.fullScreen
-                        onClicked: {
+                        onCheckedChanged: {
                             appWindow.visibility = checkFullScreen.checked ? ApplicationWindow.FullScreen : ApplicationWindow.AutomaticVisibility
                             App.settings.fullScreen = checkFullScreen.checked
                         }
-                    }
-                }
-
-                onClicked: {
-                    if (App.config.fullRowCheck) {
-                        checkFullScreen.checked = !checkFullScreen.checked
-                        checkFullScreen.clicked()
                     }
                 }
 
@@ -342,7 +303,7 @@ C.ContentPage {
 
             ItemDelegate {
                 Layout.fillWidth: true
-                Layout.minimumHeight: row0.height
+                Layout.minimumHeight: C.Style.minRowHeight
                 contentItem: RowLayout {
                     id: fontSizeRow
                     property var modelStrings: ["100%", "125%", "150%", "175%", "200%"]
@@ -355,12 +316,20 @@ C.ContentPage {
                     }
 
                     ComboBox {
+                        id: comboFontSize
                         Layout.fillWidth: true
+                        Layout.fillHeight: true
                         font.pixelSize: App.settings.font14
                         model: fontSizeRow.modelStrings
                         currentIndex: fontSizeRow.modelNumbers.indexOf(App.settings.fontSize)
                         onActivated: if (index != -1) {
                             App.settings.fontSize = fontSizeRow.modelNumbers[index]
+                        }
+
+                        delegate: ItemDelegate {
+                            width: comboFontSize.width
+                            font.pixelSize: App.settings.font14
+                            text: modelData
                         }
                     }
                 }
@@ -370,7 +339,7 @@ C.ContentPage {
 
             ItemDelegate {
                 Layout.fillWidth: true
-                Layout.minimumHeight: row0.height
+                Layout.minimumHeight: C.Style.minRowHeight
                 contentItem: RowLayout {
                     Label {
                         Layout.preferredWidth: page.width / 3
@@ -380,7 +349,9 @@ C.ContentPage {
                     }
 
                     ComboBox {
+                        id: comboCoordinates
                         Layout.fillWidth: true
+                        Layout.fillHeight: true
                         font.pixelSize: App.settings.font14
                         model: [ qsTr("Decimal degrees"), qsTr("Degrees minutes seconds"), qsTr("Degrees decimal minutes"), "UTM"]
                         currentIndex: App.settings.coordinateFormat
@@ -388,6 +359,12 @@ C.ContentPage {
                             if (index != -1) {
                                 App.settings.coordinateFormat = index
                             }
+                        }
+
+                        delegate: ItemDelegate {
+                            width: comboCoordinates.width
+                            font.pixelSize: App.settings.font14
+                            text: modelData
                         }
                     }
                 }
@@ -397,7 +374,7 @@ C.ContentPage {
 
             ItemDelegate {
                 Layout.fillWidth: true
-                Layout.minimumHeight: row0.height
+                Layout.minimumHeight: C.Style.minRowHeight
                 contentItem: RowLayout {
                     spacing: 4
 
@@ -410,8 +387,11 @@ C.ContentPage {
 
                     ToolButton {
                         icon.source: "qrc:/icons/plus.svg"
+                        icon.width: C.Style.toolButtonSize
+                        icon.height: C.Style.toolButtonSize
                         onClicked: App.settings.locationAccuracyMeters = App.settings.locationAccuracyMeters + 1
                         enabled: App.settings.locationAccuracyMeters < 100
+                        opacity: 0.5
                         autoRepeat: true
                     }
 
@@ -421,14 +401,16 @@ C.ContentPage {
                         text: App.settings.locationAccuracyMeters
                         font.pixelSize: App.settings.font16
                         font.bold: true
-                        opacity: 0.75
                         horizontalAlignment: Qt.AlignHCenter
                     }
 
                     ToolButton {
                         icon.source: "qrc:/icons/minus.svg"
+                        icon.width: C.Style.toolButtonSize
+                        icon.height: C.Style.toolButtonSize
                         onClicked: App.settings.locationAccuracyMeters = App.settings.locationAccuracyMeters - 1
                         enabled: App.settings.locationAccuracyMeters > 1
+                        opacity: 0.5
                         autoRepeat: true
                     }
                 }
@@ -438,7 +420,7 @@ C.ContentPage {
 
             ItemDelegate {
                 Layout.fillWidth: true
-                Layout.minimumHeight: row0.height
+                Layout.minimumHeight: C.Style.minRowHeight
                 visible: App.config.allowSimulateGPS || App.desktopOS
                 contentItem: RowLayout {
                     spacing: 0
@@ -453,21 +435,16 @@ C.ContentPage {
                         id: checkSimulateGPS
                         Layout.alignment: Qt.AlignRight
                         checked: App.settings.simulateGPS
-                        onClicked: App.settings.simulateGPS = checkSimulateGPS.checked
-                    }
-                }
-
-                onClicked: {
-                    if (App.config.fullRowCheck) {
-                        checkSimulateGPS.checked = !checkSimulateGPS.checked
-                        checkSimulateGPS.clicked()
+                        onCheckedChanged: {
+                            App.settings.simulateGPS = checkSimulateGPS.checked
+                        }
                     }
                 }
             }
 
             ItemDelegate {
                 Layout.fillWidth: true
-                Layout.minimumHeight: row0.height
+                Layout.minimumHeight: C.Style.minRowHeight
                 visible: App.config.allowSimulateGPS || App.desktopOS
                 topPadding: 0
                 contentItem: RowLayout {
@@ -482,6 +459,8 @@ C.ContentPage {
                     ToolButton {
                         icon.source: "qrc:/icons/info.svg"
                         icon.color: Material.accent
+                        icon.width: C.Style.toolButtonSize
+                        icon.height: C.Style.toolButtonSize
                         onClicked: {
                             if (App.requestPermissionReadExternalStorage()) {
                                 simulationSourcePopup.open()
@@ -490,7 +469,9 @@ C.ContentPage {
                     }
 
                     ComboBox {
+                        id: comboSimulateGPSFilename
                         Layout.fillWidth: true
+                        Layout.fillHeight: true
                         font.pixelSize: App.settings.font14
                         model: App.settings.simulateGPSFiles
                         currentIndex: {
@@ -505,6 +486,12 @@ C.ContentPage {
                                 App.settings.simulateGPSFilename = index === 0 ? "" : model[index]
                             }
                         }
+
+                        delegate: ItemDelegate {
+                            width: comboSimulateGPSFilename.width
+                            font.pixelSize: App.settings.font14
+                            text: modelData
+                        }
                     }
                 }
 
@@ -513,7 +500,7 @@ C.ContentPage {
 
             ItemDelegate {
                 Layout.fillWidth: true
-                Layout.minimumHeight: row0.height
+                Layout.minimumHeight: C.Style.minRowHeight
                 visible: App.desktopOS || Qt.platform.os === "android"
                 contentItem: RowLayout {
                     spacing: 0
@@ -529,14 +516,9 @@ C.ContentPage {
                         id: checkUploadRequiresWiFi
                         Layout.alignment: Qt.AlignRight
                         checked: App.settings.uploadRequiresWiFi
-                        onClicked: App.settings.uploadRequiresWiFi = checkUploadRequiresWiFi.checked
-                    }
-                }
-
-                onClicked: {
-                    if (App.config.fullRowCheck) {
-                        checkUploadRequiresWiFi.checked = !checkUploadRequiresWiFi.checked
-                        checkUploadRequiresWiFi.clicked()
+                        onCheckedChanged: {
+                            App.settings.uploadRequiresWiFi = checkUploadRequiresWiFi.checked
+                        }
                     }
                 }
 
@@ -564,23 +546,15 @@ C.ContentPage {
                         }
                     }
 
-                    Image {
+                    C.SquareIcon {
                         source: "qrc:/icons/share_variant.svg"
-                        layer {
-                            enabled: true
-                            effect: ColorOverlay {
-                                color: Material.foreground
-                            }
-                        }
+                        recolor: true
+                        opacity: 0.5
                     }
-
-                    C.ChevronRight {}
                 }
 
                 onClicked: {
-                    if (App.requestPermissionReadExternalStorage()) {
-                        appPageStack.push("qrc:/BugReportPage.qml", { useSharingOnMobile: true })
-                    }
+                    pushBugReportPage(true)
                 }
 
                 C.HorizontalDivider {}
@@ -609,23 +583,15 @@ C.ContentPage {
                         }
                     }
 
-                    Image {
+                    C.SquareIcon {
                         source: "qrc:/icons/usb.svg"
-                        layer {
-                            enabled: true
-                            effect: ColorOverlay {
-                                color: Material.foreground
-                            }
-                        }
+                        recolor: true
+                        opacity: 0.5
                     }
-
-                    C.ChevronRight {}
                 }
 
                 onClicked: {
-                    if (App.requestPermissionReadExternalStorage()) {
-                        appPageStack.push("qrc:/BugReportPage.qml", { useSharingOnMobile: false })
-                    }
+                    pushBugReportPage(false)
                 }
 
                 C.HorizontalDivider {}
@@ -669,12 +635,15 @@ C.ContentPage {
         }
     }
 
-    function syncProjects() {
-        if (!Utils.networkAvailable()) {
-            showToast(qsTr("Offline"))
+    function pushBugReportPage(useSharingOnMobile) {
+        if (!App.requestPermissionReadExternalStorage()) {
             return
         }
 
-        App.projectManager.updateAll();
+        if (typeof(formPageStack) !== "undefined") {
+            form.pushPage("qrc:/BugReportPage.qml", { useSharingOnMobile: useSharingOnMobile })
+        } else {
+            appPageStack.push("qrc:/BugReportPage.qml", { useSharingOnMobile: useSharingOnMobile })
+        }
     }
 }

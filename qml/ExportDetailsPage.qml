@@ -14,47 +14,19 @@ C.ContentPage {
         text: fileInfo.name
     }
 
-    footer: ColumnLayout {
+    footer: RowLayout {
         spacing: 0
 
-        Rectangle {
-            Layout.fillWidth: true
-            height: 2
-            color: Material.theme === Material.Dark ? "#FFFFFF" : "#000000"
-            opacity: Material.theme === Material.Dark ? 0.12 : 0.12
+        C.FooterButton {
+            text: qsTr("Delete")
+            icon.source: "qrc:/icons/delete_outline.svg"
+            onClicked: popupConfirmDelete.open()
         }
 
-        RowLayout {
-            id: buttonRow
-            spacing: 0
-            Layout.fillWidth: true
-            property int buttonCount: 2
-            property int buttonWidth: page.width / buttonCount
-            property var buttonColor: Material.theme === Material.Dark ? Material.foreground : Material.primary
-
-            ToolButton {
-                Layout.preferredWidth: buttonRow.buttonWidth
-                Layout.fillHeight: true
-                text: qsTr("Delete")
-                icon.source: "qrc:/icons/delete_outline.svg"
-                font.pixelSize: App.settings.font10
-                font.capitalization: Font.MixedCase
-                display: Button.TextUnderIcon
-                Material.foreground: buttonRow.buttonColor
-                onClicked: popupConfirmDelete.open()
-            }
-
-            ToolButton {
-                Layout.preferredWidth: buttonRow.buttonWidth
-                Layout.fillHeight: true
-                text: qsTr("Share")
-                icon.source: "qrc:/icons/share_variant_outline.svg"
-                font.pixelSize: App.settings.font10
-                font.capitalization: Font.MixedCase
-                display: Button.TextUnderIcon
-                Material.foreground: buttonRow.buttonColor
-                onClicked: App.sendFile(page.fileInfo.path, page.fileInfo.name)
-            }
+        C.FooterButton {
+            text: qsTr("Share")
+            icon.source: "qrc:/icons/share_variant_outline.svg"
+            onClicked: App.sendFile(page.fileInfo.path, page.fileInfo.name)
         }
     }
 

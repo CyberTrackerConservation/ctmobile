@@ -42,6 +42,7 @@ class Settings: public QObject
     QML_SETTING (int, utmZone, 0)
     QML_SETTING (QString, utmHemi, "N")
 
+    QML_SETTING (bool, footerText, true)
     QML_SETTING (bool, fullScreen, false)
 
     QML_SETTING (int, coordinateFormat, 0)
@@ -54,7 +55,8 @@ class Settings: public QObject
     QML_SETTING (int, mapPanMode, 1)              // Enums.LocationDisplayAutoPanModeRecenter
 
     QML_SETTING (QString, activeBasemap, "BasemapOpenStreetMap")
-    QML_SETTING (QVariantMap, activeProjectLayers, QVariantMap())
+    QML_SETTING (QStringList, offlineMapLayers, QStringList())
+    QML_SETTING (QVariantMap, offlineMapPackages, QVariantMap())
 
     QML_SETTING (bool, classicDesktopConnected, false)
     QML_SETTING (bool, classicUpgradeMessage, false)

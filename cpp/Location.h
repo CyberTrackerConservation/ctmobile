@@ -96,9 +96,9 @@ public:
     explicit SatelliteInfoSource(QObject* parent = nullptr);
     ~SatelliteInfoSource();
 
-    Error error() const override;
     int minimumUpdateInterval() const override;
     void setUpdateInterval(int msec) override;
+    QGeoSatelliteInfoSource::Error error() const override;
 
 public slots:
     void requestUpdate(int timeout = 0) override;
@@ -115,6 +115,77 @@ private:
     QGeoSatelliteInfoSource* m_source = nullptr;
 };
 
+class Location: public QObject
+{
+    Q_OBJECT
+
+    Q_PROPERTY (bool isValid READ isValid CONSTANT)
+    Q_PROPERTY (bool isAccurate READ isAccurate CONSTANT)
+    Q_PROPERTY (double x READ x CONSTANT)
+    Q_PROPERTY (double y READ y CONSTANT)
+    Q_PROPERTY (double z READ z CONSTANT)
+    Q_PROPERTY (double direction READ direction CONSTANT)
+    Q_PROPERTY (double accuracy READ accuracy CONSTANT)
+    Q_PROPERTY (double speed READ speed CONSTANT)
+    Q_PROPERTY (QString timestamp READ timestamp CONSTANT)
+    Q_PROPERTY (int counter READ counter CONSTANT)
+    Q_PROPERTY (int interval READ interval CONSTANT)
+    Q_PROPERTY (int distanceFilter READ distanceFilter CONSTANT)
+    Q_PROPERTY (int accuracyFilter READ accuracyFilter CONSTANT)
+    Q_PROPERTY (QString deviceId READ deviceId CONSTANT)
+    Q_PROPERTY (QVariantMap spatialReference READ spatialReference CONSTANT)
+    Q_PROPERTY (QVariantMap toMap READ toMap CONSTANT)
+
+public:
+    explicit Location(QObject* parent = nullptr);
+    explicit Location(const Location& location, QObject* parent = nullptr);
+    explicit Location(const QVariantMap& data, QObject* parent = nullptr);
+    explicit Location(const QGeoPositionInfo& positionInfo, QObject* parent = nullptr);
+
+    bool isValid() const;
+    bool isAccurate() const;
+    QVariant toPoint() const;
+    QVariantMap toMap() const;
+    double distanceTo(double x, double y) const;
+    double headingTo(double x, double y) const;
+
+    double x() const;
+    void set_x(double value);
+    double y() const;
+    void set_y(double value);
+    double z() const;
+    void set_z(double value);
+    double direction() const;
+    void set_direction(double value);
+    double accuracy() const;
+    void set_accuracy(double value);
+    double speed() const;
+    void set_speed(double value);
+    QString timestamp() const;
+    void set_timestamp(const QString& value);
+    int counter() const;
+    void set_counter(int value);
+    int interval() const;
+    void set_interval(int value);
+    int distanceFilter() const;
+    void set_distanceFilter(int value);
+    int accuracyFilter() const;
+    void set_accuracyFilter(int value);
+    QString deviceId() const;
+    void set_deviceId(const QString& value);
+    QVariantMap spatialReference() const;
+
+private:
+    double m_x = 0, m_y = 0, m_z = 0;
+    double m_d = 0, m_a = 0, m_s = 0;
+    QString m_ts;
+    int m_counter = -1;
+    int m_interval = 0;
+    int m_distanceFilter = 0;
+    int m_accuracyFilter = 0;
+    QString m_deviceId;
+};
+
 class LocationStreamer: public QObject
 {
     Q_OBJECT
@@ -124,6 +195,10 @@ class LocationStreamer: public QObject
     QML_READONLY_AUTO_PROPERTY (bool, locationRecent)
     QML_READONLY_AUTO_PROPERTY (double, distanceCovered)
     QML_READONLY_AUTO_PROPERTY (int, counter)
+    QML_READONLY_AUTO_PROPERTY (QString, rateIcon)
+    QML_READONLY_AUTO_PROPERTY (QString, rateText)
+    QML_READONLY_AUTO_PROPERTY (QString, rateFullText)
+    QML_WRITABLE_AUTO_PROPERTY (QString, rateLabel)
 
 public:
     explicit LocationStreamer(QObject* parent = nullptr);
@@ -132,16 +207,13 @@ public:
     void loadState(const QVariantMap& map);
     QVariantMap saveState();
 
-    void pushUpdate(const QGeoPositionInfo& update);
-    void pushUpdate(const QVariantMap& update);
+    void pushUpdate(Location* update);
 
     Q_INVOKABLE void start(int updateInterval, double distanceFilter = 0, double distanceCovered = 0, int counter = 0, bool initialRecent = false);
     Q_INVOKABLE void stop();
 
-    Q_INVOKABLE QString rateText();
-
 signals:
-    void positionUpdated(const QGeoPositionInfo& update);
+    void locationUpdated(Location* update);
     void started();
     void stopped();
 
@@ -152,4 +224,5 @@ private:
     double m_lastUpdateY;
     void startSource();
     void resetSource();
+    void updateDisplay();
 };

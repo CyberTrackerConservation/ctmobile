@@ -54,6 +54,12 @@ void ElementListModel::rebuild()
         return;
     }
 
+    if (m_elementManager->getElement(m_elementUid) == nullptr)
+    {
+        qDebug() << "Bad element used for list: " << m_elementUid;
+        return;
+    }
+
     auto form = Form::parentForm(m_elementManager);
     auto elementList = QVariantList();
     Element* otherElement = nullptr;

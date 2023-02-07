@@ -13,6 +13,6 @@ Item {
 
         color: colors.white1
         font.pixelSize: 140 * dp
-        text: "Browser unavailable"
+        text: qsTr("Browser unavailable")
     }
 }

@@ -44,12 +44,12 @@
     <message>
       <location filename="../src/engine/App.cpp" line="398" />
       <source>Imagery</source>
-      <translation type="unfinished">Simagri</translation>
+      <translation type="unfinished">Imaj</translation>
     </message>
     <message>
       <location filename="../src/engine/App.cpp" line="399" />
       <source>Dark gray canvas (Vector)</source>
-      <translation type="unfinished">Nwa gri twal (vektè)</translation>
+      <translation type="unfinished">Twal gri fonse (Vecteur)</translation>
     </message>
     <message>
       <location filename="../src/engine/App.cpp" line="400" />
@@ -59,7 +59,7 @@
     <message>
       <location filename="../src/engine/App.cpp" line="401" />
       <source>Light gray canvas (Vector)</source>
-      <translation type="unfinished">Limyè twal gri (vektè)</translation>
+      <translation type="unfinished">Twal gri limyè (Vecteur)</translation>
     </message>
     <message>
       <location filename="../src/engine/App.cpp" line="402" />
@@ -69,7 +69,7 @@
     <message>
       <location filename="../src/engine/App.cpp" line="403" />
       <source>Oceans</source>
-      <translation type="unfinished">Oseyan</translation>
+      <translation type="unfinished">Oseyan yo</translation>
     </message>
   </context>
   <context>
@@ -97,17 +97,17 @@
     <message>
       <location filename="../qml/BugReport.qml" line="86" />
       <source>Describe the issue</source>
-      <translation type="unfinished">Dekri pwoblèm lan</translation>
+      <translation type="unfinished">Dekri pwoblèm nan</translation>
     </message>
     <message>
       <location filename="../qml/BugReport.qml" line="87" />
       <source>Tap ✓ in the top right corner</source>
-      <translation type="unfinished">Tap ✓ nan kwen dwat la</translation>
+      <translation type="unfinished">Tape ✓ nan kwen anlè dwat</translation>
     </message>
     <message>
       <location filename="../qml/BugReport.qml" line="88" />
       <source>Send the file</source>
-      <translation type="unfinished">Voye dosye a</translation>
+      <translation type="unfinished">Voye fichye a</translation>
     </message>
   </context>
   <context>
@@ -131,7 +131,7 @@
     <message>
       <location filename="../qml/ConnectDropbox.qml" line="15" />
       <source>Connect to Dropbox</source>
-      <translation type="unfinished">Konekte sou Dropbox</translation>
+      <translation type="unfinished">Konekte ak Dropbox</translation>
     </message>
   </context>
   <context>
@@ -163,7 +163,7 @@
     <message>
       <location filename="../src/providers/SMART/Globals.qml" line="8" />
       <source>Version</source>
-      <translation type="unfinished">Vèsyon</translation>
+      <translation type="unfinished">Version</translation>
     </message>
     <message>
       <location filename="../src/providers/SMART/Globals.qml" line="29" />
@@ -178,7 +178,7 @@
     <message>
       <location filename="../src/providers/SMART/Globals.qml" line="31" />
       <source>Patrol pause</source>
-      <translation type="unfinished">Patwouy pran yon poz</translation>
+      <translation type="unfinished">Patwouy pran poz</translation>
     </message>
     <message>
       <location filename="../src/providers/SMART/Globals.qml" line="32" />
@@ -188,7 +188,7 @@
     <message>
       <location filename="../src/providers/SMART/Globals.qml" line="33" />
       <source>Patrol change</source>
-      <translation type="unfinished">Patwouy chanje</translation>
+      <translation type="unfinished">Chanjman patwouy</translation>
     </message>
     <message>
       <location filename="../src/providers/SMART/Globals.qml" line="34" />
@@ -211,7 +211,7 @@
     <message>
       <location filename="../src/providers/SMART/HistoryPage.qml" line="91" />
       <source>Sighting</source>
-      <translation type="unfinished">Avanse</translation>
+      <translation type="unfinished">Vue</translation>
     </message>
     <message>
       <location filename="../src/providers/SMART/HistoryPage.qml" line="98" />
@@ -221,7 +221,7 @@
     <message>
       <location filename="../src/providers/SMART/HistoryPage.qml" line="150" />
       <source>No patrol sightings</source>
-      <translation type="unfinished">Pa gen avi patwouy</translation>
+      <translation type="unfinished">Pa gen wè patwouy</translation>
     </message>
     <message>
       <location filename="../src/providers/SMART/HistoryPage.qml" line="172" />
@@ -231,7 +231,7 @@
     <message>
       <location filename="../src/providers/SMART/HistoryPage.qml" line="190" />
       <source>No sighting selected</source>
-      <translation type="unfinished">Pa gen okenn vizyon chwazi</translation>
+      <translation type="unfinished">Pa gen vi chwazi</translation>
     </message>
   </context>
   <context>
@@ -284,7 +284,7 @@
     <message>
       <location filename="../qml/Main.qml" line="66" />
       <source>Project will be permanently removed</source>
-      <translation type="unfinished">Pwojè a ap retire toutan</translation>
+      <translation type="unfinished">Pwojè a pral retire nèt ale</translation>
     </message>
     <message>
       <location filename="../qml/Main.qml" line="76" />
@@ -295,7 +295,7 @@
     <message>
       <location filename="../qml/Main.qml" line="77" />
       <source>All project data will be lost</source>
-      <translation type="unfinished">Tout done pwojè a ap pèdi</translation>
+      <translation type="unfinished">Tout done pwojè yo pral pèdi</translation>
     </message>
     <message>
       <location filename="../qml/Main.qml" line="123" />
@@ -312,22 +312,22 @@
     <message>
       <location filename="../qml/Main.qml" line="239" />
       <source>Connect to Dropbox</source>
-      <translation type="unfinished">Konekte sou Dropbox</translation>
+      <translation type="unfinished">Konekte ak Dropbox</translation>
     </message>
     <message>
       <location filename="../qml/Main.qml" line="250" />
       <source>Connect to EarthRanger</source>
-      <translation type="unfinished">Konekte sou EarthRanger</translation>
+      <translation type="unfinished">Konekte ak EarthRanger</translation>
     </message>
     <message>
       <location filename="../qml/Main.qml" line="261" />
       <source>Connect to SMART</source>
-      <translation type="unfinished">Konekte sou SMART</translation>
+      <translation type="unfinished">Konekte ak SMART</translation>
     </message>
     <message>
       <location filename="../qml/Main.qml" line="273" />
       <source>Sync projects</source>
-      <translation type="unfinished">Senkro pwojè yo</translation>
+      <translation type="unfinished">Pwojè senkronize</translation>
     </message>
     <message>
       <location filename="../qml/Main.qml" line="308" />
@@ -337,7 +337,7 @@
     <message>
       <location filename="../qml/Main.qml" line="321" />
       <source>Map</source>
-      <translation type="unfinished">Kat</translation>
+      <translation type="unfinished">Kat jeyografik</translation>
     </message>
     <message>
       <location filename="../qml/Main.qml" line="334" />
@@ -361,7 +361,7 @@
     <message>
       <location filename="../src/providers/SMART/MainPage.qml" line="51" />
       <source>Project will be permanently removed</source>
-      <translation type="unfinished">Pwojè a ap retire toutan</translation>
+      <translation type="unfinished">Pwojè a pral retire nèt ale</translation>
     </message>
     <message>
       <location filename="../src/providers/SMART/MainPage.qml" line="61" />
@@ -372,7 +372,7 @@
     <message>
       <location filename="../src/providers/SMART/MainPage.qml" line="62" />
       <source>All project data will be lost</source>
-      <translation type="unfinished">Tout done pwojè a ap pèdi</translation>
+      <translation type="unfinished">Tout done pwojè yo pral pèdi</translation>
     </message>
     <message>
       <location filename="../src/providers/SMART/MainPage.qml" line="108" />
@@ -417,12 +417,12 @@
     <message>
       <location filename="../qml/Maps.qml" line="21" />
       <source>Compass</source>
-      <translation type="unfinished">Compass</translation>
+      <translation type="unfinished">Bousòl</translation>
     </message>
     <message>
       <location filename="../qml/Maps.qml" line="473" />
       <source>No sighting selected</source>
-      <translation type="unfinished">Pa gen okenn vizyon chwazi</translation>
+      <translation type="unfinished">Pa gen vi chwazi</translation>
     </message>
     <message>
       <location filename="../qml/Maps.qml" line="509" />
@@ -445,12 +445,12 @@
     <message>
       <location filename="../src/providers/SMART/MetadataPage.qml" line="37" />
       <source>Resume patrol</source>
-      <translation type="unfinished">Rekòmanse patwouy</translation>
+      <translation type="unfinished">Rezime patwouy</translation>
     </message>
     <message>
       <location filename="../src/providers/SMART/MetadataPage.qml" line="39" />
       <source>Change patrol</source>
-      <translation type="unfinished">Chanjman patwouy</translation>
+      <translation type="unfinished">Chanje patwouy</translation>
     </message>
   </context>
   <context>
@@ -494,7 +494,7 @@
     <message>
       <location filename="../qml/Settings.qml" line="381" />
       <source>Full screen</source>
-      <translation type="unfinished">Full ekran</translation>
+      <translation type="unfinished">Ekran konplè</translation>
     </message>
     <message>
       <location filename="../qml/Settings.qml" line="411" />
@@ -514,7 +514,7 @@
     <message>
       <location filename="../qml/Settings.qml" line="476" />
       <source>Decimal degrees</source>
-      <translation type="unfinished">Degre Des</translation>
+      <translation type="unfinished">Degre desimal</translation>
     </message>
     <message>
       <location filename="../qml/Settings.qml" line="476" />
@@ -529,7 +529,7 @@
     <message>
       <location filename="../qml/Settings.qml" line="492" />
       <source>Simulate location</source>
-      <translation type="unfinished">Simule kote</translation>
+      <translation type="unfinished">Simile kote</translation>
     </message>
     <message>
       <location filename="../qml/Settings.qml" line="518" />
@@ -544,12 +544,12 @@
     <message>
       <location filename="../qml/Settings.qml" line="549" />
       <source>Kiosk mode</source>
-      <translation type="unfinished">Mòd kiyè</translation>
+      <translation type="unfinished">Mòd kyòs</translation>
     </message>
     <message>
       <location filename="../qml/Settings.qml" line="582" />
       <source>Exit pin</source>
-      <translation type="unfinished">Sòti PIN</translation>
+      <translation type="unfinished">Soti PIN</translation>
     </message>
     <message>
       <location filename="../qml/Settings.qml" line="617" />
@@ -653,7 +653,7 @@
     <message>
       <location filename="../src/providers/SMART/SightingHomePage.qml" line="382" />
       <source>Tap to add</source>
-      <translation type="unfinished">Sur pou ajoute</translation>
+      <translation type="unfinished">Tape pou ajoute</translation>
     </message>
     <message>
       <location filename="../src/providers/SMART/SightingHomePage.qml" line="430" />
@@ -683,12 +683,12 @@
     <message>
       <location filename="../src/providers/SMART/SightingHomePage.qml" line="505" />
       <source>Pause patrol</source>
-      <translation type="unfinished">Pran yon patwouy</translation>
+      <translation type="unfinished">Patwouy kanpe</translation>
     </message>
     <message>
       <location filename="../src/providers/SMART/SightingHomePage.qml" line="517" />
       <source>Change patrol</source>
-      <translation type="unfinished">Chanjman patwouy</translation>
+      <translation type="unfinished">Chanje patwouy</translation>
     </message>
   </context>
   <context>
@@ -723,12 +723,12 @@
     <message>
       <location filename="../src/providers/SMART/StartPage.qml" line="16" />
       <source>Uploaded data has been cleared</source>
-      <translation type="unfinished">Te Uploaded done otorize</translation>
+      <translation type="unfinished">Done ki telechaje yo efase</translation>
     </message>
     <message>
       <location filename="../src/providers/SMART/StartPage.qml" line="23" />
       <source>Nothing to export</source>
-      <translation type="unfinished">Pa gen anyen pou ekspòtasyon</translation>
+      <translation type="unfinished">Pa gen anyen pou ekspòte</translation>
     </message>
     <message>
       <location filename="../src/providers/SMART/StartPage.qml" line="49" />
@@ -743,7 +743,7 @@
     <message>
       <location filename="../src/providers/SMART/StartPage.qml" line="107" />
       <source>Clear sent data</source>
-      <translation type="unfinished">Klè voye done</translation>
+      <translation type="unfinished">Klè done voye yo</translation>
     </message>
     <message>
       <location filename="../src/providers/SMART/StartPage.qml" line="107" />
@@ -763,7 +763,7 @@
     <message>
       <location filename="../src/providers/SMART/StartPage.qml" line="142" />
       <source>Resume Patrol</source>
-      <translation type="unfinished">Rekòmanse patwouy</translation>
+      <translation type="unfinished">Rezime Patwouy</translation>
     </message>
     <message>
       <location filename="../src/providers/SMART/StartPage.qml" line="142" />

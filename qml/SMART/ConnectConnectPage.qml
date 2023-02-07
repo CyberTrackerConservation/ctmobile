@@ -18,7 +18,7 @@ C.ContentPage {
     }
 
     header: C.PageHeader {
-        text: "SMART Connect"
+        text: "SMART " + qsTr("Connect")
     }
 
     C.LoginItem {
@@ -165,7 +165,7 @@ C.ContentPage {
                 let zipUrl = connectorParams.navigation_url + "/" + route.uuid + "?api_key=" + connectorParams.api_key
                 let zipFile = App.downloadFile(zipUrl)
                 if (zipFile !== "") {
-                    App.gotoManager.bootstrap(zipFile)
+                    App.installPackage(zipFile, false)
                 } else {
                     console.log("Bootstrap route: " + route.uuid)
                 }

@@ -38,7 +38,6 @@ class SMARTProvider : public Provider
     QML_READONLY_AUTO_PROPERTY (QString, lastExportError)
 
     QML_READONLY_AUTO_PROPERTY (int, uploadObsCounter)
-    QML_READONLY_AUTO_PROPERTY (QString, uploadSightingLastTaskUid)
     QML_READONLY_AUTO_PROPERTY (QString, uploadLastTime)
     QML_READONLY_AUTO_PROPERTY (QString, uploadSightingLastTime)
 
@@ -75,29 +74,36 @@ public:
     Q_INVOKABLE bool clearCompletedData();
     Q_INVOKABLE bool recoverAndClearData();
 
-    Q_INVOKABLE QVariant getProfileValue(const QString& key, const QVariant& defaultValue = QVariant());
+    Q_INVOKABLE QVariant getProfileValue(const QString& key, const QVariant& defaultValue = QVariant()) const;
 
     Q_INVOKABLE QString getPatrolText();
-    Q_INVOKABLE QString getSightingTypeText(const QString& observationType);
+    Q_INVOKABLE QString getSightingTypeText(const QString& observationType) const;
+    Q_INVOKABLE QUrl getSightingTypeIcon(const QString& observationType) const;
     Q_INVOKABLE QVariantMap getPatrolLeg(int index);
 
     bool initialize();
-    bool connectToProject(bool newBuild) override;
+    bool connectToProject(bool newBuild, bool* formChangedOut) override;
 
     QUrl getStartPage() override;
     void getElements(ElementManager* elementManager) override;
     void getFields(FieldManager* fieldManager) override;
 
-    QVariantList buildMapDataLayers() override;
-    bool getUseGPSTime() override;
+    QVariantList buildMapDataLayers() const override;
+    bool requireGPSTime() const override;
 
-    bool canEditSighting(Sighting* sighting, int flags) override;
+    bool supportSightingEdit() const override;
+    bool supportSightingDelete() const override;
+
+    bool canEditSighting(Sighting* sighting, int flags) const override;
     void finalizeSighting(QVariantMap& sightingMap) override;
 
-    QVariantList buildSightingView(Sighting* sighting) override;
+    QVariantList buildSightingView(Sighting* sighting) const override;
 
-    QString getFieldName(const QString& fieldUid) override;
-    bool getFieldTitleVisible(const QString& fieldUid) override;
+    QString getFieldName(const QString& fieldUid) const override;
+    bool getFieldTitleVisible(const QString& fieldUid) const override;
+    QString getSightingSummaryText(Sighting* sighting) const override;
+    QUrl getSightingSummaryIcon(Sighting* sighting) const override;
+    QUrl getSightingStatusIcon(Sighting* sighting, int flags) const override;
 
     bool finalizePackage(const QString& packageFilesPath) const override;
 
@@ -111,26 +117,27 @@ private:
     void loadState();
     void saveState();
 
-    bool shouldUploadData();
+    bool shouldUploadData() const;
 
-    void savePatrolSighting(const QString& observationType, bool saveTrackPoint);
+    void savePatrolSighting(const QString& observationType, const QString& timestamp);
+    void savePatrolLocation(Location* location, const QString& timestamp);
 
-    QJsonObject locationToJson(const QString& sightingUid, const QVariantMap& data, const QVariantMap& extraProps = QVariantMap());
-    QJsonObject addRecordToJson(const QJsonObject& baseData, Form* form, Sighting* sighting, const QString& recordUid, bool childRecords = false, int attributeIndex = 0);
+    QJsonObject locationToJson(const QString& sightingUid, Location* location, const QVariantMap& extraProps = QVariantMap());
+    QJsonObject addRecordToJson(const QJsonObject& baseData, Form* form, Sighting* sighting, const QString& recordUid, bool childRecords = false, int attributeIndex = 0, bool skipAttachments = false);
     QJsonArray sightingToJson(Form* form, const QVariantMap& data, int* obsCounter, const QString& filterRecordUid = QString(), const QVariantMap& extraProps = QVariantMap());
 
     void startTrack(double initialTrackDistance, int initialTrackCounter);
     void stopTrack();
 
-    bool uploadPing(const QVariantMap& locationMap);
-    bool uploadPing6(const QVariantMap& locationMap);
-    bool uploadPing7(const QVariantMap& locationMap);
+    bool uploadPing(Location* location);
+    bool uploadPing6(Location* location);
+    bool uploadPing7(Location* location);
     bool uploadAlerts(Form* form, const QString& sightingUid);
     bool uploadAlerts6(Form* form, const QString& sightingUid);
     bool uploadAlerts7(Form* form, const QString& sightingUid);
     bool uploadSighting(Form* form, const QString& sightingUid, int* obsCounter);
     void uploadPendingLocations(Form* form);
-    bool uploadLocation(Form* form, const QString& sightingUid);
+    bool uploadLocation(Form* form, Location* location, const QString& locationUid);
 
     struct ExportEnumState
     {
@@ -149,6 +156,8 @@ private:
     void parseMetadata(const QString& fileName, ElementManager* elementManager, FieldManager* fieldManager, QVariantMap* settingsOut);
     void parseModel(const QString& fileName, ElementManager* elementManager, FieldManager* fieldManager, QVariantMap* settingsOut, QVariantList* extraDataOut);
     void postProcessModel(ElementManager* elementManager, FieldManager* fieldManager, RecordField* modelField, QVariantMap* settings);
+
+    QVariantMap getSightingMapSymbol(Form* form, Sighting* sighting, const QColor& color) const;
 
 signals:
     void exportProgress(int index, int count);

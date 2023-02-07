@@ -27,60 +27,32 @@ C.ContentPage {
         }
     }
 
-    footer: ColumnLayout {
+    footer: RowLayout {
         spacing: 0
 
-        Rectangle {
-            Layout.fillWidth: true
-            height: 2
-            color: Material.theme === Material.Dark ? "#FFFFFF" : "#000000"
-            opacity: Material.theme === Material.Dark ? 0.12 : 0.12
+        C.FooterButton {
+            text: qsTr("All")
+            icon.source: "qrc:/icons/checkbox_multiple_marked.svg"
+            onClicked: {
+                for (let i = 0; i < internal.forms.length; i++) {
+                    page.forms[i].__selected = true
+                }
+
+                formsListView.model = page.forms
+                formsPageHeader.menuEnabled = true
+            }
         }
 
-        RowLayout {
-            id: buttonRow
-            spacing: 0
-            Layout.fillWidth: true
-            property int buttonCount: 2
-            property int buttonWidth: page.width / buttonCount
-            property var buttonColor: Material.theme === Material.Dark ? Material.foreground : Material.primary
-
-            ToolButton {
-                Layout.preferredWidth: buttonRow.buttonWidth
-                Layout.fillHeight: true
-                text: qsTr("All")
-                icon.source: "qrc:/icons/checkbox_multiple_marked.svg"
-                font.pixelSize: App.settings.font10
-                font.capitalization: Font.MixedCase
-                display: Button.TextUnderIcon
-                Material.foreground: buttonRow.buttonColor
-                onClicked: {
-                    for (let i = 0; i < internal.forms.length; i++) {
-                        page.forms[i].__selected = true
-                    }
-
-                    formsListView.model = page.forms
-                    formsPageHeader.menuEnabled = true
+        C.FooterButton {
+            text: qsTr("None")
+            icon.source: "qrc:/icons/checkbox_multiple_blank_outline.svg"
+            onClicked: {
+                for (let i = 0; i < internal.forms.length; i++) {
+                    page.forms[i].__selected = false
                 }
-            }
 
-            ToolButton {
-                Layout.preferredWidth: buttonRow.buttonWidth
-                Layout.fillHeight: true
-                text: qsTr("None")
-                icon.source: "qrc:/icons/checkbox_multiple_blank_outline.svg"
-                font.pixelSize: App.settings.font10
-                font.capitalization: Font.MixedCase
-                display: Button.TextUnderIcon
-                Material.foreground: buttonRow.buttonColor
-                onClicked: {
-                    for (let i = 0; i < internal.forms.length; i++) {
-                        page.forms[i].__selected = false
-                    }
-
-                    formsListView.model = page.forms
-                    formsPageHeader.menuEnabled = false
-                }
+                formsListView.model = page.forms
+                formsPageHeader.menuEnabled = false
             }
         }
     }

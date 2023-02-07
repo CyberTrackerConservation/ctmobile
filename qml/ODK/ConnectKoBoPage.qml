@@ -16,7 +16,7 @@ C.ContentPage {
     }
 
     header: C.PageHeader {
-        text: "KoBoToolbox Connect"
+        text: "KoBoToolbox " + qsTr("Connect")
     }
 
     C.LoginItem {
@@ -25,8 +25,8 @@ C.ContentPage {
         iconSource: "qrc:/KoBo/logo.svg"
         cacheKey: "KoBo"
         servers: ListModel {
-            ListElement { name: qsTr("Humanitarian"); server: "https://kobo.humanitarianresponse.info" }
-            ListElement { name: qsTr("Research"); server: "https://kf.kobotoolbox.org" }
+            ListElement { name: qsTr("Humanitarian server"); server: "https://kobo.humanitarianresponse.info" }
+            ListElement { name: qsTr("Global server"); server: "https://kf.kobotoolbox.org" }
             ListElement { name: qsTr("Custom"); server: "https://"; custom: true }
         }
 

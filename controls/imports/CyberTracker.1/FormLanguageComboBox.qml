@@ -20,7 +20,8 @@ ComboBox {
 
     delegate: ItemDelegate {
         width: root.width
-        font.pixelSize: root.font.pixelSize
+        height: root.height
+        font.pixelSize: App.settings.font14
         text: modelData.name
     }
 }

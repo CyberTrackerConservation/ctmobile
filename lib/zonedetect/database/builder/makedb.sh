@@ -2,7 +2,7 @@
 
 set -e
 
-g++ builder.cpp -o builder -lshp
+g++ builder.cpp --std=c++11 -o builder -lshp
 
 rm -rf out naturalearth timezone db.zip
 mkdir -p out
@@ -11,7 +11,7 @@ mkdir -p naturalearth
 mkdir -p timezone
 
 (
-echo https://naciscdn.org/naturalearth/10m/cultural/ne_10m_admin_0_countries_lakes.zip -o /dev/null -O naturalearth/ne.zip
+echo https://www.naturalearthdata.com/http//www.naturalearthdata.com/download/10m/cultural/ne_10m_admin_0_countries_lakes.zip -o /dev/null -O naturalearth/ne.zip
 echo https://github.com/evansiroky/timezone-boundary-builder/releases/download/2020d/timezones-with-oceans.shapefile.zip -o /dev/null -O timezone/tz.zip
 ) | xargs -n5 -P2 wget
 

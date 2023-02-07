@@ -2,18 +2,21 @@
 #include "pch.h"
 #include "Element.h"
 #include "Field.h"
+#include "Project.h"
 #include <xlnt/xlnt.hpp>
-
-namespace XlsFormUtils
-{
-bool parseXlsForm(const QString& xlsxFilePath, const QString& targetFolder, QString* errorStringOut);
-}
 
 class XlsFormParser
 {
 public:
     XlsFormParser();
-    bool execute(const QString& xlsxFilePath, const QString& targetFolder);
+
+    static void configureProject(Project* project, const QVariantMap& settings);
+    static void configureProject(const QString& projectUid, const QVariantMap& settings);
+    static bool parseSettings(const QString& xlsxFilePath, QVariantMap* settingsOut);
+    static bool getFormVersion(const QString& xlsxFilePath, QString* versionOut);
+    static bool parse(const QString& xlsxFilePath, const QString& targetFolder, const QString& projectUid, QString* errorStringOut);
+
+    bool execute(const QString& xlsxFilePath, const QString& targetFolder, const QString& updateProjectUid = "");
 
 private:
     QString m_folderPath;
@@ -45,6 +48,7 @@ private:
         QString repeatCount;
         QString mediaAudio;
         QString mediaImage;
+        QString bodyAccept;
         QString bindType;
         QString bindEsriFieldType;
         QString bindEsriFieldLength;
@@ -64,11 +68,12 @@ private:
     };
 
     void parseStringToMap(const QString& header, const QString& value, QVariantMap* languagesOut, bool removeMarkdown);
-    QString findAsset(const QString& name);
-    QVariantMap parseParameters(const QString& params);
+    QString findAsset(const QString& name) const;
+    static QVariantMap parseCT(const QVariantMap& parameters, const QString& header, const QString& value);
+    QVariantMap parseParameters(const QString& params) const;
+    static QVariantMap settingsRowFromSheet(const xlnt::worksheet& sheet);
     SurveyRow surveyRowFromSheet(const xlnt::worksheet& sheet, const xlnt::cell_vector& row);
     ChoiceRow choiceRowFromSheet(const xlnt::worksheet& sheet, const xlnt::cell_vector& row);
-    QVariantMap settingsRowFromSheet(const xlnt::worksheet& sheet);
 
     void processSurvey(const xlnt::worksheet& sheet, int* startRowIndex, RecordField* recordField, Element* rootElement);
     void processChoices(const xlnt::worksheet& sheet, int startRowIndex, Element* rootElement);

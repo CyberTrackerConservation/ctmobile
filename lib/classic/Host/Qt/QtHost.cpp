@@ -32,7 +32,7 @@ constexpr char CLASSIC_ALARM_ID[] = "CLASSIC_ALARM_ID";
 
 //*************************************************************************************************
 
-CHost_Qt::CHost_Qt(CfxPersistent *pOwner, CtClassicSessionItem *pWindow, FXPROFILE *pProfile, const CHAR *pApplicationPath): CfxHost(pOwner, pProfile), QObject(nullptr)
+CHost_Qt::CHost_Qt(CfxPersistent *pOwner, CtClassicSessionItem *pWindow, FXPROFILE *pProfile, const CHAR *pApplicationPath): CfxHost(pOwner, pProfile)
 {
     _window = pWindow;
     _batteryLevel = _batteryState = _powerState = 0;
@@ -47,14 +47,14 @@ CHost_Qt::CHost_Qt(CfxPersistent *pOwner, CtClassicSessionItem *pWindow, FXPROFI
 
     _applicationPath = AllocString(pApplicationPath);
 
-    connect(&_trackStreamer, &LocationStreamer::positionUpdated, this, &CHost_Qt::onTrackTimer);
+    connect(&_trackStreamer, &LocationStreamer::locationUpdated, this, &CHost_Qt::onTrackTimer);
 
     _trackTimerHandler.setSingleShot(true);
     _trackTimerHandler.setInterval(1000);
 
     connect(&_trackTimerHandler, &QTimer::timeout, [&]()
     {
-        auto Timeout = _trackTimeout;
+        auto Timeout = _trackTimeout * 1000;
 
         if (_trackStreamer.running())
         {
@@ -134,6 +134,11 @@ VOID CHost_Qt::RequestMediaScan(const CHAR *pFileName)
 
 VOID CHost_Qt::Paint()
 {
+    if (_window == nullptr)
+    {
+        return;
+    }
+
     static bool s_mutex = false;
     if (!s_mutex)
     {
@@ -153,6 +158,11 @@ VOID CHost_Qt::Startup()
 
 VOID CHost_Qt::Shutdown()
 {
+    if (_window == nullptr)
+    {
+        return;
+    }
+
     emit _window->shutdown();
 }
 
@@ -166,7 +176,7 @@ VOID CHost_Qt::SetTrackTimer(INT Timeout)
     _trackTimerHandler.start();
 }
 
-void CHost_Qt::onTrackTimer(const QGeoPositionInfo& update)
+void CHost_Qt::onTrackTimer(Location* update)
 {
     FXGPS *finalGps = GetGPSPtr();
 
@@ -176,20 +186,31 @@ void CHost_Qt::onTrackTimer(const QGeoPositionInfo& update)
     finalGps->TimeStamp = FxGetTickCount();
     finalGps->Position.Quality = fq3D;
 
-    auto location = Utils::decodeLocation(update);
+    finalGps->Position.Latitude = update->y();
+    finalGps->Position.Longitude = update->x();
+    finalGps->Position.Altitude = update->z();
 
-    finalGps->Position.Latitude = location.y;
-    finalGps->Position.Longitude = location.x;
-    finalGps->Position.Altitude = location.z;
-    auto accuracy = location.a;
-    if (qIsNaN(accuracy))
+    auto accuracy = update->accuracy();
+    if (std::isnan(accuracy))
     {
         accuracy = 100;
     }
 
-    finalGps->Position.Accuracy = min(50,  accuracy / 10);
-    finalGps->Position.Speed = location.s;
-    finalGps->Heading = static_cast<UINT>(location.d);
+    auto speed = update->speed();
+    if (std::isnan(speed))
+    {
+        speed = 0;
+    }
+
+    auto direction = update->direction();
+    if (std::isnan(direction))
+    {
+        direction = 0;
+    }
+
+    finalGps->Position.Accuracy = min(50, accuracy / 10);
+    finalGps->Position.Speed = speed;
+    finalGps->Heading = static_cast<UINT>(direction);
     finalGps->State = dsConnected;
 
     FXDATETIME *pDateTime = &finalGps->DateTime;
@@ -214,11 +235,21 @@ BOOL CHost_Qt::HasExternalCloseButton()
 
 VOID CHost_Qt::ShowSIP()
 {
+    if (_window == nullptr)
+    {
+        return;
+    }
+
     emit _window->setInputMethodVisible(true);
 }
 
 VOID CHost_Qt::HideSIP()
 {
+    if (_window == nullptr)
+    {
+        return;
+    }
+
     emit _window->setInputMethodVisible(false);
 }
 
@@ -635,41 +666,44 @@ VOID CHost_Qt::SetGPS(BOOL OnOff)
 
     m_positionSource = new PositionInfoSource(this);
 
-    connect(m_positionSource, &QGeoPositionInfoSource::positionUpdated, this, [=](const QGeoPositionInfo& info)
+    connect(m_positionSource, &QGeoPositionInfoSource::positionUpdated, this, [=](const QGeoPositionInfo& update)
     {
-        auto location = Utils::decodeLocation(info);
+        Location location(update);
 
         FXGPS *finalGps = GetGPSPtr();
         finalGps->State = dsConnected;
         finalGps->TimeStamp = FxGetTickCount();
         finalGps->Position.Quality = fq3D;
 
-        if (std::isnan(location.a))
+        auto accuracy = location.accuracy();
+        if (std::isnan(accuracy))
         {
-            location.a = 100;
+            accuracy = 100;
         }
 
-        if (std::isnan(location.s))
+        auto speed = location.speed();
+        if (std::isnan(speed))
         {
-            location.s = 0;
+            speed = 0;
         }
 
-        if (std::isnan(location.d))
+        auto direction = location.direction();
+        if (std::isnan(direction))
         {
-            location.d = 0;
+            direction = 0;
         }
 
-        finalGps->Position.Latitude = location.y;
-        finalGps->Position.Longitude = location.x;
-        finalGps->Position.Altitude = location.z;
-        finalGps->Position.Accuracy = min(50, location.a / 10);
-        finalGps->Position.Speed = location.s;
-        finalGps->Heading = static_cast<UINT>(location.d);
+        finalGps->Position.Latitude = location.y();
+        finalGps->Position.Longitude = location.x();
+        finalGps->Position.Altitude = location.z();
+        finalGps->Position.Accuracy = min(50, accuracy / 10);
+        finalGps->Position.Speed = speed;
+        finalGps->Heading = static_cast<UINT>(direction);
 
         FXDATETIME *pDateTime = &finalGps->DateTime;
         memset(pDateTime, 0, sizeof(FXDATETIME));
 
-        auto ts = info.timestamp().toUTC();
+        auto ts = update.timestamp().toUTC();
         pDateTime->Second = static_cast<UINT16>(ts.time().second());
         pDateTime->Minute = static_cast<UINT16>(ts.time().minute());
         pDateTime->Hour = static_cast<UINT16>(ts.time().hour());
@@ -914,6 +948,11 @@ HANDLE CHost_Qt::CreateEditControl(BOOL SingleLine, BOOL Password)
 
 VOID CHost_Qt::DestroyEditControl(HANDLE Control)
 {
+    if (_window == nullptr)
+    {
+        return;
+    }
+
     auto editControl = (EDIT_CONTROL*)Control;
     emit _window->hideEditControl();
     delete editControl;
@@ -921,6 +960,11 @@ VOID CHost_Qt::DestroyEditControl(HANDLE Control)
 
 VOID CHost_Qt::MoveEditControl(HANDLE Control, INT Left, INT Top, UINT Width, UINT Height)
 {
+    if (_window == nullptr)
+    {
+        return;
+    }
+
     auto editControl = (EDIT_CONTROL*)Control;
     auto params = QVariantMap
     {
@@ -941,16 +985,31 @@ VOID CHost_Qt::FocusEditControl(HANDLE /*Control*/)
 
 CHAR *CHost_Qt::GetEditControlText(HANDLE /*Control*/)
 {
+    if (_window == nullptr)
+    {
+        return AllocString("");
+    }
+
     return AllocString(_window->lastEditorText().toUtf8());
 }
 
 VOID CHost_Qt::SetEditControlText(HANDLE /*Control*/, CHAR *pValue)
 {
+    if (_window == nullptr)
+    {
+        return;
+    }
+
     _window->set_lastEditorText(QString::fromUtf8(pValue ? pValue : ""));
 }
 
 VOID CHost_Qt::SetEditControlFont(HANDLE /*Control*/, FXFONTRESOURCE *pFont)
 {
+    if (_window == nullptr)
+    {
+        return;
+    }
+
     auto params = QVariantMap
     {
         { "family", pFont->Name },
@@ -969,6 +1028,11 @@ BOOL CHost_Qt::IsCameraSupported()
 
 BOOL CHost_Qt::ShowCameraDialog(CHAR *pFileNameNoExt, FXIMAGE_QUALITY ImageQuality)
 {
+    if (_window == nullptr)
+    {
+        return true;
+    }
+
     *pFileNameNoExt = '\0';
 
     auto rx = -1;
@@ -1027,12 +1091,13 @@ BOOL CHost_Qt::ShowCameraDialog(CHAR *pFileNameNoExt, FXIMAGE_QUALITY ImageQuali
         CfxApplication *application = GetApplication(this);
         CctSession *session = (CctSession *)application->GetScreen()->GetControl(0);
 
-        QString newFilePath = session->AllocMediaFileName((char*)filename.toStdString().c_str());
-        if (QFile::rename(filePath, newFilePath))
+        auto newFilePath = session->AllocMediaFileName((char*)filename.toStdString().c_str());
+        if (QFile::rename(filePath, QString(newFilePath)))
         {
             Utils::mediaScan(newFilePath);
-            application->GetEngine()->DoPictureTaken(application->GetScreen(), (char*)(newFilePath.toStdString().c_str()), true);
+            application->GetEngine()->DoPictureTaken(application->GetScreen(), newFilePath, true);
         }
+        MEM_FREE(newFilePath);
     });
 
     return true;
@@ -1040,12 +1105,37 @@ BOOL CHost_Qt::ShowCameraDialog(CHAR *pFileNameNoExt, FXIMAGE_QUALITY ImageQuali
 
 VOID CHost_Qt::ShowSkyplot(INT Left, INT Top, UINT Width, UINT Height, BOOL Visible)
 {
+    if (_window == nullptr)
+    {
+        return;
+    }
+
     emit _window->showSkyplot(Left, Top, Width, Height, Visible);
+}
+
+VOID CHost_Qt::ShowToast(const CHAR* pMessage)
+{
+    emit App::instance()->showToast(pMessage);
 }
 
 VOID CHost_Qt::ShowExports()
 {
+    if (_window == nullptr)
+    {
+        return;
+    }
+
     emit _window->showExports();
+}
+
+VOID CHost_Qt::ShareData()
+{
+    if (_window == nullptr)
+    {
+        return;
+    }
+
+    emit _window->shareData();
 }
 
 BOOL CHost_Qt::IsBarcodeSupported()
@@ -1055,6 +1145,11 @@ BOOL CHost_Qt::IsBarcodeSupported()
 
 BOOL CHost_Qt::ShowBarcodeDialog(CHAR */*pBarcode*/)
 {
+    if (_window == nullptr)
+    {
+        return true;
+    }
+
     emit _window->showBarcodeDialog();
 
     QObject *context = new QObject(this);
@@ -1141,6 +1236,11 @@ CHAR *CHost_Qt::AllocPathSD()
 
 VOID CHost_Qt::RegisterExportFile(CHAR *pExportFilePath, FXEXPORTFILEINFO* exportFileInfo)
 {
+    if (_window == nullptr)
+    {
+        return;
+    }
+
     auto now = App::instance()->timeManager()->currentDateTime();
 
     auto project = App::instance()->projectManager()->loadPtr(_window->projectUid());
@@ -1159,4 +1259,90 @@ VOID CHost_Qt::RegisterExportFile(CHAR *pExportFilePath, FXEXPORTFILEINFO* expor
     App::instance()->registerExportFile(pExportFilePath, fileInfo.toMap());
 
     emit App::instance()->showToast(tr("Data exported"));
+}
+
+VOID CHost_Qt::ArchiveSighting(GUID* pId, FXDATETIME* dateTime, FXGPS_POSITION* gps, const QVariantMap& data)
+{
+    auto app = App::instance();
+
+    auto sightingUid = GUIDToString(pId);
+    auto sighting = _window->ownerForm()->createSightingPtr();
+    sighting->recordManager()->rootRecord()->setRecordUid(sightingUid);
+    sighting->recalculate();
+
+    // Set the timestamp.
+    auto timestamp = GetDateStringUTC(dateTime, false);
+    auto dt = Utils::decodeTimestamp(timestamp);
+    sighting->snapCreateTime(timestamp);
+    sighting->snapUpdateTime(timestamp);
+    MEM_FREE(timestamp);
+
+    // Set the location.
+    if (gps->Quality > fqNone)
+    {
+        sighting->setRootFieldValue("location", LocationField::createValue(gps->Longitude, gps->Latitude, gps->Altitude, gps->Accuracy * 10, gps->Speed));
+    }
+
+    // Set the field values.
+    auto counter = 0;
+    for (auto it = data.constKeyValueBegin(); it != data.constKeyValueEnd(); it++)
+    {
+        auto fieldUid = it->first;
+        auto value = it->second;
+
+        if (value.toString().startsWith("media://"))
+        {
+            auto filename = value.toString().replace("media://", "");
+            auto fileInfo = QFileInfo(Utils::classicRoot() + "/Media/" + filename);
+
+            auto mimeTypePrefix = Utils::mimeDatabase()->mimeTypeForFile(fileInfo).name().split("/").constFirst();
+            auto newFilename = QString("%1-%2-%3.%4").arg(mimeTypePrefix, dt.toString("yyyyMMdd-hhmmss-zzz"), QString::number(counter++), fileInfo.suffix());
+            auto newFilePath = app->mediaPath() + "/" + newFilename;
+            QFile::copy(fileInfo.filePath(), newFilePath);
+
+            if (mimeTypePrefix == "image")
+            {
+                value = PhotoField::createValue(newFilename);
+            }
+            else if (mimeTypePrefix == "audio")
+            {
+                value = AudioField::createValue(newFilename);
+            }
+            else
+            {
+                qDebug() << "Error: unknown media type - " << mimeTypePrefix;
+            }
+        }
+
+        sighting->setRootFieldValue(fieldUid, value);
+    }
+
+    // Save the sighting to the database.
+    sighting->recalculate();
+    auto sightingAttachments = QStringList();
+    auto sightingData = sighting->save(&sightingAttachments);
+    app->database()->saveSighting(_window->projectUid(), "", sightingUid, Sighting::DB_SIGHTING_FLAG, sightingData, sightingAttachments);
+}
+
+VOID CHost_Qt::ArchiveWaypoint(GUID* pId, FXDATETIME* dateTime, FXGPS_POSITION* gps)
+{
+    auto app = App::instance();
+
+    auto locationUid = GUIDToString(pId);
+    Location location;
+    location.set_x(gps->Longitude);
+    location.set_y(gps->Latitude);
+    location.set_z(gps->Altitude);
+    location.set_accuracy(gps->Accuracy * 10);
+    location.set_accuracyFilter(app->settings()->locationAccuracyMeters());
+    location.set_distanceFilter(_trackStreamer.distanceFilter());
+    location.set_interval(_trackStreamer.updateInterval() / 1000);
+    location.set_counter(_trackStreamer.counter());
+    location.set_deviceId(App::instance()->settings()->deviceId());
+
+    auto timestamp = GetDateStringUTC(dateTime, false);
+    location.set_timestamp(timestamp);
+    MEM_FREE(timestamp);
+
+    app->database()->saveSighting(_window->projectUid(), "", locationUid, Sighting::DB_LOCATION_FLAG, location.toMap(), QStringList());
 }

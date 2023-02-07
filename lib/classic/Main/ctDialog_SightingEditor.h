@@ -171,6 +171,35 @@ extern CfxControl *Create_Control_SendData(CfxPersistent *pOwner, CfxControl *pP
 
 //*************************************************************************************************
 
+const GUID GUID_CONTROL_SHAREDATA = {0x893805b3, 0xe98c, 0x42fa, {0x88, 0xad, 0xb6, 0x9f, 0x7a, 0xdc, 0xbe, 0x70}};
+
+class CctControl_ShareData: public CfxControl_Button
+{
+protected:
+    BOOL _center, _stretch, _proportional;
+    BOOL _transparentImage;
+    XBITMAP _bitmap;
+    BYTE _format;
+
+public:
+    CctControl_ShareData(CfxPersistent *pOwner, CfxControl *pParent);
+    ~CctControl_ShareData();
+
+    VOID SetBounds(INT Left, INT Top, UINT Width, UINT Height);
+
+    VOID DefineProperties(CfxFiler &F);
+    VOID DefineResources(CfxFilerResource &F);
+    VOID DefinePropertiesUI(CfxFilerUI &F);
+
+    VOID OnPaint(CfxCanvas *pCanvas, FXRECT *pRect);
+
+    VOID OnPenClick(INT X, INT Y);
+};
+
+extern CfxControl *Create_Control_ShareData(CfxPersistent *pOwner, CfxControl *pParent);
+
+//*************************************************************************************************
+
 const GUID GUID_CONTROL_HISTORY_LIST = {0x1e7c30a5, 0x1440, 0x4daa, {0xa5, 0x6c, 0xc0, 0x33, 0x7d, 0x69, 0x9f, 0x1d}};
 
 //

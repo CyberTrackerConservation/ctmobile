@@ -19,6 +19,7 @@ public:
     bool sendDataESRI(const QString& filename, const QString& url, const QString& username, const QString& password);
     bool sendDataFTP(const QString& filename, const QString& url, const QString& username, const QString& password);
     bool sendDataUNC(const QString& filename, const QString& url, const QString& username, const QString& password);
+    bool sendDataAzure(const QString& filename, const QString& url, const QString& username, const QString& password);
 
 signals:
     void stateChange(int state);

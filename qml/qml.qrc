@@ -1,5 +1,6 @@
 <RCC>
     <qresource prefix="/">
+        <file>AboutPage.qml</file>
         <file>AppMain.qml</file>
         <file>BreakingChangePage.qml</file>
         <file>BootstrapAuthPage.qml</file>
@@ -10,12 +11,15 @@
         <file>ConnectPane.qml</file>
         <file>ConnectQRCodePage.qml</file>
         <file>ConnectDropboxPage.qml</file>
+        <file>ConsoleWindow.qml</file>
+        <file>CreateEsriServiceWindow.qml</file>
         <file>ExportDetailsPage.qml</file>
         <file>ExportsPage.qml</file>
         <file>MainPage.qml</file>
         <file>MapInspectorPage.qml</file>
         <file>MapLayersPage.qml</file>
         <file>MapsPage.qml</file>
+        <file>OfflineMapPage.qml</file>
         <file>ProjectDetailsPage.qml</file>
         <file>ProjectsPage.qml</file>
         <file>SettingsPage.qml</file>
@@ -36,13 +40,11 @@
         <file>ODK/ConnectODKCentralPage.qml</file>
         <file>ODK/ConnectKoBoPage.qml</file>
         <file>ODK/ConnectKoBoSharedPage.qml</file>
-        <file>ODK/StartPage.qml</file>
         <file>ODK/FormPage.qml</file>
-        <file>ODK/SettingsPage.qml</file>
+        <file>ODK/StartPage.qml</file>
         <file>SMART/qmldir</file>
         <file>SMART/ConnectPage.qml</file>
         <file>SMART/ConnectPaneSM.qml</file>
-        <file>SMART/ConnectPaneSMK.qml</file>
         <file>SMART/ConnectConnectPage.qml</file>
         <file>SMART/ConnectCollectPage.qml</file>
         <file>SMART/ConnectRoutesPage.qml</file>
@@ -55,7 +57,6 @@
         <file>SMART/MetadataPage.qml</file>
         <file>SMART/ModelPage.qml</file>
         <file>SMART/HistoryPage.qml</file>
-        <file>SMART/HistoryRowDelegate.qml</file>
         <file>SMART/PatrolStatsPage.qml</file>
         <file>SMART/ProjectChangePage.qml</file>
         <file>SMART/RecoverDataPage.qml</file>

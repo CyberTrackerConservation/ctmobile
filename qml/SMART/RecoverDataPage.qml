@@ -54,7 +54,7 @@ C.ContentPage {
     C.ConfirmPopup {
         id: confirmRecover
         text: qsTr("Recover data?")
-        confirmText: "Yes, recover now"
+        confirmText: qsTr("Yes, recover now")
         onConfirmed: {
             busyCover.doWork = recoverAndClearData
             busyCover.start()

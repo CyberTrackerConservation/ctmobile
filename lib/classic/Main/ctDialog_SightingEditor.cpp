@@ -1036,6 +1036,146 @@ VOID CctControl_SendData::DefinePropertiesUI(CfxFilerUI &F)
 }
 
 //*************************************************************************************************
+// CctControl_ShareData
+
+CfxControl *Create_Control_ShareData(CfxPersistent *pOwner, CfxControl *pParent)
+{
+    return new CctControl_ShareData(pOwner, pParent);
+}
+
+CctControl_ShareData::CctControl_ShareData(CfxPersistent *pOwner, CfxControl *pParent): CfxControl_Button(pOwner, pParent)
+{
+    InitControl(&GUID_CONTROL_SHAREDATA);
+    InitLockProperties("Caption;Center;Format;Stretch;Proportional;Image");
+
+    _center = _proportional = TRUE;
+    _stretch = _transparentImage = FALSE;
+    _bitmap = 0;
+    _format = 0;
+}
+
+CctControl_ShareData::~CctControl_ShareData()
+{
+    freeX(_bitmap);
+}
+
+VOID CctControl_ShareData::SetBounds(INT Left, INT Top, UINT Width, UINT Height)
+{
+    CfxControl::SetBounds(Left, Top, Width, Height);
+
+    if (_width != _height && _bitmap == 0 && (_caption == NULL || (strlen(_caption) == 0)))
+    {
+        if (_dock == dkLeft || _dock == dkRight)
+        {
+            _width = _height;
+        }
+        else if (_dock == dkTop || _dock == dkBottom)
+        {
+            _height = _width;
+        }
+        else if (_dock == dkNone)
+        {
+            _width = _height = min(_width, _height);
+        }
+        else
+        {
+            return;
+        }
+
+        CfxEngine *engine = GetEngine(this);
+        if (engine)
+        {
+            engine->RequestRealign();
+        }
+    }
+}
+
+VOID CctControl_ShareData::DefineProperties(CfxFiler &F) 
+{ 
+    CfxControl_Button::DefineProperties(F);
+
+    F.DefineValue("Transparent",  dtBoolean,  &_transparent, F_FALSE);
+
+    F.DefineValue("Center",       dtBoolean, &_center, F_TRUE);
+    F.DefineValue("Stretch",      dtBoolean, &_stretch, F_FALSE);
+    F.DefineValue("Proportional", dtBoolean, &_proportional, F_TRUE);
+    F.DefineValue("TransparentImage", dtBoolean, &_transparentImage, F_FALSE);
+    F.DefineXBITMAP("Bitmap", &_bitmap);
+    F.DefineValue("Format", dtByte, &_format, F_ZERO);
+}
+
+VOID CctControl_ShareData::DefineResources(CfxFilerResource &F)
+{
+#ifdef CLIENT_DLL
+    CfxControl_Button::DefineResources(F);
+    F.DefineBitmap(_bitmap);
+#endif
+}
+
+VOID CctControl_ShareData::DefinePropertiesUI(CfxFilerUI &F)
+{
+#ifdef CLIENT_DLL
+    F.DefineValue("Border color", dtColor,    &_borderColor);
+    F.DefineValue("Border line width", dtInt32, &_borderLineWidth, "MIN(1);MAX(100)");
+    F.DefineValue("Border style", dtInt8,     &_borderStyle, "LIST(None Single Round1 Round2)");
+    F.DefineValue("Border width", dtInt32,    &_borderWidth, "MIN(0);MAX(1000)");
+    F.DefineValue("Caption",      dtPText,    &_caption);
+    F.DefineValue("Center",       dtBoolean,  &_center);
+    F.DefineValue("Color",        dtColor,    &_color);
+    F.DefineValue("Dock",         dtByte,     &_dock,        "LIST(None Top Bottom Left Right Fill)");
+    F.DefineValue("Font",         dtFont,     &_font);
+    F.DefineValue("Format",       dtByte,     &_format,      "LIST(\"CSV zip\")");
+    F.DefineValue("Height",       dtInt32,    &_height);
+    F.DefineValue("Image",        dtPGraphic, &_bitmap,      "BITDEPTH(16);HINTWIDTH(1024);HINTHEIGHT(1024)");
+    F.DefineValue("Left",         dtInt32,    &_left);
+    F.DefineValue("Proportional", dtBoolean,  &_proportional);
+    F.DefineValue("Stretch",      dtBoolean,  &_stretch);
+    F.DefineValue("Text color",   dtColor,    &_textColor);
+    F.DefineValue("Top",          dtInt32,    &_top);
+    F.DefineValue("Transparent",  dtBoolean,  &_transparent);
+    F.DefineValue("Transparent image", dtBoolean, &_transparentImage);
+    F.DefineValue("Width",        dtInt32,    &_width);
+#endif
+}
+
+VOID CctControl_ShareData::OnPaint(CfxCanvas *pCanvas, FXRECT *pRect)
+{
+    BOOL invert = GetDown();
+
+    CfxResource *resource = GetResource();
+    FXBITMAPRESOURCE *bitmap = resource->GetBitmap(this, _bitmap);
+    if (bitmap)
+    {
+        pCanvas->State.BrushColor = pCanvas->InvertColor(_color, invert);
+        pCanvas->FillRect(pRect);
+
+        FXRECT rect;
+        GetBitmapRect(bitmap, pRect->Right - pRect->Left + 1, pRect->Bottom - pRect->Top + 1, _center, _stretch, _proportional, &rect);
+        pCanvas->StretchDraw(bitmap, pRect->Left + rect.Left, pRect->Top + rect.Top, rect.Right - rect.Left + 1 , rect.Bottom - rect.Top + 1, invert, _transparentImage);
+        resource->ReleaseBitmap(bitmap);
+    }
+    else if (_caption && (strlen(_caption) > 0))
+    {
+        CfxControl_Button::OnPaint(pCanvas, pRect);         
+    }
+    else
+    {
+        pCanvas->DrawShare(pRect, _color, _borderColor, invert, _transparent); 
+    }
+
+    // Enable data share feature.
+    if (IsLive())
+    {
+        GetSession(this)->SetShareDataEnabled(TRUE);
+    }
+}
+
+VOID CctControl_ShareData::OnPenClick(INT X, INT Y)
+{
+    GetHost(this)->ShareData();
+}
+
+//*************************************************************************************************
 // CctDialog_SightingEditor
 
 CfxDialog *Create_Dialog_SightingEditor(CfxPersistent *pOwner, CfxControl *pParent)
@@ -1199,7 +1339,7 @@ VOID CctDialog_SightingEditor::Init(CfxControl *pSender, VOID *pParam, UINT Para
 
     _sendData->SetVisible(FALSE);
     _showExports->SetVisible(FALSE);
-    if (sendDataTab)
+    if (sendDataTab) 
     {
         _sendData->SetParent(_noteBook->GetPage(sendDataTabIndex));
         _sendData->SetVisible(TRUE);
@@ -1207,7 +1347,7 @@ VOID CctDialog_SightingEditor::Init(CfxControl *pSender, VOID *pParam, UINT Para
 
         _sendData->InitState();
         _sendData->SetOnAfterSend(this, (NotifyMethod)&CctDialog_SightingEditor::OnAfterSend);
-
+    
         if (exportData)
         {
             _showExports->SetParent(_noteBook->GetPage(sendDataTabIndex));

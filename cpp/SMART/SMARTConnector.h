@@ -17,13 +17,14 @@ public:
     bool canShareAuth(Project* project) const override;
     QVariantMap getShareData(Project* project, bool auth) const override;
 
+    bool canLogin(Project* project) const override;
+
     ApiResult bootstrap(const QVariantMap& params) override;
     ApiResult hasUpdate(QNetworkAccessManager* networkAccessManager, Project* project) override;
-    bool canUpdate(Project *project) override;
+    bool canUpdate(Project* project) const override;
     ApiResult update(Project* project) override;
 
     void reset(Project* project) override;
-    void remove(Project* project) override;
 
 private:
     QString m_smart7Required;

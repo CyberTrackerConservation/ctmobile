@@ -3,7 +3,7 @@
 Sketchpad::Sketchpad(QQuickItem *parent): QQuickPaintedItem(parent)
 {
     m_penColor = Qt::black;
-    m_penWidth = 2;
+    m_penWidth = App::instance()->scaleByFontSize(2);
     m_baseLine = true;
 
     setAcceptedMouseButtons(Qt::LeftButton);

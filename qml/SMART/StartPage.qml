@@ -10,9 +10,9 @@ C.ContentPage {
 
     header: C.PageHeader {
         text: form.project.title
-        menuVisible: true
-        menuEnabled: false
+        menuVisible: Qt.platform.os !== "ios"
         menuIcon: App.batteryIcon
+        onMenuClicked: App.showToast(App.batteryText)
     }
 
     Grid {
@@ -77,7 +77,7 @@ C.ContentPage {
                 Globals.patrolChangeCount
                 return form.provider.getSightingTypeText(form.provider.patrolStarted ? "ResumePatrol" : "NewPatrol")
             }
-            image: "qrc:/icons/play.svg"
+            image: form.provider.patrolStarted ? "qrc:/icons/step_forward.svg" : "qrc:/icons/play.svg"
             onClicked: form.pushFormPage({ projectUid: form.project.uid, stateSpace: Globals.formSpacePatrol })
             enabled: form.provider.hasPatrol
         }

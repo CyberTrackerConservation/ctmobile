@@ -162,7 +162,7 @@ C.ContentPage {
     Label {
         id: labelWaitForTimeCorrection
         text: qsTr("Waiting for time correction")
-        visible: form.useGPSTime && !App.timeManager.corrected
+        visible: form.requireGPSTime && !App.timeManager.corrected
         horizontalAlignment: Qt.AlignHCenter
         x: 0
         y: progressCircle.y + progressCircle.height + 8
@@ -183,16 +183,18 @@ C.ContentPage {
         wrapMode: Label.WordWrap
     }
 
-    Button {
+    RoundButton {
         id: buttonSkip
+        radius: 0
         visible: skipVisible && !closeTimer.running && title.enabled && !labelWaitForTimeCorrection.visible
-        enabled: !form.useGPSTime || App.timeManager.corrected
+        enabled: !form.requireGPSTime || App.timeManager.corrected
         font.pixelSize: App.settings.font16
         font.capitalization: Font.MixedCase
         width: parent.width / 2
         x: (parent.width - width) / 2
         y: progressCircle.y + progressCircle.height + 8
         text: qsTr("Skip GPS")
+        Material.background: Material.accentColor
         onClicked: {
             if (form.provider.allowManualGPS) {
                 form.replaceLastPage("qrc:/imports/CyberTracker.1/FieldLocationPage.qml", {
@@ -246,7 +248,7 @@ C.ContentPage {
                 return
             }
 
-            if (form.useGPSTime && !App.timeManager.corrected) {
+            if (form.requireGPSTime && !App.timeManager.corrected) {
                 console.log("Waiting for time correction")
                 return
             }
@@ -256,7 +258,7 @@ C.ContentPage {
                 return
             }
 
-            page.lastFix = App.lastLocation
+            page.lastFix = App.lastLocation.toMap
 
             if (fixCounter < page.positionMax) {
                 fixCounter++

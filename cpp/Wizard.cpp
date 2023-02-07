@@ -21,22 +21,94 @@ Wizard::Wizard(QObject* parent): QObject(parent)
     m_canNext = m_canSave = m_canSkip = false;
 }
 
+void Wizard::init(const QString& recordUid)
+{
+    m_sighting->set_wizardRecordUid(recordUid);
+    m_sighting->set_wizardPageStack(QVariantList());
+    first(recordUid, TRANSITION_NO_REBUILD);
+}
+
 void Wizard::reset()
 {
     m_sighting->set_wizardPageStack(QVariantList());
     m_sighting->set_wizardRecordUid("");
-    m_sighting->set_wizardFieldUids(QStringList());
+    m_sighting->set_wizardRules(QVariantMap());
     form(this)->saveState();
 }
 
-QString Wizard::pageUrl() const
+QString Wizard::pageUrl()
 {
-    return "qrc:/imports/CyberTracker.1/FormWizardPage.qml";
+    return "qrc:/imports/CyberTracker.1/WizardPage.qml";
 }
 
-QString Wizard::indexPageUrl() const
+QString Wizard::indexPageUrl()
 {
-    return "qrc:/imports/CyberTracker.1/FormWizardIndexPage.qml";
+    return "qrc:/imports/CyberTracker.1/WizardIndexPage.qml";
+}
+
+QString Wizard::optionsPageUrl()
+{
+    return "qrc:/imports/CyberTracker.1/WizardOptionsPage.qml";
+}
+
+QString Wizard::recordUid() const
+{
+    return m_sighting->wizardRecordUid();
+}
+
+QVariantMap Wizard::rules() const
+{
+    return m_sighting->wizardRules();
+}
+
+QStringList Wizard::fieldUids() const
+{
+    return rules().value("fieldUids").toStringList();
+}
+
+bool Wizard::valid() const
+{
+    return m_sighting->getRecord(recordUid())->isValid(fieldUids());
+}
+
+bool Wizard::autoSave() const
+{
+    return !immersive() && form(this)->project()->wizardAutosave();
+}
+
+bool Wizard::immersive() const
+{
+    return form(this)->project()->immersive();
+}
+
+int Wizard::popCount() const
+{
+    return rules().value("popCount", -1).toInt();
+}
+
+QString Wizard::header() const
+{
+    return rules().value("header").toString();
+}
+
+QString Wizard::banner() const
+{
+    return rules().value("banner").toString();
+}
+
+QVariantMap Wizard::lastPageParams() const
+{
+    return m_sighting->wizardPageStack().isEmpty() ? QVariantMap() : m_sighting->wizardPageStack().constLast().toMap();
+}
+
+QString Wizard::lastPageRecordUid() const
+{
+    return lastPageParams().value("recordUid").toString();
+}
+
+QString Wizard::lastPageFieldUid() const
+{
+    return lastPageParams().value("fieldUid").toString();
 }
 
 void Wizard::first(const QString& recordUid, int transition)
@@ -59,16 +131,19 @@ void Wizard::back(int transition)
     if (wizardPageStack.isEmpty())
     {
         m_sighting->set_wizardRecordUid("");
-        m_sighting->set_wizardFieldUids(QStringList());
         form(this)->popPage();
 
-        // Save the sighting.
-        form(this)->saveSighting();
+        // Save the sighting if autoSave.
+        if (autoSave())
+        {
+            form(this)->saveSighting();
+        }
+
         return;
     }
 
     // Update the existing page.
-    form(this)->replaceLastPage(pageUrl(), wizardPageStack.constLast().toMap(), transition);
+    emit rebuildPage(transition);
 }
 
 bool Wizard::advance(const QString& recordUid, const QString& fieldUid, QVariantList* wizardPageStackOut, QString* errorOut, bool* lastPageOut)
@@ -120,7 +195,7 @@ bool Wizard::advance(const QString& recordUid, const QString& fieldUid, QVariant
         // The root record may have a list of fields.
         if (recordUid == m_sighting->wizardRecordUid())
         {
-            fieldUids = m_sighting->wizardFieldUids();
+            fieldUids = Wizard::fieldUids();
         }
 
         // If no list, just use the record.
@@ -148,6 +223,15 @@ bool Wizard::advance(const QString& recordUid, const QString& fieldUid, QVariant
     if (!nextFieldUid.isEmpty())
     {
         auto nextField = fieldManager(this)->getField(nextFieldUid);
+
+        // Skip snapLocationField.
+        if (qobject_cast<LocationField*>(nextField))
+        {
+            if (m_sighting->getSnapLocationFieldUid() == nextFieldUid)
+            {
+                return advance(recordUid, nextFieldUid, wizardPageStackOut, errorOut, lastPageOut);
+            }
+        }
 
         // Flat field.
         if (!nextField->isRecordField())
@@ -241,7 +325,7 @@ void Wizard::edit(const QString &recordUid, const QString& fieldUid, int transit
     wizardPageStack.append(QVariantMap {{ "recordUid", recordUid }, { "fieldUid", fieldUid }});
     m_sighting->set_wizardPageStack(wizardPageStack);
 
-    form(this)->replaceLastPage(pageUrl(), wizardPageStack.constLast().toMap(), transition);
+    emit rebuildPage(transition);
 }
 
 void Wizard::next(const QString& recordUid, const QString& fieldUid, int transition)
@@ -251,7 +335,6 @@ void Wizard::next(const QString& recordUid, const QString& fieldUid, int transit
     auto error = QString();
     auto lastPage = false;
     auto wizardPageStack = m_sighting->wizardPageStack();
-    auto wizardPageStackEmpty = wizardPageStack.isEmpty();
 
     if (!advance(recordUid, fieldUid, &wizardPageStack, &error, &lastPage))
     {
@@ -265,23 +348,32 @@ void Wizard::next(const QString& recordUid, const QString& fieldUid, int transit
     }
 
     m_sighting->set_wizardPageStack(wizardPageStack);
-    auto nextPageParams = wizardPageStack.constLast().toMap();
-    if (wizardPageStackEmpty)
-    {
-        form(this)->pushPage(pageUrl(), nextPageParams, transition);
-    }
-    else
-    {
-        form(this)->replaceLastPage(pageUrl(), nextPageParams, transition);
-    }
+
+    emit rebuildPage(transition);
 }
 
-void Wizard::home(int transition)
+void Wizard::home(int /*transition*/)
 {
     qFatalIf(m_sighting->wizardPageStack().isEmpty(), "Bad wizard page stack on Home");
 
-    form(this)->popPage(transition);
-    form(this)->saveSighting();
+    auto form = ::form(this);
+
+    // Immersive.
+    if (immersive())
+    {
+        emit App::instance()->popPageStack();
+        return;
+    }
+
+    // Default.
+    form->popPages(popCount());
+
+    if (autoSave())
+    {
+        form->saveSighting();
+    }
+
+    reset();
 }
 
 void Wizard::skip(const QString& targetFieldUid, int transition)
@@ -305,7 +397,8 @@ void Wizard::skip(const QString& targetFieldUid, int transition)
             wizardPageStack = m_sighting->wizardPageStack();
             wizardPageStack.append(pageParams);
             m_sighting->set_wizardPageStack(wizardPageStack);
-            form(this)->replaceLastPage(pageUrl(), pageParams, transition);
+
+            emit rebuildPage(transition);
             return;
         }
     }
@@ -315,7 +408,8 @@ void Wizard::skip(const QString& targetFieldUid, int transition)
         wizardPageStack = m_sighting->wizardPageStack();
         wizardPageStack.append(pageParams);
         m_sighting->set_wizardPageStack(wizardPageStack);
-        form(this)->replaceLastPage(pageUrl(), pageParams, transition);
+
+        emit rebuildPage(transition);
     }
     else if (!error.isEmpty()) // Page did not change, so this is a standard validation error.
     {
@@ -324,85 +418,108 @@ void Wizard::skip(const QString& targetFieldUid, int transition)
     }
 }
 
-QVariantList Wizard::findSaveTargets()
-{
-    auto wizardPageStack = m_sighting->wizardPageStack();
-    auto result = QVariantList();
-
-    for (auto it = wizardPageStack.constBegin(); it != wizardPageStack.constEnd(); it++)
-    {
-        auto pageParams = (*it).toMap();
-        auto field = fieldManager(this)->getField(pageParams["fieldUid"].toString());
-        if (field->parameters().contains("saveTarget"))
-        {
-            auto targetElementUid = "saveTarget/" + field->parameters().value("saveTarget").toString();
-            auto targetFieldUid = field->uid();
-            result.append(QVariantMap {{ "elementUid", targetElementUid}, { "fieldUid", targetFieldUid }});
-        }
-    }
-
-    return result;
-}
-
 bool Wizard::save(const QString& targetFieldUid, int transition)
 {
     auto updateButtonsOnLeave = qScopeGuard([this] { updateButtons(); });
 
-    // Ensure the record is valid, filtered to the subset of fields we care about.
-    auto record = m_sighting->getRecord(m_sighting->wizardRecordUid());
-    auto result = record->isValid(m_sighting->wizardFieldUids());
-    if (!result)
+    auto form = ::form(this);
+
+    // Ensure the sighting is valid.
+    if (!valid())
     {
-        emit form(this)->highlightInvalid();
+        emit form->highlightInvalid();
         emit App::instance()->showError(tr("Form incomplete"));
         return false;
     }
 
-    // Mark it as completed.
-    form(this)->markSightingCompleted();
-
-    // Commit the sighting.
-    form(this)->saveSighting();
-
-    // Reverse the wizard until we find the target field.
-    if (!targetFieldUid.isEmpty())
+    // Complete editing by popping off the top-most wizard form.
+    if (form->editing())
     {
-        auto sighting = form(this)->createSightingPtr(m_sighting->rootRecordUid());
-
-        auto wizardPageStack = sighting->wizardPageStack();
-        while (wizardPageStack.count() > 0)
-        {
-            auto params = wizardPageStack.constLast().toMap();
-
-            // Reset field values.
-            sighting->getRecord(params["recordUid"].toString())->resetFieldValue(params["fieldUid"].toString());
-
-            // Remove page if not the target.
-            if (params["fieldUid"] != targetFieldUid || !params["listElementUid"].toString().isEmpty())
-            {
-                wizardPageStack.removeLast();
-                continue;
-            }
-
-            // Found: setup the new sighting.
-            sighting->set_wizardPageStack(wizardPageStack);
-            sighting->regenerateUids();
-            m_sighting->load(sighting->save());
-            m_sighting->recalculate();
-
-            emit form(this)->sightingModified(m_sighting->rootRecordUid());
-
-            form(this)->replaceLastPage(pageUrl(), m_sighting->wizardPageStack().constLast().toMap(), transition);
-
-            return true;
-        }
+        qFatalIf(!immersive(), "Editing requires immersive");
+        reset();
+        form->saveSighting();
+        form->popPagesToParent();
+        return true;
     }
 
-    // No match: reset the wizard.
-    m_sighting->set_wizardRecordUid("");
-    m_sighting->set_wizardFieldUids(QStringList());
-    m_sighting->set_wizardPageStack(QVariantList());
-    form(this)->popPage();
+    auto sightingData = m_sighting->save();
+
+    // Save and mark completed.
+    form->saveSighting();
+    form->markSightingCompleted();
+
+    //
+    // Prepare the next sighting.
+    //
+
+    // Reverse the stack until we find the target.
+    auto sighting = form->createSightingPtr(sightingData);
+    auto wizardPageStack = sighting->wizardPageStack();
+    auto foundTargetFieldUid = false;
+    for (;;)
+    {
+        auto pageParams = wizardPageStack.constLast().toMap();
+        auto pageRecordUid = pageParams["recordUid"].toString();
+        auto pageFieldUid = pageParams["fieldUid"].toString();
+
+        // An empty fieldUid means the page represents the full record, i.e. a field-list. Convert to record + field.
+        if (pageFieldUid.isEmpty())
+        {
+            auto record = sighting->getRecord(pageRecordUid);
+            pageRecordUid = record->parentRecordUid();
+            pageFieldUid = record->recordFieldUid();
+        }
+
+        // Reset field values.
+        sighting->getRecord(pageRecordUid)->resetFieldValue(pageFieldUid);
+
+        // Check for the first page.
+        if (wizardPageStack.count() == 1)
+        {
+            break;
+        }
+
+        // Look for target or sub-list element.
+        if (Utils::compareLastPathComponents(pageFieldUid, targetFieldUid) && pageParams["listElementUid"].toString().isEmpty())
+        {
+            foundTargetFieldUid = true;
+            break;
+        }
+
+        // Remove page.
+        wizardPageStack.removeLast();
+    }
+
+    // Reset the snap location field if provided.
+    auto snapLocationFieldUid = sighting->getSnapLocationFieldUid();
+    if (!snapLocationFieldUid.isEmpty())
+    {
+        sighting->resetFieldValue(sighting->rootRecordUid(), snapLocationFieldUid);
+    }
+
+    // Reset the track file field if provided.
+    auto trackFileFieldUid = sighting->getTrackFileFieldUid();
+    if (!trackFileFieldUid.isEmpty())
+    {
+        sighting->resetFieldValue(sighting->rootRecordUid(), trackFileFieldUid);
+    }
+
+    // Found target, so stay in wizard.
+    if (foundTargetFieldUid || immersive())
+    {
+        sighting->set_wizardPageStack(wizardPageStack);
+        sighting->regenerateUids();
+        m_sighting->load(sighting->save());
+        m_sighting->recalculate();
+
+        emit form->sightingModified(m_sighting->rootRecordUid());
+        emit rebuildPage(transition);
+        return true;
+    }
+
+    // No target, non-immersive.
+    form->popPages(popCount());
+    emit form->sightingModified(m_sighting->rootRecordUid());
 
     return true;
 }
@@ -415,6 +532,7 @@ void Wizard::gotoField(const QString& targetFieldUid, int transition)
     auto recordUid = m_sighting->wizardRecordUid();
     auto fieldUid = QString();
     auto lastPage = false;
+    auto form = ::form(this);
 
     while (advance(recordUid, fieldUid, &wizardPageStack, nullptr, &lastPage))
     {
@@ -422,32 +540,62 @@ void Wizard::gotoField(const QString& targetFieldUid, int transition)
         recordUid = pageParams["recordUid"].toString();
         fieldUid = pageParams["fieldUid"].toString();
 
-        if (fieldUid == targetFieldUid || m_sighting->getRecord(recordUid)->recordFieldUid() == targetFieldUid)
+        // Skip if the target is not reached.
+        if (fieldUid != targetFieldUid && m_sighting->getRecord(recordUid)->recordFieldUid() != targetFieldUid)
         {
-            // Remove the index pages.
-            while (form(this)->getPageStack().constLast().toMap().value("pageUrl").toString() != pageUrl())
+            continue;
+        }
+
+        // Count the index and option pages.
+        auto pageCount = 0;
+        auto pageStack = form->getPageStack();
+
+        for (auto i = pageStack.length() - 1; i >= 0; i--)
+        {
+            auto lastPageUrl = pageStack[i].toMap().value("pageUrl").toString();
+            if (lastPageUrl == pageUrl() || lastPageUrl == indexPageUrl() || lastPageUrl == optionsPageUrl())
             {
-                form(this)->popPage(0);
+                pageCount++;
+                continue;
             }
 
-            // Target field found, so fix the stack to jump there directly.
-            m_sighting->set_wizardPageStack(wizardPageStack);
-
-            // Replace the last wizard page.
-            form(this)->replaceLastPage(pageUrl(), wizardPageStack.constLast().toMap(), transition);
-            return;
+            break;
         }
+
+        // Pop excess pages.
+        if (pageCount > 1)
+        {
+            form->popPage(pageCount - 1);
+        }
+
+        // Go to the target wizard page.
+        m_sighting->set_wizardPageStack(wizardPageStack);
+        form->replaceLastPage(pageUrl(), QVariantMap(), transition);
+
+        return;
     }
 }
 
-void Wizard::index(const QString& recordUid, const QString& fieldUid, int transition)
+void Wizard::index(const QString& recordUid, const QString& fieldUid, bool highlightInvalid, int transition)
 {
     form(this)->pushPage(
         indexPageUrl(),
         QVariantMap {
             { "recordUid", m_sighting->wizardRecordUid() },
             { "fieldUid", fieldUid.isEmpty() ? m_sighting->getRecord(recordUid)->recordFieldUid() : fieldUid },
-            { "filterFieldUids", m_sighting->wizardFieldUids() }
+            { "filterFieldUids", fieldUids() },
+            { "highlightInvalid", highlightInvalid }
+        }, transition);
+}
+
+void Wizard::options(const QString& recordUid, const QString& fieldUid, int transition)
+{
+    form(this)->pushPage(
+        optionsPageUrl(),
+        QVariantMap {
+            { "recordUid", m_sighting->wizardRecordUid() },
+            { "fieldUid", fieldUid.isEmpty() ? m_sighting->getRecord(recordUid)->recordFieldUid() : fieldUid },
+            { "filterFieldUids", fieldUids() }
         }, transition);
 }
 
@@ -482,6 +630,13 @@ void Wizard::updateButtons()
     while (advance(pageParams["recordUid"].toString(), pageParams["fieldUid"].toString(), &wizardPageStack, nullptr, &lastPage))
     {
         advanceCount++;
+
+        if (wizardPageStack.empty())
+        {
+            // Scenarios where the definition was changed.
+            break;
+        }
+
         pageParams = wizardPageStack.constLast().toMap();
         if (advanceCount > 1)
         {
@@ -490,9 +645,10 @@ void Wizard::updateButtons()
     }
 
     auto canNext = advanceCount > 0;
-    auto canSave = lastPage;
+    auto canSave = (advanceCount == 0) && lastPage;
     auto canSkip = (advanceCount > 1) || (advanceCount == 1 && canSave);
 
+    update_canBack(m_sighting->wizardPageStack().count() > 1);
     update_canNext(canNext);
     update_canSave(canSave);
     update_canSkip(canSkip);

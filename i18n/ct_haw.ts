@@ -6,7 +6,7 @@
     <message>
       <location filename="../src/controls/imports/CyberTracker/Controls.1/AboutPopup.qml" line="49" />
       <source>Powered by</source>
-      <translation type="unfinished">Mana na</translation>
+      <translation type="unfinished">Hoʻohana ʻia e</translation>
     </message>
   </context>
   <context>
@@ -19,57 +19,57 @@
     <message>
       <location filename="../src/engine/App.cpp" line="393" />
       <source>Humanitarian</source>
-      <translation type="unfinished">Hoʻoikaika kanaka</translation>
+      <translation type="unfinished">Ke kōkua kanaka</translation>
     </message>
     <message>
       <location filename="../src/engine/App.cpp" line="394" />
       <source>Topographic</source>
-      <translation type="unfinished">Kiʻikahi</translation>
+      <translation type="unfinished">Topographic</translation>
     </message>
     <message>
       <location filename="../src/engine/App.cpp" line="395" />
       <source>Streets</source>
-      <translation type="unfinished">Nā keʻena</translation>
+      <translation type="unfinished">Alanui</translation>
     </message>
     <message>
       <location filename="../src/engine/App.cpp" line="396" />
       <source>Streets (vector)</source>
-      <translation type="unfinished">Ke kau (vector)</translation>
+      <translation type="unfinished">Alanui (vector)</translation>
     </message>
     <message>
       <location filename="../src/engine/App.cpp" line="397" />
       <source>Streets - night (vector)</source>
-      <translation type="unfinished">Keala - pō (vector)</translation>
+      <translation type="unfinished">Alanui - pō (vector)</translation>
     </message>
     <message>
       <location filename="../src/engine/App.cpp" line="398" />
       <source>Imagery</source>
-      <translation type="unfinished">Kiʻilei</translation>
+      <translation type="unfinished">Kiʻi kiʻi</translation>
     </message>
     <message>
       <location filename="../src/engine/App.cpp" line="399" />
       <source>Dark gray canvas (Vector)</source>
-      <translation type="unfinished">Nā pāpale hina hina.</translation>
+      <translation type="unfinished">Kāpena ʻeleʻele hina (Vector)</translation>
     </message>
     <message>
       <location filename="../src/engine/App.cpp" line="400" />
       <source>Light gray canvas</source>
-      <translation type="unfinished">He mālamalama hina hina</translation>
+      <translation type="unfinished">Kāpena hina hina</translation>
     </message>
     <message>
       <location filename="../src/engine/App.cpp" line="401" />
       <source>Light gray canvas (Vector)</source>
-      <translation type="unfinished">Ka mālamalama hina hina (Kālepa)</translation>
+      <translation type="unfinished">Kāpena hina hina (Vector)</translation>
     </message>
     <message>
       <location filename="../src/engine/App.cpp" line="402" />
       <source>Navigation (vector)</source>
-      <translation type="unfinished">Hoʻoiho (vector)</translation>
+      <translation type="unfinished">Navigation (vector)</translation>
     </message>
     <message>
       <location filename="../src/engine/App.cpp" line="403" />
       <source>Oceans</source>
-      <translation type="unfinished">Kāleʻa</translation>
+      <translation type="unfinished">Nā moana</translation>
     </message>
   </context>
   <context>
@@ -77,32 +77,32 @@
     <message>
       <location filename="../qml/BugReport.qml" line="22" />
       <source>Success</source>
-      <translation type="unfinished">Ke kūleʻa</translation>
+      <translation type="unfinished">Pōmaikaʻi</translation>
     </message>
     <message>
       <location filename="../qml/BugReport.qml" line="22" />
       <source>Error</source>
-      <translation type="unfinished">ʻAʻohe kuhi</translation>
+      <translation type="unfinished">Kuhihewa</translation>
     </message>
     <message>
       <location filename="../qml/BugReport.qml" line="62" />
       <source>Unknown error</source>
-      <translation type="unfinished">ʻAno kuhi hewa ʻole</translation>
+      <translation type="unfinished">Kupa ʻike ʻole ʻia</translation>
     </message>
     <message>
       <location filename="../qml/BugReport.qml" line="68" />
       <source>Report a bug</source>
-      <translation type="unfinished">Hōʻike i kahi pōpoki</translation>
+      <translation type="unfinished">E hōʻike i kahi ʻino</translation>
     </message>
     <message>
       <location filename="../qml/BugReport.qml" line="86" />
       <source>Describe the issue</source>
-      <translation type="unfinished">E wehewehe i ka hihia</translation>
+      <translation type="unfinished">E wehewehe i ka pilikia</translation>
     </message>
     <message>
       <location filename="../qml/BugReport.qml" line="87" />
       <source>Tap ✓ in the top right corner</source>
-      <translation type="unfinished">Tap i ✓ ma ke kihi hema hema</translation>
+      <translation type="unfinished">E kaomi iā ✓ ma ke kihi ʻākau i luna</translation>
     </message>
     <message>
       <location filename="../qml/BugReport.qml" line="88" />
@@ -115,7 +115,7 @@
     <message>
       <location filename="../src/controls/imports/CyberTracker/Controls.1/Camera.qml" line="120" />
       <source>Delete current image?</source>
-      <translation type="unfinished">Hoʻopau i ke kiʻi kiʻi i kēia manawa?</translation>
+      <translation type="unfinished">Holoi i ke kiʻi o kēia manawa?</translation>
     </message>
   </context>
   <context>
@@ -131,7 +131,7 @@
     <message>
       <location filename="../qml/ConnectDropbox.qml" line="15" />
       <source>Connect to Dropbox</source>
-      <translation type="unfinished">Pākuʻi me Dropbox</translation>
+      <translation type="unfinished">Hoʻohui iā Dropbox</translation>
     </message>
   </context>
   <context>
@@ -139,7 +139,7 @@
     <message>
       <location filename="../qml/ConnectEarthRanger.qml" line="15" />
       <source>Connect to</source>
-      <translation type="unfinished">Hoʻohui a</translation>
+      <translation type="unfinished">Hoʻohui iā</translation>
     </message>
   </context>
   <context>
@@ -147,7 +147,7 @@
     <message>
       <location filename="../src/controls/imports/CyberTracker/Controls.1/DelegateFieldEdit.qml" line="58" />
       <source>Location</source>
-      <translation type="unfinished">Kahua</translation>
+      <translation type="unfinished">Wahi</translation>
     </message>
   </context>
   <context>
@@ -163,32 +163,32 @@
     <message>
       <location filename="../src/providers/SMART/Globals.qml" line="8" />
       <source>Version</source>
-      <translation type="unfinished">Kākoʻo</translation>
+      <translation type="unfinished">Manao</translation>
     </message>
     <message>
       <location filename="../src/providers/SMART/Globals.qml" line="29" />
       <source>Patrol start</source>
-      <translation type="unfinished">Hoʻomaka ka hoʻomaka</translation>
+      <translation type="unfinished">Hoʻomaka kiaʻi</translation>
     </message>
     <message>
       <location filename="../src/providers/SMART/Globals.qml" line="30" />
       <source>Patrol end</source>
-      <translation type="unfinished">Ka pau ʻana</translation>
+      <translation type="unfinished">Hoʻopau mākaʻikaʻi</translation>
     </message>
     <message>
       <location filename="../src/providers/SMART/Globals.qml" line="31" />
       <source>Patrol pause</source>
-      <translation type="unfinished">Hoʻōla wale</translation>
+      <translation type="unfinished">Patrol hoʻomaha</translation>
     </message>
     <message>
       <location filename="../src/providers/SMART/Globals.qml" line="32" />
       <source>Patrol resume</source>
-      <translation type="unfinished">Hoʻomau ka Patrol</translation>
+      <translation type="unfinished">Hoʻomaka ka mākaʻikaʻi</translation>
     </message>
     <message>
       <location filename="../src/providers/SMART/Globals.qml" line="33" />
       <source>Patrol change</source>
-      <translation type="unfinished">Ka hoʻololi ʻana o ka Patrol</translation>
+      <translation type="unfinished">Hoʻololi patrol</translation>
     </message>
     <message>
       <location filename="../src/providers/SMART/Globals.qml" line="34" />
@@ -206,12 +206,12 @@
     <message>
       <location filename="../src/providers/SMART/HistoryPage.qml" line="83" />
       <source>Incident</source>
-      <translation type="unfinished">Mea ʻeha</translation>
+      <translation type="unfinished">Hanakahi</translation>
     </message>
     <message>
       <location filename="../src/providers/SMART/HistoryPage.qml" line="91" />
       <source>Sighting</source>
-      <translation type="unfinished">ʻĀnō</translation>
+      <translation type="unfinished">ʻIke ʻana</translation>
     </message>
     <message>
       <location filename="../src/providers/SMART/HistoryPage.qml" line="98" />
@@ -221,17 +221,17 @@
     <message>
       <location filename="../src/providers/SMART/HistoryPage.qml" line="150" />
       <source>No patrol sightings</source>
-      <translation type="unfinished">ʻAʻole ke nānā loiloi</translation>
+      <translation type="unfinished">ʻAʻohe ʻike mākaʻikaʻi</translation>
     </message>
     <message>
       <location filename="../src/providers/SMART/HistoryPage.qml" line="172" />
       <source>No independent incidents</source>
-      <translation type="unfinished">ʻAʻole kahi hanana kūʻokoʻa</translation>
+      <translation type="unfinished">ʻAʻohe hanana kūʻokoʻa</translation>
     </message>
     <message>
       <location filename="../src/providers/SMART/HistoryPage.qml" line="190" />
       <source>No sighting selected</source>
-      <translation type="unfinished">ʻAʻohe ʻike ʻike ʻia</translation>
+      <translation type="unfinished">ʻAʻohe ʻike i koho ʻia</translation>
     </message>
   </context>
   <context>
@@ -239,7 +239,7 @@
     <message>
       <location filename="../src/providers/SMART/HistorySightingListView.qml" line="138" />
       <source>Group</source>
-      <translation type="unfinished">Nā hui</translation>
+      <translation type="unfinished">Pūʻulu</translation>
     </message>
   </context>
   <context>
@@ -270,7 +270,7 @@
     <message>
       <location filename="../src/controls/imports/CyberTracker/Controls.1/LoginItem.qml" line="54" />
       <source>Logon</source>
-      <translation type="unfinished">Loko</translation>
+      <translation type="unfinished">Komo</translation>
     </message>
   </context>
   <context>
@@ -279,65 +279,65 @@
       <location filename="../qml/Main.qml" line="65" />
       <location filename="../qml/Main.qml" line="113" />
       <source>Delete project?</source>
-      <translation type="unfinished">Hoʻopau i ka papahana?</translation>
+      <translation type="unfinished">Holoi i ka papahana?</translation>
     </message>
     <message>
       <location filename="../qml/Main.qml" line="66" />
       <source>Project will be permanently removed</source>
-      <translation type="unfinished">E lawe mau ʻia ka pāhana</translation>
+      <translation type="unfinished">E wehe mau ʻia ka papahana</translation>
     </message>
     <message>
       <location filename="../qml/Main.qml" line="76" />
       <location filename="../qml/Main.qml" line="154" />
       <source>Reset project?</source>
-      <translation type="unfinished">Hoʻokō i ka papahana?</translation>
+      <translation type="unfinished">Hoʻoponopono hou i ka papahana?</translation>
     </message>
     <message>
       <location filename="../qml/Main.qml" line="77" />
       <source>All project data will be lost</source>
-      <translation type="unfinished">E nalowale nā ʻikepili āpau āpau</translation>
+      <translation type="unfinished">E nalowale ana ka ʻikepili papahana</translation>
     </message>
     <message>
       <location filename="../qml/Main.qml" line="123" />
       <location filename="../qml/Main.qml" line="164" />
       <source>Yes</source>
-      <translation type="unfinished">Ae</translation>
+      <translation type="unfinished">ʻAe</translation>
     </message>
     <message>
       <location filename="../qml/Main.qml" line="137" />
       <location filename="../qml/Main.qml" line="177" />
       <source>No</source>
-      <translation type="unfinished">Aʻole</translation>
+      <translation type="unfinished">ʻAʻole</translation>
     </message>
     <message>
       <location filename="../qml/Main.qml" line="239" />
       <source>Connect to Dropbox</source>
-      <translation type="unfinished">Pākuʻi me Dropbox</translation>
+      <translation type="unfinished">Hoʻohui iā Dropbox</translation>
     </message>
     <message>
       <location filename="../qml/Main.qml" line="250" />
       <source>Connect to EarthRanger</source>
-      <translation type="unfinished">Hoʻohui i ka EarthRanger</translation>
+      <translation type="unfinished">Hoʻohui iā EarthRanger</translation>
     </message>
     <message>
       <location filename="../qml/Main.qml" line="261" />
       <source>Connect to SMART</source>
-      <translation type="unfinished">Hono iā SMART</translation>
+      <translation type="unfinished">Hoʻohui iā SMART</translation>
     </message>
     <message>
       <location filename="../qml/Main.qml" line="273" />
       <source>Sync projects</source>
-      <translation type="unfinished">Nā papahana papahana</translation>
+      <translation type="unfinished">Hoʻopili i nā papahana</translation>
     </message>
     <message>
       <location filename="../qml/Main.qml" line="308" />
       <source>Connect</source>
-      <translation type="unfinished">Honua</translation>
+      <translation type="unfinished">Hoʻohui</translation>
     </message>
     <message>
       <location filename="../qml/Main.qml" line="321" />
       <source>Map</source>
-      <translation type="unfinished">Palapala Map</translation>
+      <translation type="unfinished">Palapala ʻāina</translation>
     </message>
     <message>
       <location filename="../qml/Main.qml" line="334" />
@@ -347,7 +347,7 @@
     <message>
       <location filename="../qml/Main.qml" line="347" />
       <source>Bug</source>
-      <translation type="unfinished">Kauka</translation>
+      <translation type="unfinished">Bug</translation>
     </message>
   </context>
   <context>
@@ -356,40 +356,40 @@
       <location filename="../src/providers/SMART/MainPage.qml" line="50" />
       <location filename="../src/providers/SMART/MainPage.qml" line="98" />
       <source>Delete project?</source>
-      <translation type="unfinished">Hoʻopau i ka papahana?</translation>
+      <translation type="unfinished">Holoi i ka papahana?</translation>
     </message>
     <message>
       <location filename="../src/providers/SMART/MainPage.qml" line="51" />
       <source>Project will be permanently removed</source>
-      <translation type="unfinished">E lawe mau ʻia ka pāhana</translation>
+      <translation type="unfinished">E wehe mau ʻia ka papahana</translation>
     </message>
     <message>
       <location filename="../src/providers/SMART/MainPage.qml" line="61" />
       <location filename="../src/providers/SMART/MainPage.qml" line="139" />
       <source>Reset project?</source>
-      <translation type="unfinished">Hoʻokō i ka papahana?</translation>
+      <translation type="unfinished">Hoʻoponopono hou i ka papahana?</translation>
     </message>
     <message>
       <location filename="../src/providers/SMART/MainPage.qml" line="62" />
       <source>All project data will be lost</source>
-      <translation type="unfinished">E nalowale nā ʻikepili āpau āpau</translation>
+      <translation type="unfinished">E nalowale ana ka ʻikepili papahana</translation>
     </message>
     <message>
       <location filename="../src/providers/SMART/MainPage.qml" line="108" />
       <location filename="../src/providers/SMART/MainPage.qml" line="149" />
       <source>Yes</source>
-      <translation type="unfinished">Ae</translation>
+      <translation type="unfinished">ʻAe</translation>
     </message>
     <message>
       <location filename="../src/providers/SMART/MainPage.qml" line="122" />
       <location filename="../src/providers/SMART/MainPage.qml" line="162" />
       <source>No</source>
-      <translation type="unfinished">Aʻole</translation>
+      <translation type="unfinished">ʻAʻole</translation>
     </message>
     <message>
       <location filename="../src/providers/SMART/MainPage.qml" line="254" />
       <source>Refresh</source>
-      <translation type="unfinished">Hoʻohālikelike</translation>
+      <translation type="unfinished">Hōʻano hou</translation>
     </message>
     <message>
       <location filename="../src/providers/SMART/MainPage.qml" line="270" />
@@ -404,7 +404,7 @@
     <message>
       <location filename="../src/providers/SMART/MainPage.qml" line="296" />
       <source>Bug</source>
-      <translation type="unfinished">Kauka</translation>
+      <translation type="unfinished">Bug</translation>
     </message>
   </context>
   <context>
@@ -412,17 +412,17 @@
     <message>
       <location filename="../qml/Maps.qml" line="21" />
       <source>Inspect</source>
-      <translation type="unfinished">E nānā</translation>
+      <translation type="unfinished">Nānā</translation>
     </message>
     <message>
       <location filename="../qml/Maps.qml" line="21" />
       <source>Compass</source>
-      <translation type="unfinished">Kāohi</translation>
+      <translation type="unfinished">Pāpana</translation>
     </message>
     <message>
       <location filename="../qml/Maps.qml" line="473" />
       <source>No sighting selected</source>
-      <translation type="unfinished">ʻAʻohe ʻike ʻike ʻia</translation>
+      <translation type="unfinished">ʻAʻohe ʻike i koho ʻia</translation>
     </message>
     <message>
       <location filename="../qml/Maps.qml" line="509" />
@@ -432,7 +432,7 @@
     <message>
       <location filename="../qml/Maps.qml" line="526" />
       <source>Time</source>
-      <translation type="unfinished">He wa</translation>
+      <translation type="unfinished">Manawa</translation>
     </message>
   </context>
   <context>
@@ -440,17 +440,17 @@
     <message>
       <location filename="../src/providers/SMART/MetadataPage.qml" line="35" />
       <source>Start patrol</source>
-      <translation type="unfinished">Hoʻomaka ka Patrol</translation>
+      <translation type="unfinished">E hoʻomaka i ka mākaʻikaʻi</translation>
     </message>
     <message>
       <location filename="../src/providers/SMART/MetadataPage.qml" line="37" />
       <source>Resume patrol</source>
-      <translation type="unfinished">E hoʻomau i nā patrol</translation>
+      <translation type="unfinished">E hoʻomau i ka mākaʻikaʻi</translation>
     </message>
     <message>
       <location filename="../src/providers/SMART/MetadataPage.qml" line="39" />
       <source>Change patrol</source>
-      <translation type="unfinished">E hoʻololi i ka patrol</translation>
+      <translation type="unfinished">Hoʻololi patrol</translation>
     </message>
   </context>
   <context>
@@ -489,52 +489,52 @@
     <message>
       <location filename="../qml/Settings.qml" line="345" />
       <source>Language</source>
-      <translation type="unfinished">ʻLelo</translation>
+      <translation type="unfinished">ʻŌlelo</translation>
     </message>
     <message>
       <location filename="../qml/Settings.qml" line="381" />
       <source>Full screen</source>
-      <translation type="unfinished">Lawa piha</translation>
+      <translation type="unfinished">Paʻa piha</translation>
     </message>
     <message>
       <location filename="../qml/Settings.qml" line="411" />
       <source>Dark theme</source>
-      <translation type="unfinished">ʻLelo ʻeleʻele</translation>
+      <translation type="unfinished">Poʻomanaʻo ʻeleʻele</translation>
     </message>
     <message>
       <location filename="../qml/Settings.qml" line="444" />
       <source>Font size</source>
-      <translation type="unfinished">Nui kiko</translation>
+      <translation type="unfinished">Nui kikokiko</translation>
     </message>
     <message>
       <location filename="../qml/Settings.qml" line="468" />
       <source>Coordinates</source>
-      <translation type="unfinished">Koʻiila</translation>
+      <translation type="unfinished">Hoʻohui</translation>
     </message>
     <message>
       <location filename="../qml/Settings.qml" line="476" />
       <source>Decimal degrees</source>
-      <translation type="unfinished">Nā kekelē decimal</translation>
+      <translation type="unfinished">Degere decimal</translation>
     </message>
     <message>
       <location filename="../qml/Settings.qml" line="476" />
       <source>Degrees minutes seconds</source>
-      <translation type="unfinished">Mau kekona mau kekona</translation>
+      <translation type="unfinished">Degere minuke kekona</translation>
     </message>
     <message>
       <location filename="../qml/Settings.qml" line="476" />
       <source>Degrees decimal minutes</source>
-      <translation type="unfinished">Hōʻailona hōʻano minuke</translation>
+      <translation type="unfinished">Degere decimal minuke</translation>
     </message>
     <message>
       <location filename="../qml/Settings.qml" line="492" />
       <source>Simulate location</source>
-      <translation type="unfinished">Hoʻololi i kahi</translation>
+      <translation type="unfinished">E hoʻohālike i ka wahi</translation>
     </message>
     <message>
       <location filename="../qml/Settings.qml" line="518" />
       <source>Source file</source>
-      <translation type="unfinished">Pūnaewele kumu</translation>
+      <translation type="unfinished">Waihona kumu</translation>
     </message>
     <message>
       <location filename="../qml/Settings.qml" line="526" />
@@ -544,27 +544,27 @@
     <message>
       <location filename="../qml/Settings.qml" line="549" />
       <source>Kiosk mode</source>
-      <translation type="unfinished">Kūlana Kiosk</translation>
+      <translation type="unfinished">ʻano kiosk</translation>
     </message>
     <message>
       <location filename="../qml/Settings.qml" line="582" />
       <source>Exit pin</source>
-      <translation type="unfinished">Pihi i ka pin</translation>
+      <translation type="unfinished">Puka pine</translation>
     </message>
     <message>
       <location filename="../qml/Settings.qml" line="617" />
       <source>Simulation source</source>
-      <translation type="unfinished">He kumu waihona</translation>
+      <translation type="unfinished">Puna hoʻohālike</translation>
     </message>
     <message>
       <location filename="../qml/Settings.qml" line="626" />
       <source>Generate track file using</source>
-      <translation type="unfinished">Hoʻopau i nā faile track me ka hoʻohana ʻana</translation>
+      <translation type="unfinished">E hana i ka faila track me ka hoʻohana</translation>
     </message>
     <message>
       <location filename="../qml/Settings.qml" line="633" />
       <source>Copy to the Download folder</source>
-      <translation type="unfinished">Kākoʻo i ka folder Download</translation>
+      <translation type="unfinished">E kope i ka waihona Download</translation>
     </message>
     <message>
       <location filename="../qml/Settings.qml" line="640" />
@@ -593,12 +593,12 @@
     <message>
       <location filename="../src/providers/SMART/SettingsPage.qml" line="32" />
       <source>Patrol language</source>
-      <translation type="unfinished">ʻOllelo Patrol</translation>
+      <translation type="unfinished">ʻŌlelo kiaʻi</translation>
     </message>
     <message>
       <location filename="../src/providers/SMART/SettingsPage.qml" line="62" />
       <source>Incident language</source>
-      <translation type="unfinished">ʻLelo kūkā</translation>
+      <translation type="unfinished">ʻŌlelo pilikua</translation>
     </message>
   </context>
   <context>
@@ -653,7 +653,7 @@
     <message>
       <location filename="../src/providers/SMART/SightingHomePage.qml" line="382" />
       <source>Tap to add</source>
-      <translation type="unfinished">Pākuʻi e hoʻohui</translation>
+      <translation type="unfinished">Kaomi no ka hoʻohui</translation>
     </message>
     <message>
       <location filename="../src/providers/SMART/SightingHomePage.qml" line="430" />
@@ -668,27 +668,27 @@
     <message>
       <location filename="../src/providers/SMART/SightingHomePage.qml" line="443" />
       <source>Yes</source>
-      <translation type="unfinished">Ae</translation>
+      <translation type="unfinished">ʻAe</translation>
     </message>
     <message>
       <location filename="../src/providers/SMART/SightingHomePage.qml" line="465" />
       <source>No</source>
-      <translation type="unfinished">Aʻole</translation>
+      <translation type="unfinished">ʻAʻole</translation>
     </message>
     <message>
       <location filename="../src/providers/SMART/SightingHomePage.qml" line="494" />
       <source>End patrol</source>
-      <translation type="unfinished">E pau i ka lā patrol</translation>
+      <translation type="unfinished">Hoʻopau mākaʻikaʻi</translation>
     </message>
     <message>
       <location filename="../src/providers/SMART/SightingHomePage.qml" line="505" />
       <source>Pause patrol</source>
-      <translation type="unfinished">Pōleʻa pale</translation>
+      <translation type="unfinished">Hoʻomaha mākaʻikaʻi</translation>
     </message>
     <message>
       <location filename="../src/providers/SMART/SightingHomePage.qml" line="517" />
       <source>Change patrol</source>
-      <translation type="unfinished">E hoʻololi i ka patrol</translation>
+      <translation type="unfinished">Hoʻololi patrol</translation>
     </message>
   </context>
   <context>
@@ -723,12 +723,12 @@
     <message>
       <location filename="../src/providers/SMART/StartPage.qml" line="16" />
       <source>Uploaded data has been cleared</source>
-      <translation type="unfinished">Ua hoʻoili ʻia nā ʻikepili i hoʻouka ʻia</translation>
+      <translation type="unfinished">Ua holoi ʻia ka ʻikepili i hoʻouka ʻia</translation>
     </message>
     <message>
       <location filename="../src/providers/SMART/StartPage.qml" line="23" />
       <source>Nothing to export</source>
-      <translation type="unfinished">ʻAʻohe mea e hōʻike aku ai</translation>
+      <translation type="unfinished">ʻAʻohe mea e hoʻokuʻu aku</translation>
     </message>
     <message>
       <location filename="../src/providers/SMART/StartPage.qml" line="49" />
@@ -743,7 +743,7 @@
     <message>
       <location filename="../src/providers/SMART/StartPage.qml" line="107" />
       <source>Clear sent data</source>
-      <translation type="unfinished">Hoʻopaʻa ʻia nā ʻikepili i hoʻouna ʻia</translation>
+      <translation type="unfinished">Holoi i ka ʻikepili i hoʻouna ʻia</translation>
     </message>
     <message>
       <location filename="../src/providers/SMART/StartPage.qml" line="107" />
@@ -763,7 +763,7 @@
     <message>
       <location filename="../src/providers/SMART/StartPage.qml" line="142" />
       <source>Resume Patrol</source>
-      <translation type="unfinished">Hoʻomau ka Patrol</translation>
+      <translation type="unfinished">Hoʻomaka hou i ka mākaʻikaʻi</translation>
     </message>
     <message>
       <location filename="../src/providers/SMART/StartPage.qml" line="142" />

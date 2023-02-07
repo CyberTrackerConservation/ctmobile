@@ -13,16 +13,44 @@ QtObject {
     property color colorAccent: App.config.colorAccent
     property color colorForeground: Material.foreground
 
-    property color colorGroove: darkTheme ? "#808080" : "#CECECE"
-    property color colorContent: Qt.lighter(Material.background, 0.98)
-    property color colorToolbar: Qt.lighter(Material.background, darkTheme ? 0.5 : 1.5)
+    property color colorGroove: getColorGroove(Material.background)
+    property color colorContent: getColorContent(Material.background)
+    property color colorToolbar: getColorToolbar(Material.background)
 
     property color colorCalculated: darkTheme ? "lightsteelblue" : "steelblue"
     property color colorInvalid: darkTheme ? "red" : "crimson"
     property var colorHighlighted: darkTheme ? "lightsteelblue" : "steelblue"
 
-    property int toolButtonSize: 30
-    property int minRowHeight: 24 + (16 * App.settings.fontSize) / 100
+    property int toolButtonSize: (24 * App.settings.fontSize) / 100
+    property int minRowHeight: Math.max(40, (40 * App.settings.fontSize) / 100)
+    property int iconSize24: Math.min(48, (24 * App.settings.fontSize) / 100)
+    property int iconSize48: Math.max(40, (40 * App.settings.fontSize) / 100)
+    property int iconSize64: Math.max(64, (64 * App.settings.fontSize) / 100)
+
+    property int lineWidth1: (1 * App.settings.fontSize) / 100
+    property int lineWidth2: (2 * App.settings.fontSize) / 100
 
     readonly property string backIconSource: "qrc:/icons/arrow_back.svg"
+    readonly property string nextIconSource: "qrc:/icons/arrow_right.svg"
+    readonly property string saveIconSource: "qrc:/icons/save.svg"
+    readonly property string mapIconSource: "qrc:/icons/map_outline.svg"
+    readonly property string formIconSource: "qrc:/icons/file_outline.svg"
+    readonly property string homeIconSource: "qrc:/icons/home_import_outline.svg"
+    readonly property string swapIconSource: "qrc:/icons/arrange_send_backward.svg"
+    readonly property string okIconSource: "qrc:/icons/ok.svg"
+    readonly property string cancelIconSource: "qrc:/icons/cancel.svg"
+
+    function getColorGroove(backgroundColor) {
+        let tintColor = Utils.lightness(backgroundColor) < 128 ? "#C0FFFFFF" : "#58000000"
+        return Qt.tint(backgroundColor, tintColor)
+    }
+
+    function getColorContent(backgroundColor) {
+        return Qt.lighter(backgroundColor, 0.95)
+    }
+
+    function getColorToolbar(backgroundColor) {
+        return Qt.lighter(backgroundColor, Style.darkTheme ? 0.5 : 1.0)
+    }
+
 }

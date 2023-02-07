@@ -39,7 +39,7 @@ Label {
                 return
             }
 
-            if (form.useGPSTime && !App.timeManager.corrected) {
+            if (form.requireGPSTime && !App.timeManager.corrected) {
                 console.log("Waiting for time correction")
                 return
             }
@@ -55,7 +55,7 @@ Label {
             }
 
             active = false
-            fieldBinding.setValue(App.lastLocation)
+            fieldBinding.setValue(App.lastLocation.toMap)
         }
 
         onActiveChanged: fixCounter = 0

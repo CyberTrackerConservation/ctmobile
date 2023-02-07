@@ -9,10 +9,8 @@ GridLayout {
     columnSpacing: 0
     rowSpacing: 8
 
-    property var location: App.lastLocation
     property int buttonWidth: (grid.width - 16) / 2
-
-    property bool hasTimestamp: grid.location !== undefined && grid.location.t !== undefined
+    property bool hasTimestamp: App.lastLocation.isValid
 
     // Date.
     Label {
@@ -20,6 +18,7 @@ GridLayout {
         text: qsTr("Date")
         font.pixelSize: App.settings.font14
         horizontalAlignment: Label.AlignRight
+        elide: Label.ElideLeft
     }
 
     Item {
@@ -28,7 +27,7 @@ GridLayout {
 
     Label {
         Layout.preferredWidth: grid.buttonWidth
-        text: grid.hasTimestamp ? App.timeManager.getDateText(grid.location.ts) : "-"
+        text: App.timeManager.getDateText(App.lastLocation.timestamp, "-")
         font.pixelSize: App.settings.font14
         font.bold: true
     }
@@ -39,6 +38,7 @@ GridLayout {
         text: qsTr("Time")
         font.pixelSize: App.settings.font14
         horizontalAlignment: Label.AlignRight
+        elide: Label.ElideLeft
     }
 
     Item {
@@ -47,7 +47,7 @@ GridLayout {
 
     Label {
         Layout.preferredWidth: grid.buttonWidth
-        text: grid.hasTimestamp ? App.timeManager.getTimeText(grid.location.ts) : "-"
+        text: App.timeManager.getTimeText(App.lastLocation.timestamp, "-")
         font.pixelSize: App.settings.font14
         font.bold: true
     }
@@ -58,6 +58,7 @@ GridLayout {
         text: qsTr("Time zone")
         font.pixelSize: App.settings.font14
         horizontalAlignment: Label.AlignRight
+        elide: Label.ElideLeft
     }
 
     Item {
@@ -67,7 +68,7 @@ GridLayout {
     Label {
         Layout.preferredWidth: grid.buttonWidth
         text: {
-            grid.location
+            App.lastLocation
             return App.timeManager.timeZoneText
         }
         font.pixelSize: App.settings.font14
@@ -80,13 +81,14 @@ GridLayout {
         text: qsTr("Altitude")
         font.pixelSize: App.settings.font14
         horizontalAlignment: Label.AlignRight
+        elide: Label.ElideLeft
     }
 
     Item { width: 16 }
 
     Label {
         Layout.preferredWidth: grid.buttonWidth
-        text: grid.location ? App.getDistanceText(grid.location.z) : "-"
+        text: App.lastLocation.isValid ? App.getDistanceText(App.lastLocation.z) : "-"
         font.pixelSize: App.settings.font14
         font.bold: true
     }
@@ -97,13 +99,14 @@ GridLayout {
         text: qsTr("Direction")
         font.pixelSize: App.settings.font14
         horizontalAlignment: Label.AlignRight
+        elide: Label.ElideLeft
     }
 
     Item { width: 16 }
 
     Label {
         Layout.preferredWidth: grid.buttonWidth
-        text: grid.location ? ((grid.location.d | 0) + " " + qsTr("degrees")) : "-"
+        text: App.lastLocation.isValid ? App.getDirectionText(App.lastLocation.direction) : "-"
         font.pixelSize: App.settings.font14
         font.bold: true
     }
@@ -114,13 +117,14 @@ GridLayout {
         text: qsTr("Accuracy")
         font.pixelSize: App.settings.font14
         horizontalAlignment: Label.AlignRight
+        elide: Label.ElideLeft
     }
 
     Item { width: 16 }
 
     Label {
         Layout.preferredWidth: grid.buttonWidth
-        text: grid.location ? App.getDistanceText(grid.location.a) : "-"
+        text: App.lastLocation.isValid ? App.getDistanceText(App.lastLocation.accuracy) : "-"
         font.pixelSize: App.settings.font14
         font.bold: true
     }
@@ -131,13 +135,14 @@ GridLayout {
         text: qsTr("Speed")
         font.pixelSize: App.settings.font14
         horizontalAlignment: Label.AlignRight
+        elide: Label.ElideLeft
     }
 
     Item { width: 16 }
 
     Label {
         Layout.preferredWidth: grid.buttonWidth
-        text: grid.location ? App.getSpeedText(grid.location.s) : "-"
+        text: App.lastLocation.isValid ? App.getSpeedText(App.lastLocation.speed) : "-"
         font.pixelSize: App.settings.font14
         font.bold: true
     }
@@ -148,6 +153,7 @@ GridLayout {
         font.pixelSize: App.settings.font14
         horizontalAlignment: Label.AlignRight
         text: qsTr("Track recorder")
+        elide: Label.ElideLeft
     }
 
     Item { width: 16 }
@@ -160,7 +166,7 @@ GridLayout {
             if (typeof(form) === "undefined") {
                 return qsTr("Off")
             } else {
-                return form.trackStreamer.rateText()
+                return form.trackStreamer.rateText
             }
         }
     }

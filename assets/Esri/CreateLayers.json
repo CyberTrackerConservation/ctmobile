@@ -1,0 +1,540 @@
+{
+    "layers": [
+        {
+            "id": 0,
+            "name": "Tracks",
+            "type": "Feature Layer",
+            "description": "The Tracks Layer",
+            "geometryType": "esriGeometryPoint",
+            "hasZ": true,
+            "objectIdField": "objectid",
+            "capabilities": "Create,Delete,Query,Update,Editing,Append",
+            "extent": {
+                "spatialReference": {
+                    "latestWkid": 4326,
+                    "wkid": 4326
+                },
+                "xmax": 180,
+                "xmin": -180,
+                "ymax": 90,
+                "ymin": -90
+            },
+            "displayField": "created_user",
+            "htmlPopupType": "esriServerHTMLPopupTypeAsHTMLText",
+            "editFieldsInfo": {
+                "creatorField": "created_user"
+            },
+            "indexes": [
+                {
+                    "name": "GlobalIDIndex",
+                    "fields": "globalid",
+                    "isAscending": false,
+                    "isUnique": true,
+                    "description": "GlobalID index"
+                }
+            ],
+            "globalIdField": "globalid",
+            "supportsApplyEditsWithGlobalIds": true,
+            "fields": [
+                {
+                    "name": "objectid",
+                    "type": "esriFieldTypeOID",
+                    "alias": "OBJECTID",
+                    "sqlType": "sqlTypeInteger",
+                    "length": 8,
+                    "nullable": false,
+                    "editable": false,
+                    "visible": true,
+                    "domain": null,
+                    "defaultValue": null
+                },
+                {
+                    "name": "globalid",
+                    "type": "esriFieldTypeGlobalID",
+                    "alias": "GlobalID",
+                    "sqlType": "sqlTypeGUID",
+                    "length": 38,
+                    "nullable": false,
+                    "editable": false,
+                    "domain": null,
+                    "defaultValue": null
+                },
+                {
+                    "name": "deviceid",
+                    "type": "esriFieldTypeGUID",
+                    "alias": "DeviceID",
+                    "sqlType": "sqlTypeVarchar",
+                    "length": 38,
+                    "nullable": true,
+                    "editable": true,
+                    "visible": true,
+                    "domain": null,
+                    "defaultValue": null
+                },
+                {
+                    "name": "appid",
+                    "type": "esriFieldTypeString",
+                    "alias": "AppID",
+                    "sqlType": "sqlTypeVarchar",
+                    "length": 64,
+                    "nullable": true,
+                    "editable": true,
+                    "visible": true,
+                    "domain": null,
+                    "defaultValue": null
+                },
+                {
+                    "name": "timestamp",
+                    "type": "esriFieldTypeDate",
+                    "alias": "Timestamp",
+                    "sqlType": "sqlTypeTimestamp",
+                    "length": 0,
+                    "nullable": false,
+                    "editable": true,
+                    "visible": true,
+                    "domain": null,
+                    "defaultValue": null
+                },
+                {
+                    "name": "altitude",
+                    "type": "esriFieldTypeDouble",
+                    "alias": "Altitude",
+                    "sqlType": "sqlTypeDouble",
+                    "nullable": true,
+                    "editable": true,
+                    "visible": true,
+                    "domain": null,
+                    "defaultValue": null
+                },
+                {
+                    "name": "course",
+                    "type": "esriFieldTypeDouble",
+                    "alias": "Course",
+                    "sqlType": "sqlTypeDouble",
+                    "nullable": true,
+                    "editable": true,
+                    "visible": true,
+                    "domain": null,
+                    "defaultValue": null
+                },
+                {
+                    "name": "speed",
+                    "type": "esriFieldTypeDouble",
+                    "alias": "Speed",
+                    "sqlType": "sqlTypeDouble",
+                    "nullable": true,
+                    "editable": true,
+                    "visible": true,
+                    "domain": null,
+                    "defaultValue": null
+                },
+                {
+                    "name": "accuracy",
+                    "type": "esriFieldTypeDouble",
+                    "alias": "Accuracy",
+                    "sqlType": "sqlTypeDouble",
+                    "nullable": true,
+                    "editable": true,
+                    "visible": true,
+                    "domain": null,
+                    "defaultValue": null
+                },
+                {
+                    "name": "interval",
+                    "type": "esriFieldTypeInteger",
+                    "alias": "Interval",
+                    "sqlType": "sqlTypeInteger",
+                    "nullable": true,
+                    "editable": true,
+                    "visible": true,
+                    "domain": null,
+                    "defaultValue": null
+                },
+                {
+                    "name": "distance_filter",
+                    "type": "esriFieldTypeInteger",
+                    "alias": "Distance filter",
+                    "sqlType": "sqlTypeInteger",
+                    "nullable": true,
+                    "editable": true,
+                    "visible": true,
+                    "domain": null,
+                    "defaultValue": null
+                },
+                {
+                    "name": "accuracy_filter",
+                    "type": "esriFieldTypeInteger",
+                    "alias": "Accuracy filter",
+                    "sqlType": "sqlTypeInteger",
+                    "nullable": true,
+                    "editable": true,
+                    "visible": true,
+                    "domain": null,
+                    "defaultValue": null
+                },
+                {
+                    "name": "counter",
+                    "type": "esriFieldTypeInteger",
+                    "alias": "Counter",
+                    "sqlType": "sqlTypeInteger",
+                    "nullable": true,
+                    "editable": true,
+                    "visible": true,
+                    "domain": null,
+                    "defaultValue": null
+                },
+                {
+                    "name": "full_name",
+                    "type": "esriFieldTypeString",
+                    "alias": "Full Name",
+                    "sqlType": "sqlTypeVarchar",
+                    "length": 255,
+                    "nullable": true,
+                    "editable": true,
+                    "visible": true,
+                    "domain": null,
+                    "defaultValue": null
+                },
+                {
+                    "name": "created_user",
+                    "type": "esriFieldTypeString",
+                    "alias": "Created User",
+                    "sqlType": "sqlTypeVarchar",
+                    "length": 255,
+                    "nullable": true,
+                    "editable": false,
+                    "visible": true,
+                    "domain": null,
+                    "defaultValue": null
+                }
+            ]
+        },
+        {
+            "id": 1,
+            "name": "Last Known Locations",
+            "type": "Feature Layer",
+            "description": "The Last Known Location Layer",
+            "geometryType": "esriGeometryPoint",
+            "hasZ": true,
+            "objectIdField": "objectid",
+            "capabilities": "Create,Delete,Query,Update,Editing,Append",
+            "extent": {
+                "spatialReference": {
+                    "latestWkid": 4326,
+                    "wkid": 4326
+                },
+                "xmax": 180,
+                "xmin": -180,
+                "ymax": 90,
+                "ymin": -90
+            },
+            "displayField": "created_user",
+            "htmlPopupType": "esriServerHTMLPopupTypeAsHTMLText",
+            "editFieldsInfo": {
+                "creatorField": "created_user"
+            },
+            "indexes": [
+                {
+                    "name": "GlobalIDIndex",
+                    "fields": "globalid",
+                    "isAscending": false,
+                    "isUnique": true,
+                    "description": "GlobalID index"
+                },
+                {
+                    "name": "DeviceUserIndex",
+                    "fields": "deviceid, created_user",
+                    "isAscending": false,
+                    "isUnique": true,
+                    "description": "Unique user and device"
+                }
+            ],
+            "globalIdField": "globalid",
+            "supportsApplyEditsWithGlobalIds": true,
+            "fields": [
+                {
+                    "name": "objectid",
+                    "type": "esriFieldTypeOID",
+                    "alias": "OBJECTID",
+                    "sqlType": "sqlTypeInteger",
+                    "length": 8,
+                    "nullable": false,
+                    "editable": false,
+                    "visible": true,
+                    "domain": null,
+                    "defaultValue": null
+                },
+                {
+                    "name": "globalid",
+                    "type": "esriFieldTypeGlobalID",
+                    "alias": "GlobalID",
+                    "sqlType": "sqlTypeGUID",
+                    "length": 38,
+                    "nullable": false,
+                    "editable": false,
+                    "domain": null,
+                    "defaultValue": null
+                },
+                {
+                    "name": "deviceid",
+                    "type": "esriFieldTypeGUID",
+                    "alias": "DeviceID",
+                    "sqlType": "sqlTypeVarchar",
+                    "length": 38,
+                    "nullable": true,
+                    "editable": true,
+                    "visible": true,
+                    "domain": null,
+                    "defaultValue": null
+                },
+                {
+                    "name": "appid",
+                    "type": "esriFieldTypeString",
+                    "alias": "AppID",
+                    "sqlType": "sqlTypeVarchar",
+                    "length": 64,
+                    "nullable": true,
+                    "editable": true,
+                    "visible": true,
+                    "domain": null,
+                    "defaultValue": null
+                },
+                {
+                    "name": "timestamp",
+                    "type": "esriFieldTypeDate",
+                    "alias": "Timestamp",
+                    "sqlType": "sqlTypeTimestamp",
+                    "length": 0,
+                    "nullable": false,
+                    "editable": true,
+                    "visible": true,
+                    "domain": null,
+                    "defaultValue": null
+                },
+                {
+                    "name": "altitude",
+                    "type": "esriFieldTypeDouble",
+                    "alias": "Altitude",
+                    "sqlType": "sqlTypeDouble",
+                    "nullable": true,
+                    "editable": true,
+                    "visible": true,
+                    "domain": null,
+                    "defaultValue": null
+                },
+                {
+                    "name": "course",
+                    "type": "esriFieldTypeDouble",
+                    "alias": "Course",
+                    "sqlType": "sqlTypeDouble",
+                    "nullable": true,
+                    "editable": true,
+                    "visible": true,
+                    "domain": null,
+                    "defaultValue": null
+                },
+                {
+                    "name": "speed",
+                    "type": "esriFieldTypeDouble",
+                    "alias": "Speed",
+                    "sqlType": "sqlTypeDouble",
+                    "nullable": true,
+                    "editable": true,
+                    "visible": true,
+                    "domain": null,
+                    "defaultValue": null
+                },
+                {
+                    "name": "accuracy",
+                    "type": "esriFieldTypeDouble",
+                    "alias": "Accuracy",
+                    "sqlType": "sqlTypeDouble",
+                    "nullable": true,
+                    "editable": true,
+                    "visible": true,
+                    "domain": null,
+                    "defaultValue": null
+                },
+                {
+                    "name": "interval",
+                    "type": "esriFieldTypeInteger",
+                    "alias": "Interval",
+                    "sqlType": "sqlTypeInteger",
+                    "nullable": true,
+                    "editable": true,
+                    "visible": true,
+                    "domain": null,
+                    "defaultValue": null
+                },
+                {
+                    "name": "full_name",
+                    "type": "esriFieldTypeString",
+                    "alias": "Full Name",
+                    "sqlType": "sqlTypeVarchar",
+                    "length": 255,
+                    "nullable": true,
+                    "editable": true,
+                    "visible": true,
+                    "domain": null,
+                    "defaultValue": null
+                },
+                {
+                    "name": "created_user",
+                    "type": "esriFieldTypeString",
+                    "alias": "Created User",
+                    "sqlType": "sqlTypeVarchar",
+                    "length": 255,
+                    "nullable": true,
+                    "editable": false,
+                    "visible": true,
+                    "domain": null,
+                    "defaultValue": null
+                }
+            ]
+        },
+        {
+            "id": 2,
+            "name": "Track Lines",
+            "type": "Feature Layer",
+            "description": "The Track Lines Layer",
+            "geometryType": "esriGeometryPolyline",
+            "hasZ": true,
+            "objectIdField": "objectid",
+            "capabilities": "Create,Delete,Query,Update,Editing,Append",
+            "extent": {
+                "spatialReference": {
+                    "latestWkid": 4326,
+                    "wkid": 4326
+                },
+                "xmax": 180,
+                "xmin": -180,
+                "ymax": 90,
+                "ymin": -90
+            },
+            "displayField": "created_user",
+            "htmlPopupType": "esriServerHTMLPopupTypeAsHTMLText",
+            "editFieldsInfo": {
+                "creatorField": "created_user"
+            },
+            "indexes": [
+                {
+                    "name": "GlobalIDIndex",
+                    "fields": "globalid",
+                    "isAscending": false,
+                    "isUnique": true,
+                    "description": "GlobalID index"
+                }
+            ],
+            "globalIdField": "globalid",
+            "supportsApplyEditsWithGlobalIds": true,
+            "fields": [
+                {
+                    "name": "objectid",
+                    "type": "esriFieldTypeOID",
+                    "alias": "OBJECTID",
+                    "sqlType": "sqlTypeInteger",
+                    "length": 8,
+                    "nullable": false,
+                    "editable": false,
+                    "visible": true,
+                    "domain": null,
+                    "defaultValue": null
+                },
+                {
+                    "name": "globalid",
+                    "type": "esriFieldTypeGlobalID",
+                    "alias": "GlobalID",
+                    "sqlType": "sqlTypeGUID",
+                    "length": 38,
+                    "nullable": false,
+                    "editable": false,
+                    "domain": null,
+                    "defaultValue": null
+                },
+                {
+                    "name": "deviceid",
+                    "type": "esriFieldTypeGUID",
+                    "alias": "DeviceID",
+                    "sqlType": "sqlTypeVarchar",
+                    "length": 38,
+                    "nullable": true,
+                    "editable": true,
+                    "visible": true,
+                    "domain": null,
+                    "defaultValue": null
+                },
+                {
+                    "name": "appid",
+                    "type": "esriFieldTypeString",
+                    "alias": "AppID",
+                    "sqlType": "sqlTypeVarchar",
+                    "length": 64,
+                    "nullable": true,
+                    "editable": true,
+                    "visible": true,
+                    "domain": null,
+                    "defaultValue": null
+                },
+                {
+                    "name": "count",
+                    "type": "esriFieldTypeInteger",
+                    "alias": "Count",
+                    "sqlType": "sqlTypeInteger",
+                    "nullable": true,
+                    "editable": true,
+                    "visible": true,
+                    "domain": null,
+                    "defaultValue": null
+                },
+                {
+                    "name": "start_timestamp",
+                    "type": "esriFieldTypeDate",
+                    "alias": "Start Time",
+                    "sqlType": "sqlTypeTimestamp",
+                    "length": 0,
+                    "nullable": false,
+                    "editable": true,
+                    "visible": true,
+                    "domain": null,
+                    "defaultValue": null
+                },
+                {
+                    "name": "stop_timestamp",
+                    "type": "esriFieldTypeDate",
+                    "alias": "Stop Time",
+                    "sqlType": "sqlTypeTimestamp",
+                    "length": 0,
+                    "nullable": false,
+                    "editable": true,
+                    "visible": true,
+                    "domain": null,
+                    "defaultValue": null
+                },
+                {
+                    "name": "full_name",
+                    "type": "esriFieldTypeString",
+                    "alias": "Full Name",
+                    "sqlType": "sqlTypeVarchar",
+                    "length": 255,
+                    "nullable": true,
+                    "editable": true,
+                    "visible": true,
+                    "domain": null,
+                    "defaultValue": null
+                },
+                {
+                    "name": "created_user",
+                    "type": "esriFieldTypeString",
+                    "alias": "Created User",
+                    "sqlType": "sqlTypeVarchar",
+                    "length": 255,
+                    "nullable": true,
+                    "editable": false,
+                    "visible": true,
+                    "domain": null,
+                    "defaultValue": null
+                }
+            ]
+        }
+    ]
+}

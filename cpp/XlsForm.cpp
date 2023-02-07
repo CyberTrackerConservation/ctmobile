@@ -1,8 +1,11 @@
 #include "XlsForm.h"
 #include "App.h"
 
+constexpr char CT_PREFIX[] = "bind::ct:";
+constexpr int CT_PREFIX_LENGTH = 9;
+
 //=================================================================================================
-namespace XlsFormUtils
+namespace
 {
 
 class ParserException : public std::runtime_error
@@ -12,8 +15,90 @@ public:
     ~ParserException() throw() {}
 };
 
+}
 
-bool parseXlsForm(const QString& xlsxFilePath, const QString& targetFolder, QString* errorStringOut)
+//=================================================================================================
+// XlsFormParser.
+
+XlsFormParser::XlsFormParser()
+{
+}
+
+void XlsFormParser::configureProject(Project* project, const QVariantMap& settings)
+{
+    project->set_languages(settings.value("languages").toList());
+
+    auto params = settings.value("parameters").toMap();
+
+    if (params.contains("colors"))
+    {
+        project->set_colors(params.value("colors").toMap());
+    }
+
+    project->set_defaultImmersive(params.value("immersive", project->defaultImmersive()).toBool());
+    project->set_defaultWizardMode(params.value("wizardMode", project->defaultWizardMode()).toBool());
+    project->set_defaultSendLocationInterval(params.value("sendLocationInterval").toInt());
+    project->set_esriLocationServiceUrl(params.value("esriLocationServiceUrl").toString());
+    project->set_defaultSubmitInterval(params.value("submitInterval").toInt());
+    project->set_offlineMapUrl(params.value("offlineMapUrl").toString());
+
+    if (params.contains("subtitle"))
+    {
+        project->set_subtitle(params.value("subtitle").toString());
+    }
+
+    if (params.contains("icon"))
+    {
+        project->set_icon(params.value("icon").toString());
+    }
+
+    if (params.contains("iconDark"))
+    {
+        project->set_iconDark(params.value("iconDark").toString());
+    }
+}
+
+void XlsFormParser::configureProject(const QString& projectUid, const QVariantMap& settings)
+{
+    App::instance()->projectManager()->modify(projectUid, [&](Project* project)
+    {
+        configureProject(project, settings);
+    });
+}
+
+bool XlsFormParser::parseSettings(const QString& xlsxFilePath, QVariantMap* settingsOut)
+{
+    settingsOut->clear();
+
+    xlnt::workbook wb;
+
+    try
+    {
+        wb.load(xlsxFilePath.toStdString());
+        *settingsOut = settingsRowFromSheet(wb.sheet_by_title("settings"));
+    }
+    catch (xlnt::exception e)
+    {
+        qDebug() << "Exception getting version: " << e.what();
+    }
+
+    return !settingsOut->isEmpty();
+}
+
+bool XlsFormParser::getFormVersion(const QString& xlsxFilePath, QString* versionOut)
+{
+    auto settings = QVariantMap();
+    if (!parseSettings(xlsxFilePath, &settings))
+    {
+        return false;
+    }
+
+    *versionOut = settings.value("version").toString();
+
+    return !versionOut->isEmpty();
+}
+
+bool XlsFormParser::parse(const QString& xlsxFilePath, const QString& targetFolder, const QString& projectUid, QString* errorStringOut)
 {
     auto result = false;
 
@@ -28,7 +113,7 @@ bool parseXlsForm(const QString& xlsxFilePath, const QString& targetFolder, QStr
 
     try
     {
-        result = parser.execute(xlsxFilePath, targetFolder);
+        result = parser.execute(xlsxFilePath, targetFolder, projectUid);
     }
     catch (const ParserException& e)
     {
@@ -44,21 +129,22 @@ bool parseXlsForm(const QString& xlsxFilePath, const QString& targetFolder, QStr
     return result;
 }
 
-}
-
-//=================================================================================================
-// XlsFormParser.
-
-XlsFormParser::XlsFormParser()
-{
-}
-
-bool XlsFormParser::execute(const QString& xlsxFilePath, const QString& targetFolder)
+bool XlsFormParser::execute(const QString& xlsxFilePath, const QString& targetFolder, const QString& updateProjectUid)
 {
     m_folderPath = QFileInfo(xlsxFilePath).path();
 
     xlnt::workbook wb;
-    wb.load(xlsxFilePath.toStdString());
+
+    // Load the file.
+    try
+    {
+        wb.load(xlsxFilePath.toStdString());
+    }
+    catch (xlnt::exception e)
+    {
+        qDebug() << "Exception loading workbook: " << e.what();
+        return false;
+    }
 
     // Process "survey" table.
     auto startRowIndex = 1;
@@ -121,6 +207,11 @@ bool XlsFormParser::execute(const QString& xlsxFilePath, const QString& targetFo
     m_elementManager.saveToQmlFile(targetFolderFinal + "/Elements.qml");
     Utils::writeJsonToFile(targetFolderFinal + "/Settings.json", Utils::variantMapToJson(settingsMap));
 
+    if (!updateProjectUid.isEmpty())
+    {
+        XlsFormParser::configureProject(updateProjectUid, settingsMap);
+    }
+
     return m_elementManager.rootElement()->elementCount() != 0 &&
            m_fieldManager.rootField()->fieldCount() != 0;
 }
@@ -173,7 +264,7 @@ void XlsFormParser::parseStringToMap(const QString& header, const QString& value
     }
 }
 
-QString XlsFormParser::findAsset(const QString& name)
+QString XlsFormParser::findAsset(const QString& name) const
 {
     if (!name.isEmpty())
     {
@@ -192,10 +283,65 @@ QString XlsFormParser::findAsset(const QString& name)
     return "";
 }
 
-QVariantMap XlsFormParser::parseParameters(const QString& params)
+QVariantMap XlsFormParser::parseCT(const QVariantMap& parameters, const QString& header, const QString& value)
+{
+    auto valueText = value.trimmed();
+    if (valueText.isEmpty())
+    {
+        return QVariantMap();
+    }
+
+    // Convert "TRUE", "FALSE", "YES", "NO" to lowercase boolean values.
+    auto fixups = QMap<QString, QString> { { "TRUE", "true" }, { "FALSE", "false" }, { "YES", "true" }, { "NO", "false" } };
+    valueText = fixups.value(valueText.toUpper(), valueText);
+
+    // Try a JSON type.
+    auto valueJson = "{ \"v\": " + valueText + " }";
+    auto v = QJsonDocument::fromJson(valueJson.toLatin1()).object().toVariantMap().value("v");
+    if (!v.isValid() || v.isNull())
+    {
+        // object, array, bool, integer and double failed -> must be text.
+        v = valueText;
+    }
+
+    auto attribute = header.right(header.length() - CT_PREFIX_LENGTH);
+
+    // 'parameters' must be an object.
+    if (attribute == "parameters")
+    {
+        return v.toMap();
+    }
+
+    // Check for full attribute value.
+    auto parts = attribute.split('.');
+
+    // attribute is full name.
+    if (parts.length() == 1)
+    {
+        return QVariantMap { { attribute, v } };
+    }
+
+    // attribute is a.b format, e.g. content.style.
+    if (parts.length() == 2)
+    {
+        auto mapName = parts.constFirst();
+        auto mapValue = parts.constLast();
+
+        auto result = parameters.value(mapName).toMap();
+        result[mapValue] = v;
+        return QVariantMap { { mapName, result } };
+    }
+
+    // Format not supported.
+    qDebug() << "Invalid attribute name: " << attribute;
+    return QVariantMap();
+}
+
+
+QVariantMap XlsFormParser::parseParameters(const QString& params) const
 {
     auto result = QVariantMap();
-
+    
     auto strings = params.split(' ');
     for (auto it = strings.constBegin(); it != strings.constEnd(); it++)
     {
@@ -208,13 +354,38 @@ QVariantMap XlsFormParser::parseParameters(const QString& params)
             continue;
         }
 
-        auto value = nv.last();
-        if (value.endsWith(".qml") || value.endsWith(".svg") || value.endsWith(".png"))
-        {
-            value = findAsset(value);
-        }
+        result.insert(name, nv.last());
+    }
 
-        result.insert(name, value);
+    return result;
+}
+
+QVariantMap XlsFormParser::settingsRowFromSheet(const xlnt::worksheet& sheet)
+{
+    auto result = QVariantMap();
+    auto rows = sheet.rows();
+
+    if (rows.length() >= 2)
+    {
+        auto columnHeaders = sheet.rows().front();
+
+        for (auto cell: rows[1])
+        {
+            auto columnIndex = cell.column_index() - 1;
+            auto header = QString(columnHeaders[columnIndex].to_string().c_str()).trimmed();
+            auto value = QString(cell.to_string().c_str()).trimmed();
+
+            if (header.startsWith(CT_PREFIX))
+            {
+                auto parameters = result.value("parameters").toMap();
+                parameters.insert(parseCT(parameters, header, value));
+                result["parameters"] = parameters;
+            }
+            else
+            {
+                result[header] = value;
+            }
+        }
     }
 
     return result;
@@ -291,7 +462,7 @@ XlsFormParser::SurveyRow XlsFormParser::surveyRowFromSheet(const xlnt::worksheet
         }
         else if (header == "default")
         {
-            result.defaultValue = value;
+            result.defaultValue = value == "null" ? QVariant() : value;
         }
         else if (header == "calculation")
         {
@@ -349,9 +520,21 @@ XlsFormParser::SurveyRow XlsFormParser::surveyRowFromSheet(const xlnt::worksheet
         {
             result.bodyEsriStyle = value;
         }
+        else if (header == "body::accept")
+        {
+            result.bodyAccept = value;
+        }
         else if (header == "parameters" || header == "ct_parameters")
         {
-            result.parameters.insert(parseParameters(value));
+            auto values = parseParameters(value);
+            if (!values.isEmpty())
+            {
+                result.parameters.insert(values);
+            }
+        }
+        else if (header.startsWith(CT_PREFIX))
+        {
+            result.parameters.insert(parseCT(result.parameters, header, value));
         }
     }
 
@@ -387,37 +570,6 @@ XlsFormParser::ChoiceRow XlsFormParser::choiceRowFromSheet(const xlnt::worksheet
         else
         {
             result.tags[header] = value;
-        }
-    }
-
-    return result;
-}
-
-QVariantMap XlsFormParser::settingsRowFromSheet(const xlnt::worksheet& sheet)
-{
-    auto result = QVariantMap();
-    auto rows = sheet.rows();
-
-    if (rows.length() == 2)
-    {
-        auto columnHeaders = sheet.rows().front();
-
-        for (auto cell: rows[1])
-        {
-            auto columnIndex = cell.column_index() - 1;
-            auto header = QString(columnHeaders[columnIndex].to_string().c_str()).trimmed();
-            auto cellValue = QString(cell.to_string().c_str()).trimmed();
-
-            if (header == "parameters" || header == "ct_parameters")
-            {
-                auto parameters = result["parameters"].toMap();
-                parameters.insert(parseParameters(cellValue));
-                result["parameters"] = parameters;
-            }
-            else
-            {
-                result[header] = cellValue;
-            }
         }
     }
 
@@ -505,10 +657,28 @@ void XlsFormParser::processSurvey(const xlnt::worksheet& sheet, int* startRowInd
         else if (fieldType == "range")
         {
             auto f = new NumberField();
-            f->set_decimals(0);
-            f->set_minValue(surveyRow.parameters.value("start", 0).toInt());
-            f->set_maxValue(surveyRow.parameters.value("end", 0).toInt());
-            f->set_step(surveyRow.parameters.value("step", 1).toInt());
+
+            auto start = surveyRow.parameters.value("start", 0);
+            surveyRow.parameters.remove("start");
+            auto end = surveyRow.parameters.value("end", 0);
+            surveyRow.parameters.remove("end");
+            auto step = surveyRow.parameters.value("step", 1);
+            surveyRow.parameters.remove("step");
+
+            if (start.toString().contains(".") || end.toString().contains(".") || step.toString().contains("."))
+            {
+                f->set_decimals(4);
+            }
+            else
+            {
+                f->set_decimals(0);
+                surveyRow.parameters["autoNext"] = surveyRow.appearance.contains("quick");
+                surveyRow.appearance = "range";
+            }
+
+            f->set_minValue(start.toInt());
+            f->set_maxValue(end.toInt());
+            f->set_step(step.toInt());
             field = f;
         }
         else if (fieldType == "text")
@@ -522,7 +692,8 @@ void XlsFormParser::processSurvey(const xlnt::worksheet& sheet, int* startRowInd
         {
             auto f = new StringField();
             auto listSpec = surveyRow.type.split(' ');
-            auto listName = listSpec[1];
+            listSpec.removeAll("");
+            auto listName = listSpec.count() >= 2 ? listSpec[1] : "";
 
             f->set_listElementUid(listName);
             f->set_listFilterByTag(surveyRow.choiceFilter);
@@ -533,13 +704,16 @@ void XlsFormParser::processSurvey(const xlnt::worksheet& sheet, int* startRowInd
                 surveyRow.defaultValue = listName + '/' + surveyRow.defaultValue.toString();
             }
 
+            surveyRow.parameters["autoNext"] = surveyRow.appearance.contains("quick");
+
             field = f;
         }
         else if (fieldType.startsWith("select_multiple"))
         {
             auto f = new CheckField();
             auto listSpec = surveyRow.type.split(' ');
-            auto listName = listSpec[1];
+            listSpec.removeAll("");
+            auto listName = listSpec.count() >= 2 ? listSpec[1] : "";
 
             f->set_listElementUid(listName);
             f->set_listFilterByTag(surveyRow.choiceFilter);
@@ -552,9 +726,9 @@ void XlsFormParser::processSurvey(const xlnt::worksheet& sheet, int* startRowInd
                 if (!defaultValues.isEmpty())
                 {
                     auto defaultValueMap = QVariantMap();
-                    for (auto defaultValue: defaultValues)
+                    for (auto it = defaultValues.constBegin(); it != defaultValues.constEnd(); it++)
                     {
-                        defaultValueMap[defaultValue] = true;
+                        defaultValueMap[*it] = true;
                     }
                     surveyRow.defaultValue = defaultValueMap;
                 }
@@ -571,7 +745,7 @@ void XlsFormParser::processSurvey(const xlnt::worksheet& sheet, int* startRowInd
         {
             auto f = new LocationField();
             f->set_allowManual(true);
-            f->set_fixCount(4);
+            f->set_fixCount(surveyRow.parameters.value("fixCount", 4).toInt());
             field = f;
         }
         else if (fieldType == "geotrace")
@@ -627,6 +801,16 @@ void XlsFormParser::processSurvey(const xlnt::worksheet& sheet, int* startRowInd
         else if (fieldType == "audio")
         {
             auto f = new AudioField();
+            field = f;
+        }
+        else if (fieldType == "file")
+        {
+            auto f = new FileField();
+
+            auto accept = surveyRow.bodyAccept.trimmed().toLower().remove(' ');
+            auto filters = accept.split(',');
+            f->set_accept(filters.join(' '));
+            f->set_format(surveyRow.parameters["format"].toString().trimmed().toLower());
             field = f;
         }
         else if (fieldType == "barcode")
@@ -728,6 +912,7 @@ void XlsFormParser::processSurvey(const xlnt::worksheet& sheet, int* startRowInd
             nameElement->set_uid(uniqueFieldUid);
             nameElement->set_names(QJsonObject::fromVariantMap(surveyRow.label));
             nameElement->set_icon(surveyRow.mediaImage);
+            nameElement->set_audio(surveyRow.mediaAudio);
             rootElement->appendElement(nameElement);
             m_fieldElements.insert(nameElement->uid(), nameElement);
         }
@@ -763,7 +948,7 @@ void XlsFormParser::processSurvey(const xlnt::worksheet& sheet, int* startRowInd
         field->set_constraintElementUid(constraintElement ? constraintElement->uid() : "");
         field->set_hintElementUid(hintElement ? hintElement->uid() : "");
         field->set_formula(surveyRow.calculation);
-        field->set_hidden(field->hidden() || field->nameElementUid().isEmpty());
+        field->set_hidden(field->hidden() || field->nameElementUid().isEmpty() || surveyRow.parameters.value("hidden").toBool() || surveyRow.appearance.contains("hidden"));
         field->set_parameters(surveyRow.parameters);
 
         if (!surveyRow.appearance.isEmpty())
@@ -807,14 +992,33 @@ void XlsFormParser::processChoices(const xlnt::worksheet& sheet, int startRowInd
         }
     };
 
+    auto choiceRows = QList<ChoiceRow>();
+    auto choiceOrder = QStringList();
     for (auto i = startRowIndex; i < (int)(sheet.rows().length()); i++)
     {
-        ChoiceRow choiceRow = choiceRowFromSheet(sheet, rows[i]);
-        if (choiceRow.name.isEmpty())
+        auto choiceRow = choiceRowFromSheet(sheet, rows[i]);
+        if (!choiceRow.listName.isEmpty() && !choiceRow.name.isEmpty())
         {
-            continue;
+            choiceRows.append(choiceRow);
+            choiceOrder.append(choiceRow.name);
         }
+    }
 
+    std::sort(choiceRows.begin(), choiceRows.end(), [&](const ChoiceRow& r1, const ChoiceRow& r2) -> bool
+    {
+        if (r1.listName != r2.listName)
+        {
+            return r1.listName < r2.listName;
+        }
+        else
+        {
+            return choiceOrder.indexOf(r1.name) < choiceOrder.indexOf(r2.name);
+        }
+    });
+
+    for (auto choiceRowIt = choiceRows.constBegin(); choiceRowIt != choiceRows.constEnd(); choiceRowIt++)
+    {
+        auto choiceRow = *choiceRowIt;
         if (choiceRow.listName != lastListName || !lastElement)
         {
             addOther();

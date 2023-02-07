@@ -6,109 +6,93 @@ import QtGraphicalEffects 1.0
 import QtQuick.Controls.Material 2.12
 import CyberTracker 1.0 as C
 
-Pane {
-    id: pane
+ItemDelegate {
+    id: root
 
-    property alias recordUid: fieldBinding.recordUid
-    property alias fieldUid: fieldBinding.fieldUid
-
-    clip: true
-    contentWidth: parent.width
-    contentHeight: paneContent.implicitHeight
-
-    Binding { target: background; property: "color"; value: Style.colorContent }
+    property string recordUid
+    property string fieldUid
 
     C.FieldBinding {
         id: fieldBinding
+        recordUid: root.recordUid
+        fieldUid: root.fieldUid
     }
 
-    C.ConfirmPopup {
-        id: popupConfirmReset
-        text: qsTr("Clear all points?")
-        confirmText: qsTr("Yes, clear them")
-        onConfirmed: fieldBinding.resetValue()
+    QtObject {
+        id: internal
+        property bool isArea: fieldBinding.fieldType === "AreaField"
     }
 
-    contentItem: ColumnLayout {
-        id: paneContent
-        anchors.fill: parent
+    padding: 0
 
-        Item {
-            height: 8
-        }
+    contentItem: Item {
+        width: root.width
+        height: root.height
 
-        Label {
-            Layout.fillWidth: true
-            horizontalAlignment: Label.AlignHCenter
-            font.pixelSize: App.settings.font14
-            text: fieldBinding.isEmpty ? qsTr("Empty") : fieldBinding.displayValue
-            opacity: fieldBinding.isEmpty ? 0.5 : 1.0
-        }
-
-        Item {
-            height: 8
-            visible: !fieldBinding.isEmpty
-        }
-
-        Image {
-            id: imageValue
-            Layout.fillWidth: true
-            source: fieldBinding.value ? "data:image/svg+xml;utf8," + Utils.renderPointsToSvg(fieldBinding.value, "black", 5, fieldBinding.fieldType === "AreaField") : ""
-            sourceSize.height: 128
-            visible: !fieldBinding.isEmpty
-            fillMode: Image.PreserveAspectFit
-            layer {
-                enabled: true
-                effect: ColorOverlay {
-                    color: Material.foreground
-                }
-            }
-        }
-
-        Item {
-            Layout.fillWidth: true
-            height: 8
-            C.HorizontalDivider {}
-        }
-
-        RowLayout {
-            id: buttonRow
-            Layout.preferredWidth: parent.width * 0.75
-            Layout.alignment: Qt.AlignHCenter
+        ColumnLayout {
             spacing: 0
+            anchors.fill: parent
+            visible: !fieldBinding.isEmpty
 
-            property int buttonWidth: buttonRow.width / 2
-            property var buttonColor: Material.foreground
+            Label {
+                Layout.fillWidth: true
+                visible: !fieldBinding.isEmpty
+                horizontalAlignment: Label.AlignHCenter
+                font.pixelSize: App.settings.font14
+                fontSizeMode: Label.Fit
+                text: fieldBinding.displayValue
+                opacity: 0.5
+            }
 
-            ToolButton {
-                Layout.preferredWidth: buttonRow.buttonWidth
-                text: {
-                    if (fieldBinding.fieldType === "LineField") {
-                        return fieldBinding.isEmpty ? qsTr("Start line") : qsTr("Edit line")
-                    } else {
-                        return fieldBinding.isEmpty ? qsTr("Start area") : qsTr("Edit area")
+            Image {
+                Layout.fillWidth: true
+                Layout.fillHeight: true
+                source: fieldBinding.value ? "data:image/svg+xml;utf8," + Utils.renderPointsToSvg(fieldBinding.value, "black", App.scaleByFontSize(4), internal.isArea) : ""
+                sourceSize.width: root.width
+                fillMode: Image.PreserveAspectFit
+                layer {
+                    enabled: true
+                    effect: ColorOverlay {
+                        color: Material.foreground
                     }
                 }
+            }
+        }
 
-                font.capitalization: Font.AllUppercase
-                font.pixelSize: App.settings.font12
-                icon.source: "qrc:/icons/edit_location_outline.svg"
-                opacity: enabled ? 1.0 : 0.5
-                icon.color: buttonRow.buttonColor
-                onClicked: form.pushPage(Qt.resolvedUrl("FieldLinePage.qml"), { recordUid: fieldBinding.recordUid, fieldUid: fieldBinding.fieldUid } )
+        RoundButton {
+            anchors {
+                bottom: parent.bottom
+                horizontalCenter: parent.horizontalCenter
             }
 
-            ToolButton {
-                Layout.preferredWidth: buttonRow.buttonWidth
-                text: qsTr("Reset")
-                icon.source: "qrc:/icons/delete_outline.svg"
-                icon.color: buttonRow.buttonColor
-                enabled: !fieldBinding.isEmpty
-                opacity: enabled ? 1.0 : 0.5
-                font.capitalization: Font.AllUppercase
-                font.pixelSize: App.settings.font12
-                onClicked: popupConfirmReset.open()
+            visible: !fieldBinding.isEmpty
+            icon.source: "qrc:/icons/delete_outline.svg"
+            icon.width: Style.toolButtonSize
+            icon.height: Style.toolButtonSize
+            icon.color: Utils.changeAlpha(Material.foreground, 128)
+            onClicked: {
+                popupConfirmReset.open()
             }
+        }
+
+        SquareIcon {
+            anchors.centerIn: parent
+            visible: fieldBinding.isEmpty
+            source: internal.isArea ? "qrc:/icons/shape_polygon_plus.svg" : "qrc:/icons/vector_polyline_plus.svg"
+            size: Style.iconSize64
+            opacity: 0.5
+            recolor: true
+        }
+    }
+
+    onClicked: form.pushPage(Qt.resolvedUrl("FieldLinePage.qml"), { recordUid: fieldBinding.recordUid, fieldUid: fieldBinding.fieldUid } )
+
+    ConfirmPopup {
+        id: popupConfirmReset
+        text: internal.isArea ? qsTr("Clear area?") : qsTr("Clear line?")
+        confirmText: qsTr("Yes, clear all points")
+        onConfirmed: {
+            fieldBinding.resetValue()
         }
     }
 }

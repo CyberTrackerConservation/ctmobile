@@ -12,12 +12,9 @@ Item {
     property alias recordUid: fieldBinding.recordUid
     property alias fieldUid: fieldBinding.fieldUid
     property string listElementUid: fieldBinding.field.listElementUid
+    property bool iconVisible: true
 
     signal itemClicked(string elementUid)
-
-    function getSelectedElementUid() {
-        return listView.currentIndex === -1 ? "" : elementListModel.get(listView.currentIndex).uid
-    }
 
     C.FieldBinding {
         id: fieldBinding
@@ -29,6 +26,7 @@ Item {
 
         ItemDelegate {
             Layout.fillWidth: true
+            padding: 6 // Same as HorizontalDivider.
             contentItem: TextField {
                 id: searchFilter
                 Layout.fillWidth: true
@@ -39,13 +37,18 @@ Item {
             visible: (elementListModel.count > 10) || (searchFilter.displayText !== "")
         }
 
-        C.ListViewV {
+        ListViewV {
             id: listView
 
             Layout.fillWidth: true
             Layout.fillHeight: true
 
-            currentIndex: fieldBinding.getControlState(listElementUid + "_CurrentIndex", -1)
+            Component.onCompleted: {
+                let index = fieldBinding.getControlState(listElementUid + "_CurrentIndex", -1)
+                if (index !== -1) {
+                    listView.positionViewAtIndex(index, ListView.Contain)
+                }
+            }
 
             model: C.ElementListModel {
                 id: elementListModel
@@ -59,7 +62,7 @@ Item {
                 filterByTag: fieldBinding.field.listFilterByTag
             }
 
-            delegate: ItemDelegate {
+            delegate: HighlightDelegate {
                 width: ListView.view.width
                 highlighted: modelData.uid === fieldBinding.value
 
@@ -70,11 +73,10 @@ Item {
 
                         Item { height: Style.minRowHeight }
 
-                        Image {
+                        SquareIcon {
                             source: form.getElementIcon(modelData.uid)
-                            fillMode: Image.PreserveAspectFit
-                            sourceSize.width: Style.minRowHeight
-                            sourceSize.height: Style.minRowHeight
+                            size: Style.minRowHeight
+                            visible: root.iconVisible && source.toString() !== ""
                         }
 
                         Label {
@@ -95,10 +97,11 @@ Item {
                     sourceComponent: itemComponent
                 }
 
-                C.HorizontalDivider {}
+                C.HorizontalDivider {
+                    visible: !highlighted
+                }
 
                 onClicked: {
-                    listView.currentIndex = model.index
                     fieldBinding.setControlState(listElementUid + "_CurrentIndex", model.index)
                     itemClicked(modelData.uid)
                 }

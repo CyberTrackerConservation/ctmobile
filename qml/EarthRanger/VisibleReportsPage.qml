@@ -53,11 +53,10 @@ C.ContentPage {
             contentItem: RowLayout {
                 id: row
 
-                Image {
+                C.SquareIcon {
                     id: reportImage
-                    Layout.preferredWidth: C.Style.minRowHeight
+                    size: C.Style.minRowHeight
                     source: form.getElementIcon(modelData.elementUid)
-                    fillMode: Image.Pad
                     visible: modelData.depth > 0
                     opacity: {
                         listView.checkedChange
@@ -82,6 +81,8 @@ C.ContentPage {
                         return listView.visibleReports[modelData.elementUid]
                     }
                     icon.source: checked ? "qrc:/icons/gps_fixed.svg" : "qrc:/icons/gps_not_fixed.svg"
+                    icon.width: C.Style.toolButtonSize
+                    icon.height: C.Style.toolButtonSize
 
                     checked: {
                         listView.checkedChange

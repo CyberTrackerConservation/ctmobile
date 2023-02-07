@@ -2,6 +2,7 @@
 #include "ClassicProvider.h"
 #include "App.h"
 #include "../lib/classic/Main/ctSession.h"
+#include "../lib/classic/Host/Qt/QtHost.h"
 #include <jlcompress.h>
 
 ClassicConnector::ClassicConnector(QObject* parent) : Connector(parent)
@@ -60,6 +61,11 @@ QVariantMap ClassicConnector::getShareData(Project* project, bool /*auth*/) cons
         { "webUpdateUrl", webUpdateUrl },
         { "launch", true }
     };
+}
+
+bool ClassicConnector::canLogin(Project* /*project*/) const
+{
+    return false;
 }
 
 ApiResult ClassicConnector::bootstrap(const QVariantMap& params)
@@ -142,6 +148,7 @@ ApiResult ClassicConnector::bootstrap(const QVariantMap& params)
         project->set_title("Pending update");
         project->set_subtitle("");
         project->set_updateOnLaunch(true);
+        project->set_androidBackgroundLocation(true);
         project->set_androidDisableBatterySaver(true);
 
         QVariantMap connectorParams;
@@ -231,6 +238,7 @@ ApiResult ClassicConnector::bootstrap(const QVariantMap& params)
         project->set_subtitle(getSubtitle(ctsMetadata["serverFileName"].toString()));
         project->set_updateOnLaunch(!connectorParams["webUpdateUrl"].toString().isEmpty());
         project->set_connectorParams(connectorParams);
+        project->set_androidBackgroundLocation(true);
         project->set_androidDisableBatterySaver(true);
         project->set_telemetry(ctsMetadata["telemetry"].toMap());
 
@@ -283,7 +291,7 @@ ApiResult ClassicConnector::hasUpdate(QNetworkAccessManager* networkAccessManage
     return UpdateAvailable();
 }
 
-bool ClassicConnector::canUpdate(Project *project)
+bool ClassicConnector::canUpdate(Project* project) const
 {
     return !project->connectorParams().value("webUpdateUrl").toString().isEmpty();
 }
@@ -298,6 +306,22 @@ ApiResult ClassicConnector::update(Project* project)
     if (webUpdateUrl.isEmpty())
     {
         return Failure(tr("Not supported"));
+    }
+
+    // Skip update if there is any unsent data.
+    FXPROFILE profile = {};
+    profile.Magic = MAGIC_PROFILE;
+    auto host = std::unique_ptr<CHost_Qt>(new CHost_Qt(NULL, nullptr, &profile, Utils::classicRoot().toStdString().c_str()));
+    auto appName = project->connectorParams()["app"].toString().toStdString();
+    auto hasData = CctUpdateManager::HasData(host.get(), appName.c_str());
+
+    if (hasData)
+    {
+        // FlushData will destroy host.
+        if (!CctTransferManager::FlushData(host.release(), appName.c_str()))
+        {
+            return Failure(tr("Unsent data"));
+        }
     }
 
     auto defGet = Utils::httpGet(App::instance()->networkAccessManager(), webUpdateUrl);
@@ -349,6 +373,7 @@ ApiResult ClassicConnector::update(Project* project)
     project->set_version(1);
     project->set_title(ctsMetadata["name"].toString());
     project->set_subtitle(getSubtitle(ctsMetadata["serverFileName"].toString()));
+    project->set_androidBackgroundLocation(true);
     project->set_androidDisableBatterySaver(true);
     project->set_telemetry(ctsMetadata["telemetry"].toMap());
 
@@ -373,8 +398,12 @@ void ClassicConnector::reset(Project* project)
 
     auto rootFilePath = Utils::classicRoot() + "/" + name;
     QFile::remove(rootFilePath + ".STA");
-    //QFile::remove(rootFilePath + ".WAY");
-    //QFile::remove(rootFilePath + ".DAT");
+    QFile::remove(rootFilePath + ".WAY");
+    QFile::remove(rootFilePath + ".DAT");
+
+    auto projectPath = m_projectManager->getFilePath(project->uid());
+    QFile::remove(projectPath + "/Elements.qml");
+    QFile::remove(projectPath + "/Fields.qml");
 }
 
 void ClassicConnector::remove(Project* project)
@@ -424,6 +453,7 @@ bool ClassicConnector::getCTSMetadata(const QString& ctsFile, QVariantMap* metad
             { FXSENDDATA_PROTOCOL_BACKUP,  "BACKUP" },
             { FXSENDDATA_PROTOCOL_HTTPZ,   "HTTPZ"  },
             { FXSENDDATA_PROTOCOL_ESRI,    "ESRI"   },
+            { FXSENDDATA_PROTOCOL_AZURE,   "AZURE"  },
         };
 
         auto protocol = protocolTable.value(header->SendData.Protocol);

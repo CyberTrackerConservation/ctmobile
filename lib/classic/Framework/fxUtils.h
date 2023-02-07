@@ -133,3 +133,5 @@ BOOL Base64Encode(CHAR *pSource, UINT SourceLen, CfxFileStream &Stream);
 VOID FixJsonString(CfxString &String);
 
 BOOL CompressFile(const char* pSrc_filename, const char *pDst_filename);
+
+QString GUIDToString(GUID* guid);

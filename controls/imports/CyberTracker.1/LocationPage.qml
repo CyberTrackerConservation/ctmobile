@@ -60,58 +60,28 @@ ContentPage {
         text: qsTr("Location")
     }
 
-    ButtonGroup {
-        buttons: buttonRow.children
-    }
-
-    footer: ColumnLayout {
+    footer: RowLayout {
+        id: buttonRow
         spacing: 0
-        width: parent.width
 
-        Rectangle {
-            Layout.fillWidth: true
-            height: 2
-            color: Material.theme === Material.Dark ? "#FFFFFF" : "#000000"
-            opacity: Material.theme === Material.Dark ? 0.12 : 0.12
+        ButtonGroup { id: buttonGroup }
+
+        C.FooterButton {
+            ButtonGroup.group: buttonGroup
+            text: qsTr("Point")
+            checkable: true
+            checked: stackLayout.currentIndex === 0
+            icon.source: checked ? "qrc:/icons/touch_app.svg" : "qrc:/icons/touch_outline.svg"
+            onClicked: stackLayout.currentIndex = 0
         }
 
-        RowLayout {
-            id: buttonRow
-            spacing: 0
-            Layout.fillWidth: true
-
-            property int buttonWidth: page.width / 2
-            property var buttonColor: Material.theme === Material.Dark ? Material.foreground : Material.primary
-
-            ToolButton {
-                Layout.preferredWidth: buttonRow.buttonWidth
-                Layout.fillWidth: true
-                Layout.fillHeight: true
-                text: qsTr("Point")
-                checkable: true
-                checked: stackLayout.currentIndex === 0
-                font.pixelSize: App.settings.font10
-                font.capitalization: Font.MixedCase
-                display: Button.TextUnderIcon
-                icon.source: checked ? "qrc:/icons/touch_app.svg" : "qrc:/icons/touch_outline.svg"
-                Material.foreground: buttonRow.buttonColor
-                onClicked: stackLayout.currentIndex = 0
-            }
-
-            ToolButton {
-                Layout.preferredWidth: buttonRow.buttonWidth
-                Layout.fillWidth: true
-                Layout.fillHeight: true
-                text: qsTr("Manual")
-                checkable: true
-                checked: stackLayout.currentIndex === 1
-                font.pixelSize: App.settings.font10
-                font.capitalization: Font.MixedCase
-                display: Button.TextUnderIcon
-                icon.source: checked ? "qrc:/icons/keyboard.svg" : "qrc:/icons/keyboard_outline.svg"
-                Material.foreground: buttonRow.buttonColor
-                onClicked: stackLayout.currentIndex = 1
-            }
+        C.FooterButton {
+            ButtonGroup.group: buttonGroup
+            text: qsTr("Manual")
+            checkable: true
+            checked: stackLayout.currentIndex === 1
+            icon.source: checked ? "qrc:/icons/keyboard.svg" : "qrc:/icons/keyboard_outline.svg"
+            onClicked: stackLayout.currentIndex = 1
         }
     }
 

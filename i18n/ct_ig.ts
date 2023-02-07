@@ -14,7 +14,7 @@
     <message>
       <location filename="../src/engine/App.cpp" line="389" />
       <source>None</source>
-      <translation type="unfinished">O nweghi</translation>
+      <translation type="unfinished">Ọ dịghị</translation>
     </message>
     <message>
       <location filename="../src/engine/App.cpp" line="393" />
@@ -24,17 +24,17 @@
     <message>
       <location filename="../src/engine/App.cpp" line="394" />
       <source>Topographic</source>
-      <translation type="unfinished">Ihu mmadu</translation>
+      <translation type="unfinished">Topographic</translation>
     </message>
     <message>
       <location filename="../src/engine/App.cpp" line="395" />
       <source>Streets</source>
-      <translation type="unfinished">.Zọ</translation>
+      <translation type="unfinished">Okporo ụzọ</translation>
     </message>
     <message>
       <location filename="../src/engine/App.cpp" line="396" />
       <source>Streets (vector)</source>
-      <translation type="unfinished">Etszọ (vector)</translation>
+      <translation type="unfinished">Okporo ụzọ (vector)</translation>
     </message>
     <message>
       <location filename="../src/engine/App.cpp" line="397" />
@@ -49,27 +49,27 @@
     <message>
       <location filename="../src/engine/App.cpp" line="399" />
       <source>Dark gray canvas (Vector)</source>
-      <translation type="unfinished">Ọchịchịrị isi awọ kanji (Vector)</translation>
+      <translation type="unfinished">Akwa akwa isi awọ gbara ọchịchịrị (Vector)</translation>
     </message>
     <message>
       <location filename="../src/engine/App.cpp" line="400" />
       <source>Light gray canvas</source>
-      <translation type="unfinished">Ọta isi awọ</translation>
+      <translation type="unfinished">Kwaaji isi awọ dị mfe</translation>
     </message>
     <message>
       <location filename="../src/engine/App.cpp" line="401" />
       <source>Light gray canvas (Vector)</source>
-      <translation type="unfinished">Uhie isi awọ (Vector)</translation>
+      <translation type="unfinished">Akwa akwa isi awọ dị mfe (Vector)</translation>
     </message>
     <message>
       <location filename="../src/engine/App.cpp" line="402" />
       <source>Navigation (vector)</source>
-      <translation type="unfinished">Ationzọ (vector)</translation>
+      <translation type="unfinished">Ntugharị (vector)</translation>
     </message>
     <message>
       <location filename="../src/engine/App.cpp" line="403" />
       <source>Oceans</source>
-      <translation type="unfinished">Osimiri</translation>
+      <translation type="unfinished">Oke osimiri</translation>
     </message>
   </context>
   <context>
@@ -77,7 +77,7 @@
     <message>
       <location filename="../qml/BugReport.qml" line="22" />
       <source>Success</source>
-      <translation type="unfinished">Ga nke Ọma</translation>
+      <translation type="unfinished">Ihe ịga nke ọma</translation>
     </message>
     <message>
       <location filename="../qml/BugReport.qml" line="22" />
@@ -87,27 +87,27 @@
     <message>
       <location filename="../qml/BugReport.qml" line="62" />
       <source>Unknown error</source>
-      <translation type="unfinished">Njehie amaghi</translation>
+      <translation type="unfinished">Njehie amaghị</translation>
     </message>
     <message>
       <location filename="../qml/BugReport.qml" line="68" />
       <source>Report a bug</source>
-      <translation type="unfinished">Kpee ahụhụ</translation>
+      <translation type="unfinished">Kpesa ahụhụ</translation>
     </message>
     <message>
       <location filename="../qml/BugReport.qml" line="86" />
       <source>Describe the issue</source>
-      <translation type="unfinished">Kọwaa ihe iseokwu ahụ</translation>
+      <translation type="unfinished">Kọwaa nsogbu ahụ</translation>
     </message>
     <message>
       <location filename="../qml/BugReport.qml" line="87" />
       <source>Tap ✓ in the top right corner</source>
-      <translation type="unfinished">Pịa ✓ na akuku aka nri elu</translation>
+      <translation type="unfinished">Pịa ✓ n'akụkụ aka nri elu</translation>
     </message>
     <message>
       <location filename="../qml/BugReport.qml" line="88" />
       <source>Send the file</source>
-      <translation type="unfinished">Zipụ faịlụ ahụ</translation>
+      <translation type="unfinished">Zipu faịlụ</translation>
     </message>
   </context>
   <context>
@@ -115,7 +115,7 @@
     <message>
       <location filename="../src/controls/imports/CyberTracker/Controls.1/Camera.qml" line="120" />
       <source>Delete current image?</source>
-      <translation type="unfinished">Hichapụ ihe onyonyo ugbu a?</translation>
+      <translation type="unfinished">Hichapụ onyonyo dị ugbu a?</translation>
     </message>
   </context>
   <context>
@@ -147,7 +147,7 @@
     <message>
       <location filename="../src/controls/imports/CyberTracker/Controls.1/DelegateFieldEdit.qml" line="58" />
       <source>Location</source>
-      <translation type="unfinished">Ọnọdụ</translation>
+      <translation type="unfinished">Ebe</translation>
     </message>
   </context>
   <context>
@@ -163,27 +163,27 @@
     <message>
       <location filename="../src/providers/SMART/Globals.qml" line="8" />
       <source>Version</source>
-      <translation type="unfinished">Versiondị</translation>
+      <translation type="unfinished">Ụdị</translation>
     </message>
     <message>
       <location filename="../src/providers/SMART/Globals.qml" line="29" />
       <source>Patrol start</source>
-      <translation type="unfinished">Nchịkwa amalite</translation>
+      <translation type="unfinished">Mmado nche nche</translation>
     </message>
     <message>
       <location filename="../src/providers/SMART/Globals.qml" line="30" />
       <source>Patrol end</source>
-      <translation type="unfinished">Patrol njedebe</translation>
+      <translation type="unfinished">Ọgwụgwụ ndị nche</translation>
     </message>
     <message>
       <location filename="../src/providers/SMART/Globals.qml" line="31" />
       <source>Patrol pause</source>
-      <translation type="unfinished">Nleghara kwụsị</translation>
+      <translation type="unfinished">Patrol kwụsịtụ</translation>
     </message>
     <message>
       <location filename="../src/providers/SMART/Globals.qml" line="32" />
       <source>Patrol resume</source>
-      <translation type="unfinished">Patrol bidoro</translation>
+      <translation type="unfinished">Patrol malitegharịa</translation>
     </message>
     <message>
       <location filename="../src/providers/SMART/Globals.qml" line="33" />
@@ -193,7 +193,7 @@
     <message>
       <location filename="../src/providers/SMART/Globals.qml" line="34" />
       <source>Patrol</source>
-      <translation type="unfinished">Njikwa</translation>
+      <translation type="unfinished">Patrol</translation>
     </message>
   </context>
   <context>
@@ -201,17 +201,17 @@
     <message>
       <location filename="../src/providers/SMART/HistoryPage.qml" line="75" />
       <source>Patrol</source>
-      <translation type="unfinished">Njikwa</translation>
+      <translation type="unfinished">Patrol</translation>
     </message>
     <message>
       <location filename="../src/providers/SMART/HistoryPage.qml" line="83" />
       <source>Incident</source>
-      <translation type="unfinished">Itunanya</translation>
+      <translation type="unfinished">Ihe omume</translation>
     </message>
     <message>
       <location filename="../src/providers/SMART/HistoryPage.qml" line="91" />
       <source>Sighting</source>
-      <translation type="unfinished">Ighthụ ụzọ</translation>
+      <translation type="unfinished">Ịhụ ụzọ</translation>
     </message>
     <message>
       <location filename="../src/providers/SMART/HistoryPage.qml" line="98" />
@@ -221,17 +221,17 @@
     <message>
       <location filename="../src/providers/SMART/HistoryPage.qml" line="150" />
       <source>No patrol sightings</source>
-      <translation type="unfinished">Enweghị nlepụ anya ọhụhụ</translation>
+      <translation type="unfinished">Enweghị nlegharị anya patrol</translation>
     </message>
     <message>
       <location filename="../src/providers/SMART/HistoryPage.qml" line="172" />
       <source>No independent incidents</source>
-      <translation type="unfinished">Onweghị ihe merenụ</translation>
+      <translation type="unfinished">Enweghị ihe omume onwe</translation>
     </message>
     <message>
       <location filename="../src/providers/SMART/HistoryPage.qml" line="190" />
       <source>No sighting selected</source>
-      <translation type="unfinished">Ahọpụtaghị ịhụ ọhụụ</translation>
+      <translation type="unfinished">Ọnweghị ọhụụ ahọpụtara</translation>
     </message>
   </context>
   <context>
@@ -279,23 +279,23 @@
       <location filename="../qml/Main.qml" line="65" />
       <location filename="../qml/Main.qml" line="113" />
       <source>Delete project?</source>
-      <translation type="unfinished">Kpochapụ oru ngo?</translation>
+      <translation type="unfinished">Hichapụ oru ngo?</translation>
     </message>
     <message>
       <location filename="../qml/Main.qml" line="66" />
       <source>Project will be permanently removed</source>
-      <translation type="unfinished">A ga-ewepụ ọrụ a kpamkpam</translation>
+      <translation type="unfinished">A ga-ewepụ oru ngo kpamkpam</translation>
     </message>
     <message>
       <location filename="../qml/Main.qml" line="76" />
       <location filename="../qml/Main.qml" line="154" />
       <source>Reset project?</source>
-      <translation type="unfinished">Weghachite oru?</translation>
+      <translation type="unfinished">Tọgharia oru ngo?</translation>
     </message>
     <message>
       <location filename="../qml/Main.qml" line="77" />
       <source>All project data will be lost</source>
-      <translation type="unfinished">A ga-efu data ọrụ niile</translation>
+      <translation type="unfinished">All oru ngo data ga-efunahụ</translation>
     </message>
     <message>
       <location filename="../qml/Main.qml" line="123" />
@@ -327,7 +327,7 @@
     <message>
       <location filename="../qml/Main.qml" line="273" />
       <source>Sync projects</source>
-      <translation type="unfinished">Mmemme mmekọrịta</translation>
+      <translation type="unfinished">Mekọrịta oru ngo</translation>
     </message>
     <message>
       <location filename="../qml/Main.qml" line="308" />
@@ -347,7 +347,7 @@
     <message>
       <location filename="../qml/Main.qml" line="347" />
       <source>Bug</source>
-      <translation type="unfinished">Kpamkpam</translation>
+      <translation type="unfinished">Ahụhụ</translation>
     </message>
   </context>
   <context>
@@ -356,23 +356,23 @@
       <location filename="../src/providers/SMART/MainPage.qml" line="50" />
       <location filename="../src/providers/SMART/MainPage.qml" line="98" />
       <source>Delete project?</source>
-      <translation type="unfinished">Kpochapụ oru ngo?</translation>
+      <translation type="unfinished">Hichapụ oru ngo?</translation>
     </message>
     <message>
       <location filename="../src/providers/SMART/MainPage.qml" line="51" />
       <source>Project will be permanently removed</source>
-      <translation type="unfinished">A ga-ewepụ ọrụ a kpamkpam</translation>
+      <translation type="unfinished">A ga-ewepụ oru ngo kpamkpam</translation>
     </message>
     <message>
       <location filename="../src/providers/SMART/MainPage.qml" line="61" />
       <location filename="../src/providers/SMART/MainPage.qml" line="139" />
       <source>Reset project?</source>
-      <translation type="unfinished">Weghachite oru?</translation>
+      <translation type="unfinished">Tọgharia oru ngo?</translation>
     </message>
     <message>
       <location filename="../src/providers/SMART/MainPage.qml" line="62" />
       <source>All project data will be lost</source>
-      <translation type="unfinished">A ga-efu data ọrụ niile</translation>
+      <translation type="unfinished">All oru ngo data ga-efunahụ</translation>
     </message>
     <message>
       <location filename="../src/providers/SMART/MainPage.qml" line="108" />
@@ -389,7 +389,7 @@
     <message>
       <location filename="../src/providers/SMART/MainPage.qml" line="254" />
       <source>Refresh</source>
-      <translation type="unfinished">Nwee ume</translation>
+      <translation type="unfinished">Weghachite ume</translation>
     </message>
     <message>
       <location filename="../src/providers/SMART/MainPage.qml" line="270" />
@@ -404,7 +404,7 @@
     <message>
       <location filename="../src/providers/SMART/MainPage.qml" line="296" />
       <source>Bug</source>
-      <translation type="unfinished">Kpamkpam</translation>
+      <translation type="unfinished">Ahụhụ</translation>
     </message>
   </context>
   <context>
@@ -422,7 +422,7 @@
     <message>
       <location filename="../qml/Maps.qml" line="473" />
       <source>No sighting selected</source>
-      <translation type="unfinished">Ahọpụtaghị ịhụ ọhụụ</translation>
+      <translation type="unfinished">Ọnweghị ọhụụ ahọpụtara</translation>
     </message>
     <message>
       <location filename="../qml/Maps.qml" line="509" />
@@ -440,12 +440,12 @@
     <message>
       <location filename="../src/providers/SMART/MetadataPage.qml" line="35" />
       <source>Start patrol</source>
-      <translation type="unfinished">Na-amalite nche</translation>
+      <translation type="unfinished">Malite nchegharị</translation>
     </message>
     <message>
       <location filename="../src/providers/SMART/MetadataPage.qml" line="37" />
       <source>Resume patrol</source>
-      <translation type="unfinished">Umelaghachi njem njegharị</translation>
+      <translation type="unfinished">Malitekwa patrol</translation>
     </message>
     <message>
       <location filename="../src/providers/SMART/MetadataPage.qml" line="39" />
@@ -499,42 +499,42 @@
     <message>
       <location filename="../qml/Settings.qml" line="411" />
       <source>Dark theme</source>
-      <translation type="unfinished">Ọchịchịrị gbara</translation>
+      <translation type="unfinished">Isiokwu gbara ọchịchịrị</translation>
     </message>
     <message>
       <location filename="../qml/Settings.qml" line="444" />
       <source>Font size</source>
-      <translation type="unfinished">Font size</translation>
+      <translation type="unfinished">Ogo mkpụrụedemede</translation>
     </message>
     <message>
       <location filename="../qml/Settings.qml" line="468" />
       <source>Coordinates</source>
-      <translation type="unfinished">Nchikota</translation>
+      <translation type="unfinished">Nhazi</translation>
     </message>
     <message>
       <location filename="../qml/Settings.qml" line="476" />
       <source>Decimal degrees</source>
-      <translation type="unfinished">Ogologo ogo</translation>
+      <translation type="unfinished">Ogo iri</translation>
     </message>
     <message>
       <location filename="../qml/Settings.qml" line="476" />
       <source>Degrees minutes seconds</source>
-      <translation type="unfinished">Ogologo nkeji sekọnd</translation>
+      <translation type="unfinished">Nkeji nkeji nkeji</translation>
     </message>
     <message>
       <location filename="../qml/Settings.qml" line="476" />
       <source>Degrees decimal minutes</source>
-      <translation type="unfinished">Ogo ogo nkeji</translation>
+      <translation type="unfinished">Ogo nkeji nkeji iri</translation>
     </message>
     <message>
       <location filename="../qml/Settings.qml" line="492" />
       <source>Simulate location</source>
-      <translation type="unfinished">Mepee ọnọdụ</translation>
+      <translation type="unfinished">Mepụta ọnọdụ</translation>
     </message>
     <message>
       <location filename="../qml/Settings.qml" line="518" />
       <source>Source file</source>
-      <translation type="unfinished">Faịlụ sitere</translation>
+      <translation type="unfinished">Isi mmalite faịlụ</translation>
     </message>
     <message>
       <location filename="../qml/Settings.qml" line="526" />
@@ -544,22 +544,22 @@
     <message>
       <location filename="../qml/Settings.qml" line="549" />
       <source>Kiosk mode</source>
-      <translation type="unfinished">Ọnọdụ Kiosk</translation>
+      <translation type="unfinished">Ụdị kiosk</translation>
     </message>
     <message>
       <location filename="../qml/Settings.qml" line="582" />
       <source>Exit pin</source>
-      <translation type="unfinished">Wepu pin</translation>
+      <translation type="unfinished">Wepụ ntụtụ</translation>
     </message>
     <message>
       <location filename="../qml/Settings.qml" line="617" />
       <source>Simulation source</source>
-      <translation type="unfinished">Isi iyi mmuo</translation>
+      <translation type="unfinished">Isi mmalite ịme anwansị</translation>
     </message>
     <message>
       <location filename="../qml/Settings.qml" line="626" />
       <source>Generate track file using</source>
-      <translation type="unfinished">Ntinye egwu faịlụ site na iji</translation>
+      <translation type="unfinished">Mepụta faịlụ egwu site na iji</translation>
     </message>
     <message>
       <location filename="../qml/Settings.qml" line="633" />
@@ -583,7 +583,7 @@
     <message>
       <location filename="../src/providers/EarthRanger/SettingsPage.qml" line="31" />
       <source>Merge categories</source>
-      <translation type="unfinished">Jikota ngalaba</translation>
+      <translation type="unfinished">Jikọta ngalaba</translation>
     </message>
     <message>
       <location filename="../src/providers/EarthRanger/SettingsPage.qml" line="60" />
@@ -612,7 +612,7 @@
       <location filename="../src/providers/SMART/SightingHomePage.qml" line="111" />
       <location filename="../src/providers/SMART/SightingHomePage.qml" line="185" />
       <source>Patrol</source>
-      <translation type="unfinished">Njikwa</translation>
+      <translation type="unfinished">Patrol</translation>
     </message>
     <message>
       <location filename="../src/providers/SMART/SightingHomePage.qml" line="111" />
@@ -653,7 +653,7 @@
     <message>
       <location filename="../src/providers/SMART/SightingHomePage.qml" line="382" />
       <source>Tap to add</source>
-      <translation type="unfinished">Kpatụ ịgbakwunye</translation>
+      <translation type="unfinished">Pịa ka ịgbakwunye</translation>
     </message>
     <message>
       <location filename="../src/providers/SMART/SightingHomePage.qml" line="430" />
@@ -678,12 +678,12 @@
     <message>
       <location filename="../src/providers/SMART/SightingHomePage.qml" line="494" />
       <source>End patrol</source>
-      <translation type="unfinished">Njedebe patrol</translation>
+      <translation type="unfinished">Patrol kwụsị</translation>
     </message>
     <message>
       <location filename="../src/providers/SMART/SightingHomePage.qml" line="505" />
       <source>Pause patrol</source>
-      <translation type="unfinished">Kwụsị patrol</translation>
+      <translation type="unfinished">Kwụsịtụ nchegharị</translation>
     </message>
     <message>
       <location filename="../src/providers/SMART/SightingHomePage.qml" line="517" />
@@ -723,12 +723,12 @@
     <message>
       <location filename="../src/providers/SMART/StartPage.qml" line="16" />
       <source>Uploaded data has been cleared</source>
-      <translation type="unfinished">Ehichapu data agbadoro</translation>
+      <translation type="unfinished">A kpochapụrụ data ebugoro</translation>
     </message>
     <message>
       <location filename="../src/providers/SMART/StartPage.qml" line="23" />
       <source>Nothing to export</source>
-      <translation type="unfinished">Onweghi ihe mbupụ</translation>
+      <translation type="unfinished">Ọnweghị ihe a ga-ebupụ</translation>
     </message>
     <message>
       <location filename="../src/providers/SMART/StartPage.qml" line="49" />
@@ -743,7 +743,7 @@
     <message>
       <location filename="../src/providers/SMART/StartPage.qml" line="107" />
       <source>Clear sent data</source>
-      <translation type="unfinished">Kpochapụ data zitere</translation>
+      <translation type="unfinished">Kpochapụ data ezitere</translation>
     </message>
     <message>
       <location filename="../src/providers/SMART/StartPage.qml" line="107" />
@@ -763,12 +763,12 @@
     <message>
       <location filename="../src/providers/SMART/StartPage.qml" line="142" />
       <source>Resume Patrol</source>
-      <translation type="unfinished">Umelaghachi Patrol</translation>
+      <translation type="unfinished">Malitekwa patrol</translation>
     </message>
     <message>
       <location filename="../src/providers/SMART/StartPage.qml" line="142" />
       <source>Start Patrol</source>
-      <translation type="unfinished">Na-amalite Patrol</translation>
+      <translation type="unfinished">Malite Patrol</translation>
     </message>
   </context>
   <context>

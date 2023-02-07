@@ -28,6 +28,8 @@ class Provider: public QObject
 
     QML_READONLY_AUTO_PROPERTY (QString, name)
 
+    Q_PROPERTY (QUrl startPage READ getStartPage CONSTANT)
+
 public:
     Provider(QObject* parent = nullptr);
     virtual ~Provider();
@@ -35,32 +37,41 @@ public:
     virtual void save(QVariantMap& data);
     virtual void load(const QVariantMap& data);
 
-    virtual bool connectToProject(bool newBuild);
+    virtual bool connectToProject(bool newBuild, bool* formChangedOut);
     virtual void disconnectFromProject();
 
-    virtual bool canEditSighting(Sighting* sighting, int flags);
+    virtual bool canEditSighting(Sighting* sighting, int flags) const;
     virtual void finalizeSighting(QVariantMap& sightingMap);
 
-    virtual QVariantList buildSightingView(Sighting* sighting);
+    virtual QVariantList buildSightingView(Sighting* sighting) const;
 
     virtual bool requireUsername() const;
+    virtual bool requireGPSTime() const;
+
+    virtual bool supportLocationPoint() const;
+    virtual bool supportLocationTrack() const;
+    virtual bool supportSightingEdit() const;
+    virtual bool supportSightingDelete() const;
 
     virtual QUrl getStartPage();
     virtual void getElements(ElementManager* elementManager);
     virtual void getFields(FieldManager* fieldManager);
 
-    virtual QVariantList buildMapDataLayers();
+    virtual QVariantList buildMapDataLayers() const;
 
-    virtual bool getUseGPSTime();
-    
-    virtual QString getFieldName(const QString& fieldUid);
-    virtual QUrl getFieldIcon(const QString& fieldUid);
-
-    virtual bool getFieldTitleVisible(const QString& fieldUid);
+    virtual QString getFieldName(const QString& fieldUid) const;
+    virtual QUrl getFieldIcon(const QString& fieldUid) const;
+    virtual bool getFieldTitleVisible(const QString& fieldUid) const;
+    virtual QString getSightingSummaryText(Sighting* sighting) const;
+    virtual QUrl getSightingSummaryIcon(Sighting* sighting) const;
+    virtual QUrl getSightingStatusIcon(Sighting* sighting, int flags) const;
 
     virtual bool notify(const QVariantMap& message);
 
     virtual bool finalizePackage(const QString& packageFilesPath) const;
+
+    virtual bool canSubmitData() const;
+    virtual void submitData();
 
 protected:
     Project* m_project = nullptr;

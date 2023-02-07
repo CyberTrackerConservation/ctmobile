@@ -40,7 +40,7 @@ C.ContentPage {
                 let zipUrl = connectorParams.navigation_url + "/" + route.uuid + "?api_key=" + connectorParams.api_key
                 let zipFile = App.downloadFile(zipUrl)
                 if (zipFile !== "") {
-                    if (App.gotoManager.bootstrap(zipFile)) {
+                    if (App.installPackage(zipFile, false).success) {
                         connectedCount++
                     }
                 } else {

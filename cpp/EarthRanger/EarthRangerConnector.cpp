@@ -1,6 +1,7 @@
 #include "EarthRangerConnector.h"
 #include "EarthRangerProvider.h"
 #include "App.h"
+#include <jlcompress.h>
 
 EarthRangerConnector::EarthRangerConnector(QObject *parent) : Connector(parent)
 {
@@ -37,6 +38,11 @@ QVariantMap EarthRangerConnector::getShareData(Project* project, bool auth) cons
     }
 
     return result;
+}
+
+bool EarthRangerConnector::canLogin(Project* /*project*/) const
+{
+    return true;
 }
 
 bool EarthRangerConnector::loggedIn(Project* project) const
@@ -133,6 +139,31 @@ ApiResult EarthRangerConnector::bootstrap(const QVariantMap& params)
     return bootstrapUpdate(projectUid);
 }
 
+bool EarthRangerConnector::refreshAccessToken(QNetworkAccessManager* networkAccessManager, Project* project)
+{
+    auto connectorParams = project->connectorParams();
+    auto server = connectorParams["server"].toString();
+
+    auto accessToken = project->accessToken();
+    auto refreshToken = project->refreshToken();
+
+    auto response = Utils::httpRefreshOAuthToken(networkAccessManager, server, EARTH_RANGER_MOBILE_CLIENT_ID, refreshToken, &accessToken, &refreshToken);
+    if (!response.success)
+    {
+        if (response.status == 401)
+        {
+            logout(project);
+        }
+
+        return false;
+    }
+
+    project->set_accessToken(accessToken);
+    project->set_refreshToken(refreshToken);
+
+    return true;
+}
+
 ApiResult EarthRangerConnector::hasUpdate(QNetworkAccessManager* networkAccessManager, Project* project)
 {
     auto connectorParams = project->connectorParams();
@@ -140,6 +171,14 @@ ApiResult EarthRangerConnector::hasUpdate(QNetworkAccessManager* networkAccessMa
     auto accessToken = project->accessToken();
 
     auto response = Utils::httpGetWithToken(networkAccessManager, server + "/api/v1.0/activity/events/schema?format=json", accessToken);
+    if (!response.success && response.status == 401)
+    {
+        if (refreshAccessToken(networkAccessManager, project))
+        {
+            response = Utils::httpGetWithToken(networkAccessManager, server + "/api/v1.0/activity/events/schema?format=json", project->accessToken());
+        }
+    }
+
     if (!response.success)
     {
         return Failure(response.errorString);
@@ -153,7 +192,7 @@ ApiResult EarthRangerConnector::hasUpdate(QNetworkAccessManager* networkAccessMa
     return UpdateAvailable();
 }
 
-bool EarthRangerConnector::canUpdate(Project* project)
+bool EarthRangerConnector::canUpdate(Project* project) const
 {
     return loggedIn(project);
 }
@@ -175,6 +214,10 @@ ApiResult EarthRangerConnector::update(Project* project)
         return Failure(tr("Unsent data"));
     }
 
+    // Reset the project.
+    m_projectManager->reset(projectUid, true);
+
+    // Update.
     auto networkAccessManager = App::instance()->networkAccessManager();
     auto connectorParams = project->connectorParams();
     auto server = connectorParams["server"].toString();
@@ -194,6 +237,14 @@ ApiResult EarthRangerConnector::update(Project* project)
 
         auto jsonObj = QJsonDocument::fromJson(response.data).object().value("data").toObject();
         Utils::writeJsonToFile(updateFolder + "/schema.json", QJsonDocument(jsonObj).toJson());
+    }
+
+    // Download choice icons zip.
+    auto iconsZipFilePath = App::instance()->downloadFile(server + "/api/v1.0/choices/icons/download", "", "", accessToken);
+    if (!iconsZipFilePath.isEmpty())
+    {
+        auto extractedFiles = JlCompress::extractDir(iconsZipFilePath, updateFolder);
+        QFile::remove(iconsZipFilePath);
     }
 
     // Update the project.
@@ -291,8 +342,8 @@ ApiResult EarthRangerConnector::update(Project* project)
         updateProject.set_androidPermissions(androidPermissions);
 
         auto colors = QVariantMap();
-        colors["primary"] = "#607d8b";
-        colors["accent"] = "#f4511e";
+        colors["primary"] = "#5E4C40";
+        colors["accent"] = "#6DC4BC";
         updateProject.set_colors(colors);
 
         updateProject.saveToQmlFile(updateFolder + "/Project.qml");

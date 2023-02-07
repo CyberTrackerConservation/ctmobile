@@ -56,6 +56,11 @@ QString FieldValue::fieldUid() const
     return m_fieldUid;
 }
 
+QString FieldValue::parentFieldUid() const
+{
+    return field()->parentField()->uid();
+}
+
 QString FieldValue::name() const
 {
     return record()->getFieldName(m_fieldUid);
@@ -421,6 +426,11 @@ void Record::enumFieldValues(const std::function<void(const FieldValue& fieldVal
     }
 }
 
+void Record::setRecordUid(const QString& value)
+{
+    m_recordUid = value;
+}
+
 void Record::remapRecordUids(const std::function<QString(const QString& recordUid)>& lookup)
 {
     m_recordUid = lookup(m_recordUid);
@@ -454,13 +464,8 @@ bool Record::hasFieldValue(const QString& fieldUid) const
 
 QVariant Record::getFieldValue(const QString& fieldUid, const QVariant& defaultValue) const
 {
-    auto result = m_fieldValues.value(fieldUid).value;
-    if (!result.isValid())
-    {
-        result = defaultValue;
-    }
-
-    return result;
+    auto v = m_fieldValues.value(fieldUid);
+    return v.state != FieldState::UserSet && !v.value.isValid() ? defaultValue : v.value;
 }
 
 void Record::setFieldValue(const QString& fieldUid, const QVariant& value)
@@ -468,12 +473,6 @@ void Record::setFieldValue(const QString& fieldUid, const QVariant& value)
     if (getFieldState(fieldUid) == FieldState::Constant)
     {
         qDebug() << "Cannot setFieldValue on a constant field: " << fieldUid;
-        return;
-    }
-
-    if (!value.isValid())
-    {
-        resetFieldValue(fieldUid);
         return;
     }
 
@@ -640,6 +639,12 @@ QString Record::getFieldName(const QString& fieldUid) const
 
     // Use the field name if specified.
     auto field = fieldManager->getField(fieldUid);
+    if (field == nullptr)
+    {
+        qDebug() << "Field not found: " << fieldUid;
+        return QString(); // Field is no longer available.
+    }
+
     auto result = recordManager()->expandFieldText(m_recordUid, elementManager->getElementName(field->nameElementUid()));
     if (!result.isEmpty())
     {
@@ -872,6 +877,22 @@ bool RecordManager::hasRecord(const QString& recordUid) const
     return false;
 }
 
+bool RecordManager::hasRecordChanged(const QString& recordUid) const
+{
+    auto result = false;
+    enumFieldValues(recordUid, true, nullptr,
+        [&](const FieldValue& fieldValue)
+        {
+            if (fieldValue.state() == FieldState::UserSet)
+            {
+                result = true;
+            }
+        },
+        nullptr);
+
+    return result;
+}
+
 QStringList RecordManager::recordUids() const
 {
     auto result = QStringList();
@@ -966,7 +987,7 @@ bool RecordManager::detachRecord(Record* record)
             auto recordFieldUid = record->recordFieldUid();
             auto recordList = parentRecord->getFieldValue(recordFieldUid).toStringList();
             result = recordList.removeOne(record->recordUid());
-            parentRecord->setFieldValue(recordFieldUid, recordList.isEmpty() ? QVariant() : recordList);
+            parentRecord->setFieldValue(recordFieldUid, recordList);
         }
     }
 
@@ -1453,7 +1474,7 @@ bool RecordManager::computeFieldValueFlags(Record* record, const BaseField* fiel
     // FieldFlag::Constraint.
     {
         constraint = true;
-        if (!field->constraint().isEmpty())
+        if (!field->constraint().isEmpty() && !value.toString().isEmpty())
         {
             constraint = evaluator.evaluate(field->constraint(), recordUid, fieldUid).toBool();
         }

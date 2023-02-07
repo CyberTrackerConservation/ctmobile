@@ -20,6 +20,7 @@ class Element: public QObject
     QML_WRITABLE_AUTO_PROPERTY (QString, name)
     QML_WRITABLE_AUTO_PROPERTY (QJsonObject, names)
     QML_WRITABLE_AUTO_PROPERTY (QString, icon)
+    QML_WRITABLE_AUTO_PROPERTY (QString, audio)
     QML_WRITABLE_AUTO_PROPERTY (QVariantMap, tag)
     QML_WRITABLE_AUTO_PROPERTY (QColor, color)
     QML_WRITABLE_AUTO_PROPERTY (QStringList, elementUids)
@@ -78,8 +79,8 @@ public:
     QUrl getElementIcon(const QString& elementUid, bool walkBack = false) const;
 
     void enumChildren(const QString& parentElementUid, bool leavesOnly, const std::function<void(Element*)>& callback) const;
-    QStringList getLeafElementUids(const QString& parentElementUid);
-    QList<Element*> getLeafElements(const QString& parentElementUid);
+    QStringList getLeafElementUids(const QString& parentElementUid, bool ignoreHidden = true) const;
+    QList<Element*> getLeafElements(const QString& parentElementUid, bool ignoreHidden = true) const;
 
     void appendElement(Element* parent, Element* element);
 

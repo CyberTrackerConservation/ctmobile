@@ -8,7 +8,7 @@ import CyberTracker 1.0 as C
 C.ContentPage {
     id: page
 
-    property var projectCount: 0
+    property int projectCount: 0
 
     Timer {
         interval: 500
@@ -21,99 +21,67 @@ C.ContentPage {
         }
     }
 
-    footer: ColumnLayout {
+    footer: RowLayout {
+        id: buttonRow
         spacing: 0
 
-        Rectangle {
-            Layout.fillWidth: true
-            height: 2
-            color: Material.theme === Material.Dark ? "#FFFFFF" : "#000000"
-            opacity: Material.theme === Material.Dark ? 0.12 : 0.12
+        ButtonGroup { id: buttonGroup }
+
+        C.FooterButton {
+            text: qsTr("Connect")
+            ButtonGroup.group: buttonGroup
+            checkable: true
+            checked: stackLayout.currentIndex === 0
+            icon.source: checked ? "qrc:/icons/view_grid_plus.svg" : "qrc:/icons/view_grid_plus_outline.svg"
+            onClicked: stackLayout.currentIndex = 0
         }
 
-        RowLayout {
-            id: buttonRow
-            spacing: 0
-            Layout.fillWidth: true
-            property int buttonCount: 4
-            property int buttonWidth: page.width / buttonCount
-            property var buttonColor: Material.theme === Material.Dark ? Material.foreground : Material.primary
+        C.FooterButton {
+            id: projectsButton
+            ButtonGroup.group: buttonGroup
+            text: qsTr("Projects")
+            checkable: true
+            checked: stackLayout.currentIndex === 1
+            icon.source: checked ? "qrc:/icons/clipboard_multiple.svg" : "qrc:/icons/clipboard_multiple_outline.svg"
+            onClicked: stackLayout.currentIndex = 1
+            enabled: page.projectCount > 0
+        }
 
-            ButtonGroup {
-                buttons: buttonRow.children
-            }
-
-            ToolButton {
-                Layout.preferredWidth: buttonRow.buttonWidth
-                Layout.fillHeight: true
-                text: qsTr("Connect")
-                checkable: true
-                checked: stackLayout.currentIndex === 0
-                font.pixelSize: App.settings.font10
-                font.capitalization: Font.MixedCase
-                display: Button.TextUnderIcon
-                icon.source: checked ? "qrc:/icons/view_grid_plus.svg" : "qrc:/icons/view_grid_plus_outline.svg"
-                Material.foreground: buttonRow.buttonColor
-                onClicked: stackLayout.currentIndex = 0
-            }
-
-            ToolButton {
-                Layout.preferredWidth: buttonRow.buttonWidth
-                Layout.fillHeight: true
-                text: qsTr("Projects")
-                checkable: true
-                checked: stackLayout.currentIndex === 1
-                font.pixelSize: App.settings.font10
-                font.capitalization: Font.MixedCase
-                display: Button.TextUnderIcon
-                icon.source: checked ? "qrc:/icons/clipboard_multiple.svg" : "qrc:/icons/clipboard_multiple_outline.svg"
-                Material.foreground: buttonRow.buttonColor
-                onClicked: stackLayout.currentIndex = 1
-                enabled: page.projectCount > 0
-            }
-
-            ToolButton {
-                Layout.preferredWidth: buttonRow.buttonWidth
-                Layout.fillHeight: true
-                text: qsTr("Map")
-                font.pixelSize: App.settings.font10
-                font.capitalization: Font.MixedCase
-                display: Button.TextUnderIcon
-                icon.source: "qrc:/icons/map_outline.svg"
-                Material.foreground: buttonRow.buttonColor
-                onClicked: {
-                    if (App.requestPermissionLocation()) {
-                        appPageStack.push("qrc:/MapsPage.qml", StackView.Immediate)
-                    }
+        C.FooterButton {
+            text: qsTr("Map")
+            icon.source: C.Style.mapIconSource
+            onClicked: {
+                if (App.requestPermissionLocation()) {
+                    appPageStack.push("qrc:/MapsPage.qml", StackView.Immediate)
                 }
             }
+        }
 
-            ToolButton {
-                Layout.preferredWidth: buttonRow.buttonWidth
-                Layout.fillHeight: true
-                text: qsTr("Settings")
-                checkable: true
-                checked: stackLayout.currentIndex === 2
-                font.pixelSize: App.settings.font10
-                font.capitalization: Font.MixedCase
-                display: Button.TextUnderIcon
-                icon.source: checked ? "qrc:/icons/settings.svg" : "qrc:/icons/settings_outline.svg"
-                Material.foreground: buttonRow.buttonColor
-                onClicked: stackLayout.currentIndex = 2
-            }
+        C.FooterButton {
+            text: qsTr("Settings")
+            ButtonGroup.group: buttonGroup
+            checkable: true
+            checked: stackLayout.currentIndex === 2
+            icon.source: checked ? "qrc:/icons/settings.svg" : "qrc:/icons/settings_outline.svg"
+            onClicked: stackLayout.currentIndex = 2
         }
     }
 
     StackLayout {
         id: stackLayout
         anchors.fill: parent
+        clip: true
 
         Component.onCompleted: {
             page.projectCount = App.projectManager.count()
             currentIndex = page.projectCount === 0 ? 0 : 1
         }
 
-        clip: true
+        onCurrentIndexChanged: {
+            if (buttonRow.children[stackLayout.currentIndex].checkable) {
+                buttonRow.children[stackLayout.currentIndex].checked = true
+            }
+        }
 
         ConnectPage {
         }

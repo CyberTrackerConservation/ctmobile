@@ -4,12 +4,18 @@ import QtQuick.Controls 2.12
 import QtQuick.Layouts 1.12
 import QtQuick.Controls.Material 2.12
 import QtQuick.Dialogs 1.2
+import Qt.labs.settings 1.0 as Labs
 import CyberTracker 1.0 as C
 
 C.ContentPage {
     id: page
 
     property var project
+
+    Component.onCompleted: {
+        // Clone so changes to the caller model do not affect us.
+        page.project = App.projectManager.load(page.project.uid)
+    }
 
     header: C.PageHeader {
         text: qsTr("Project details")
@@ -82,10 +88,7 @@ C.ContentPage {
                     anchors.centerIn: parent
                     height: 64
                     sourceSize.height: 64
-                    source: {
-                        let result = App.settings.darkTheme && project.iconDark !== "" ? project.iconDark : project.icon
-                        return result !== "" ? App.projectManager.getFileUrl(project.uid, result) : ""
-                    }
+                    source: page.project.displayIcon
                 }
             }
 
@@ -94,7 +97,7 @@ C.ContentPage {
                 font.pixelSize: App.settings.font18
                 font.bold: true
                 wrapMode: Label.WordWrap
-                text: project.title
+                text: project ? project.title : ""
                 horizontalAlignment: Qt.AlignHCenter
             }
 
@@ -150,7 +153,7 @@ C.ContentPage {
 
     // Helpers.
     function createPackage() {
-        let packageFile = App.projectManager.createPackage(project.uid, true, false, false)
+        let packageFile = App.projectManager.createPackage(project.uid, true, true, false)
         if (packageFile === "") {
             showError(qsTr("Packaging failed"))
             return
@@ -163,6 +166,12 @@ C.ContentPage {
         }
 
         App.sendFile(packageFile, project.title)
+    }
+
+    Labs.Settings {
+        fileName: App.iniPath
+        category: "PackageFileDialog"
+        property alias fileDialogPackageFolder: fileDialogPackage.folder
     }
 
     // Dialogs.
@@ -219,11 +228,20 @@ C.ContentPage {
                 confirmDelay: true
                 onConfirmed: {
                     App.backupDatabase("Project delete: " + project.uid)
-                    let projectTitle = project.title
                     App.projectManager.remove(project.uid)
-                    showToast(qsTr("%1 deleted").arg("'" + projectTitle + "'"))
+                    showToast(qsTr("%1 deleted").arg("'" + project.title + "'"))
                     appPageStack.pop()
                 }
+            }
+        }
+    }
+
+    Connections {
+        target: App.projectManager
+
+        function onProjectUpdateComplete(projectUid, result) {
+            if (projectUid === page.project.uid) {
+                page.project = App.projectManager.load(projectUid)
             }
         }
     }

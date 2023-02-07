@@ -12,16 +12,18 @@ C.ContentPage {
         menuVisible: true
 
         onMenuClicked: {
-            if (listView.validate()) {
-                form.markSightingCompleted()
-                form.saveSighting()
-                form.popPage(StackView.Immediate)
+            if (!listView.validate()) {
+                return
             }
+
+            form.applyTrackCommand()
+            form.saveSighting()
+            form.markSightingCompleted()
+            form.popPage(StackView.Immediate)
         }
 
         formBack: false
         onBackClicked: {
-            form.markSightingCompleted()
             form.saveSighting()
             form.popPage(StackView.Immediate)
         }

@@ -2,6 +2,7 @@ import QtQml 2.12
 import QtQuick 2.12
 import QtQuick.Controls 2.12
 import QtQuick.Layouts 1.12
+import QtWebView 1.1
 import CyberTracker 1.0 as C
 
 ContentPage {
@@ -15,7 +16,13 @@ ContentPage {
 
         property string text: form.getElementName(page.elementUid)
         property var icon: form.getElementIcon(page.elementUid)
-        property string iconLocation: form.getElementTag(page.elementUid, "iconLocation").toString()
+        property string iconLocation: {
+            let result = form.getElementTag(page.elementUid, "iconLocation")
+            if (result === undefined || result === "") {
+                result = "BEFORE"
+            }
+            return result
+        }
 
         Component.onCompleted: {
             loader.sourceComponent = link.toString() !== "" ? webViewComponent : simpleViewComponent;
@@ -53,7 +60,7 @@ ContentPage {
 
             ColumnLayout {
                 id: column
-                width: parent.width - 16
+                width: parent.width - 32
                 x: 16
                 spacing: 16
 

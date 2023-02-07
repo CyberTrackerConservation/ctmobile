@@ -27,6 +27,11 @@ QVariantMap Connector::getShareData(Project* /*project*/, bool /*auth*/) const
     return QVariantMap();
 }
 
+bool Connector::canLogin(Project* project) const
+{
+    return false;
+}
+
 bool Connector::loggedIn(Project* /*project*/) const
 {
     return true;
@@ -46,12 +51,17 @@ ApiResult Connector::bootstrap(const QVariantMap& /*params*/)
     return Failure(tr("Not implemented"));
 }
 
+bool Connector::refreshAccessToken(QNetworkAccessManager* /*networkAccessManager*/, Project* /*project*/)
+{
+    return false;
+}
+
 ApiResult Connector::hasUpdate(QNetworkAccessManager* /*networkAccessManager*/, Project* /*project*/)
 {
     return Failure(tr("Not implemented"));
 }
 
-bool Connector::canUpdate(Project* /*project*/)
+bool Connector::canUpdate(Project* /*project*/) const
 {
     return false;
 }

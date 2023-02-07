@@ -12,20 +12,13 @@ RowLayout {
     property alias recordUid: fieldBinding.recordUid
     property alias fieldUid: fieldBinding.fieldUid
 
-    enabled: fieldBinding.isValid
-
     Component.onCompleted: {
-        ensureValue()
         updateState()
     }
 
     C.FieldBinding {
         id: fieldBinding
         onValueChanged: {
-            if (fieldBinding.value === undefined) {
-                ensureValue()
-            }
-
             updateState()
         }
     }
@@ -33,21 +26,21 @@ RowLayout {
     ToolButton {
         id: recordButton
         icon.source: "qrc:/icons/record.svg"
+        icon.width: Style.toolButtonSize
+        icon.height: Style.toolButtonSize
         icon.color: enabled ? "red" : "gray"
         Layout.fillHeight: true
         onClicked: {
-            ensureValue()
-
-            if (fieldBinding.value.filename !== "") {
+            let value = getValue()
+            if (value.filename !== "") {
                 confirmDeletePopup.open()
                 return
             }
 
-            let value = fieldBinding.value
             value.filename = Utils.generateUuid() + ".wav"
             fieldBinding.setValue(value)
 
-            recorder.start(App.getMediaFilePath(fieldBinding.value.filename), fieldBinding.field.sampleRate)
+            recorder.start(App.getMediaFilePath(value.filename), fieldBinding.field.sampleRate)
             updateState()
         }
     }
@@ -84,7 +77,7 @@ RowLayout {
                 height: progressBar.height
                 horizontalAlignment: Label.AlignHCenter
                 verticalAlignment: Label.AlignVCenter
-                font.pixelSize: App.settings.font10
+                font.pixelSize: App.settings.font12
             }
         }
     }
@@ -93,9 +86,11 @@ RowLayout {
         id: playButton
         icon.source: "qrc:/icons/play.svg"
         icon.color: enabled ? "green" : "gray"
+        icon.width: Style.toolButtonSize
+        icon.height: Style.toolButtonSize
         onClicked: {
             stop()
-            player.source = App.getMediaFileUrl(fieldBinding.value.filename)
+            player.source = App.getMediaFileUrl(getValue().filename)
             player.play()
             updateState()
         }
@@ -105,6 +100,8 @@ RowLayout {
         id: stopButton
         icon.source: "qrc:/icons/stop.svg"
         icon.color: enabled ? Material.foreground : "gray"
+        icon.width: Style.toolButtonSize
+        icon.height: Style.toolButtonSize
         onClicked: {
             stop()
             updateState()
@@ -133,7 +130,7 @@ RowLayout {
 
         onDurationChanged: {
             if (recording) {
-                let value = fieldBinding.value
+                let value = getValue()
                 value.duration = recorder.duration
                 fieldBinding.setValue(value)
 
@@ -147,25 +144,22 @@ RowLayout {
         }
     }
 
-    function updateState() {
-        if (!fieldBinding.isValid) {
-            recordButton.enabled = false
-            playButton.enabled = false
-            stopButton.enabled = false
-            progressBar.value = 0
-            return
-        }
+    function getValue() {
+        fieldBinding.value // change notifications
+        return fieldBinding.getValue({ filename: "", duration: 0 })
+    }
 
+    function updateState() {
         let playing = player.playbackState === MediaPlayer.PlayingState
         recordButton.enabled = !recorder.recording && !playing
-        playButton.enabled = !recorder.recording && !playing && fieldBinding.value.duration > 0
+        playButton.enabled = !recorder.recording && !playing && getValue().duration > 0
         stopButton.enabled = recorder.recording || playing
         updateProgress()
     }
 
     function updateProgress() {
         let position = 0
-        let duration = fieldBinding.value.duration
+        let duration = getValue().duration
         let durationText = parseInt(duration / 1000, 10) + " " + qsTr("seconds")
 
         if (player.playbackState === MediaPlayer.PlayingState && duration !== 0) {
@@ -184,10 +178,10 @@ RowLayout {
     }
 
     function reset() {
-        if (fieldBinding.value !== undefined) {
-            App.removeMedia(fieldBinding.value.filename)
+        if (getValue().filename !== "") {
+            App.removeMedia(getValue().filename)
         }
-        fieldBinding.setValue({ filename: "", duration: 0 })
+        fieldBinding.resetValue()
         updateState()
         form.saveState()
     }
@@ -197,11 +191,5 @@ RowLayout {
         player.stop()
         updateState()
         form.saveState()
-    }
-
-    function ensureValue() {
-        if (fieldBinding.isValid && fieldBinding.value === undefined) {
-            fieldBinding.setValue({ filename: "", duration: 0 })
-        }
     }
 }

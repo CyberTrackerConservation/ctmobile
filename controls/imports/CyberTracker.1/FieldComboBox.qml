@@ -20,6 +20,7 @@ ComboBox {
 
     delegate: ItemDelegate {
         width: root.width
+        font.pixelSize: App.settings.font14
         text: form.getElementName(modelData.uid)
     }
 

@@ -19,27 +19,27 @@
     <message>
       <location filename="../src/engine/App.cpp" line="393" />
       <source>Humanitarian</source>
-      <translation type="unfinished">Zothandiza anthu</translation>
+      <translation type="unfinished">Wothandizira anthu</translation>
     </message>
     <message>
       <location filename="../src/engine/App.cpp" line="394" />
       <source>Topographic</source>
-      <translation type="unfinished">Zithunzi</translation>
+      <translation type="unfinished">Zojambulajambula</translation>
     </message>
     <message>
       <location filename="../src/engine/App.cpp" line="395" />
       <source>Streets</source>
-      <translation type="unfinished">Malikulu</translation>
+      <translation type="unfinished">Misewu</translation>
     </message>
     <message>
       <location filename="../src/engine/App.cpp" line="396" />
       <source>Streets (vector)</source>
-      <translation type="unfinished">Malikulu (vekitala)</translation>
+      <translation type="unfinished">Misewu (vector)</translation>
     </message>
     <message>
       <location filename="../src/engine/App.cpp" line="397" />
       <source>Streets - night (vector)</source>
-      <translation type="unfinished">Masabata - usiku (vekitala)</translation>
+      <translation type="unfinished">Misewu - usiku (vector)</translation>
     </message>
     <message>
       <location filename="../src/engine/App.cpp" line="398" />
@@ -49,22 +49,22 @@
     <message>
       <location filename="../src/engine/App.cpp" line="399" />
       <source>Dark gray canvas (Vector)</source>
-      <translation type="unfinished">Chovala chakuda chakuda (Vector)</translation>
+      <translation type="unfinished">Chinsalu chotuwa chakuda (Vector)</translation>
     </message>
     <message>
       <location filename="../src/engine/App.cpp" line="400" />
       <source>Light gray canvas</source>
-      <translation type="unfinished">Chovala chowirira cha imvi</translation>
+      <translation type="unfinished">Chinsalu chotuwa chowala</translation>
     </message>
     <message>
       <location filename="../src/engine/App.cpp" line="401" />
       <source>Light gray canvas (Vector)</source>
-      <translation type="unfinished">Chofiyira cha imvi chofiyira (Vector)</translation>
+      <translation type="unfinished">Chinsalu chotuwa chowala (Vector)</translation>
     </message>
     <message>
       <location filename="../src/engine/App.cpp" line="402" />
       <source>Navigation (vector)</source>
-      <translation type="unfinished">Kusanthula (vekitala)</translation>
+      <translation type="unfinished">Navigation (vector)</translation>
     </message>
     <message>
       <location filename="../src/engine/App.cpp" line="403" />
@@ -82,27 +82,27 @@
     <message>
       <location filename="../qml/BugReport.qml" line="22" />
       <source>Error</source>
-      <translation type="unfinished">Zolakwika</translation>
+      <translation type="unfinished">Cholakwika</translation>
     </message>
     <message>
       <location filename="../qml/BugReport.qml" line="62" />
       <source>Unknown error</source>
-      <translation type="unfinished">Vuto losadziwika</translation>
+      <translation type="unfinished">Cholakwika chosadziwika</translation>
     </message>
     <message>
       <location filename="../qml/BugReport.qml" line="68" />
       <source>Report a bug</source>
-      <translation type="unfinished">Nenani za cholakwika</translation>
+      <translation type="unfinished">Nenani cholakwika</translation>
     </message>
     <message>
       <location filename="../qml/BugReport.qml" line="86" />
       <source>Describe the issue</source>
-      <translation type="unfinished">Fotokozani nkhaniyi</translation>
+      <translation type="unfinished">Fotokozani vuto</translation>
     </message>
     <message>
       <location filename="../qml/BugReport.qml" line="87" />
       <source>Tap ✓ in the top right corner</source>
-      <translation type="unfinished">Dinani ✓ kudzanja lamanja</translation>
+      <translation type="unfinished">Dinani ✓ pakona yakumanja yakumanja</translation>
     </message>
     <message>
       <location filename="../qml/BugReport.qml" line="88" />
@@ -115,7 +115,7 @@
     <message>
       <location filename="../src/controls/imports/CyberTracker/Controls.1/Camera.qml" line="120" />
       <source>Delete current image?</source>
-      <translation type="unfinished">Fufutani chithunzi chamakono?</translation>
+      <translation type="unfinished">Chotsani chithunzi chapano?</translation>
     </message>
   </context>
   <context>
@@ -139,7 +139,7 @@
     <message>
       <location filename="../qml/ConnectEarthRanger.qml" line="15" />
       <source>Connect to</source>
-      <translation type="unfinished">Lumikizani kwa</translation>
+      <translation type="unfinished">Lumikizani ku</translation>
     </message>
   </context>
   <context>
@@ -163,32 +163,32 @@
     <message>
       <location filename="../src/providers/SMART/Globals.qml" line="8" />
       <source>Version</source>
-      <translation type="unfinished">Mtundu</translation>
+      <translation type="unfinished">Baibulo</translation>
     </message>
     <message>
       <location filename="../src/providers/SMART/Globals.qml" line="29" />
       <source>Patrol start</source>
-      <translation type="unfinished">Kuyambira</translation>
+      <translation type="unfinished">Patrol kuyamba</translation>
     </message>
     <message>
       <location filename="../src/providers/SMART/Globals.qml" line="30" />
       <source>Patrol end</source>
-      <translation type="unfinished">Mapeto</translation>
+      <translation type="unfinished">Patrol mapeto</translation>
     </message>
     <message>
       <location filename="../src/providers/SMART/Globals.qml" line="31" />
       <source>Patrol pause</source>
-      <translation type="unfinished">Patrol kaye</translation>
+      <translation type="unfinished">Patrol ayime kaye</translation>
     </message>
     <message>
       <location filename="../src/providers/SMART/Globals.qml" line="32" />
       <source>Patrol resume</source>
-      <translation type="unfinished">Patrol pitilizani</translation>
+      <translation type="unfinished">Patrol ayambiranso</translation>
     </message>
     <message>
       <location filename="../src/providers/SMART/Globals.qml" line="33" />
       <source>Patrol change</source>
-      <translation type="unfinished">Kusintha kwa Patrol</translation>
+      <translation type="unfinished">Kusintha kwa patrol</translation>
     </message>
     <message>
       <location filename="../src/providers/SMART/Globals.qml" line="34" />
@@ -206,7 +206,7 @@
     <message>
       <location filename="../src/providers/SMART/HistoryPage.qml" line="83" />
       <source>Incident</source>
-      <translation type="unfinished">Zadzidzidzi</translation>
+      <translation type="unfinished">Chochitika</translation>
     </message>
     <message>
       <location filename="../src/providers/SMART/HistoryPage.qml" line="91" />
@@ -216,22 +216,22 @@
     <message>
       <location filename="../src/providers/SMART/HistoryPage.qml" line="98" />
       <source>History</source>
-      <translation type="unfinished">Mbiriyakale</translation>
+      <translation type="unfinished">Mbiri</translation>
     </message>
     <message>
       <location filename="../src/providers/SMART/HistoryPage.qml" line="150" />
       <source>No patrol sightings</source>
-      <translation type="unfinished">Palibe kuyang'anira</translation>
+      <translation type="unfinished">Palibe zowonera</translation>
     </message>
     <message>
       <location filename="../src/providers/SMART/HistoryPage.qml" line="172" />
       <source>No independent incidents</source>
-      <translation type="unfinished">Palibe zochitika zodziyimira pawokha</translation>
+      <translation type="unfinished">Palibe zochitika zapadera</translation>
     </message>
     <message>
       <location filename="../src/providers/SMART/HistoryPage.qml" line="190" />
       <source>No sighting selected</source>
-      <translation type="unfinished">Palibe chowonera chosankhidwa</translation>
+      <translation type="unfinished">Palibe zowonera zomwe zasankhidwa</translation>
     </message>
   </context>
   <context>
@@ -270,7 +270,7 @@
     <message>
       <location filename="../src/controls/imports/CyberTracker/Controls.1/LoginItem.qml" line="54" />
       <source>Logon</source>
-      <translation type="unfinished">Login</translation>
+      <translation type="unfinished">Logoni</translation>
     </message>
   </context>
   <context>
@@ -284,18 +284,18 @@
     <message>
       <location filename="../qml/Main.qml" line="66" />
       <source>Project will be permanently removed</source>
-      <translation type="unfinished">Pulojekiti ichotsedweratu</translation>
+      <translation type="unfinished">Ntchitoyi idzachotsedwa mpaka kalekale</translation>
     </message>
     <message>
       <location filename="../qml/Main.qml" line="76" />
       <location filename="../qml/Main.qml" line="154" />
       <source>Reset project?</source>
-      <translation type="unfinished">Yambitsanso ntchito?</translation>
+      <translation type="unfinished">Bwezeretsani ntchito?</translation>
     </message>
     <message>
       <location filename="../qml/Main.qml" line="77" />
       <source>All project data will be lost</source>
-      <translation type="unfinished">Zambiri za polojekiti zidzatayika</translation>
+      <translation type="unfinished">Zonse za polojekiti zidzatayika</translation>
     </message>
     <message>
       <location filename="../qml/Main.qml" line="123" />
@@ -327,7 +327,7 @@
     <message>
       <location filename="../qml/Main.qml" line="273" />
       <source>Sync projects</source>
-      <translation type="unfinished">Landirani mapulogalamu</translation>
+      <translation type="unfinished">Gwirizanitsani ntchito</translation>
     </message>
     <message>
       <location filename="../qml/Main.qml" line="308" />
@@ -337,17 +337,17 @@
     <message>
       <location filename="../qml/Main.qml" line="321" />
       <source>Map</source>
-      <translation type="unfinished">Map</translation>
+      <translation type="unfinished">Mapu</translation>
     </message>
     <message>
       <location filename="../qml/Main.qml" line="334" />
       <source>Settings</source>
-      <translation type="unfinished">Makonda</translation>
+      <translation type="unfinished">Zokonda</translation>
     </message>
     <message>
       <location filename="../qml/Main.qml" line="347" />
       <source>Bug</source>
-      <translation type="unfinished">Mdudu</translation>
+      <translation type="unfinished">Bug</translation>
     </message>
   </context>
   <context>
@@ -361,18 +361,18 @@
     <message>
       <location filename="../src/providers/SMART/MainPage.qml" line="51" />
       <source>Project will be permanently removed</source>
-      <translation type="unfinished">Pulojekiti ichotsedweratu</translation>
+      <translation type="unfinished">Ntchitoyi idzachotsedwa mpaka kalekale</translation>
     </message>
     <message>
       <location filename="../src/providers/SMART/MainPage.qml" line="61" />
       <location filename="../src/providers/SMART/MainPage.qml" line="139" />
       <source>Reset project?</source>
-      <translation type="unfinished">Yambitsanso ntchito?</translation>
+      <translation type="unfinished">Bwezeretsani ntchito?</translation>
     </message>
     <message>
       <location filename="../src/providers/SMART/MainPage.qml" line="62" />
       <source>All project data will be lost</source>
-      <translation type="unfinished">Zambiri za polojekiti zidzatayika</translation>
+      <translation type="unfinished">Zonse za polojekiti zidzatayika</translation>
     </message>
     <message>
       <location filename="../src/providers/SMART/MainPage.qml" line="108" />
@@ -389,7 +389,7 @@
     <message>
       <location filename="../src/providers/SMART/MainPage.qml" line="254" />
       <source>Refresh</source>
-      <translation type="unfinished">Tsitsimutsani</translation>
+      <translation type="unfinished">Tsitsaninso</translation>
     </message>
     <message>
       <location filename="../src/providers/SMART/MainPage.qml" line="270" />
@@ -404,7 +404,7 @@
     <message>
       <location filename="../src/providers/SMART/MainPage.qml" line="296" />
       <source>Bug</source>
-      <translation type="unfinished">Mdudu</translation>
+      <translation type="unfinished">Bug</translation>
     </message>
   </context>
   <context>
@@ -412,7 +412,7 @@
     <message>
       <location filename="../qml/Maps.qml" line="21" />
       <source>Inspect</source>
-      <translation type="unfinished">Yenderani</translation>
+      <translation type="unfinished">Yang'anani</translation>
     </message>
     <message>
       <location filename="../qml/Maps.qml" line="21" />
@@ -422,12 +422,12 @@
     <message>
       <location filename="../qml/Maps.qml" line="473" />
       <source>No sighting selected</source>
-      <translation type="unfinished">Palibe chowonera chosankhidwa</translation>
+      <translation type="unfinished">Palibe zowonera zomwe zasankhidwa</translation>
     </message>
     <message>
       <location filename="../qml/Maps.qml" line="509" />
       <source>Position</source>
-      <translation type="unfinished">Maudindo</translation>
+      <translation type="unfinished">Udindo</translation>
     </message>
     <message>
       <location filename="../qml/Maps.qml" line="526" />
@@ -440,17 +440,17 @@
     <message>
       <location filename="../src/providers/SMART/MetadataPage.qml" line="35" />
       <source>Start patrol</source>
-      <translation type="unfinished">Yambani kuyendayenda</translation>
+      <translation type="unfinished">Yambani kulondera</translation>
     </message>
     <message>
       <location filename="../src/providers/SMART/MetadataPage.qml" line="37" />
       <source>Resume patrol</source>
-      <translation type="unfinished">Yambitsaninso pateni</translation>
+      <translation type="unfinished">Yambitsaninso kulondera</translation>
     </message>
     <message>
       <location filename="../src/providers/SMART/MetadataPage.qml" line="39" />
       <source>Change patrol</source>
-      <translation type="unfinished">Sinthani kuyendayenda</translation>
+      <translation type="unfinished">Sinthani kulondera</translation>
     </message>
   </context>
   <context>
@@ -484,12 +484,12 @@
     <message>
       <location filename="../qml/Settings.qml" line="327" />
       <source>Settings</source>
-      <translation type="unfinished">Makonda</translation>
+      <translation type="unfinished">Zokonda</translation>
     </message>
     <message>
       <location filename="../qml/Settings.qml" line="345" />
       <source>Language</source>
-      <translation type="unfinished">Chilankhulo</translation>
+      <translation type="unfinished">Chiyankhulo</translation>
     </message>
     <message>
       <location filename="../qml/Settings.qml" line="381" />
@@ -504,67 +504,67 @@
     <message>
       <location filename="../qml/Settings.qml" line="444" />
       <source>Font size</source>
-      <translation type="unfinished">Kukula kwa mawonekedwe</translation>
+      <translation type="unfinished">Kukula kwa zilembo</translation>
     </message>
     <message>
       <location filename="../qml/Settings.qml" line="468" />
       <source>Coordinates</source>
-      <translation type="unfinished">Ogwirizana</translation>
+      <translation type="unfinished">Coordinates</translation>
     </message>
     <message>
       <location filename="../qml/Settings.qml" line="476" />
       <source>Decimal degrees</source>
-      <translation type="unfinished">Madigiri opitilira muyeso</translation>
+      <translation type="unfinished">Madigiri a decimal</translation>
     </message>
     <message>
       <location filename="../qml/Settings.qml" line="476" />
       <source>Degrees minutes seconds</source>
-      <translation type="unfinished">Madigiri mphindi</translation>
+      <translation type="unfinished">Madigiri miniti masekondi</translation>
     </message>
     <message>
       <location filename="../qml/Settings.qml" line="476" />
       <source>Degrees decimal minutes</source>
-      <translation type="unfinished">Madigiri mphindi</translation>
+      <translation type="unfinished">Madigiri decimal miniti</translation>
     </message>
     <message>
       <location filename="../qml/Settings.qml" line="492" />
       <source>Simulate location</source>
-      <translation type="unfinished">Tsanzirani malo</translation>
+      <translation type="unfinished">Yezerani malo</translation>
     </message>
     <message>
       <location filename="../qml/Settings.qml" line="518" />
       <source>Source file</source>
-      <translation type="unfinished">Fayilo yachinsinsi</translation>
+      <translation type="unfinished">Fayilo yochokera</translation>
     </message>
     <message>
       <location filename="../qml/Settings.qml" line="526" />
       <source>Default</source>
-      <translation type="unfinished">Zofikira</translation>
+      <translation type="unfinished">Zosasintha</translation>
     </message>
     <message>
       <location filename="../qml/Settings.qml" line="549" />
       <source>Kiosk mode</source>
-      <translation type="unfinished">Makonda a Kiosk</translation>
+      <translation type="unfinished">Kiosk mode</translation>
     </message>
     <message>
       <location filename="../qml/Settings.qml" line="582" />
       <source>Exit pin</source>
-      <translation type="unfinished">Tuluka pini</translation>
+      <translation type="unfinished">Tulukani pini</translation>
     </message>
     <message>
       <location filename="../qml/Settings.qml" line="617" />
       <source>Simulation source</source>
-      <translation type="unfinished">Magwero oyambira</translation>
+      <translation type="unfinished">Kuyerekeza gwero</translation>
     </message>
     <message>
       <location filename="../qml/Settings.qml" line="626" />
       <source>Generate track file using</source>
-      <translation type="unfinished">Pangani fayilo yogwiritsira ntchito</translation>
+      <translation type="unfinished">Pangani track file pogwiritsa ntchito</translation>
     </message>
     <message>
       <location filename="../qml/Settings.qml" line="633" />
       <source>Copy to the Download folder</source>
-      <translation type="unfinished">Koperani ku Foda yotsitsa</translation>
+      <translation type="unfinished">Koperani ku Download chikwatu</translation>
     </message>
     <message>
       <location filename="../qml/Settings.qml" line="640" />
@@ -593,12 +593,12 @@
     <message>
       <location filename="../src/providers/SMART/SettingsPage.qml" line="32" />
       <source>Patrol language</source>
-      <translation type="unfinished">Chilankhulo cha olondera</translation>
+      <translation type="unfinished">Chilankhulo cholondera</translation>
     </message>
     <message>
       <location filename="../src/providers/SMART/SettingsPage.qml" line="62" />
       <source>Incident language</source>
-      <translation type="unfinished">Chilankhulo</translation>
+      <translation type="unfinished">Chilankhulo cha zochitika</translation>
     </message>
   </context>
   <context>
@@ -628,7 +628,7 @@
     <message>
       <location filename="../src/providers/SMART/SightingHomePage.qml" line="159" />
       <source>History</source>
-      <translation type="unfinished">Mbiriyakale</translation>
+      <translation type="unfinished">Mbiri</translation>
     </message>
     <message>
       <location filename="../src/providers/SMART/SightingHomePage.qml" line="172" />
@@ -678,17 +678,17 @@
     <message>
       <location filename="../src/providers/SMART/SightingHomePage.qml" line="494" />
       <source>End patrol</source>
-      <translation type="unfinished">Kutsiriza kuyandikira</translation>
+      <translation type="unfinished">Malizitsani kulondera</translation>
     </message>
     <message>
       <location filename="../src/providers/SMART/SightingHomePage.qml" line="505" />
       <source>Pause patrol</source>
-      <translation type="unfinished">Imani kaye</translation>
+      <translation type="unfinished">Imani kaye kulondera</translation>
     </message>
     <message>
       <location filename="../src/providers/SMART/SightingHomePage.qml" line="517" />
       <source>Change patrol</source>
-      <translation type="unfinished">Sinthani kuyendayenda</translation>
+      <translation type="unfinished">Sinthani kulondera</translation>
     </message>
   </context>
   <context>
@@ -728,7 +728,7 @@
     <message>
       <location filename="../src/providers/SMART/StartPage.qml" line="23" />
       <source>Nothing to export</source>
-      <translation type="unfinished">Palibe chogulitsa</translation>
+      <translation type="unfinished">Palibe chotumiza kunja</translation>
     </message>
     <message>
       <location filename="../src/providers/SMART/StartPage.qml" line="49" />
@@ -743,7 +743,7 @@
     <message>
       <location filename="../src/providers/SMART/StartPage.qml" line="107" />
       <source>Clear sent data</source>
-      <translation type="unfinished">Chotsani zotumizira</translation>
+      <translation type="unfinished">Chotsani data yotumizidwa</translation>
     </message>
     <message>
       <location filename="../src/providers/SMART/StartPage.qml" line="107" />
@@ -753,7 +753,7 @@
     <message>
       <location filename="../src/providers/SMART/StartPage.qml" line="123" />
       <source>History</source>
-      <translation type="unfinished">Mbiriyakale</translation>
+      <translation type="unfinished">Mbiri</translation>
     </message>
     <message>
       <location filename="../src/providers/SMART/StartPage.qml" line="131" />
@@ -768,7 +768,7 @@
     <message>
       <location filename="../src/providers/SMART/StartPage.qml" line="142" />
       <source>Start Patrol</source>
-      <translation type="unfinished">Yambitsani Patrol</translation>
+      <translation type="unfinished">Yambani Patrol</translation>
     </message>
   </context>
   <context>

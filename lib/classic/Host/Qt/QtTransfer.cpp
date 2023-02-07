@@ -53,6 +53,7 @@ QList<TransferItem> buildTransferItems(const QString& queuePath)
         {
         case FXSENDDATA_PROTOCOL_UNC:
         case FXSENDDATA_PROTOCOL_FTP:
+        case FXSENDDATA_PROTOCOL_AZURE:
         case FXSENDDATA_PROTOCOL_BACKUP:
             transferItem.fileNameData = QString(filenameOUT).replace(".OUT", ".CTX");
             break;
@@ -117,6 +118,10 @@ public:
 
             case FXSENDDATA_PROTOCOL_FTP:
                 success = m_transfer->sendDataFTP(item.fileNameData, item.sendData.Url, item.sendData.UserName, item.sendData.Password);
+                break;
+
+            case FXSENDDATA_PROTOCOL_AZURE:
+                success = m_transfer->sendDataAzure(item.fileNameData, item.sendData.Url, item.sendData.UserName, item.sendData.Password);
                 break;
 
             case FXSENDDATA_PROTOCOL_HTTP:
@@ -262,6 +267,7 @@ bool QtTransfer::sendDataHTTP(const QString& filename, const QString& url, const
     result.reason = reply->attribute(QNetworkRequest::HttpReasonPhraseAttribute).toString();
     result.etag = reply->header(QNetworkRequest::ETagHeader).toString();
     result.location = reply->header(QNetworkRequest::LocationHeader).toString();
+    result.url = url;
     result.errorString = reply->errorString();
     result.data = QByteArray(reply->readAll());
 
@@ -482,4 +488,46 @@ bool QtTransfer::sendDataUNC(const QString& filename, const QString& url, const 
     }
 
     return QFile::copy(filename, finalUrl + QFileInfo(filename).fileName());
+}
+
+bool QtTransfer::sendDataAzure(const QString& filename, const QString& url, const QString& username, const QString& /*password*/)
+{
+    if (url.isEmpty())
+    {
+        return false;
+    }
+
+    // Construct multipart.
+    QFile file(filename);
+    QFileInfo fileInfo(filename);
+    if (!file.open(QIODevice::ReadOnly))
+    {
+        qDebug() << "Failed to open CTX: " << filename;
+        return false;
+    }
+
+    auto part = QHttpPart();
+    part.setHeader(QNetworkRequest::ContentTypeHeader, "application/ctx");
+    part.setHeader(QNetworkRequest::ContentDispositionHeader, "form-data; name=\"file\"; filename=\"" + fileInfo.fileName() + "\"");
+    part.setBodyDevice(&file);
+
+    QHttpMultiPart multipart(QHttpMultiPart::FormDataType);
+    multipart.append(part);
+
+    // Build url.
+    auto urlFinal = url;
+    if (urlFinal.back() != '/')
+    {
+        urlFinal += "/";
+    }
+
+    urlFinal += "api/queue/";
+    urlFinal += username;
+    urlFinal += "/upload";
+
+    // Send.
+    QNetworkAccessManager networkAccessManager;
+    auto response = Utils::httpPostMultiPart(&networkAccessManager, urlFinal, &multipart);
+
+    return response.success;
 }

@@ -9,7 +9,7 @@ C.ContentPage {
     id: page
 
     property var inspectList: []
-    property var currentIndex: 0
+    property int currentIndex: 0
     property var currentItem: ({})
 
     property var forms: ({})
@@ -18,31 +18,11 @@ C.ContentPage {
         page.rebuild(0)
     }
 
-    function rebuild(indexDelta) {
-        currentIndex += indexDelta
-        if (currentIndex < 0 || currentIndex >= inspectList.length) {
-            console.log("Error bad index")
-            return
-        }
+    Connections {
+        target: listViewSighting.sightingForm
 
-        currentItem = inspectList[currentIndex]
-
-        switch (currentItem.overlayId) {
-        case "sighting":
-            if (forms[currentItem.stateSpace] === undefined) {
-                forms[currentItem.stateSpace] = App.createForm(form.project.uid, currentItem.stateSpace, true, page)
-            }
-
-            listViewSighting.sightingForm = forms[currentItem.stateSpace]
-            listViewSighting.sightingUid = currentItem.sightingUid
-            title.menuVisible = listViewSighting.sightingForm.canEditSighting(currentItem.sightingUid)
-            break
-        case "gotoPoints":
-            title.menuVisible = false
-            break
-        case "gotoLines":
-            title.menuVisible = false
-            break
+        function onSightingSaved(sightingUid) {
+            rebuild(0)
         }
     }
 
@@ -92,13 +72,7 @@ C.ContentPage {
     }
 
     header: C.PageHeader {
-        id: title
         text: qsTr("Identify") + " - " + currentItem.name
-        menuIcon: "qrc:/icons/edit.svg"
-        onMenuClicked: {
-            form.saveState()
-            form.pushFormPage({ projectUid: form.project.uid, stateSpace: listViewSighting.sightingForm.stateSpace, editSightingUid: listViewSighting.sightingUid })
-        }
     }
 
     Label {
@@ -111,73 +85,101 @@ C.ContentPage {
         font.pixelSize: App.settings.font20
     }
 
-    footer: ColumnLayout {
+    footer: RowLayout {
         spacing: 0
-        width: parent.width
 
-        Rectangle {
-            Layout.fillWidth: true
-            height: 2
-            color: Material.theme === Material.Dark ? "#FFFFFF" : "#000000"
-            opacity: Material.theme === Material.Dark ? 0.12 : 0.12
+        C.FooterButton {
+            text: qsTr("Previous")
+            icon.source: "qrc:/icons/chevron_left.svg"
+            enabled: page.currentIndex > 0
+            onClicked: rebuild(-1)
         }
 
-        RowLayout {
-            id: buttonRow
-            spacing: 0
-            Layout.fillWidth: true
-            property int buttonCount: 3
-            property int buttonWidth: page.width / buttonCount
-            property var buttonColor: Material.theme === Material.Dark ? Material.foreground : Material.primary
+        C.FooterButton {
+            text: qsTr("Next")
+            icon.source: "qrc:/icons/chevron_right.svg"
+            enabled: page.currentIndex < page.inspectList.length - 1
+            onClicked: rebuild(+1)
+        }
 
-            ToolButton {
-                Layout.preferredWidth: buttonRow.buttonWidth
-                Layout.fillWidth: true
-                Layout.fillHeight: true
-                text: "Set goto"
-                font.pixelSize: App.settings.font10
-                font.capitalization: Font.MixedCase
-                display: Button.TextUnderIcon
-                icon.source: "qrc:/icons/arrow_goto.svg"
-                Material.foreground: buttonRow.buttonColor
-                onClicked: {
-                    App.gotoManager.setTarget(page.currentItem.name, page.currentItem.path, page.currentItem.pathIndex)
-                    if (typeof(formPageStack) !== "undefined") {
-                        form.popPage()
-                    } else {
-                        appPageStack.pop()
-                    }
-
+        C.FooterButton {
+            text: qsTr("Set goto")
+            icon.source: "qrc:/icons/arrow_goto.svg"
+            onClicked: {
+                App.gotoManager.setTarget(page.currentItem.name, page.currentItem.path, page.currentItem.pathIndex)
+                if (typeof(formPageStack) !== "undefined") {
+                    form.popPage()
+                } else {
+                    appPageStack.pop()
                 }
             }
+        }
 
-            ToolButton {
-                Layout.preferredWidth: buttonRow.buttonWidth
-                Layout.fillWidth: true
-                Layout.fillHeight: true
-                text: qsTr("Previous")
-                font.pixelSize: App.settings.font10
-                font.capitalization: Font.MixedCase
-                display: Button.TextUnderIcon
-                icon.source: "qrc:/icons/menu_left.svg"
-                Material.foreground: buttonRow.buttonColor
-                enabled: page.currentIndex > 0
-                onClicked: page.rebuild(-1)
+        C.FooterButton {
+            id: deleteButton
+            text: qsTr("Delete")
+            icon.source: "qrc:/icons/delete_outline.svg"
+            visible: form.supportSightingDelete
+            onClicked: {
+                confirmDelete.open()
+            }
+        }
+
+        C.FooterButton {
+            id: editButton
+            text: qsTr("Edit")
+            icon.source: "qrc:/icons/pencil_outline.svg"
+            visible: form.supportSightingEdit
+            onClicked: {
+                form.saveState()
+                form.pushFormPage({ projectUid: form.project.uid, stateSpace: listViewSighting.sightingForm.stateSpace, editSightingUid: listViewSighting.sightingUid })
+            }
+        }
+    }
+
+    C.PopupLoader {
+        id: confirmDelete
+
+        popupComponent: Component {
+            C.ConfirmPopup {
+                text: qsTr("Delete sighting?")
+                onConfirmed: {
+                    form.removeSighting(listViewSighting.sightingUid)
+                    form.popPage()
+                }
+            }
+        }
+    }
+
+    function rebuild(indexDelta) {
+        currentIndex += indexDelta
+        if (currentIndex < 0 || currentIndex >= inspectList.length) {
+            console.log("Error bad index")
+            return
+        }
+
+        currentItem = inspectList[currentIndex]
+
+        switch (currentItem.overlayId) {
+        case "sighting":
+            if (forms[currentItem.stateSpace] === undefined) {
+                forms[currentItem.stateSpace] = App.createForm(form.project.uid, currentItem.stateSpace, true, page)
             }
 
-            ToolButton {
-                Layout.preferredWidth: buttonRow.buttonWidth
-                Layout.fillWidth: true
-                Layout.fillHeight: true
-                text: qsTr("Next")
-                font.pixelSize: App.settings.font10
-                font.capitalization: Font.MixedCase
-                display: Button.TextUnderIcon
-                icon.source: "qrc:/icons/menu_right.svg"
-                Material.foreground: buttonRow.buttonColor
-                enabled: page.currentIndex < page.inspectList.length - 1
-                onClicked: page.rebuild(+1)
-            }
+            listViewSighting.sightingForm = forms[currentItem.stateSpace]
+            listViewSighting.sightingUid = ""   // Ensure change event
+            listViewSighting.sightingUid = currentItem.sightingUid
+
+            deleteButton.enabled = editButton.enabled = listViewSighting.sightingForm.canEditSighting(currentItem.sightingUid)
+            break
+
+        case "gotoPoints":
+            deleteButton.enabled = editButton.enabled = false
+            break
+
+        case "gotoLines":
+            deleteButton.enabled = editButton.enabled = false
+            break
         }
     }
 }

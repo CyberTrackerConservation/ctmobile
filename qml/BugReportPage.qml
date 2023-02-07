@@ -43,6 +43,7 @@ C.ContentPage {
         }
 
         placeholderTextColor: Material.color(Material.Grey)
+        inputMethodHints: Qt.ImhNoPredictiveText
     }
 
     FileDialog {

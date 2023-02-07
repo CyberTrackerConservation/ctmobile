@@ -1064,7 +1064,7 @@ VOID CctControl_ElementList::DefineResources(CfxFilerResource &F)
     F.DefineObject(_radioElement);
 
     // Fields
-    if ((_listMode == elmRadio) && !IsNullXGuid(&_radioElement))
+    if ((_listMode == elmRadio || _listMode == elmCheck || _listMode == elmCheckIcon) && !IsNullXGuid(&_radioElement))
     {
         F.DefineField(_radioElement, dtText);
     }

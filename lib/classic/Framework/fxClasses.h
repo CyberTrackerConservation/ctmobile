@@ -31,8 +31,10 @@ class CfxFilerResource;
 #define FILER_MARKER_LISTEND     -1
 
 // CfxPersistent
-class CfxPersistent
+class CfxPersistent: public QObject
 {
+    Q_OBJECT
+
 protected:
     CfxPersistent *_owner;
 public:
@@ -129,6 +131,7 @@ public:
     BOOL ListEnd();
     BOOL IsReader();
     BOOL IsWriter();
+    BOOL IsEnd();
 };
 
 // CfxReader

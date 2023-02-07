@@ -20,6 +20,7 @@ constexpr char FIELD_PHOTOS[]              = "Photos";
 constexpr char FIELD_PHOTOS_REQUIRED[]     = "PhotosRequired";
 constexpr char FIELD_AUDIO[]               = "Audio";
 
+constexpr char FIELD_EMPLOYEES[]           = "SMART_Employees";
 constexpr char FIELD_DATA_TYPE[]           = "SMART_DataType";
 constexpr char FIELD_SIGHTING_GROUP_ID[]   = "SMART_SightingGroupId";
 constexpr char FIELD_OBSERVATION_TYPE[]    = "SMART_ObservationType";
@@ -83,8 +84,7 @@ public:
             {
                 auto sightingUid = *sightingIt;
                 App::instance()->database()->setSightingFlags(projectUid, sightingUid, Sighting::DB_UPLOADED_FLAG);
-
-                emit App::instance()->sightingModified(projectUid, sightingUid, output["stateSpace"].toString());
+                emit App::instance()->sightingFlagsChanged(projectUid, sightingUid, output["stateSpace"].toString());
             }
         }
         else
@@ -237,6 +237,20 @@ QVariantList SMARTProvider::buildConfigModel()
         }
     }
 
+    auto projectionFormat = tr("Unknown");
+    switch (m_profile.value("PROJECTION", 1).toInt())
+    {
+    case 0:
+        projectionFormat = tr("Degrees minutes seconds");
+        break;
+    case 1:
+        projectionFormat = tr("Decimal degrees");
+        break;
+    case 2:
+        projectionFormat = tr("UTM");
+        break;
+    }
+
     auto resizeImage = !m_profile.value("RESIZE_IMAGE").toBool() ?
         QString("%1 x %2").arg(DEFAULT_PHOTO_RESOLUTION_X).arg(DEFAULT_PHOTO_RESOLUTION_Y) :
         QString("%1 x %2").arg(m_profile.value("IMAGE_WIDTH").toInt()).arg(m_profile.value("IMAGE_HEIGHT").toInt());
@@ -265,7 +279,8 @@ QVariantList SMARTProvider::buildConfigModel()
         { "-" },
         { tr("Fix count"), m_profile.value("SIGHTING_FIX_COUNT", 0).toString() },
         { tr("Track timer"), trackTimer },
-        { tr("Use time from GPS"), boolToValue(getUseGPSTime()) },
+        { tr("Use time from GPS"), boolToValue(requireGPSTime()) },
+        { tr("Format"), projectionFormat },
         { tr("Skip button timeout"), skipButtonTimeout == 0 ? tr("Off") : QString("%1 %2").arg(QString::number(skipButtonTimeout), tr("seconds")) },
         { tr("Allow manual GPS"), boolToValue(m_allowManualGPS) },
         { "-" },
@@ -285,22 +300,33 @@ QVariantList SMARTProvider::buildConfigModel()
     return result;
 }
 
-void SMARTProvider::savePatrolSighting(const QString& observationType, bool saveTrackPoint)
+void SMARTProvider::savePatrolSighting(const QString& observationType, const QString& timestamp)
 {
     auto form = qobject_cast<Form*>(parent());
     auto sighting = form->createSightingPtr();
     sighting->regenerateUids();
+
+    sighting->snapCreateTime(timestamp);
+    sighting->snapUpdateTime(timestamp);
 
     auto rootRecord = sighting->getRecord(sighting->rootRecordUid());
     rootRecord->resetFieldValue(FIELD_MODEL);
     rootRecord->resetFieldValue(FIELD_GROUPS);
     rootRecord->setFieldValue(FIELD_OBSERVATION_TYPE, observationType);
 
-    form->saveSighting(sighting.get(), saveTrackPoint);
+    form->saveSighting(sighting.get(), false);
 
     form->resetFieldValue(FIELD_LOCATION);
     form->resetFieldValue(FIELD_DISTANCE);
     form->resetFieldValue(FIELD_BEARING);
+}
+
+void SMARTProvider::savePatrolLocation(Location* location, const QString& timestamp)
+{
+    location->set_timestamp(timestamp);
+
+    auto form = qobject_cast<Form*>(parent());
+    form->trackStreamer()->pushUpdate(location);
 }
 
 void SMARTProvider::startPatrol()
@@ -333,10 +359,12 @@ void SMARTProvider::startPatrol()
     m_patrolUid = QUuid::createUuid().toString(QUuid::Id128);
     form->setFieldValue(FIELD_PATROL_ID, m_patrolUid);
 
-    auto currentTime = App::instance()->timeManager()->currentDateTime();
-    m_patrolStartTimestamp = App::instance()->timeManager()->currentDateTimeISO();
-    form->setFieldValue(FIELD_PATROL_START_DATE, currentTime.toString("yyyy/MM/dd"));
-    form->setFieldValue(FIELD_PATROL_START_TIME, currentTime.toString("HH:mm:ss"));
+    auto now = App::instance()->timeManager()->currentDateTime();
+    m_patrolStartTimestamp = Utils::encodeTimestamp(now);
+    form->setFieldValue(FIELD_PATROL_START_DATE, now.toString("yyyy/MM/dd"));
+    form->setFieldValue(FIELD_PATROL_START_TIME, now.toString("HH:mm:ss"));
+
+    auto location = form->sighting()->locationPtr();
 
     // Setup the leg stats.
     update_patrolLegs(QVariantList { QVariantMap {{ "startTime", m_patrolStartTimestamp }} });
@@ -345,7 +373,6 @@ void SMARTProvider::startPatrol()
 
     // Reset the upload state.
     m_uploadObsCounter = 1;
-    m_uploadSightingLastTaskUid = "";
 
     // Initialize the ping uid.
     m_pingUuid = QUuid::createUuid().toString(QUuid::Id128);
@@ -354,8 +381,12 @@ void SMARTProvider::startPatrol()
     startTrack(0, 0);
 
     // Create a patrol state change sighting.
-    // Note: do this after starting the track so we get a corresponding location sighting.
-    savePatrolSighting(VALUE_NEW_PATROL, true);
+    savePatrolSighting(VALUE_NEW_PATROL, m_patrolStartTimestamp);
+
+    // Create a location *after* the sighting.
+    savePatrolLocation(location.get(), m_patrolStartTimestamp);
+
+    // Save the state.
     saveState();
 
     emit patrolStartedChanged();
@@ -375,9 +406,12 @@ void SMARTProvider::stopPatrol()
     qFatalIf(!m_patrolStarted, "Patrol not started");
     qFatalIf(m_patrolPaused, "Patrol should not be paused");
 
+    // Create a location *before* the sighting.
+    auto now = App::instance()->timeManager()->currentDateTimeISO();
+    savePatrolLocation(form->sighting()->locationPtr().get(), now);
+
     // Create a patrol state change sighting.
-    // Note: do this before stopping the track so we get a corresponding location sighting.
-    savePatrolSighting(VALUE_STOP_PATROL, false);
+    savePatrolSighting(VALUE_STOP_PATROL, now);
 
     // Stop the track timer.
     stopTrack();
@@ -390,7 +424,6 @@ void SMARTProvider::stopPatrol()
 
     // Reset the upload state.
     m_uploadObsCounter = 1;
-    m_uploadSightingLastTaskUid = "";
 
     // Finalize the leg.
     setPatrolLegValue("stopTime", App::instance()->timeManager()->currentDateTimeISO());
@@ -414,9 +447,12 @@ void SMARTProvider::pausePatrol()
     qFatalIf(!m_patrolStarted, "Patrol not started");
     qFatalIf(m_patrolPaused, "Patrol should not be paused");
 
+    // Create a location *before* the sighting and before marking it as paused.
+    auto now = App::instance()->timeManager()->currentDateTimeISO();
+    savePatrolLocation(form->sighting()->locationPtr().get(), now);
+
     // Create a patrol state change sighting.
-    // Note: do this before stopping the track so we get a corresponding location sighting.
-    savePatrolSighting(VALUE_PAUSE_PATROL, false);
+    savePatrolSighting(VALUE_PAUSE_PATROL, now);
 
     // Store the distance to be resumed and pause the track.
     m_patrolPausedDistance = form->trackStreamer()->distanceCovered();
@@ -443,16 +479,21 @@ void SMARTProvider::resumePatrol()
     qFatalIf(!m_patrolStarted, "resumePatrol: patrol not started");
     qFatalIf(!m_patrolPaused, "resumePatrol: patrol not paused");
 
+    auto now = App::instance()->timeManager()->currentDateTimeISO();
+    auto location = form->sighting()->locationPtr();
+
     // Restart the track timer.
     startTrack(m_patrolPausedDistance, 0);
 
     // Create a patrol state change sighting.
-    // Note: do this after starting the track so we get a corresponding location sighting.
-    savePatrolSighting(VALUE_RESUME_PATROL, false);
+    savePatrolSighting(VALUE_RESUME_PATROL, now);
 
     // Resume the patrol and commit the form state.
     m_patrolPaused = false;
     saveState();
+
+    // Create a location *after* the sighting and after unpause.
+    savePatrolLocation(location.get(), now);
 
     emit patrolPausedChanged();
 
@@ -565,24 +606,34 @@ void SMARTProvider::changePatrol()
 {
     auto form = qobject_cast<Form*>(parent());
 
+    auto now = App::instance()->timeManager()->currentDateTimeISO();
+    auto location = form->sighting()->locationPtr();
+
+    // Save a location *before* change.
+    // Required because the timer might be turned off after.
+    savePatrolLocation(location.get(), now);
+
     // Store the counter and stop the track.
     auto trackCounter = form->trackStreamer()->counter();
     stopTrack();
 
     // Update the legs.
-    auto currentTime = App::instance()->timeManager()->currentDateTimeISO();
-    setPatrolLegValue("stopTime", currentTime);
-    m_patrolLegs.append(QVariantMap {{ "startTime", currentTime }});
+    setPatrolLegValue("stopTime", now);
+    m_patrolLegs.append(QVariantMap {{ "startTime", now }});
     form->setFieldValue(FIELD_PATROL_LEG_COUNTER, form->getFieldValue(FIELD_PATROL_LEG_COUNTER).toInt() + 1);
     form->setFieldValue(FIELD_PATROL_LEG_DISTANCE, 0);
 
     // To retain backward compatibility, a metadata change in a survey comes through as an observation.
     // The backend will not create a new incident as a result.
-    savePatrolSighting(m_surveyMode ? VALUE_OBSERVATION : VALUE_CHANGE_PATROL, true);
+    savePatrolSighting(m_surveyMode ? VALUE_OBSERVATION : VALUE_CHANGE_PATROL, now);
     saveState();
 
     // Resume the track with the counter.
     startTrack(0, trackCounter);
+
+    // Save a location after change.
+    // Required because the timer might not have been turned on before the change.
+    savePatrolLocation(location.get(), now);
 }
 
 void SMARTProvider::startIncident()
@@ -677,15 +728,15 @@ void SMARTProvider::setCollectUser(const QString& user)
     saveState();
 }
 
-QJsonObject SMARTProvider::locationToJson(const QString& sightingUid, const QVariantMap& data, const QVariantMap& extraProps)
+QJsonObject SMARTProvider::locationToJson(const QString& sightingUid, Location* location, const QVariantMap& extraProps)
 {
     // SMART requires that latitude and longitude look like doubles not like longs.
-    auto locationX = data.value("x").toDouble();
+    auto locationX = location->x();
     if (!QString::number(locationX).contains("."))
     {
         locationX += 0.0000000001;
     }
-    auto locationY = data.value("y").toDouble();
+    auto locationY = location->y();
     if (!QString::number(locationY).contains("."))
     {
         locationY += 0.0000000001;
@@ -703,13 +754,11 @@ QJsonObject SMARTProvider::locationToJson(const QString& sightingUid, const QVar
     // Properties.
     auto properties = QJsonObject();
     properties.insert(FIELD_OBSERVATION_TYPE, "waypoint");
-    properties.insert("dateTime", data["ts"].toString());
-    properties.insert("deviceId", App::instance()->settings()->deviceId());
+    properties.insert("dateTime", location->timestamp());
+    properties.insert("deviceId", location->deviceId());
     properties.insert("id", sightingUid);
-    auto accuracy = data["a"].toDouble();
-    properties.insert("accuracy", qIsNaN(accuracy) ? 10000 : accuracy);
-    auto altitude = data["z"].toDouble();
-    properties.insert("altitude", qIsNaN(altitude) ? 0 : altitude);
+    properties.insert("accuracy", std::isnan(location->accuracy()) ? 10000 : location->accuracy());
+    properties.insert("altitude", std::isnan(location->z()) ? 0 : location->z());
 
     // Extra properties.
     for (auto it = extraProps.constKeyValueBegin(); it != extraProps.constKeyValueEnd(); it++)
@@ -726,99 +775,62 @@ QJsonObject SMARTProvider::locationToJson(const QString& sightingUid, const QVar
     return result;
 }
 
-QJsonObject SMARTProvider::addRecordToJson(const QJsonObject& baseData, Form* form, Sighting* sighting, const QString& recordUid, bool childRecords, int attributeIndex)
+QJsonObject SMARTProvider::addRecordToJson(const QJsonObject& baseData, Form* form, Sighting* sighting, const QString& recordUid, bool childRecords, int attributeIndex, bool skipAttachments)
 {
     auto result = QJsonObject(baseData);
 
-    auto record = sighting->getRecord(recordUid);
-    auto fieldFilter = QStringList();
+    // Default skip list.
+    auto excludeFieldUids = QStringList { FIELD_MODEL_TREE, FIELD_GROUPS, FIELD_LOCATION, FIELD_DISTANCE, FIELD_BEARING };
+    auto modelFieldUids = QStringList();
 
+    // Skip employee list for incidents.
+    if (form->stateSpace() == TYPE_INCIDENT)
+    {
+        excludeFieldUids.append(FIELD_EMPLOYEES);
+    }
+
+    // Filter to only model fields.
+    auto record = sighting->getRecord(recordUid);
     if (record->hasFieldValue(FIELD_MODEL_TREE))
     {
         auto value = record->getFieldValue(FIELD_MODEL_TREE).toString();
         auto element = form->elementManager()->getElement(value);
         if (element)
         {
-            fieldFilter = element->fieldUids();
+            modelFieldUids.append(FIELD_SIGHTING_GROUP_ID);
+            modelFieldUids.append(element->fieldUids());
+            result.insert("c:" + QString::number(attributeIndex), element->exportUid());
         }
-
-        fieldFilter.append(FIELD_SIGHTING_GROUP_ID);
     }
 
+    // Enumerate values.
     record->enumFieldValues([&](const FieldValue& fieldValue, bool* /*stopOut*/)
     {
-        // Skip internal fields.
-        auto fieldUid = fieldValue.fieldUid();
-        if (fieldUid == FIELD_GROUPS ||
-            fieldUid == FIELD_LOCATION ||
-            fieldUid == FIELD_DISTANCE || fieldUid == FIELD_BEARING)
-        {
-            return;
-        }
-
         auto field = fieldValue.field();
+        auto fieldUid = field->uid();
 
-        // Special handling of the category selection.
-        if (fieldUid == FIELD_MODEL_TREE)
-        {
-            auto element = form->elementManager()->getElement(fieldValue.value().toString());
-            result.insert("c:" + QString::number(attributeIndex), element->exportUid());
-            return;
-        }
-
-        // Skip fields which aren't part of the model.
-        if (!fieldFilter.empty() && !fieldFilter.contains(fieldUid))
+        // Skip excluded fields.
+        if (excludeFieldUids.contains(fieldUid))
         {
             return;
         }
 
-        // Skip fields which are not relevant.
-        if (!fieldValue.isRelevant())
+        // Skip non-model fields.
+        if (!modelFieldUids.isEmpty() && !modelFieldUids.contains(fieldUid))
         {
             return;
         }
 
-        // When we encounter a record field, we must replicate each of the attributes in the parent as well.
-        // SMART expects:
-        //    ParentAttributes
-        //    Child0Attributes
-        //    ParentAttributes
-        //    Child1Attributes
-        // etc.
+        // Skip fields which are not relevant as long as no default value is set.
+        if (!fieldValue.isRelevant() && !field->defaultValue().isValid())
+        {
+            return;
+        }
+
+        // Skip record fields, they are handled later.
+        // Since they replicate the parent, it must have been completely processed.
         if (field->isRecordField())
         {
-            auto recordField = RecordField::fromField(field);
-            if (!childRecords)
-            {
-                return;
-            }
-
-            auto orgAttributeIndex = attributeIndex;
-            auto childRecordUids = sighting->getRecord(recordUid)->getFieldValue(fieldUid).toStringList();
-            for (auto i = 0; i < childRecordUids.count(); i++)
-            {
-                auto childRecordUid = childRecordUids[i];
-
-                // In matrix mode, skip records if they have not been changed.
-                if (recordField->matrixCount() > 0)
-                {
-                    if (sighting->getRecord(childRecordUid)->isEmpty())
-                    {
-                        continue;
-                    }
-                }
-
-                // Add the parent record for each child.
-                result = addRecordToJson(result, form, sighting, recordUid, false, attributeIndex);
-
-                // Add the child record.
-                result = addRecordToJson(result, form, sighting, childRecordUid, false, attributeIndex);
-
-                // Add another index.
-                attributeIndex++;
-            }
-
-            attributeIndex = orgAttributeIndex;
             return;
         }
 
@@ -835,7 +847,7 @@ QJsonObject SMARTProvider::addRecordToJson(const QJsonObject& baseData, Form* fo
         // Build the export value.
         auto exportValue = record->getFieldValue(fieldUid, field->defaultValue());
 
-        // Decode text field.
+        // StringField.
         bool fieldIsList = !field->listElementUid().isEmpty();
         if (fieldIsList && qobject_cast<StringField*>(field))
         {
@@ -845,12 +857,12 @@ QJsonObject SMARTProvider::addRecordToJson(const QJsonObject& baseData, Form* fo
                 exportValue = element->exportUid();
             }
         }
-        // Decode date field.
+        // DateField.
         else if (qobject_cast<DateField*>(field))
         {
             exportValue = QDate::fromString(exportValue.toString(), Qt::DateFormat::ISODate).toString("yyyy/MM/dd");
         }
-        // Decode check list.
+        // Check list.
         else if (fieldIsList && qobject_cast<CheckField*>(field))
         {
             bool master = field->getTagValue("master").toBool();
@@ -886,7 +898,7 @@ QJsonObject SMARTProvider::addRecordToJson(const QJsonObject& baseData, Form* fo
             }
             return;
         }
-        // Decode number list.
+        // Number list.
         else if (fieldIsList && qobject_cast<NumberField*>(field))
         {
             bool master = field->getTagValue("master").toBool();
@@ -930,10 +942,26 @@ QJsonObject SMARTProvider::addRecordToJson(const QJsonObject& baseData, Form* fo
 
             return;
         }
+        // PhotoField.
         else if (qobject_cast<PhotoField*>(field))
         {
-            auto filenames = exportValue.toStringList();
+            if (skipAttachments)
+            {
+                return;
+            }
+
+            // Restart the index from the last one available.
             auto photoIndex = 0;
+            for (auto baseDataIt = baseData.constBegin(); baseDataIt != baseData.constEnd(); baseDataIt++)
+            {
+                auto key = baseDataIt.key();
+                if (key.startsWith(exportName) && key.split(':').constLast() == QString::number(attributeIndex))
+                {
+                    photoIndex++;
+                }
+            }
+
+            auto filenames = exportValue.toStringList();
             for (auto filenameIt = filenames.constBegin(); filenameIt != filenames.constEnd(); filenameIt++)
             {
                 auto filePath = App::instance()->getMediaFilePath(*filenameIt);
@@ -952,14 +980,31 @@ QJsonObject SMARTProvider::addRecordToJson(const QJsonObject& baseData, Form* fo
 
             return;
         }
+        // AudioField.
         else if (qobject_cast<AudioField*>(field))
         {
+            if (skipAttachments)
+            {
+                return;
+            }
+
+            // Restart the index from the last one available.
+            auto audioIndex = 0;
+            for (auto baseDataIt = baseData.constBegin(); baseDataIt != baseData.constEnd(); baseDataIt++)
+            {
+                auto key = baseDataIt.key();
+                if (key.startsWith(exportName) && key.split(':').constLast() == QString::number(attributeIndex))
+                {
+                    audioIndex++;
+                }
+            }
+
             auto filePath = App::instance()->getMediaFilePath(exportValue.toMap().value("filename").toString());
             QFile file(filePath);
             if (!filePath.isEmpty() && file.exists() && file.open(QIODevice::ReadOnly))
             {
                 auto hexString = QString(file.readAll().toBase64());
-                auto exportKey = exportName + QString::number(0);
+                auto exportKey = exportName + QString::number(audioIndex++);
                 if (m_smartVersion >= 700)
                 {
                     exportKey += ":" + QString::number(attributeIndex);
@@ -969,8 +1014,14 @@ QJsonObject SMARTProvider::addRecordToJson(const QJsonObject& baseData, Form* fo
 
             return;
         }
+        // SketchField.
         else if (qobject_cast<SketchField*>(field))
         {
+            if (skipAttachments)
+            {
+                return;
+            }
+
             auto filePath = App::instance()->getMediaFilePath(exportValue.toMap().value("filename").toString());
             QFile file(filePath);
             if (!filePath.isEmpty() && file.exists() && file.open(QIODevice::ReadOnly))
@@ -999,6 +1050,61 @@ QJsonObject SMARTProvider::addRecordToJson(const QJsonObject& baseData, Form* fo
         result.insert(exportName, exportValue.toJsonValue());
     });
 
+    // For child records, replicate each of the attributes in the parent as well.
+    // SMART expects:
+    //    ParentAttributes
+    //    Child0Attributes
+    //    ParentAttributes
+    //    Child1Attributes
+    // etc.
+    if (childRecords)
+    {
+        record->enumFieldValues([&](const FieldValue& fieldValue, bool* /*stopOut*/)
+        {
+            auto field = fieldValue.field();
+
+            // Skip non-record fields.
+            if (!field->isRecordField())
+            {
+                return;
+            }
+
+            // Skip non-model fields.
+            if (!modelFieldUids.isEmpty() && !modelFieldUids.contains(fieldValue.fieldUid()))
+            {
+                return;
+            }
+
+            auto recordField = RecordField::fromField(field);
+
+            auto orgAttributeIndex = attributeIndex;
+            auto childRecordUids = fieldValue.value().toStringList();
+            for (auto childRecordIt = childRecordUids.constBegin(); childRecordIt != childRecordUids.constEnd(); childRecordIt++)
+            {
+                // In matrix mode, skip records if they have not been changed.
+                if (recordField->matrixCount() > 0)
+                {
+                    if (sighting->getRecord(*childRecordIt)->isEmpty())
+                    {
+                        continue;
+                    }
+                }
+
+                // Add the parent record for each child.
+                // Skip parent attachments for child records.
+                result = addRecordToJson(result, form, sighting, recordUid, false, attributeIndex, true /* skipAttachments */);
+
+                // Add the child record.
+                result = addRecordToJson(result, form, sighting, *childRecordIt, false, attributeIndex);
+
+                // Add another index.
+                attributeIndex++;
+            }
+
+            attributeIndex = orgAttributeIndex;
+        });
+    }
+
     return result;
 }
 
@@ -1010,7 +1116,6 @@ QJsonArray SMARTProvider::sightingToJson(Form* form, const QVariantMap& data, in
     // Write the sighting.
     auto result = QJsonArray();
     auto rootRecordUid = sighting->rootRecordUid();
-    auto recordUids = sighting->recordManager()->recordUids();
 
     // SMART requires that latitude and longitude look like doubles not like longs.
     auto location = sighting->getRootFieldValue(FIELD_LOCATION).toJsonObject();
@@ -1094,29 +1199,22 @@ QJsonArray SMARTProvider::sightingToJson(Form* form, const QVariantMap& data, in
     }
 
     // Add the data records.
+    auto recordUids = sighting->getRootFieldValue(FIELD_MODEL).toStringList();
+    if (!filterRecordUid.isEmpty())
+    {
+        // Filter to just one record.
+        recordUids = QStringList { filterRecordUid };
+    }
+    else if (recordUids.count() == 0)
+    {
+        // Metadata only sighting.
+        recordUids = QStringList { rootRecordUid };
+    }
+
     auto firstRecord = true;
     for (auto recordIt = recordUids.constBegin(); recordIt != recordUids.constEnd(); recordIt++)
     {
         auto recordUid = *recordIt;
-
-        // Skip root metadata record unless this is a metadata only sighting.
-        if ((recordUid == rootRecordUid) && (recordUids.count() != 1))
-        {
-            continue;
-        }
-
-        // Filter to just one record.
-        if (!filterRecordUid.isEmpty() && recordUid != filterRecordUid)
-        {
-            continue;
-        }
-
-        // Skip child records - they will be aggregated during addRecordToJson().
-        auto parentRecordUid = sighting->getRecord(recordUid)->parentRecordUid();
-        if (!parentRecordUid.isEmpty() && parentRecordUid != rootRecordUid)
-        {
-            continue;
-        }
 
         // Append to base data.
         auto oneRecord = QJsonObject();
@@ -1195,8 +1293,9 @@ bool SMARTProvider::exportSightings(Form* form, QFile& exportFile, const std::fu
             if (!timestamp.isEmpty())
             // B: Hack end.
             {
-            featureArray.append(locationToJson(sightingUid, data));
-            }
+                Location location(data);
+                featureArray.append(locationToJson(sightingUid, &location));
+            }            
         }
         else                                    // Sightings.
         {
@@ -1571,7 +1670,6 @@ bool SMARTProvider::clearCompletedData()
     }
 
     // Clear completed tasks.
-    m_uploadSightingLastTaskUid = "";
     saveState();
     m_database->deleteTasks(projectUid, Task::Complete);
 
@@ -1692,7 +1790,7 @@ void SMARTProvider::stopTrack()
     App::instance()->settings()->set_locationOutlierMaxSpeed(0);
 }
 
-bool SMARTProvider::uploadPing(const QVariantMap& locationMap)
+bool SMARTProvider::uploadPing(Location* location)
 {
     qFatalIf(!shouldUploadData(), "Upload disabled");
 
@@ -1700,17 +1798,17 @@ bool SMARTProvider::uploadPing(const QVariantMap& locationMap)
 
     if (m_profile.contains("POSITION_UPDATES"))
     {
-        result = uploadPing7(locationMap);
+        result = uploadPing7(location);
     }
     else
     {
-        result = uploadPing6(locationMap);
+        result = uploadPing6(location);
     }
 
     return result;
 }
 
-bool SMARTProvider::uploadPing6(const QVariantMap& locationMap)
+bool SMARTProvider::uploadPing6(Location* location)
 {
     qFatalIf(!shouldUploadData(), "Upload disabled");
 
@@ -1747,7 +1845,7 @@ bool SMARTProvider::uploadPing6(const QVariantMap& locationMap)
     extraProps.insert("patrolId", m_patrolUid);
     extraProps.insert("description", "");
 
-    auto locationJson = locationToJson(QUuid::createUuid().toString(QUuid::Id128), locationMap, extraProps);
+    auto locationJson = locationToJson(QUuid::createUuid().toString(QUuid::Id128), location, extraProps);
     auto features = QVariantList();
     features.append(locationJson);
 
@@ -1799,7 +1897,7 @@ bool SMARTProvider::uploadPing6(const QVariantMap& locationMap)
     return true;
 }
 
-bool SMARTProvider::uploadPing7(const QVariantMap& locationMap)
+bool SMARTProvider::uploadPing7(Location* location)
 {
     qFatalIf(!shouldUploadData(), "Upload disabled");
     qFatalIf(!m_profile.contains("POSITION_UPDATES"), "Nowhere to send");
@@ -1822,7 +1920,7 @@ bool SMARTProvider::uploadPing7(const QVariantMap& locationMap)
         { "description", "" },
     };
 
-    auto locationJson = locationToJson(QUuid::createUuid().toString(QUuid::Id128), locationMap, extraProps);
+    auto locationJson = locationToJson(QUuid::createUuid().toString(QUuid::Id128), location, extraProps);
     auto features = QVariantList();
     features.append(locationJson);
 
@@ -1992,12 +2090,10 @@ bool SMARTProvider::uploadAlerts6(Form* form, const QString& sightingUid)
             inputJson.insert("DATA_SERVER", QJsonObject::fromVariantMap(dataServer));
             inputJson.insert("payload", QJsonObject::fromVariantMap(event));
 
-            // Parent to the last save task.
+            // Create the task - no parent.
             auto baseUid = Task::makeUid(UploadSightingTask::getName(), recordUid + "_alert");
             auto uid = baseUid + '.' + QString::number(QDateTime::currentDateTime().toMSecsSinceEpoch());
-
-            // Create the task and parent to the last uploaded sighting.
-            m_taskManager->addTask(projectUid, uid, "", inputJson.toVariantMap());
+            m_taskManager->addSingleTask(projectUid, uid, inputJson.toVariantMap());
         }
     }
 
@@ -2074,7 +2170,7 @@ bool SMARTProvider::uploadAlerts7(Form* form, const QString& sightingUid)
                 { "typeUuid", alertMetadata["TYPEUUID"] },
                 { "caUuid", alertMetadata["CAUUID"] },
                 { "level", alertMetadata["LEVEL"] },
-                { "description", "" },
+                { "description", sighting->summaryText(true) },
             };
 
             auto event = QVariantMap();
@@ -2086,12 +2182,10 @@ bool SMARTProvider::uploadAlerts7(Form* form, const QString& sightingUid)
             inputJson.insert("payload", QJsonObject::fromVariantMap(event));
             inputJson.insert("usePUT", true);
 
-            // Parent to the last save task.
+            // Create the task - no parent.
             auto baseUid = Task::makeUid(UploadSightingTask::getName(), recordUid + "_alert");
             auto uid = baseUid + '.' + QString::number(QDateTime::currentDateTime().toMSecsSinceEpoch());
-
-            // Create the task and parent to the last uploaded sighting.
-            m_taskManager->addTask(projectUid, uid, "", inputJson.toVariantMap());
+            m_taskManager->addSingleTask(projectUid, uid, inputJson.toVariantMap());
         }
     }
 
@@ -2122,14 +2216,13 @@ bool SMARTProvider::uploadSighting(Form* form, const QString& sightingUid, int* 
     auto uid = baseUid + '.' + QString::number(QDateTime::currentDateTime().toMSecsSinceEpoch());
 
     // Create the task and parent to the last uploaded sighting (or none if empty).
-    m_taskManager->addTask(projectUid, uid, m_uploadSightingLastTaskUid, inputJson.toVariantMap());
+    m_taskManager->addSerialTask(projectUid, uid, inputJson.toVariantMap());
 
-    // Subsequent sightings will only upload after this one is complete.
-    m_uploadSightingLastTaskUid = uid;
+    // Track last upload time.
     m_uploadSightingLastTime = data["createTime"].toString();
 
     // Mark the sighting as read-only.
-    m_database->setSightingFlags(projectUid, sightingUid, Sighting::DB_READONLY_FLAG);
+    form->setSightingFlag(sightingUid, Sighting::DB_READONLY_FLAG);
 
     return true;
 }
@@ -2137,87 +2230,77 @@ bool SMARTProvider::uploadSighting(Form* form, const QString& sightingUid, int* 
 void SMARTProvider::uploadPendingLocations(Form* form)
 {
     qFatalIf(!shouldUploadData(), "Upload disabled");
-
     auto projectUid = m_project->uid();
-    auto sightingUids = QStringList();
-    m_database->getSightings(projectUid, form->stateSpace(), Sighting::DB_PENDING_FLAG, &sightingUids);
 
-    if (sightingUids.count() == 0)
+    auto locationUids = QJsonArray();
+    auto featureArray = QJsonArray();
+
+    m_database->enumSightings(projectUid, form->stateSpace(), Sighting::DB_LOCATION_FLAG | Sighting::DB_PENDING_FLAG /* ON */, 0 /* OFF */,
+        [&](const QString& sightingUid, uint /*flags*/, const QVariantMap& data, const QStringList& /*attachments*/)
+    {
+        locationUids.append(sightingUid);
+
+        Location location(data);
+        featureArray.append(locationToJson(sightingUid, &location));
+    });
+
+    if (locationUids.isEmpty())
     {
         return;
     }
 
-    auto event = QVariantMap();
-    event["type"] = "FeatureCollection";
-    auto featureArray = QJsonArray();
-
-    for (auto sightingIt = sightingUids.constBegin(); sightingIt != sightingUids.constEnd(); sightingIt++)
+    auto inputJson = QJsonObject
     {
-        auto sightingUid = *sightingIt;
-        auto data = QVariantMap();
-        m_database->loadSighting(projectUid, sightingUid, &data);
-        featureArray.append(locationToJson(sightingUid, data));
-    }
+        { "DATA_SERVER", m_profile["DATA_SERVER"].toJsonObject() },
+        { "payload", QJsonObject {{ "type", "FeatureCollection" }, { "features", featureArray }}},
+        { "stateSpace", form->stateSpace() },
+        { "sightingUids", locationUids }
+    };
 
-    event["features"] = featureArray;
-
-    auto inputJson = QJsonObject();
-    inputJson.insert("DATA_SERVER", m_profile["DATA_SERVER"].toJsonObject());
-    inputJson.insert("payload", QJsonObject::fromVariantMap(event));
-    inputJson.insert("stateSpace", form->stateSpace());
-    inputJson.insert("sightingUids", QJsonArray::fromStringList(sightingUids));
-
-    // Create the task and parent to the last uploaded sighting.
-    auto baseUid = Task::makeUid(UploadSightingTask::getName(), sightingUids.first());
-    auto uid = baseUid + '.' + QString::number(sightingUids.count());
-    m_taskManager->addTask(projectUid, uid, m_uploadSightingLastTaskUid, inputJson.toVariantMap());
+    // Create the task.
+    auto baseUid = Task::makeUid(UploadSightingTask::getName(), locationUids.first().toString());
+    auto uid = baseUid + '.' + QString::number(locationUids.count());
+    m_taskManager->addSerialTask(projectUid, uid, inputJson.toVariantMap());
 
     // Remove the pending flag: the task owns this now.
-    for (auto sightingIt = sightingUids.constBegin(); sightingIt != sightingUids.constEnd(); sightingIt++)
+    for (auto locationIt = locationUids.constBegin(); locationIt != locationUids.constEnd(); locationIt++)
     {
-        m_database->setSightingFlags(projectUid, *sightingIt, Sighting::DB_PENDING_FLAG | Sighting::DB_READONLY_FLAG, false);
+        auto locationUid = locationIt->toString();
+        m_database->setSightingFlags(projectUid, locationUid, Sighting::DB_PENDING_FLAG, false);
+        m_database->setSightingFlags(projectUid, locationUid, Sighting::DB_READONLY_FLAG, true);
     }
 
+    // Track last upload time.
     m_uploadLastTime = App::instance()->timeManager()->currentDateTimeISO();
 }
 
-bool SMARTProvider::uploadLocation(Form* form, const QString& sightingUid)
+bool SMARTProvider::uploadLocation(Form* form, Location* location, const QString& locationUid)
 {
     qFatalIf(!shouldUploadData(), "Upload disabled");
     qFatalIf(form->stateSpace() != TYPE_PATROL && form->stateSpace() != TYPE_COLLECT, "Can only send locations for patrol & collect");
     qFatalIf(!m_patrolStarted && !m_collectStarted, "Patrol/Collect not started");
     qFatalIf(m_patrolPaused, "Patrol paused");
 
-    auto projectUid = m_project->uid();
-    auto data = QVariantMap();
-    uint flags;
-    m_database->loadSighting(projectUid, sightingUid, &data, &flags);
+    auto inputJson = QJsonObject
+    {
+        { "DATA_SERVER", m_profile["DATA_SERVER"].toJsonObject() },
+        { "payload", QJsonObject {{ "type", "FeatureCollection" }, { "features", QJsonArray { locationToJson(locationUid, location) } }}},
+        { "stateSpace", form->stateSpace() },
+        { "sightingUids", QJsonArray { locationUid } }
+    };
 
-    auto event = QVariantMap();
-    event["type"] = "FeatureCollection";
-    auto featureArray = QJsonArray();
-    featureArray.append(locationToJson(sightingUid, data));
-    event["features"] = featureArray;
-
-    auto inputJson = QJsonObject();
-    inputJson.insert("DATA_SERVER", m_profile["DATA_SERVER"].toJsonObject());
-    inputJson.insert("payload", QJsonObject::fromVariantMap(event));
-    inputJson.insert("stateSpace", form->stateSpace());
-    inputJson.insert("sightingUids", QJsonArray::fromStringList(QStringList { sightingUid }));
-
-    auto baseUid = Task::makeUid(UploadSightingTask::getName(), sightingUid);
+    // Create the task.
+    auto baseUid = Task::makeUid(UploadSightingTask::getName(), locationUid);
     auto uid = baseUid + '.' + QString::number(QDateTime::currentDateTime().toMSecsSinceEpoch());
-
-    // Create the task and parent to the last uploaded sighting.
-    m_taskManager->addTask(projectUid, uid, m_uploadSightingLastTaskUid, inputJson.toVariantMap());
+    m_taskManager->addSerialTask(m_project->uid(), uid, inputJson.toVariantMap());
 
     // Mark the location as read-only.
-    m_database->setSightingFlags(projectUid, sightingUid, Sighting::DB_READONLY_FLAG);
+    form->setSightingFlag(locationUid, Sighting::DB_READONLY_FLAG);
 
     return true;
 }
 
-QVariant SMARTProvider::getProfileValue(const QString& key, const QVariant& defaultValue)
+QVariant SMARTProvider::getProfileValue(const QString& key, const QVariant& defaultValue) const
 {
     return m_profile.value(key, defaultValue);
 }
@@ -2236,7 +2319,6 @@ void SMARTProvider::loadState()
     update_collectUser(map.value("collectUser").toString());
     update_uploadObsCounter(map.value("uploadObsCounter", 1).toInt());
     update_uploadLastTime(map.value("lastUploadTime").toString());
-    update_uploadSightingLastTaskUid(map.value("lastUploadSightingTaskUid").toString());
     update_uploadSightingLastTime(map.value("lastUploadSightingTime").toString());
     m_pingData = map.value("pingData").toMap();
     m_pingUuid = map.value("pingUuid").toString();
@@ -2256,7 +2338,6 @@ void SMARTProvider::saveState()
     map["collectUser"] = m_collectUser;
     map["uploadObsCounter"] = m_uploadObsCounter;
     map["lastUploadTime"] = m_uploadLastTime;
-    map["lastUploadSightingTaskUid"] = m_uploadSightingLastTaskUid;
     map["lastUploadSightingTime"] = m_uploadSightingLastTime;
     map["pingData"] = m_pingData;
     map["pingUuid"] = m_pingUuid;
@@ -2341,7 +2422,7 @@ void SMARTProvider::addMetadataItem(const QString& fieldName, const QVariantMap&
         field = new CheckField();
 
         // Sort employee lists.
-        field->set_listSorted(fieldName == "SMART_Employees");
+        field->set_listSorted(fieldName == FIELD_EMPLOYEES);
 
         if (fieldValues.contains("defaults"))
         {
@@ -2483,7 +2564,6 @@ void SMARTProvider::addMetadataItem(const QString& fieldName, const QVariantMap&
         {
             auto groupsElement = new Element(nullptr);
             groupsElement->set_uid(fieldName + "/groups");
-            groupsElement->set_elementUids(optionUids);
             elementManager->rootElement()->appendElement(groupsElement);
 
             auto groups = fieldValues["groups"].toJsonArray();
@@ -2492,13 +2572,23 @@ void SMARTProvider::addMetadataItem(const QString& fieldName, const QVariantMap&
             for (auto groupIt = groups.constBegin(); groupIt != groups.constEnd(); groupIt++)
             {
                 auto groupMap = groupIt->toObject().toVariantMap();
+                auto groupOptionsUids = groupMap.value("options").toStringList();
 
+                // Remove options which are in this group.
+                for (auto optionIt = groupOptionsUids.constBegin(); optionIt != groupOptionsUids.constEnd(); optionIt++)
+                {
+                    optionUids.removeOne(*optionIt);
+                }
+
+                // Create a new group.
                 auto groupElement = new Element(nullptr);
                 groupElement->set_uid(fieldName + "/group/" + QString::number(index++));
                 groupElement->set_names(findLabels(groupMap));
-                groupElement->set_elementUids(groupMap.value("options").toStringList());
+                groupElement->set_elementUids(groupOptionsUids);
                 groupsElement->appendElement(groupElement);
             }
+
+            groupsElement->set_elementUids(optionUids);
 
             field->set_listElementUid(groupsElement->uid());
         }
@@ -2576,7 +2666,7 @@ void SMARTProvider::parseMetadata(const QString& fileName, ElementManager* eleme
     auto locationField = new LocationField(this);
     locationField->set_uid(FIELD_LOCATION);
     locationField->set_required(true);
-    locationField->set_allowManual(m_profile.value("MANUAL_GPS", false).toBool() || m_profile.value("ALLOW_SKIP_MANUAL_GPS", false).toBool());
+    locationField->set_allowManual(m_profile.value("MANUAL_GPS", false).toBool() || m_profile.value("USE_MAP_ON_SKIP", false).toBool());
     locationField->addTag("metadata", true);
     locationField->set_fixCount(m_profile.value("SIGHTING_FIX_COUNT", 0).toInt());
     fieldManager->rootField()->appendField(locationField);
@@ -2625,9 +2715,9 @@ void SMARTProvider::parseMetadata(const QString& fileName, ElementManager* eleme
         // Found employees, so connect to the observer field.
         // Collect instances do not have employee lists, but keep the observer field around
         // so that there is less special casing between flavors.
-        if (fieldName == "SMART_Employees")
+        if (fieldName == FIELD_EMPLOYEES)
         {
-            observerField->set_listElementUid("SMART_Employees");
+            observerField->set_listElementUid(FIELD_EMPLOYEES);
 
             // Filter employees for patrols and surveys based on those selected.
             if (!fileName.startsWith("incident"))
@@ -2636,7 +2726,7 @@ void SMARTProvider::parseMetadata(const QString& fileName, ElementManager* eleme
             }
         }
 
-        // Make the sampling units look like other attributes - also correct for a typo coming from SMART.
+        // Make the sampling units look like other attributes - also correct for a typo coming from SMART ("SMART_SampingUnit").
         // Create a goto manager layer from the sampling unit data.
         if (fieldName == "SMART_SampingUnit" || fieldName == FIELD_SAMPLING_UNIT)
         {
@@ -2669,10 +2759,15 @@ void SMARTProvider::parseMetadata(const QString& fileName, ElementManager* eleme
             auto gotoLayer = QVariantMap();
             gotoLayer["decoder"] = "sourceparser_smartsurveylayer";
             gotoLayer["features"] = gotoItems;
-            gotoLayer["filename"] = m_project->uid() + ".json";
+            gotoLayer["filename"] = m_project->uid() + ".geojson";
             gotoLayer["name"] = m_project->title();
             gotoLayer["type"] = "FeatureCollection";
-            App::instance()->gotoManager()->install(gotoLayer);
+            gotoLayer["project"] = m_project->uid();
+
+            auto tempFilePath = App::instance()->tempPath() + "/" + gotoLayer["filename"].toString();
+            QFile::remove(tempFilePath);
+            Utils::writeJsonToFile(tempFilePath, Utils::variantMapToJson(gotoLayer));
+            App::instance()->offlineMapManager()->installPackage(tempFilePath);
 
             fieldValues["default"] = optionNull["uuid"];
             fieldValues["isFixed"] = false;
@@ -3148,7 +3243,7 @@ bool SMARTProvider::initialize()
     return true;
 }
 
-bool SMARTProvider::connectToProject(bool newBuild)
+bool SMARTProvider::connectToProject(bool newBuild, bool* formChangedOut)
 {
     m_taskManager->registerTask(UploadSightingTask::getName(), UploadSightingTask::createInstance, UploadSightingTask::completed);
 
@@ -3197,6 +3292,7 @@ bool SMARTProvider::connectToProject(bool newBuild)
         !QFile::exists(elementsFilePath) || !QFile::exists(fieldsFilePath) || !QFile::exists(settingsFilePath))
     {
         initialize();
+        *formChangedOut = true;
     }
 
     // Misc properties.
@@ -3205,7 +3301,7 @@ bool SMARTProvider::connectToProject(bool newBuild)
     m_surveyMode = project.value("metadata").toString().contains("survey");
     m_samplingUnits = settings.value("samplingUnits", false).toBool();
     m_instantGPS = settings.value("instantGPS", false).toBool();
-    m_allowManualGPS = m_profile.value("MANUAL_GPS", false).toBool() || m_profile.value("ALLOW_SKIP_MANUAL_GPS", false).toBool();
+    m_allowManualGPS = m_profile.value("MANUAL_GPS", false).toBool() || m_profile.value("USE_MAP_ON_SKIP", false).toBool();
     m_useDistanceAndBearing = m_profile.value("RECORD_DISTANCE_BEARING", false) == true;
     m_useGroupUI = m_profile.value("INCIDENT_GROUP_UI", false) == true;
     m_useObserver = m_profile.value("RECORD_OBSERVER", false) == true;
@@ -3228,7 +3324,7 @@ bool SMARTProvider::connectToProject(bool newBuild)
     });
 
     // Location saved.
-    connect(form, &Form::locationTrack, this, [=](const QVariantMap& locationMap, const QString& locationUid)
+    connect(form, &Form::locationTrack, this, [=](Location* location, const QString& locationUid)
     {
         // Update the patrol leg.
         {
@@ -3254,25 +3350,13 @@ bool SMARTProvider::connectToProject(bool newBuild)
             return;
         }
 
-        // Skip if before the start of the patrol.
-        // Skip if too close to a sighting - since the sighting also emits a track point.
-        auto locationTimestamp = locationMap["ts"].toString();
-        auto timeSinceStart = Utils::timestampDeltaMs(m_patrolStartTimestamp, locationTimestamp);
-        auto timeSinceLastUpload = Utils::timestampDeltaMs(m_uploadSightingLastTime, locationTimestamp);
-
-        if (timeSinceStart < 0 || timeSinceLastUpload < 1000)
-        {
-            m_database->deleteSighting(projectUid, locationUid);
-            return;
-        }
-
         // Batch behavior for locations.
         if (shouldUploadData())
         {
             // Check for no batching.
             if (m_uploadFrequencyMinutes == 0)
             {
-                uploadLocation(form, locationUid);
+                uploadLocation(form, location, locationUid);
                 return;
             }
 
@@ -3299,7 +3383,7 @@ bool SMARTProvider::connectToProject(bool newBuild)
     });
 
     // Pings.
-    connect(form, &Form::locationPoint, this, [=](const QVariantMap& locationMap)
+    connect(form, &Form::locationPoint, this, [=](Location* location)
     {
         if (!shouldUploadData())
         {
@@ -3308,7 +3392,7 @@ bool SMARTProvider::connectToProject(bool newBuild)
 
         if ((m_patrolStarted && !m_patrolPaused) || m_collectStarted)
         {
-            uploadPing(locationMap);
+            uploadPing(location);
         }
     });
 
@@ -3387,26 +3471,48 @@ void SMARTProvider::getFields(FieldManager* fieldManager)
     fieldManager->loadFromQmlFile(getProjectFilePath("Fields" + stateSpace + ".qml"));
 }
 
-QVariantList SMARTProvider::buildMapDataLayers()
+QVariantMap SMARTProvider::getSightingMapSymbol(Form* form, Sighting* sighting, const QColor& color) const
+{
+    // Patrol icons.
+    static auto iconSelect = QMap<QString, QString>
+    {
+        { VALUE_NEW_PATROL, ":/icons/mark-play.svg" },
+        { VALUE_STOP_PATROL, ":/icons/mark-stop.svg" },
+        { VALUE_PAUSE_PATROL, ":/icons/mark-pause.svg" },
+        { VALUE_RESUME_PATROL, ":/icons/mark-resume.svg" },
+        { VALUE_CHANGE_PATROL, ":/icons/mark-change.svg" },
+    };
+
+    auto observationType = sighting->getRootFieldValue(FIELD_OBSERVATION_TYPE).toString();
+    if (iconSelect.contains(observationType))
+    {
+        return App::instance()->createMapPointSymbol(iconSelect[observationType], color);
+    }
+
+    // Model icons.
+    auto modelIconFilePath = form->provider()->getSightingSummaryIcon(sighting).toLocalFile();
+    if (!modelIconFilePath.isEmpty())
+    {
+        return App::instance()->createMapCalloutSymbol(modelIconFilePath);
+    }
+
+    // Default marker.
+    return App::instance()->createMapPointSymbol(":/icons/mark-circle.svg", color);
+}
+
+QVariantList SMARTProvider::buildMapDataLayers() const
 {
     auto result = QVariantList();
+
+    Utils::enforceFolderQuota(App::instance()->mapMarkerCachePath(), 0);
 
     // Incident.
     if (m_hasIncident)
     {
         auto form = App::instance()->createFormPtr(m_project->uid(), TYPE_INCIDENT);
-        auto getSightingSymbol = [](const Sighting* /*sighting*/) -> QVariantMap
+        auto getSightingSymbol = [&](Sighting* sighting) -> QVariantMap
         {
-            auto symbol = QVariantMap();
-            symbol["symbolType"] = "PictureMarkerSymbol";
-            symbol["angle"] = 0.0;
-            symbol["type"] = "esriPMS";
-            symbol["url"] = "qrc:/icons/map_marker.png";
-            symbol["width"] = 24;
-            symbol["height"] = 24;
-            symbol["yoffset"] = 12.0;
-
-            return symbol;
+            return getSightingMapSymbol(form.get(), sighting, Qt::darkRed);
         };
 
         result.append(form->buildSightingMapLayer(tr("Incident"), getSightingSymbol));
@@ -3418,29 +3524,9 @@ QVariantList SMARTProvider::buildMapDataLayers()
         auto form = App::instance()->createFormPtr(m_project->uid(), TYPE_PATROL);
 
         // Sightings.
-        auto getSightingSymbol = [](const Sighting* /*sighting*/) -> QVariantMap
+        auto getSightingSymbol = [&](Sighting* sighting) -> QVariantMap
         {
-            auto symbol = QVariantMap();
-//            auto observationType = sighting->getRootFieldValue(FIELD_OBSERVATION_TYPE).toString();
-
-// TODO(justin): get different markers for different patrol parts
-//            auto map = QVariantMap();
-//            map[VALUE_NEW_PATROL] = 0;
-//            map[VALUE_STOP_PATROL] = 15;
-//            map[VALUE_PAUSE_PATROL] = 30;
-//            map[VALUE_RESUME_PATROL] = 45;
-//            map[VALUE_CHANGE_PATROL] = 60;
-//            map[VALUE_OBSERVATION] = 90;
-
-            symbol["symbolType"] = "PictureMarkerSymbol";
-            symbol["angle"] = 0;//map[observationType].toDouble();
-            symbol["type"] = "esriPMS";
-            symbol["url"] = "qrc:/icons/map_marker.png";
-            symbol["width"] = 24;
-            symbol["height"] = 24;
-            symbol["yoffset"] = 12.0;
-
-            return symbol;
+            return getSightingMapSymbol(form.get(), sighting, Qt::darkBlue);
         };
 
         result.append(form->buildSightingMapLayer(tr("Patrol"), getSightingSymbol));
@@ -3448,22 +3534,9 @@ QVariantList SMARTProvider::buildMapDataLayers()
         // Track.
         auto getTrackSymbol = [&]() -> QVariantMap
         {
-            auto symbol = QVariantMap();
-            symbol["symbolType"] = "SimpleLineSymbol";
-
-            auto trackColor = QColor("#" + getProfileValue("TRACK_COLOR", "0000ff").toString());
-            auto symbolColor = QVariantList();
-            symbolColor.append(trackColor.red());
-            symbolColor.append(trackColor.green());
-            symbolColor.append(trackColor.blue());
-            symbolColor.append(200);
-
-            symbol["color"] = symbolColor;
-            symbol["style"] = "esriSLSDot";
-            symbol["type"] = "esriSLS";
-            symbol["width"] = 1.75;
-
-            return symbol;
+            auto color = QColor("#" + getProfileValue("TRACK_COLOR", "0000ff").toString());
+            color.setAlpha(200);
+            return App::instance()->createMapLineSymbol(color);
         };
 
         result.append(form->buildTrackMapLayer(tr("Tracks"), getTrackSymbol()));
@@ -3475,19 +3548,9 @@ QVariantList SMARTProvider::buildMapDataLayers()
         auto form = App::instance()->createFormPtr(m_project->uid(), TYPE_COLLECT);
 
         // Sightings.
-        auto getSightingSymbol = [](const Sighting* /*sighting*/) -> QVariantMap
+        auto getSightingSymbol = [&](Sighting* sighting) -> QVariantMap
         {
-            auto symbol = QVariantMap();
-            //auto observationType = sighting->getRootFieldValue(FIELD_OBSERVATION_TYPE).toString();
-            symbol["symbolType"] = "PictureMarkerSymbol";
-            symbol["angle"] = 0;
-            symbol["type"] = "esriPMS";
-            symbol["url"] = "qrc:/icons/map_marker.png";
-            symbol["width"] = 24;
-            symbol["height"] = 24;
-            symbol["yoffset"] = 12.0;
-
-            return symbol;
+            return getSightingMapSymbol(form.get(), sighting, Qt::darkGreen);
         };
 
         result.append(form->buildSightingMapLayer(tr("Collect"), getSightingSymbol));
@@ -3495,22 +3558,9 @@ QVariantList SMARTProvider::buildMapDataLayers()
         // Track.
         auto getTrackSymbol = [&]() -> QVariantMap
         {
-            auto symbol = QVariantMap();
-            symbol["symbolType"] = "SimpleLineSymbol";
-
-            auto trackColor = QColor("#" + getProfileValue("TRACK_COLOR", "0000ff").toString());
-            auto symbolColor = QVariantList();
-            symbolColor.append(trackColor.red());
-            symbolColor.append(trackColor.green());
-            symbolColor.append(trackColor.blue());
-            symbolColor.append(200);
-
-            symbol["color"] = symbolColor;
-            symbol["style"] = "esriSLSDot";
-            symbol["type"] = "esriSLS";
-            symbol["width"] = 1.75;
-
-            return symbol;
+            auto color = QColor("#" + getProfileValue("TRACK_COLOR", "0000ff").toString());
+            color.setAlpha(200);
+            return App::instance()->createMapLineSymbol(color);
         };
 
         result.append(form->buildTrackMapLayer(tr("Tracks"), getTrackSymbol()));
@@ -3519,16 +3569,25 @@ QVariantList SMARTProvider::buildMapDataLayers()
     return result;
 }
 
-bool SMARTProvider::getUseGPSTime()
+bool SMARTProvider::requireGPSTime() const
 {
     return m_profile.value("USE_GPS_TIME", false) == true;
 }
 
-bool SMARTProvider::canEditSighting(Sighting* sighting, int /*flags*/)
+bool SMARTProvider::supportSightingEdit() const
 {
-    return !shouldUploadData() &&
-           sighting->recordManager()->recordUids().count() > 1 &&
-           getProfileValue("DISABLE_EDITING", false) == false;
+    return getProfileValue("DISABLE_EDITING", false) == false;
+}
+
+bool SMARTProvider::supportSightingDelete() const
+{
+    return supportSightingEdit();
+}
+
+bool SMARTProvider::canEditSighting(Sighting* sighting, int /*flags*/) const
+{
+    return supportSightingEdit() && !shouldUploadData() &&
+           sighting->recordManager()->recordUids().count() > 1; // Cannot edit metadata only sightings.
 }
 
 void SMARTProvider::finalizeSighting(QVariantMap& sightingMap)
@@ -3547,12 +3606,12 @@ void SMARTProvider::finalizeSighting(QVariantMap& sightingMap)
     }
 }
 
-bool SMARTProvider::shouldUploadData()
+bool SMARTProvider::shouldUploadData() const
 {
     return m_hasDataServer && !m_manualUpload;
 }
 
-QString SMARTProvider::getFieldName(const QString& fieldUid)
+QString SMARTProvider::getFieldName(const QString& fieldUid) const
 {
     // Handle simple static fields.
     auto map = QVariantMap
@@ -3639,7 +3698,8 @@ QString SMARTProvider::getFieldName(const QString& fieldUid)
     // If the name Element has "names" set, then we are on SMART 7 and the server has provided translations.
     if (!nameElement->names().isEmpty())
     {
-        return QString();
+        // TODO: SMART Desktop does not support translation of patrol metadata field names. When it does, uncomment this line.
+        //return QString();
     }
 
     // If the name does not match the English name we have, then it must have been translated by
@@ -3656,7 +3716,7 @@ QString SMARTProvider::getFieldName(const QString& fieldUid)
     return trMap.value(fieldUid).toString();
 }
 
-QVariantList SMARTProvider::buildSightingView(Sighting* sighting)
+QVariantList SMARTProvider::buildSightingView(Sighting* sighting) const
 {
     auto recordModel = QVariantList();
     auto form = qobject_cast<Form*>(parent());
@@ -3771,6 +3831,11 @@ QVariantList SMARTProvider::buildSightingView(Sighting* sighting)
                     return false;
                 }
 
+                if (depth == 2 && modelFieldUids.indexOf(fieldValue.parentFieldUid()) == -1)
+                {
+                    return false;
+                }
+
                 return true;
             });
         }
@@ -3865,7 +3930,7 @@ QString SMARTProvider::getPatrolText()
     return m_surveyMode ? tr("Survey") : tr("Patrol");
 }
 
-QString SMARTProvider::getSightingTypeText(const QString& observationType)
+QString SMARTProvider::getSightingTypeText(const QString& observationType) const
 {
     if (observationType == VALUE_NEW_PATROL)
     {
@@ -3897,9 +3962,112 @@ QString SMARTProvider::getSightingTypeText(const QString& observationType)
     }
 }
 
-bool SMARTProvider::getFieldTitleVisible(const QString& fieldUid)
+QUrl SMARTProvider::getSightingTypeIcon(const QString& observationType) const
+{
+    if (observationType == VALUE_NEW_PATROL)
+    {
+        return QUrl("qrc:/icons/play.svg");
+    }
+    else if (observationType == VALUE_STOP_PATROL)
+    {
+        return QUrl("qrc:/icons/stop.svg");
+    }
+    else if (observationType == VALUE_PAUSE_PATROL)
+    {
+        return QUrl("qrc:/icons/pause.svg");
+    }
+    else if (observationType == VALUE_RESUME_PATROL)
+    {
+        return QUrl("qrc:/icons/step_forward.svg");
+    }
+    else if (observationType == VALUE_CHANGE_PATROL)
+    {
+        return QUrl("qrc:/icons/account_edit.svg");
+    }
+    else
+    {
+        return QUrl();
+    }
+}
+
+bool SMARTProvider::getFieldTitleVisible(const QString& fieldUid) const
 {
     return fieldUid != "Photos";
+}
+
+QString SMARTProvider::getSightingSummaryText(Sighting* sighting) const
+{
+    auto recordUids = sighting->getRootFieldValue(FIELD_MODEL).toStringList();
+    if (recordUids.isEmpty())
+    {
+        return getSightingTypeText(sighting->getRootFieldValue(FIELD_OBSERVATION_TYPE).toString());
+    }
+
+    auto results = QStringList();
+
+    for (auto it = recordUids.constBegin(); it != recordUids.constEnd(); it++)
+    {
+        auto modelElementUid = sighting->getFieldValue(*it, FIELD_MODEL_TREE, "").toString();
+        if (modelElementUid.isEmpty())
+        {
+            continue;
+        }
+
+        auto form = qobject_cast<Form*>(parent());
+        auto name = form->getElementName(modelElementUid);
+        if (name.isEmpty())
+        {
+            continue;
+        }
+
+        results.append(name);
+    }
+
+    return results.join(", ");
+}
+
+QUrl SMARTProvider::getSightingSummaryIcon(Sighting* sighting) const
+{
+    auto recordUids = sighting->getRootFieldValue(FIELD_MODEL).toStringList();
+    if (recordUids.isEmpty())
+    {
+        return getSightingTypeIcon(sighting->getRootFieldValue(FIELD_OBSERVATION_TYPE).toString());
+    }
+
+    for (auto it = recordUids.constBegin(); it != recordUids.constEnd(); it++)
+    {
+        auto modelElementUid = sighting->getFieldValue(*it, FIELD_MODEL_TREE, "").toString();
+        if (modelElementUid.isEmpty())
+        {
+            continue;
+        }
+
+        auto form = qobject_cast<Form*>(parent());
+        auto icon = form->getElementIcon(modelElementUid, true);
+        if (icon.isEmpty())
+        {
+            continue;
+        }
+
+        return icon;
+    }
+
+    return QUrl();
+}
+
+QUrl SMARTProvider::getSightingStatusIcon(Sighting* /*sighting*/, int flags) const
+{
+    if (!hasDataServer() || manualUpload())
+    {
+        return QUrl();
+    }
+
+    if ((flags & Sighting::DB_UPLOADED_FLAG) || (flags & Sighting::DB_EXPORTED_FLAG))
+    {
+        return QUrl("qrc:/icons/cloud_done.svg");
+    }
+
+    return QUrl("qrc:/icons/cloud_none.svg");
 }
 
 bool SMARTProvider::finalizePackage(const QString& packageFilesPath) const

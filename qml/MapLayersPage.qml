@@ -8,13 +8,15 @@ import CyberTracker 1.0 as C
 C.ContentPage {
     id: page
 
-    C.MapLayerListModel {
-        id: layerListModel
-    }
+    property bool configMode: false
 
     header: C.PageHeader {
         id: title
         text: qsTr("Layers")
+    }
+
+    C.MapLayerListModel {
+        id: layerListModel
     }
 
     ButtonGroup {
@@ -30,16 +32,44 @@ C.ContentPage {
         delegate: ItemDelegate {
             id: d
             width: ListView.view.width
-            implicitHeight: di.implicitHeight
 
             Component {
-                id: formLayerComponent
+                id: titleComponent
+
+                RowLayout {
+                    Label {
+                        Layout.fillWidth: true
+                        font.bold: true
+                        font.pixelSize: App.settings.font14
+                        text: modelData.name
+                        elide: Label.ElideRight
+                    }
+
+                    ToolButton {
+                        icon.source: "qrc:/icons/settings.svg"
+                        icon.width: C.Style.toolButtonSize
+                        icon.height: C.Style.toolButtonSize
+                        opacity: 0.5
+                        visible: modelData.config || false
+                        onClicked: {
+                            if (typeof(formPageStack) !== "undefined") {
+                                form.pushPage("qrc:/OfflineMapPage.qml", {})
+                            } else {
+                                appPageStack.push("qrc:/OfflineMapPage.qml", {}, StackView.Immediate)
+                            }
+                        }
+                    }
+                }
+            }
+
+            Component {
+                id: layerComponent
                 RowLayout {
                     Switch {
                         checked: modelData.checked === true
                         onCheckedChanged: {
                             if (modelData.checked !== checked) {
-                                layerListModel.setDataLayerState(modelData.id, checked)
+                                layerListModel.setLayerState(modelData, checked)
                             }
                         }
                     }
@@ -48,82 +78,25 @@ C.ContentPage {
                         Layout.fillWidth: true
                         font.pixelSize: App.settings.font14
                         text: modelData.name
+                        elide: Label.ElideRight
                     }
 
                     ToolButton {
                         icon.source: "qrc:/icons/magnify_expand.svg"
+                        icon.width: C.Style.toolButtonSize
+                        icon.height: C.Style.toolButtonSize
                         onClicked: {
-                            App.zoomToMapOverlay(modelData.id)
+                            App.zoomToMapLayer(modelData)
                             page.header.sendBackClick()
                         }
-                        opacity: enabled ? 0.8 : 0
+                        opacity: enabled ? 0.5 : 0
                         enabled: modelData.checked
                     }
                 }
             }
 
             Component {
-                id: gotoLayerComponent
-                RowLayout {
-                    Switch {
-                        checked: modelData.checked === true
-                        onCheckedChanged: {
-                            if (modelData.checked !== checked) {
-                                layerListModel.setProjectLayerState(modelData.id, checked)
-                            }
-                        }
-                    }
-
-                    Label {
-                        Layout.fillWidth: true
-                        font.pixelSize: App.settings.font14
-                        text: modelData.name
-                    }
-
-                    ToolButton {
-                        icon.source: "qrc:/icons/magnify_expand.svg"
-                        onClicked: {
-                            App.zoomToMapOverlay(modelData.id)
-                            page.header.sendBackClick()
-                        }
-                        opacity: enabled ? 0.8 : 0
-                        enabled: modelData.checked
-                    }
-                }
-            }
-
-            Component {
-                id: projectLayerComponent
-                RowLayout {
-                    Switch {
-                        checked: modelData.checked === true
-                        onCheckedChanged: {
-                            if (modelData.checked !== checked) {
-                                layerListModel.setProjectLayerState(modelData.id, checked)
-                            }
-                        }
-                    }
-
-                    Label {
-                        Layout.fillWidth: true
-                        font.pixelSize: App.settings.font14
-                        text: modelData.name
-                    }
-
-                    ToolButton {
-                        icon.source: "qrc:/icons/magnify_expand.svg"
-                        onClicked: {
-                            App.zoomToMapLayer(modelData.id)
-                            page.header.sendBackClick()
-                        }
-                        opacity: enabled ? 0.8 : 0
-                        enabled: modelData.checked
-                    }
-                }
-            }
-
-            Component {
-                id: basemapLayerComponent
+                id: basemapComponent
                 RowLayout {
                     Item {
                         width: 8
@@ -149,104 +122,34 @@ C.ContentPage {
                         Layout.fillWidth: true
                         font.pixelSize: App.settings.font14
                         text: modelData.name
+                        elide: Label.ElideRight
                     }
                 }
             }
 
-            SwipeDelegate {
-                id: di
-                anchors.fill: parent
+            contentItem: {
+                switch (modelData.type) {
+                case "title":
+                    return titleComponent.createObject(d)
 
-                Binding { target: background; property: "color"; value: C.Style.colorContent }
+                case "form":
+                case "goto":
+                case "project":
+                case "offline":
+                    return layerComponent.createObject(d)
 
-                function getComponent() {
-                    switch (modelData.type) {
-                    case "form":
-                        return formLayerComponent
+                case "basemap":
+                    return basemapComponent.createObject(d)
 
-                    case "goto":
-                        return gotoLayerComponent
-
-                    case "project":
-                        return projectLayerComponent
-
-                    case "basemap":
-                        return basemapLayerComponent
-
-                    default: console.log(modelData.type)
-                    }
-
-                    return undefined
+                default: console.log(modelData.type)
                 }
 
-                contentItem: getComponent().createObject(d)
-
-                swipe.right: Rectangle {
-                    width: modelData.type === "goto" ? parent.width : 0
-                    height: parent.height
-                    color: C.Style.colorGroove
-
-                    RowLayout {
-                        anchors.fill: parent
-
-                        Label {
-                            text: qsTr("Delete layer?")
-                            leftPadding: 20
-                            font.pixelSize: App.settings.font16
-                            fontSizeMode: Label.Fit
-                            Layout.fillWidth: true
-                            Layout.alignment: Qt.AlignVCenter
-                        }
-
-                        ToolButton {
-                            flat: true
-                            text: qsTr("Yes")
-                            onClicked: {
-                                di.swipe.close()
-                                confirmDelete.gotoLayerId = modelData.id
-                                confirmDelete.gotoLayerIndex = model.index
-                                confirmDelete.open()
-                            }
-                            Layout.alignment: Qt.AlignRight
-                            Layout.preferredWidth: parent.height
-                            Layout.maximumWidth: parent.width / 5
-                            font.pixelSize: App.settings.font14
-                        }
-
-                        ToolButton {
-                            flat: true
-                            text: qsTr("No")
-                            onClicked: di.swipe.close()
-                            Layout.alignment: Qt.AlignRight
-                            Layout.preferredWidth: parent.height
-                            Layout.maximumWidth: parent.width / 5
-                            font.pixelSize: App.settings.font14
-                        }
-                    }
-                }
+                return undefined
             }
 
-            // Divider.
-            Rectangle {
-                x: 6
-                y: parent.height - 1
-                width: parent.width - 12
-                height: 1
-                color: Material.theme === Material.Dark ? "#FFFFFF" : "#000000"
-                opacity: Material.theme === Material.Dark ? 0.12 : 0.12
+            C.HorizontalDivider {
                 visible: modelData.divider === true
             }
-        }
-    }
-
-    C.ConfirmPopup {
-        id: confirmDelete
-        property var gotoLayerIndex
-        property var gotoLayerId
-        text: qsTr("Delete map layer?")
-        confirmText: qsTr("Yes, delete it")
-        onConfirmed: {
-            layerListModel.removeGotoLayer(gotoLayerId)
         }
     }
 }

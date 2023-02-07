@@ -11,7 +11,7 @@ C.ListViewV {
     property string recordUid
     property string fieldUid
     property bool wizardMode: false
-    property var highlightInvalid: false
+    property bool highlightInvalid: false
 
     C.FieldBinding {
         id: fieldBinding
@@ -28,8 +28,6 @@ C.ListViewV {
     delegate: SwipeDelegate {
         id: swipeDelegate
         width: ListView.view.width
-
-        Binding { target: background; property: "color"; value: C.Style.colorContent }
 
         contentItem: RowLayout {
             Item { height: Style.minRowHeight }
@@ -49,13 +47,9 @@ C.ListViewV {
                         color: content.textColor
                     }
 
-                    Image {
-                        fillMode: Image.PreserveAspectFit
+                    SquareIcon {
                         source: modelData.recordIcon
-                        sourceSize.width: Style.minRowHeight
-                        sourceSize.height: Style.minRowHeight
-                        visible: modelData.recordIcon !== ""
-                        verticalAlignment: Image.AlignVCenter
+                        size: Style.minRowHeight
                     }
                 }
 

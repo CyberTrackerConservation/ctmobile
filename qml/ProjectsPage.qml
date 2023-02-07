@@ -42,8 +42,6 @@ C.ContentPage {
             checked: swipe.complete
             onCheckedChanged: if (!checked) swipe.close()
 
-            Binding { target: background; property: "color"; value: C.Style.colorContent }
-
             swipe.right: Rectangle {
                 width: parent.width
                 height: parent.height
@@ -132,6 +130,12 @@ C.ContentPage {
                     // Ask for update on launch.
                     if (modelData.hasUpdate && modelData.loggedIn && App.updateAllowed()) {
                         popupConfirmUpdate.open({ projectUid: modelData.uid, projectTitle: modelData.title })
+                        return
+                    }
+
+                    // Ensure valid provider.
+                    if (modelData.provider === "") {
+                        App.showError(qsTr("No provider"))
                         return
                     }
 

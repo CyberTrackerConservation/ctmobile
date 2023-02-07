@@ -10,7 +10,7 @@ C.ListViewH {
 
     property alias recordUid: fieldBinding.recordUid
     property alias fieldUid: fieldBinding.fieldUid
-    property var imageSize: 24
+    property int imageSize: 48
     property bool highlightInvalid: false
 
     spacing: 4
@@ -19,7 +19,15 @@ C.ListViewH {
         id: fieldBinding
     }
 
-    model: buildModel()
+    model: {
+        fieldBinding.value
+        let value = fieldBinding.getValue([""])
+        if (value[value.length - 1] !== "" && value.length < fieldBinding.field.maxCount) {
+            value.push("")
+        }
+
+        return value
+    }
 
     delegate: ItemDelegate {
         id: control
@@ -47,12 +55,10 @@ C.ListViewH {
                 opacity: 0.5
                 visible: modelData === ""
 
-                Image {
-                    anchors.fill: parent
-                    fillMode: Image.Pad
+                SquareIcon {
+                    anchors.centerIn: parent
                     source: "qrc:/icons/camera_alt.svg"
-                    sourceSize.width: imageSize / 2
-                    sourceSize.height: imageSize / 2
+                    size: Style.iconSize48
                 }
 
                 layer {
@@ -65,22 +71,7 @@ C.ListViewH {
         }
 
         onClicked: {
-            fieldBinding.setValue(buildModel())
             form.pushPage(Qt.resolvedUrl("FieldCameraPage.qml"), { photoIndex: model.index, recordUid: fieldBinding.recordUid, fieldUid: fieldBinding.fieldUid } )
         }
-    }
-
-    function buildModel() {
-        var v = fieldBinding.value
-        if (v === undefined || v === null) {
-            v = [""]
-        } else {
-            v = v.filter(e => e !== "")
-            if (v.length < fieldBinding.field.maxCount) {
-                v.push("")
-            }
-        }
-
-        return v
     }
 }

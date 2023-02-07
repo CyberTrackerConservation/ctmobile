@@ -3,7 +3,7 @@
 QTDIR=$HOME/"Qt/5.15.2/clang_64/bin"
 CTAPP=$HOME/"github/build-ct-Desktop_Qt_5_15_2_clang_64bit-Release/CyberTracker.app"
 CTQML=$HOME/"github/ct/qml"
-ARCGIS=$HOME/"ArcGIS_SDKs/Qt100.13"
+ARCGIS=$HOME/"ArcGIS_SDKs/Qt100.15.0"
 
 cd $QTDIR
 

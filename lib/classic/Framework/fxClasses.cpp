@@ -407,6 +407,11 @@ BOOL CfxReader::IsWriter()
     return FALSE;
 }
 
+BOOL CfxReader::IsEnd()
+{
+    return _stream->GetPosition() == _stream->GetSize();
+}
+
 //*************************************************************************************************
 // CfxWriter
 

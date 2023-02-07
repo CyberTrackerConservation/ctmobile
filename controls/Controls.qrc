@@ -3,6 +3,10 @@
         <file>imports/CyberTracker.1/qmldir</file>
         <file>imports/CyberTracker.1/BusyCover.qml</file>
         <file>imports/CyberTracker.1/CheckableBox.qml</file>
+        <file>imports/CyberTracker.1/CheckBoxIconInlay.qml</file>
+        <file>imports/CyberTracker.1/CheckBoxIconOnly.qml</file>
+        <file>imports/CyberTracker.1/CheckBoxTextBesideIcon.qml</file>
+        <file>imports/CyberTracker.1/CheckBoxTextOnly.qml</file>
         <file>imports/CyberTracker.1/ChevronRight.qml</file>
         <file>imports/CyberTracker.1/CircleButton.qml</file>
         <file>imports/CyberTracker.1/ColorButton.qml</file>
@@ -17,11 +21,15 @@
         <file>imports/CyberTracker.1/FieldAudio.qml</file>
         <file>imports/CyberTracker.1/FieldBarcode.qml</file>
         <file>imports/CyberTracker.1/FieldBarcodePage.qml</file>
+        <file>imports/CyberTracker.1/FieldBarcodePane.qml</file>
         <file>imports/CyberTracker.1/FieldCalendar.qml</file>
         <file>imports/CyberTracker.1/FieldCalendarPage.qml</file>
         <file>imports/CyberTracker.1/FieldCamera.qml</file>
         <file>imports/CyberTracker.1/FieldCameraPage.qml</file>
+        <file>imports/CyberTracker.1/FieldCameraPane.qml</file>
         <file>imports/CyberTracker.1/FieldCheckBox.qml</file>
+        <file>imports/CyberTracker.1/FieldCheckGridView.qml</file>
+        <file>imports/CyberTracker.1/FieldCheckGridViewPage.qml</file>
         <file>imports/CyberTracker.1/FieldCheckListView.qml</file>
         <file>imports/CyberTracker.1/FieldCheckListViewPage.qml</file>
         <file>imports/CyberTracker.1/FieldComboBox.qml</file>
@@ -29,11 +37,15 @@
         <file>imports/CyberTracker.1/FieldDateTimePicker.qml</file>
         <file>imports/CyberTracker.1/FieldDateTimePickerPage.qml</file>
         <file>imports/CyberTracker.1/FieldEditorDelegate.qml</file>
-        <file>imports/CyberTracker.1/FieldName.qml</file>
+        <file>imports/CyberTracker.1/FieldFilePage.qml</file>
+        <file>imports/CyberTracker.1/FieldFilePane.qml</file>
+        <file>imports/CyberTracker.1/FieldGridView.qml</file>
+        <file>imports/CyberTracker.1/FieldGridViewPage.qml</file>
         <file>imports/CyberTracker.1/FieldKeypad.qml</file>
         <file>imports/CyberTracker.1/FieldKeypadPage.qml</file>
         <file>imports/CyberTracker.1/FieldLikert.qml</file>
         <file>imports/CyberTracker.1/FieldLinePage.qml</file>
+        <file>imports/CyberTracker.1/FieldLine.qml</file>
         <file>imports/CyberTracker.1/FieldLinePane.qml</file>
         <file>imports/CyberTracker.1/FieldListView.qml</file>
         <file>imports/CyberTracker.1/FieldListViewEditor.qml</file>
@@ -41,23 +53,37 @@
         <file>imports/CyberTracker.1/FieldLocation.qml</file>
         <file>imports/CyberTracker.1/FieldLocationPage.qml</file>
         <file>imports/CyberTracker.1/FieldLocationPane.qml</file>
+        <file>imports/CyberTracker.1/FieldName.qml</file>
         <file>imports/CyberTracker.1/FieldNumberListViewPage.qml</file>
+        <file>imports/CyberTracker.1/FieldPhotoButton.qml</file>
         <file>imports/CyberTracker.1/FieldPhotoListView.qml</file>
+        <file>imports/CyberTracker.1/FieldRange.qml</file>
+        <file>imports/CyberTracker.1/FieldRangePage.qml</file>
         <file>imports/CyberTracker.1/FieldRecordEditorPage.qml</file>
         <file>imports/CyberTracker.1/FieldRecordListView.qml</file>
         <file>imports/CyberTracker.1/FieldRecordListViewPage.qml</file>
+        <file>imports/CyberTracker.1/FieldRecordNumberGridView.qml</file>
+        <file>imports/CyberTracker.1/FieldRecordNumberGridViewPage.qml</file>
+        <file>imports/CyberTracker.1/FieldRecordPhotoGridView.qml</file>
+        <file>imports/CyberTracker.1/FieldRecordPhotoGridViewPage.qml</file>
         <file>imports/CyberTracker.1/FieldSketchpad.qml</file>
         <file>imports/CyberTracker.1/FieldSketchpadPage.qml</file>
         <file>imports/CyberTracker.1/FieldStateMarker.qml</file>
         <file>imports/CyberTracker.1/FieldTextEdit.qml</file>
         <file>imports/CyberTracker.1/FieldTextEditPage.qml</file>
         <file>imports/CyberTracker.1/FieldTimePicker.qml</file>
+        <file>imports/CyberTracker.1/FooterButton.qml</file>
         <file>imports/CyberTracker.1/FormLanguageComboBox.qml</file>
+        <file>imports/CyberTracker.1/FormSettingsListView.qml</file>
+        <file>imports/CyberTracker.1/FormSettingsPage.qml</file>
         <file>imports/CyberTracker.1/FormSightingListView.qml</file>
+        <file>imports/CyberTracker.1/FormSightingsListView.qml</file>
         <file>imports/CyberTracker.1/FormView.qml</file>
         <file>imports/CyberTracker.1/FormWizardPage.qml</file>
-        <file>imports/CyberTracker.1/FormWizardIndexPage.qml</file>
         <file>imports/CyberTracker.1/GotoLocation.qml</file>
+        <file>imports/CyberTracker.1/GridFrameDelegate.qml</file>
+        <file>imports/CyberTracker.1/GridViewV.qml</file>
+        <file>imports/CyberTracker.1/HighlightDelegate.qml</file>
         <file>imports/CyberTracker.1/HintPage.qml</file>
         <file>imports/CyberTracker.1/HorizontalDivider.qml</file>
         <file>imports/CyberTracker.1/ImagePage.qml</file>
@@ -67,6 +93,7 @@
         <file>imports/CyberTracker.1/ListViewV.qml</file>
         <file>imports/CyberTracker.1/LocationData.qml</file>
         <file>imports/CyberTracker.1/LocationPage.qml</file>
+        <file>imports/CyberTracker.1/LocationPopup.qml</file>
         <file>imports/CyberTracker.1/LoginItem.qml</file>
         <file>imports/CyberTracker.1/LoginPage.qml</file>
         <file>imports/CyberTracker.1/LoginPopup.qml</file>
@@ -74,7 +101,6 @@
         <file>imports/CyberTracker.1/OAuthItem.qml</file>
         <file>imports/CyberTracker.1/OAuthPopup.qml</file>
         <file>imports/CyberTracker.1/OptionsPopup.qml</file>
-        <file>imports/CyberTracker.1/PageFooterButton.qml</file>
         <file>imports/CyberTracker.1/PageHeader.qml</file>
         <file>imports/CyberTracker.1/PageStack.qml</file>
         <file>imports/CyberTracker.1/PasscodePopup.qml</file>
@@ -83,9 +109,17 @@
         <file>imports/CyberTracker.1/PopupLoader.qml</file>
         <file>imports/CyberTracker.1/PopupToast.qml</file>
         <file>imports/CyberTracker.1/ProgressCircle.qml</file>
+        <file>imports/CyberTracker.1/SquareIcon.qml</file>
         <file>imports/CyberTracker.1/Style.qml</file>
+        <file>imports/CyberTracker.1/SubmitButton.qml</file>
         <file>imports/CyberTracker.1/UsernamePage.qml</file>
         <file>imports/CyberTracker.1/WebView.qml</file>
+        <file>imports/CyberTracker.1/WizardFooter.qml</file>
+        <file>imports/CyberTracker.1/WizardHeader.qml</file>
+        <file>imports/CyberTracker.1/WizardIndex.qml</file>
+        <file>imports/CyberTracker.1/WizardIndexPage.qml</file>
+        <file>imports/CyberTracker.1/WizardPage.qml</file>
+        <file>imports/CyberTracker.1/WizardOptionsPage.qml</file>
         <file>imports/CyberTracker.1/+webengine/WebView.qml</file>
         <file>imports/CyberTracker.1/+webview/WebView.qml</file>
     </qresource>

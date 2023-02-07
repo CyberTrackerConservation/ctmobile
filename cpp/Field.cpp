@@ -121,7 +121,7 @@ QVariant BaseField::getTagValue(const QString& key, const QVariant& defaultValue
 
 QVariant BaseField::getParameter(const QString& key, const QVariant& defaultValue) const
 {
-    return m_parameters.value(key, defaultValue);
+    return Utils::getParam(m_parameters, key, defaultValue);
 }
 
 void BaseField::addParameter(const QString& key, const QVariant& value)
@@ -243,6 +243,43 @@ bool RecordField::wizardFieldList() const
     return m_parameters.contains("field-list") || (m_parameters.value("appearance") == "field-list");
 }
 
+QString RecordField::onlyFieldType() const
+{
+    // Dynamic: expect a single field.
+    if (!group())
+    {
+        return fieldCount() == 1 ? field(0)->metaObject()->className() : "";
+    }
+
+    // Group: expect all fields of one type.
+    auto lastFieldType = QString();
+    auto multipleTypes = false;
+
+    enumFields([&](BaseField* field)
+    {
+        if (multipleTypes)
+        {
+            return;
+        }
+
+        auto fieldType = field->metaObject()->className();
+
+        if (lastFieldType.isEmpty())
+        {
+            lastFieldType = fieldType;
+            return;
+        }
+
+        if (lastFieldType != fieldType)
+        {
+            multipleTypes = true;
+            return;
+        }
+    });
+
+    return !lastFieldType.isEmpty() && !multipleTypes ? lastFieldType : "";
+}
+
 int RecordField::fieldIndex(BaseField* field) const
 {
     return m_fields.indexOf(field);
@@ -335,14 +372,21 @@ void StringField::toQml(QTextStream& stream, int depth) const
 
 QString StringField::toDisplayValue(ElementManager* elementManager, const QVariant &value) const
 {
-    auto valueString = value.toString();
+    // Internal fields.
+    if (m_listElementUid.isEmpty() && m_nameElementUid.isEmpty())
+    {
+        return "";
+    }
 
+    // Not a list element or not set.
+    auto valueString = value.toString();
     if (m_listElementUid.isEmpty() || valueString.isEmpty())
     {
         return valueString;
     }
 
-    return elementManager->getElementName(value.toString());
+    // List element result.
+    return elementManager->getElementName(valueString);
 }
 
 QString StringField::toXml(const QVariant& value) const
@@ -672,6 +716,11 @@ LocationField::LocationField(QObject* parent): BaseField(parent)
 {
     m_fixCount = 0;
     m_allowManual = true;
+}
+
+QVariant LocationField::createValue(double x, double y, double z, double a, double s)
+{
+    return QVariantMap {{ "x", x }, { "y", y }, { "z", z }, { "a", a }, { "s", s }};
 }
 
 QString LocationField::toXml(const QVariant& value) const
@@ -1075,6 +1124,11 @@ PhotoField::PhotoField(QObject* parent): BaseField(parent)
     m_resolutionY = -1;
 }
 
+QVariant PhotoField::createValue(const QString& filename)
+{
+    return QStringList { filename };
+}
+
 void PhotoField::appendAttachments(const QVariant& value, QStringList* attachmentsOut) const
 {
     attachmentsOut->append(value.toStringList());
@@ -1125,10 +1179,13 @@ void PhotoField::toQml(QTextStream& stream, int depth) const
     Utils::writeQml(stream, depth, "}");
 }
 
-QString PhotoField::toDisplayValue(ElementManager* /*elementManager*/, const QVariant& value) const
+QString PhotoField::toDisplayValue(ElementManager* elementManager, const QVariant& value) const
 {
-    auto photoCount = value.toStringList().count();
-    return photoCount > 0 ? tr("Photos") + " (" + QString::number(photoCount) + ")" : "";
+    auto name = elementManager->getElementName(m_nameElementUid);
+
+    auto photoList = value.toStringList();
+    photoList.removeAll("");
+    return photoList.count() > 0 || name.isEmpty() ? tr("Photos") + " (" + QString::number(photoList.count()) + ")" : "";
 }
 
 bool PhotoField::isValid(const QVariant& value, bool required) const
@@ -1164,6 +1221,11 @@ AudioField::AudioField(QObject* parent): BaseField(parent)
 {
     m_maxSeconds = 60;
     m_sampleRate = 16000;
+}
+
+QVariant AudioField::createValue(const QString& filename)
+{
+    return QVariantMap {{ "filename", filename }};
 }
 
 void AudioField::appendAttachments(const QVariant& value, QStringList* attachmentsOut) const
@@ -1262,7 +1324,7 @@ QString SketchField::toXml(const QVariant& value) const
 
 QString SketchField::toDisplayValue(ElementManager* /*elementManager*/, const QVariant& value) const
 {
-    return !value.toMap().isEmpty() ? tr("Yes") : tr("No");
+    return !value.toMap().isEmpty() ? tr("Yes") : "";
 }
 
 void SketchField::appendAttachments(const QVariant& value, QStringList* attachmentsOut) const
@@ -1272,6 +1334,66 @@ void SketchField::appendAttachments(const QVariant& value, QStringList* attachme
     {
         attachmentsOut->append(filename);
     }
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// FileField
+
+FileField::FileField(QObject* parent): BaseField(parent)
+{
+}
+
+void FileField::appendAttachments(const QVariant& value, QStringList* attachmentsOut) const
+{
+    if (!value.toString().isEmpty())
+    {
+        attachmentsOut->append(value.toString());
+    }
+}
+
+QVariant FileField::save(const QVariant& value) const
+{
+    return value.toString();
+}
+
+QVariant FileField::load(const QVariant& value) const
+{
+    return value.toString();
+}
+
+void FileField::toQml(QTextStream& stream, int depth) const
+{
+    Utils::writeQml(stream, depth, "FileField {");
+    BaseField::toQml(stream, depth + 1);
+    Utils::writeQml(stream, depth + 1, "format", m_format);
+    Utils::writeQml(stream, depth + 1, "accept", m_accept);
+    Utils::writeQml(stream, depth, "}");
+}
+
+QString FileField::toDisplayValue(ElementManager* /*elementManager*/, const QVariant &value) const
+{
+    auto filename = value.toString();
+    if (filename.isEmpty())
+    {
+        return QString();
+    }
+
+    QMimeDatabase mimeDatabase;
+    auto mimeType = mimeDatabase.mimeTypeForFile(filename, QMimeDatabase::MatchExtension);
+    if (mimeType.isValid())
+    {
+        return mimeType.comment();
+    }
+    else
+    {
+        QFileInfo fileInfo(filename);
+        return QString("%1 %2").arg(fileInfo.suffix(), tr("file"));
+    }
+}
+
+QString FileField::toXml(const QVariant& value) const
+{
+    return value.toString();
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

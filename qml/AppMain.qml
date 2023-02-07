@@ -5,8 +5,10 @@ import QtSensors 5.12
 import QtPositioning 5.12
 import QtMultimedia 5.12
 import QtQuick.Window 2.12
+import QtWebView 1.1
 import Qt.labs.platform 1.0 as Labs
-import Esri.ArcGISRuntime 100.14
+import Qt.labs.settings 1.0 as Labs
+import Esri.ArcGISRuntime 100.15
 import QtQuick.Controls.Material 2.12
 import QtQuick.Dialogs 1.2 as Dialogs
 import CyberTracker 1.0 as C
@@ -16,11 +18,24 @@ ApplicationWindow {
 
     property var appPageStackList: [ { stackView: appPageStack, form: undefined } ]
     property int popupCount: 0
+    property bool frameless: false
 
-    //flags: Qt.FramelessWindowHint | Qt.Window
+    flags: frameless ? Qt.FramelessWindowHint | Qt.Window : Qt.Window
 
     width: 480
     height: 640
+
+    Labs.Settings {
+        fileName: App.iniPath
+        category: "AppWindow"
+        property alias saveAsDialogFolder: saveAsDialog.folder
+        property alias installPackageDialogFolder: installPackageDialog.folder
+        property alias x: appWindow.x
+        property alias y: appWindow.y
+        property alias width: appWindow.width
+        property alias height: appWindow.height
+        property alias consoleVisible: consoleWindowLoader.active
+    }
 
     Material.theme: C.Style.darkTheme ? Material.Dark : Material.Light
     Material.primary: C.Style.colorPrimary
@@ -29,18 +44,33 @@ ApplicationWindow {
     // Menu.
     Loader {
         id: desktopMenuLoader
-        sourceComponent: App.desktopOS ? desktopMenu : undefined
+        sourceComponent: App.desktopOS && !frameless ? desktopMenu : undefined
     }
 
     Dialogs.FileDialog {
-        id: fileDialog
+        id: saveAsDialog
         title: qsTr("Choose a file")
         folder: shortcuts.pictures
         selectExisting: false
         selectMultiple: false
         selectFolder: false
         nameFilters: [qsTr("Image files") + " (*.png)"]
-        onAccepted: App.snapScreenshotToFile(fileDialog.fileUrl)
+        onAccepted: {
+            App.snapScreenshotToFile(saveAsDialog.fileUrl)
+        }
+    }
+
+    Dialogs.FileDialog {
+        id: installPackageDialog
+        title: qsTr("Choose a file")
+        folder: shortcuts.desktop
+        selectExisting: true
+        selectMultiple: false
+        selectFolder: false
+        nameFilters: [qsTr("Package files") + " (*.zip)"]
+        onAccepted: {
+            App.installPackage(installPackageDialog.fileUrl)
+        }
     }
 
     Component {
@@ -51,16 +81,18 @@ ApplicationWindow {
             Labs.Menu {
                 title: qsTr("&File")
                 Labs.MenuItem {
-                    text: qsTr("&Copy to Clipboard")
-                    onTriggered: App.snapScreenshotToClipboard()
-                }
-                Labs.MenuItem {
-                    text: qsTr("Snap &As...")
+                    text: qsTr("Save &As...")
                     onTriggered: {
-                        fileDialog.open()
+                        saveAsDialog.open()
                     }
                 }
                 Labs.MenuSeparator { }
+                Labs.MenuItem {
+                    text: qsTr("Install package")
+                    onTriggered: {
+                        installPackageDialog.open()
+                    }
+                }
                 Labs.MenuItem {
                     text: qsTr("Connect using clipboard link")
                     onTriggered: {
@@ -73,6 +105,35 @@ ApplicationWindow {
                     onTriggered: Qt.quit()
                 }
             }
+            Labs.Menu {
+                title: qsTr("&Edit")
+                Labs.MenuItem {
+                    text: qsTr("&Copy to clipboard")
+                    onTriggered: App.snapScreenshotToClipboard()
+                }
+            }
+            Labs.Menu {
+                title: qsTr("&Tools")
+                Labs.MenuItem {
+                    text: qsTr("Create ArcGIS location service")
+                    onTriggered: createEsriServiceWindowLoader.active = true
+                }
+            }
+            Labs.Menu {
+                title: qsTr("&Window")
+                Labs.MenuItem {
+                    text: qsTr("Reset window size")
+                    onTriggered: {
+                        consoleWindowLoader.active = false
+                        appWindow.setGeometry(appWindow.x, appWindow.y, 480, 640)
+                    }
+                }
+                Labs.MenuSeparator { }
+                Labs.MenuItem {
+                    text: qsTr("Toggle developer console")
+                    onTriggered: consoleWindowLoader.active = !consoleWindowLoader.active
+                }
+            }
         }
     }
 
@@ -83,17 +144,6 @@ ApplicationWindow {
         standardButtons: Dialogs.StandardButton.Ok
         onAccepted: close()
         modality: App.mobileOS ? Qt.ApplicationModal : Qt.WindowModal
-    }
-
-    Connections {
-        target: App
-
-        function onShowMessageBox(title, text, details) {
-            messageDialog.title = title
-            messageDialog.text = text
-            messageDialog.detailedText = details
-            messageDialog.open()
-        }
     }
 
     // Setting the state declaratively does not stick.
@@ -137,6 +187,10 @@ ApplicationWindow {
 
                 let keyboardHeight = Qt.inputMethod.keyboardRectangle.height
                 if (Qt.platform.os !== "ios") {
+                    // Adjust if the keyboard is not at the bottom.
+                    keyboardHeight += (appWindow.height * Screen.devicePixelRatio - Qt.inputMethod.keyboardRectangle.bottom)
+
+                    // Scale to screen coordinates.
                     keyboardHeight /= Screen.devicePixelRatio
                 }
                 
@@ -228,6 +282,24 @@ ApplicationWindow {
         }
     }
 
+    // Console window.
+    Loader {
+        id: consoleWindowLoader
+        active: false
+        sourceComponent: ConsoleWindow {
+            onClosing: consoleWindowLoader.active = false
+        }
+    }
+
+    // Create ESRI Service window.
+    Loader {
+        id: createEsriServiceWindowLoader
+        active: false
+        sourceComponent: CreateEsriServiceWindow {
+            onClosing: createEsriServiceWindowLoader.active = false
+        }
+    }
+
     Connections {
         target: App
 
@@ -248,6 +320,18 @@ ApplicationWindow {
 
         function onShowError(info) {
             showError(info)
+        }
+
+        function onShowMessageBox(title, text, details) {
+            messageDialog.title = title
+            messageDialog.text = text
+            messageDialog.detailedText = details
+            messageDialog.open()
+        }
+
+        function onPopPageStack() {
+            appPageStackList.pop()
+            appPageStack.pop()
         }
     }
 
@@ -288,5 +372,13 @@ ApplicationWindow {
 
     C.BusyCover {
         id: busyCover
+    }
+
+    function getParam(params, key, defaultValue = undefined) {
+        return params !== undefined ? Utils.getParam(params, key, defaultValue) : defaultValue
+    }
+
+    function getParamColor(params, key, defaultValue = undefined) {
+        return params !== undefined ? Utils.getParam(params, key + (App.settings.darkTheme ? "Dark" : ""), defaultValue) : defaultValue
     }
 }

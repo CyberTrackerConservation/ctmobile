@@ -15,7 +15,6 @@ ContentPage {
 
     FieldSketchpad {
         id: sketchpad
-        width: parent.width
-        height: Math.min(parent.width * 0.6666, parent.height)
+        anchors.fill: parent
     }
 }

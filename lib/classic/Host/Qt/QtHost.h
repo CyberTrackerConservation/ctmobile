@@ -30,7 +30,7 @@
 #include "Location.h"
 #include "WaveFileRecorder.h"
 
-class CHost_Qt: public CfxHost, public QObject
+class CHost_Qt: public CfxHost
 {
 protected:
     CtClassicSessionItem *_window;
@@ -74,7 +74,7 @@ protected:
     QTimer _trackTimerHandler;
 
 private slots:
-    void onTrackTimer(const QGeoPositionInfo& update);
+    void onTrackTimer(Location* update);
 
 public:
     CHost_Qt(CfxPersistent *pOwner, CtClassicSessionItem *pWindow, FXPROFILE *pProfile, const CHAR *pApplicationPath);
@@ -113,8 +113,9 @@ public:
     BOOL ShowCameraDialog(CHAR *pFileNameNoExt, FXIMAGE_QUALITY ImageQuality);
 
     VOID ShowSkyplot(INT Left, INT Top, UINT Width, UINT Height, BOOL Visible);
-
+    VOID ShowToast(const CHAR* pMessage);
     VOID ShowExports();
+    VOID ShareData();
 
     BOOL IsBarcodeSupported();
     BOOL ShowBarcodeDialog(CHAR *pBarcode);
@@ -196,4 +197,6 @@ public:
     CHAR *AllocPathSD();
 
     VOID RegisterExportFile(CHAR *pExportFilePath, FXEXPORTFILEINFO* exportFileInfo) override;
+    VOID ArchiveSighting(GUID* pId, FXDATETIME* dateTime, FXGPS_POSITION* gps, const QVariantMap& data) override;
+    VOID ArchiveWaypoint(GUID* pId, FXDATETIME* dateTime, FXGPS_POSITION* gps) override;
 };

@@ -53,17 +53,42 @@ void Provider::load(const QVariantMap& /*data*/)
 {
 }
 
-bool Provider::connectToProject(bool /*newBuild*/)
+bool Provider::connectToProject(bool /*newBuild*/, bool* /*formChangedOut*/)
 {
     return true;
 }
 
 void Provider::disconnectFromProject()
 {
-
 }
 
 bool Provider::requireUsername() const
+{
+    return false;
+}
+
+bool Provider::requireGPSTime() const
+{
+    return false;
+}
+
+bool Provider::supportLocationPoint() const
+{
+    return false;
+}
+
+bool Provider::supportLocationTrack() const
+{
+    // FileField to store the track.
+    return !qobject_cast<Form*>(parent())->sighting()->getTrackFileFieldUid().isEmpty();
+}
+
+bool Provider::supportSightingEdit() const
+{
+    return false;
+}
+
+bool Provider::supportSightingDelete() const
 {
     return false;
 }
@@ -101,52 +126,39 @@ bool Provider::finalizePackage(const QString& /*packageFilesPath*/) const
     return true;
 }
 
-QVariantList Provider::buildMapDataLayers()
+bool Provider::canSubmitData() const
+{
+    return true;
+}
+
+void Provider::submitData()
+{
+    qDebug() << "Error: submitData not implemented";
+}
+
+QVariantList Provider::buildMapDataLayers() const
 {
     auto result = QVariantList();
     auto form = qobject_cast<Form*>(parent());
 
     // Sighting layer.
-    auto getSightingSymbol = [](const Sighting* /*sighting*/) -> QVariantMap
+    auto getSightingSymbol = [&](Sighting* /*sighting*/) -> QVariantMap
     {
-        auto symbol = QVariantMap();
-        symbol["symbolType"] = "PictureMarkerSymbol";
-        symbol["angle"] = 0.0;
-        symbol["type"] = "esriPMS";
-        symbol["url"] = "qrc:/icons/map_marker.png";
-        symbol["width"] = 24;
-        symbol["height"] = 24;
-        symbol["yoffset"] = 12.0;
-
-        return symbol;
+        return App::instance()->createMapPointSymbol(":/icons/mark-circle.svg", Qt::darkBlue);
     };
     result.append(form->buildSightingMapLayer("Sighting", getSightingSymbol));
 
     // Track layer.
     auto getTrackSymbol = []() -> QVariantMap
     {
-        auto symbol = QVariantMap();
-        symbol["symbolType"] = "SimpleLineSymbol";
-
-        auto symbolColor = QVariantList();
-        symbolColor.append(0);
-        symbolColor.append(0);
-        symbolColor.append(255);
-        symbolColor.append(200);
-
-        symbol["color"] = symbolColor;
-        symbol["style"] = "esriSLSDot";
-        symbol["type"] = "esriSLS";
-        symbol["width"] = 1.75;
-
-        return symbol;
+        return App::instance()->createMapLineSymbol(QColor(0, 0, 255, 200));
     };
     result.append(form->buildTrackMapLayer("Tracks", getTrackSymbol()));
 
     return result;
 }
 
-bool Provider::canEditSighting(Sighting* /*sighting*/, int /*flags*/)
+bool Provider::canEditSighting(Sighting* /*sighting*/, int /*flags*/) const
 {
     return false;
 }
@@ -155,7 +167,7 @@ void Provider::finalizeSighting(QVariantMap& /*sightingMap*/)
 {
 }
 
-QVariantList Provider::buildSightingView(Sighting* sighting)
+QVariantList Provider::buildSightingView(Sighting* sighting) const
 {
     auto recordModel = QVariantList();
     auto modelIndex = 1;
@@ -167,7 +179,7 @@ QVariantList Provider::buildSightingView(Sighting* sighting)
     modelIndex++;
 
     // Add top-level location.
-    auto locationFieldValue = sighting->location();
+    auto locationFieldValue = sighting->locationMap();
     if (!locationFieldValue.isEmpty())
     {
         recordModel.append(QVariantMap {
@@ -247,22 +259,32 @@ QVariantList Provider::buildSightingView(Sighting* sighting)
     return recordModel;
 }
 
-bool Provider::getUseGPSTime()
-{
-    return false;
-}
-
-QString Provider::getFieldName(const QString& /*fieldUid*/)
+QString Provider::getFieldName(const QString& /*fieldUid*/) const
 {
     return QString();
 }
 
-QUrl Provider::getFieldIcon(const QString& /*fieldUid*/)
+QUrl Provider::getFieldIcon(const QString& /*fieldUid*/) const
 {
     return QUrl();
 }
 
-bool Provider::getFieldTitleVisible(const QString& /*fieldUid*/)
+bool Provider::getFieldTitleVisible(const QString& /*fieldUid*/) const
 {
     return true;
+}
+
+QString Provider::getSightingSummaryText(Sighting* sighting) const
+{
+    return sighting->summaryText();
+}
+
+QUrl Provider::getSightingSummaryIcon(Sighting* sighting) const
+{
+    return sighting->summaryIcon();
+}
+
+QUrl Provider::getSightingStatusIcon(Sighting* sighting, int flags) const
+{
+    return sighting->statusIcon(flags);
 }

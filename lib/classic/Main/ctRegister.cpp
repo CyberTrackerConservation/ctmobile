@@ -113,6 +113,7 @@ VOID RegisterCTControls()
     ControlRegistry.RegisterControl(&GUID_CONTROL_COMPORTLIST,        "Com Port List",        Create_Control_ComPortList,        TRUE,  ICON(COMPORTLIST),        1);
     ControlRegistry.RegisterControl(&GUID_CONTROL_OWNERINFO,          "Owner Information",    Create_Control_OwnerInfo,          TRUE,  ICON(OWNERINFO),          1);
     ControlRegistry.RegisterControl(&GUID_CONTROL_SENDDATA,           "Send Data",            Create_Control_SendData,           TRUE,  ICON(SENDDATA),           1);
+    ControlRegistry.RegisterControl(&GUID_CONTROL_SHAREDATA,          "Share Data",           Create_Control_ShareData,          TRUE,  ICON(SHAREDATA),           1);
     ControlRegistry.RegisterControl(&GUID_CONTROL_NAVBUTTON_BACK,     "Navigator Back",       Create_Control_NavButton_Back,     TRUE,  ICON(NAVBUTTONBACK),      1);
     ControlRegistry.RegisterControl(&GUID_CONTROL_NAVBUTTON_NEXT,     "Navigator Next",       Create_Control_NavButton_Next,     TRUE,  ICON(NAVBUTTONNEXT),      1);
     ControlRegistry.RegisterControl(&GUID_CONTROL_NAVBUTTON_HOME,     "Navigator Home",       Create_Control_NavButton_Home,     TRUE,  ICON(NAVBUTTONHOME),      1);

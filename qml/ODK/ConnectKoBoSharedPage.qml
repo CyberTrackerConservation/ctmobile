@@ -31,13 +31,9 @@ C.ContentPage {
 
         Item { height: 16 }
 
-        Image {
+        C.SquareIcon {
             Layout.alignment: Qt.AlignHCenter
-            sourceSize.width: parent.width * 0.2
-            sourceSize.height: parent.width * 0.2
-            fillMode: Image.PreserveAspectFit
-            width: parent.width * 0.2
-            height: parent.width * 0.2
+            size: parent.width * 0.2
             source: internal.account.icon
         }
 
@@ -45,7 +41,7 @@ C.ContentPage {
 
         Label {
             Layout.alignment: Qt.AlignHCenter
-            text: qsTr("Enter Landscape")
+            text: qsTr("Enter user name")
             font.pixelSize: App.settings.font14
             font.bold: true
         }

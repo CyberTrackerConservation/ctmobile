@@ -72,6 +72,19 @@ C.ContentPage {
         }
     }
 
+    enum BackButtonType { None, Back, TrackRate }
+    property int backButtonType: {
+        if (form.editing) {
+            return SightingHomePage.BackButtonType.None
+        }
+
+        if (form.provider.incidentForm) {
+            return SightingHomePage.BackButtonType.Back
+        }
+
+        return SightingHomePage.BackButtonType.TrackRate
+    }
+
     header: C.PageHeader {
         topText: {
             let result = ""
@@ -83,7 +96,7 @@ C.ContentPage {
             }
 
             if (form.editing) {
-                result = result + " (" + qsTr("edit") + ") "
+                result = result + " (" + qsTr("Edit") + ") "
             }
 
             return result
@@ -91,39 +104,55 @@ C.ContentPage {
 
         text: form.project.title
 
+        menuVisible: Qt.platform.os !== "ios"
         menuIcon: App.batteryIcon
-        menuVisible: true
-        menuEnabled: false
+        onMenuClicked: App.showToast(App.batteryText)
 
         formBack: false
-        backEnabled: backIcon.toString() === C.Style.backIconSource
+        backEnabled: !form.editing || backIcon.toString() === C.Style.backIconSource
         backIcon: {
-            if (form.editing) {
+            switch (backButtonType) {
+            case SightingHomePage.BackButtonType.None:
                 return ""
-            } else if (form.provider.incidentForm) {
+
+            case SightingHomePage.BackButtonType.Back:
                 return C.Style.backIconSource
-            } else if (!form.trackStreamer.running) {
-                return "qrc:/icons/gps_off.svg"
-            } else if (form.trackStreamer.locationRecent) {
-                return  "qrc:/icons/gps_fixed.svg"
-            } else {
-                return "qrc:/icons/gps_unknown.svg"
+
+            case SightingHomePage.BackButtonType.TrackRate:
+                return form.trackStreamer.rateIcon
+
+            default:
+                console.log("Error: unknown button type - " + backButtonType)
+                return ""
             }
         }
 
         onBackClicked: {
-            if (backIcon.toString() !== C.Style.backIconSource) {
+            if (backButtonType === SightingHomePage.BackButtonType.None) {
                 return
-            } else if (popupPatrol.opened) {
+            }
+
+            if (backButtonType === SightingHomePage.BackButtonType.TrackRate) {
+                App.showToast(form.trackStreamer.rateFullText)
+                return
+            }
+
+            if (popupPatrol.opened) {
                 popupPatrol.close()
                 return
-            } else if (confirmPatrolStop.opened) {
+            }
+
+            if (confirmPatrolStop.opened) {
                 confirmPatrolStop.close()
                 return
-            } else if (form.provider.patrolForm) {
+            }
+
+            if (form.provider.patrolForm) {
                 confirmPatrolStop.open()
                 return
-            } else if (form.provider.incidentForm) {
+            }
+
+            if (form.provider.incidentForm) {
                 if (recordModel.hasRecords) {
                     confirmIncidentStop.open()
                     return
@@ -137,244 +166,123 @@ C.ContentPage {
         }
     }
 
-    footer: ColumnLayout {
+    footer: RowLayout {
         spacing: 0
-        width: parent.width
 
-        Rectangle {
-            Layout.fillWidth: true
-            height: 2
-            color: "transparent"
-
-            Rectangle {
-                x: 0
-                y: 0
-                width: parent.width - saveHighlight.width
-                height: 2
-                color: Material.theme === Material.Dark ? "#FFFFFF" : "#000000"
-                opacity: 0.12
-            }
-
-            Rectangle {
-                x: saveHighlight.x
-                y: 0
-                width: saveHighlight.width
-                height: 2
-                color: saveButton.enabled ? Material.accent : (Material.theme === Material.Dark ? "#FFFFFF" : "#000000")
-                opacity: saveButton.enabled ? 0.5 : 0.12
-            }
+        C.FooterButton {
+            text: qsTr("History")
+            icon.source: "qrc:/icons/history.svg"
+            onClicked: form.pushPage("qrc:/SMART/HistoryPage.qml")
+            visible: !form.editing && !form.provider.incidentForm
         }
 
-        RowLayout {
-            id: buttonRow
-            spacing: 0
+        C.FooterButton {
+            text: qsTr("Map")
+            icon.source: "qrc:/icons/map_outline.svg"
+            onClicked: form.pushPage("qrc:/MapsPage.qml")
+            visible: !form.editing && !form.provider.incidentForm
+        }
+
+        C.FooterButton {
+            text: form.provider.getPatrolText()
+            icon.source: "qrc:/icons/shoe_print.svg"
+            visible: !form.editing && form.provider.patrolForm
+            onClicked: popupPatrol.open()
+        }
+
+        C.FooterButton {
+            text: qsTr("Stop")
+            icon.source: "qrc:/icons/stop.svg"
+            visible: !form.editing && form.provider.collectForm
+            onClicked: confirmCollectStop.open()
+        }
+
+        C.FooterButton {
+            text: qsTr("Incident")
+            icon.source: "qrc:/icons/assignment_turned_in_outline.svg"
+            visible: !form.editing && form.provider.hasIncident && form.provider.patrolForm
+            onClicked: form.pushFormPage({ projectUid: form.project.uid, stateSpace: Globals.formSpaceIncident })
+        }
+
+        C.FooterButton {
+            id: saveButton
+            text: qsTr("Save")
+            icon.source: "qrc:/icons/save.svg"
+            highlight: enabled
+            highlightBlink: form.getSetting("blinkSaveButton", true)
+            enabled: recordModel.hasRecords
             visible: !form.editing
-            Layout.fillWidth: true
-            Layout.fillHeight: true
-            property int buttonCount: {
+            onClicked: {
+                // Highlight fields that are required but not specified.
+                if ((form.provider.instantGPS && (form.getFieldValue(Globals.modelLocationFieldUid) === undefined)) ||
+                    (form.provider.useObserver && (form.getFieldValue(Globals.modelObserverFieldUid) === undefined))) {
+                    instantGPSEditor.highlightInvalid = true
+                    observerIdEditor.highlightInvalid = true
+                    return
+                }
+
+                // Disable highlighting for the next sighting.
+                instantGPSEditor.highlightInvalid = false
+                observerIdEditor.highlightInvalid = false
+
+                deleteIncompleteRecords()
+
+                let tag = "patrolSighting"
                 if (form.provider.collectForm) {
-                    return 4
+                    tag = "collectSighting"
+                } else if (form.provider.incidentForm) {
+                    tag = "independentIncident"
                 }
 
-                if (form.provider.patrolForm) {
-                    return 5
-                }
-
-                if (form.provider.incidentForm) {
-                    return 1
-                }
-
-                return 0
+                form.pushPage("qrc:/SMART/LocationPage.qml", { tag: tag })
             }
 
-            property int buttonWidth: page.width / buttonCount
-            property var buttonColor: Material.theme === Material.Dark ? Material.foreground : Material.primary
+            Connections {
+                target: form
 
-            ToolButton {
-                Layout.preferredWidth: buttonRow.buttonWidth
-                Layout.fillWidth: true
-                Layout.fillHeight: true
-                text: qsTr("History")
-                font.pixelSize: App.settings.font10
-                font.capitalization: Font.MixedCase
-                display: Button.TextUnderIcon
-                icon.source: "qrc:/icons/history.svg"
-                Material.foreground: buttonRow.buttonColor
-                onClicked: form.pushPage("qrc:/SMART/HistoryPage.qml")
-                visible: !form.provider.incidentForm
-            }
-
-            ToolButton {
-                Layout.preferredWidth: buttonRow.buttonWidth
-                Layout.fillWidth: true
-                Layout.fillHeight: true
-                text: qsTr("Map")
-                font.pixelSize: App.settings.font10
-                font.capitalization: Font.MixedCase
-                display: Button.TextUnderIcon
-                icon.source: "qrc:/icons/map_outline.svg"
-                Material.foreground: buttonRow.buttonColor
-                onClicked: form.pushPage("qrc:/MapsPage.qml")
-                visible: !form.provider.incidentForm
-            }
-
-            ToolButton {
-                Layout.preferredWidth: buttonRow.buttonWidth
-                Layout.fillWidth: true
-                Layout.fillHeight: true
-                text: form.provider.getPatrolText()
-                font.pixelSize: App.settings.font10
-                font.capitalization: Font.MixedCase
-                display: Button.TextUnderIcon
-                icon.source: "qrc:/icons/shoe_print.svg"
-                Material.foreground: buttonRow.buttonColor
-                visible: form.provider.patrolForm
-                onClicked: popupPatrol.open()
-            }
-
-            ToolButton {
-                Layout.preferredWidth: buttonRow.buttonWidth
-                Layout.fillWidth: true
-                Layout.fillHeight: true
-                text: qsTr("Stop")
-                font.pixelSize: App.settings.font10
-                font.capitalization: Font.MixedCase
-                display: Button.TextUnderIcon
-                icon.source: "qrc:/icons/stop.svg"
-                Material.foreground: buttonRow.buttonColor
-                visible: form.provider.collectForm
-                onClicked: confirmCollectStop.open()
-            }
-
-            ToolButton {
-                Layout.preferredWidth: buttonRow.buttonWidth
-                Layout.fillWidth: true
-                Layout.fillHeight: true
-                text: qsTr("Incident")
-                font.pixelSize: App.settings.font10
-                font.capitalization: Font.MixedCase
-                display: Button.TextUnderIcon
-                icon.source: "qrc:/icons/assignment_turned_in_outline.svg"
-                Material.foreground: buttonRow.buttonColor
-                visible: form.provider.hasIncident && form.provider.patrolForm
-                onClicked: form.pushFormPage({ projectUid: form.project.uid, stateSpace: Globals.formSpaceIncident })
-            }
-
-            Rectangle {
-                id: saveHighlight
-                Layout.preferredWidth: buttonRow.buttonWidth
-                Layout.preferredHeight: saveButton.implicitHeight
-                Layout.fillWidth: true
-                Layout.fillHeight: true
-                color: saveButton.enabled ? form.Material.accent : form.Material.background
-                visible: !form.editing
-
-                SequentialAnimation {
-                    running: saveButton.enabled && form.getSetting("blinkSaveButton", true)
-                    loops: 3
-                    PropertyAnimation { target: saveHighlight; property: "color"; to: form.Material.accent; duration: 0 }
-                    PropertyAnimation { target: saveHighlight; property: "color"; to: form.Material.accent; duration: 250 }
-                    PropertyAnimation { target: saveHighlight; property: "color"; to: form.Material.background; duration: 250 }
-                    PropertyAnimation { target: saveHighlight; property: "color"; to: form.Material.background; duration: 250 }
-                    PropertyAnimation { target: saveHighlight; property: "color"; to: form.Material.accent; duration: 250 }
-                }
-
-                ToolButton {
-                    id: saveButton
-                    anchors.fill: parent
-                    text: qsTr("Save")
-                    font.pixelSize: App.settings.font10
-                    font.capitalization: Font.MixedCase
-                    display: Button.TextUnderIcon
-                    icon.source: "qrc:/icons/save.svg"
-                    enabled: recordModel.hasRecords
-                    flat: true
-                    onClicked: {
-                        // Highlight fields that are required but not specified.
-                        if ((form.provider.instantGPS && (form.getFieldValue(Globals.modelLocationFieldUid) === undefined)) ||
-                            (form.provider.useObserver && (form.getFieldValue(Globals.modelObserverFieldUid) === undefined))) {
-                            instantGPSEditor.highlightInvalid = true
-                            observerIdEditor.highlightInvalid = true
-                            return
-                        }
-
-                        // Disable highlighting for the next sighting.
-                        instantGPSEditor.highlightInvalid = false
-                        observerIdEditor.highlightInvalid = false
-
-                        deleteIncompleteRecords()
-
-                        let tag = "patrolSighting"
-                        if (form.provider.collectForm) {
-                            tag = "collectSighting"
-                        } else if (form.provider.incidentForm) {
-                            tag = "independentIncident"
-                        }
-
-                        form.pushPage("qrc:/SMART/LocationPage.qml", { tag: tag })
+                function onFieldValueChanged(recordUid, fieldUid, oldValue, newValue) {
+                    if (fieldUid === Globals.modelLocationFieldUid || fieldUid === Globals.modelObserverFieldUid) {
+                        saveButton.enabled = recordModel.hasRecords
                     }
+                }
+            }
 
-                    Connections {
-                        target: form
+            Connections {
+                target: recordModel
 
-                        function onFieldValueChanged(recordUid, fieldUid, oldValue, newValue) {
-                            if (fieldUid === Globals.modelLocationFieldUid || fieldUid === Globals.modelObserverFieldUid) {
-                                saveButton.enabled = recordModel.hasRecords
-                            }
-                        }
-                    }
-
-                    Connections {
-                        target: recordModel
-
-                        function onHasRecordsChanged() {
-                            saveButton.enabled = recordModel.hasRecords
-                        }
-                    }
+                function onHasRecordsChanged() {
+                    saveButton.enabled = recordModel.hasRecords
                 }
             }
         }
 
-        RowLayout {
-            spacing: 20
-            Layout.fillWidth: true
-            Layout.alignment: Qt.AlignHCenter
-
-            RoundButton {
-                Layout.alignment: Qt.AlignLeft
-                icon.source: "qrc:/icons/cancel.svg"
-                icon.color: Material.foreground
-                icon.width: 40
-                icon.height: 40
-                onClicked: {
-                    internal.blockRebuild = true
-                    if (form.provider.incidentForm) {
-                        form.provider.stopIncident(true)
-                    }
-                    form.popPagesToParent()
-                }
-            }
-
-            RoundButton {
-                Layout.alignment: Qt.AlignRight
-                icon.source: "qrc:/icons/ok.svg"
-                icon.color: Material.foreground
-                icon.width: 40
-                icon.height: 40
-                Material.background: Material.accent
-                enabled: saveButton.enabled
-                onClicked: {
-                    internal.blockRebuild = true
-                    deleteIncompleteRecords()
-                    form.saveSighting()
-                    if (form.provider.incidentForm) {
-                        form.provider.stopIncident(false)
-                    }
-                    form.popPagesToParent()
-                }
-            }
-
+        C.FooterButton {
             visible: form.editing
+            icon.source: "qrc:/icons/cancel.svg"
+            text: qsTr("Cancel")
+            onClicked: {
+                internal.blockRebuild = true
+                if (form.provider.incidentForm) {
+                    form.provider.stopIncident(true)
+                }
+                form.popPagesToParent()
+            }
+        }
+
+        C.FooterButton {
+            visible: form.editing
+            icon.source: "qrc:/icons/ok.svg"
+            text: qsTr("Confirm")
+            enabled: saveButton.enabled
+            onClicked: {
+                internal.blockRebuild = true
+                deleteIncompleteRecords()
+                form.saveSighting()
+                if (form.provider.incidentForm) {
+                    form.provider.stopIncident(false)
+                }
+                form.popPagesToParent()
+            }
         }
     }
 
@@ -439,8 +347,6 @@ C.ContentPage {
             id: swipeDelegate
             width: ListView.view.width
 
-            Binding { target: background; property: "color"; value: C.Style.colorContent }
-
             Component {
                 id: groupDelegateComponent
                 RowLayout {
@@ -454,17 +360,10 @@ C.ContentPage {
                         opacity: 0.85
                     }
 
-                    Image {
+                    C.SquareIcon {
                         source: "qrc:/icons/add.svg"
-                        sourceSize.width: _title.height * 1.5
-                        sourceSize.height: _title.height * 1.5
                         opacity: 0.75
-                        layer {
-                            enabled: true
-                            effect: ColorOverlay {
-                                color: Material.foreground
-                            }
-                        }
+                        recolor: true
                     }
 
                     Connections {
@@ -495,12 +394,13 @@ C.ContentPage {
                        verticalAlignment: Text.AlignVCenter
                    }
 
-                   Image {
-                       fillMode: Image.PreserveAspectFit
+                   C.SquareIcon {
                        source: form.getElementIcon(model.elementUid, true)
-                       sourceSize.width: App.settings.font16 * 2
-                       sourceSize.height: App.settings.font16 * 2
-                       verticalAlignment: Image.AlignVCenter
+                       size: C.Style.minRowHeight
+                   }
+
+                   Item {
+                       height: C.Style.minRowHeight
                    }
 
                    Connections {
@@ -510,7 +410,12 @@ C.ContentPage {
                            if (swipeDelegate.swipe.position === 0) {
                                let recordUid = model.recordUid
                                let elementUid = form.getFieldValue(recordUid, Globals.modelTreeFieldUid)
-                               form.pushPage("qrc:/SMART/AttributesPage.qml", { title: form.getElementName(elementUid), recordUid: recordUid, elementUid: elementUid } )
+
+                               if (form.project.wizardMode) {
+                                   form.pushWizardIndexPage(recordUid, { fieldUids: form.getElement(elementUid).fieldUids, header: form.getElementName(elementUid) })
+                               } else {
+                                   form.pushPage("qrc:/SMART/AttributesPage.qml", { title: form.getElementName(elementUid), recordUid: recordUid, elementUid: elementUid } )
+                               }
                            }
                        }
                    }
@@ -547,9 +452,10 @@ C.ContentPage {
             Component {
                  id: newSightingDelegateComponent
                 RowLayout {
-
                     Label {
                         Layout.alignment: Qt.AlignHCenter
+                        Layout.minimumHeight: C.Style.iconSize24
+                        verticalAlignment: Label.AlignVCenter
                         text: recordModel.hasRecords ? qsTr("Add observation") : qsTr("Make observation")
                         font.pixelSize: App.settings.font14
                         font.bold: true
@@ -567,6 +473,7 @@ C.ContentPage {
             }
 
             contentItem: Loader {
+                Binding { target: background; property: "color"; value: colorContent || Style.colorContent }
                 width: swipeDelegate.width - swipeDelegate.leftPadding - swipeDelegate.rightPadding
                 height: item.height
                 sourceComponent: {
@@ -669,8 +576,10 @@ C.ContentPage {
                     spacing: 0
 
                     ItemDelegate {
-                        icon.source: "qrc:/icons/stop.svg"
                         Layout.fillWidth: true
+                        icon.source: "qrc:/icons/stop.svg"
+                        icon.width: C.Style.iconSize24
+                        icon.height: C.Style.iconSize24
                         text: form.provider.getSightingTypeText("StopPatrol")
                         onClicked: {
                             popupPatrol.close()
@@ -679,8 +588,10 @@ C.ContentPage {
                     }
 
                     ItemDelegate {
-                        icon.source: "qrc:/icons/pause.svg"
                         Layout.fillWidth: true
+                        icon.source: "qrc:/icons/pause.svg"
+                        icon.width: C.Style.iconSize24
+                        icon.height: C.Style.iconSize24
                         text: form.provider.getSightingTypeText("PausePatrol")
                         visible: form.provider.getProfileValue("CAN_PAUSE", true)
                         onClicked: {
@@ -691,7 +602,9 @@ C.ContentPage {
 
                     ItemDelegate {
                         Layout.fillWidth: true
-                        icon.source: "qrc:/icons/person.svg"
+                        icon.source: "qrc:/icons/account_edit.svg"
+                        icon.width: C.Style.iconSize24
+                        icon.height: C.Style.iconSize24
                         text: form.provider.getSightingTypeText("ChangePatrol")
                         onClicked: {
                             popupPatrol.close()
@@ -708,6 +621,8 @@ C.ContentPage {
                     ItemDelegate {
                         Layout.fillWidth: true
                         icon.source: "qrc:/icons/finance.svg"
+                        icon.width: C.Style.iconSize24
+                        icon.height: C.Style.iconSize24
                         text: qsTr("Statistics")
                         onClicked: {
                             popupPatrol.close()
@@ -719,6 +634,8 @@ C.ContentPage {
 
                     ItemDelegate {
                         Layout.fillWidth: true
+                        icon.width: C.Style.iconSize24
+                        icon.height: C.Style.iconSize24
                         icon.source: "qrc:/icons/theme_light_dark.svg"
                         text: qsTr("Toggle dark theme")
 
@@ -749,6 +666,12 @@ C.ContentPage {
         function onRecordComplete(recordUid) {
             let parentRecordUid = form.getParentRecordUid(recordUid)
             if (parentRecordUid === form.rootRecordUid) {
+                rebuildListModel()
+            }
+        }
+
+        function onFieldValueChanged(recordUid, fieldUid, oldValue, newValue) {
+            if (fieldUid === Globals.modelTreeFieldUid) {
                 rebuildListModel()
             }
         }

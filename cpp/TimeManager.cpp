@@ -87,7 +87,7 @@ QString TimeManager::getTimeZoneText(const QString& timeZoneId, qint64 mSecsSinc
     return result;
 }
 
-void TimeManager::computeTimeError(int methods, double x, double y, double s, qint64 t)
+void TimeManager::computeTimeError(double x, double y, double s, qint64 t)
 {
     // Compute the time zone based on the location.
     auto safeZone = static_cast<float>(0);
@@ -119,7 +119,7 @@ void TimeManager::computeTimeError(int methods, double x, double y, double s, qi
     update_timeZoneText(getTimeZoneText(ianaId, t));
 
     // Compute the time error.
-    if (!qIsNaN(s) && methods == QGeoPositionInfoSource::PositioningMethod::SatellitePositioningMethods)
+    if (!std::isnan(s))
     {
         m_timeError = t - QDateTime::currentMSecsSinceEpoch();
 
@@ -131,6 +131,15 @@ void TimeManager::computeTimeError(int methods, double x, double y, double s, qi
         if (m_correctCounter >= 5)
         {
             update_corrected(true);
+
+            // Sanity test for the corrected time.
+            if (currentDateTime().date().year() < 2022)
+            {
+                qDebug() << "computeTimeError found year less than 2022: " << currentDateTime();
+                m_timeError = 0;
+                m_correctCounter = 0;
+                update_corrected(false);
+            }
         }
     }
 
@@ -175,14 +184,24 @@ QString TimeManager::formatDateTime(QDateTime dateTime) const
     return Utils::encodeTimestamp(dateTime);
 }
 
-QString TimeManager::getDateText(const QString& isoDateTime) const
+QString TimeManager::getDateText(const QString& isoDateTime, const QString& emptyValue) const
 {
+    if (isoDateTime.isEmpty())
+    {
+        return emptyValue;
+    }
+
     auto date = Utils::decodeTimestamp(isoDateTime).date();
     return App::instance()->locale().toString(date, QLocale::ShortFormat);
 }
 
-QString TimeManager::getTimeText(const QString& isoDateTime) const
+QString TimeManager::getTimeText(const QString& isoDateTime, const QString& emptyValue) const
 {
+    if (isoDateTime.isEmpty())
+    {
+        return emptyValue;
+    }
+
     auto time = Utils::decodeTimestamp(isoDateTime).time();
     return App::instance()->locale().toString(time, QLocale::ShortFormat);
 }

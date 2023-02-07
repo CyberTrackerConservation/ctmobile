@@ -36,7 +36,7 @@ public:
         {
             auto sightingUid = output.value("sightingUid").toString();
             App::instance()->database()->setSightingFlags(projectUid, sightingUid, Sighting::DB_UPLOADED_FLAG);
-            emit App::instance()->sightingModified(projectUid, sightingUid);
+            emit App::instance()->sightingFlagsChanged(projectUid, sightingUid);
         }
         else
         {
@@ -69,7 +69,7 @@ public:
         auto payloadXml = input["payload"].toByteArray();
 
         QHttpMultiPart multipart(QHttpMultiPart::FormDataType);
-        multipart.setBoundary("------WebKitFormBoundarytoHka8LUGjq34sBN");
+        multipart.setBoundary(Utils::makeMultiPartBoundary());
         auto xmlPart = QHttpPart();
         xmlPart.setHeader(QNetworkRequest::ContentTypeHeader, "text/xml");
         xmlPart.setHeader(QNetworkRequest::ContentDispositionHeader, "form-data; name=\"xml_submission_file\"; filename=\"xml_submission_file\"");
@@ -127,7 +127,7 @@ public:
             qDebug() << "ODK upload failed: " << reply->errorString();
         }
 
-        return responseXml.contains("successful", Qt::CaseInsensitive);
+        return responseXml.contains("successful", Qt::CaseInsensitive) || responseXml.contains("duplicate", Qt::CaseInsensitive);
     }
 };
 
@@ -140,7 +140,7 @@ ODKProvider::ODKProvider(QObject *parent) : Provider(parent)
     update_name(ODK_PROVIDER);
 }
 
-bool ODKProvider::connectToProject(bool newBuild)
+bool ODKProvider::connectToProject(bool newBuild, bool* formChangedOut)
 {
     m_taskManager->registerTask(UploadSightingTask::getName(), UploadSightingTask::createInstance, UploadSightingTask::completed);
 
@@ -148,7 +148,7 @@ bool ODKProvider::connectToProject(bool newBuild)
 
     // Delete uploaded sightings after 2 seconds.
     auto form = qobject_cast<Form*>(parent());
-    connect(form, &Form::sightingModified, this, [=](const QString& sightingUid)
+    connect(form, &Form::sightingFlagsChanged, this, [=](const QString& sightingUid)
     {
         if (!m_database->testSighting(projectUid, sightingUid))
         {
@@ -171,25 +171,31 @@ bool ODKProvider::connectToProject(bool newBuild)
     });
 
     // Rebuild the form.
+    auto formFilePath = getProjectFilePath("form.xlsx");
+    auto formLastModified = QFileInfo(formFilePath).lastModified().toMSecsSinceEpoch();
     auto elementsFilePath = getProjectFilePath("Elements.qml");
     auto fieldsFilePath = getProjectFilePath("Fields.qml");
 
     // Early out if possible.
-    if (!CACHE_ENABLE || newBuild || !QFile::exists(elementsFilePath) || !QFile::exists(fieldsFilePath))
+    if (!CACHE_ENABLE || newBuild || formLastModified != m_project->formLastModified() || !QFile::exists(elementsFilePath) || !QFile::exists(fieldsFilePath))
     {
-        XlsFormUtils::parseXlsForm(getProjectFilePath("form.xlsx"), getProjectFilePath(""), &m_parserError);
+        XlsFormParser::parse(formFilePath, getProjectFilePath(""), projectUid, &m_parserError);
+        m_project->set_formLastModified(formLastModified);
+        m_project->reload();
+        *formChangedOut = true;
     }
 
-    // Update the languages.
+    // Load settings.
     m_settings = Utils::variantMapFromJsonFile(getProjectFilePath("Settings.json"));
-    m_project->set_languages(m_settings.value("languages").toList());
 
     return true;
 }
 
 bool ODKProvider::requireUsername() const
 {
-    return m_project->username().isEmpty() && App::instance()->settings()->username().isEmpty();
+    return m_settings["requireUsername"].toBool() &&
+           m_project->username().isEmpty() &&
+           App::instance()->settings()->username().isEmpty();
 }
 
 QUrl ODKProvider::getStartPage()
@@ -219,64 +225,49 @@ void ODKProvider::getFields(FieldManager* fieldManager)
     fieldManager->loadFromQmlFile(getProjectFilePath("Fields.qml"));
 }
 
-bool ODKProvider::sendSighting(Form* form, const QString& sightingUid)
+bool ODKProvider::canSubmitData() const
 {
-    auto app = App::instance();
-    auto projectUid = m_project->uid();
-
-    // Ensure this is not already submitted.
-    uint flags = m_database->getSightingFlags(projectUid, sightingUid);
-    if ((flags & Sighting::DB_COMPLETED_FLAG) == 0)
-    {
-        qDebug() << "Not completed: " << sightingUid;
-        return false;
-    }
-
-    if (flags & Sighting::DB_SUBMITTED_FLAG)
-    {
-        qDebug() << "Already submitted: " << sightingUid;
-        return false;
-    }
-
-    // Build the payload.
-    auto formId = m_project->connectorParams()["exportId"].toString();
-    auto formVersion = m_project->connectorParams()["version"].toString();
-
-    auto attachments = QStringList();
-    auto formXml = form->createSightingPtr(sightingUid)->toXml(formId, formVersion, &attachments);
-
-    auto inputJson = QJsonObject();
-    inputJson.insert("payload", formXml);
-    inputJson.insert("attachments", QJsonArray::fromStringList(attachments));
-    inputJson.insert("sightingUid", sightingUid);
-
-    // Create the task for the main sighting.
-    auto baseUid = Task::makeUid(UploadSightingTask::getName(), sightingUid);
-    auto parentUids = QStringList();
-    m_taskManager->getTasks(projectUid, baseUid, -1, &parentUids);
-    auto parentUid = !parentUids.isEmpty() ? parentUids.last(): QString();
-    auto sightingTaskUid = baseUid + '.' + QString::number(QDateTime::currentDateTime().toMSecsSinceEpoch());
-    m_taskManager->addTask(projectUid, sightingTaskUid, parentUid, inputJson.toVariantMap());
-
-    // Mark the sighting as submitted.
-    m_database->setSightingFlags(projectUid, sightingUid, Sighting::DB_SUBMITTED_FLAG);
-    emit app->sightingModified(projectUid, sightingUid);
-
-    return true;
+    return !m_project->connectorParams().value("submissionUrl").toString().isEmpty();
 }
 
 void ODKProvider::submitData()
 {
     auto projectUid = m_project->uid();
-    auto sightingUids = QStringList();
     auto form = qobject_cast<Form*>(parent());
 
-    m_database->getSightings(projectUid, form->stateSpace(), Sighting::DB_SIGHTING_FLAG, &sightingUids);
-    for (auto it = sightingUids.constBegin(); it != sightingUids.constEnd(); it++)
+    // Backup database and delete old tasks.
+    App::instance()->backupDatabase("ODK: submit data");
+    m_database->deleteTasks(projectUid, Task::Complete);
+
+    // Create tasks for sightings.
+    m_database->enumSightings(projectUid, form->stateSpace(), Sighting::DB_SIGHTING_FLAG | Sighting::DB_COMPLETED_FLAG /* ON */, Sighting::DB_SUBMITTED_FLAG /* OFF */,
+        [&](const QString& sightingUid, uint /*flags*/, const QVariantMap& data, const QStringList& /*attachments*/)
     {
-        // Call is smart enough not to resend already sent data.
-        sendSighting(form, *it);
-    }
+        auto sighting = form->createSightingPtr(data);
+
+        // Build the payload.
+        auto formId = m_project->connectorParams()["exportId"].toString();
+        auto formVersion = m_project->connectorParams()["version"].toString();
+
+        auto attachments = QStringList();
+        auto formXml = sighting->toXml(formId, formVersion, &attachments);
+
+        auto inputJson = QJsonObject();
+        inputJson.insert("payload", formXml);
+        inputJson.insert("attachments", QJsonArray::fromStringList(attachments));
+        inputJson.insert("sightingUid", sightingUid);
+
+        // Create the task for the main sighting.
+        auto baseUid = Task::makeUid(UploadSightingTask::getName(), sightingUid);
+        auto sightingTaskUid = baseUid + '.' + QString::number(QDateTime::currentDateTime().toMSecsSinceEpoch());
+        m_taskManager->addSingleTask(projectUid, sightingTaskUid, inputJson.toVariantMap());
+
+        // Mark the sighting as submitted.
+        form->setSightingFlag(sightingUid, Sighting::DB_SUBMITTED_FLAG);
+    });
+
+    // Remove snapped locations.
+    m_database->deleteSightings(projectUid, form->stateSpace(), Sighting::DB_LOCATION_FLAG | Sighting::DB_SNAPPED_FLAG);
 
     m_taskManager->resumePausedTasks(projectUid);
 }

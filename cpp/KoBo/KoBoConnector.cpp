@@ -1,6 +1,7 @@
 #include "KoBoConnector.h"
 #include "../ODK/ODKProvider.h"
 #include "App.h"
+#include "XlsForm.h"
 
 KoBoConnector::KoBoConnector(QObject *parent) : Connector(parent)
 {
@@ -49,6 +50,11 @@ QVariantMap KoBoConnector::getShareData(Project* project, bool auth) const
     }
 
     return result;
+}
+
+bool KoBoConnector::canLogin(Project* /*project*/) const
+{
+    return true;
 }
 
 bool KoBoConnector::loggedIn(Project* project) const
@@ -149,6 +155,18 @@ ApiResult KoBoConnector::bootstrap(const QVariantMap& params)
     return bootstrapUpdate(projectUid);
 }
 
+QString KoBoConnector::getDeployedVersion(const QVariantMap& formMap)
+{
+    auto deployedVersions = formMap.value("deployed_versions").toMap().value("results").toList();
+    if (deployedVersions.isEmpty())
+    {
+        qDebug() << "Error: deployed versions empty";
+        return "";
+    }
+
+    return deployedVersions.constFirst().toMap().value("uid").toString();
+}
+
 ApiResult KoBoConnector::hasUpdate(QNetworkAccessManager* networkAccessManager, Project* project)
 {
     auto connectorParams = project->connectorParams();
@@ -164,7 +182,14 @@ ApiResult KoBoConnector::hasUpdate(QNetworkAccessManager* networkAccessManager, 
     }
 
     auto formMap = QJsonDocument::fromJson(response.data).object().toVariantMap();
-    if (formMap.value("version_id") == connectorParams["version"])
+
+    auto deployedVersion = getDeployedVersion(formMap);
+    if (deployedVersion.isEmpty())
+    {
+        return Failure(tr("No deployed versions"));
+    }
+
+    if (deployedVersion == connectorParams["version"])
     {
         return AlreadyUpToDate();
     }
@@ -172,7 +197,7 @@ ApiResult KoBoConnector::hasUpdate(QNetworkAccessManager* networkAccessManager, 
     return UpdateAvailable();
 }
 
-bool KoBoConnector::canUpdate(Project* project)
+bool KoBoConnector::canUpdate(Project* project) const
 {
     return loggedIn(project);
 }
@@ -182,12 +207,12 @@ ApiResult KoBoConnector::update(Project* project)
     auto projectUid = project->uid();
 
     // Skip updates if there are any unsent sightings.
-    auto sightingUids = QStringList();
-    m_database->getSightings(projectUid, "", Sighting::DB_SIGHTING_FLAG, &sightingUids);
-    if (sightingUids.count() > 0)
-    {
-        return Failure(tr("Unsent data"));
-    }
+//    auto sightingUids = QStringList();
+//    m_database->getSightings(projectUid, "", Sighting::DB_SIGHTING_FLAG, &sightingUids);
+//    if (sightingUids.count() > 0)
+//    {
+//        return Failure(tr("Unsent data"));
+//    }
 
     auto updateFolder = m_projectManager->getUpdateFolder(projectUid);
 
@@ -212,7 +237,8 @@ ApiResult KoBoConnector::update(Project* project)
     }
 
     auto formMap = QJsonDocument::fromJson(response.data).object().toVariantMap();
-    if (formMap.value("version_id") == connectorParams["version"])
+    auto deployedVersion = getDeployedVersion(formMap);
+    if (deployedVersion == connectorParams["version"])
     {
         return AlreadyUpToDate();
     }
@@ -252,6 +278,12 @@ ApiResult KoBoConnector::update(Project* project)
         return Failure(tr("Form download failed"));
     }
 
+    auto formSettings = QVariantMap();
+    if (!XlsFormParser::parseSettings(updateFolder + "/form.xlsx", &formSettings))
+    {
+        return Failure(tr("Failed to read form settings sheet"));
+    }
+
     // Download the media.
     response = Utils::httpGetWithToken(App::instance()->networkAccessManager(), server + "/api/v2/assets/" + formId + "/files/?file_type=form_media", token, tokenType);
     if (!response.success)
@@ -285,7 +317,7 @@ ApiResult KoBoConnector::update(Project* project)
     }
 
     // Update the project.
-    connectorParams["version"] = formMap["version_id"].toString();
+    connectorParams["version"] = deployedVersion;
     connectorParams["submissionUrl"] = submissionUrl.toString();
 
     Project updateProject;
@@ -316,11 +348,11 @@ ApiResult KoBoConnector::update(Project* project)
     }
     else if (subtitle.startsWith("kf.kobotoolbox.org", Qt::CaseInsensitive))
     {
-        subtitle = tr("Research");
+        subtitle = tr("Global server");
     }
     else if (server.startsWith("kobo.humanitarianresponse.info", Qt::CaseInsensitive))
     {
-        subtitle = tr("Humanitarian");
+        subtitle = tr("Humanitarian server");
     }
 
     updateProject.set_icon(icon);
@@ -334,10 +366,21 @@ ApiResult KoBoConnector::update(Project* project)
     androidPermissions << "ACCESS_COARSE_LOCATION";
     updateProject.set_androidPermissions(androidPermissions);
 
+    XlsFormParser::configureProject(&updateProject, formSettings);
+
     updateProject.saveToQmlFile(updateFolder + "/Project.qml");
 
     // Reset the project database state.
-    m_projectManager->reset(projectUid);
+    m_projectManager->reset(projectUid, true);
 
     return Success();
+}
+
+void KoBoConnector::reset(Project* project)
+{
+    auto path = m_projectManager->getFilePath(project->uid());
+
+    QFile::remove(path + "/Elements.qml");
+    QFile::remove(path + "/Fields.qml");
+    QFile::remove(path + "/Settings.json");
 }

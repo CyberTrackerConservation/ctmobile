@@ -3,6 +3,7 @@ import QtQuick 2.12
 import QtQuick.Controls 2.12
 import QtQuick.Layouts 1.12
 import QtQuick.Dialogs 1.2
+import Qt.labs.settings 1.0 as Labs
 import QtMultimedia 5.12
 import QtQuick.Controls.Material 2.12
 import CyberTracker 1.0 as C
@@ -10,7 +11,7 @@ import CyberTracker 1.0 as C
 Item {
     id: root
 
-    property var photoIndex: 0
+    property int photoIndex: 0
     property alias recordUid: fieldBinding.recordUid
     property alias fieldUid: fieldBinding.fieldUid
 
@@ -20,6 +21,12 @@ Item {
     property bool confirmDelete: false
     property bool allowVideo: true
     property string filename: "" // Filename without path.
+
+    Labs.Settings {
+        fileName: App.iniPath
+        category: "FieldCameraDialog"
+        property alias fileDialogFolder: fileDialog.folder
+    }
 
     Component.onCompleted: {
         confirmDelete = getFilename() !== ""
@@ -48,7 +55,6 @@ Item {
 
     C.FieldBinding {
         id: fieldBinding
-        property bool valid: fieldUid !== ""
     }
 
     FileDialog {
@@ -174,7 +180,10 @@ Item {
         anchors.fill: parent
         fillMode: VideoOutput.PreserveAspectCrop
         autoOrientation: true
-        visible: getFilename() === ""
+        visible: {
+            fieldBinding.isValid
+            return getFilename() === ""
+        }
         focus: visible
         scale: camera.digitalZoom
 
@@ -261,6 +270,8 @@ Item {
             enabled: getFilename() === ""
             opacity: enabled ? 1.0 : 0.5
             icon.color: "white"
+            icon.width: Style.toolButtonSize
+            icon.height: Style.toolButtonSize
             icon.source: {
                 for (let i = 0; i < model.length; i++) {
                     if (model[i].mode === camera.flash.mode) {
@@ -293,6 +304,8 @@ Item {
             enabled: getFilename() === ""
             opacity: enabled ? 1.0 : 0.5
             icon.color: "white"
+            icon.width: Style.toolButtonSize
+            icon.height: Style.toolButtonSize
             icon.source: {
                 for (let i = 0; i < model.length; i++) {
                     if (model[i].mode === camera.imageProcessing.whiteBalanceMode) {
@@ -316,8 +329,8 @@ Item {
         RoundButton {
             id: cameraAction
 
-            icon.height: 48
-            icon.width: 48
+            icon.height: Style.iconSize48
+            icon.width: Style.iconSize48
             icon.color: "white"
             radius: width / 2
             background: Item {
@@ -403,6 +416,8 @@ Item {
             opacity: enabled ? 1.0 : 0.5
             icon.source: "qrc:/icons/folder.svg"
             icon.color: "white"
+            icon.width: Style.toolButtonSize
+            icon.height: Style.toolButtonSize
             onClicked: {
                 fileDialog.show()
             }
@@ -417,6 +432,8 @@ Item {
             enabled: getFilename() === ""
             opacity: enabled ? 1.0 : 0.5
             icon.color: "white"
+            icon.width: Style.toolButtonSize
+            icon.height: Style.toolButtonSize
             icon.source: {
                 for (let i = 0; i < model.length; i++) {
                     if (model[i].mode === camera.position) {
@@ -439,7 +456,16 @@ Item {
     }
 
     function getFilename() {
-        return fieldBinding.fieldUid !== "" && fieldBinding.isValid ? buildPhotoModel()[photoIndex] : root.filename
+        if (fieldBinding.fieldUid === "") {
+            return root.filename
+        }
+
+        let value = fieldBinding.getValue([""])
+        if (value.length <= photoIndex) {
+            return ""
+        }
+
+        return value[photoIndex]
     }
 
     function setFilename(sourcePath, reorient) {
@@ -464,7 +490,10 @@ Item {
         root.filename = filename
 
         if (fieldBinding.fieldUid !== "") {
-            let value = buildPhotoModel()
+            let value = fieldBinding.getValue([""])
+            while (value.length < fieldBinding.field.maxCount && value.length <= photoIndex) {
+                value.push("")
+            }
             value[photoIndex] = filename
             fieldBinding.setValue(value)
         }
@@ -487,19 +516,5 @@ Item {
         setFilename("", false)
         confirmDelete = false
         updatePreview()
-    }
-
-    function buildPhotoModel() {
-        var v = fieldBinding.value
-        if (v === undefined || v === null) {
-            v = [""]
-        } else {
-            v = v.filter(e => e !== "")
-            if (v.length < fieldBinding.field.maxCount) {
-                v.push("")
-            }
-        }
-
-        return v
     }
 }

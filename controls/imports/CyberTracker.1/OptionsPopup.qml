@@ -35,10 +35,10 @@ PopupBase {
             contentItem: ColumnLayout {
                 Image {
                     Layout.alignment: Image.AlignHCenter
-                    Layout.preferredHeight: 48
+                    Layout.preferredHeight: Style.iconSize48
                     source: popup.icon
-                    sourceSize.width: 48
-                    sourceSize.height: 48
+                    sourceSize.width: Style.iconSize48
+                    sourceSize.height: Style.iconSize48
                     layer {
                         enabled: true
                         effect: ColorOverlay {
@@ -50,7 +50,7 @@ PopupBase {
 
                 Label {
                     Layout.fillWidth: true
-                    Layout.maximumHeight: 64
+                    Layout.maximumHeight: Style.iconSize64
                     text: popup.text
                     font.pixelSize: App.settings.font16
                     font.bold: true
@@ -111,18 +111,11 @@ PopupBase {
 
                 contentItem: RowLayout {
                     width: parent.width
-                    Image {
-                        Layout.preferredWidth: 32
+                    SquareIcon {
+                        Layout.preferredWidth: Style.iconSize24
                         source: modelData.icon
-                        sourceSize.width: 32
-                        sourceSize.height: 32
+                        recolor: true
                         opacity: 0.5
-                        layer {
-                            enabled: true
-                            effect: ColorOverlay {
-                                color: Material.foreground
-                            }
-                        }
                     }
 
                     Label {
@@ -138,14 +131,14 @@ PopupBase {
                 visible: modelData.visible === undefined || modelData.visible === true
 
                 onClicked: {
-                    if (!modelData.delay) {
+                    if (!modelData.delay && popup.opened) {
                         popup.close()
                         popup.clicked(model.index)
                     }
                 }
 
                 onActivated: {
-                    if (modelData.delay) {
+                    if (modelData.delay && popup.opened) {
                         popup.close()
                         popup.clicked(model.index)
                     }

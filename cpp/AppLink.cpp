@@ -37,6 +37,7 @@ AppLink::AppLink(QObject* parent): QObject(parent)
         "username",
         "WebUpdate",
         "url",
+        "packageUrl"
     };
 
     m_shorteners = QMap<QString, QString>
@@ -111,7 +112,7 @@ QVariantMap AppLink::decode(const QString& code)
             if (n != (char)0xff)
             {
                 *index = i;
-                return m_dictionary[n];
+                return m_dictionary.value(n, "");
             }
 
             auto string = QByteArray();

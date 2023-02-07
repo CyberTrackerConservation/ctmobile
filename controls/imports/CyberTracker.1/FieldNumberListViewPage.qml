@@ -47,11 +47,9 @@ ContentPage {
                 id: d
                 width: parent.width
                 contentItem: RowLayout {
-                    Image {
-                        fillMode: Image.PreserveAspectFit
+                    SquareIcon {
                         source: form.getElementIcon(modelData.uid)
-                        sourceSize.width: controlLabel.implicitHeight * 1.3
-                        sourceSize.height: controlLabel.implicitHeight * 1.3
+                        size: controlLabel.implicitHeight * 1.3
                     }
 
                     Label {

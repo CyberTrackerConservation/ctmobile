@@ -27,9 +27,14 @@ public:
     bool testSighting(const QString& projectUid, const QString& uid) const;
     void deleteSighting(const QString& projectUid, const QString& uid);
     void deleteSightings(const QString& projectUid, const QString& stateSpace, uint flags);
-    void getSightings(const QString& projectUid, const QString& stateSpace, uint flags, QStringList* uidsOut) const;
+
+    void enumSightings(const QString& projectUid, const QString& stateSpace, uint flagsAny, std::function<void(const QString& uid, uint flags, const QVariantMap& data, const QStringList& attachments)> callback) const;
+    void enumSightings(const QString& projectUid, const QString& stateSpace, uint flagsOn, uint flagsOff, std::function<void(const QString& uid, uint flags, const QVariantMap& data, const QStringList& attachments)> callback) const;
+    void getSightings(const QString& projectUid, const QString& stateSpace, uint flagsAny, QStringList* uidsOut) const;
+    void getSightings(const QString& projectUid, const QString& stateSpace, uint flagsOn, uint flagsOff, QStringList* uidsOut) const;
     uint getSightingFlags(const QString& projectUid, const QString& uid) const;
     void setSightingFlags(const QString& projectUid, const QString& uid, uint flags, bool on = true);
+    void setSightingFlags(const QString& projectUid, const QString& stateSpace, uint matchFlagsOn, uint matchFlagsOff, uint flags);
     void setSightingFlagsAll(const QString& projectUid, uint flags, bool on = true);
 
     void saveFormState(const QString& projectUid, const QString& stateSpace, const QVariantMap& data, const QStringList& attachments);
@@ -43,6 +48,7 @@ public:
 
     void addTask(const QString& projectUid, const QString& uid, const QString& parentUid, const QVariantMap& input, int state);
     void getTasks(const QString& projectUid, int stateMask, QStringList* uidsOut, QStringList* parentUidsOut) const;
+    void getLastTask(const QString& projectUid, QString* outUid) const;
     void getTaskProperty(const QString& projectUid, const QString& uid, const QString& propertyName, QVariant* valueOut) const;
     void getTaskProperty(const QString& projectUid, const QString& uid, const QString& propertyName, QVariantMap* valueOut) const;
     void setTaskProperty(const QString& projectUid, const QString& uid, const QString& propertyName, const QVariant& value);

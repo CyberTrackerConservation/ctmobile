@@ -2,6 +2,7 @@
 #include "App.h"
 #include "Form.h"
 #include "XlsForm.h"
+#include "TrackFile.h"
 
 constexpr bool CACHE_ENABLE = true;
 
@@ -10,22 +11,9 @@ constexpr bool CACHE_ENABLE = true;
 
 namespace {
 
-bool refreshAccessToken(QNetworkAccessManager* networkAccessManager, Project* project)
+bool requireLogin(int code)
 {
-    auto accessToken = project->accessToken();
-    auto refreshToken = project->refreshToken();
-
-    auto result = Utils::esriRefreshOAuthToken(networkAccessManager, refreshToken, &accessToken, &refreshToken);
-    if (!result.success)
-    {
-        qDebug() << "Failed to refresh token: " << result.errorString;
-        return false;
-    }
-
-    project->set_accessToken(accessToken);
-    project->set_refreshToken(refreshToken);
-
-    return true;
+    return code == 401 || code == 498;
 }
 
 // UploadSightingTask.
@@ -50,85 +38,66 @@ public:
 
     static void completed(TaskManager* taskManager, const QString& projectUid, const QString& uid, const QVariantMap& output, bool success)
     {
-        if (!success)
+        if (success)
         {
-            taskManager->pauseTask(projectUid, uid);
-            if (output["status"] == 401 || output["status"] == 498)
-            {
-                emit App::instance()->projectManager()->projectTriggerLogin(projectUid);
-            }
+            return;
+        }
+
+        // Failed: prompt for login.
+        taskManager->pauseTask(projectUid, uid);
+        if (requireLogin(output["status"].toInt()))
+        {
+            emit App::instance()->projectManager()->projectTriggerLogin(projectUid);
         }
     }
 
     bool doWork() override
     {
-        // Check if uploads are allowed.
         if (!App::instance()->uploadAllowed())
         {
-            qDebug() << "Upload blocked because not on WiFi";
+            qDebug() << "Upload not allowed";
             return false;
         }
 
-        auto project = App::instance()->projectManager()->loadPtr(projectUid());
-        auto connectorParams = project->connectorParams();
-
-        // Prepare work.
-        auto input = this->input();
-        auto serviceUrl = connectorParams["serviceUrl"].toString() + "/applyEdits";
-        auto payload = input["payload"].toByteArray();
-
         QNetworkAccessManager networkAccessManager;
+
+        auto project = App::instance()->projectManager()->loadPtr(projectUid());
+
+        auto input = this->input();
+        auto serviceUrl = project->connectorParams()["serviceUrl"].toString() + "/applyEdits";
+        auto features = input["features"].toList();
+        auto payload = QJsonDocument(QJsonArray::fromVariantList(features)).toJson(QJsonDocument::Compact);
 
         auto sendData = [&]() -> QVariantMap
         {
             auto query = QUrlQuery();
             query.addQueryItem("f", "json");
-            query.addQueryItem("edits", QUrl::toPercentEncoding(payload));
+            query.addQueryItem("edits", payload);
             query.addQueryItem("useGlobalIds", "true");
             query.addQueryItem("rollbackOnFailure", "true");
             query.addQueryItem("token", project->accessToken());
+            auto response = Utils::esriDecodeResponse(Utils::httpPostQuery(&networkAccessManager, serviceUrl, query));
 
-            auto response = Utils::httpPostQuery(&networkAccessManager, serviceUrl, query);
-
-            auto output = QVariantMap();
-            if (!response.success)
+            auto results = QVariantList();
+            if (response.success)
             {
-                output["success"] = false;
-                output["status"] = response.status;
-                output["errorString"] = response.errorString;
-                return output;
+                results = QJsonDocument::fromJson(response.data).array().toVariantList();
             }
 
-            auto errorMap = QJsonDocument::fromJson(response.data).object().toVariantMap();
-            if (errorMap.contains("error"))
+            return QVariantMap
             {
-                output["success"] = false;
-                errorMap = errorMap.value("error").toMap();
-                output["status"] = errorMap.value("code", -1).toInt();
-                output["errorString"] = errorMap.value("message").toString();
-                return output;
-            }
-
-            auto results = QJsonDocument::fromJson(response.data).array().toVariantList();
-            if (results.count() == 0)
-            {
-                output["success"] = false;
-                output["status"] = 404;
-                return output;
-            }
-
-            output["success"] = true;
-            output["response"] = results;
-            output["status"] = response.status;
-            output["sightingUid"] = input["sightingUid"];
-
-            return output;
+                { "success", response.success },
+                { "status", response.status },
+                { "errorString", response.errorString },
+                { "reason", response.reason },
+                { "response", results }
+            };
         };
 
         auto output = sendData();
-        if (output["status"] == 401 || output["status"] == 498)
+        if (requireLogin(output["status"].toInt()))
         {
-            if (refreshAccessToken(&networkAccessManager, project.get()))
+            if (App::instance()->createConnectorPtr(project->connector())->refreshAccessToken(&networkAccessManager, project.get()))
             {
                 output = sendData();
             }
@@ -162,28 +131,30 @@ public:
 
     static void completed(TaskManager* taskManager, const QString& projectUid, const QString& uid, const QVariantMap& output, bool success)
     {
-        if (!success)
+        if (success)
         {
-            taskManager->pauseTask(projectUid, uid);
-            if (output["status"] == 401 || output["status"] == 498)
-            {
-                emit App::instance()->projectManager()->projectTriggerLogin(projectUid);
-            }
+            return;
+        }
+
+        // Failed: prompt for login.
+        taskManager->pauseTask(projectUid, uid);
+        if (requireLogin(output["status"].toInt()))
+        {
+            emit App::instance()->projectManager()->projectTriggerLogin(projectUid);
         }
     }
 
     bool doWork() override
     {
-        // Check if uploads are allowed.
         if (!App::instance()->uploadAllowed())
         {
-            qDebug() << "Upload blocked because not on WiFi";
+            qDebug() << "Upload not allowed";
             return false;
         }
 
+        QNetworkAccessManager networkAccessManager;
         auto project = App::instance()->projectManager()->loadPtr(projectUid());
         auto connectorParams = project->connectorParams();
-        QNetworkAccessManager networkAccessManager;
 
         // Get the objectid for each record.
         auto parentOutput = this->parentOutput();
@@ -191,14 +162,13 @@ public:
         {
             auto globalId = Utils::addBracesToUuid(recordUid);
             auto resultsList = parentOutput["response"].toList();
-            for (auto results: resultsList)
+            for (auto resultsMapIt = resultsList.constBegin(); resultsMapIt != resultsList.constEnd(); resultsMapIt++)
             {
-                auto resultsMap = results.toMap();
-
+                auto resultsMap = resultsMapIt->toMap();
                 auto addResults = resultsMap["addResults"].toList();
-                for (auto result: addResults)
+                for (auto resultMapIt = addResults.constBegin(); resultMapIt != addResults.constEnd(); resultMapIt++)
                 {
-                    auto resultMap = result.toMap();
+                    auto resultMap = resultMapIt->toMap();
                     if (resultMap["globalId"] != globalId)
                     {
                         continue;
@@ -213,37 +183,35 @@ public:
             return false;
         };
 
-        // Prepare work.
-        auto serviceUrl = connectorParams["serviceUrl"].toString();
+        // Send data.
         auto input = this->input();
-        auto payload = input["payload"].toMap();
+        auto recordUid = input["recordUid"].toString();
+        auto filename = input["filename"].toString();
 
-        int serviceId;
-        qint64 objectId;
-        if (!lookupObjectId(payload["recordUid"].toString(), &serviceId, &objectId))
+        int serviceId = -1;
+        qint64 objectId = 0;
+        if (!lookupObjectId(recordUid, &serviceId, &objectId))
         {
-            qDebug() << "Lost attachment: no object found";
+            qDebug() << "Error: lost attachment - no object found";
             return true; // Fall through to next task.
         }
 
-        auto filePath = App::instance()->getMediaFilePath(payload["filename"].toString());
+        auto filePath = App::instance()->getMediaFilePath(filename);
         QFile file(filePath);
         QFileInfo fileInfo(filePath);
         if (!file.open(QIODevice::ReadOnly))
         {
-            qDebug() << "Lost attachment: file could not be opened";
+            qDebug() << "Error: lost attachment - file could not be opened";
             return true; // Fall through to next task.
         }
 
-        serviceUrl = serviceUrl + '/' + QString::number(serviceId) + '/' + QString::number(objectId) + "/addAttachment";
+        auto serviceUrl = connectorParams["serviceUrl"].toString() + '/' + QString::number(serviceId) + '/' + QString::number(objectId) + "/addAttachment";
 
-        // Send data function.
         auto sendData = [&]() -> QVariantMap
         {
             auto accessToken = project->accessToken();
 
             QHttpMultiPart multipart(QHttpMultiPart::FormDataType);
-            multipart.setBoundary("------WebKitFormBoundarytoHka8LUGjq34sBN");
 
             auto part1 = QHttpPart();
             part1.setHeader(QNetworkRequest::KnownHeaders::ContentDispositionHeader, "form-data; name=\"f\"");
@@ -270,42 +238,35 @@ public:
             part4.setBodyDevice(&file);
             multipart.append(part4);
 
-            auto response = Utils::httpPostMultiPart(&networkAccessManager, serviceUrl, &multipart);
+            auto response = Utils::esriDecodeResponse(Utils::httpPostMultiPart(&networkAccessManager, serviceUrl, &multipart));
 
-            auto output = QVariantMap();
             if (!response.success)
             {
-                output["success"] = false;
-                output["status"] = response.status;
-                output["errorString"] = response.errorString;
-                return output;
+                return QVariantMap
+                {
+                    { "success", false },
+                    { "status", response.status },
+                    { "errorString", response.errorString },
+                    { "reason", response.reason },
+                };
             }
 
-            auto outputMap = QJsonDocument::fromJson(response.data).object().toVariantMap();
-            if (outputMap.contains("error"))
+            auto result = QJsonDocument::fromJson(response.data).object().toVariantMap().value("addAttachmentResult").toMap();
+
+            return QVariantMap
             {
-                output["success"] = false;
-                auto errorMap = outputMap.value("error").toMap();
-                output["status"] = errorMap.value("code", -1).toInt();
-                output["errorString"] = errorMap.value("message");
-                return output;
-            }
-
-            auto jsonObj = outputMap.value("addAttachmentResult").toMap();
-            output["success"] = jsonObj.value("success").toBool();
-            output["status"] = response.status;
-            output["reason"] = response.reason;
-            output["errorString"] = response.errorString;
-            output["data"] = response.data;
-            output["sightingUid"] = parentOutput.value("sightingUid");
-
-            return output;
+                { "success", result.value("success").toBool() },
+                { "status", response.status },
+                { "errorString", response.errorString },
+                { "reason", response.reason },
+                { "result", result },
+            };
         };
 
         auto output = sendData();
-        if (output["status"] == 401 || output["status"] == 498)
+        if (requireLogin(output["status"].toInt()))
         {
-            if (refreshAccessToken(&networkAccessManager, project.get()))
+            if (App::instance()->createConnectorPtr(project->connector())->refreshAccessToken(&networkAccessManager, project.get()))
             {
                 output = sendData();
             }
@@ -341,14 +302,292 @@ public:
     {
         auto sightingUid = output.value("sightingUid").toString();
         App::instance()->database()->setSightingFlags(projectUid, sightingUid, Sighting::DB_UPLOADED_FLAG);
-        emit App::instance()->sightingModified(projectUid, sightingUid);
+
+        emit App::instance()->sightingFlagsChanged(projectUid, sightingUid);
     }
 
     bool doWork() override
     {
-        update_output(QVariantMap { { "sightingUid", input()["sightingUid"] } });
+        update_output(input());
 
         return true;
+    }
+};
+
+// UploadLocationsTask.
+class UploadLocationsTask: public Task
+{
+public:
+    UploadLocationsTask(QObject* parent): Task(parent)
+    {}
+
+    static QString getName()
+    {
+        return QString(ESRI_PROVIDER) + "_SaveLocations";
+    }
+
+    static Task* createInstance(const QString& projectUid, const QString& uid, const QVariantMap& input, const QVariantMap& parentOutput)
+    {
+        auto task = new UploadLocationsTask(nullptr);
+        task->init(projectUid, uid, input, parentOutput);
+
+        return task;
+    }
+
+    static void completed(TaskManager* taskManager, const QString& projectUid, const QString& uid, const QVariantMap& output, bool success)
+    {
+        // Success: clean up snapped locations. Submitted is sufficient, since the task has the data.
+        if (success)
+        {
+            App::instance()->database()->deleteSightings(projectUid, "", Sighting::DB_LOCATION_FLAG | Sighting::DB_SUBMITTED_FLAG | Sighting::DB_SNAPPED_FLAG);
+            return;
+        }
+
+        // Failed: prompt for login.
+        taskManager->pauseTask(projectUid, uid);
+        if (requireLogin(output["status"].toInt()))
+        {
+            emit App::instance()->projectManager()->projectTriggerLogin(projectUid);
+        }
+    }
+
+    bool doWork() override
+    {
+        if (!App::instance()->uploadAllowed())
+        {
+            qDebug() << "Upload not allowed";
+            return false;
+        }
+
+        QNetworkAccessManager networkAccessManager;
+        auto project = App::instance()->projectManager()->loadPtr(projectUid());
+        auto serviceUrl = project->esriLocationServiceUrl();
+
+        auto input = this->input();
+        auto locationUids = input["locationUids"].toStringList();
+        auto features = input["features"].toList();
+
+        auto sendData = [&]() -> QVariantMap
+        {
+            auto results = QVariantList();
+            auto response = Utils::esriApplyEdits(&networkAccessManager, serviceUrl, "adds", 0, features, project->accessToken(), &results);
+
+            return QVariantMap
+            {
+                { "locationUids", locationUids },
+                { "success", response.success },
+                { "status", response.status },
+                { "errorString", response.errorString },
+                { "reason", response.reason },
+                { "response", results }
+            };
+        };
+
+        auto output = sendData();
+        if (requireLogin(output["status"].toInt()))
+        {
+            if (App::instance()->createConnectorPtr(project->connector())->refreshAccessToken(&networkAccessManager, project.get()))
+            {
+                output = sendData();
+            }
+        }
+
+        update_output(output);
+
+        return output["success"] == true;
+    }
+};
+
+// UpdateLastLocationTask.
+class UpdateLastLocationTask: public Task
+{
+public:
+    UpdateLastLocationTask(QObject* parent): Task(parent)
+    {}
+
+    static QString getName()
+    {
+        return QString(ESRI_PROVIDER) + "_UpdateLastLocation";
+    }
+
+    static Task* createInstance(const QString& projectUid, const QString& uid, const QVariantMap& input, const QVariantMap& parentOutput)
+    {
+        auto task = new UpdateLastLocationTask(nullptr);
+        task->init(projectUid, uid, input, parentOutput);
+
+        return task;
+    }
+
+    static void completed(TaskManager* taskManager, const QString& projectUid, const QString& uid, const QVariantMap& output, bool success)
+    {
+        if (success)
+        {
+            return;
+        }
+
+        // Failed: prompt for login.
+        taskManager->pauseTask(projectUid, uid);
+        if (requireLogin(output["status"].toInt()))
+        {
+            emit App::instance()->projectManager()->projectTriggerLogin(projectUid);
+        }
+    }
+
+    bool doWork() override
+    {
+        if (!App::instance()->uploadAllowed())
+        {
+            qDebug() << "Upload not allowed";
+            return false;
+        }
+
+        auto project = App::instance()->projectManager()->loadPtr(projectUid());
+        if (project->sendLocationInterval() == 0)
+        {
+            qDebug() << "Skip sending location, since no longer enabled";
+            return true;
+        }
+
+        QNetworkAccessManager networkAccessManager;
+        auto serviceUrl = project->esriLocationServiceUrl();
+
+        auto input = this->input();
+        auto feature = input["feature"].toMap();
+
+        auto sendData = [&]() -> QVariantMap
+        {
+            auto results = QVariantList();
+            auto response = Utils::esriApplyEdits(&networkAccessManager, serviceUrl, "updates", 1, feature, project->accessToken(), &results);
+
+            // Normally the last location state will be initialized during project install.
+            // In case the last location table is reset, attempt to reinitialize it.
+            if (response.success && results.length() == 1)
+            {
+                auto updateResults = results.constFirst().toMap()["updateResults"].toList();
+                if (updateResults.length() == 1)
+                {
+                    auto errorCode = updateResults.constFirst().toMap()["error"].toMap()["code"].toInt();
+                    if (errorCode == 1019)
+                    {
+                        auto esriLocationServiceState = QVariantMap();
+                        auto initResponse = Utils::esriInitLocationTracking(&networkAccessManager, serviceUrl, project->accessToken(), &esriLocationServiceState);
+                        if (initResponse.success)
+                        {
+                            project->set_esriLocationServiceState(esriLocationServiceState);
+                        }
+                    }
+                }
+            }
+
+            return QVariantMap
+            {
+                { "success", response.success },
+                { "status", response.status },
+                { "errorString", response.errorString },
+                { "reason", response.reason },
+                { "response", results }
+            };
+        };
+
+        auto output = sendData();
+        if (requireLogin(output["status"].toInt()))
+        {
+            if (App::instance()->createConnectorPtr(project->connector())->refreshAccessToken(&networkAccessManager, project.get()))
+            {
+                output = sendData();
+            }
+        }
+
+        update_output(output);
+
+        return output["success"] == true;
+    }
+};
+
+// UploadTrackTask.
+class UploadTrackTask: public Task
+{
+public:
+    UploadTrackTask(QObject* parent): Task(parent)
+    {}
+
+    static QString getName()
+    {
+        return QString(ESRI_PROVIDER) + "_UploadTrack";
+    }
+
+    static Task* createInstance(const QString& projectUid, const QString& uid, const QVariantMap& input, const QVariantMap& parentOutput)
+    {
+        auto task = new UploadTrackTask(nullptr);
+        task->init(projectUid, uid, input, parentOutput, true);
+
+        return task;
+    }
+
+    static void completed(TaskManager* taskManager, const QString& projectUid, const QString& uid, const QVariantMap& output, bool success)
+    {
+        if (success)
+        {
+            App::instance()->database()->deleteSightings(projectUid, "", Sighting::DB_LOCATION_FLAG | Sighting::DB_SUBMITTED_FLAG | Sighting::DB_SNAPPED_FLAG);
+            return;
+        }
+
+        // Failed: prompt for login.
+        taskManager->pauseTask(projectUid, uid);
+        if (requireLogin(output["status"].toInt()))
+        {
+            emit App::instance()->projectManager()->projectTriggerLogin(projectUid);
+        }
+    }
+
+    bool doWork() override
+    {
+        if (!App::instance()->uploadAllowed())
+        {
+            qDebug() << "Upload not allowed";
+            return false;
+        }
+
+        QNetworkAccessManager networkAccessManager;
+        auto project = App::instance()->projectManager()->loadPtr(projectUid());
+        auto serviceState = project->esriLocationServiceState();
+        auto serviceUrl = project->esriLocationServiceUrl();
+
+        auto input = this->input();
+        auto sightingUid = input["sightingUid"].toString();
+        auto trackFilename = input["trackFile"].toString();
+
+        TrackFile trackFile(App::instance()->getMediaFilePath(trackFilename));
+        auto features = trackFile.createEsriFeatures(sightingUid, serviceState.value("fullName").toString());
+
+        auto sendData = [&]() -> QVariantMap
+        {
+            auto results = QVariantList();
+            auto response = Utils::esriApplyEdits(&networkAccessManager, serviceUrl, "adds", 2, features, project->accessToken(), &results);
+
+            return QVariantMap
+            {
+                { "success", response.success },
+                { "status", response.status },
+                { "errorString", response.errorString },
+                { "reason", response.reason },
+                { "response", results }
+            };
+        };
+
+        auto output = sendData();
+        if (requireLogin(output["status"].toInt()))
+        {
+            if (App::instance()->createConnectorPtr(project->connector())->refreshAccessToken(&networkAccessManager, project.get()))
+            {
+                output = sendData();
+            }
+        }
+
+        output["sightingUid"] = sightingUid;
+        update_output(output);
+
+        return output["success"] == true;
     }
 };
 
@@ -451,17 +690,20 @@ void EsriProvider::setFieldTags(const QString& serviceInfoFilePath, const QStrin
     fieldManager.saveToQmlFile(fieldsFilePath);
 }
 
-bool EsriProvider::connectToProject(bool newBuild)
+bool EsriProvider::connectToProject(bool newBuild, bool* formChangedOut)
 {
     m_taskManager->registerTask(UploadSightingTask::getName(), UploadSightingTask::createInstance, UploadSightingTask::completed);
     m_taskManager->registerTask(UploadFileTask::getName(), UploadFileTask::createInstance, UploadFileTask::completed);
+    m_taskManager->registerTask(UploadTrackTask::getName(), UploadTrackTask::createInstance, UploadTrackTask::completed);
     m_taskManager->registerTask(UploadCompleteTask::getName(), UploadCompleteTask::createInstance, UploadCompleteTask::completed);
+    m_taskManager->registerTask(UploadLocationsTask::getName(), UploadLocationsTask::createInstance, UploadLocationsTask::completed);
+    m_taskManager->registerTask(UpdateLastLocationTask::getName(), UpdateLastLocationTask::createInstance, UpdateLastLocationTask::completed);
 
     auto projectUid = m_project->uid();
 
     // Delete uploaded sightings after 2 seconds.
     auto form = qobject_cast<Form*>(parent());
-    connect(form, &Form::sightingModified, this, [=](const QString& sightingUid)
+    connect(form, &Form::sightingFlagsChanged, this, [=](const QString& sightingUid)
     {
         if (!m_database->testSighting(projectUid, sightingUid))
         {
@@ -477,34 +719,66 @@ bool EsriProvider::connectToProject(bool newBuild)
         QTimer::singleShot(2000, form, &Form::removeUploadedSightings);
     });
 
+    // Last known location.
+    connect(form, &Form::locationPoint, this, [=](Location* update)
+    {
+        sendLastLocation(update);
+    });
+
     // Cleanup uploaded data.
     connect(form, &Form::connectedChanged, this, [=]()
     {
         form->removeUploadedSightings();
     });
 
-    QString elementsFilePath = getProjectFilePath("Elements.qml");
-    QString fieldsFilePath = getProjectFilePath("Fields.qml");
+    // Rebuild the form.
+    auto formFilePath = getProjectFilePath("form.xlsx");
+    auto formLastModified = QFileInfo(formFilePath).lastModified().toMSecsSinceEpoch();
+    auto elementsFilePath = getProjectFilePath("Elements.qml");
+    auto fieldsFilePath = getProjectFilePath("Fields.qml");
 
     // Early out if possible.
-    if (!CACHE_ENABLE || newBuild || !QFile::exists(elementsFilePath) || !QFile::exists(fieldsFilePath))
+    if (!CACHE_ENABLE || newBuild || formLastModified != m_project->formLastModified() || !QFile::exists(elementsFilePath) || !QFile::exists(fieldsFilePath))
     {
-        if (XlsFormUtils::parseXlsForm(getProjectFilePath("form.xlsx"), getProjectFilePath(""), &m_parserError))
+        if (XlsFormParser::parse(formFilePath, getProjectFilePath(""), projectUid, &m_parserError))
         {
             setFieldTags(getProjectFilePath("serviceInfo.json"), fieldsFilePath);
         }
+        m_project->set_formLastModified(formLastModified);
+        m_project->reload();
+        *formChangedOut = true;
     }
 
-    // Update the languages.
+    // Load settings.
     m_settings = Utils::variantMapFromJsonFile(getProjectFilePath("Settings.json"));
-    m_project->set_languages(m_settings.value("languages").toList());
 
     return true;
 }
 
 bool EsriProvider::requireUsername() const
 {
-    return m_project->username().isEmpty() && App::instance()->settings()->username().isEmpty();
+    return m_settings["requireUsername"].toBool() &&
+           m_project->username().isEmpty() &&
+           App::instance()->settings()->username().isEmpty();
+}
+
+bool EsriProvider::supportLocationPoint() const
+{
+    return !m_project->esriLocationServiceUrl().isEmpty();
+}
+
+bool EsriProvider::supportLocationTrack() const
+{
+    // Location service.
+    auto hasLocationService = !m_project->esriLocationServiceUrl().isEmpty();
+    auto hasTrackFileField = !qobject_cast<Form*>(parent())->sighting()->getTrackFileFieldUid().isEmpty();
+
+    if (hasLocationService && hasTrackFileField)
+    {
+        qWarning() << "Both location service and track file field detected: location service will be ignored";
+    }
+
+    return hasLocationService || hasTrackFileField;
 }
 
 QUrl EsriProvider::getStartPage()
@@ -534,10 +808,8 @@ void EsriProvider::getFields(FieldManager* fieldManager)
     fieldManager->loadFromQmlFile(getProjectFilePath("Fields.qml"));
 }
 
-QVariantList EsriProvider::buildSightingPayload(Form* form, const QString& sightingUid, QVariantMap* attachmentsMapOut)
+QVariantList EsriProvider::buildSightingPayload(Sighting* sighting, QVariantMap* attachmentsMapOut)
 {
-    auto sighting = form->createSightingPtr(sightingUid);
-
     // Build the per-record payload.
     struct RecordData
     {
@@ -550,7 +822,7 @@ QVariantList EsriProvider::buildSightingPayload(Form* form, const QString& sight
     auto recordDataList = QVector<RecordData>();
 
     // Iterate over the records and build a RecordData structure for each service table.
-    auto queueRecordUids = QStringList { sightingUid };
+    auto queueRecordUids = QStringList { sighting->rootRecordUid() };
 
     while (!queueRecordUids.isEmpty())
     {
@@ -648,9 +920,10 @@ QVariantList EsriProvider::buildSightingPayload(Form* form, const QString& sight
                     auto locationValue = fieldValue.value().toMap();
                     geometry.insert("x", locationValue["x"]);
                     geometry.insert("y", locationValue["y"]);
+                    geometry.insert("z", locationValue["z"]);
                     return;
                 }
-                else if (qobject_cast<LineField*>(field) || qobject_cast<AreaField*>(field))
+                else if (qobject_cast<LineField*>(field))
                 {
                     auto points = fieldValue.value().toList();
                     auto path = QVariantList();
@@ -660,15 +933,45 @@ QVariantList EsriProvider::buildSightingPayload(Form* form, const QString& sight
                         auto point = it->toList();
                         auto x = point[0].toDouble();
                         auto y = point[1].toDouble();
-                        path.append(QVariant(QVariantList { x, y }));
+                        auto z = point[2].toDouble();
+                        path.append(QVariant(QVariantList { x, y, z }));
                     }
 
-                    geometry.insert("paths", QVariantList { QVariant(path) });
+                    if (!path.isEmpty())
+                    {
+                        geometry.insert("paths", QVariantList { QVariant(path) });
+                    }
+
+                    return;
+                }
+                else if (qobject_cast<AreaField*>(field))
+                {
+                    auto points = fieldValue.value().toList();
+                    auto path = QVariantList();
+
+                    for (auto it = points.constBegin(); it != points.constEnd(); it++)
+                    {
+                        auto point = it->toList();
+                        auto x = point[0].toDouble();
+                        auto y = point[1].toDouble();
+                        auto z = point[2].toDouble();
+                        path.append(QVariant(QVariantList { x, y, z }));
+                    }
+
+                    if (!path.isEmpty())
+                    {
+                        path.append(path.constFirst()); // Last point same as first point.
+                        geometry.insert("rings", QVariantList { QVariant(path) });
+                    }
+
                     return;
                 }
 
                 // Attachments.
-                else if (qobject_cast<PhotoField*>(field) || qobject_cast<AudioField*>(field) || qobject_cast<SketchField*>(field))
+                else if (qobject_cast<PhotoField*>(field) ||
+                         qobject_cast<AudioField*>(field) ||
+                         qobject_cast<SketchField*>(field) ||
+                         qobject_cast<FileField*>(field))
                 {
                     attachments.append(fieldValue.attachments());
                     return;
@@ -753,100 +1056,230 @@ QVariantList EsriProvider::buildSightingPayload(Form* form, const QString& sight
     return result;
 }
 
-bool EsriProvider::sendSighting(Form* form, const QString& sightingUid)
+QVariantMap EsriProvider::buildLocationPayload(const QString& locationUid, const QVariantMap& location) const
 {
-    auto app = App::instance();
-    auto database = app->database();
+    auto attributes = QVariantMap
+    {
+        { "globalid", Utils::addBracesToUuid(locationUid) },
+        { "deviceid", Utils::addBracesToUuid(App::instance()->settings()->deviceId()) },
+        { "appid", App::instance()->config()["title"] },
+        { "counter", location["c"].toInt() },
+        { "timestamp", Utils::decodeTimestampMSecs(location["ts"].toString()) },
+        { "accuracy", location["a"] },
+        { "altitude", location["z"] },
+        { "speed", location["s"] },
+        { "course", location["d"] },
+        { "interval", location["interval"].toInt() / 1000 },
+        { "distance_filter", location["distanceFilter"].toInt() },
+        { "accuracy_filter", location["accuracyFilter"].toInt() },
+        { "full_name", m_project->esriLocationServiceState().value("fullName", "Not Found") },
+    };
+
+    auto geometry = QVariantMap
+    {
+        { "spatialReference", QVariantMap { { "wkid", 4326 } } },
+        { "x", location["x"] },
+        { "y", location["y"] },
+        { "z", location["z"] },
+    };
+
+    return QVariantMap
+    {
+        { "attributes", attributes },
+        { "geometry", geometry },
+    };
+}
+
+bool EsriProvider::sendSighting(Sighting* sighting)
+{
     auto projectUid = m_project->uid();
+    auto sightingUid = sighting->rootRecordUid();
 
-    // Ensure this is not already submitted.
-    uint flags = database->getSightingFlags(projectUid, sightingUid);
-
-    if ((flags & Sighting::DB_COMPLETED_FLAG) == 0)
-    {
-        qDebug() << "Not completed: " << sightingUid;
-        return false;
-    }
-
-    if (flags & Sighting::DB_SUBMITTED_FLAG)
-    {
-        qDebug() << "Already submitted: " << sightingUid;
-        return false;
-    }
-
-    // Build the payload.
     auto attachmentsMap = QVariantMap();
-    auto payload = buildSightingPayload(form, sightingUid, &attachmentsMap);
-    auto payloadJson = QJsonDocument(QJsonArray::fromVariantList(payload)).toJson(QJsonDocument::Compact);
-    auto inputMap = QVariantMap();
-    inputMap.insert("payload", payloadJson);
-    inputMap.insert("sightingUid", sightingUid);
+    auto features = buildSightingPayload(sighting, &attachmentsMap);
+
+    auto inputMap = QVariantMap
+    {
+        { "sightingUid", sightingUid },
+        { "features", features },
+    };
 
     // Create the task for the sighting.
-    auto sightingTaskUid = QString();
-    auto lastTaskUid = QString();
-    {
-        auto baseUid = Task::makeUid(UploadSightingTask::getName(), sightingUid);
-        auto parentUids = QStringList();
-        m_taskManager->getTasks(projectUid, baseUid, -1, &parentUids);
-        auto parentUid = !parentUids.isEmpty() ? parentUids.last(): QString();
-
-        sightingTaskUid = baseUid + '.' + QString::number(QDateTime::currentDateTime().toMSecsSinceEpoch());
-        m_taskManager->addTask(projectUid, sightingTaskUid, parentUid, inputMap);
-        lastTaskUid = sightingTaskUid;
-    }
+    auto sightingTaskUid = Task::makeUid(UploadSightingTask::getName(), sightingUid);
+    m_taskManager->addSerialTask(projectUid, sightingTaskUid, inputMap);
 
     // Create the tasks for the attachments (1 per attachments).
-    auto baseUid = Task::makeUid(UploadFileTask::getName(), sightingUid);
-    for (auto recordUid: attachmentsMap.keys())
+    for (auto attachmentsIt = attachmentsMap.constKeyValueBegin(); attachmentsIt != attachmentsMap.constKeyValueEnd(); attachmentsIt++)
     {
-        auto attachmentsTaskUid = baseUid + '.' + QString::number(QDateTime::currentDateTime().toMSecsSinceEpoch());
-        auto attachments = attachmentsMap[recordUid].toStringList();
+        auto recordUid = attachmentsIt->first;
+        auto filenames = attachmentsIt->second.toStringList();
+
         auto counter = 0;
-        for (auto filename: attachments)
+        for (auto filenameIt = filenames.constBegin(); filenameIt != filenames.constEnd(); filenameIt++)
         {
-            auto inputMap = QVariantMap();
-            inputMap["payload"] = QVariantMap { { "recordUid", recordUid }, { "filename", filename } };
-            auto attachmentTaskUid = attachmentsTaskUid + "." + QString::number(counter);
+            auto filename = *filenameIt;
+            auto inputMap = QVariantMap {{ "recordUid", recordUid }, { "filename", filename }};
 
-            auto alreadySentTaskUids = QStringList();
-            m_taskManager->getTasks(projectUid, baseUid, -1, &alreadySentTaskUids);
-            if (alreadySentTaskUids.isEmpty())
-            {
-                m_taskManager->addTask(projectUid, attachmentTaskUid, lastTaskUid, inputMap);
-                lastTaskUid = attachmentTaskUid;
-            }
-
-            counter++;
+            auto taskUid = Task::makeUid(UploadFileTask::getName(), sightingUid) + ".attachment." + recordUid + "." + QString::number(counter++);
+            m_taskManager->addTask(projectUid, taskUid, sightingTaskUid, inputMap);
         }
     }
 
-    // Create the completion task.
-    m_taskManager->addTask(projectUid, Task::makeUid(UploadCompleteTask::getName(), sightingUid), lastTaskUid, QVariantMap { { "sightingUid", sightingUid } });
+    // Create the task for the track file.
+    if (!sighting->trackFile().isEmpty() && m_project->esriLocationServiceUrl().isEmpty())
+    {
+        auto inputMap = QVariantMap
+        {
+            { "sightingUid", sightingUid },
+            { "trackFile", sighting->trackFile() },
+        };
 
-    // Mark the sighting as submitted.
-    database->setSightingFlags(projectUid, sightingUid, Sighting::DB_SUBMITTED_FLAG);
-    emit app->sightingModified(projectUid, sightingUid);
+        auto taskUid = Task::makeUid(UploadTrackTask::getName(), sightingUid);
+        m_taskManager->addTask(projectUid, taskUid, sightingTaskUid, inputMap);
+    }
+
+    // Create the completion task.
+    m_taskManager->addSerialTask(projectUid, Task::makeUid(UploadCompleteTask::getName(), sightingUid), QVariantMap { { "sightingUid", sightingUid } });
 
     return true;
 }
 
-void EsriProvider::submitData()
+void EsriProvider::sendLocations(const QStringList& locationUids, const QVariantList& features)
 {
-    auto app = App::instance();
-    auto database = app->database();
-    auto projectUid = m_project->uid();
-    auto sightingUids = QStringList();
-    auto form = qobject_cast<Form*>(parent());
-
-    database->getSightings(projectUid, form->stateSpace(), Sighting::DB_SIGHTING_FLAG, &sightingUids);
-    for (auto it = sightingUids.constBegin(); it != sightingUids.constEnd(); it++)
+    auto inputMap = QVariantMap
     {
-        // Call is smart enough not to resend already sent data.
-        sendSighting(form, *it);
+        { "locationUids", locationUids },
+        { "features", features }
+    };
+
+    auto taskUid = Task::makeUid(UploadLocationsTask::getName(), locationUids.constFirst());
+    m_taskManager->addSerialTask(m_project->uid(), taskUid, inputMap);
+}
+
+void EsriProvider::sendLastLocation(Location* location)
+{
+    auto serviceState = m_project->esriLocationServiceState();
+
+    auto attributes = QVariantMap
+    {
+        { "globalid", serviceState.value("globalid") },
+        { "deviceid", Utils::addBracesToUuid(location->deviceId()) },
+        { "appid", App::instance()->config()["title"] },
+        { "timestamp", Utils::decodeTimestampMSecs(location->timestamp()) },
+        { "accuracy", location->accuracy() },
+        { "altitude", location->z() },
+        { "speed", location->speed() },
+        { "course", location->direction() },
+        { "interval", location->interval() },
+        { "full_name", serviceState.value("fullName", "Not Found") },
+    };
+
+    auto geometry = QVariantMap
+    {
+        { "spatialReference", QVariantMap { { "wkid", 4326 } } },
+        { "x", location->x() },
+        { "y", location->y() },
+        { "z", location->z() },
+    };
+
+    auto feature = QVariantMap
+    {
+        { "attributes", attributes },
+        { "geometry", geometry },
+    };
+
+    auto inputMap = QVariantMap
+    {
+        { "feature", feature }
+    };
+
+    auto taskUid = Task::makeUid(UpdateLastLocationTask::getName(), "singleton");
+    m_taskManager->resetTask(m_project->uid(), taskUid, inputMap);
+}
+
+void EsriProvider::sendTrackFile(Sighting* sighting)
+{
+    if (sighting->trackFile().isEmpty())
+    {
+        // Nothing to send.
+        return;
     }
 
-    app->taskManager()->resumePausedTasks(projectUid);
+    if (m_project->esriLocationServiceUrl().isEmpty())
+    {
+        // Nowhere to send.
+        qDebug() << "Error: nowhere to send track file";
+        return;
+    }
+
+    auto sightingUid = sighting->rootRecordUid();
+    auto inputMap = QVariantMap
+    {
+        { "sightingUid", sightingUid },
+        { "trackFile", sighting->trackFile() },
+    };
+
+    auto taskUid = Task::makeUid(UploadTrackTask::getName(), sightingUid);
+    m_taskManager->addSerialTask(m_project->uid(), taskUid, inputMap);
+}
+
+void EsriProvider::submitData()
+{
+    auto projectUid = m_project->uid();
+    auto form = qobject_cast<Form*>(parent());
+
+    // Backup database and delete old tasks.
+    App::instance()->backupDatabase("ESRI: submit data");
+    m_database->deleteTasks(projectUid, Task::Complete);
+
+    // Create tasks for sightings.
+    m_database->enumSightings(projectUid, form->stateSpace(), Sighting::DB_SIGHTING_FLAG | Sighting::DB_COMPLETED_FLAG /* ON */, Sighting::DB_SUBMITTED_FLAG /* OFF */,
+        [&](const QString& sightingUid, uint /*flags*/, const QVariantMap& data, const QStringList& /*attachments*/)
+    {
+        auto sighting = form->createSightingPtr(data);
+
+        // Mark the sighting as submitted.
+        sendSighting(sighting.get());
+        form->setSightingFlag(sightingUid, Sighting::DB_SUBMITTED_FLAG);
+
+        // Send any attached track file.
+        sendTrackFile(sighting.get());
+    });
+
+    // Create tasks for locations.
+    if (!m_project->esriLocationServiceUrl().isEmpty())
+    {
+        auto batchLocationUids = QStringList();
+        auto batchFeatures = QVariantList();
+        auto lastFeature = QVariantMap();
+
+        m_database->enumSightings(projectUid, form->stateSpace(), Sighting::DB_LOCATION_FLAG /* ON */, Sighting::DB_SUBMITTED_FLAG /* OFF */,
+            [&](const QString& locationUid, uint /*flags*/, const QVariantMap& data, const QStringList& /*attachments*/)
+        {
+            lastFeature = buildLocationPayload(locationUid, data);
+            batchLocationUids.append(locationUid);
+            batchFeatures.append(lastFeature);
+
+            if (batchLocationUids.count() == 1024)
+            {
+                sendLocations(batchLocationUids, batchFeatures);
+                batchLocationUids.clear();
+                batchFeatures.clear();
+            }
+        });
+
+        // Send leftovers.
+        if (!batchLocationUids.isEmpty())
+        {
+            sendLocations(batchLocationUids, batchFeatures);
+        }
+
+        // Mark locations as submitted.
+        m_database->setSightingFlags(projectUid, form->stateSpace(), Sighting::DB_LOCATION_FLAG /* ON */, Sighting::DB_SUBMITTED_FLAG /* OFF */, Sighting::DB_SUBMITTED_FLAG);
+    }
+
+    // Start all tasks.
+    App::instance()->taskManager()->resumePausedTasks(projectUid);
 }
 
 bool EsriProvider::notify(const QVariantMap& message)

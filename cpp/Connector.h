@@ -19,13 +19,15 @@ public:
     virtual bool canShareAuth(Project* project) const;
     virtual QVariantMap getShareData(Project* project, bool auth) const;
 
+    virtual bool canLogin(Project* project) const;
     virtual bool loggedIn(Project* project) const;
     virtual bool login(Project* project, const QString& server, const QString& username, const QString& password);
     virtual void logout(Project* project);
 
     virtual ApiResult bootstrap(const QVariantMap& params);
+    virtual bool refreshAccessToken(QNetworkAccessManager* networkAccessManager, Project* project);
     virtual ApiResult hasUpdate(QNetworkAccessManager* networkAccessManager, Project* project);
-    virtual bool canUpdate(Project* project);
+    virtual bool canUpdate(Project* project) const;
     virtual ApiResult update(Project* project);
 
     virtual void reset(Project* project);

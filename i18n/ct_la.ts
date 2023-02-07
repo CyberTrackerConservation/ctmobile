@@ -6,7 +6,7 @@
     <message>
       <location filename="../src/controls/imports/CyberTracker/Controls.1/AboutPopup.qml" line="49" />
       <source>Powered by</source>
-      <translation type="unfinished">Nectunt</translation>
+      <translation type="unfinished">Powered by</translation>
     </message>
   </context>
   <context>
@@ -14,32 +14,32 @@
     <message>
       <location filename="../src/engine/App.cpp" line="389" />
       <source>None</source>
-      <translation type="unfinished">Nihil</translation>
+      <translation type="unfinished">Nullus</translation>
     </message>
     <message>
       <location filename="../src/engine/App.cpp" line="393" />
       <source>Humanitarian</source>
-      <translation type="unfinished">Humanitariae</translation>
+      <translation type="unfinished">Humanitarian</translation>
     </message>
     <message>
       <location filename="../src/engine/App.cpp" line="394" />
       <source>Topographic</source>
-      <translation type="unfinished">Topographie</translation>
+      <translation type="unfinished">Topographic</translation>
     </message>
     <message>
       <location filename="../src/engine/App.cpp" line="395" />
       <source>Streets</source>
-      <translation type="unfinished">Vicos</translation>
+      <translation type="unfinished">Plateis</translation>
     </message>
     <message>
       <location filename="../src/engine/App.cpp" line="396" />
       <source>Streets (vector)</source>
-      <translation type="unfinished">Viae (Vector)</translation>
+      <translation type="unfinished">Viae (vector)</translation>
     </message>
     <message>
       <location filename="../src/engine/App.cpp" line="397" />
       <source>Streets - night (vector)</source>
-      <translation type="unfinished">Viae - nox (Vector)</translation>
+      <translation type="unfinished">Viae - nox (vector)</translation>
     </message>
     <message>
       <location filename="../src/engine/App.cpp" line="398" />
@@ -49,22 +49,22 @@
     <message>
       <location filename="../src/engine/App.cpp" line="399" />
       <source>Dark gray canvas (Vector)</source>
-      <translation type="unfinished">Griseo pariete (Vector)</translation>
+      <translation type="unfinished">Cinereo carbasa (Vector)</translation>
     </message>
     <message>
       <location filename="../src/engine/App.cpp" line="400" />
       <source>Light gray canvas</source>
-      <translation type="unfinished">Lux griseo pariete</translation>
+      <translation type="unfinished">Lux griseo carbasa</translation>
     </message>
     <message>
       <location filename="../src/engine/App.cpp" line="401" />
       <source>Light gray canvas (Vector)</source>
-      <translation type="unfinished">Pariete levi griseo (Vector)</translation>
+      <translation type="unfinished">Lux griseo carbasa (Vector)</translation>
     </message>
     <message>
       <location filename="../src/engine/App.cpp" line="402" />
       <source>Navigation (vector)</source>
-      <translation type="unfinished">Navigation (Vector)</translation>
+      <translation type="unfinished">Navigatio (vector)</translation>
     </message>
     <message>
       <location filename="../src/engine/App.cpp" line="403" />
@@ -92,17 +92,17 @@
     <message>
       <location filename="../qml/BugReport.qml" line="68" />
       <source>Report a bug</source>
-      <translation type="unfinished">Report a Bug</translation>
+      <translation type="unfinished">Referre ugbay</translation>
     </message>
     <message>
       <location filename="../qml/BugReport.qml" line="86" />
       <source>Describe the issue</source>
-      <translation type="unfinished">Exitus describere</translation>
+      <translation type="unfinished">Describere exitus</translation>
     </message>
     <message>
       <location filename="../qml/BugReport.qml" line="87" />
       <source>Tap ✓ in the top right corner</source>
-      <translation type="unfinished">ICTUS ✓ in summo ius anguli</translation>
+      <translation type="unfinished">ICTUS in vertice anguli recti</translation>
     </message>
     <message>
       <location filename="../qml/BugReport.qml" line="88" />
@@ -115,7 +115,7 @@
     <message>
       <location filename="../src/controls/imports/CyberTracker/Controls.1/Camera.qml" line="120" />
       <source>Delete current image?</source>
-      <translation type="unfinished">Delere current imago?</translation>
+      <translation type="unfinished">Current imaginem delere?</translation>
     </message>
   </context>
   <context>
@@ -131,7 +131,7 @@
     <message>
       <location filename="../qml/ConnectDropbox.qml" line="15" />
       <source>Connect to Dropbox</source>
-      <translation type="unfinished">Iungo ut Dropbox</translation>
+      <translation type="unfinished">Coniungere ad Dropbox</translation>
     </message>
   </context>
   <context>
@@ -139,7 +139,7 @@
     <message>
       <location filename="../qml/ConnectEarthRanger.qml" line="15" />
       <source>Connect to</source>
-      <translation type="unfinished">Iungo ut</translation>
+      <translation type="unfinished">Connect to</translation>
     </message>
   </context>
   <context>
@@ -147,7 +147,7 @@
     <message>
       <location filename="../src/controls/imports/CyberTracker/Controls.1/DelegateFieldEdit.qml" line="58" />
       <source>Location</source>
-      <translation type="unfinished">Location</translation>
+      <translation type="unfinished">Locus</translation>
     </message>
   </context>
   <context>
@@ -168,32 +168,32 @@
     <message>
       <location filename="../src/providers/SMART/Globals.qml" line="29" />
       <source>Patrol start</source>
-      <translation type="unfinished">Disputatio initio</translation>
+      <translation type="unfinished">Index initium</translation>
     </message>
     <message>
       <location filename="../src/providers/SMART/Globals.qml" line="30" />
       <source>Patrol end</source>
-      <translation type="unfinished">Disputatio finis</translation>
+      <translation type="unfinished">Circuitus finis</translation>
     </message>
     <message>
       <location filename="../src/providers/SMART/Globals.qml" line="31" />
       <source>Patrol pause</source>
-      <translation type="unfinished">Disputatio diapsalma</translation>
+      <translation type="unfinished">Disputatio mora</translation>
     </message>
     <message>
       <location filename="../src/providers/SMART/Globals.qml" line="32" />
       <source>Patrol resume</source>
-      <translation type="unfinished">Proin Disputatio</translation>
+      <translation type="unfinished">Disputatio Proin</translation>
     </message>
     <message>
       <location filename="../src/providers/SMART/Globals.qml" line="33" />
       <source>Patrol change</source>
-      <translation type="unfinished">Disputatio mutatio</translation>
+      <translation type="unfinished">Index mutatio</translation>
     </message>
     <message>
       <location filename="../src/providers/SMART/Globals.qml" line="34" />
       <source>Patrol</source>
-      <translation type="unfinished">Disputatio</translation>
+      <translation type="unfinished">Patrol</translation>
     </message>
   </context>
   <context>
@@ -201,7 +201,7 @@
     <message>
       <location filename="../src/providers/SMART/HistoryPage.qml" line="75" />
       <source>Patrol</source>
-      <translation type="unfinished">Disputatio</translation>
+      <translation type="unfinished">Patrol</translation>
     </message>
     <message>
       <location filename="../src/providers/SMART/HistoryPage.qml" line="83" />
@@ -221,7 +221,7 @@
     <message>
       <location filename="../src/providers/SMART/HistoryPage.qml" line="150" />
       <source>No patrol sightings</source>
-      <translation type="unfinished">Non multae circuitu</translation>
+      <translation type="unfinished">Nulla circuitu multae</translation>
     </message>
     <message>
       <location filename="../src/providers/SMART/HistoryPage.qml" line="172" />
@@ -231,7 +231,7 @@
     <message>
       <location filename="../src/providers/SMART/HistoryPage.qml" line="190" />
       <source>No sighting selected</source>
-      <translation type="unfinished">Nulla lectus sighting</translation>
+      <translation type="unfinished">Nulla eros lectus</translation>
     </message>
   </context>
   <context>
@@ -279,23 +279,23 @@
       <location filename="../qml/Main.qml" line="65" />
       <location filename="../qml/Main.qml" line="113" />
       <source>Delete project?</source>
-      <translation type="unfinished">Delete project?</translation>
+      <translation type="unfinished">Project delere?</translation>
     </message>
     <message>
       <location filename="../qml/Main.qml" line="66" />
       <source>Project will be permanently removed</source>
-      <translation type="unfinished">Et erit in perpetuum remota Project</translation>
+      <translation type="unfinished">Project erit in perpetuum remotum</translation>
     </message>
     <message>
       <location filename="../qml/Main.qml" line="76" />
       <location filename="../qml/Main.qml" line="154" />
       <source>Reset project?</source>
-      <translation type="unfinished">Reddere praeferentias project?</translation>
+      <translation type="unfinished">Reset project?</translation>
     </message>
     <message>
       <location filename="../qml/Main.qml" line="77" />
       <source>All project data will be lost</source>
-      <translation type="unfinished">Project notitia et perdidit omnes</translation>
+      <translation type="unfinished">Omnes project notitia peribit</translation>
     </message>
     <message>
       <location filename="../qml/Main.qml" line="123" />
@@ -307,22 +307,22 @@
       <location filename="../qml/Main.qml" line="137" />
       <location filename="../qml/Main.qml" line="177" />
       <source>No</source>
-      <translation type="unfinished">Nullum</translation>
+      <translation type="unfinished">No</translation>
     </message>
     <message>
       <location filename="../qml/Main.qml" line="239" />
       <source>Connect to Dropbox</source>
-      <translation type="unfinished">Iungo ut Dropbox</translation>
+      <translation type="unfinished">Coniungere ad Dropbox</translation>
     </message>
     <message>
       <location filename="../qml/Main.qml" line="250" />
       <source>Connect to EarthRanger</source>
-      <translation type="unfinished">Iungo ut EarthRanger</translation>
+      <translation type="unfinished">Coniungere ad EarthRanger</translation>
     </message>
     <message>
       <location filename="../qml/Main.qml" line="261" />
       <source>Connect to SMART</source>
-      <translation type="unfinished">Iungo ut SCITUS</translation>
+      <translation type="unfinished">Ad coniungere SCITUS</translation>
     </message>
     <message>
       <location filename="../qml/Main.qml" line="273" />
@@ -342,7 +342,7 @@
     <message>
       <location filename="../qml/Main.qml" line="334" />
       <source>Settings</source>
-      <translation type="unfinished">Optiones</translation>
+      <translation type="unfinished">Occasus</translation>
     </message>
     <message>
       <location filename="../qml/Main.qml" line="347" />
@@ -356,23 +356,23 @@
       <location filename="../src/providers/SMART/MainPage.qml" line="50" />
       <location filename="../src/providers/SMART/MainPage.qml" line="98" />
       <source>Delete project?</source>
-      <translation type="unfinished">Delete project?</translation>
+      <translation type="unfinished">Project delere?</translation>
     </message>
     <message>
       <location filename="../src/providers/SMART/MainPage.qml" line="51" />
       <source>Project will be permanently removed</source>
-      <translation type="unfinished">Et erit in perpetuum remota Project</translation>
+      <translation type="unfinished">Project erit in perpetuum remotum</translation>
     </message>
     <message>
       <location filename="../src/providers/SMART/MainPage.qml" line="61" />
       <location filename="../src/providers/SMART/MainPage.qml" line="139" />
       <source>Reset project?</source>
-      <translation type="unfinished">Reddere praeferentias project?</translation>
+      <translation type="unfinished">Reset project?</translation>
     </message>
     <message>
       <location filename="../src/providers/SMART/MainPage.qml" line="62" />
       <source>All project data will be lost</source>
-      <translation type="unfinished">Project notitia et perdidit omnes</translation>
+      <translation type="unfinished">Omnes project notitia peribit</translation>
     </message>
     <message>
       <location filename="../src/providers/SMART/MainPage.qml" line="108" />
@@ -384,7 +384,7 @@
       <location filename="../src/providers/SMART/MainPage.qml" line="122" />
       <location filename="../src/providers/SMART/MainPage.qml" line="162" />
       <source>No</source>
-      <translation type="unfinished">Nullum</translation>
+      <translation type="unfinished">No</translation>
     </message>
     <message>
       <location filename="../src/providers/SMART/MainPage.qml" line="254" />
@@ -412,7 +412,7 @@
     <message>
       <location filename="../qml/Maps.qml" line="21" />
       <source>Inspect</source>
-      <translation type="unfinished">Inspicere</translation>
+      <translation type="unfinished">Inspice</translation>
     </message>
     <message>
       <location filename="../qml/Maps.qml" line="21" />
@@ -422,12 +422,12 @@
     <message>
       <location filename="../qml/Maps.qml" line="473" />
       <source>No sighting selected</source>
-      <translation type="unfinished">Nulla lectus sighting</translation>
+      <translation type="unfinished">Nulla eros lectus</translation>
     </message>
     <message>
       <location filename="../qml/Maps.qml" line="509" />
       <source>Position</source>
-      <translation type="unfinished">Statum</translation>
+      <translation type="unfinished">Position</translation>
     </message>
     <message>
       <location filename="../qml/Maps.qml" line="526" />
@@ -440,17 +440,17 @@
     <message>
       <location filename="../src/providers/SMART/MetadataPage.qml" line="35" />
       <source>Start patrol</source>
-      <translation type="unfinished">Satus circuitu</translation>
+      <translation type="unfinished">Satus circuitus</translation>
     </message>
     <message>
       <location filename="../src/providers/SMART/MetadataPage.qml" line="37" />
       <source>Resume patrol</source>
-      <translation type="unfinished">Proin circuitu</translation>
+      <translation type="unfinished">Proin circuitus</translation>
     </message>
     <message>
       <location filename="../src/providers/SMART/MetadataPage.qml" line="39" />
       <source>Change patrol</source>
-      <translation type="unfinished">Mutare circuitu</translation>
+      <translation type="unfinished">Mutatio circuitus</translation>
     </message>
   </context>
   <context>
@@ -484,7 +484,7 @@
     <message>
       <location filename="../qml/Settings.qml" line="327" />
       <source>Settings</source>
-      <translation type="unfinished">Optiones</translation>
+      <translation type="unfinished">Occasus</translation>
     </message>
     <message>
       <location filename="../qml/Settings.qml" line="345" />
@@ -499,22 +499,22 @@
     <message>
       <location filename="../qml/Settings.qml" line="411" />
       <source>Dark theme</source>
-      <translation type="unfinished">Theme tenebris</translation>
+      <translation type="unfinished">Dark theme</translation>
     </message>
     <message>
       <location filename="../qml/Settings.qml" line="444" />
       <source>Font size</source>
-      <translation type="unfinished">Font magnitudine</translation>
+      <translation type="unfinished">Font size</translation>
     </message>
     <message>
       <location filename="../qml/Settings.qml" line="468" />
       <source>Coordinates</source>
-      <translation type="unfinished">Coordinata geographica:</translation>
+      <translation type="unfinished">Coordinates</translation>
     </message>
     <message>
       <location filename="../qml/Settings.qml" line="476" />
       <source>Decimal degrees</source>
-      <translation type="unfinished">Gradus punctum,</translation>
+      <translation type="unfinished">Gradus decimales</translation>
     </message>
     <message>
       <location filename="../qml/Settings.qml" line="476" />
@@ -524,7 +524,7 @@
     <message>
       <location filename="../qml/Settings.qml" line="476" />
       <source>Degrees decimal minutes</source>
-      <translation type="unfinished">Gradus minuta decimal</translation>
+      <translation type="unfinished">Gradus punctum minuta</translation>
     </message>
     <message>
       <location filename="../qml/Settings.qml" line="492" />
@@ -534,7 +534,7 @@
     <message>
       <location filename="../qml/Settings.qml" line="518" />
       <source>Source file</source>
-      <translation type="unfinished">Source file</translation>
+      <translation type="unfinished">Fons file</translation>
     </message>
     <message>
       <location filename="../qml/Settings.qml" line="526" />
@@ -544,7 +544,7 @@
     <message>
       <location filename="../qml/Settings.qml" line="549" />
       <source>Kiosk mode</source>
-      <translation type="unfinished">Ac ante modus</translation>
+      <translation type="unfinished">Ac ante mode</translation>
     </message>
     <message>
       <location filename="../qml/Settings.qml" line="582" />
@@ -554,17 +554,17 @@
     <message>
       <location filename="../qml/Settings.qml" line="617" />
       <source>Simulation source</source>
-      <translation type="unfinished">Fons simulation</translation>
+      <translation type="unfinished">Fons simulatio</translation>
     </message>
     <message>
       <location filename="../qml/Settings.qml" line="626" />
       <source>Generate track file using</source>
-      <translation type="unfinished">Track lima usura generate</translation>
+      <translation type="unfinished">Generate semita lima utens</translation>
     </message>
     <message>
       <location filename="../qml/Settings.qml" line="633" />
       <source>Copy to the Download folder</source>
-      <translation type="unfinished">Effingo ad in folder Download</translation>
+      <translation type="unfinished">Effingo ad Download folder</translation>
     </message>
     <message>
       <location filename="../qml/Settings.qml" line="640" />
@@ -612,7 +612,7 @@
       <location filename="../src/providers/SMART/SightingHomePage.qml" line="111" />
       <location filename="../src/providers/SMART/SightingHomePage.qml" line="185" />
       <source>Patrol</source>
-      <translation type="unfinished">Disputatio</translation>
+      <translation type="unfinished">Patrol</translation>
     </message>
     <message>
       <location filename="../src/providers/SMART/SightingHomePage.qml" line="111" />
@@ -678,17 +678,17 @@
     <message>
       <location filename="../src/providers/SMART/SightingHomePage.qml" line="494" />
       <source>End patrol</source>
-      <translation type="unfinished">Finis circuitu</translation>
+      <translation type="unfinished">Finis circuitus</translation>
     </message>
     <message>
       <location filename="../src/providers/SMART/SightingHomePage.qml" line="505" />
       <source>Pause patrol</source>
-      <translation type="unfinished">Die Jovis circuitu</translation>
+      <translation type="unfinished">Laetabuntur circuitus</translation>
     </message>
     <message>
       <location filename="../src/providers/SMART/SightingHomePage.qml" line="517" />
       <source>Change patrol</source>
-      <translation type="unfinished">Mutare circuitu</translation>
+      <translation type="unfinished">Mutatio circuitus</translation>
     </message>
   </context>
   <context>
@@ -723,12 +723,12 @@
     <message>
       <location filename="../src/providers/SMART/StartPage.qml" line="16" />
       <source>Uploaded data has been cleared</source>
-      <translation type="unfinished">Fasciculi data est iustum</translation>
+      <translation type="unfinished">Fasciculi notitia purgata</translation>
     </message>
     <message>
       <location filename="../src/providers/SMART/StartPage.qml" line="23" />
       <source>Nothing to export</source>
-      <translation type="unfinished">Nihil est export</translation>
+      <translation type="unfinished">Nihil export</translation>
     </message>
     <message>
       <location filename="../src/providers/SMART/StartPage.qml" line="49" />
@@ -743,7 +743,7 @@
     <message>
       <location filename="../src/providers/SMART/StartPage.qml" line="107" />
       <source>Clear sent data</source>
-      <translation type="unfinished">Misit patet notitia</translation>
+      <translation type="unfinished">Patet missis data</translation>
     </message>
     <message>
       <location filename="../src/providers/SMART/StartPage.qml" line="107" />
@@ -763,12 +763,12 @@
     <message>
       <location filename="../src/providers/SMART/StartPage.qml" line="142" />
       <source>Resume Patrol</source>
-      <translation type="unfinished">Disputatio resumere</translation>
+      <translation type="unfinished">Proin Disputatio</translation>
     </message>
     <message>
       <location filename="../src/providers/SMART/StartPage.qml" line="142" />
       <source>Start Patrol</source>
-      <translation type="unfinished">Satus Disputatio</translation>
+      <translation type="unfinished">Satus Patrol</translation>
     </message>
   </context>
   <context>

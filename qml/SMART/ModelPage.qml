@@ -24,7 +24,7 @@ C.ContentPage {
             elementUid: listElementUid
         }
 
-        delegate: ItemDelegate {
+        delegate: C.HighlightDelegate {
             width: ListView.view.width
             highlighted: ListView.isCurrentItem
 
@@ -32,12 +32,9 @@ C.ContentPage {
 
                 Item { height: C.Style.minRowHeight }
 
-                Image {
-                    fillMode: Image.PreserveAspectFit
+                C.SquareIcon {
                     source: form.getElementIcon(modelData.uid)
-                    sourceSize.width: C.Style.minRowHeight
-                    sourceSize.height: C.Style.minRowHeight
-                    verticalAlignment: Image.AlignVCenter
+                    size: C.Style.minRowHeight
                 }
 
                 Label {
@@ -61,7 +58,14 @@ C.ContentPage {
                 form.setControlState(recordUid, "CM", listElementUid, model.index)
 
                 if (form.getElement(modelData.uid).hasChildren) {
+                    form.resetFieldValue(recordUid, Globals.modelTreeFieldUid) // Not the leaf Element, so reset the field.
                     form.pushPage("qrc:/SMART/ModelPage.qml", { recordUid: recordUid, listElementUid: modelData.uid } )
+                    return
+                }
+
+                form.setFieldValue(recordUid, Globals.modelTreeFieldUid, modelData.uid) // Leaf Element, so set the field.
+                if (form.project.wizardMode) {
+                    form.pushWizardPage(recordUid, { fieldUids: modelData.fieldUids, header: form.getElementName(modelData.uid) })
                 } else {
                     form.pushPage("qrc:/SMART/AttributesPage.qml", { title: form.getElementName(modelData.uid), recordUid: recordUid, elementUid: modelData.uid } )
                 }

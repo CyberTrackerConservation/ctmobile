@@ -12,8 +12,8 @@ SwipeDelegate {
     property string recordUid
     property string fieldUid
     property bool showTitle: true
-    property var minRowHeight: Style.minRowHeight
-    property var highlightInvalid: false
+    property int minRowHeight: Style.minRowHeight
+    property bool highlightInvalid: false
     property var callbackEnabled
     property bool autoLocation: true
     property bool enableSwipeReset: true
@@ -36,7 +36,7 @@ SwipeDelegate {
         }
     }
 
-    Binding { target: background; property: "color"; value: C.Style.colorContent }
+    Binding { target: background; property: "color"; value: colorContent || Style.colorContent }
 
     Component {
         id: recordFieldComponent
@@ -72,35 +72,39 @@ SwipeDelegate {
                 }
             }
 
-            Image {
-                fillMode: Image.PreserveAspectFit
+            SquareIcon {
                 source: fieldBinding.fieldIcon
-                sourceSize.width: root.minRowHeight
-                sourceSize.height: root.minRowHeight
-                visible: fieldBinding.fieldIcon.toString() !== ""
-                verticalAlignment: Image.AlignVCenter
+                size: root.minRowHeight
             }
 
             Connections {
                 target: root
 
                 function onClicked() {
-                    if (fieldBinding.field.group) {
-                        // Group.
-                        if (root.wizardMode) {
-                            form.wizard.edit(fieldBinding.value[0])
-                        } else {
-                            form.pushPage(Qt.resolvedUrl("FieldRecordEditorPage.qml"), { title: recordsTitle.text, recordUid: fieldBinding.value[0], fieldUid: fieldBinding.fieldUid, highlightInvalid: root.highlightInvalid })
-                        }
 
-                    } else {
-                        // Repeat.
-                        if (root.wizardMode) {
-                            form.wizard.edit(fieldBinding.recordUid, fieldBinding.fieldUid)
-                        } else {
-                            form.pushPage(Qt.resolvedUrl("FieldRecordListViewPage.qml"), { title: recordsTitle.text, recordUid: fieldBinding.recordUid, fieldUid: fieldBinding.fieldUid, highlightInvalid: root.highlightInvalid })
+                    let recordUid = fieldBinding.field.group ? fieldBinding.value[0] : fieldBinding.recordUid
+                    let fieldUid = fieldBinding.field.group ? "" : fieldBinding.fieldUid
+
+                    if (root.wizardMode) {
+                        form.wizard.edit(recordUid, fieldUid)
+                        return
+                    }
+
+                    if (hasStyle()) {
+                        let onlyFieldType = fieldBinding.field.onlyFieldType
+
+                        switch (onlyFieldType) {
+                        case "PhotoField":
+                            form.pushPage(Qt.resolvedUrl("FieldRecordPhotoGridViewPage.qml"), { recordUid: recordUid, fieldUid: fieldUid })
+                            return
+
+                        case "NumberField":
+                            form.pushPage(Qt.resolvedUrl("FieldRecordNumberGridViewPage.qml"), { recordUid: fieldBinding.value[0], fieldUid: fieldBinding.fieldUid })
+                            return
                         }
                     }
+
+                    form.pushPage(Qt.resolvedUrl("FieldRecordEditorPage.qml"), { title: recordsTitle.text, recordUid: recordUid, fieldUid: fieldUid, highlightInvalid: root.highlightInvalid })
                 }
             }
 
@@ -191,7 +195,7 @@ SwipeDelegate {
                 visible: root.enabled && fieldBinding.field.allowManual
                 onClicked: {
                     // Disable with warning if waiting for time correction.
-                    if (form.useGPSTime && !App.timeManager.corrected) {
+                    if (form.requireGPSTime && !App.timeManager.corrected) {
                         showToast(qsTr("Waiting for time correction"))
                         return
                     }
@@ -241,13 +245,9 @@ SwipeDelegate {
                 onClicked: locationValue.active = true
             }
 
-            Image {
-                fillMode: Image.PreserveAspectFit
+            SquareIcon {
                 source: fieldBinding.fieldIcon
-                sourceSize.width: root.minRowHeight
-                sourceSize.height: root.minRowHeight
-                visible: fieldBinding.fieldIcon.toString() !== ""
-                verticalAlignment: Image.AlignVCenter
+                size: root.minRowHeight
             }
         }
     }
@@ -275,13 +275,9 @@ SwipeDelegate {
                 font.pixelSize: App.settings.font16
             }
 
-            Image {
-                fillMode: Image.PreserveAspectFit
+            SquareIcon {
                 source: fieldBinding.fieldIcon
-                sourceSize.width: root.minRowHeight
-                sourceSize.height: root.minRowHeight
-                visible: fieldBinding.fieldIcon.toString() !== ""
-                verticalAlignment: Image.AlignVCenter
+                size: root.minRowHeight
             }
 
             Connections {
@@ -312,13 +308,9 @@ SwipeDelegate {
                 opacity: 1.0
             }
 
-            Image {
-                fillMode: Image.PreserveAspectFit
+            SquareIcon {
                 source: fieldBinding.fieldIcon
-                sourceSize.width: root.minRowHeight
-                sourceSize.height: root.minRowHeight
-                visible: fieldBinding.fieldIcon.toString() !== ""
-                verticalAlignment: Image.AlignVCenter
+                size: root.minRowHeight
             }
         }
     }
@@ -368,13 +360,9 @@ SwipeDelegate {
                 }
             }
 
-            Image {
-                fillMode: Image.PreserveAspectFit
+            SquareIcon {
                 source: fieldBinding.fieldIcon
-                sourceSize.width: root.minRowHeight
-                sourceSize.height: root.minRowHeight
-                visible: fieldBinding.fieldIcon.toString() !== ""
-                verticalAlignment: Image.AlignVCenter
+                size: root.minRowHeight
             }
 
             Connections {
@@ -431,25 +419,22 @@ SwipeDelegate {
                     recordUid: fieldBinding.recordUid
                     fieldUid: fieldBinding.fieldUid
                     visible: likertMode
+                    onItemClicked: {
+                        fieldBinding.setValue(elementUid)
+                    }
                 }
             }
 
-            Image {
-                fillMode: Image.PreserveAspectFit
+            SquareIcon {
                 source: fieldBinding.fieldIcon
-                sourceSize.width: root.minRowHeight
-                sourceSize.height: root.minRowHeight
+                size: root.minRowHeight
                 visible: fieldBinding.isEmpty && fieldBinding.fieldIcon.toString() !== ""
-                verticalAlignment: Image.AlignVCenter
             }
 
-            Image {
-                fillMode: Image.PreserveAspectFit
+            SquareIcon {
                 source: fieldBinding.valueElementIcon
-                sourceSize.width: root.minRowHeight
-                sourceSize.height: root.minRowHeight
+                size: root.minRowHeight
                 visible: fieldBinding.valueElementIcon.toString() !== ""
-                verticalAlignment: Image.AlignVCenter
             }
 
             Connections {
@@ -457,10 +442,12 @@ SwipeDelegate {
 
                 function onClicked() {
                     if (!likertMode) {
-                        if (!wizardMode) {
-                            form.pushPage(Qt.resolvedUrl("FieldListViewPage.qml"), { recordUid: fieldBinding.recordUid, fieldUid: fieldBinding.fieldUid } )
-                        } else {
+                        if (wizardMode) {
                             form.wizard.edit(fieldBinding.recordUid, fieldBinding.fieldUid)
+                        } else if (hasStyle()) {
+                            form.pushPage(Qt.resolvedUrl("FieldGridViewPage.qml"), { recordUid: fieldBinding.recordUid, fieldUid: fieldBinding.fieldUid } )
+                        } else {
+                            form.pushPage(Qt.resolvedUrl("FieldListViewPage.qml"), { recordUid: fieldBinding.recordUid, fieldUid: fieldBinding.fieldUid } )
                         }
                     }
                 }
@@ -501,23 +488,21 @@ SwipeDelegate {
                 }
             }
 
-            Image {
-                fillMode: Image.PreserveAspectFit
+            SquareIcon {
                 source: fieldBinding.fieldIcon
-                sourceSize.width: root.minRowHeight
-                sourceSize.height: root.minRowHeight
-                visible: fieldBinding.fieldIcon.toString() !== ""
-                verticalAlignment: Image.AlignVCenter
+                size: root.minRowHeight
             }
 
             Connections {
                 target: root
 
                 function onClicked() {
-                    if (!wizardMode) {
-                        form.pushPage(Qt.resolvedUrl("FieldCheckListViewPage.qml"), { recordUid: fieldBinding.recordUid, fieldUid: fieldBinding.fieldUid } )
-                    } else {
+                    if (wizardMode) {
                         form.wizard.edit(fieldBinding.recordUid, fieldBinding.fieldUid)
+                    } else if (hasStyle()) {
+                        form.pushPage(Qt.resolvedUrl("FieldCheckGridViewPage.qml"), { recordUid: fieldBinding.recordUid, fieldUid: fieldBinding.fieldUid } )
+                    } else {
+                        form.pushPage(Qt.resolvedUrl("FieldCheckListViewPage.qml"), { recordUid: fieldBinding.recordUid, fieldUid: fieldBinding.fieldUid } )
                     }
                 }
             }
@@ -557,13 +542,9 @@ SwipeDelegate {
                 }
             }
 
-            Image {
-                fillMode: Image.PreserveAspectFit
+            SquareIcon {
                 source: fieldBinding.fieldIcon
-                sourceSize.width: root.minRowHeight
-                sourceSize.height: root.minRowHeight
-                visible: fieldBinding.fieldIcon.toString() !== ""
-                verticalAlignment: Image.AlignVCenter
+                size: root.minRowHeight
             }
 
             Connections {
@@ -644,23 +625,21 @@ SwipeDelegate {
 
                     function onClicked() {
                         if (!numberEditor.visible) {
-                            if (!wizardMode) {
-                                form.pushPage(Qt.resolvedUrl("FieldKeypadPage.qml"), { recordUid: fieldBinding.recordUid, fieldUid: fieldBinding.fieldUid } )
-                            } else {
+                            if (wizardMode) {
                                 form.wizard.edit(fieldBinding.recordUid, fieldBinding.fieldUid)
+                            } else if (hasStyle()) {
+                                form.pushPage(Qt.resolvedUrl("FieldRangePage.qml"), { recordUid: fieldBinding.recordUid, fieldUid: fieldBinding.fieldUid } )
+                            } else {
+                                form.pushPage(Qt.resolvedUrl("FieldKeypadPage.qml"), { recordUid: fieldBinding.recordUid, fieldUid: fieldBinding.fieldUid } )
                             }
                         }
                     }
                 }
             }
 
-            Image {
-                fillMode: Image.PreserveAspectFit
+            SquareIcon {
                 source: fieldBinding.fieldIcon
-                sourceSize.width: root.minRowHeight
-                sourceSize.height: root.minRowHeight
-                visible: fieldBinding.fieldIcon.toString() !== ""
-                verticalAlignment: Image.AlignVCenter
+                size: root.minRowHeight
             }
         }
     }
@@ -697,13 +676,9 @@ SwipeDelegate {
                 }
             }
 
-            Image {
-                fillMode: Image.PreserveAspectFit
+            SquareIcon {
                 source: fieldBinding.fieldIcon
-                sourceSize.width: root.minRowHeight
-                sourceSize.height: root.minRowHeight
-                visible: fieldBinding.fieldIcon.toString() !== ""
-                verticalAlignment: Image.AlignVCenter
+                size: root.minRowHeight
             }
         }
     }
@@ -737,13 +712,9 @@ SwipeDelegate {
                 }
             }
 
-            Image {
-                fillMode: Image.PreserveAspectFit
+            SquareIcon {
                 source: fieldBinding.fieldIcon
-                sourceSize.width: root.minRowHeight
-                sourceSize.height: root.minRowHeight
-                visible: fieldBinding.fieldIcon.toString() !== ""
-                verticalAlignment: Image.AlignVCenter
+                size: root.minRowHeight
             }
         }
     }
@@ -784,13 +755,9 @@ SwipeDelegate {
                 }
             }
 
-            Image {
-                fillMode: Image.PreserveAspectFit
+            SquareIcon {
                 source: fieldBinding.fieldIcon
-                sourceSize.width: root.minRowHeight
-                sourceSize.height: root.minRowHeight
-                visible: fieldBinding.fieldIcon.toString() !== ""
-                verticalAlignment: Image.AlignVCenter
+                size: root.minRowHeight
             }
 
             Connections {
@@ -799,6 +766,83 @@ SwipeDelegate {
                 function onClicked() {
                     if (!wizardMode) {
                         form.pushPage(Qt.resolvedUrl("FieldSketchpadPage.qml"), { recordUid: fieldBinding.recordUid, fieldUid: fieldBinding.fieldUid } )
+                    } else {
+                        form.wizard.edit(fieldBinding.recordUid, fieldBinding.fieldUid)
+                    }
+                }
+            }
+        }
+    }
+
+    Component {
+        id: fileFieldComponent
+
+        RowLayout {
+            Item { height: root.minRowHeight }
+
+            Column {
+                Layout.fillWidth: true
+                spacing: 5 // default value for ColumnLayout
+                height: fileTitle.implicitHeight + fileValue.implicitHeight
+
+                C.FieldName {
+                    id: fileTitle
+                    width: parent.width
+                    recordUid: fieldBinding.recordUid
+                    fieldUid: fieldBinding.fieldUid
+                    color: titleColor(fieldBinding)
+                    font.bold: titleFontBold(fieldBinding)
+                    visible: titleVisible(fieldBinding)
+                }
+
+                Label {
+                    id: fileValue
+                    width: parent.width
+                    color: valueColor(fieldBinding)
+                    font.pixelSize: App.settings.font16
+                    font.bold: true
+                    wrapMode: Label.Wrap
+                    text: fieldBinding.displayValue
+                    visible: !fieldBinding.isEmpty
+                }
+            }
+
+            SquareIcon {
+                source: fieldBinding.fieldIcon
+                size: root.minRowHeight
+            }
+
+            Image {
+                id: fileFieldImage
+                fillMode: Image.PreserveAspectFit
+                source: {
+                    if (fieldBinding.isEmpty) {
+                        return ""
+                    }
+
+                    let mimeType = App.getMediaMimeType(fieldBinding.value)
+                    if (mimeType === "") {
+                        return ""
+                    }
+
+                    if (Utils.isMimeTypeAnImage(mimeType)) {
+                        return App.getMediaFileUrl(fieldBinding.value)
+                    }
+
+                    return ""
+                }
+                sourceSize.width: root.minRowHeight
+                sourceSize.height: root.minRowHeight
+                visible: source !== ""
+                verticalAlignment: Image.AlignVCenter
+            }
+
+            Connections {
+                target: root
+
+                function onClicked() {
+                    if (!wizardMode) {
+                        form.pushPage(Qt.resolvedUrl("FieldFilePage.qml"), { recordUid: fieldBinding.recordUid, fieldUid: fieldBinding.fieldUid } )
                     } else {
                         form.wizard.edit(fieldBinding.recordUid, fieldBinding.fieldUid)
                     }
@@ -849,13 +893,9 @@ SwipeDelegate {
                 }
             }
 
-            Image {
-                fillMode: Image.PreserveAspectFit
+            SquareIcon {
                 source: fieldBinding.fieldIcon
-                sourceSize.width: root.minRowHeight
-                sourceSize.height: root.minRowHeight
-                visible: fieldBinding.fieldIcon.toString() !== ""
-                verticalAlignment: Image.AlignVCenter
+                size: root.minRowHeight
             }
 
             Connections {
@@ -917,13 +957,9 @@ SwipeDelegate {
                 }
             }
 
-            Image {
-                fillMode: Image.PreserveAspectFit
+            SquareIcon {
                 source: fieldBinding.fieldIcon
-                sourceSize.width: root.minRowHeight
-                sourceSize.height: root.minRowHeight
-                visible: fieldBinding.fieldIcon.toString() !== ""
-                verticalAlignment: Image.AlignVCenter
+                size: root.minRowHeight
             }
         }
     }
@@ -961,13 +997,9 @@ SwipeDelegate {
                 }
             }
 
-            Image {
-                fillMode: Image.PreserveAspectFit
+            SquareIcon {
                 source: fieldBinding.fieldIcon
-                sourceSize.width: root.minRowHeight
-                sourceSize.height: root.minRowHeight
-                visible: fieldBinding.fieldIcon.toString() !== ""
-                verticalAlignment: Image.AlignVCenter
+                size: root.minRowHeight
             }
         }
     }
@@ -993,7 +1025,7 @@ SwipeDelegate {
     swipe.right: Rectangle {
         width: parent.width
         height: parent.height
-        color: C.Style.colorGroove
+        color: colorContent || C.Style.colorContent
 
         RowLayout {
             anchors.fill: parent
@@ -1040,6 +1072,7 @@ SwipeDelegate {
         icon.width: 12
         icon.height: 12
         icon.color: titleColor(fieldBinding)
+        opacity: root.swipe.position === 0 ? 1.0 : 0
     }
 
     ToolButton {
@@ -1051,11 +1084,14 @@ SwipeDelegate {
         icon.source: "qrc:/icons/info.svg"
         icon.width: 20
         icon.height: 20
-        opacity: 0.75
+        enabled: root.swipe.position === 0
+        opacity: enabled ? 0.75 : 0
         clip: true
         icon.color: Material.foreground
         visible: false
-        onClicked: form.pushPage(Qt.resolvedUrl("HintPage.qml"), { title: fieldBinding.fieldName, elementUid: fieldBinding.field.hintElementUid, link: fieldBinding.hintLink })
+        onClicked: {
+            form.pushPage(Qt.resolvedUrl("HintPage.qml"), { title: fieldBinding.fieldName, elementUid: fieldBinding.field.hintElementUid, link: fieldBinding.hintLink })
+        }
     }
 
     onPressAndHold: {
@@ -1117,6 +1153,9 @@ SwipeDelegate {
          case "SketchField":
              return sketchFieldComponent
 
+         case "FileField":
+             return fileFieldComponent
+
          case "DateField":
          case "TimeField":
          case "DateTimeField":
@@ -1132,5 +1171,9 @@ SwipeDelegate {
          }
 
          return undefined
+    }
+
+    function hasStyle() {
+        return form.getFieldParameter(fieldBinding.recordUid, fieldBinding.fieldUid, "content.style", false)
     }
 }

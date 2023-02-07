@@ -12,7 +12,7 @@ C.ListViewV  {
     property alias filterTagName: fieldListModel.filterTagName
     property alias filterTagValue: fieldListModel.filterTagValue
     property bool wizardMode: false
-    property var highlightInvalid: false
+    property bool highlightInvalid: false
     property var callbackEnabled
 
     // Hack start: prevent the scroll position from changing when the list is resized (due to stackview Push/Pop events).

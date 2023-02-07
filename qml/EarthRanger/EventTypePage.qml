@@ -11,6 +11,7 @@ C.ContentPage {
 
     property string listElementUid: "categories"
     property bool flattenCategories: false
+    property int depth: 0
 
     header: C.PageHeader {}
 
@@ -66,30 +67,32 @@ C.ContentPage {
         anchors.fill: parent
 
         model: elementListModel
-        delegate: ItemDelegate {
+        delegate: C.HighlightDelegate {
             id: control
             width: ListView.view.width
-            height: controlLabel.implicitHeight * 3
             highlighted: ListView.isCurrentItem
-            contentItem: RowLayout {
-                Image {
-                    fillMode: Image.PreserveAspectFit
-                    source: form.getElementIcon(modelData.uid)
-                    sourceSize.width: controlLabel.implicitHeight * 1.4
-                }
+            contentItem: ColumnLayout {
+                Item { height: 4 }
+                RowLayout {
+                    C.SquareIcon {
+                        size: C.Style.minRowHeight
+                        source: form.getElementIcon(modelData.uid)
+                    }
 
-                Label {
-                    id: controlLabel
-                    Layout.fillWidth: true
-                    wrapMode: Label.WordWrap
-                    text: form.getElementName(modelData.uid)
-                    verticalAlignment: Text.AlignVCenter
-                    font.pixelSize: App.settings.font16
-                }
+                    Label {
+                        id: controlLabel
+                        Layout.fillWidth: true
+                        wrapMode: Label.WordWrap
+                        text: form.getElementName(modelData.uid)
+                        verticalAlignment: Text.AlignVCenter
+                        font.pixelSize: App.settings.font16
+                    }
 
-                C.ChevronRight {
-                    visible: form.getElement(modelData.uid).hasChildren
+                    C.ChevronRight {
+                        visible: form.getElement(modelData.uid).hasChildren
+                    }
                 }
+                Item { height: 4 }
             }
 
             onClicked: {
@@ -97,10 +100,11 @@ C.ContentPage {
                 form.setControlState("EventTypeStage", "", listElementUid, model.index)
 
                 if (form.getElement(modelData.uid).hasChildren) {
-                    form.pushPage("qrc:/EarthRanger/EventTypePage.qml", { listElementUid: modelData.uid } )
-                } else {
-                    form.pushPage("qrc:/EarthRanger/AttributesPage.qml", { elementUid: modelData.uid } )
+                    form.pushPage("qrc:/EarthRanger/EventTypePage.qml", { listElementUid: modelData.uid, depth: page.depth + 1 } )
+                    return;
                 }
+
+                editAttributes(modelData)
             }
 
             C.HorizontalDivider {}
@@ -122,44 +126,52 @@ C.ContentPage {
         cellHeight: cellWidth / 2 + l.implicitHeight * 3
 
         model: elementListModel
-        delegate: ItemDelegate {
+        delegate: C.HighlightDelegate {
             id: d
             width: gridView.cellWidth
             height: gridView.cellHeight
             highlighted: GridView.isCurrentItem
             padding: 4
-            contentItem: Column {
+            contentItem: ColumnLayout {
                 clip: true
-                Image {
-                    fillMode: Image.PreserveAspectFit
+                C.SquareIcon {
+                    Layout.alignment: Qt.AlignHCenter
                     source: form.getElementIcon(modelData.uid)
-                    sourceSize.width: gridView.cellWidth
-                    sourceSize.height: gridView.cellWidth / 2
-                    horizontalAlignment: Image.AlignHCenter
-                    verticalAlignment: Image.AlignVCenter
-                    width: parent.width
-                    height: parent.width / 2
+                    size: parent.width / 2
                 }
 
                 Label {
+                    Layout.fillWidth: true
                     horizontalAlignment: Label.AlignHCenter
-                    verticalAlignment: Label.AlignVCenter
-                    wrapMode: Label.WordWrap
-                    fontSizeMode: Text.Fit
                     width: parent.width
-                    height: parent.height - (parent.width / 2)
                     text: form.getElementName(modelData.uid)
                     font.pixelSize: App.settings.font14
+                    elide: Label.ElideRight
                 }
             }
 
             onClicked: {
                 gridView.currentIndex = model.index
                 form.setControlState("EventTypeStage", "", listElementUid, model.index)
-                form.pushPage("qrc:/EarthRanger/AttributesPage.qml", { elementUid: modelData.uid } )
+
+                editAttributes(modelData)
             }
 
             C.HorizontalDivider {}
+        }
+    }
+
+    function editAttributes(report) {
+        form.setFieldValue("reportUid", report.uid)
+        form.setFieldState("reportUid", 4 /*FieldState::Constant*/)
+
+        let locationVisible = form.getSetting("locationReports", {})[report.uid]
+        form.setSightingVariable("LOCATION_VISIBLE", locationVisible === undefined || locationVisible === true)
+
+        if (form.project.wizardMode) {
+            form.pushWizardPage(form.rootRecordUid, { fieldUids: report.fieldUids, header: form.getElementName(report.uid) })
+        } else {
+            form.pushPage("qrc:/EarthRanger/AttributesPage.qml", { elementUid: report.uid } )
         }
     }
 }

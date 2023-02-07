@@ -2,148 +2,283 @@
 <!DOCTYPE TS[]>
 <TS version="2.1" language="uk_UA">
 <context>
+    <name>AboutPage</name>
+    <message>
+        <location filename="../qml/AboutPage.qml" line="13" />
+        <source>About</source>
+        <translation type="unfinished">Про</translation>
+    </message>
+    <message>
+        <location filename="../qml/AboutPage.qml" line="71" />
+        <source>Powered by</source>
+        <translation type="unfinished">Працює на базі</translation>
+    </message>
+    <message>
+        <location filename="../qml/AboutPage.qml" line="109" />
+        <source>Privacy statement</source>
+        <translation type="unfinished">Заява про конфіденційність</translation>
+    </message>
+    <message>
+        <location filename="../qml/AboutPage.qml" line="122" />
+        <source>Software license</source>
+        <translation type="unfinished">Ліцензія на програмне забезпечення</translation>
+    </message>
+    <message>
+        <location filename="../qml/AboutPage.qml" line="135" />
+        <source>Support forum</source>
+        <translation type="unfinished">Форум підтримки</translation>
+    </message>
+    <message>
+        <location filename="../qml/AboutPage.qml" line="148" />
+        <source>More resources</source>
+        <translation type="unfinished">Більше ресурсів</translation>
+    </message>
+</context>
+<context>
     <name>AcknowledgeField</name>
     <message>
-        <location filename="../cpp/Field.cpp" line="660" />
+        <location filename="../cpp/Field.cpp" line="704" />
         <source>OK</source>
-        <translation type="unfinished">Гаразд</translation>
+        <translation type="unfinished">ГАРАЗД.</translation>
     </message>
 </context>
 <context>
     <name>App</name>
     <message>
-        <location filename="../cpp/App.cpp" line="704" />
+        <location filename="../cpp/App.cpp" line="719" />
         <source>Accuracy</source>
         <translation type="unfinished">Точність</translation>
     </message>
     <message>
-        <location filename="../cpp/App.cpp" line="849" />
-        <location filename="../cpp/App.cpp" line="905" />
+        <location filename="../cpp/App.cpp" line="864" />
+        <location filename="../cpp/App.cpp" line="920" />
+        <location filename="../cpp/App.cpp" line="934" />
         <source>Permission request</source>
-        <translation type="unfinished">Запит на дозвіл</translation>
+        <translation type="unfinished">Запит на отримання дозволу</translation>
     </message>
     <message>
-        <location filename="../cpp/App.cpp" line="905" />
+        <location filename="../cpp/App.cpp" line="920" />
         <source>This project requires access to some features of the device. Please allow these requests in order to proceed.</source>
-        <translation type="unfinished">Для цього проекту потрібен доступ до деяких функцій пристрою. Будь ласка, дозвольте ці запити, щоб продовжити.</translation>
+        <translation type="unfinished">Цей проект вимагає доступу до деяких функцій пристрою. Будь ласка, дозвольте ці запити, щоб продовжити роботу.</translation>
     </message>
     <message>
-        <location filename="../cpp/App.cpp" line="922" />
+        <location filename="../cpp/App.cpp" line="934" />
+        <source>This project requires background GPS access. Please allow this request in order to proceed.</source>
+        <translation type="unfinished">Для цього проекту потрібен фоновий доступ до GPS. Будь ласка, дозвольте цей запит, щоб продовжити роботу.</translation>
+    </message>
+    <message>
+        <location filename="../cpp/App.cpp" line="946" />
         <source>Recording audio and video requires permission. Please allow the request in order to proceed.</source>
-        <translation type="unfinished">Для запису аудіо та відео потрібен дозвіл. Будь ласка, дозвольте запит, щоб продовжити.</translation>
+        <translation type="unfinished">Для проведення аудіо- та відеозапису потрібен дозвіл. Будь ласка, дозвольте нам продовжити.</translation>
     </message>
     <message>
-        <location filename="../cpp/App.cpp" line="927" />
-        <location filename="../cpp/App.cpp" line="928" />
+        <location filename="../cpp/App.cpp" line="951" />
+        <location filename="../cpp/App.cpp" line="952" />
         <source>Access to GPS is required for this feature to work. Please allow the request in order to proceed.</source>
-        <translation type="unfinished">Щоб ця функція працювала, потрібен доступ до GPS. Будь ласка, дозвольте запит, щоб продовжити.</translation>
+        <translation type="unfinished">Для роботи цієї функції потрібен доступ до GPS. Будь ласка, дозвольте запит, щоб продовжити.</translation>
     </message>
     <message>
-        <location filename="../cpp/App.cpp" line="933" />
-        <location filename="../cpp/App.cpp" line="938" />
+        <location filename="../cpp/App.cpp" line="960" />
+        <source>Background access to GPS is required. Please allow the request in order to proceed.</source>
+        <translation type="unfinished">Потрібен фоновий доступ до GPS. Будь ласка, дозвольте запит, щоб продовжити.</translation>
+    </message>
+    <message>
+        <location filename="../cpp/App.cpp" line="969" />
+        <location filename="../cpp/App.cpp" line="974" />
         <source>Access to external storage is required for this feature to work. Please allow the request in order to proceed.</source>
-        <translation type="unfinished">Для роботи цієї функції потрібен доступ до зовнішньої пам’яті. Будь ласка, дозвольте запит, щоб продовжити.</translation>
+        <translation type="unfinished">Для роботи цієї функції потрібен доступ до зовнішньої пам'яті. Будь ласка, дозвольте запит, щоб продовжити.</translation>
     </message>
     <message>
-        <location filename="../cpp/App.cpp" line="1343" />
+        <location filename="../cpp/App.cpp" line="1002" />
+        <source>Battery level</source>
+        <translation type="unfinished">Рівень заряду батареї</translation>
+    </message>
+    <message>
+        <location filename="../cpp/App.cpp" line="1408" />
         <source>Download failed</source>
         <translation type="unfinished">Не вдалося завантажити</translation>
     </message>
     <message>
-        <location filename="../cpp/App.cpp" line="1398" />
+        <location filename="../cpp/App.cpp" line="1465" />
         <source>Bad link</source>
-        <translation type="unfinished">Погане посилання</translation>
+        <translation type="unfinished">Непрацююче посилання</translation>
     </message>
     <message>
-        <location filename="../cpp/App.cpp" line="1435" />
+        <location filename="../cpp/App.cpp" line="1502" />
         <source>Unknown command</source>
         <translation type="unfinished">Невідома команда</translation>
     </message>
     <message>
-        <location filename="../cpp/App.cpp" line="1665" />
+        <location filename="../cpp/App.cpp" line="1523" />
+        <source>Not an installable package</source>
+        <translation type="unfinished">Не є пакунком для встановлення</translation>
+    </message>
+    <message>
+        <location filename="../cpp/App.cpp" line="1531" />
+        <source>Install successful</source>
+        <translation type="unfinished">Встановлення пройшло успішно</translation>
+    </message>
+    <message>
+        <location filename="../cpp/App.cpp" line="1691" />
+        <source>second</source>
+        <translation type="unfinished">другий</translation>
+    </message>
+    <message>
+        <location filename="../cpp/App.cpp" line="1691" />
+        <source>seconds</source>
+        <translation type="unfinished">секунди</translation>
+    </message>
+    <message>
+        <location filename="../cpp/App.cpp" line="1696" />
+        <source>minute</source>
+        <translation type="unfinished">хвилина</translation>
+    </message>
+    <message>
+        <location filename="../cpp/App.cpp" line="1696" />
+        <source>minutes</source>
+        <translation type="unfinished">хвилини</translation>
+    </message>
+    <message>
+        <location filename="../cpp/App.cpp" line="1701" />
+        <source>hour</source>
+        <translation type="unfinished">година</translation>
+    </message>
+    <message>
+        <location filename="../cpp/App.cpp" line="1701" />
+        <source>hours</source>
+        <translation type="unfinished">години</translation>
+    </message>
+    <message>
+        <location filename="../cpp/App.cpp" line="1816" />
         <source>Export missing</source>
         <translation type="unfinished">Експорт відсутній</translation>
     </message>
     <message>
-        <location filename="../cpp/App.cpp" line="1673" />
+        <location filename="../cpp/App.cpp" line="1824" />
         <source>%1 deleted</source>
         <translation type="unfinished">%1 видалено</translation>
     </message>
     <message>
-        <location filename="../cpp/App.cpp" line="1734" />
+        <location filename="../cpp/App.cpp" line="1886" />
         <source>Project</source>
         <translation type="unfinished">Проект</translation>
     </message>
     <message>
-        <location filename="../cpp/App.cpp" line="1735" />
+        <location filename="../cpp/App.cpp" line="1887" />
         <source>Start date</source>
         <translation type="unfinished">Дата початку</translation>
     </message>
     <message>
-        <location filename="../cpp/App.cpp" line="1736" />
+        <location filename="../cpp/App.cpp" line="1888" />
         <source>Start time</source>
         <translation type="unfinished">Час початку</translation>
     </message>
     <message>
-        <location filename="../cpp/App.cpp" line="1737" />
+        <location filename="../cpp/App.cpp" line="1889" />
         <source>Stop date</source>
         <translation type="unfinished">Дата зупинки</translation>
     </message>
     <message>
-        <location filename="../cpp/App.cpp" line="1738" />
+        <location filename="../cpp/App.cpp" line="1890" />
         <source>Stop time</source>
-        <translation type="unfinished">Зупинити час</translation>
+        <translation type="unfinished">Час зупинки</translation>
     </message>
     <message>
-        <location filename="../cpp/App.cpp" line="1739" />
+        <location filename="../cpp/App.cpp" line="1891" />
         <source>Sightings</source>
-        <translation type="unfinished">Спостереження</translation>
+        <translation type="unfinished">Пам'ятки</translation>
     </message>
     <message>
-        <location filename="../cpp/App.cpp" line="1740" />
+        <location filename="../cpp/App.cpp" line="1892" />
         <source>Locations</source>
-        <translation type="unfinished">Розташування</translation>
+        <translation type="unfinished">Місця розташування</translation>
+    </message>
+    <message>
+        <location filename="../cpp/App.cpp" line="1920" />
+        <source>Failed to load service template</source>
+        <translation type="unfinished">Не вдалося завантажити шаблон послуги</translation>
     </message>
 </context>
 <context>
     <name>AppMain</name>
     <message>
-        <location filename="../qml/AppMain.qml" line="37" />
+        <location filename="../qml/AppMain.qml" line="52" />
+        <location filename="../qml/AppMain.qml" line="65" />
         <source>Choose a file</source>
         <translation type="unfinished">Виберіть файл</translation>
     </message>
     <message>
-        <location filename="../qml/AppMain.qml" line="42" />
+        <location filename="../qml/AppMain.qml" line="57" />
         <source>Image files</source>
         <translation type="unfinished">Файли зображень</translation>
     </message>
     <message>
-        <location filename="../qml/AppMain.qml" line="52" />
+        <location filename="../qml/AppMain.qml" line="70" />
+        <source>Package files</source>
+        <translation type="unfinished">Файли пакету</translation>
+    </message>
+    <message>
+        <location filename="../qml/AppMain.qml" line="82" />
         <source>&amp;File</source>
-        <translation type="unfinished">&amp;Файл</translation>
+        <translation type="unfinished">&amp;File</translation>
     </message>
     <message>
-        <location filename="../qml/AppMain.qml" line="54" />
-        <source>&amp;Copy to Clipboard</source>
-        <translation type="unfinished">&amp;Копіювати в буфер обміну</translation>
+        <location filename="../qml/AppMain.qml" line="84" />
+        <source>Save &amp;As...</source>
+        <translation type="unfinished">Зберегти &amp;As...</translation>
     </message>
     <message>
-        <location filename="../qml/AppMain.qml" line="58" />
-        <source>Snap &amp;As...</source>
-        <translation type="unfinished">Зробити &amp;як...</translation>
+        <location filename="../qml/AppMain.qml" line="91" />
+        <source>Install package</source>
+        <translation type="unfinished">Встановити пакет</translation>
     </message>
     <message>
-        <location filename="../qml/AppMain.qml" line="65" />
+        <location filename="../qml/AppMain.qml" line="97" />
         <source>Connect using clipboard link</source>
-        <translation type="unfinished">Підключитися за допомогою посилання в буфер обміну</translation>
+        <translation type="unfinished">Підключитися за допомогою посилання з буфера обміну</translation>
     </message>
     <message>
-        <location filename="../qml/AppMain.qml" line="72" />
+        <location filename="../qml/AppMain.qml" line="104" />
         <source>&amp;Quit</source>
-        <translation type="unfinished">&amp;Вийти</translation>
+        <translation type="unfinished">&amp;Quit</translation>
     </message>
     <message>
-        <location filename="../qml/AppMain.qml" line="286" />
+        <location filename="../qml/AppMain.qml" line="109" />
+        <source>&amp;Edit</source>
+        <translation type="unfinished">Редагувати</translation>
+    </message>
+    <message>
+        <location filename="../qml/AppMain.qml" line="111" />
+        <source>&amp;Copy to clipboard</source>
+        <translation type="unfinished">Скопіювати в буфер обміну</translation>
+    </message>
+    <message>
+        <location filename="../qml/AppMain.qml" line="116" />
+        <source>&amp;Tools</source>
+        <translation type="unfinished">&amp;Інструменти</translation>
+    </message>
+    <message>
+        <location filename="../qml/AppMain.qml" line="118" />
+        <source>Create ArcGIS location service</source>
+        <translation type="unfinished">Створення сервісу визначення місцезнаходження ArcGIS</translation>
+    </message>
+    <message>
+        <location filename="../qml/AppMain.qml" line="123" />
+        <source>&amp;Window</source>
+        <translation type="unfinished">&amp;Вікно</translation>
+    </message>
+    <message>
+        <location filename="../qml/AppMain.qml" line="125" />
+        <source>Reset window size</source>
+        <translation type="unfinished">Скинути розмір вікна</translation>
+    </message>
+    <message>
+        <location filename="../qml/AppMain.qml" line="133" />
+        <source>Toggle developer console</source>
+        <translation type="unfinished">Перемикання консолі розробника</translation>
+    </message>
+    <message>
+        <location filename="../qml/AppMain.qml" line="370" />
         <source>Offline</source>
         <translation type="unfinished">Офлайн</translation>
     </message>
@@ -151,25 +286,17 @@
 <context>
     <name>AreaField</name>
     <message>
-        <location filename="../cpp/Field.cpp" line="832" />
+        <location filename="../cpp/Field.cpp" line="881" />
         <source>points</source>
-        <translation type="unfinished">точки</translation>
-    </message>
-</context>
-<context>
-    <name>AttributesPage</name>
-    <message>
-        <location filename="../qml/EarthRanger/AttributesPage.qml" line="21" />
-        <source>Editing report saved on </source>
-        <translation type="unfinished">Звіт про редагування збережено</translation>
+        <translation type="unfinished">бали</translation>
     </message>
 </context>
 <context>
     <name>AudioField</name>
     <message>
-        <location filename="../cpp/Field.cpp" line="1208" />
+        <location filename="../cpp/Field.cpp" line="1270" />
         <source>seconds</source>
-        <translation type="unfinished">секунд</translation>
+        <translation type="unfinished">секунди</translation>
     </message>
 </context>
 <context>
@@ -177,7 +304,7 @@
     <message>
         <location filename="../qml/BootstrapAuthPage.qml" line="13" />
         <source>Connect</source>
-        <translation type="unfinished">Підключіть</translation>
+        <translation type="unfinished">Підключіться</translation>
     </message>
 </context>
 <context>
@@ -185,23 +312,23 @@
     <message>
         <location filename="../qml/BreakingChangePage.qml" line="12" />
         <source>Breaking change</source>
-        <translation type="unfinished">Порушення змін</translation>
+        <translation type="unfinished">Вирішальні зміни</translation>
     </message>
 </context>
 <context>
     <name>BugReportPage</name>
     <message>
-        <location filename="../qml/BugReportPage.qml" line="93" />
+        <location filename="../qml/BugReportPage.qml" line="94" />
         <source>Unknown error</source>
         <translation type="unfinished">Невідома помилка</translation>
     </message>
     <message>
-        <location filename="../qml/BugReportPage.qml" line="59" />
+        <location filename="../qml/BugReportPage.qml" line="60" />
         <source>Report saved</source>
         <translation type="unfinished">Звіт збережено</translation>
     </message>
     <message>
-        <location filename="../qml/BugReportPage.qml" line="61" />
+        <location filename="../qml/BugReportPage.qml" line="62" />
         <source>Failed to copy report</source>
         <translation type="unfinished">Не вдалося скопіювати звіт</translation>
     </message>
@@ -213,7 +340,7 @@
     <message>
         <location filename="../qml/BugReportPage.qml" line="16" />
         <source>Share report</source>
-        <translation type="unfinished">Поділіться звітом</translation>
+        <translation type="unfinished">Звіт про акцію</translation>
     </message>
     <message>
         <location filename="../qml/BugReportPage.qml" line="16" />
@@ -223,15 +350,15 @@
     <message>
         <location filename="../qml/BugReportPage.qml" line="40" />
         <source>Tap ✓ in the top right corner</source>
-        <translation type="unfinished">Торкніться ✓ у верхньому правому куті</translation>
+        <translation type="unfinished">Натисніть ✓ у правому верхньому куті</translation>
     </message>
     <message>
         <location filename="../qml/BugReportPage.qml" line="41" />
         <source>Send the file</source>
-        <translation type="unfinished">Надішліть файл</translation>
+        <translation type="unfinished">Надіслати файл</translation>
     </message>
     <message>
-        <location filename="../qml/BugReportPage.qml" line="77" />
+        <location filename="../qml/BugReportPage.qml" line="78" />
         <source>Success</source>
         <translation type="unfinished">Успіх</translation>
     </message>
@@ -239,20 +366,48 @@
 <context>
     <name>CHost_Qt</name>
     <message>
-        <location filename="../lib/classic/Host/Qt/QtHost.cpp" line="1161" />
+        <location filename="../lib/classic/Host/Qt/QtHost.cpp" line="1261" />
         <source>Data exported</source>
-        <translation type="unfinished">Дані експортовано</translation>
+        <translation type="unfinished">Експортовані дані</translation>
+    </message>
+</context>
+<context>
+    <name>CTOConnector</name>
+    <message>
+        <location filename="../cpp/CTO/CTOConnector.cpp" line="82" />
+        <source>Failed to create project</source>
+        <translation type="unfinished">Не вдалося створити проект</translation>
+    </message>
+    <message>
+        <location filename="../cpp/CTO/CTOConnector.cpp" line="135" />
+        <source>Logged out</source>
+        <translation type="unfinished">Вийшли з системи</translation>
+    </message>
+    <message>
+        <location filename="../cpp/CTO/CTOConnector.cpp" line="163" />
+        <source>Form download failed</source>
+        <translation type="unfinished">Не вдалося завантажити форму</translation>
+    </message>
+    <message>
+        <location filename="../cpp/CTO/CTOConnector.cpp" line="170" />
+        <source>Bad package</source>
+        <translation type="unfinished">Погана упаковка</translation>
+    </message>
+    <message>
+        <location filename="../cpp/CTO/CTOConnector.cpp" line="177" />
+        <source>Failed to read form settings sheet</source>
+        <translation type="unfinished">Не вдалося прочитати сторінку налаштувань форми</translation>
     </message>
 </context>
 <context>
     <name>CheckField</name>
     <message>
-        <location filename="../cpp/Field.cpp" line="611" />
+        <location filename="../cpp/Field.cpp" line="655" />
         <source>Yes</source>
         <translation type="unfinished">Так</translation>
     </message>
     <message>
-        <location filename="../cpp/Field.cpp" line="611" />
+        <location filename="../cpp/Field.cpp" line="655" />
         <source>No</source>
         <translation type="unfinished">Ні</translation>
     </message>
@@ -260,47 +415,52 @@
 <context>
     <name>ClassicConnector</name>
     <message>
-        <location filename="../cpp/Classic/ClassicConnector.cpp" line="71" />
-        <location filename="../cpp/Classic/ClassicConnector.cpp" line="480" />
-        <location filename="../cpp/Classic/ClassicConnector.cpp" line="520" />
+        <location filename="../cpp/Classic/ClassicConnector.cpp" line="77" />
+        <location filename="../cpp/Classic/ClassicConnector.cpp" line="510" />
+        <location filename="../cpp/Classic/ClassicConnector.cpp" line="550" />
         <source>Cannot create path</source>
-        <translation type="unfinished">Неможливо створити шлях</translation>
+        <translation type="unfinished">Не вдається створити шлях</translation>
     </message>
     <message>
-        <location filename="../cpp/Classic/ClassicConnector.cpp" line="133" />
+        <location filename="../cpp/Classic/ClassicConnector.cpp" line="139" />
         <source>Server not found</source>
-        <translation type="unfinished">Сервер не знайдений</translation>
+        <translation type="unfinished">Сервер не знайдено</translation>
     </message>
     <message>
-        <location filename="../cpp/Classic/ClassicConnector.cpp" line="300" />
+        <location filename="../cpp/Classic/ClassicConnector.cpp" line="308" />
         <source>Not supported</source>
         <translation type="unfinished">Не підтримується</translation>
     </message>
     <message>
-        <location filename="../cpp/Classic/ClassicConnector.cpp" line="306" />
+        <location filename="../cpp/Classic/ClassicConnector.cpp" line="323" />
+        <source>Unsent data</source>
+        <translation type="unfinished">Невідправлені дані</translation>
+    </message>
+    <message>
+        <location filename="../cpp/Classic/ClassicConnector.cpp" line="330" />
         <source>Not found</source>
         <translation type="unfinished">Не знайдено</translation>
     </message>
     <message>
-        <location filename="../cpp/Classic/ClassicConnector.cpp" line="271" />
-        <location filename="../cpp/Classic/ClassicConnector.cpp" line="312" />
+        <location filename="../cpp/Classic/ClassicConnector.cpp" line="279" />
+        <location filename="../cpp/Classic/ClassicConnector.cpp" line="336" />
         <source>DEF file corrupt</source>
-        <translation type="unfinished">Файл DEF пошкоджено</translation>
+        <translation type="unfinished">Пошкоджено файл DEF</translation>
     </message>
     <message>
-        <location filename="../cpp/Classic/ClassicConnector.cpp" line="336" />
+        <location filename="../cpp/Classic/ClassicConnector.cpp" line="360" />
         <source>Download failed</source>
         <translation type="unfinished">Не вдалося завантажити</translation>
     </message>
     <message>
-        <location filename="../cpp/Classic/ClassicConnector.cpp" line="345" />
+        <location filename="../cpp/Classic/ClassicConnector.cpp" line="369" />
         <source>Bad archive</source>
         <translation type="unfinished">Поганий архів</translation>
     </message>
     <message>
-        <location filename="../cpp/Classic/ClassicConnector.cpp" line="488" />
+        <location filename="../cpp/Classic/ClassicConnector.cpp" line="518" />
         <source>Failed to read classic project</source>
-        <translation type="unfinished">Не вдалося прочитати класичний проект</translation>
+        <translation type="unfinished">Не зумів прочитати класичний проект</translation>
     </message>
 </context>
 <context>
@@ -313,7 +473,7 @@
     <message>
         <location filename="../qml/ComingSoonPage.qml" line="16" />
         <source>In progress, expected during 2020!</source>
-        <translation type="unfinished">У виконанні, очікується протягом 2020 року!</translation>
+        <translation type="unfinished">У процесі виконання, очікується протягом 2020 року!</translation>
     </message>
 </context>
 <context>
@@ -339,7 +499,7 @@
     <message>
         <location filename="../qml/SMART/ConnectCollectPage.qml" line="24" />
         <source>All regions</source>
-        <translation type="unfinished">Усі регіони</translation>
+        <translation type="unfinished">Всі регіони</translation>
     </message>
     <message>
         <location filename="../qml/SMART/ConnectCollectPage.qml" line="63" />
@@ -349,7 +509,7 @@
     <message>
         <location filename="../qml/SMART/ConnectCollectPage.qml" line="89" />
         <source>Select package</source>
-        <translation type="unfinished">Виберіть пакет</translation>
+        <translation type="unfinished">Оберіть пакет</translation>
     </message>
     <message>
         <location filename="../qml/SMART/ConnectCollectPage.qml" line="122" />
@@ -364,21 +524,26 @@
     <message>
         <location filename="../qml/SMART/ConnectCollectPage.qml" line="166" />
         <source>No packages found</source>
-        <translation type="unfinished">Пакунок не знайдено</translation>
+        <translation type="unfinished">Посилки не знайдено</translation>
     </message>
     <message>
         <location filename="../qml/SMART/ConnectCollectPage.qml" line="151" />
         <location filename="../qml/SMART/ConnectCollectPage.qml" line="171" />
         <source>Connection error</source>
-        <translation type="unfinished">Помилка з'єднання</translation>
+        <translation type="unfinished">Помилка підключення</translation>
     </message>
 </context>
 <context>
     <name>ConnectConnectPage</name>
     <message>
+        <location filename="../qml/SMART/ConnectConnectPage.qml" line="21" />
+        <source>Connect</source>
+        <translation type="unfinished">Підключіться</translation>
+    </message>
+    <message>
         <location filename="../qml/SMART/ConnectConnectPage.qml" line="44" />
         <source>Select package</source>
-        <translation type="unfinished">Виберіть пакет</translation>
+        <translation type="unfinished">Оберіть пакет</translation>
     </message>
     <message>
         <location filename="../qml/SMART/ConnectConnectPage.qml" line="69" />
@@ -388,7 +553,7 @@
     <message>
         <location filename="../qml/SMART/ConnectConnectPage.qml" line="104" />
         <source>No packages found</source>
-        <translation type="unfinished">Пакунок не знайдено</translation>
+        <translation type="unfinished">Посилки не знайдено</translation>
     </message>
     <message>
         <location filename="../qml/SMART/ConnectConnectPage.qml" line="109" />
@@ -401,7 +566,7 @@
     <message>
         <location filename="../qml/ConnectDropboxPage.qml" line="9" />
         <source>Connect to Dropbox</source>
-        <translation type="unfinished">Підключіться до Dropbox</translation>
+        <translation type="unfinished">Підключення до Dropbox</translation>
     </message>
 </context>
 <context>
@@ -412,42 +577,47 @@
         <translation type="unfinished">Виберіть форми</translation>
     </message>
     <message>
-        <location filename="../qml/ConnectFormPage.qml" line="51" />
+        <location filename="../qml/ConnectFormPage.qml" line="34" />
         <source>All</source>
         <translation type="unfinished">Всі</translation>
     </message>
     <message>
-        <location filename="../qml/ConnectFormPage.qml" line="70" />
+        <location filename="../qml/ConnectFormPage.qml" line="47" />
         <source>None</source>
-        <translation type="unfinished">Жодного</translation>
+        <translation type="unfinished">Немає</translation>
     </message>
 </context>
 <context>
     <name>ConnectKoBoPage</name>
     <message>
+        <location filename="../qml/ODK/ConnectKoBoPage.qml" line="19" />
+        <source>Connect</source>
+        <translation type="unfinished">Підключіться</translation>
+    </message>
+    <message>
         <location filename="../qml/ODK/ConnectKoBoPage.qml" line="28" />
-        <source>Humanitarian</source>
-        <translation type="unfinished">Гуманітарний</translation>
+        <source>Humanitarian server</source>
+        <translation type="unfinished">Гуманітарний сервер</translation>
     </message>
     <message>
         <location filename="../qml/ODK/ConnectKoBoPage.qml" line="29" />
-        <source>Research</source>
-        <translation type="unfinished">Дослідження</translation>
+        <source>Global server</source>
+        <translation type="unfinished">Глобальний сервер</translation>
     </message>
     <message>
         <location filename="../qml/ODK/ConnectKoBoPage.qml" line="30" />
         <source>Custom</source>
-        <translation type="unfinished">На замовлення</translation>
+        <translation type="unfinished">Нестандартний</translation>
     </message>
     <message>
         <location filename="../qml/ODK/ConnectKoBoPage.qml" line="86" />
         <source>No forms found</source>
-        <translation type="unfinished">Жодних форм не знайдено</translation>
+        <translation type="unfinished">Форм не знайдено</translation>
     </message>
     <message>
         <location filename="../qml/ODK/ConnectKoBoPage.qml" line="99" />
         <source>Error retrieving form</source>
-        <translation type="unfinished">Помилка отримання форми</translation>
+        <translation type="unfinished">Форма пошуку помилок</translation>
     </message>
 </context>
 <context>
@@ -455,55 +625,60 @@
     <message>
         <location filename="../qml/ODK/ConnectKoBoSharedPage.qml" line="24" />
         <source>%1 Connect</source>
-        <translation type="unfinished">%1 Підключитися</translation>
+        <translation type="unfinished">%1 Підключення</translation>
     </message>
     <message>
-        <location filename="../qml/ODK/ConnectKoBoSharedPage.qml" line="48" />
-        <source>Enter Landscape</source>
-        <translation type="unfinished">Введіть ландшафт</translation>
+        <location filename="../qml/ODK/ConnectKoBoSharedPage.qml" line="44" />
+        <source>Enter user name</source>
+        <translation type="unfinished">Введіть ім'я користувача</translation>
     </message>
     <message>
-        <location filename="../qml/ODK/ConnectKoBoSharedPage.qml" line="57" />
+        <location filename="../qml/ODK/ConnectKoBoSharedPage.qml" line="53" />
         <source>Use %1 for templates</source>
         <translation type="unfinished">Використовуйте %1 для шаблонів</translation>
     </message>
     <message>
-        <location filename="../qml/ODK/ConnectKoBoSharedPage.qml" line="77" />
+        <location filename="../qml/ODK/ConnectKoBoSharedPage.qml" line="73" />
         <source>Choose forms</source>
         <translation type="unfinished">Виберіть форми</translation>
     </message>
     <message>
-        <location filename="../qml/ODK/ConnectKoBoSharedPage.qml" line="113" />
+        <location filename="../qml/ODK/ConnectKoBoSharedPage.qml" line="109" />
         <source>Connection failed</source>
-        <translation type="unfinished">Підключення не вдалося</translation>
+        <translation type="unfinished">Не вдалося встановити з'єднання</translation>
     </message>
     <message>
-        <location filename="../qml/ODK/ConnectKoBoSharedPage.qml" line="145" />
+        <location filename="../qml/ODK/ConnectKoBoSharedPage.qml" line="141" />
         <source>No forms found</source>
-        <translation type="unfinished">Жодних форм не знайдено</translation>
+        <translation type="unfinished">Форм не знайдено</translation>
     </message>
     <message>
-        <location filename="../qml/ODK/ConnectKoBoSharedPage.qml" line="158" />
+        <location filename="../qml/ODK/ConnectKoBoSharedPage.qml" line="154" />
         <source>Error retrieving form</source>
-        <translation type="unfinished">Помилка отримання форми</translation>
+        <translation type="unfinished">Форма пошуку помилок</translation>
     </message>
 </context>
 <context>
     <name>ConnectODKCentralPage</name>
     <message>
+        <location filename="../qml/ODK/ConnectODKCentralPage.qml" line="20" />
+        <source>Connect</source>
+        <translation type="unfinished">Підключіться</translation>
+    </message>
+    <message>
         <location filename="../qml/ODK/ConnectODKCentralPage.qml" line="40" />
         <source>Select project</source>
-        <translation type="unfinished">Виберіть проект</translation>
+        <translation type="unfinished">Вибрати проект</translation>
     </message>
     <message>
         <location filename="../qml/ODK/ConnectODKCentralPage.qml" line="97" />
         <source>No projects found</source>
-        <translation type="unfinished">Жодного проекту не знайдено</translation>
+        <translation type="unfinished">Не знайдено жодного проекту</translation>
     </message>
     <message>
         <location filename="../qml/ODK/ConnectODKCentralPage.qml" line="120" />
         <source>No forms found</source>
-        <translation type="unfinished">Жодних форм не знайдено</translation>
+        <translation type="unfinished">Форм не знайдено</translation>
     </message>
 </context>
 <context>
@@ -512,18 +687,18 @@
         <location filename="../qml/ConnectPage.qml" line="12" />
         <location filename="../qml/SMART/ConnectPage.qml" line="43" />
         <source>Connect</source>
-        <translation type="unfinished">Підключіть</translation>
+        <translation type="unfinished">Підключіться</translation>
     </message>
     <message>
         <location filename="../qml/Classic/ConnectPage.qml" line="26" />
         <location filename="../qml/SMART/ConnectPage.qml" line="26" />
         <source>Desktop install</source>
-        <translation type="unfinished">Встановлення на робочий стіл</translation>
+        <translation type="unfinished">Настільна установка</translation>
     </message>
     <message>
         <location filename="../qml/Classic/ConnectPage.qml" line="27" />
         <source>Scan for projects installed by CyberTracker desktop</source>
-        <translation type="unfinished">Скануйте проекти, встановлені на робочому столі CyberTracker</translation>
+        <translation type="unfinished">Сканування на наявність проектів, встановлених десктопною програмою CyberTracker</translation>
     </message>
     <message>
         <location filename="../qml/Classic/ConnectPage.qml" line="43" />
@@ -533,7 +708,7 @@
     <message>
         <location filename="../qml/Classic/ConnectPage.qml" line="44" />
         <source>Install a project from a web source. Requires a web link from the project publisher.</source>
-        <translation type="unfinished">Встановіть проект із веб-джерела. Потрібне веб-посилання від видавця проекту.</translation>
+        <translation type="unfinished">Встановлення проекту з веб-джерела. Потрібне веб-посилання від видавця проекту.</translation>
     </message>
     <message>
         <location filename="../qml/Classic/ConnectPage.qml" line="55" />
@@ -543,23 +718,23 @@
     <message>
         <location filename="../qml/Classic/ConnectPage.qml" line="56" />
         <source>Install a sample to see CyberTracker in action. Saved data will not be kept.</source>
-        <translation type="unfinished">Установіть зразок, щоб побачити CyberTracker в дії. Збережені дані не зберігатимуться.</translation>
+        <translation type="unfinished">Встановіть зразок, щоб побачити CyberTracker в дії. Збережені дані не зберігаються.</translation>
     </message>
     <message>
         <location filename="../qml/EarthRanger/ConnectPage.qml" line="8" />
         <location filename="../qml/Esri/ConnectPage.qml" line="19" />
         <source>Connect to</source>
-        <translation type="unfinished">Підключитися до</translation>
+        <translation type="unfinished">Підключіться до</translation>
     </message>
     <message>
         <location filename="../qml/SMART/ConnectPage.qml" line="27" />
         <source>Scan for projects installed by SMART Desktop</source>
-        <translation type="unfinished">Скануйте проекти, встановлені за допомогою SMART Desktop</translation>
+        <translation type="unfinished">Пошук проектів, встановлених SMART Desktop</translation>
     </message>
     <message>
         <location filename="../qml/SMART/ConnectPage.qml" line="44" />
         <source>Install a project from SMART Connect</source>
-        <translation type="unfinished">Встановіть проект із SMART Connect</translation>
+        <translation type="unfinished">Встановити проект від SMART Connect</translation>
     </message>
     <message>
         <location filename="../qml/SMART/ConnectPage.qml" line="55" />
@@ -569,12 +744,12 @@
     <message>
         <location filename="../qml/SMART/ConnectPage.qml" line="56" />
         <source>Install a project from SMART Collect</source>
-        <translation type="unfinished">Встановіть проект із SMART Collect</translation>
+        <translation type="unfinished">Встановіть проект від SMART Collect</translation>
     </message>
     <message>
         <location filename="../qml/Esri/ConnectPage.qml" line="40" />
         <source>Select surveys</source>
-        <translation type="unfinished">Виберіть опитування</translation>
+        <translation type="unfinished">Вибрані опитування</translation>
     </message>
     <message>
         <location filename="../qml/Esri/ConnectPage.qml" line="71" />
@@ -587,38 +762,35 @@
     <message>
         <location filename="../qml/ConnectPane.qml" line="101" />
         <source>Coming soon...</source>
-        <translation type="unfinished">Незабаром...</translation>
+        <translation type="unfinished">Скоро буде...</translation>
     </message>
 </context>
 <context>
     <name>ConnectPaneSM</name>
     <message>
-        <location filename="../qml/SMART/ConnectPaneSM.qml" line="15" />
-        <source>Tap to add project</source>
-        <translation type="unfinished">Торкніться, щоб додати проект</translation>
-    </message>
-</context>
-<context>
-    <name>ConnectPaneSMK</name>
-    <message>
-        <location filename="../qml/SMART/ConnectPaneSMK.qml" line="35" />
+        <location filename="../qml/SMART/ConnectPaneSM.qml" line="35" />
         <source>Scan for desktop projects</source>
         <translation type="unfinished">Сканування для настільних проектів</translation>
     </message>
     <message>
-        <location filename="../qml/SMART/ConnectPaneSMK.qml" line="53" />
+        <location filename="../qml/SMART/ConnectPaneSM.qml" line="53" />
         <source>Connect to an online project</source>
-        <translation type="unfinished">Підключення до онлайн-проекту</translation>
+        <translation type="unfinished">Підключіться до онлайн-проекту</translation>
     </message>
     <message>
-        <location filename="../qml/SMART/ConnectPaneSMK.qml" line="65" />
+        <location filename="../qml/SMART/ConnectPaneSM.qml" line="65" />
         <source>Connect to a community project</source>
-        <translation type="unfinished">Підключіться до спільного проекту</translation>
+        <translation type="unfinished">Підключіться до громадського проекту</translation>
     </message>
     <message>
-        <location filename="../qml/SMART/ConnectPaneSMK.qml" line="77" />
+        <location filename="../qml/SMART/ConnectPaneSM.qml" line="73" />
+        <source>Scan QR code</source>
+        <translation type="unfinished">Відскануйте QR-код</translation>
+    </message>
+    <message>
+        <location filename="../qml/SMART/ConnectPaneSM.qml" line="77" />
         <source>Install from a shared QR code</source>
-        <translation type="unfinished">Установіть із спільного QR-коду</translation>
+        <translation type="unfinished">Встановити за допомогою загального QR-коду</translation>
     </message>
 </context>
 <context>
@@ -626,7 +798,7 @@
     <message>
         <location filename="../qml/ConnectQRCodePage.qml" line="17" />
         <source>Scan QR code</source>
-        <translation type="unfinished">Скануйте QR-код</translation>
+        <translation type="unfinished">Відскануйте QR-код</translation>
     </message>
 </context>
 <context>
@@ -639,12 +811,12 @@
     <message>
         <location filename="../qml/SMART/ConnectRoutesPage.qml" line="52" />
         <source>route installed</source>
-        <translation type="unfinished">маршрут встановлений</translation>
+        <translation type="unfinished">прокладено маршрут</translation>
     </message>
     <message>
         <location filename="../qml/SMART/ConnectRoutesPage.qml" line="52" />
         <source>routes installed</source>
-        <translation type="unfinished">встановлені маршрути</translation>
+        <translation type="unfinished">прокладено маршрутів</translation>
     </message>
 </context>
 <context>
@@ -657,17 +829,17 @@
     <message>
         <location filename="../qml/Classic/ConnectSamplesPage.qml" line="19" />
         <source>Shows what data capture is like for simple cases</source>
-        <translation type="unfinished">Показує, як відбувається захоплення даних для простих випадків</translation>
+        <translation type="unfinished">Показує, що таке збір даних на прикладі простих кейсів</translation>
     </message>
     <message>
         <location filename="../qml/Classic/ConnectSamplesPage.qml" line="25" />
         <source>Shows recording notes, photos and audio</source>
-        <translation type="unfinished">Показує записні нотатки, фотографії та аудіо</translation>
+        <translation type="unfinished">Відображає нотатки, фотографії та аудіозаписи</translation>
     </message>
     <message>
         <location filename="../qml/Classic/ConnectSamplesPage.qml" line="31" />
         <source>More advanced sample showing track timer and a plant key</source>
-        <translation type="unfinished">Більш розширений зразок, який показує таймер треку та ключ заводу</translation>
+        <translation type="unfinished">Більш просунутий зразок з таймером колії та ключем від заводу</translation>
     </message>
 </context>
 <context>
@@ -691,148 +863,254 @@
 <context>
     <name>Connector</name>
     <message>
-        <location filename="../cpp/Connector.cpp" line="46" />
         <location filename="../cpp/Connector.cpp" line="51" />
         <location filename="../cpp/Connector.cpp" line="61" />
+        <location filename="../cpp/Connector.cpp" line="71" />
         <source>Not implemented</source>
-        <translation type="unfinished">Не впроваджений</translation>
+        <translation type="unfinished">Не виконано</translation>
     </message>
     <message>
-        <location filename="../cpp/Connector.cpp" line="89" />
+        <location filename="../cpp/Connector.cpp" line="99" />
         <source>Up to date</source>
         <translation type="unfinished">Актуально</translation>
     </message>
     <message>
-        <location filename="../cpp/Connector.cpp" line="94" />
+        <location filename="../cpp/Connector.cpp" line="104" />
         <source>Already connected</source>
         <translation type="unfinished">Вже підключено</translation>
     </message>
     <message>
-        <location filename="../cpp/Connector.cpp" line="99" />
+        <location filename="../cpp/Connector.cpp" line="109" />
         <source>Update available</source>
-        <translation type="unfinished">Доступне оновлення</translation>
+        <translation type="unfinished">Доступно оновлення</translation>
+    </message>
+</context>
+<context>
+    <name>ConsoleWindow</name>
+    <message>
+        <location filename="../qml/ConsoleWindow.qml" line="15" />
+        <source>Developer console</source>
+        <translation type="unfinished">Консоль розробника</translation>
+    </message>
+    <message>
+        <location filename="../qml/ConsoleWindow.qml" line="66" />
+        <source>Clear</source>
+        <translation type="unfinished">Чисто</translation>
+    </message>
+</context>
+<context>
+    <name>CreateEsriServiceWindow</name>
+    <message>
+        <location filename="../qml/CreateEsriServiceWindow.qml" line="19" />
+        <source>Create ArcGIS location service</source>
+        <translation type="unfinished">Створення сервісу визначення місцезнаходження ArcGIS</translation>
+    </message>
+    <message>
+        <location filename="../qml/CreateEsriServiceWindow.qml" line="46" />
+        <source>Create an ArcGIS Online hosted feature service which will receive location track data from Survey123 projects.</source>
+        <translation type="unfinished">Створення сервісу ArcGIS Online, який буде отримувати дані відстеження місцезнаходження з проектів Survey123.</translation>
+    </message>
+    <message>
+        <location filename="../qml/CreateEsriServiceWindow.qml" line="86" />
+        <source>Service name</source>
+        <translation type="unfinished">Назва послуги</translation>
+    </message>
+    <message>
+        <location filename="../qml/CreateEsriServiceWindow.qml" line="95" />
+        <source>The name of service to be created</source>
+        <translation type="unfinished">Назва сервісу, що створюється</translation>
+    </message>
+    <message>
+        <location filename="../qml/CreateEsriServiceWindow.qml" line="99" />
+        <source>Service description</source>
+        <translation type="unfinished">Опис послуги</translation>
+    </message>
+    <message>
+        <location filename="../qml/CreateEsriServiceWindow.qml" line="108" />
+        <source>The service description</source>
+        <translation type="unfinished">Опис послуги</translation>
+    </message>
+    <message>
+        <location filename="../qml/CreateEsriServiceWindow.qml" line="119" />
+        <source>Click 'START' to create service</source>
+        <translation type="unfinished">Натисніть "СТАРТ", щоб створити послугу</translation>
+    </message>
+    <message>
+        <location filename="../qml/CreateEsriServiceWindow.qml" line="130" />
+        <source>Start</source>
+        <translation type="unfinished">Старт</translation>
+    </message>
+    <message>
+        <location filename="../qml/CreateEsriServiceWindow.qml" line="162" />
+        <source>Success - service created</source>
+        <translation type="unfinished">Успіх - сервіс створено</translation>
+    </message>
+    <message>
+        <location filename="../qml/CreateEsriServiceWindow.qml" line="170" />
+        <source>Create a column named 'bind::ct:esriLocationServiceUrl' in the 'settings' sheet of the XlsForm and set it to the content below. Republish and install or update the form in CyberTracker.</source>
+        <translation type="unfinished">Створіть стовпець з назвою "bind::ct:esriLocationServiceUrl" на аркуші "settings" XlsForm та встановіть для нього наведений нижче вміст. Повторно опублікуйте та встановіть або оновіть форму в CyberTracker.</translation>
+    </message>
+    <message>
+        <location filename="../qml/CreateEsriServiceWindow.qml" line="199" />
+        <source>Copy to clipboard</source>
+        <translation type="unfinished">Скопіювати в буфер обміну</translation>
+    </message>
+    <message>
+        <location filename="../qml/CreateEsriServiceWindow.qml" line="223" />
+        <source>Logging in...</source>
+        <translation type="unfinished">Вхід в систему...</translation>
+    </message>
+    <message>
+        <location filename="../qml/CreateEsriServiceWindow.qml" line="234" />
+        <source>Creating service...</source>
+        <translation type="unfinished">Створення сервісу...</translation>
+    </message>
+    <message>
+        <location filename="../qml/CreateEsriServiceWindow.qml" line="243" />
+        <source>Success!</source>
+        <translation type="unfinished">Успіхів!</translation>
     </message>
 </context>
 <context>
     <name>EarthRangerConnector</name>
     <message>
-        <location filename="../cpp/EarthRanger/EarthRangerConnector.cpp" line="102" />
+        <location filename="../cpp/EarthRanger/EarthRangerConnector.cpp" line="108" />
         <source>Failed to create project</source>
         <translation type="unfinished">Не вдалося створити проект</translation>
     </message>
     <message>
-        <location filename="../cpp/EarthRanger/EarthRangerConnector.cpp" line="167" />
+        <location filename="../cpp/EarthRanger/EarthRangerConnector.cpp" line="206" />
         <source>Logged out</source>
-        <translation type="unfinished">Вийшов із системи</translation>
+        <translation type="unfinished">Вийшли з системи</translation>
     </message>
     <message>
-        <location filename="../cpp/EarthRanger/EarthRangerConnector.cpp" line="175" />
+        <location filename="../cpp/EarthRanger/EarthRangerConnector.cpp" line="214" />
         <source>Unsent data</source>
-        <translation type="unfinished">Ненадіслані дані</translation>
+        <translation type="unfinished">Невідправлені дані</translation>
     </message>
 </context>
 <context>
     <name>EarthRangerProvider</name>
     <message>
-        <location filename="../cpp/EarthRanger/EarthRangerProvider.cpp" line="1211" />
-        <source>Location</source>
-        <translation type="unfinished">Розташування</translation>
+        <location filename="../cpp/EarthRanger/EarthRangerProvider.cpp" line="1181" />
+        <source>Login needed</source>
+        <translation type="unfinished">Потрібен логін</translation>
     </message>
     <message>
-        <location filename="../cpp/EarthRanger/EarthRangerProvider.cpp" line="1212" />
+        <location filename="../cpp/EarthRanger/EarthRangerProvider.cpp" line="1202" />
+        <source>Sighting</source>
+        <translation type="unfinished">Прицілювання</translation>
+    </message>
+    <message>
+        <location filename="../cpp/EarthRanger/EarthRangerProvider.cpp" line="1228" />
+        <source>Location</source>
+        <translation type="unfinished">Місцезнаходження</translation>
+    </message>
+    <message>
+        <location filename="../cpp/EarthRanger/EarthRangerProvider.cpp" line="1229" />
         <source>Photos</source>
         <translation type="unfinished">Фотографії</translation>
     </message>
     <message>
-        <location filename="../cpp/EarthRanger/EarthRangerProvider.cpp" line="1213" />
+        <location filename="../cpp/EarthRanger/EarthRangerProvider.cpp" line="1230" />
         <source>Notes</source>
         <translation type="unfinished">Примітки</translation>
+    </message>
+    <message>
+        <location filename="../cpp/EarthRanger/EarthRangerProvider.cpp" line="1283" />
+        <source>Editing report saved on</source>
+        <translation type="unfinished">Звіт про редагування збережено на</translation>
     </message>
 </context>
 <context>
     <name>ElementManager</name>
     <message>
-        <location filename="../cpp/Element.cpp" line="283" />
+        <location filename="../cpp/Element.cpp" line="294" />
         <source>None</source>
-        <translation type="unfinished">Жодного</translation>
+        <translation type="unfinished">Немає</translation>
     </message>
     <message>
-        <location filename="../cpp/Element.cpp" line="284" />
+        <location filename="../cpp/Element.cpp" line="295" />
         <source>Yes</source>
         <translation type="unfinished">Так</translation>
     </message>
     <message>
-        <location filename="../cpp/Element.cpp" line="285" />
+        <location filename="../cpp/Element.cpp" line="296" />
         <source>No</source>
         <translation type="unfinished">Ні</translation>
     </message>
     <message>
-        <location filename="../cpp/Element.cpp" line="286" />
+        <location filename="../cpp/Element.cpp" line="297" />
         <source>Other</source>
-        <translation type="unfinished">Інший</translation>
+        <translation type="unfinished">Інші</translation>
     </message>
 </context>
 <context>
     <name>EsriConnector</name>
     <message>
-        <location filename="../cpp/Esri/EsriConnector.cpp" line="92" />
+        <location filename="../cpp/Esri/EsriConnector.cpp" line="96" />
         <source>Failed to create project</source>
         <translation type="unfinished">Не вдалося створити проект</translation>
     </message>
     <message>
-        <location filename="../cpp/Esri/EsriConnector.cpp" line="149" />
+        <location filename="../cpp/Esri/EsriConnector.cpp" line="184" />
         <source>Logged out</source>
-        <translation type="unfinished">Вийшов із системи</translation>
+        <translation type="unfinished">Вийшли з системи</translation>
+    </message>
+    <message>
+        <location filename="../cpp/Esri/EsriConnector.cpp" line="290" />
+        <source>Form not found</source>
+        <translation type="unfinished">Форма не знайдена</translation>
     </message>
     <message>
         <location filename="../cpp/Esri/EsriConnector.cpp" line="157" />
-        <source>Unsent data</source>
-        <translation type="unfinished">Ненадіслані дані</translation>
-    </message>
-    <message>
-        <location filename="../cpp/Esri/EsriConnector.cpp" line="248" />
-        <source>Form not found</source>
-        <translation type="unfinished">Форму не знайдено</translation>
-    </message>
-    <message>
-        <location filename="../cpp/Esri/EsriConnector.cpp" line="122" />
-        <location filename="../cpp/Esri/EsriConnector.cpp" line="171" />
+        <location filename="../cpp/Esri/EsriConnector.cpp" line="213" />
         <source>Could not retrieve survey</source>
         <translation type="unfinished">Не вдалося отримати опитування</translation>
     </message>
     <message>
-        <location filename="../cpp/Esri/EsriConnector.cpp" line="224" />
+        <location filename="../cpp/Esri/EsriConnector.cpp" line="201" />
+        <source>Login required</source>
+        <translation type="unfinished">Потрібен логін</translation>
+    </message>
+    <message>
+        <location filename="../cpp/Esri/EsriConnector.cpp" line="266" />
         <source>Form download failed</source>
-        <translation type="unfinished">Помилка завантаження форми</translation>
+        <translation type="unfinished">Не вдалося завантажити форму</translation>
     </message>
     <message>
-        <location filename="../cpp/Esri/EsriConnector.cpp" line="231" />
+        <location filename="../cpp/Esri/EsriConnector.cpp" line="273" />
         <source>Bad form zip</source>
-        <translation type="unfinished">Погана блискавка</translation>
+        <translation type="unfinished">Погана форма застібки-блискавки</translation>
     </message>
     <message>
-        <location filename="../cpp/Esri/EsriConnector.cpp" line="238" />
+        <location filename="../cpp/Esri/EsriConnector.cpp" line="280" />
         <source>Bad form</source>
         <translation type="unfinished">Погана форма</translation>
     </message>
     <message>
-        <location filename="../cpp/Esri/EsriConnector.cpp" line="254" />
+        <location filename="../cpp/Esri/EsriConnector.cpp" line="297" />
         <source>Failed to copy form file</source>
         <translation type="unfinished">Не вдалося скопіювати файл форми</translation>
+    </message>
+    <message>
+        <location filename="../cpp/Esri/EsriConnector.cpp" line="330" />
+        <source>Failed to read form settings sheet</source>
+        <translation type="unfinished">Не вдалося прочитати сторінку налаштувань форми</translation>
     </message>
 </context>
 <context>
     <name>EsriMapView</name>
     <message>
-        <location filename="../controls/imports/CyberTracker.1/EsriMapView.qml" line="267" />
+        <location filename="../controls/imports/CyberTracker.1/EsriMapView.qml" line="288" />
         <source>Sighting</source>
-        <translation type="unfinished">Прицільний</translation>
+        <translation type="unfinished">Прицілювання</translation>
     </message>
 </context>
 <context>
     <name>EventTypePage</name>
     <message>
-        <location filename="../qml/EarthRanger/EventTypePage.qml" line="35" />
+        <location filename="../qml/EarthRanger/EventTypePage.qml" line="36" />
         <source>Report</source>
         <translation type="unfinished">Звіт</translation>
     </message>
@@ -840,29 +1118,29 @@
 <context>
     <name>ExportDetailsPage</name>
     <message>
-        <location filename="../qml/ExportDetailsPage.qml" line="38" />
+        <location filename="../qml/ExportDetailsPage.qml" line="21" />
         <source>Delete</source>
         <translation type="unfinished">Видалити</translation>
     </message>
     <message>
-        <location filename="../qml/ExportDetailsPage.qml" line="50" />
+        <location filename="../qml/ExportDetailsPage.qml" line="27" />
         <source>Share</source>
-        <translation type="unfinished">Поділіться</translation>
+        <translation type="unfinished">Поділитися</translation>
     </message>
     <message>
-        <location filename="../qml/ExportDetailsPage.qml" line="71" />
+        <location filename="../qml/ExportDetailsPage.qml" line="43" />
         <source>Delete data file?</source>
         <translation type="unfinished">Видалити файл даних?</translation>
     </message>
     <message>
-        <location filename="../qml/ExportDetailsPage.qml" line="72" />
+        <location filename="../qml/ExportDetailsPage.qml" line="44" />
         <source>This file will be permanently removed.</source>
-        <translation type="unfinished">Цей файл буде видалено назавжди.</translation>
+        <translation type="unfinished">Цей файл буде безповоротно видалено.</translation>
     </message>
     <message>
-        <location filename="../qml/ExportDetailsPage.qml" line="73" />
+        <location filename="../qml/ExportDetailsPage.qml" line="45" />
         <source>Yes, delete it</source>
-        <translation type="unfinished">Так, видаліть</translation>
+        <translation type="unfinished">Так, видалити</translation>
     </message>
 </context>
 <context>
@@ -875,30 +1153,30 @@
     <message>
         <location filename="../qml/ExportsPage.qml" line="39" />
         <source>The files listed below are awaiting import. If the import is not working, click on a file and send it using another channel.</source>
-        <translation type="unfinished">Файли, перелічені нижче, очікують на імпорт. Якщо імпорт не працює, клацніть файл і надішліть його іншим каналом.</translation>
+        <translation type="unfinished">Файли, перелічені нижче, очікують на імпорт. Якщо імпорт не працює, натисніть на файл і надішліть його іншим каналом.</translation>
     </message>
     <message>
         <location filename="../qml/ExportsPage.qml" line="92" />
         <source>No files</source>
-        <translation type="unfinished">Немає файлів</translation>
+        <translation type="unfinished">Файлів немає</translation>
     </message>
 </context>
 <context>
     <name>FieldAudio</name>
     <message>
-        <location filename="../controls/imports/CyberTracker.1/FieldAudio.qml" line="116" />
+        <location filename="../controls/imports/CyberTracker.1/FieldAudio.qml" line="113" />
         <source>Delete the recording?</source>
         <translation type="unfinished">Видалити запис?</translation>
     </message>
     <message>
-        <location filename="../controls/imports/CyberTracker.1/FieldAudio.qml" line="117" />
+        <location filename="../controls/imports/CyberTracker.1/FieldAudio.qml" line="114" />
         <source>Yes, delete it</source>
-        <translation type="unfinished">Так, видаліть</translation>
+        <translation type="unfinished">Так, видалити</translation>
     </message>
     <message>
-        <location filename="../controls/imports/CyberTracker.1/FieldAudio.qml" line="169" />
+        <location filename="../controls/imports/CyberTracker.1/FieldAudio.qml" line="163" />
         <source>seconds</source>
-        <translation type="unfinished">секунд</translation>
+        <translation type="unfinished">секунди</translation>
     </message>
 </context>
 <context>
@@ -906,30 +1184,43 @@
     <message>
         <location filename="../controls/imports/CyberTracker.1/FieldBarcodePage.qml" line="10" />
         <source>Scan</source>
-        <translation type="unfinished">Сканувати</translation>
+        <translation type="unfinished">Сканування</translation>
+    </message>
+</context>
+<context>
+    <name>FieldBarcodePane</name>
+    <message>
+        <location filename="../controls/imports/CyberTracker.1/FieldBarcodePane.qml" line="69" />
+        <source>Clear code?</source>
+        <translation type="unfinished">Чистий код?</translation>
+    </message>
+    <message>
+        <location filename="../controls/imports/CyberTracker.1/FieldBarcodePane.qml" line="70" />
+        <source>Yes, clear it</source>
+        <translation type="unfinished">Так, очистити</translation>
     </message>
 </context>
 <context>
     <name>FieldCamera</name>
     <message>
-        <location filename="../controls/imports/CyberTracker.1/FieldCamera.qml" line="69" />
+        <location filename="../controls/imports/CyberTracker.1/FieldCamera.qml" line="75" />
         <source>Failed to copy</source>
         <translation type="unfinished">Не вдалося скопіювати</translation>
     </message>
     <message>
-        <location filename="../controls/imports/CyberTracker.1/FieldCamera.qml" line="236" />
+        <location filename="../controls/imports/CyberTracker.1/FieldCamera.qml" line="245" />
         <source>Delete the image?</source>
         <translation type="unfinished">Видалити зображення?</translation>
     </message>
     <message>
-        <location filename="../controls/imports/CyberTracker.1/FieldCamera.qml" line="237" />
+        <location filename="../controls/imports/CyberTracker.1/FieldCamera.qml" line="246" />
         <source>Yes, delete it</source>
-        <translation type="unfinished">Так, видаліть</translation>
+        <translation type="unfinished">Так, видалити</translation>
     </message>
     <message>
-        <location filename="../controls/imports/CyberTracker.1/FieldCamera.qml" line="456" />
+        <location filename="../controls/imports/CyberTracker.1/FieldCamera.qml" line="482" />
         <source>Failed to move</source>
-        <translation type="unfinished">Не вдалося перемістити</translation>
+        <translation type="unfinished">Не зміг переїхати</translation>
     </message>
 </context>
 <context>
@@ -941,9 +1232,22 @@
     </message>
 </context>
 <context>
+    <name>FieldCameraPane</name>
+    <message>
+        <location filename="../controls/imports/CyberTracker.1/FieldCameraPane.qml" line="69" />
+        <source>Delete the image?</source>
+        <translation type="unfinished">Видалити зображення?</translation>
+    </message>
+    <message>
+        <location filename="../controls/imports/CyberTracker.1/FieldCameraPane.qml" line="70" />
+        <source>Yes, delete it</source>
+        <translation type="unfinished">Так, видалити</translation>
+    </message>
+</context>
+<context>
     <name>FieldCheckListView</name>
     <message>
-        <location filename="../controls/imports/CyberTracker.1/FieldCheckListView.qml" line="31" />
+        <location filename="../controls/imports/CyberTracker.1/FieldCheckListView.qml" line="32" />
         <source>Search</source>
         <translation type="unfinished">Пошук</translation>
     </message>
@@ -951,158 +1255,172 @@
 <context>
     <name>FieldEditorDelegate</name>
     <message>
-        <location filename="../controls/imports/CyberTracker.1/FieldEditorDelegate.qml" line="179" />
+        <location filename="../controls/imports/CyberTracker.1/FieldEditorDelegate.qml" line="183" />
         <source>Location</source>
-        <translation type="unfinished">Розташування</translation>
+        <translation type="unfinished">Місцезнаходження</translation>
     </message>
     <message>
-        <location filename="../controls/imports/CyberTracker.1/FieldEditorDelegate.qml" line="195" />
+        <location filename="../controls/imports/CyberTracker.1/FieldEditorDelegate.qml" line="199" />
         <source>Waiting for time correction</source>
-        <translation type="unfinished">Чекаємо виправлення часу</translation>
+        <translation type="unfinished">Очікування часової корекції</translation>
     </message>
     <message>
-        <location filename="../controls/imports/CyberTracker.1/FieldEditorDelegate.qml" line="364" />
+        <location filename="../controls/imports/CyberTracker.1/FieldEditorDelegate.qml" line="356" />
         <source>Tap to scan</source>
-        <translation type="unfinished">Торкніться, щоб сканувати</translation>
+        <translation type="unfinished">Натисніть для сканування</translation>
     </message>
     <message>
-        <location filename="../controls/imports/CyberTracker.1/FieldEditorDelegate.qml" line="1002" />
+        <location filename="../controls/imports/CyberTracker.1/FieldEditorDelegate.qml" line="1034" />
         <source>Reset data?</source>
         <translation type="unfinished">Скинути дані?</translation>
     </message>
     <message>
-        <location filename="../controls/imports/CyberTracker.1/FieldEditorDelegate.qml" line="1012" />
+        <location filename="../controls/imports/CyberTracker.1/FieldEditorDelegate.qml" line="1044" />
         <source>Yes</source>
         <translation type="unfinished">Так</translation>
     </message>
     <message>
-        <location filename="../controls/imports/CyberTracker.1/FieldEditorDelegate.qml" line="1025" />
+        <location filename="../controls/imports/CyberTracker.1/FieldEditorDelegate.qml" line="1057" />
         <source>No</source>
         <translation type="unfinished">Ні</translation>
     </message>
 </context>
 <context>
-    <name>FieldLinePage</name>
+    <name>FieldFilePage</name>
     <message>
-        <location filename="../controls/imports/CyberTracker.1/FieldLinePage.qml" line="25" />
-        <source>Line</source>
-        <translation type="unfinished">Лінія</translation>
+        <location filename="../controls/imports/CyberTracker.1/FieldFilePage.qml" line="10" />
+        <source>File</source>
+        <translation type="unfinished">Файл</translation>
+    </message>
+</context>
+<context>
+    <name>FieldFilePane</name>
+    <message>
+        <location filename="../controls/imports/CyberTracker.1/FieldFilePane.qml" line="126" />
+        <source>Clear file?</source>
+        <translation type="unfinished">Чистий файл?</translation>
     </message>
     <message>
-        <location filename="../controls/imports/CyberTracker.1/FieldLinePage.qml" line="25" />
-        <source>Area</source>
-        <translation type="unfinished">Площа</translation>
+        <location filename="../controls/imports/CyberTracker.1/FieldFilePane.qml" line="127" />
+        <source>The original will not be deleted.</source>
+        <translation type="unfinished">Оригінал не буде видалено.</translation>
     </message>
     <message>
-        <location filename="../controls/imports/CyberTracker.1/FieldLinePage.qml" line="55" />
+        <location filename="../controls/imports/CyberTracker.1/FieldFilePane.qml" line="128" />
+        <source>Yes, remove it</source>
+        <translation type="unfinished">Так, видалити</translation>
+    </message>
+    <message>
+        <location filename="../controls/imports/CyberTracker.1/FieldFilePane.qml" line="40" />
+        <source>Failed to copy</source>
+        <translation type="unfinished">Не вдалося скопіювати</translation>
+    </message>
+    <message>
+        <location filename="../controls/imports/CyberTracker.1/FieldFilePane.qml" line="56" />
+        <source>Preview not available</source>
+        <translation type="unfinished">Попередній перегляд недоступний</translation>
+    </message>
+</context>
+<context>
+    <name>FieldLine</name>
+    <message>
+        <location filename="../controls/imports/CyberTracker.1/FieldLine.qml" line="26" />
         <source>Layers</source>
         <translation type="unfinished">Шари</translation>
     </message>
     <message>
-        <location filename="../controls/imports/CyberTracker.1/FieldLinePage.qml" line="70" />
+        <location filename="../controls/imports/CyberTracker.1/FieldLine.qml" line="36" />
         <source>Follow</source>
-        <translation type="unfinished">Слідкуйте</translation>
+        <translation type="unfinished">Слідкуйте за</translation>
     </message>
     <message>
-        <location filename="../controls/imports/CyberTracker.1/FieldLinePage.qml" line="85" />
+        <location filename="../controls/imports/CyberTracker.1/FieldLine.qml" line="46" />
         <source>Reset</source>
-        <translation type="unfinished">Скинути</translation>
+        <translation type="unfinished">Перезавантаження</translation>
     </message>
     <message>
-        <location filename="../controls/imports/CyberTracker.1/FieldLinePage.qml" line="143" />
-        <source>Tap</source>
-        <translation type="unfinished">Торкніться</translation>
-    </message>
-    <message>
-        <location filename="../controls/imports/CyberTracker.1/FieldLinePage.qml" line="144" />
-        <source>GPS</source>
-        <translation type="unfinished">GPS</translation>
-    </message>
-    <message>
-        <location filename="../controls/imports/CyberTracker.1/FieldLinePage.qml" line="145" />
-        <source>Auto GPS</source>
-        <translation type="unfinished">Автоматичний GPS</translation>
-    </message>
-    <message>
-        <location filename="../controls/imports/CyberTracker.1/FieldLinePage.qml" line="295" />
-        <source>Start</source>
-        <translation type="unfinished">Почніть</translation>
-    </message>
-    <message>
-        <location filename="../controls/imports/CyberTracker.1/FieldLinePage.qml" line="272" />
-        <source>Add point</source>
-        <translation type="unfinished">Додайте точку</translation>
-    </message>
-    <message>
-        <location filename="../controls/imports/CyberTracker.1/FieldLinePage.qml" line="99" />
+        <location filename="../controls/imports/CyberTracker.1/FieldLine.qml" line="53" />
         <source>Remove</source>
         <translation type="unfinished">Видалити</translation>
     </message>
     <message>
-        <location filename="../controls/imports/CyberTracker.1/FieldLinePage.qml" line="128" />
+        <location filename="../controls/imports/CyberTracker.1/FieldLine.qml" line="72" />
         <source>Clear current points?</source>
-        <translation type="unfinished">Очистити поточні точки?</translation>
+        <translation type="unfinished">Зрозумілі поточні моменти?</translation>
     </message>
     <message>
-        <location filename="../controls/imports/CyberTracker.1/FieldLinePage.qml" line="129" />
+        <location filename="../controls/imports/CyberTracker.1/FieldLine.qml" line="73" />
         <source>Yes, clear them</source>
-        <translation type="unfinished">Так, очистіть їх</translation>
+        <translation type="unfinished">Так, очистити їх</translation>
     </message>
     <message>
-        <location filename="../controls/imports/CyberTracker.1/FieldLinePage.qml" line="307" />
-        <location filename="../controls/imports/CyberTracker.1/FieldLinePage.qml" line="319" />
-        <location filename="../controls/imports/CyberTracker.1/FieldLinePage.qml" line="331" />
+        <location filename="../controls/imports/CyberTracker.1/FieldLine.qml" line="87" />
+        <source>Tap</source>
+        <translation type="unfinished">Натисніть</translation>
+    </message>
+    <message>
+        <location filename="../controls/imports/CyberTracker.1/FieldLine.qml" line="88" />
+        <source>GPS</source>
+        <translation type="unfinished">GPS</translation>
+    </message>
+    <message>
+        <location filename="../controls/imports/CyberTracker.1/FieldLine.qml" line="89" />
+        <source>Auto GPS</source>
+        <translation type="unfinished">Авто GPS</translation>
+    </message>
+    <message>
+        <location filename="../controls/imports/CyberTracker.1/FieldLine.qml" line="216" />
+        <source>Add point</source>
+        <translation type="unfinished">Додати точку</translation>
+    </message>
+    <message>
+        <location filename="../controls/imports/CyberTracker.1/FieldLine.qml" line="241" />
+        <source>Start</source>
+        <translation type="unfinished">Старт</translation>
+    </message>
+    <message>
+        <location filename="../controls/imports/CyberTracker.1/FieldLine.qml" line="253" />
+        <location filename="../controls/imports/CyberTracker.1/FieldLine.qml" line="265" />
+        <location filename="../controls/imports/CyberTracker.1/FieldLine.qml" line="277" />
         <source>Pause</source>
         <translation type="unfinished">Пауза</translation>
     </message>
 </context>
 <context>
+    <name>FieldLinePage</name>
+    <message>
+        <location filename="../controls/imports/CyberTracker.1/FieldLinePage.qml" line="27" />
+        <source>Line</source>
+        <translation type="unfinished">Лінія</translation>
+    </message>
+    <message>
+        <location filename="../controls/imports/CyberTracker.1/FieldLinePage.qml" line="29" />
+        <source>Area</source>
+        <translation type="unfinished">Площа</translation>
+    </message>
+</context>
+<context>
     <name>FieldLinePane</name>
     <message>
-        <location filename="../controls/imports/CyberTracker.1/FieldLinePane.qml" line="27" />
-        <source>Clear all points?</source>
-        <translation type="unfinished">Очистити всі точки?</translation>
+        <location filename="../controls/imports/CyberTracker.1/FieldLinePane.qml" line="92" />
+        <source>Clear area?</source>
+        <translation type="unfinished">Чисто?</translation>
     </message>
     <message>
-        <location filename="../controls/imports/CyberTracker.1/FieldLinePane.qml" line="28" />
-        <source>Yes, clear them</source>
-        <translation type="unfinished">Так, очистіть їх</translation>
+        <location filename="../controls/imports/CyberTracker.1/FieldLinePane.qml" line="92" />
+        <source>Clear line?</source>
+        <translation type="unfinished">Чиста лінія?</translation>
     </message>
     <message>
-        <location filename="../controls/imports/CyberTracker.1/FieldLinePane.qml" line="44" />
-        <source>Empty</source>
-        <translation type="unfinished">Порожній</translation>
-    </message>
-    <message>
-        <location filename="../controls/imports/CyberTracker.1/FieldLinePane.qml" line="87" />
-        <source>Start line</source>
-        <translation type="unfinished">Стартова лінія</translation>
-    </message>
-    <message>
-        <location filename="../controls/imports/CyberTracker.1/FieldLinePane.qml" line="87" />
-        <source>Edit line</source>
-        <translation type="unfinished">Редагувати рядок</translation>
-    </message>
-    <message>
-        <location filename="../controls/imports/CyberTracker.1/FieldLinePane.qml" line="89" />
-        <source>Start area</source>
-        <translation type="unfinished">Початкова зона</translation>
-    </message>
-    <message>
-        <location filename="../controls/imports/CyberTracker.1/FieldLinePane.qml" line="89" />
-        <source>Edit area</source>
-        <translation type="unfinished">Редагувати область</translation>
-    </message>
-    <message>
-        <location filename="../controls/imports/CyberTracker.1/FieldLinePane.qml" line="103" />
-        <source>Reset</source>
-        <translation type="unfinished">Скинути</translation>
+        <location filename="../controls/imports/CyberTracker.1/FieldLinePane.qml" line="93" />
+        <source>Yes, clear all points</source>
+        <translation type="unfinished">Так, перевірте всі пункти</translation>
     </message>
 </context>
 <context>
     <name>FieldListView</name>
     <message>
-        <location filename="../controls/imports/CyberTracker.1/FieldListView.qml" line="35" />
+        <location filename="../controls/imports/CyberTracker.1/FieldListView.qml" line="33" />
         <source>Search</source>
         <translation type="unfinished">Пошук</translation>
     </message>
@@ -1110,92 +1428,281 @@
 <context>
     <name>FieldLocationPane</name>
     <message>
-        <location filename="../controls/imports/CyberTracker.1/FieldLocationPane.qml" line="73" />
+        <location filename="../controls/imports/CyberTracker.1/FieldLocationPane.qml" line="71" />
         <source>Date</source>
         <translation type="unfinished">Дата</translation>
     </message>
     <message>
-        <location filename="../controls/imports/CyberTracker.1/FieldLocationPane.qml" line="91" />
+        <location filename="../controls/imports/CyberTracker.1/FieldLocationPane.qml" line="89" />
         <source>Time</source>
         <translation type="unfinished">Час</translation>
     </message>
     <message>
-        <location filename="../controls/imports/CyberTracker.1/FieldLocationPane.qml" line="109" />
+        <location filename="../controls/imports/CyberTracker.1/FieldLocationPane.qml" line="107" />
         <source>Time zone</source>
         <translation type="unfinished">Часовий пояс</translation>
     </message>
     <message>
-        <location filename="../controls/imports/CyberTracker.1/FieldLocationPane.qml" line="130" />
+        <location filename="../controls/imports/CyberTracker.1/FieldLocationPane.qml" line="128" />
         <source>Altitude</source>
         <translation type="unfinished">Висота над рівнем моря</translation>
     </message>
     <message>
-        <location filename="../controls/imports/CyberTracker.1/FieldLocationPane.qml" line="148" />
+        <location filename="../controls/imports/CyberTracker.1/FieldLocationPane.qml" line="146" />
         <source>Direction</source>
         <translation type="unfinished">Напрямок</translation>
     </message>
     <message>
-        <location filename="../controls/imports/CyberTracker.1/FieldLocationPane.qml" line="156" />
+        <location filename="../controls/imports/CyberTracker.1/FieldLocationPane.qml" line="154" />
         <source>degrees</source>
         <translation type="unfinished">градуси</translation>
     </message>
     <message>
-        <location filename="../controls/imports/CyberTracker.1/FieldLocationPane.qml" line="166" />
+        <location filename="../controls/imports/CyberTracker.1/FieldLocationPane.qml" line="164" />
         <source>Accuracy</source>
         <translation type="unfinished">Точність</translation>
     </message>
     <message>
-        <location filename="../controls/imports/CyberTracker.1/FieldLocationPane.qml" line="184" />
+        <location filename="../controls/imports/CyberTracker.1/FieldLocationPane.qml" line="182" />
         <source>Speed</source>
         <translation type="unfinished">Швидкість</translation>
-    </message>
-    <message>
-        <location filename="../controls/imports/CyberTracker.1/FieldLocationPane.qml" line="225" />
-        <source>Refresh</source>
-        <translation type="unfinished">Оновити</translation>
-    </message>
-    <message>
-        <location filename="../controls/imports/CyberTracker.1/FieldLocationPane.qml" line="225" />
-        <source>Stop</source>
-        <translation type="unfinished">Стій</translation>
-    </message>
-    <message>
-        <location filename="../controls/imports/CyberTracker.1/FieldLocationPane.qml" line="238" />
-        <source>Map</source>
-        <translation type="unfinished">Карта</translation>
-    </message>
-    <message>
-        <location filename="../controls/imports/CyberTracker.1/FieldLocationPane.qml" line="251" />
-        <source>Reset</source>
-        <translation type="unfinished">Скинути</translation>
     </message>
 </context>
 <context>
     <name>FieldRecordListView</name>
     <message>
-        <location filename="../controls/imports/CyberTracker.1/FieldRecordListView.qml" line="105" />
+        <location filename="../controls/imports/CyberTracker.1/FieldRecordListView.qml" line="99" />
         <source>Delete record?</source>
         <translation type="unfinished">Видалити запис?</translation>
     </message>
     <message>
-        <location filename="../controls/imports/CyberTracker.1/FieldRecordListView.qml" line="105" />
+        <location filename="../controls/imports/CyberTracker.1/FieldRecordListView.qml" line="99" />
         <source>Reset record?</source>
         <translation type="unfinished">Скинути запис?</translation>
     </message>
     <message>
-        <location filename="../controls/imports/CyberTracker.1/FieldRecordListView.qml" line="115" />
+        <location filename="../controls/imports/CyberTracker.1/FieldRecordListView.qml" line="109" />
         <source>Yes</source>
         <translation type="unfinished">Так</translation>
     </message>
     <message>
-        <location filename="../controls/imports/CyberTracker.1/FieldRecordListView.qml" line="132" />
+        <location filename="../controls/imports/CyberTracker.1/FieldRecordListView.qml" line="126" />
         <source>No</source>
         <translation type="unfinished">Ні</translation>
     </message>
     <message>
-        <location filename="../controls/imports/CyberTracker.1/FieldRecordListView.qml" line="165" />
+        <location filename="../controls/imports/CyberTracker.1/FieldRecordListView.qml" line="159" />
         <source>Add record</source>
         <translation type="unfinished">Додати запис</translation>
+    </message>
+</context>
+<context>
+    <name>FieldRecordNumberGridView</name>
+    <message>
+        <location filename="../controls/imports/CyberTracker.1/FieldRecordNumberGridView.qml" line="199" />
+        <source>Group field not a number</source>
+        <translation type="unfinished">Групове поле не є числом</translation>
+    </message>
+</context>
+<context>
+    <name>FieldRecordPhotoGridView</name>
+    <message>
+        <location filename="../controls/imports/CyberTracker.1/FieldRecordPhotoGridView.qml" line="132" />
+        <source>Expected photo field</source>
+        <translation type="unfinished">Очікуване фотополе</translation>
+    </message>
+    <message>
+        <location filename="../controls/imports/CyberTracker.1/FieldRecordPhotoGridView.qml" line="146" />
+        <source>photoGrid not a group or repeat</source>
+        <translation type="unfinished">фотоСітка не є групою або повторенням</translation>
+    </message>
+</context>
+<context>
+    <name>FileField</name>
+    <message>
+        <location filename="../cpp/Field.cpp" line="1390" />
+        <source>file</source>
+        <translation type="unfinished">файл</translation>
+    </message>
+</context>
+<context>
+    <name>Form</name>
+    <message>
+        <location filename="../cpp/Form.cpp" line="26" />
+        <source>Track</source>
+        <translation type="unfinished">Трек</translation>
+    </message>
+    <message>
+        <location filename="../cpp/Form.cpp" line="28" />
+        <source>Location</source>
+        <translation type="unfinished">Місцезнаходження</translation>
+    </message>
+    <message>
+        <location filename="../cpp/Form.cpp" line="1416" />
+        <source>Missing track field or service</source>
+        <translation type="unfinished">Відсутнє легкоатлетичне поле або послуга</translation>
+    </message>
+    <message>
+        <location filename="../cpp/Form.cpp" line="1769" />
+        <source>CSV sighting export failed</source>
+        <translation type="unfinished">Експорт прицілу CSV не відбувся</translation>
+    </message>
+    <message>
+        <location filename="../cpp/Form.cpp" line="1813" />
+        <source>CSV location export failed</source>
+        <translation type="unfinished">Не вдалося здійснити експорт CSV-локацій</translation>
+    </message>
+    <message>
+        <location filename="../cpp/Form.cpp" line="1821" />
+        <source>No new data</source>
+        <translation type="unfinished">Нові дані відсутні</translation>
+    </message>
+    <message>
+        <location filename="../cpp/Form.cpp" line="1829" />
+        <source>Failed to compress file</source>
+        <translation type="unfinished">Не вдалося стиснути файл</translation>
+    </message>
+</context>
+<context>
+    <name>FormSettingsListView</name>
+    <message>
+        <location filename="../controls/imports/CyberTracker.1/FormSettingsListView.qml" line="65" />
+        <source>Form version</source>
+        <translation type="unfinished">Версія форми</translation>
+    </message>
+    <message>
+        <location filename="../controls/imports/CyberTracker.1/FormSettingsListView.qml" line="77" />
+        <source>Not specified</source>
+        <translation type="unfinished">Не вказано</translation>
+    </message>
+    <message>
+        <location filename="../controls/imports/CyberTracker.1/FormSettingsListView.qml" line="87" />
+        <source>Update</source>
+        <translation type="unfinished">Оновлення</translation>
+    </message>
+    <message>
+        <location filename="../controls/imports/CyberTracker.1/FormSettingsListView.qml" line="98" />
+        <source>Offline</source>
+        <translation type="unfinished">Офлайн</translation>
+    </message>
+    <message>
+        <location filename="../controls/imports/CyberTracker.1/FormSettingsListView.qml" line="123" />
+        <source>Logged in as</source>
+        <translation type="unfinished">Увійшов в систему як</translation>
+    </message>
+    <message>
+        <location filename="../controls/imports/CyberTracker.1/FormSettingsListView.qml" line="123" />
+        <source>Logged out</source>
+        <translation type="unfinished">Вийшли з системи</translation>
+    </message>
+    <message>
+        <location filename="../controls/imports/CyberTracker.1/FormSettingsListView.qml" line="139" />
+        <source>Logout</source>
+        <translation type="unfinished">Вихід з системи</translation>
+    </message>
+    <message>
+        <location filename="../controls/imports/CyberTracker.1/FormSettingsListView.qml" line="139" />
+        <source>Login</source>
+        <translation type="unfinished">Логін</translation>
+    </message>
+    <message>
+        <location filename="../controls/imports/CyberTracker.1/FormSettingsListView.qml" line="164" />
+        <source>Language</source>
+        <translation type="unfinished">Мова</translation>
+    </message>
+    <message>
+        <location filename="../controls/imports/CyberTracker.1/FormSettingsListView.qml" line="192" />
+        <source>Immersive mode</source>
+        <translation type="unfinished">Режим занурення</translation>
+    </message>
+    <message>
+        <location filename="../controls/imports/CyberTracker.1/FormSettingsListView.qml" line="201" />
+        <source>Hide sighting home page</source>
+        <translation type="unfinished">Приховати домашню сторінку пам'ятки</translation>
+    </message>
+    <message>
+        <location filename="../controls/imports/CyberTracker.1/FormSettingsListView.qml" line="238" />
+        <source>Page mode</source>
+        <translation type="unfinished">Сторінковий режим</translation>
+    </message>
+    <message>
+        <location filename="../controls/imports/CyberTracker.1/FormSettingsListView.qml" line="247" />
+        <source>One page per question</source>
+        <translation type="unfinished">Одна сторінка на одне питання</translation>
+    </message>
+    <message>
+        <location filename="../controls/imports/CyberTracker.1/FormSettingsListView.qml" line="332" />
+        <source>Autosend location</source>
+        <translation type="unfinished">Місце розташування автовідправки</translation>
+    </message>
+    <message>
+        <location filename="../controls/imports/CyberTracker.1/FormSettingsListView.qml" line="282" />
+        <location filename="../controls/imports/CyberTracker.1/FormSettingsListView.qml" line="343" />
+        <source>Off</source>
+        <translation type="unfinished">Вимкнено</translation>
+    </message>
+    <message>
+        <location filename="../controls/imports/CyberTracker.1/FormSettingsListView.qml" line="344" />
+        <source>30 seconds</source>
+        <translation type="unfinished">30 секунд</translation>
+    </message>
+    <message>
+        <location filename="../controls/imports/CyberTracker.1/FormSettingsListView.qml" line="284" />
+        <location filename="../controls/imports/CyberTracker.1/FormSettingsListView.qml" line="345" />
+        <source>5 minutes</source>
+        <translation type="unfinished">5 хвилин</translation>
+    </message>
+    <message>
+        <location filename="../controls/imports/CyberTracker.1/FormSettingsListView.qml" line="26" />
+        <source>System settings</source>
+        <translation type="unfinished">Налаштування системи</translation>
+    </message>
+    <message>
+        <location filename="../controls/imports/CyberTracker.1/FormSettingsListView.qml" line="271" />
+        <source>Auto-submit</source>
+        <translation type="unfinished">Автовідправлення</translation>
+    </message>
+    <message>
+        <location filename="../controls/imports/CyberTracker.1/FormSettingsListView.qml" line="283" />
+        <source>On save</source>
+        <translation type="unfinished">При збереженні</translation>
+    </message>
+    <message>
+        <location filename="../controls/imports/CyberTracker.1/FormSettingsListView.qml" line="285" />
+        <location filename="../controls/imports/CyberTracker.1/FormSettingsListView.qml" line="346" />
+        <source>10 minutes</source>
+        <translation type="unfinished">10 хвилин</translation>
+    </message>
+    <message>
+        <location filename="../controls/imports/CyberTracker.1/FormSettingsListView.qml" line="286" />
+        <location filename="../controls/imports/CyberTracker.1/FormSettingsListView.qml" line="347" />
+        <source>30 minutes</source>
+        <translation type="unfinished">30 хвилин</translation>
+    </message>
+    <message>
+        <location filename="../controls/imports/CyberTracker.1/FormSettingsListView.qml" line="287" />
+        <location filename="../controls/imports/CyberTracker.1/FormSettingsListView.qml" line="348" />
+        <source>1 hour</source>
+        <translation type="unfinished">1 година</translation>
+    </message>
+    <message>
+        <location filename="../controls/imports/CyberTracker.1/FormSettingsListView.qml" line="317" />
+        <location filename="../controls/imports/CyberTracker.1/FormSettingsListView.qml" line="383" />
+        <source>Unknown interval</source>
+        <translation type="unfinished">Невідомий інтервал</translation>
+    </message>
+    <message>
+        <location filename="../controls/imports/CyberTracker.1/FormSettingsListView.qml" line="394" />
+        <source>Logout?</source>
+        <translation type="unfinished">Вийти з системи?</translation>
+    </message>
+</context>
+<context>
+    <name>FormSettingsPage</name>
+    <message>
+        <location filename="../controls/imports/CyberTracker.1/FormSettingsPage.qml" line="11" />
+        <source>Settings</source>
+        <translation type="unfinished">Налаштування</translation>
     </message>
 </context>
 <context>
@@ -1207,29 +1714,44 @@
     </message>
 </context>
 <context>
-    <name>FormView</name>
+    <name>FormSightingsListView</name>
     <message>
-        <location filename="../controls/imports/CyberTracker.1/FormView.qml" line="192" />
-        <source>Bad username or password</source>
-        <translation type="unfinished">Неправильне ім’я користувача або пароль</translation>
+        <location filename="../controls/imports/CyberTracker.1/FormSightingsListView.qml" line="129" />
+        <source>No data</source>
+        <translation type="unfinished">Немає даних</translation>
+    </message>
+    <message>
+        <location filename="../controls/imports/CyberTracker.1/FormSightingsListView.qml" line="147" />
+        <source>Continue editing</source>
+        <translation type="unfinished">Продовжити редагування</translation>
+    </message>
+    <message>
+        <location filename="../controls/imports/CyberTracker.1/FormSightingsListView.qml" line="148" />
+        <source>Delete sighting</source>
+        <translation type="unfinished">Видалити приціл</translation>
+    </message>
+    <message>
+        <location filename="../controls/imports/CyberTracker.1/FormSightingsListView.qml" line="160" />
+        <source>Sighting deleted</source>
+        <translation type="unfinished">Приціл видалено</translation>
+    </message>
+    <message>
+        <location filename="../controls/imports/CyberTracker.1/FormSightingsListView.qml" line="173" />
+        <source>Submit data?</source>
+        <translation type="unfinished">Подати дані?</translation>
+    </message>
+    <message>
+        <location filename="../controls/imports/CyberTracker.1/FormSightingsListView.qml" line="188" />
+        <source>No supported in demo mode</source>
+        <translation type="unfinished">У демо-режимі не підтримується</translation>
     </message>
 </context>
 <context>
-    <name>FormWizardPage</name>
+    <name>FormView</name>
     <message>
-        <location filename="../controls/imports/CyberTracker.1/FormWizardPage.qml" line="463" />
-        <source>Yes</source>
-        <translation type="unfinished">Так</translation>
-    </message>
-    <message>
-        <location filename="../controls/imports/CyberTracker.1/FormWizardPage.qml" line="463" />
-        <source>No</source>
-        <translation type="unfinished">Ні</translation>
-    </message>
-    <message>
-        <location filename="../controls/imports/CyberTracker.1/FormWizardPage.qml" line="500" />
-        <source>OK</source>
-        <translation type="unfinished">Гаразд</translation>
+        <location filename="../controls/imports/CyberTracker.1/FormView.qml" line="219" />
+        <source>Bad username or password</source>
+        <translation type="unfinished">Неправильне ім'я користувача або пароль</translation>
     </message>
 </context>
 <context>
@@ -1237,12 +1759,12 @@
     <message>
         <location filename="../controls/imports/CyberTracker.1/GotoLocation.qml" line="70" />
         <source>Location</source>
-        <translation type="unfinished">Розташування</translation>
+        <translation type="unfinished">Місцезнаходження</translation>
     </message>
     <message>
         <location filename="../controls/imports/CyberTracker.1/GotoLocation.qml" line="87" />
         <source>Stop</source>
-        <translation type="unfinished">Стій</translation>
+        <translation type="unfinished">Стоп!</translation>
     </message>
     <message>
         <location filename="../controls/imports/CyberTracker.1/GotoLocation.qml" line="103" />
@@ -1258,7 +1780,7 @@
 <context>
     <name>GotoManager</name>
     <message>
-        <location filename="../cpp/Goto.cpp" line="377" />
+        <location filename="../cpp/Goto.cpp" line="52" />
         <source>No fix</source>
         <translation type="unfinished">Немає виправлення</translation>
     </message>
@@ -1271,96 +1793,76 @@
         <translation type="unfinished">Історія</translation>
     </message>
     <message>
-        <location filename="../qml/SMART/HistoryPage.qml" line="58" />
+        <location filename="../qml/SMART/HistoryPage.qml" line="40" />
         <source>Collect</source>
         <translation type="unfinished">Збирати</translation>
     </message>
     <message>
-        <location filename="../qml/SMART/HistoryPage.qml" line="141" />
-        <location filename="../qml/SMART/HistoryPage.qml" line="170" />
-        <location filename="../qml/SMART/HistoryPage.qml" line="199" />
-        <source>No data</source>
-        <translation type="unfinished">Немає даних</translation>
-    </message>
-    <message>
-        <location filename="../qml/SMART/HistoryPage.qml" line="88" />
+        <location filename="../qml/SMART/HistoryPage.qml" line="58" />
         <source>Incidents</source>
         <translation type="unfinished">Інциденти</translation>
     </message>
 </context>
 <context>
-    <name>HistoryRowDelegate</name>
-    <message>
-        <location filename="../qml/SMART/HistoryRowDelegate.qml" line="100" />
-        <source>Delete observation?</source>
-        <translation type="unfinished">Видалити спостереження?</translation>
-    </message>
-    <message>
-        <location filename="../qml/SMART/HistoryRowDelegate.qml" line="108" />
-        <source>Yes</source>
-        <translation type="unfinished">Так</translation>
-    </message>
-    <message>
-        <location filename="../qml/SMART/HistoryRowDelegate.qml" line="119" />
-        <source>No</source>
-        <translation type="unfinished">Ні</translation>
-    </message>
-</context>
-<context>
     <name>KoBoConnector</name>
     <message>
-        <location filename="../cpp/KoBo/KoBoConnector.cpp" line="224" />
+        <location filename="../cpp/KoBo/KoBoConnector.cpp" line="250" />
         <source>No deployment links</source>
         <translation type="unfinished">Немає посилань на розгортання</translation>
     </message>
     <message>
-        <location filename="../cpp/KoBo/KoBoConnector.cpp" line="230" />
+        <location filename="../cpp/KoBo/KoBoConnector.cpp" line="256" />
         <source>No deployment url</source>
         <translation type="unfinished">Немає URL-адреси розгортання</translation>
     </message>
     <message>
-        <location filename="../cpp/KoBo/KoBoConnector.cpp" line="123" />
+        <location filename="../cpp/KoBo/KoBoConnector.cpp" line="284" />
+        <source>Failed to read form settings sheet</source>
+        <translation type="unfinished">Не вдалося прочитати сторінку налаштувань форми</translation>
+    </message>
+    <message>
+        <location filename="../cpp/KoBo/KoBoConnector.cpp" line="351" />
+        <source>Global server</source>
+        <translation type="unfinished">Глобальний сервер</translation>
+    </message>
+    <message>
+        <location filename="../cpp/KoBo/KoBoConnector.cpp" line="355" />
+        <source>Humanitarian server</source>
+        <translation type="unfinished">Гуманітарний сервер</translation>
+    </message>
+    <message>
+        <location filename="../cpp/KoBo/KoBoConnector.cpp" line="129" />
         <source>Failed to create project</source>
         <translation type="unfinished">Не вдалося створити проект</translation>
     </message>
     <message>
         <location filename="../cpp/KoBo/KoBoConnector.cpp" line="189" />
-        <source>Unsent data</source>
-        <translation type="unfinished">Ненадіслані дані</translation>
+        <source>No deployed versions</source>
+        <translation type="unfinished">Розгорнутих версій немає</translation>
     </message>
     <message>
-        <location filename="../cpp/KoBo/KoBoConnector.cpp" line="252" />
+        <location filename="../cpp/KoBo/KoBoConnector.cpp" line="278" />
         <source>Form download failed</source>
-        <translation type="unfinished">Помилка завантаження форми</translation>
-    </message>
-    <message>
-        <location filename="../cpp/KoBo/KoBoConnector.cpp" line="319" />
-        <source>Research</source>
-        <translation type="unfinished">Дослідження</translation>
-    </message>
-    <message>
-        <location filename="../cpp/KoBo/KoBoConnector.cpp" line="323" />
-        <source>Humanitarian</source>
-        <translation type="unfinished">Гуманітарний</translation>
+        <translation type="unfinished">Не вдалося завантажити форму</translation>
     </message>
 </context>
 <context>
     <name>LineField</name>
     <message>
-        <location filename="../cpp/Field.cpp" line="766" />
+        <location filename="../cpp/Field.cpp" line="815" />
         <source>points</source>
-        <translation type="unfinished">точки</translation>
+        <translation type="unfinished">бали</translation>
     </message>
 </context>
 <context>
     <name>LocationData</name>
     <message>
-        <location filename="../controls/imports/CyberTracker.1/LocationData.qml" line="20" />
+        <location filename="../controls/imports/CyberTracker.1/LocationData.qml" line="18" />
         <source>Date</source>
         <translation type="unfinished">Дата</translation>
     </message>
     <message>
-        <location filename="../controls/imports/CyberTracker.1/LocationData.qml" line="39" />
+        <location filename="../controls/imports/CyberTracker.1/LocationData.qml" line="38" />
         <source>Time</source>
         <translation type="unfinished">Час</translation>
     </message>
@@ -1370,37 +1872,32 @@
         <translation type="unfinished">Часовий пояс</translation>
     </message>
     <message>
-        <location filename="../controls/imports/CyberTracker.1/LocationData.qml" line="80" />
+        <location filename="../controls/imports/CyberTracker.1/LocationData.qml" line="81" />
         <source>Altitude</source>
         <translation type="unfinished">Висота над рівнем моря</translation>
     </message>
     <message>
-        <location filename="../controls/imports/CyberTracker.1/LocationData.qml" line="97" />
+        <location filename="../controls/imports/CyberTracker.1/LocationData.qml" line="99" />
         <source>Direction</source>
         <translation type="unfinished">Напрямок</translation>
     </message>
     <message>
-        <location filename="../controls/imports/CyberTracker.1/LocationData.qml" line="106" />
-        <source>degrees</source>
-        <translation type="unfinished">градуси</translation>
-    </message>
-    <message>
-        <location filename="../controls/imports/CyberTracker.1/LocationData.qml" line="114" />
+        <location filename="../controls/imports/CyberTracker.1/LocationData.qml" line="117" />
         <source>Accuracy</source>
         <translation type="unfinished">Точність</translation>
     </message>
     <message>
-        <location filename="../controls/imports/CyberTracker.1/LocationData.qml" line="131" />
+        <location filename="../controls/imports/CyberTracker.1/LocationData.qml" line="135" />
         <source>Speed</source>
         <translation type="unfinished">Швидкість</translation>
     </message>
     <message>
-        <location filename="../controls/imports/CyberTracker.1/LocationData.qml" line="150" />
+        <location filename="../controls/imports/CyberTracker.1/LocationData.qml" line="155" />
         <source>Track recorder</source>
-        <translation type="unfinished">Трек-рекордер</translation>
+        <translation type="unfinished">Диктофон</translation>
     </message>
     <message>
-        <location filename="../controls/imports/CyberTracker.1/LocationData.qml" line="161" />
+        <location filename="../controls/imports/CyberTracker.1/LocationData.qml" line="167" />
         <source>Off</source>
         <translation type="unfinished">Вимкнено</translation>
     </message>
@@ -1436,7 +1933,7 @@
     <message>
         <location filename="../qml/SMART/LocationPage.qml" line="100" />
         <source>Patrol completed</source>
-        <translation type="unfinished">Патруль завершено</translation>
+        <translation type="unfinished">Патрулювання завершено</translation>
     </message>
     <message>
         <location filename="../qml/SMART/LocationPage.qml" line="107" />
@@ -1446,17 +1943,17 @@
     <message>
         <location filename="../qml/SMART/LocationPage.qml" line="107" />
         <source>Patrol resumed</source>
-        <translation type="unfinished">Патрулювання відновлено</translation>
+        <translation type="unfinished">Відновлено патрулювання</translation>
     </message>
     <message>
         <location filename="../qml/SMART/LocationPage.qml" line="145" />
         <source>Acquiring location</source>
-        <translation type="unfinished">Отримання місцезнаходження</translation>
+        <translation type="unfinished">Придбання місця розташування</translation>
     </message>
     <message>
         <location filename="../qml/SMART/LocationPage.qml" line="164" />
         <source>Waiting for time correction</source>
-        <translation type="unfinished">Чекаємо виправлення часу</translation>
+        <translation type="unfinished">Очікування часової корекції</translation>
     </message>
     <message>
         <location filename="../qml/SMART/LocationPage.qml" line="177" />
@@ -1466,64 +1963,72 @@
     <message>
         <location filename="../qml/SMART/LocationPage.qml" line="177" />
         <source>Completing survey</source>
-        <translation type="unfinished">Заповнення опитування</translation>
+        <translation type="unfinished">Завершуємо опитування</translation>
     </message>
     <message>
-        <location filename="../qml/SMART/LocationPage.qml" line="195" />
+        <location filename="../qml/SMART/LocationPage.qml" line="196" />
         <source>Skip GPS</source>
         <translation type="unfinished">Пропустити GPS</translation>
     </message>
     <message>
-        <location filename="../controls/imports/CyberTracker.1/LocationPage.qml" line="90" />
+        <location filename="../controls/imports/CyberTracker.1/LocationPage.qml" line="71" />
         <source>Point</source>
         <translation type="unfinished">Точка</translation>
     </message>
     <message>
-        <location filename="../controls/imports/CyberTracker.1/LocationPage.qml" line="105" />
+        <location filename="../controls/imports/CyberTracker.1/LocationPage.qml" line="80" />
         <source>Manual</source>
         <translation type="unfinished">Посібник</translation>
     </message>
     <message>
         <location filename="../controls/imports/CyberTracker.1/LocationPage.qml" line="60" />
-        <location filename="../controls/imports/CyberTracker.1/LocationPage.qml" line="141" />
+        <location filename="../controls/imports/CyberTracker.1/LocationPage.qml" line="111" />
         <source>Location</source>
-        <translation type="unfinished">Розташування</translation>
+        <translation type="unfinished">Місцезнаходження</translation>
     </message>
     <message>
-        <location filename="../controls/imports/CyberTracker.1/LocationPage.qml" line="174" />
+        <location filename="../controls/imports/CyberTracker.1/LocationPage.qml" line="144" />
         <source>Decimal degrees</source>
         <translation type="unfinished">Десяткові градуси</translation>
     </message>
     <message>
-        <location filename="../controls/imports/CyberTracker.1/LocationPage.qml" line="180" />
+        <location filename="../controls/imports/CyberTracker.1/LocationPage.qml" line="150" />
         <source>Latitude</source>
         <translation type="unfinished">Широта</translation>
     </message>
     <message>
-        <location filename="../controls/imports/CyberTracker.1/LocationPage.qml" line="180" />
+        <location filename="../controls/imports/CyberTracker.1/LocationPage.qml" line="150" />
         <source>Easting</source>
-        <translation type="unfinished">Східний</translation>
+        <translation type="unfinished">Східний напрямок</translation>
     </message>
     <message>
-        <location filename="../controls/imports/CyberTracker.1/LocationPage.qml" line="194" />
+        <location filename="../controls/imports/CyberTracker.1/LocationPage.qml" line="164" />
         <source>Longitude</source>
         <translation type="unfinished">Довгота</translation>
     </message>
     <message>
-        <location filename="../controls/imports/CyberTracker.1/LocationPage.qml" line="194" />
+        <location filename="../controls/imports/CyberTracker.1/LocationPage.qml" line="164" />
         <source>Northing</source>
-        <translation type="unfinished">Північне</translation>
+        <translation type="unfinished">Північний курс</translation>
     </message>
     <message>
-        <location filename="../controls/imports/CyberTracker.1/LocationPage.qml" line="208" />
+        <location filename="../controls/imports/CyberTracker.1/LocationPage.qml" line="178" />
         <source>Zone</source>
         <translation type="unfinished">Зона</translation>
     </message>
 </context>
 <context>
+    <name>LocationPopup</name>
+    <message>
+        <location filename="../controls/imports/CyberTracker.1/LocationPopup.qml" line="64" />
+        <source>Waiting for time correction</source>
+        <translation type="unfinished">Очікування часової корекції</translation>
+    </message>
+</context>
+<context>
     <name>LocationStreamer</name>
     <message>
-        <location filename="../cpp/Location.cpp" line="781" />
+        <location filename="../cpp/Location.cpp" line="1121" />
         <source>Off</source>
         <translation type="unfinished">Вимкнено</translation>
     </message>
@@ -1538,30 +2043,30 @@
     <message>
         <location filename="../controls/imports/CyberTracker.1/LoginItem.qml" line="28" />
         <source>Bad user name or password</source>
-        <translation type="unfinished">Неправильне ім’я користувача або пароль</translation>
+        <translation type="unfinished">Неправильне ім'я користувача або пароль</translation>
     </message>
     <message>
-        <location filename="../controls/imports/CyberTracker.1/LoginItem.qml" line="116" />
+        <location filename="../controls/imports/CyberTracker.1/LoginItem.qml" line="117" />
         <source>Server</source>
         <translation type="unfinished">Сервер</translation>
     </message>
     <message>
-        <location filename="../controls/imports/CyberTracker.1/LoginItem.qml" line="129" />
+        <location filename="../controls/imports/CyberTracker.1/LoginItem.qml" line="130" />
         <source>User name</source>
         <translation type="unfinished">Ім'я користувача</translation>
     </message>
     <message>
-        <location filename="../controls/imports/CyberTracker.1/LoginItem.qml" line="142" />
+        <location filename="../controls/imports/CyberTracker.1/LoginItem.qml" line="143" />
         <source>Password</source>
         <translation type="unfinished">Пароль</translation>
     </message>
     <message>
-        <location filename="../controls/imports/CyberTracker.1/LoginItem.qml" line="147" />
+        <location filename="../controls/imports/CyberTracker.1/LoginItem.qml" line="148" />
         <source>Login</source>
-        <translation type="unfinished">Увійти</translation>
+        <translation type="unfinished">Логін</translation>
     </message>
     <message>
-        <location filename="../controls/imports/CyberTracker.1/LoginItem.qml" line="181" />
+        <location filename="../controls/imports/CyberTracker.1/LoginItem.qml" line="182" />
         <source>Skip and login later</source>
         <translation type="unfinished">Пропустіть і увійдіть пізніше</translation>
     </message>
@@ -1569,22 +2074,22 @@
 <context>
     <name>MainPage</name>
     <message>
-        <location filename="../qml/MainPage.qml" line="49" />
+        <location filename="../qml/MainPage.qml" line="31" />
         <source>Connect</source>
-        <translation type="unfinished">Підключіть</translation>
+        <translation type="unfinished">Підключіться</translation>
     </message>
     <message>
-        <location filename="../qml/MainPage.qml" line="63" />
+        <location filename="../qml/MainPage.qml" line="42" />
         <source>Projects</source>
         <translation type="unfinished">Проекти</translation>
     </message>
     <message>
-        <location filename="../qml/MainPage.qml" line="78" />
+        <location filename="../qml/MainPage.qml" line="51" />
         <source>Map</source>
         <translation type="unfinished">Карта</translation>
     </message>
     <message>
-        <location filename="../qml/MainPage.qml" line="94" />
+        <location filename="../qml/MainPage.qml" line="61" />
         <source>Settings</source>
         <translation type="unfinished">Налаштування</translation>
     </message>
@@ -1592,22 +2097,42 @@
 <context>
     <name>MapInspectorPage</name>
     <message>
-        <location filename="../qml/MapInspectorPage.qml" line="96" />
+        <location filename="../qml/MapInspectorPage.qml" line="75" />
         <source>Identify</source>
         <translation type="unfinished">Ідентифікувати</translation>
     </message>
     <message>
-        <location filename="../qml/MapInspectorPage.qml" line="106" />
+        <location filename="../qml/MapInspectorPage.qml" line="80" />
         <source>No selection</source>
-        <translation type="unfinished">Немає вибору</translation>
+        <translation type="unfinished">Без вибору</translation>
     </message>
     <message>
-        <location filename="../qml/MapInspectorPage.qml" line="158" />
+        <location filename="../qml/MapInspectorPage.qml" line="106" />
+        <source>Set goto</source>
+        <translation type="unfinished">Встановити goto</translation>
+    </message>
+    <message>
+        <location filename="../qml/MapInspectorPage.qml" line="120" />
+        <source>Delete</source>
+        <translation type="unfinished">Видалити</translation>
+    </message>
+    <message>
+        <location filename="../qml/MapInspectorPage.qml" line="130" />
+        <source>Edit</source>
+        <translation type="unfinished">Редагувати</translation>
+    </message>
+    <message>
+        <location filename="../qml/MapInspectorPage.qml" line="145" />
+        <source>Delete sighting?</source>
+        <translation type="unfinished">Видалити приціл?</translation>
+    </message>
+    <message>
+        <location filename="../qml/MapInspectorPage.qml" line="92" />
         <source>Previous</source>
         <translation type="unfinished">Попередній</translation>
     </message>
     <message>
-        <location filename="../qml/MapInspectorPage.qml" line="172" />
+        <location filename="../qml/MapInspectorPage.qml" line="99" />
         <source>Next</source>
         <translation type="unfinished">Далі</translation>
     </message>
@@ -1615,118 +2140,133 @@
 <context>
     <name>MapLayerListModel</name>
     <message>
-        <location filename="../cpp/MapLayerListModel.cpp" line="191" />
-        <source>None</source>
-        <translation type="unfinished">Жодного</translation>
+        <location filename="../cpp/MapLayerListModel.cpp" line="160" />
+        <source>Data layers</source>
+        <translation type="unfinished">Шари даних</translation>
     </message>
     <message>
-        <location filename="../cpp/MapLayerListModel.cpp" line="193" />
+        <location filename="../cpp/MapLayerListModel.cpp" line="173" />
+        <source>Offline layers</source>
+        <translation type="unfinished">Офлайн шари</translation>
+    </message>
+    <message>
+        <location filename="../cpp/MapLayerListModel.cpp" line="181" />
+        <source>Base map</source>
+        <translation type="unfinished">Базова карта</translation>
+    </message>
+    <message>
+        <location filename="../cpp/MapLayerListModel.cpp" line="212" />
+        <source>None</source>
+        <translation type="unfinished">Немає</translation>
+    </message>
+    <message>
+        <location filename="../cpp/MapLayerListModel.cpp" line="214" />
         <source>Humanitarian</source>
         <translation type="unfinished">Гуманітарний</translation>
     </message>
     <message>
-        <location filename="../cpp/MapLayerListModel.cpp" line="196" />
+        <location filename="../cpp/MapLayerListModel.cpp" line="217" />
         <source>Topographic</source>
-        <translation type="unfinished">Топографічний</translation>
+        <translation type="unfinished">Топографічні</translation>
     </message>
     <message>
-        <location filename="../cpp/MapLayerListModel.cpp" line="197" />
+        <location filename="../cpp/MapLayerListModel.cpp" line="218" />
         <source>Streets</source>
         <translation type="unfinished">Вулиці</translation>
     </message>
     <message>
-        <location filename="../cpp/MapLayerListModel.cpp" line="200" />
-        <source>Imagery</source>
-        <translation type="unfinished">Образність</translation>
+        <location filename="../cpp/MapLayerListModel.cpp" line="219" />
+        <source>Streets (vector)</source>
+        <translation type="unfinished">Вулиці (вектор)</translation>
     </message>
     <message>
-        <location filename="../cpp/MapLayerListModel.cpp" line="201" />
+        <location filename="../cpp/MapLayerListModel.cpp" line="220" />
+        <source>Streets night (vector)</source>
+        <translation type="unfinished">Вулиці вночі (вектор)</translation>
+    </message>
+    <message>
+        <location filename="../cpp/MapLayerListModel.cpp" line="221" />
+        <source>Imagery</source>
+        <translation type="unfinished">Зображення</translation>
+    </message>
+    <message>
+        <location filename="../cpp/MapLayerListModel.cpp" line="222" />
         <source>Dark gray canvas</source>
         <translation type="unfinished">Темно-сіре полотно</translation>
     </message>
     <message>
-        <location filename="../cpp/MapLayerListModel.cpp" line="203" />
+        <location filename="../cpp/MapLayerListModel.cpp" line="223" />
+        <source>Dark gray canvas (vector)</source>
+        <translation type="unfinished">Темно-сіре полотно (вектор)</translation>
+    </message>
+    <message>
+        <location filename="../cpp/MapLayerListModel.cpp" line="224" />
         <source>Light gray canvas</source>
         <translation type="unfinished">Світло-сіре полотно</translation>
     </message>
     <message>
-        <location filename="../cpp/MapLayerListModel.cpp" line="206" />
+        <location filename="../cpp/MapLayerListModel.cpp" line="225" />
+        <source>Light gray canvas (vector)</source>
+        <translation type="unfinished">Світло-сіре полотно (вектор)</translation>
+    </message>
+    <message>
+        <location filename="../cpp/MapLayerListModel.cpp" line="226" />
+        <source>Navigation (vector)</source>
+        <translation type="unfinished">Навігація (векторна)</translation>
+    </message>
+    <message>
+        <location filename="../cpp/MapLayerListModel.cpp" line="227" />
         <source>Oceans</source>
-        <translation type="unfinished">Океанів</translation>
+        <translation type="unfinished">Океани</translation>
     </message>
 </context>
 <context>
     <name>MapLayersPage</name>
     <message>
-        <location filename="../qml/MapLayersPage.qml" line="17" />
+        <location filename="../qml/MapLayersPage.qml" line="15" />
         <source>Layers</source>
         <translation type="unfinished">Шари</translation>
-    </message>
-    <message>
-        <location filename="../qml/MapLayersPage.qml" line="193" />
-        <source>Delete layer?</source>
-        <translation type="unfinished">Видалити шар?</translation>
-    </message>
-    <message>
-        <location filename="../qml/MapLayersPage.qml" line="203" />
-        <source>Yes</source>
-        <translation type="unfinished">Так</translation>
-    </message>
-    <message>
-        <location filename="../qml/MapLayersPage.qml" line="218" />
-        <source>No</source>
-        <translation type="unfinished">Ні</translation>
-    </message>
-    <message>
-        <location filename="../qml/MapLayersPage.qml" line="246" />
-        <source>Delete map layer?</source>
-        <translation type="unfinished">Видалити шар карти?</translation>
-    </message>
-    <message>
-        <location filename="../qml/MapLayersPage.qml" line="247" />
-        <source>Yes, delete it</source>
-        <translation type="unfinished">Так, видаліть</translation>
     </message>
 </context>
 <context>
     <name>MapsPage</name>
     <message>
-        <location filename="../qml/MapsPage.qml" line="135" />
+        <location filename="../qml/MapsPage.qml" line="120" />
         <source>Layers</source>
         <translation type="unfinished">Шари</translation>
     </message>
     <message>
-        <location filename="../qml/MapsPage.qml" line="169" />
+        <location filename="../qml/MapsPage.qml" line="137" />
         <source>Pan</source>
-        <translation type="unfinished">Пан</translation>
+        <translation type="unfinished">Сковорода</translation>
     </message>
     <message>
-        <location filename="../qml/MapsPage.qml" line="186" />
+        <location filename="../qml/MapsPage.qml" line="149" />
         <source>Follow</source>
-        <translation type="unfinished">Слідкуйте</translation>
+        <translation type="unfinished">Слідкуйте за</translation>
     </message>
     <message>
-        <location filename="../qml/MapsPage.qml" line="203" />
+        <location filename="../qml/MapsPage.qml" line="161" />
         <source>Goto</source>
-        <translation type="unfinished">Йти до</translation>
+        <translation type="unfinished">Готово.</translation>
     </message>
     <message>
-        <location filename="../qml/MapsPage.qml" line="228" />
+        <location filename="../qml/MapsPage.qml" line="171" />
         <source>More</source>
         <translation type="unfinished">Більше</translation>
     </message>
     <message>
-        <location filename="../qml/MapsPage.qml" line="251" />
+        <location filename="../qml/MapsPage.qml" line="187" />
         <source>Data</source>
         <translation type="unfinished">Дані</translation>
     </message>
     <message>
-        <location filename="../qml/MapsPage.qml" line="252" />
+        <location filename="../qml/MapsPage.qml" line="188" />
         <source>Compass</source>
         <translation type="unfinished">Компас</translation>
     </message>
     <message>
-        <location filename="../qml/MapsPage.qml" line="253" />
+        <location filename="../qml/MapsPage.qml" line="189" />
         <source>Navigation</source>
         <translation type="unfinished">Навігація</translation>
     </message>
@@ -1736,12 +2276,12 @@
     <message>
         <location filename="../qml/SMART/MetadataPage.qml" line="67" />
         <source>Survey started</source>
-        <translation type="unfinished">Почалося опитування</translation>
+        <translation type="unfinished">Розпочато опитування</translation>
     </message>
     <message>
         <location filename="../qml/SMART/MetadataPage.qml" line="67" />
         <source>Patrol started</source>
-        <translation type="unfinished">Почався патруль</translation>
+        <translation type="unfinished">Розпочато патрулювання</translation>
     </message>
     <message>
         <location filename="../qml/SMART/MetadataPage.qml" line="71" />
@@ -1751,7 +2291,7 @@
     <message>
         <location filename="../qml/SMART/MetadataPage.qml" line="71" />
         <source>Patrol resumed</source>
-        <translation type="unfinished">Патрулювання відновлено</translation>
+        <translation type="unfinished">Відновлено патрулювання</translation>
     </message>
     <message>
         <location filename="../qml/SMART/MetadataPage.qml" line="75" />
@@ -1761,44 +2301,44 @@
     <message>
         <location filename="../qml/SMART/MetadataPage.qml" line="75" />
         <source>Patrol changed</source>
-        <translation type="unfinished">Змінився патруль</translation>
+        <translation type="unfinished">Патруль змінено</translation>
     </message>
 </context>
 <context>
     <name>NativeConnector</name>
     <message>
-        <location filename="../cpp/Native/NativeConnector.cpp" line="38" />
+        <location filename="../cpp/Native/NativeConnector.cpp" line="48" />
         <source>Install kind not found</source>
-        <translation type="unfinished">Тип встановлення не знайдено</translation>
+        <translation type="unfinished">Тип установки не знайдено</translation>
     </message>
     <message>
-        <location filename="../cpp/Native/NativeConnector.cpp" line="53" />
+        <location filename="../cpp/Native/NativeConnector.cpp" line="63" />
         <source>Missing projectUid</source>
-        <translation type="unfinished">Відсутній projectUid</translation>
+        <translation type="unfinished">Відсутній ідентифікатор проекту</translation>
     </message>
     <message>
-        <location filename="../cpp/Native/NativeConnector.cpp" line="97" />
-        <location filename="../cpp/Native/NativeConnector.cpp" line="132" />
+        <location filename="../cpp/Native/NativeConnector.cpp" line="107" />
+        <location filename="../cpp/Native/NativeConnector.cpp" line="142" />
         <source>Package mismatch</source>
-        <translation type="unfinished">Невідповідність пакетів</translation>
+        <translation type="unfinished">Невідповідність упаковки</translation>
     </message>
     <message>
-        <location filename="../cpp/Native/NativeConnector.cpp" line="156" />
+        <location filename="../cpp/Native/NativeConnector.cpp" line="166" />
         <source>Bad package</source>
-        <translation type="unfinished">Поганий пакет</translation>
+        <translation type="unfinished">Погана упаковка</translation>
     </message>
     <message>
-        <location filename="../cpp/Native/NativeConnector.cpp" line="162" />
+        <location filename="../cpp/Native/NativeConnector.cpp" line="172" />
         <source>Not a package</source>
         <translation type="unfinished">Не пакет</translation>
     </message>
     <message>
-        <location filename="../cpp/Native/NativeConnector.cpp" line="169" />
+        <location filename="../cpp/Native/NativeConnector.cpp" line="179" />
         <source>No project in package</source>
-        <translation type="unfinished">У пакеті немає проекту</translation>
+        <translation type="unfinished">У пакеті немає жодного проекту</translation>
     </message>
     <message>
-        <location filename="../cpp/Native/NativeConnector.cpp" line="148" />
+        <location filename="../cpp/Native/NativeConnector.cpp" line="158" />
         <source>Download failed</source>
         <translation type="unfinished">Не вдалося завантажити</translation>
     </message>
@@ -1806,19 +2346,133 @@
 <context>
     <name>ODKConnector</name>
     <message>
-        <location filename="../cpp/ODK/ODKConnector.cpp" line="109" />
+        <location filename="../cpp/ODK/ODKConnector.cpp" line="114" />
         <source>Failed to create project</source>
         <translation type="unfinished">Не вдалося створити проект</translation>
     </message>
     <message>
-        <location filename="../cpp/ODK/ODKConnector.cpp" line="181" />
-        <source>Unsent data</source>
-        <translation type="unfinished">Ненадіслані дані</translation>
-    </message>
-    <message>
-        <location filename="../cpp/ODK/ODKConnector.cpp" line="237" />
+        <location filename="../cpp/ODK/ODKConnector.cpp" line="245" />
         <source>Download failed</source>
         <translation type="unfinished">Не вдалося завантажити</translation>
+    </message>
+    <message>
+        <location filename="../cpp/ODK/ODKConnector.cpp" line="251" />
+        <source>Failed to read form settings sheet</source>
+        <translation type="unfinished">Не вдалося прочитати сторінку налаштувань форми</translation>
+    </message>
+</context>
+<context>
+    <name>OfflineMapManager</name>
+    <message>
+        <location filename="../cpp/OfflineMap.cpp" line="442" />
+        <location filename="../cpp/OfflineMap.cpp" line="449" />
+        <source>No a valid route file</source>
+        <translation type="unfinished">Немає дійсного файлу маршруту</translation>
+    </message>
+    <message>
+        <location filename="../cpp/OfflineMap.cpp" line="468" />
+        <location filename="../cpp/OfflineMap.cpp" line="660" />
+        <source>No maps found</source>
+        <translation type="unfinished">Карт не знайдено</translation>
+    </message>
+    <message>
+        <location filename="../cpp/OfflineMap.cpp" line="487" />
+        <location filename="../cpp/OfflineMap.cpp" line="678" />
+        <source>Install failed</source>
+        <translation type="unfinished">Не вдалося встановити</translation>
+    </message>
+    <message>
+        <location filename="../cpp/OfflineMap.cpp" line="522" />
+        <source>Up to date</source>
+        <translation type="unfinished">Актуально</translation>
+    </message>
+    <message>
+        <location filename="../cpp/OfflineMap.cpp" line="554" />
+        <source>Map download failed</source>
+        <translation type="unfinished">Не вдалося завантажити карту</translation>
+    </message>
+    <message>
+        <location filename="../cpp/OfflineMap.cpp" line="568" />
+        <source>Invalid map format</source>
+        <translation type="unfinished">Неправильний формат карти</translation>
+    </message>
+</context>
+<context>
+    <name>OfflineMapPage</name>
+    <message>
+        <location filename="../qml/OfflineMapPage.qml" line="15" />
+        <source>Offline maps</source>
+        <translation type="unfinished">Офлайн карти</translation>
+    </message>
+    <message>
+        <location filename="../qml/OfflineMapPage.qml" line="22" />
+        <source>Move up</source>
+        <translation type="unfinished">Рухайся.</translation>
+    </message>
+    <message>
+        <location filename="../qml/OfflineMapPage.qml" line="33" />
+        <source>Move down</source>
+        <translation type="unfinished">Вниз.</translation>
+    </message>
+    <message>
+        <location filename="../qml/OfflineMapPage.qml" line="44" />
+        <source>Share</source>
+        <translation type="unfinished">Поділитися</translation>
+    </message>
+    <message>
+        <location filename="../qml/OfflineMapPage.qml" line="50" />
+        <source>Packaging failed</source>
+        <translation type="unfinished">Відбулася помилка при пакуванні</translation>
+    </message>
+    <message>
+        <location filename="../qml/OfflineMapPage.qml" line="60" />
+        <source>Offline map</source>
+        <translation type="unfinished">Офлайн карта</translation>
+    </message>
+    <message>
+        <location filename="../qml/OfflineMapPage.qml" line="65" />
+        <source>Delete</source>
+        <translation type="unfinished">Видалити</translation>
+    </message>
+    <message>
+        <location filename="../qml/OfflineMapPage.qml" line="74" />
+        <source>Add</source>
+        <translation type="unfinished">Додати</translation>
+    </message>
+    <message>
+        <location filename="../qml/OfflineMapPage.qml" line="93" />
+        <source>No layers</source>
+        <translation type="unfinished">Без шарів</translation>
+    </message>
+    <message>
+        <location filename="../qml/OfflineMapPage.qml" line="163" />
+        <source>Not a map package</source>
+        <translation type="unfinished">Не картографічний пакет</translation>
+    </message>
+    <message>
+        <location filename="../qml/OfflineMapPage.qml" line="182" />
+        <source>Save map package</source>
+        <translation type="unfinished">Зберегти пакет карт</translation>
+    </message>
+    <message>
+        <location filename="../qml/OfflineMapPage.qml" line="191" />
+        <source>Copied to clipboard</source>
+        <translation type="unfinished">Скопійовано в буфер обміну</translation>
+    </message>
+    <message>
+        <location filename="../qml/OfflineMapPage.qml" line="193" />
+        <source>Failed to save package</source>
+        <translation type="unfinished">Не вдалося зберегти пакет</translation>
+    </message>
+    <message>
+        <location filename="../qml/OfflineMapPage.qml" line="203" />
+        <source>Yes, delete it</source>
+        <translation type="unfinished">Так, видалити</translation>
+    </message>
+    <message>
+        <location filename="../qml/OfflineMapPage.qml" line="211" />
+        <source>Delete layer?</source>
+        <translation type="unfinished">Видалити шар?</translation>
     </message>
 </context>
 <context>
@@ -1859,13 +2513,13 @@
     <message>
         <location filename="../qml/SMART/PatrolStatsPage.qml" line="152" />
         <source>Track recorder</source>
-        <translation type="unfinished">Трек-рекордер</translation>
+        <translation type="unfinished">Диктофон</translation>
     </message>
 </context>
 <context>
     <name>PhotoField</name>
     <message>
-        <location filename="../cpp/Field.cpp" line="1131" />
+        <location filename="../cpp/Field.cpp" line="1188" />
         <source>Photos</source>
         <translation type="unfinished">Фотографії</translation>
     </message>
@@ -1873,7 +2527,7 @@
 <context>
     <name>PositionInfoSource</name>
     <message>
-        <location filename="../cpp/Location.cpp" line="241" />
+        <location filename="../cpp/Location.cpp" line="290" />
         <source>GPS outlier detected</source>
         <translation type="unfinished">Виявлено відхилення GPS</translation>
     </message>
@@ -1883,133 +2537,133 @@
     <message>
         <location filename="../qml/SMART/ProjectChangePage.qml" line="9" />
         <source>Change Project</source>
-        <translation type="unfinished">Змінити проект</translation>
+        <translation type="unfinished">Проект змін</translation>
     </message>
 </context>
 <context>
     <name>ProjectDetailsPage</name>
     <message>
-        <location filename="../qml/ProjectDetailsPage.qml" line="15" />
+        <location filename="../qml/ProjectDetailsPage.qml" line="21" />
         <source>Project details</source>
         <translation type="unfinished">Деталі проекту</translation>
     </message>
     <message>
-        <location filename="../qml/ProjectDetailsPage.qml" line="20" />
+        <location filename="../qml/ProjectDetailsPage.qml" line="26" />
         <source>Exported data</source>
         <translation type="unfinished">Експортовані дані</translation>
     </message>
     <message>
-        <location filename="../qml/ProjectDetailsPage.qml" line="21" />
+        <location filename="../qml/ProjectDetailsPage.qml" line="27" />
         <source>Project data waiting for import</source>
         <translation type="unfinished">Дані проекту очікують на імпорт</translation>
     </message>
     <message>
-        <location filename="../qml/ProjectDetailsPage.qml" line="28" />
+        <location filename="../qml/ProjectDetailsPage.qml" line="34" />
         <source>QR code</source>
         <translation type="unfinished">QR-код</translation>
     </message>
     <message>
-        <location filename="../qml/ProjectDetailsPage.qml" line="29" />
+        <location filename="../qml/ProjectDetailsPage.qml" line="35" />
         <source>Share a link to this project</source>
         <translation type="unfinished">Поділіться посиланням на цей проект</translation>
     </message>
     <message>
-        <location filename="../qml/ProjectDetailsPage.qml" line="36" />
+        <location filename="../qml/ProjectDetailsPage.qml" line="42" />
         <source>Send package</source>
-        <translation type="unfinished">Відправити пакет</translation>
+        <translation type="unfinished">Надіслати пакет</translation>
     </message>
     <message>
-        <location filename="../qml/ProjectDetailsPage.qml" line="37" />
+        <location filename="../qml/ProjectDetailsPage.qml" line="43" />
         <source>Share this project with others</source>
         <translation type="unfinished">Поділіться цим проектом з іншими</translation>
     </message>
     <message>
-        <location filename="../qml/ProjectDetailsPage.qml" line="43" />
+        <location filename="../qml/ProjectDetailsPage.qml" line="49" />
         <source>Update</source>
         <translation type="unfinished">Оновлення</translation>
     </message>
     <message>
-        <location filename="../qml/ProjectDetailsPage.qml" line="44" />
-        <source>Check for updates</source>
-        <translation type="unfinished">Перевірити наявність оновлень</translation>
-    </message>
-    <message>
         <location filename="../qml/ProjectDetailsPage.qml" line="50" />
-        <source>Reset project</source>
-        <translation type="unfinished">Скинути проект</translation>
+        <source>Check for updates</source>
+        <translation type="unfinished">Перевірте наявність оновлень</translation>
     </message>
     <message>
-        <location filename="../qml/ProjectDetailsPage.qml" line="51" />
+        <location filename="../qml/ProjectDetailsPage.qml" line="56" />
+        <source>Reset project</source>
+        <translation type="unfinished">Проект "Перезавантаження</translation>
+    </message>
+    <message>
+        <location filename="../qml/ProjectDetailsPage.qml" line="57" />
         <source>Delete all project data</source>
         <translation type="unfinished">Видалити всі дані проекту</translation>
     </message>
     <message>
-        <location filename="../qml/ProjectDetailsPage.qml" line="57" />
+        <location filename="../qml/ProjectDetailsPage.qml" line="63" />
         <source>Delete project</source>
         <translation type="unfinished">Видалити проект</translation>
     </message>
     <message>
-        <location filename="../qml/ProjectDetailsPage.qml" line="58" />
+        <location filename="../qml/ProjectDetailsPage.qml" line="64" />
         <source>Delete the project and all data</source>
-        <translation type="unfinished">Видаліть проект і всі дані</translation>
+        <translation type="unfinished">Видалити проект і всі дані</translation>
     </message>
     <message>
-        <location filename="../qml/ProjectDetailsPage.qml" line="155" />
+        <location filename="../qml/ProjectDetailsPage.qml" line="158" />
         <source>Packaging failed</source>
-        <translation type="unfinished">Помилка упаковки</translation>
+        <translation type="unfinished">Відбулася помилка при пакуванні</translation>
     </message>
     <message>
-        <location filename="../qml/ProjectDetailsPage.qml" line="175" />
+        <location filename="../qml/ProjectDetailsPage.qml" line="184" />
         <source>Save package</source>
         <translation type="unfinished">Зберегти пакет</translation>
     </message>
     <message>
-        <location filename="../qml/ProjectDetailsPage.qml" line="184" />
+        <location filename="../qml/ProjectDetailsPage.qml" line="193" />
         <source>Copied to clipboard</source>
         <translation type="unfinished">Скопійовано в буфер обміну</translation>
     </message>
     <message>
-        <location filename="../qml/ProjectDetailsPage.qml" line="186" />
+        <location filename="../qml/ProjectDetailsPage.qml" line="195" />
         <source>Failed to save package</source>
         <translation type="unfinished">Не вдалося зберегти пакет</translation>
     </message>
     <message>
-        <location filename="../qml/ProjectDetailsPage.qml" line="198" />
+        <location filename="../qml/ProjectDetailsPage.qml" line="207" />
         <source>Reset project?</source>
-        <translation type="unfinished">Скинути проект?</translation>
+        <translation type="unfinished">Проект перезавантаження?</translation>
     </message>
     <message>
-        <location filename="../qml/ProjectDetailsPage.qml" line="199" />
+        <location filename="../qml/ProjectDetailsPage.qml" line="208" />
         <source>All project data will be permanently removed from the device.</source>
-        <translation type="unfinished">Усі дані проекту буде назавжди видалено з пристрою.</translation>
+        <translation type="unfinished">Всі дані проекту будуть безповоротно видалені з пристрою.</translation>
     </message>
     <message>
-        <location filename="../qml/ProjectDetailsPage.qml" line="200" />
+        <location filename="../qml/ProjectDetailsPage.qml" line="209" />
         <source>Yes, reset it</source>
-        <translation type="unfinished">Так, скиньте його</translation>
+        <translation type="unfinished">Так, перезавантажити</translation>
     </message>
     <message>
-        <location filename="../qml/ProjectDetailsPage.qml" line="205" />
+        <location filename="../qml/ProjectDetailsPage.qml" line="214" />
         <source>%1 reset</source>
         <translation type="unfinished">%1 скидання</translation>
     </message>
     <message>
-        <location filename="../qml/ProjectDetailsPage.qml" line="216" />
+        <location filename="../qml/ProjectDetailsPage.qml" line="225" />
         <source>Delete project?</source>
         <translation type="unfinished">Видалити проект?</translation>
     </message>
     <message>
-        <location filename="../qml/ProjectDetailsPage.qml" line="217" />
+        <location filename="../qml/ProjectDetailsPage.qml" line="226" />
         <source>The project and all of its data will be permanently removed.</source>
-        <translation type="unfinished">Проект і всі його дані буде видалено назавжди.</translation>
+        <translation type="unfinished">Проект та всі його дані будуть безповоротно видалені.</translation>
     </message>
     <message>
-        <location filename="../qml/ProjectDetailsPage.qml" line="218" />
+        <location filename="../qml/ProjectDetailsPage.qml" line="227" />
         <source>Yes, delete it</source>
-        <translation type="unfinished">Так, видаліть</translation>
+        <translation type="unfinished">Так, видалити</translation>
     </message>
     <message>
-        <location filename="../qml/ProjectDetailsPage.qml" line="224" />
+        <location filename="../qml/ProjectDetailsPage.qml" line="232" />
         <source>%1 deleted</source>
         <translation type="unfinished">%1 видалено</translation>
     </message>
@@ -2017,49 +2671,64 @@
 <context>
     <name>ProjectManager</name>
     <message>
-        <location filename="../cpp/Project.cpp" line="898" />
+        <location filename="../cpp/Project.cpp" line="965" />
         <source>Failed to extract</source>
-        <translation type="unfinished">Не вдалося витягнути</translation>
+        <translation type="unfinished">Не вдалося витягти</translation>
     </message>
     <message>
-        <location filename="../cpp/Project.cpp" line="906" />
+        <location filename="../cpp/Project.cpp" line="973" />
         <source>Invalid package</source>
         <translation type="unfinished">Недійсний пакет</translation>
     </message>
     <message>
-        <location filename="../cpp/Project.cpp" line="918" />
+        <location filename="../cpp/Project.cpp" line="985" />
         <source>Failed to initialize project</source>
         <translation type="unfinished">Не вдалося ініціалізувати проект</translation>
     </message>
     <message>
-        <location filename="../cpp/Project.cpp" line="991" />
+        <location filename="../cpp/Project.cpp" line="1064" />
         <source>Already installed</source>
         <translation type="unfinished">Вже встановлено</translation>
     </message>
     <message>
-        <location filename="../cpp/Project.cpp" line="996" />
+        <location filename="../cpp/Project.cpp" line="1069" />
         <source>Nothing to do</source>
-        <translation type="unfinished">Нічого робити</translation>
+        <translation type="unfinished">Нічого не вдієш</translation>
     </message>
     <message>
-        <location filename="../cpp/Project.cpp" line="1015" />
+        <location filename="../cpp/Project.cpp" line="1088" />
         <source>File not found</source>
         <translation type="unfinished">Файл не знайдено</translation>
     </message>
     <message>
-        <location filename="../cpp/Project.cpp" line="1023" />
+        <location filename="../cpp/Project.cpp" line="1096" />
         <source>Permissions not granted</source>
-        <translation type="unfinished">Дозволи не надано</translation>
+        <translation type="unfinished">Дозволи не надані</translation>
     </message>
     <message>
-        <location filename="../cpp/Project.cpp" line="1036" />
+        <location filename="../cpp/Project.cpp" line="1109" />
         <source>Bad definition format</source>
         <translation type="unfinished">Поганий формат визначення</translation>
     </message>
     <message>
-        <location filename="../cpp/Project.cpp" line="1171" />
+        <location filename="../cpp/Project.cpp" line="1258" />
         <source>Update Complete</source>
         <translation type="unfinished">Оновлення завершено</translation>
+    </message>
+    <message>
+        <location filename="../cpp/Project.cpp" line="1363" />
+        <source>Bad project file</source>
+        <translation type="unfinished">Пошкоджений файл проекту</translation>
+    </message>
+    <message>
+        <location filename="../cpp/Project.cpp" line="1368" />
+        <source>Up to date</source>
+        <translation type="unfinished">Актуально</translation>
+    </message>
+    <message>
+        <location filename="../cpp/Project.cpp" line="1402" />
+        <source>Update error</source>
+        <translation type="unfinished">Помилка оновлення</translation>
     </message>
 </context>
 <context>
@@ -2070,66 +2739,71 @@
         <translation type="unfinished">Проекти</translation>
     </message>
     <message>
-        <location filename="../qml/ProjectsPage.qml" line="56" />
-        <location filename="../qml/ProjectsPage.qml" line="164" />
+        <location filename="../qml/ProjectsPage.qml" line="54" />
+        <location filename="../qml/ProjectsPage.qml" line="168" />
         <source>Delete project?</source>
         <translation type="unfinished">Видалити проект?</translation>
     </message>
     <message>
-        <location filename="../qml/ProjectsPage.qml" line="66" />
+        <location filename="../qml/ProjectsPage.qml" line="64" />
         <source>Yes</source>
         <translation type="unfinished">Так</translation>
     </message>
     <message>
-        <location filename="../qml/ProjectsPage.qml" line="79" />
+        <location filename="../qml/ProjectsPage.qml" line="77" />
         <source>No</source>
         <translation type="unfinished">Ні</translation>
     </message>
     <message>
-        <location filename="../qml/ProjectsPage.qml" line="100" />
+        <location filename="../qml/ProjectsPage.qml" line="98" />
         <source>Offline</source>
         <translation type="unfinished">Офлайн</translation>
     </message>
     <message>
-        <location filename="../qml/ProjectsPage.qml" line="165" />
+        <location filename="../qml/ProjectsPage.qml" line="138" />
+        <source>No provider</source>
+        <translation type="unfinished">Немає провайдера</translation>
+    </message>
+    <message>
+        <location filename="../qml/ProjectsPage.qml" line="169" />
         <source>The project and all of its data will be permanently removed.</source>
-        <translation type="unfinished">Проект і всі його дані буде видалено назавжди.</translation>
+        <translation type="unfinished">Проект та всі його дані будуть безповоротно видалені.</translation>
     </message>
     <message>
-        <location filename="../qml/ProjectsPage.qml" line="166" />
+        <location filename="../qml/ProjectsPage.qml" line="170" />
         <source>Yes, delete it</source>
-        <translation type="unfinished">Так, видаліть</translation>
+        <translation type="unfinished">Так, видалити</translation>
     </message>
     <message>
-        <location filename="../qml/ProjectsPage.qml" line="171" />
+        <location filename="../qml/ProjectsPage.qml" line="175" />
         <source>%1 deleted</source>
         <translation type="unfinished">%1 видалено</translation>
     </message>
     <message>
-        <location filename="../qml/ProjectsPage.qml" line="185" />
+        <location filename="../qml/ProjectsPage.qml" line="189" />
         <source>Update project?</source>
-        <translation type="unfinished">Оновити проект?</translation>
+        <translation type="unfinished">Оновлення проекту?</translation>
     </message>
     <message>
-        <location filename="../qml/ProjectsPage.qml" line="186" />
+        <location filename="../qml/ProjectsPage.qml" line="190" />
         <source>A new version is available.</source>
         <translation type="unfinished">Доступна нова версія.</translation>
     </message>
     <message>
-        <location filename="../qml/ProjectsPage.qml" line="187" />
+        <location filename="../qml/ProjectsPage.qml" line="191" />
         <source>Yes, update now</source>
-        <translation type="unfinished">Так, оновіть зараз</translation>
+        <translation type="unfinished">Так, оновити зараз</translation>
     </message>
     <message>
-        <location filename="../qml/ProjectsPage.qml" line="189" />
+        <location filename="../qml/ProjectsPage.qml" line="193" />
         <source>No, update later</source>
-        <translation type="unfinished">Ні, оновіть пізніше</translation>
+        <translation type="unfinished">Ні, оновлюйте пізніше</translation>
     </message>
 </context>
 <context>
     <name>Provider</name>
     <message>
-        <location filename="../cpp/ProviderInterface.cpp" line="182" />
+        <location filename="../cpp/ProviderInterface.cpp" line="194" />
         <source>Data</source>
         <translation type="unfinished">Дані</translation>
     </message>
@@ -2137,17 +2811,17 @@
 <context>
     <name>Record</name>
     <message>
-        <location filename="../cpp/Record.cpp" line="387" />
+        <location filename="../cpp/Record.cpp" line="392" />
         <source>Record</source>
-        <translation type="unfinished">Запис</translation>
+        <translation type="unfinished">Рекорд</translation>
     </message>
     <message>
-        <location filename="../cpp/Record.cpp" line="675" />
+        <location filename="../cpp/Record.cpp" line="680" />
         <source>Records</source>
-        <translation type="unfinished">Записи</translation>
+        <translation type="unfinished">Рекорди</translation>
     </message>
     <message>
-        <location filename="../cpp/Record.cpp" line="703" />
+        <location filename="../cpp/Record.cpp" line="708" />
         <source>Value required</source>
         <translation type="unfinished">Необхідне значення</translation>
     </message>
@@ -2155,12 +2829,12 @@
 <context>
     <name>RecordField</name>
     <message>
-        <location filename="../cpp/Field.cpp" line="283" />
+        <location filename="../cpp/Field.cpp" line="320" />
         <source>record</source>
-        <translation type="unfinished">запис</translation>
+        <translation type="unfinished">рекорд</translation>
     </message>
     <message>
-        <location filename="../cpp/Field.cpp" line="283" />
+        <location filename="../cpp/Field.cpp" line="320" />
         <source>records</source>
         <translation type="unfinished">записи</translation>
     </message>
@@ -2170,22 +2844,27 @@
     <message>
         <location filename="../qml/SMART/RecoverDataPage.qml" line="12" />
         <source>Recover Connect data</source>
-        <translation type="unfinished">Відновлення даних Connect</translation>
+        <translation type="unfinished">Відновлення даних підключення</translation>
     </message>
     <message>
         <location filename="../qml/SMART/RecoverDataPage.qml" line="25" />
         <source>Use this option to recover data which cannot be uploaded. Once the data is recovered, it must be retrieved by importing from SMART desktop.</source>
-        <translation type="unfinished">Використовуйте цю опцію для відновлення даних, які неможливо завантажити. Після відновлення даних їх необхідно отримати за допомогою імпорту з робочого столу SMART.</translation>
+        <translation type="unfinished">Використовуйте цю опцію для відновлення даних, які не можуть бути завантажені. Після того, як дані будуть відновлені, їх необхідно отримати шляхом імпорту з SMART desktop.</translation>
     </message>
     <message>
         <location filename="../qml/SMART/RecoverDataPage.qml" line="44" />
         <source>Recover data</source>
-        <translation type="unfinished">Відновити дані</translation>
+        <translation type="unfinished">Відновлення даних</translation>
     </message>
     <message>
         <location filename="../qml/SMART/RecoverDataPage.qml" line="56" />
         <source>Recover data?</source>
         <translation type="unfinished">Відновити дані?</translation>
+    </message>
+    <message>
+        <location filename="../qml/SMART/RecoverDataPage.qml" line="57" />
+        <source>Yes, recover now</source>
+        <translation type="unfinished">Так, одужуйте зараз</translation>
     </message>
     <message>
         <location filename="../qml/SMART/RecoverDataPage.qml" line="72" />
@@ -2205,7 +2884,7 @@
     <message>
         <location filename="../qml/SMART/RecoverDataPage.qml" line="76" />
         <source>An error occurred during data export</source>
-        <translation type="unfinished">Під час експорту даних сталася помилка</translation>
+        <translation type="unfinished">Виникла помилка під час експорту даних</translation>
     </message>
 </context>
 <context>
@@ -2213,105 +2892,115 @@
     <message>
         <location filename="../qml/EarthRanger/ReportedByPage.qml" line="10" />
         <source>Reported by</source>
-        <translation type="unfinished">Повідомляє</translation>
+        <translation type="unfinished">Про це повідомили</translation>
     </message>
 </context>
 <context>
     <name>SMARTConnector</name>
     <message>
-        <location filename="../cpp/SMART/SMARTConnector.cpp" line="101" />
+        <location filename="../cpp/SMART/SMARTConnector.cpp" line="105" />
         <source>has unexported data</source>
         <translation type="unfinished">має неекспортовані дані</translation>
     </message>
     <message>
         <location filename="../cpp/SMART/SMARTConnector.cpp" line="14" />
         <source>required</source>
-        <translation type="unfinished">вимагається</translation>
+        <translation type="unfinished">необхідний</translation>
     </message>
     <message>
-        <location filename="../cpp/SMART/SMARTConnector.cpp" line="167" />
+        <location filename="../cpp/SMART/SMARTConnector.cpp" line="171" />
         <source>Download failed</source>
         <translation type="unfinished">Не вдалося завантажити</translation>
     </message>
     <message>
-        <location filename="../cpp/SMART/SMARTConnector.cpp" line="177" />
+        <location filename="../cpp/SMART/SMARTConnector.cpp" line="181" />
         <source>Download bad</source>
         <translation type="unfinished">Завантажити погано</translation>
     </message>
     <message>
-        <location filename="../cpp/SMART/SMARTConnector.cpp" line="333" />
-        <location filename="../cpp/SMART/SMARTConnector.cpp" line="529" />
-        <source>Bad project file</source>
-        <translation type="unfinished">Поганий файл проекту</translation>
+        <location filename="../cpp/SMART/SMARTConnector.cpp" line="339" />
+        <source>Unexported data</source>
+        <translation type="unfinished">Неекспортовані дані</translation>
     </message>
     <message>
-        <location filename="../cpp/SMART/SMARTConnector.cpp" line="345" />
-        <location filename="../cpp/SMART/SMARTConnector.cpp" line="538" />
+        <location filename="../cpp/SMART/SMARTConnector.cpp" line="355" />
+        <location filename="../cpp/SMART/SMARTConnector.cpp" line="551" />
+        <source>Bad project file</source>
+        <translation type="unfinished">Пошкоджений файл проекту</translation>
+    </message>
+    <message>
+        <location filename="../cpp/SMART/SMARTConnector.cpp" line="367" />
+        <location filename="../cpp/SMART/SMARTConnector.cpp" line="560" />
         <source>Cannot unpack project</source>
         <translation type="unfinished">Не вдається розпакувати проект</translation>
+    </message>
+    <message>
+        <location filename="../cpp/SMART/SMARTConnector.cpp" line="543" />
+        <source>Unsent data</source>
+        <translation type="unfinished">Невідправлені дані</translation>
     </message>
 </context>
 <context>
     <name>SMARTProvider</name>
     <message>
-        <location filename="../cpp/SMART/SMARTProvider.cpp" line="3412" />
+        <location filename="../cpp/SMART/SMARTProvider.cpp" line="3518" />
         <source>Incident</source>
         <translation type="unfinished">Інцидент</translation>
     </message>
     <message>
         <location filename="../cpp/SMART/SMARTProvider.cpp" line="206" />
-        <location filename="../cpp/SMART/SMARTProvider.cpp" line="3446" />
-        <location filename="../cpp/SMART/SMARTProvider.cpp" line="3865" />
-        <location filename="../cpp/SMART/SMARTProvider.cpp" line="3892" />
+        <location filename="../cpp/SMART/SMARTProvider.cpp" line="3532" />
+        <location filename="../cpp/SMART/SMARTProvider.cpp" line="3930" />
+        <location filename="../cpp/SMART/SMARTProvider.cpp" line="3957" />
         <source>Patrol</source>
         <translation type="unfinished">Патруль</translation>
     </message>
     <message>
-        <location filename="../cpp/SMART/SMARTProvider.cpp" line="3469" />
-        <location filename="../cpp/SMART/SMARTProvider.cpp" line="3516" />
+        <location filename="../cpp/SMART/SMARTProvider.cpp" line="3542" />
+        <location filename="../cpp/SMART/SMARTProvider.cpp" line="3566" />
         <source>Tracks</source>
-        <translation type="unfinished">Доріжки</translation>
+        <translation type="unfinished">Треки</translation>
     </message>
     <message>
         <location filename="../cpp/SMART/SMARTProvider.cpp" line="210" />
-        <location filename="../cpp/SMART/SMARTProvider.cpp" line="3493" />
+        <location filename="../cpp/SMART/SMARTProvider.cpp" line="3556" />
         <source>Collect</source>
         <translation type="unfinished">Збирати</translation>
     </message>
     <message>
-        <location filename="../cpp/SMART/SMARTProvider.cpp" line="3560" />
+        <location filename="../cpp/SMART/SMARTProvider.cpp" line="3619" />
         <source>Location</source>
-        <translation type="unfinished">Розташування</translation>
+        <translation type="unfinished">Місцезнаходження</translation>
     </message>
     <message>
-        <location filename="../cpp/SMART/SMARTProvider.cpp" line="3561" />
+        <location filename="../cpp/SMART/SMARTProvider.cpp" line="3620" />
         <source>Distance</source>
         <translation type="unfinished">Відстань</translation>
     </message>
     <message>
-        <location filename="../cpp/SMART/SMARTProvider.cpp" line="3562" />
+        <location filename="../cpp/SMART/SMARTProvider.cpp" line="3621" />
         <source>Bearing</source>
         <translation type="unfinished">Підшипник</translation>
     </message>
     <message>
-        <location filename="../cpp/SMART/SMARTProvider.cpp" line="3563" />
-        <location filename="../cpp/SMART/SMARTProvider.cpp" line="3564" />
+        <location filename="../cpp/SMART/SMARTProvider.cpp" line="3622" />
+        <location filename="../cpp/SMART/SMARTProvider.cpp" line="3623" />
         <source>Photos</source>
         <translation type="unfinished">Фотографії</translation>
     </message>
     <message>
-        <location filename="../cpp/SMART/SMARTProvider.cpp" line="3565" />
+        <location filename="../cpp/SMART/SMARTProvider.cpp" line="3624" />
         <source>Audio note</source>
-        <translation type="unfinished">Аудіо нотатка</translation>
+        <translation type="unfinished">Аудіозапис</translation>
     </message>
     <message>
-        <location filename="../cpp/SMART/SMARTProvider.cpp" line="3566" />
+        <location filename="../cpp/SMART/SMARTProvider.cpp" line="3625" />
         <source>Sampling unit</source>
         <translation type="unfinished">Блок відбору проб</translation>
     </message>
     <message>
-        <location filename="../cpp/SMART/SMARTProvider.cpp" line="258" />
-        <location filename="../cpp/SMART/SMARTProvider.cpp" line="3567" />
+        <location filename="../cpp/SMART/SMARTProvider.cpp" line="272" />
+        <location filename="../cpp/SMART/SMARTProvider.cpp" line="3626" />
         <source>Observer</source>
         <translation type="unfinished">Спостерігач</translation>
     </message>
@@ -2328,7 +3017,7 @@
     <message>
         <location filename="../cpp/SMART/SMARTProvider.cpp" line="199" />
         <source>None</source>
-        <translation type="unfinished">Жодного</translation>
+        <translation type="unfinished">Немає</translation>
     </message>
     <message>
         <location filename="../cpp/SMART/SMARTProvider.cpp" line="213" />
@@ -2343,267 +3032,292 @@
     <message>
         <location filename="../cpp/SMART/SMARTProvider.cpp" line="222" />
         <source>Immediate</source>
-        <translation type="unfinished">Негайний</translation>
+        <translation type="unfinished">Негайне</translation>
     </message>
     <message>
         <location filename="../cpp/SMART/SMARTProvider.cpp" line="222" />
         <source>minutes</source>
-        <translation type="unfinished">хвилин</translation>
+        <translation type="unfinished">хвилини</translation>
     </message>
     <message>
         <location filename="../cpp/SMART/SMARTProvider.cpp" line="227" />
-        <location filename="../cpp/SMART/SMARTProvider.cpp" line="269" />
+        <location filename="../cpp/SMART/SMARTProvider.cpp" line="284" />
         <source>Off</source>
         <translation type="unfinished">Вимкнено</translation>
     </message>
     <message>
         <location filename="../cpp/SMART/SMARTProvider.cpp" line="236" />
-        <location filename="../cpp/SMART/SMARTProvider.cpp" line="269" />
+        <location filename="../cpp/SMART/SMARTProvider.cpp" line="284" />
         <source>seconds</source>
-        <translation type="unfinished">секунд</translation>
+        <translation type="unfinished">секунди</translation>
     </message>
     <message>
-        <location filename="../cpp/SMART/SMARTProvider.cpp" line="253" />
+        <location filename="../cpp/SMART/SMARTProvider.cpp" line="240" />
+        <source>Unknown</source>
+        <translation type="unfinished">Невідомо</translation>
+    </message>
+    <message>
+        <location filename="../cpp/SMART/SMARTProvider.cpp" line="244" />
+        <source>Degrees minutes seconds</source>
+        <translation type="unfinished">Градуси хвилини секунди</translation>
+    </message>
+    <message>
+        <location filename="../cpp/SMART/SMARTProvider.cpp" line="247" />
+        <source>Decimal degrees</source>
+        <translation type="unfinished">Десяткові градуси</translation>
+    </message>
+    <message>
+        <location filename="../cpp/SMART/SMARTProvider.cpp" line="250" />
+        <source>UTM</source>
+        <translation type="unfinished">UTM</translation>
+    </message>
+    <message>
+        <location filename="../cpp/SMART/SMARTProvider.cpp" line="267" />
         <source>Type</source>
         <translation type="unfinished">Тип</translation>
     </message>
     <message>
-        <location filename="../cpp/SMART/SMARTProvider.cpp" line="254" />
+        <location filename="../cpp/SMART/SMARTProvider.cpp" line="268" />
         <source>Incidents</source>
         <translation type="unfinished">Інциденти</translation>
     </message>
     <message>
-        <location filename="../cpp/SMART/SMARTProvider.cpp" line="255" />
+        <location filename="../cpp/SMART/SMARTProvider.cpp" line="269" />
         <source>Connection</source>
         <translation type="unfinished">Підключення</translation>
     </message>
     <message>
-        <location filename="../cpp/SMART/SMARTProvider.cpp" line="255" />
+        <location filename="../cpp/SMART/SMARTProvider.cpp" line="269" />
         <source>Online</source>
         <translation type="unfinished">Онлайн</translation>
     </message>
     <message>
-        <location filename="../cpp/SMART/SMARTProvider.cpp" line="255" />
+        <location filename="../cpp/SMART/SMARTProvider.cpp" line="269" />
         <source>Desktop</source>
         <translation type="unfinished">Робочий стіл</translation>
     </message>
     <message>
-        <location filename="../cpp/SMART/SMARTProvider.cpp" line="256" />
+        <location filename="../cpp/SMART/SMARTProvider.cpp" line="270" />
         <source>Upload</source>
         <translation type="unfinished">Завантажити</translation>
     </message>
     <message>
-        <location filename="../cpp/SMART/SMARTProvider.cpp" line="259" />
+        <location filename="../cpp/SMART/SMARTProvider.cpp" line="273" />
         <source>Distance and Bearing</source>
-        <translation type="unfinished">Відстань і пеленг</translation>
+        <translation type="unfinished">Відстань і підшипник</translation>
     </message>
     <message>
-        <location filename="../cpp/SMART/SMARTProvider.cpp" line="261" />
+        <location filename="../cpp/SMART/SMARTProvider.cpp" line="275" />
         <source>Incident group UI</source>
-        <translation type="unfinished">Інтерфейс групи інцидентів</translation>
+        <translation type="unfinished">Група інцидентів UI</translation>
     </message>
     <message>
-        <location filename="../cpp/SMART/SMARTProvider.cpp" line="262" />
+        <location filename="../cpp/SMART/SMARTProvider.cpp" line="276" />
         <source>Kiosk mode</source>
         <translation type="unfinished">Режим кіоску</translation>
     </message>
     <message>
-        <location filename="../cpp/SMART/SMARTProvider.cpp" line="263" />
+        <location filename="../cpp/SMART/SMARTProvider.cpp" line="277" />
         <source>Can pause</source>
-        <translation type="unfinished">Може зробити паузу</translation>
+        <translation type="unfinished">Може ставити на паузу</translation>
     </message>
     <message>
-        <location filename="../cpp/SMART/SMARTProvider.cpp" line="264" />
+        <location filename="../cpp/SMART/SMARTProvider.cpp" line="278" />
         <source>Disable editing</source>
-        <translation type="unfinished">Вимкнути редагування</translation>
+        <translation type="unfinished">Відключити редагування</translation>
     </message>
     <message>
-        <location filename="../cpp/SMART/SMARTProvider.cpp" line="266" />
+        <location filename="../cpp/SMART/SMARTProvider.cpp" line="280" />
         <source>Fix count</source>
-        <translation type="unfinished">Виправити кількість</translation>
+        <translation type="unfinished">Зафіксувати кількість</translation>
     </message>
     <message>
-        <location filename="../cpp/SMART/SMARTProvider.cpp" line="267" />
+        <location filename="../cpp/SMART/SMARTProvider.cpp" line="281" />
         <source>Track timer</source>
-        <translation type="unfinished">Відстежувати таймер</translation>
+        <translation type="unfinished">Таймер відстеження</translation>
     </message>
     <message>
-        <location filename="../cpp/SMART/SMARTProvider.cpp" line="268" />
+        <location filename="../cpp/SMART/SMARTProvider.cpp" line="282" />
         <source>Use time from GPS</source>
         <translation type="unfinished">Використовуйте час з GPS</translation>
     </message>
     <message>
-        <location filename="../cpp/SMART/SMARTProvider.cpp" line="269" />
-        <source>Skip button timeout</source>
-        <translation type="unfinished">Час очікування кнопки пропустити</translation>
+        <location filename="../cpp/SMART/SMARTProvider.cpp" line="283" />
+        <source>Format</source>
+        <translation type="unfinished">Формат</translation>
     </message>
     <message>
-        <location filename="../cpp/SMART/SMARTProvider.cpp" line="270" />
+        <location filename="../cpp/SMART/SMARTProvider.cpp" line="284" />
+        <source>Skip button timeout</source>
+        <translation type="unfinished">Таймаут кнопки пропуску</translation>
+    </message>
+    <message>
+        <location filename="../cpp/SMART/SMARTProvider.cpp" line="285" />
         <source>Allow manual GPS</source>
         <translation type="unfinished">Дозволити ручний GPS</translation>
     </message>
     <message>
-        <location filename="../cpp/SMART/SMARTProvider.cpp" line="272" />
+        <location filename="../cpp/SMART/SMARTProvider.cpp" line="287" />
         <source>Maximum photos</source>
-        <translation type="unfinished">Максимум фото</translation>
+        <translation type="unfinished">Максимум фотографій</translation>
     </message>
     <message>
-        <location filename="../cpp/SMART/SMARTProvider.cpp" line="273" />
+        <location filename="../cpp/SMART/SMARTProvider.cpp" line="288" />
         <source>Resize photos</source>
-        <translation type="unfinished">Змінити розмір фотографій</translation>
+        <translation type="unfinished">Зміна розміру фотографій</translation>
     </message>
     <message>
-        <location filename="../cpp/SMART/SMARTProvider.cpp" line="275" />
+        <location filename="../cpp/SMART/SMARTProvider.cpp" line="290" />
         <source>Position updates</source>
-        <translation type="unfinished">Оновлення позиції</translation>
+        <translation type="unfinished">Актуалізація позицій</translation>
     </message>
     <message>
-        <location filename="../cpp/SMART/SMARTProvider.cpp" line="276" />
+        <location filename="../cpp/SMART/SMARTProvider.cpp" line="291" />
         <source>Alerts</source>
         <translation type="unfinished">Сповіщення</translation>
     </message>
     <message>
-        <location filename="../cpp/SMART/SMARTProvider.cpp" line="3597" />
+        <location filename="../cpp/SMART/SMARTProvider.cpp" line="3656" />
         <source>Transport Type</source>
         <translation type="unfinished">Тип транспорту</translation>
     </message>
     <message>
-        <location filename="../cpp/SMART/SMARTProvider.cpp" line="3598" />
+        <location filename="../cpp/SMART/SMARTProvider.cpp" line="3657" />
         <source>Is Armed</source>
-        <translation type="unfinished">Є озброєним</translation>
+        <translation type="unfinished">Озброєний</translation>
     </message>
     <message>
-        <location filename="../cpp/SMART/SMARTProvider.cpp" line="3599" />
+        <location filename="../cpp/SMART/SMARTProvider.cpp" line="3658" />
         <source>Team</source>
         <translation type="unfinished">Команда</translation>
     </message>
     <message>
-        <location filename="../cpp/SMART/SMARTProvider.cpp" line="3600" />
+        <location filename="../cpp/SMART/SMARTProvider.cpp" line="3659" />
         <source>Station</source>
         <translation type="unfinished">Станція</translation>
     </message>
     <message>
-        <location filename="../cpp/SMART/SMARTProvider.cpp" line="3601" />
+        <location filename="../cpp/SMART/SMARTProvider.cpp" line="3660" />
         <source>Mandate</source>
         <translation type="unfinished">Мандат</translation>
     </message>
     <message>
-        <location filename="../cpp/SMART/SMARTProvider.cpp" line="3602" />
+        <location filename="../cpp/SMART/SMARTProvider.cpp" line="3661" />
         <source>Objective</source>
-        <translation type="unfinished">Об'єктивний</translation>
+        <translation type="unfinished">Мета</translation>
     </message>
     <message>
-        <location filename="../cpp/SMART/SMARTProvider.cpp" line="3603" />
+        <location filename="../cpp/SMART/SMARTProvider.cpp" line="3662" />
         <source>Comment</source>
         <translation type="unfinished">Коментар</translation>
     </message>
     <message>
-        <location filename="../cpp/SMART/SMARTProvider.cpp" line="3604" />
+        <location filename="../cpp/SMART/SMARTProvider.cpp" line="3663" />
         <source>Employees</source>
         <translation type="unfinished">Співробітники</translation>
     </message>
     <message>
-        <location filename="../cpp/SMART/SMARTProvider.cpp" line="3605" />
+        <location filename="../cpp/SMART/SMARTProvider.cpp" line="3664" />
         <source>Members</source>
         <translation type="unfinished">Члени</translation>
     </message>
     <message>
-        <location filename="../cpp/SMART/SMARTProvider.cpp" line="3606" />
+        <location filename="../cpp/SMART/SMARTProvider.cpp" line="3665" />
         <source>Leader</source>
         <translation type="unfinished">Лідер</translation>
     </message>
     <message>
-        <location filename="../cpp/SMART/SMARTProvider.cpp" line="3607" />
+        <location filename="../cpp/SMART/SMARTProvider.cpp" line="3666" />
         <source>Pilot</source>
         <translation type="unfinished">Пілот</translation>
     </message>
     <message>
-        <location filename="../cpp/SMART/SMARTProvider.cpp" line="3608" />
+        <location filename="../cpp/SMART/SMARTProvider.cpp" line="3667" />
         <source>Sampling Unit</source>
         <translation type="unfinished">Блок відбору проб</translation>
     </message>
     <message>
-        <location filename="../cpp/SMART/SMARTProvider.cpp" line="3731" />
+        <location filename="../cpp/SMART/SMARTProvider.cpp" line="3791" />
         <source>Group</source>
         <translation type="unfinished">Група</translation>
     </message>
     <message>
-        <location filename="../cpp/SMART/SMARTProvider.cpp" line="3731" />
+        <location filename="../cpp/SMART/SMARTProvider.cpp" line="3791" />
         <source>Observation</source>
         <translation type="unfinished">Спостереження</translation>
     </message>
     <message>
-        <location filename="../cpp/SMART/SMARTProvider.cpp" line="541" />
-        <location filename="../cpp/SMART/SMARTProvider.cpp" line="3829" />
+        <location filename="../cpp/SMART/SMARTProvider.cpp" line="582" />
+        <location filename="../cpp/SMART/SMARTProvider.cpp" line="3894" />
         <source>Leg</source>
         <translation type="unfinished">Нога</translation>
     </message>
     <message>
-        <location filename="../cpp/SMART/SMARTProvider.cpp" line="550" />
+        <location filename="../cpp/SMART/SMARTProvider.cpp" line="591" />
         <source>Paused</source>
         <translation type="unfinished">Призупинено</translation>
     </message>
     <message>
-        <location filename="../cpp/SMART/SMARTProvider.cpp" line="550" />
+        <location filename="../cpp/SMART/SMARTProvider.cpp" line="591" />
         <source>Active</source>
         <translation type="unfinished">Активний</translation>
     </message>
     <message>
         <location filename="../cpp/SMART/SMARTProvider.cpp" line="202" />
-        <location filename="../cpp/SMART/SMARTProvider.cpp" line="3865" />
-        <location filename="../cpp/SMART/SMARTProvider.cpp" line="3892" />
+        <location filename="../cpp/SMART/SMARTProvider.cpp" line="3930" />
+        <location filename="../cpp/SMART/SMARTProvider.cpp" line="3957" />
         <source>Survey</source>
         <translation type="unfinished">Опитування</translation>
     </message>
     <message>
-        <location filename="../cpp/SMART/SMARTProvider.cpp" line="3872" />
+        <location filename="../cpp/SMART/SMARTProvider.cpp" line="3937" />
         <source>Start survey</source>
-        <translation type="unfinished">Почніть опитування</translation>
+        <translation type="unfinished">Почати опитування</translation>
     </message>
     <message>
-        <location filename="../cpp/SMART/SMARTProvider.cpp" line="3872" />
+        <location filename="../cpp/SMART/SMARTProvider.cpp" line="3937" />
         <source>Start patrol</source>
-        <translation type="unfinished">Почніть патрулювання</translation>
+        <translation type="unfinished">Розпочати патрулювання.</translation>
     </message>
     <message>
-        <location filename="../cpp/SMART/SMARTProvider.cpp" line="3876" />
+        <location filename="../cpp/SMART/SMARTProvider.cpp" line="3941" />
         <source>End survey</source>
-        <translation type="unfinished">Завершити опитування</translation>
+        <translation type="unfinished">Кінцеве опитування</translation>
     </message>
     <message>
-        <location filename="../cpp/SMART/SMARTProvider.cpp" line="3876" />
+        <location filename="../cpp/SMART/SMARTProvider.cpp" line="3941" />
         <source>End patrol</source>
-        <translation type="unfinished">Закінчення патрулювання</translation>
+        <translation type="unfinished">Закінчити патрулювання.</translation>
     </message>
     <message>
-        <location filename="../cpp/SMART/SMARTProvider.cpp" line="3880" />
+        <location filename="../cpp/SMART/SMARTProvider.cpp" line="3945" />
         <source>Pause survey</source>
-        <translation type="unfinished">Призупинити опитування</translation>
+        <translation type="unfinished">Опитування на паузі</translation>
     </message>
     <message>
-        <location filename="../cpp/SMART/SMARTProvider.cpp" line="3880" />
+        <location filename="../cpp/SMART/SMARTProvider.cpp" line="3945" />
         <source>Pause patrol</source>
-        <translation type="unfinished">Призупинити патрулювання</translation>
+        <translation type="unfinished">Призупинити патрулювання.</translation>
     </message>
     <message>
-        <location filename="../cpp/SMART/SMARTProvider.cpp" line="3884" />
+        <location filename="../cpp/SMART/SMARTProvider.cpp" line="3949" />
         <source>Resume survey</source>
-        <translation type="unfinished">Резюме опитування</translation>
+        <translation type="unfinished">Опитування резюме</translation>
     </message>
     <message>
-        <location filename="../cpp/SMART/SMARTProvider.cpp" line="3884" />
+        <location filename="../cpp/SMART/SMARTProvider.cpp" line="3949" />
         <source>Resume patrol</source>
         <translation type="unfinished">Відновити патрулювання</translation>
     </message>
     <message>
-        <location filename="../cpp/SMART/SMARTProvider.cpp" line="3888" />
+        <location filename="../cpp/SMART/SMARTProvider.cpp" line="3953" />
         <source>Change survey</source>
-        <translation type="unfinished">Змінити опитування</translation>
+        <translation type="unfinished">Опитування щодо змін</translation>
     </message>
     <message>
-        <location filename="../cpp/SMART/SMARTProvider.cpp" line="3888" />
+        <location filename="../cpp/SMART/SMARTProvider.cpp" line="3953" />
         <source>Change patrol</source>
-        <translation type="unfinished">Змінити патруль</translation>
+        <translation type="unfinished">Змінний патруль</translation>
     </message>
 </context>
 <context>
@@ -2618,301 +3332,285 @@
     <name>SettingsPage</name>
     <message>
         <location filename="../qml/EarthRanger/SettingsPage.qml" line="10" />
-        <location filename="../qml/ODK/SettingsPage.qml" line="12" />
         <location filename="../qml/SMART/SettingsPage.qml" line="12" />
         <location filename="../qml/SettingsPage.qml" line="22" />
         <source>Settings</source>
         <translation type="unfinished">Налаштування</translation>
     </message>
     <message>
-        <location filename="../qml/EarthRanger/SettingsPage.qml" line="37" />
+        <location filename="../qml/EarthRanger/SettingsPage.qml" line="30" />
+        <source>System settings</source>
+        <translation type="unfinished">Налаштування системи</translation>
+    </message>
+    <message>
+        <location filename="../qml/EarthRanger/SettingsPage.qml" line="67" />
         <source>Last updated</source>
         <translation type="unfinished">Останнє оновлення</translation>
     </message>
     <message>
-        <location filename="../qml/EarthRanger/SettingsPage.qml" line="54" />
-        <location filename="../qml/ODK/SettingsPage.qml" line="62" />
+        <location filename="../qml/EarthRanger/SettingsPage.qml" line="84" />
         <source>Update</source>
         <translation type="unfinished">Оновлення</translation>
     </message>
     <message>
-        <location filename="../qml/EarthRanger/SettingsPage.qml" line="90" />
-        <location filename="../qml/ODK/SettingsPage.qml" line="96" />
+        <location filename="../qml/EarthRanger/SettingsPage.qml" line="120" />
         <source>Logged in as</source>
-        <translation type="unfinished">Ви увійшли як</translation>
+        <translation type="unfinished">Увійшов в систему як</translation>
     </message>
     <message>
-        <location filename="../qml/EarthRanger/SettingsPage.qml" line="90" />
-        <location filename="../qml/ODK/SettingsPage.qml" line="96" />
+        <location filename="../qml/EarthRanger/SettingsPage.qml" line="120" />
         <source>Logged out</source>
-        <translation type="unfinished">Вийшов із системи</translation>
-    </message>
-    <message>
-        <location filename="../qml/EarthRanger/SettingsPage.qml" line="105" />
-        <location filename="../qml/ODK/SettingsPage.qml" line="112" />
-        <source>Logout</source>
-        <translation type="unfinished">Вийти</translation>
-    </message>
-    <message>
-        <location filename="../qml/EarthRanger/SettingsPage.qml" line="105" />
-        <location filename="../qml/ODK/SettingsPage.qml" line="112" />
-        <source>Login</source>
-        <translation type="unfinished">Увійти</translation>
+        <translation type="unfinished">Вийшли з системи</translation>
     </message>
     <message>
         <location filename="../qml/EarthRanger/SettingsPage.qml" line="135" />
+        <source>Logout</source>
+        <translation type="unfinished">Вихід з системи</translation>
+    </message>
+    <message>
+        <location filename="../qml/EarthRanger/SettingsPage.qml" line="135" />
+        <source>Login</source>
+        <translation type="unfinished">Логін</translation>
+    </message>
+    <message>
+        <location filename="../qml/EarthRanger/SettingsPage.qml" line="165" />
         <source>Reported by</source>
-        <translation type="unfinished">Повідомляє</translation>
+        <translation type="unfinished">Про це повідомили</translation>
     </message>
     <message>
-        <location filename="../qml/EarthRanger/SettingsPage.qml" line="169" />
+        <location filename="../qml/EarthRanger/SettingsPage.qml" line="200" />
         <source>Merge categories</source>
-        <translation type="unfinished">Об’єднати категорії</translation>
+        <translation type="unfinished">Об'єднати категорії</translation>
     </message>
     <message>
-        <location filename="../qml/EarthRanger/SettingsPage.qml" line="198" />
+        <location filename="../qml/EarthRanger/SettingsPage.qml" line="243" />
+        <source>One page per question</source>
+        <translation type="unfinished">Одна сторінка на одне питання</translation>
+    </message>
+    <message>
+        <location filename="../qml/EarthRanger/SettingsPage.qml" line="268" />
         <source>Visible reports</source>
-        <translation type="unfinished">Видимі звіти</translation>
+        <translation type="unfinished">Наочні звіти</translation>
     </message>
     <message>
-        <location filename="../qml/EarthRanger/SettingsPage.qml" line="215" />
-        <location filename="../qml/ODK/SettingsPage.qml" line="237" />
+        <location filename="../qml/EarthRanger/SettingsPage.qml" line="285" />
         <source>Logout?</source>
-        <translation type="unfinished">Вийти?</translation>
+        <translation type="unfinished">Вийти з системи?</translation>
     </message>
     <message>
-        <location filename="../qml/EarthRanger/SettingsPage.qml" line="65" />
-        <location filename="../qml/ODK/SettingsPage.qml" line="73" />
-        <location filename="../qml/SettingsPage.qml" line="674" />
+        <location filename="../qml/EarthRanger/SettingsPage.qml" line="95" />
         <source>Offline</source>
         <translation type="unfinished">Офлайн</translation>
     </message>
     <message>
-        <location filename="../qml/EarthRanger/SettingsPage.qml" line="145" />
+        <location filename="../qml/EarthRanger/SettingsPage.qml" line="175" />
         <source>Unknown</source>
         <translation type="unfinished">Невідомо</translation>
     </message>
     <message>
-        <location filename="../qml/ODK/SettingsPage.qml" line="40" />
-        <source>Form version</source>
-        <translation type="unfinished">Версія форми</translation>
-    </message>
-    <message>
-        <location filename="../qml/ODK/SettingsPage.qml" line="52" />
-        <source>Not specified</source>
-        <translation type="unfinished">Не визначено</translation>
-    </message>
-    <message>
-        <location filename="../qml/ODK/SettingsPage.qml" line="144" />
-        <location filename="../qml/SettingsPage.qml" line="166" />
+        <location filename="../qml/SettingsPage.qml" line="111" />
         <source>Collect as</source>
         <translation type="unfinished">Збирати як</translation>
     </message>
     <message>
-        <location filename="../qml/ODK/SettingsPage.qml" line="172" />
-        <location filename="../qml/SMART/SettingsPage.qml" line="37" />
-        <location filename="../qml/SettingsPage.qml" line="208" />
+        <location filename="../qml/SMART/SettingsPage.qml" line="38" />
+        <location filename="../qml/SettingsPage.qml" line="154" />
         <source>Language</source>
-        <translation type="unfinished">Мову</translation>
+        <translation type="unfinished">Мова</translation>
     </message>
     <message>
-        <location filename="../qml/SMART/SettingsPage.qml" line="111" />
+        <location filename="../qml/SMART/SettingsPage.qml" line="135" />
         <source>Change project</source>
-        <translation type="unfinished">Змінити проект</translation>
+        <translation type="unfinished">Проект змін</translation>
     </message>
     <message>
-        <location filename="../qml/SMART/SettingsPage.qml" line="90" />
+        <location filename="../qml/SMART/SettingsPage.qml" line="113" />
         <source>Select routes</source>
         <translation type="unfinished">Виберіть маршрути</translation>
     </message>
     <message>
-        <location filename="../qml/SMART/SettingsPage.qml" line="131" />
+        <location filename="../qml/SMART/SettingsPage.qml" line="156" />
         <source>Exported data</source>
         <translation type="unfinished">Експортовані дані</translation>
     </message>
     <message>
-        <location filename="../qml/SMART/SettingsPage.qml" line="150" />
-        <location filename="../qml/SMART/SettingsPage.qml" line="157" />
+        <location filename="../qml/SMART/SettingsPage.qml" line="176" />
+        <location filename="../qml/SMART/SettingsPage.qml" line="183" />
         <source>Configuration</source>
         <translation type="unfinished">Конфігурація</translation>
     </message>
     <message>
-        <location filename="../qml/SMART/SettingsPage.qml" line="176" />
+        <location filename="../qml/SMART/SettingsPage.qml" line="202" />
         <source>Recover Connect data</source>
-        <translation type="unfinished">Відновлення даних Connect</translation>
+        <translation type="unfinished">Відновлення даних підключення</translation>
     </message>
     <message>
-        <location filename="../qml/SMART/SettingsPage.qml" line="201" />
+        <location filename="../qml/SMART/SettingsPage.qml" line="227" />
         <source>No routes found</source>
-        <translation type="unfinished">Маршрути не знайдено</translation>
+        <translation type="unfinished">Маршрутів не знайдено</translation>
     </message>
     <message>
-        <location filename="../qml/SettingsPage.qml" line="81" />
-        <source>Powered by</source>
-        <translation type="unfinished">Працює на</translation>
+        <location filename="../qml/SettingsPage.qml" line="232" />
+        <source>Toolbar captions</source>
+        <translation type="unfinished">Підписи на панелі інструментів</translation>
     </message>
     <message>
-        <location filename="../qml/SettingsPage.qml" line="119" />
-        <source>Privacy Statement</source>
-        <translation type="unfinished">Заява про конфіденційність</translation>
-    </message>
-    <message>
-        <location filename="../qml/SettingsPage.qml" line="132" />
-        <source>Software License</source>
-        <translation type="unfinished">Ліцензія на програмне забезпечення</translation>
-    </message>
-    <message>
-        <location filename="../qml/SettingsPage.qml" line="142" />
-        <source>Check for project updates</source>
-        <translation type="unfinished">Перевірте наявність оновлень проекту</translation>
-    </message>
-    <message>
-        <location filename="../qml/SettingsPage.qml" line="285" />
+        <location filename="../qml/SettingsPage.qml" line="258" />
         <source>Metric units</source>
         <translation type="unfinished">Метричні одиниці</translation>
     </message>
     <message>
-        <location filename="../qml/SettingsPage.qml" line="317" />
+        <location filename="../qml/SettingsPage.qml" line="285" />
         <source>Full screen</source>
-        <translation type="unfinished">Повноекранний</translation>
+        <translation type="unfinished">На весь екран</translation>
     </message>
     <message>
-        <location filename="../qml/ODK/SettingsPage.qml" line="209" />
-        <location filename="../qml/SMART/SettingsPage.qml" line="56" />
-        <location filename="../qml/SettingsPage.qml" line="253" />
+        <location filename="../qml/SMART/SettingsPage.qml" line="60" />
+        <location filename="../qml/SettingsPage.qml" line="207" />
         <source>Dark theme</source>
         <translation type="unfinished">Темна тема</translation>
     </message>
     <message>
-        <location filename="../qml/SettingsPage.qml" line="352" />
+        <location filename="../qml/SettingsPage.qml" line="43" />
+        <source>About</source>
+        <translation type="unfinished">Про</translation>
+    </message>
+    <message>
+        <location filename="../qml/SettingsPage.qml" line="76" />
+        <source>Offline maps</source>
+        <translation type="unfinished">Офлайн карти</translation>
+    </message>
+    <message>
+        <location filename="../qml/SettingsPage.qml" line="313" />
         <source>Font size</source>
         <translation type="unfinished">Розмір шрифту</translation>
     </message>
     <message>
-        <location filename="../qml/SettingsPage.qml" line="377" />
+        <location filename="../qml/SettingsPage.qml" line="346" />
         <source>Coordinates</source>
         <translation type="unfinished">Координати</translation>
     </message>
     <message>
-        <location filename="../qml/SettingsPage.qml" line="385" />
+        <location filename="../qml/SettingsPage.qml" line="356" />
         <source>Decimal degrees</source>
         <translation type="unfinished">Десяткові градуси</translation>
     </message>
     <message>
-        <location filename="../qml/SettingsPage.qml" line="385" />
+        <location filename="../qml/SettingsPage.qml" line="356" />
         <source>Degrees minutes seconds</source>
         <translation type="unfinished">Градуси хвилини секунди</translation>
     </message>
     <message>
-        <location filename="../qml/SettingsPage.qml" line="385" />
+        <location filename="../qml/SettingsPage.qml" line="356" />
         <source>Degrees decimal minutes</source>
         <translation type="unfinished">Градуси десяткові хвилини</translation>
     </message>
     <message>
-        <location filename="../qml/SettingsPage.qml" line="406" />
+        <location filename="../qml/SettingsPage.qml" line="383" />
         <source>GPS accuracy</source>
         <translation type="unfinished">Точність GPS</translation>
     </message>
     <message>
-        <location filename="../qml/SettingsPage.qml" line="406" />
+        <location filename="../qml/SettingsPage.qml" line="383" />
         <source>meters</source>
-        <translation type="unfinished">метрів</translation>
+        <translation type="unfinished">метри</translation>
     </message>
     <message>
-        <location filename="../qml/SettingsPage.qml" line="447" />
+        <location filename="../qml/SettingsPage.qml" line="429" />
         <source>Simulate location</source>
-        <translation type="unfinished">Зімітувати розташування</translation>
+        <translation type="unfinished">Змоделюйте місцезнаходження</translation>
     </message>
     <message>
-        <location filename="../qml/SettingsPage.qml" line="477" />
+        <location filename="../qml/SettingsPage.qml" line="454" />
         <source>Source file</source>
         <translation type="unfinished">Вихідний файл</translation>
     </message>
     <message>
-        <location filename="../qml/SettingsPage.qml" line="523" />
+        <location filename="../qml/SettingsPage.qml" line="510" />
         <source>Upload requires WiFi</source>
-        <translation type="unfinished">Для завантаження потрібен Wi-Fi</translation>
+        <translation type="unfinished">Для завантаження потрібен WiFi</translation>
     </message>
     <message>
-        <location filename="../qml/SettingsPage.qml" line="552" />
+        <location filename="../qml/SettingsPage.qml" line="534" />
         <source>Share bug report</source>
-        <translation type="unfinished">Поділіться звітом про помилку</translation>
+        <translation type="unfinished">Поділіться повідомленням про помилку</translation>
     </message>
     <message>
-        <location filename="../qml/SettingsPage.qml" line="560" />
+        <location filename="../qml/SettingsPage.qml" line="542" />
         <source>Share over email, text, etc.</source>
-        <translation type="unfinished">Поділіться електронною поштою, текстовими повідомленнями тощо.</translation>
+        <translation type="unfinished">Поділіться електронною поштою, текстом тощо.</translation>
     </message>
     <message>
-        <location filename="../qml/SettingsPage.qml" line="597" />
+        <location filename="../qml/SettingsPage.qml" line="571" />
         <source>Save bug report</source>
         <translation type="unfinished">Зберегти звіт про помилку</translation>
     </message>
     <message>
-        <location filename="../qml/SettingsPage.qml" line="605" />
+        <location filename="../qml/SettingsPage.qml" line="579" />
         <source>Save to device for manual copy</source>
-        <translation type="unfinished">Зберегти на пристрої для копіювання вручну</translation>
+        <translation type="unfinished">Зберегти на пристрій для ручного копіювання</translation>
     </message>
     <message>
-        <location filename="../qml/SettingsPage.qml" line="642" />
+        <location filename="../qml/SettingsPage.qml" line="608" />
         <source>Simulation source</source>
         <translation type="unfinished">Джерело моделювання</translation>
     </message>
     <message>
-        <location filename="../qml/SettingsPage.qml" line="651" />
+        <location filename="../qml/SettingsPage.qml" line="617" />
         <source>Generate track file using</source>
         <translation type="unfinished">Згенеруйте файл треку за допомогою</translation>
     </message>
     <message>
-        <location filename="../qml/SettingsPage.qml" line="658" />
+        <location filename="../qml/SettingsPage.qml" line="624" />
         <source>Copy to the Download folder</source>
-        <translation type="unfinished">Скопіюйте в папку Download</translation>
+        <translation type="unfinished">Скопіювати в папку Download</translation>
     </message>
     <message>
-        <location filename="../qml/SettingsPage.qml" line="665" />
+        <location filename="../qml/SettingsPage.qml" line="631" />
         <source>Restart</source>
-        <translation type="unfinished">Перезавантажте</translation>
+        <translation type="unfinished">Перезапуск</translation>
     </message>
     <message>
-        <location filename="../qml/ODK/SettingsPage.qml" line="190" />
+        <location filename="../qml/EarthRanger/SettingsPage.qml" line="234" />
+        <location filename="../qml/SMART/SettingsPage.qml" line="87" />
         <source>Page mode</source>
-        <translation type="unfinished">Режим сторінки</translation>
+        <translation type="unfinished">Сторінковий режим</translation>
     </message>
 </context>
 <context>
     <name>ShareProjectPage</name>
     <message>
-        <location filename="../qml/ShareProjectPage.qml" line="38" />
+        <location filename="../qml/ShareProjectPage.qml" line="43" />
         <source>Require login</source>
-        <translation type="unfinished">Вимагати входу</translation>
+        <translation type="unfinished">Потрібен логін</translation>
     </message>
     <message>
-        <location filename="../qml/ShareProjectPage.qml" line="66" />
+        <location filename="../qml/ShareProjectPage.qml" line="53" />
         <source>Share link</source>
-        <translation type="unfinished">Розповсюдити посилання</translation>
+        <translation type="unfinished">Поділіться посиланням</translation>
     </message>
     <message>
-        <location filename="../qml/ShareProjectPage.qml" line="77" />
+        <location filename="../qml/ShareProjectPage.qml" line="60" />
         <source>Copied to clipboard</source>
         <translation type="unfinished">Скопійовано в буфер обміну</translation>
     </message>
     <message>
-        <location filename="../qml/ShareProjectPage.qml" line="88" />
+        <location filename="../qml/ShareProjectPage.qml" line="69" />
         <source>Share QR code</source>
-        <translation type="unfinished">Поділіться QR-кодом</translation>
+        <translation type="unfinished">Поділитися QR-кодом</translation>
     </message>
     <message>
-        <location filename="../qml/ShareProjectPage.qml" line="111" />
+        <location filename="../qml/ShareProjectPage.qml" line="87" />
         <source>Save QR code</source>
-        <translation type="unfinished">Збережіть QR-код</translation>
+        <translation type="unfinished">Зберегти QR-код</translation>
     </message>
     <message>
-        <location filename="../qml/ShareProjectPage.qml" line="119" />
+        <location filename="../qml/ShareProjectPage.qml" line="95" />
         <source>QR code saved</source>
         <translation type="unfinished">QR-код збережено</translation>
     </message>
     <message>
-        <location filename="../qml/ShareProjectPage.qml" line="121" />
+        <location filename="../qml/ShareProjectPage.qml" line="97" />
         <source>Failed to save code</source>
         <translation type="unfinished">Не вдалося зберегти код</translation>
     </message>
@@ -2920,12 +3618,12 @@
 <context>
     <name>Sighting</name>
     <message>
-        <location filename="../cpp/Sighting.cpp" line="648" />
+        <location filename="../cpp/Sighting.cpp" line="810" />
         <source>photo</source>
         <translation type="unfinished">фото</translation>
     </message>
     <message>
-        <location filename="../cpp/Sighting.cpp" line="648" />
+        <location filename="../cpp/Sighting.cpp" line="810" />
         <source>photos</source>
         <translation type="unfinished">фотографії</translation>
     </message>
@@ -2940,7 +3638,7 @@
     <message>
         <location filename="../qml/SMART/SightingHomePage.qml" line="53" />
         <source>End survey?</source>
-        <translation type="unfinished">Завершити опитування?</translation>
+        <translation type="unfinished">Закінчити опитування?</translation>
     </message>
     <message>
         <location filename="../qml/SMART/SightingHomePage.qml" line="53" />
@@ -2950,163 +3648,201 @@
     <message>
         <location filename="../qml/SMART/SightingHomePage.qml" line="63" />
         <source>Stop collecting?</source>
-        <translation type="unfinished">Перестати збирати?</translation>
+        <translation type="unfinished">Припинити збирати?</translation>
     </message>
     <message>
-        <location filename="../qml/SMART/SightingHomePage.qml" line="253" />
+        <location filename="../qml/SMART/SightingHomePage.qml" line="99" />
+        <source>Edit</source>
+        <translation type="unfinished">Редагувати</translation>
+    </message>
+    <message>
+        <location filename="../qml/SMART/SightingHomePage.qml" line="201" />
         <source>Incident</source>
         <translation type="unfinished">Інцидент</translation>
     </message>
     <message>
-        <location filename="../qml/SMART/SightingHomePage.qml" line="86" />
-        <source>edit</source>
-        <translation type="unfinished">редагувати</translation>
-    </message>
-    <message>
-        <location filename="../qml/SMART/SightingHomePage.qml" line="197" />
+        <location filename="../qml/SMART/SightingHomePage.qml" line="173" />
         <source>History</source>
         <translation type="unfinished">Історія</translation>
     </message>
     <message>
-        <location filename="../qml/SMART/SightingHomePage.qml" line="211" />
+        <location filename="../qml/SMART/SightingHomePage.qml" line="180" />
         <source>Map</source>
         <translation type="unfinished">Карта</translation>
     </message>
     <message>
-        <location filename="../qml/SMART/SightingHomePage.qml" line="239" />
+        <location filename="../qml/SMART/SightingHomePage.qml" line="194" />
         <source>Stop</source>
-        <translation type="unfinished">Стій</translation>
+        <translation type="unfinished">Стоп!</translation>
     </message>
     <message>
-        <location filename="../qml/SMART/SightingHomePage.qml" line="285" />
+        <location filename="../qml/SMART/SightingHomePage.qml" line="209" />
         <source>Save</source>
         <translation type="unfinished">Зберегти</translation>
     </message>
     <message>
-        <location filename="../qml/SMART/SightingHomePage.qml" line="450" />
+        <location filename="../qml/SMART/SightingHomePage.qml" line="262" />
+        <source>Cancel</source>
+        <translation type="unfinished">Скасувати</translation>
+    </message>
+    <message>
+        <location filename="../qml/SMART/SightingHomePage.qml" line="275" />
+        <source>Confirm</source>
+        <translation type="unfinished">Підтвердити</translation>
+    </message>
+    <message>
+        <location filename="../qml/SMART/SightingHomePage.qml" line="356" />
         <source>Group</source>
         <translation type="unfinished">Група</translation>
     </message>
     <message>
-        <location filename="../qml/SMART/SightingHomePage.qml" line="525" />
+        <location filename="../qml/SMART/SightingHomePage.qml" line="430" />
         <source>Create a new group</source>
-        <translation type="unfinished">Створіть нову групу</translation>
+        <translation type="unfinished">Створити нову групу</translation>
     </message>
     <message>
-        <location filename="../qml/SMART/SightingHomePage.qml" line="553" />
+        <location filename="../qml/SMART/SightingHomePage.qml" line="459" />
         <source>Make observation</source>
-        <translation type="unfinished">Зробіть спостереження</translation>
+        <translation type="unfinished">Зробити спостереження</translation>
     </message>
     <message>
-        <location filename="../qml/SMART/SightingHomePage.qml" line="553" />
+        <location filename="../qml/SMART/SightingHomePage.qml" line="459" />
         <source>Add observation</source>
-        <translation type="unfinished">Додайте спостереження</translation>
+        <translation type="unfinished">Додати спостереження</translation>
     </message>
     <message>
-        <location filename="../qml/SMART/SightingHomePage.qml" line="604" />
+        <location filename="../qml/SMART/SightingHomePage.qml" line="511" />
         <source>Delete group?</source>
         <translation type="unfinished">Видалити групу?</translation>
     </message>
     <message>
-        <location filename="../qml/SMART/SightingHomePage.qml" line="605" />
+        <location filename="../qml/SMART/SightingHomePage.qml" line="512" />
         <source>Delete item?</source>
-        <translation type="unfinished">Видалити елемент?</translation>
+        <translation type="unfinished">Видалити пункт?</translation>
     </message>
     <message>
-        <location filename="../qml/SMART/SightingHomePage.qml" line="617" />
+        <location filename="../qml/SMART/SightingHomePage.qml" line="524" />
         <source>Yes</source>
         <translation type="unfinished">Так</translation>
     </message>
     <message>
-        <location filename="../qml/SMART/SightingHomePage.qml" line="641" />
+        <location filename="../qml/SMART/SightingHomePage.qml" line="548" />
         <source>No</source>
         <translation type="unfinished">Ні</translation>
     </message>
     <message>
-        <location filename="../qml/SMART/SightingHomePage.qml" line="711" />
+        <location filename="../qml/SMART/SightingHomePage.qml" line="626" />
         <source>Statistics</source>
         <translation type="unfinished">Статистика</translation>
     </message>
     <message>
-        <location filename="../qml/SMART/SightingHomePage.qml" line="723" />
+        <location filename="../qml/SMART/SightingHomePage.qml" line="640" />
         <source>Toggle dark theme</source>
-        <translation type="unfinished">Увімкнути темну тему</translation>
+        <translation type="unfinished">Переключити темну тему</translation>
+    </message>
+</context>
+<context>
+    <name>SightingListModel</name>
+    <message>
+        <location filename="../cpp/SightingListModel.cpp" line="74" />
+        <source>Track</source>
+        <translation type="unfinished">Трек</translation>
+    </message>
+    <message>
+        <location filename="../cpp/SightingListModel.cpp" line="75" />
+        <source>points</source>
+        <translation type="unfinished">бали</translation>
+    </message>
+    <message>
+        <location filename="../cpp/SightingListModel.cpp" line="162" />
+        <source>observations</source>
+        <translation type="unfinished">спостереження</translation>
     </message>
 </context>
 <context>
     <name>SightingPage</name>
     <message>
-        <location filename="../qml/SightingPage.qml" line="18" />
+        <location filename="../qml/SightingPage.qml" line="16" />
         <source>Sighting</source>
-        <translation type="unfinished">Прицільний</translation>
+        <translation type="unfinished">Прицілювання</translation>
     </message>
     <message>
-        <location filename="../qml/SightingPage.qml" line="43" />
+        <location filename="../qml/SightingPage.qml" line="36" />
         <source>No sighting selected</source>
-        <translation type="unfinished">Прицілювання не вибрано</translation>
+        <translation type="unfinished">Приціл не вибрано</translation>
     </message>
     <message>
-        <location filename="../qml/SightingPage.qml" line="74" />
+        <location filename="../qml/SightingPage.qml" line="48" />
         <source>First</source>
-        <translation type="unfinished">Спочатку</translation>
+        <translation type="unfinished">Перший</translation>
     </message>
     <message>
-        <location filename="../qml/SightingPage.qml" line="88" />
+        <location filename="../qml/SightingPage.qml" line="56" />
         <source>Previous</source>
         <translation type="unfinished">Попередній</translation>
     </message>
     <message>
-        <location filename="../qml/SightingPage.qml" line="102" />
+        <location filename="../qml/SightingPage.qml" line="63" />
         <source>Next</source>
         <translation type="unfinished">Далі</translation>
     </message>
     <message>
-        <location filename="../qml/SightingPage.qml" line="116" />
+        <location filename="../qml/SightingPage.qml" line="70" />
         <source>Last</source>
         <translation type="unfinished">Останній</translation>
+    </message>
+    <message>
+        <location filename="../qml/SightingPage.qml" line="79" />
+        <source>Delete</source>
+        <translation type="unfinished">Видалити</translation>
+    </message>
+    <message>
+        <location filename="../qml/SightingPage.qml" line="89" />
+        <source>Edit</source>
+        <translation type="unfinished">Редагувати</translation>
+    </message>
+    <message>
+        <location filename="../qml/SightingPage.qml" line="104" />
+        <source>Delete sighting?</source>
+        <translation type="unfinished">Видалити приціл?</translation>
     </message>
 </context>
 <context>
     <name>SketchField</name>
     <message>
-        <location filename="../cpp/Field.cpp" line="1265" />
+        <location filename="../cpp/Field.cpp" line="1327" />
         <source>Yes</source>
         <translation type="unfinished">Так</translation>
-    </message>
-    <message>
-        <location filename="../cpp/Field.cpp" line="1265" />
-        <source>No</source>
-        <translation type="unfinished">Ні</translation>
     </message>
 </context>
 <context>
     <name>StartPage</name>
     <message>
-        <location filename="../qml/EarthRanger/StartPage.qml" line="61" />
+        <location filename="../qml/EarthRanger/StartPage.qml" line="25" />
         <source>Sync</source>
-        <translation type="unfinished">Синхронізувати</translation>
+        <translation type="unfinished">Синхронізація</translation>
     </message>
     <message>
-        <location filename="../qml/EarthRanger/StartPage.qml" line="76" />
+        <location filename="../qml/EarthRanger/StartPage.qml" line="33" />
         <source>Clear</source>
-        <translation type="unfinished">Ясно</translation>
+        <translation type="unfinished">Чисто</translation>
     </message>
     <message>
-        <location filename="../qml/EarthRanger/StartPage.qml" line="89" />
-        <location filename="../qml/ODK/StartPage.qml" line="69" />
+        <location filename="../qml/EarthRanger/StartPage.qml" line="39" />
+        <location filename="../qml/ODK/StartPage.qml" line="33" />
         <location filename="../qml/SMART/StartPage.qml" line="26" />
         <source>Map</source>
         <translation type="unfinished">Карта</translation>
     </message>
     <message>
-        <location filename="../qml/EarthRanger/StartPage.qml" line="230" />
+        <location filename="../qml/EarthRanger/StartPage.qml" line="102" />
         <source>Clear uploaded data?</source>
         <translation type="unfinished">Очистити завантажені дані?</translation>
     </message>
     <message>
-        <location filename="../qml/EarthRanger/StartPage.qml" line="231" />
+        <location filename="../qml/EarthRanger/StartPage.qml" line="103" />
         <source>Yes, clear it</source>
-        <translation type="unfinished">Так, очистіть це</translation>
+        <translation type="unfinished">Так, очистити</translation>
     </message>
     <message>
         <location filename="../qml/SMART/StartPage.qml" line="34" />
@@ -3114,17 +3850,33 @@
         <translation type="unfinished">Налаштування</translation>
     </message>
     <message>
-        <location filename="../qml/EarthRanger/StartPage.qml" line="108" />
-        <location filename="../qml/ODK/StartPage.qml" line="83" />
+        <location filename="../qml/EarthRanger/StartPage.qml" line="45" />
+        <location filename="../qml/ODK/StartPage.qml" line="39" />
         <source>New</source>
         <translation type="unfinished">Новий</translation>
     </message>
     <message>
-        <location filename="../qml/EarthRanger/StartPage.qml" line="210" />
+        <location filename="../qml/EarthRanger/StartPage.qml" line="73" />
         <source>Report cannot be changed</source>
-        <translation type="unfinished">Звіт не можна змінити</translation>
+        <translation type="unfinished">Звіт не може бути змінений</translation>
     </message>
     <message>
+        <location filename="../qml/Classic/StartPage.qml" line="122" />
+        <source>No new data</source>
+        <translation type="unfinished">Нові дані відсутні</translation>
+    </message>
+    <message>
+        <location filename="../qml/Classic/StartPage.qml" line="142" />
+        <source>Share outstanding data?</source>
+        <translation type="unfinished">Поділіться нерозкритими даними?</translation>
+    </message>
+    <message>
+        <location filename="../qml/Classic/StartPage.qml" line="143" />
+        <source>Yes, share it</source>
+        <translation type="unfinished">Так, поділіться нею</translation>
+    </message>
+    <message>
+        <location filename="../qml/Classic/StartPage.qml" line="153" />
         <location filename="../qml/SMART/StartPage.qml" line="111" />
         <source>Success</source>
         <translation type="unfinished">Успіх</translation>
@@ -3137,12 +3889,12 @@
     <message>
         <location filename="../qml/SMART/StartPage.qml" line="92" />
         <source>All data has been uploaded</source>
-        <translation type="unfinished">Усі дані завантажено</translation>
+        <translation type="unfinished">Всі дані завантажено</translation>
     </message>
     <message>
         <location filename="../qml/SMART/StartPage.qml" line="93" />
         <source>Connection failed</source>
-        <translation type="unfinished">Підключення не вдалося</translation>
+        <translation type="unfinished">Не вдалося встановити з'єднання</translation>
     </message>
     <message>
         <location filename="../qml/SMART/StartPage.qml" line="100" />
@@ -3152,12 +3904,12 @@
     <message>
         <location filename="../qml/SMART/StartPage.qml" line="101" />
         <source>Export may have failed</source>
-        <translation type="unfinished">Можливо, не вдалося експортувати</translation>
+        <translation type="unfinished">Експорт міг зірватися</translation>
     </message>
     <message>
         <location filename="../qml/SMART/StartPage.qml" line="43" />
         <source>Export data</source>
-        <translation type="unfinished">Експортувати дані</translation>
+        <translation type="unfinished">Експортні дані</translation>
     </message>
     <message>
         <location filename="../qml/SMART/StartPage.qml" line="59" />
@@ -3170,47 +3922,27 @@
         <translation type="unfinished">Повідомити про інцидент</translation>
     </message>
     <message>
-        <location filename="../qml/ODK/StartPage.qml" line="54" />
+        <location filename="../qml/ODK/StartPage.qml" line="26" />
         <source>Submit</source>
-        <translation type="unfinished">Подати</translation>
+        <translation type="unfinished">Надіслати</translation>
     </message>
     <message>
-        <location filename="../qml/ODK/StartPage.qml" line="202" />
-        <source>Delete sighting</source>
-        <translation type="unfinished">Видалити прицілювання</translation>
-    </message>
-    <message>
-        <location filename="../qml/ODK/StartPage.qml" line="213" />
-        <source>Sighting deleted</source>
-        <translation type="unfinished">Прицілювання видалено</translation>
-    </message>
-    <message>
-        <location filename="../qml/ODK/StartPage.qml" line="201" />
-        <source>Continue editing</source>
-        <translation type="unfinished">Продовжити редагування</translation>
-    </message>
-    <message>
-        <location filename="../qml/ODK/StartPage.qml" line="226" />
-        <source>Submit data?</source>
-        <translation type="unfinished">Подати дані?</translation>
-    </message>
-    <message>
-        <location filename="../qml/ODK/StartPage.qml" line="237" />
+        <location filename="../qml/ODK/StartPage.qml" line="115" />
         <source>Form error</source>
-        <translation type="unfinished">Помилка форми</translation>
+        <translation type="unfinished">Помилка при заповненні форми</translation>
     </message>
 </context>
 <context>
     <name>StartPageCollect</name>
     <message>
-        <location filename="../qml/SMART/StartPageCollect.qml" line="145" />
+        <location filename="../qml/SMART/StartPageCollect.qml" line="149" />
         <source>All data has been uploaded</source>
-        <translation type="unfinished">Усі дані завантажено</translation>
+        <translation type="unfinished">Всі дані завантажено</translation>
     </message>
     <message>
-        <location filename="../qml/SMART/StartPageCollect.qml" line="146" />
+        <location filename="../qml/SMART/StartPageCollect.qml" line="150" />
         <source>Connection failed</source>
-        <translation type="unfinished">Підключення не вдалося</translation>
+        <translation type="unfinished">Не вдалося встановити з'єднання</translation>
     </message>
     <message>
         <location filename="../qml/SMART/StartPageCollect.qml" line="23" />
@@ -3225,17 +3957,30 @@
     <message>
         <location filename="../qml/SMART/StartPageCollect.qml" line="101" />
         <source>Enter email or phone</source>
-        <translation type="unfinished">Введіть електронну адресу або телефон</translation>
+        <translation type="unfinished">Введіть email або телефон</translation>
     </message>
     <message>
-        <location filename="../qml/SMART/StartPageCollect.qml" line="113" />
+        <location filename="../qml/SMART/StartPageCollect.qml" line="112" />
         <source>Start collecting</source>
-        <translation type="unfinished">Почніть збирати</translation>
+        <translation type="unfinished">Починаємо збір</translation>
     </message>
     <message>
-        <location filename="../qml/SMART/StartPageCollect.qml" line="123" />
+        <location filename="../qml/SMART/StartPageCollect.qml" line="126" />
         <source>Upload data</source>
         <translation type="unfinished">Завантажити дані</translation>
+    </message>
+</context>
+<context>
+    <name>SubmitButton</name>
+    <message>
+        <location filename="../controls/imports/CyberTracker.1/SubmitButton.qml" line="94" />
+        <source>Upload failed</source>
+        <translation type="unfinished">Не вдалося завантажити</translation>
+    </message>
+    <message>
+        <location filename="../controls/imports/CyberTracker.1/SubmitButton.qml" line="156" />
+        <source>Submit data?</source>
+        <translation type="unfinished">Подати дані?</translation>
     </message>
 </context>
 <context>
@@ -3246,14 +3991,14 @@
         <translation type="unfinished">Збирати як</translation>
     </message>
     <message>
-        <location filename="../controls/imports/CyberTracker.1/UsernamePage.qml" line="51" />
+        <location filename="../controls/imports/CyberTracker.1/UsernamePage.qml" line="42" />
         <source>Set name</source>
-        <translation type="unfinished">Встановити назву</translation>
+        <translation type="unfinished">Назва набору</translation>
     </message>
     <message>
-        <location filename="../controls/imports/CyberTracker.1/UsernamePage.qml" line="74" />
+        <location filename="../controls/imports/CyberTracker.1/UsernamePage.qml" line="65" />
         <source>Data will be tagged with this name. This setting applies to all projects.</source>
-        <translation type="unfinished">Дані будуть позначені цим іменем. Цей параметр застосовується до всіх проектів.</translation>
+        <translation type="unfinished">Дані будуть позначені цією назвою. Це налаштування застосовується до всіх проектів.</translation>
     </message>
 </context>
 <context>
@@ -3261,15 +4006,84 @@
     <message>
         <location filename="../qml/EarthRanger/VisibleReportsPage.qml" line="10" />
         <source>Visible reports</source>
-        <translation type="unfinished">Видимі звіти</translation>
+        <translation type="unfinished">Наочні звіти</translation>
+    </message>
+</context>
+<context>
+    <name>WebView</name>
+    <message>
+        <location filename="../controls/imports/CyberTracker.1/WebView.qml" line="16" />
+        <source>Browser unavailable</source>
+        <translation type="unfinished">Браузер недоступний</translation>
     </message>
 </context>
 <context>
     <name>Wizard</name>
     <message>
-        <location filename="../cpp/Wizard.cpp" line="357" />
+        <location filename="../cpp/Wizard.cpp" line="431" />
         <source>Form incomplete</source>
-        <translation type="unfinished">Форма неповна</translation>
+        <translation type="unfinished">Форма не заповнена</translation>
+    </message>
+</context>
+<context>
+    <name>WizardOptionsPage</name>
+    <message>
+        <location filename="../controls/imports/CyberTracker.1/WizardOptionsPage.qml" line="20" />
+        <source>Current sighting</source>
+        <translation type="unfinished">Поточний приціл</translation>
+    </message>
+    <message>
+        <location filename="../controls/imports/CyberTracker.1/WizardOptionsPage.qml" line="23" />
+        <source>Saved sightings</source>
+        <translation type="unfinished">Збережені спостереження</translation>
+    </message>
+    <message>
+        <location filename="../controls/imports/CyberTracker.1/WizardOptionsPage.qml" line="102" />
+        <source>Submit</source>
+        <translation type="unfinished">Надіслати</translation>
+    </message>
+</context>
+<context>
+    <name>WizardPage</name>
+    <message>
+        <location filename="../controls/imports/CyberTracker.1/WizardPage.qml" line="352" />
+        <source>Yes</source>
+        <translation type="unfinished">Так</translation>
+    </message>
+    <message>
+        <location filename="../controls/imports/CyberTracker.1/WizardPage.qml" line="352" />
+        <source>No</source>
+        <translation type="unfinished">Ні</translation>
+    </message>
+    <message>
+        <location filename="../controls/imports/CyberTracker.1/WizardPage.qml" line="389" />
+        <source>OK</source>
+        <translation type="unfinished">ГАРАЗД.</translation>
+    </message>
+    <message>
+        <location filename="../controls/imports/CyberTracker.1/WizardPage.qml" line="712" />
+        <source>Unsaved data?</source>
+        <translation type="unfinished">Незбережені дані?</translation>
+    </message>
+    <message>
+        <location filename="../controls/imports/CyberTracker.1/WizardPage.qml" line="713" />
+        <source>This sighting has not been saved.</source>
+        <translation type="unfinished">Цей об'єкт не зберігся.</translation>
+    </message>
+    <message>
+        <location filename="../controls/imports/CyberTracker.1/WizardPage.qml" line="714" />
+        <source>Yes, discard it</source>
+        <translation type="unfinished">Так, викиньте його</translation>
+    </message>
+    <message>
+        <location filename="../controls/imports/CyberTracker.1/WizardPage.qml" line="788" />
+        <source>Home</source>
+        <translation type="unfinished">Головна сторінка</translation>
+    </message>
+    <message>
+        <location filename="../controls/imports/CyberTracker.1/WizardPage.qml" line="963" />
+        <source>Error saving observation</source>
+        <translation type="unfinished">Спостереження за збереженням помилок</translation>
     </message>
 </context>
 </TS>

@@ -119,8 +119,10 @@ public:
     virtual BOOL ShowCameraDialog(CHAR *pFileNameNoExt, FXIMAGE_QUALITY ImageQuality);
 
     virtual VOID ShowSkyplot(INT Left, INT Top, UINT Width, UINT Height, BOOL Visible);
-
+    virtual VOID ShowToast(const CHAR *pMessage);
     virtual VOID ShowExports();
+    
+    virtual VOID ShareData();
 
     virtual BOOL IsBarcodeSupported();
     virtual BOOL ShowBarcodeDialog(CHAR *pBarcode);
@@ -207,5 +209,8 @@ public:
     virtual VOID CheckForUpdate(GUID AppId, GUID StampId, CHAR *pWebUpdateUrl, CHAR *pTargetPath);
 
     virtual VOID RegisterExportFile(CHAR *pExportFilePath, FXEXPORTFILEINFO* exportFileInfo);
+
+    virtual VOID ArchiveSighting(GUID* pId, FXDATETIME* dateTime, FXGPS_POSITION* gps, const QVariantMap& content);
+    virtual VOID ArchiveWaypoint(GUID* pId, FXDATETIME* dateTime, FXGPS_POSITION* gps);
 };
 

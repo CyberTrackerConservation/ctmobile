@@ -8,6 +8,8 @@ import CyberTracker 1.0 as C
 C.Form {
     id: form
 
+    signal loadComplete
+
     onConnectedChanged: {
         if (!connected) {
             return
@@ -22,6 +24,9 @@ C.Form {
         if (form.project.kioskMode === true) {
             App.settings.kioskModeProjectUid = form.project.uid
         }
+
+        // Send load complete.
+        loadComplete()
     }
 
     StackView {
@@ -67,6 +72,15 @@ C.Form {
 
                 // Normal pop.
                 form.popPage()
+            }
+        }
+
+        Connections {
+            target: App.settings
+
+            function onDarkThemeChanged() {
+                formPageStack.setProjectColors(form)
+                formPageStack.setProjectColors(kioskPopup)
             }
         }
 
@@ -127,21 +141,34 @@ C.Form {
 
         function setProjectColors(item) {
             var colors = form.project.colors
-            if (colors.primary !== undefined) {
-                item.Material.primary = colors.primary.toString()
+
+            if (App.settings.darkTheme) {
+                if (colors.primaryDark !== undefined) {
+                    item.Material.primary = colors.primaryDark.toString()
+                } else if (colors.primary !== undefined) {
+                    item.Material.primary = colors.primary.toString()
+                } else {
+                    item.Material.primary = appWindow.Material.primary
+                }
+
+                if (colors.accentDark !== undefined) {
+                    item.Material.accent = colors.accentDark.toString()
+                } else if (colors.accent !== undefined) {
+                    item.Material.accent = colors.accent.toString()
+                } else {
+                    item.Material.accent = appWindow.Material.accent
+                }
+
+                item.Material.foreground = (colors.foregroundDark !== undefined) ? colors.foregroundDark.toString() : appWindow.Material.foreground
+                item.Material.background = (colors.backgroundDark !== undefined) ? colors.backgroundDark.toString() : appWindow.Material.background
+
+                return
             }
 
-            if (colors.accent !== undefined) {
-                item.Material.accent = colors.accent.toString()
-            }
-
-            if (colors.foreground !== undefined) {
-                //item.Material.foreground = colors.foreground.toString()
-            }
-
-            if (colors.background !== undefined) {
-                //item.Material.background = colors.background.toString()
-            }
+            item.Material.primary = (colors.primary !== undefined) ? colors.primary.toString() : appWindow.Material.primary
+            item.Material.accent = (colors.accent !== undefined) ? colors.accent.toString() : appWindow.Material.accent
+            item.Material.foreground = (colors.foreground !== undefined) ? colors.foreground.toString() : appWindow.Material.foreground
+            item.Material.background = (colors.background !== undefined) ? colors.background.toString() : appWindow.Material.background
         }
     }
 

@@ -14,6 +14,7 @@
 #include "Goto.h"
 #include "Compass.h"
 #include "Satellite.h"
+#include "OfflineMap.h"
 
 //#define SCREENSHOT_MODE
 #if defined(SCREENSHOT_MODE)
@@ -30,12 +31,14 @@ class App: public QObject
     Q_OBJECT
 
     QML_READONLY_AUTO_PROPERTY (QString, commandLine)
+    QML_READONLY_AUTO_PROPERTY (QString, sessionId)
 
     QML_READONLY_AUTO_PROPERTY (QString, buildString)
     QML_READONLY_AUTO_PROPERTY (int, dpi)
     QML_READONLY_AUTO_PROPERTY (bool, desktopOS)
     QML_READONLY_AUTO_PROPERTY (bool, mobileOS)
     QML_READONLY_AUTO_PROPERTY (bool, debugBuild)
+    QML_READONLY_AUTO_PROPERTY (QString, fixedFontFamily)
 
     QML_READONLY_AUTO_PROPERTY (QVariantList, languages)
 
@@ -49,15 +52,17 @@ class App: public QObject
     QML_READONLY_AUTO_PROPERTY (Database*, database)
     QML_READONLY_AUTO_PROPERTY (AppLink*, appLink)
     QML_READONLY_AUTO_PROPERTY (ProjectManager*, projectManager)
+    QML_READONLY_AUTO_PROPERTY (OfflineMapManager*, offlineMapManager)
     QML_READONLY_AUTO_PROPERTY (TimeManager*, timeManager)
     QML_READONLY_AUTO_PROPERTY (TaskManager*, taskManager)
+    QML_READONLY_AUTO_PROPERTY (QString, iniPath)
     QML_READONLY_AUTO_PROPERTY (QString, tempPath)
     QML_READONLY_AUTO_PROPERTY (QUrl, tempUrl)
     QML_READONLY_AUTO_PROPERTY (QString, workPath)
     QML_READONLY_AUTO_PROPERTY (QString, mapTileCachePath)
+    QML_READONLY_AUTO_PROPERTY (QString, mapMarkerCachePath)
     QML_READONLY_AUTO_PROPERTY (MBTilesReader*, mbTilesReader)
     QML_READONLY_AUTO_PROPERTY (QString, gotoPath)
-    QML_READONLY_AUTO_PROPERTY (QString, offlineMapPath)
     QML_READONLY_AUTO_PROPERTY (QString, exportPath)
     QML_READONLY_AUTO_PROPERTY (QUrl, exportUrl)
     QML_READONLY_AUTO_PROPERTY (QString, backupPath)
@@ -69,7 +74,7 @@ class App: public QObject
     QML_READONLY_AUTO_PROPERTY (Compass*, compass)
     QML_READONLY_AUTO_PROPERTY (SatelliteManager*, satelliteManager)
 
-    QML_READONLY_AUTO_PROPERTY (QVariantMap, lastLocation)
+    QML_READONLY_AUTO_PROPERTY (Location*, lastLocation)
     QML_READONLY_AUTO_PROPERTY (QString, lastLocationText)
     QML_READONLY_AUTO_PROPERTY (bool, lastLocationRecent)
     QML_READONLY_AUTO_PROPERTY (bool, lastLocationAccurate)
@@ -84,6 +89,7 @@ class App: public QObject
     QML_READONLY_AUTO_PROPERTY (int, batteryLevel)
     QML_READONLY_AUTO_PROPERTY (bool, batteryCharging)
     QML_READONLY_AUTO_PROPERTY (QString, batteryIcon)
+    QML_READONLY_AUTO_PROPERTY (QString, batteryText)
 
 public:
     App(QObject* parent = nullptr);
@@ -120,6 +126,8 @@ public:
     void killAlarm(const QString& alarmId);
     void processAlarms();
 
+    Q_INVOKABLE double scaleByFontSize(double value) const;
+
     Q_INVOKABLE QVariantMap getLogin(const QString& key, const QString& defaultServer = QString()) const;
     Q_INVOKABLE void setLogin(const QString& key, const QVariantMap& value);
 
@@ -135,6 +143,7 @@ public:
 
     Q_INVOKABLE bool requestPermissionRecordAudio();
     Q_INVOKABLE bool requestPermissionLocation();
+    Q_INVOKABLE bool requestPermissionBackgroundLocation();
     Q_INVOKABLE bool requestPermissionReadExternalStorage();
     Q_INVOKABLE bool requestPermissionWriteExternalStorage();
     Q_INVOKABLE bool requestPermissions(const QString& projectUid);
@@ -148,13 +157,14 @@ public:
     Q_INVOKABLE QString formatDateTime(qint64 mSecsSinceEpoch) const;
     Q_INVOKABLE QString formatDateTime(const QDateTime& dateTime) const;
 
-    Q_INVOKABLE QString downloadFile(const QString& url, const QString& username = QString(), const QString& password = QString());
+    Q_INVOKABLE QString downloadFile(const QString& url, const QString& username = QString(), const QString& password = QString(), const QString& token = QString(), const QString& tokenType = "Bearer");
 
     Q_INVOKABLE QString moveToMedia(const QString& filePathUrl);
     Q_INVOKABLE QString copyToMedia(const QString& filePathUrl);
     Q_INVOKABLE bool removeMedia(const QString& filename) const;
     Q_INVOKABLE QString getMediaFilePath(const QString& filename) const;
     Q_INVOKABLE QUrl getMediaFileUrl(const QString& filename) const;
+    Q_INVOKABLE QString getMediaMimeType(const QString& filename) const;
     Q_INVOKABLE void garbageCollectMedia() const;
 
     Q_INVOKABLE void copyToClipboard(const QString& text);
@@ -162,14 +172,17 @@ public:
     Q_INVOKABLE void snapScreenshotToFile(const QString& filePathUrl);
 
     Q_INVOKABLE void runLinkOnClipboard();
-    Q_INVOKABLE QVariantMap runCommandLine();
+    Q_INVOKABLE QVariantMap runCommandLine(const QString& customCommandLine = QString());
     Q_INVOKABLE void runQRCode(const QString& tag);
+    Q_INVOKABLE QVariantMap installPackage(const QString& filePathUrl, bool showToasts = true);
 
     Q_INVOKABLE void clearComponentCache();
 
+    Q_INVOKABLE QString getDirectionText(double directionDegrees) const;
     Q_INVOKABLE QString getDistanceText(double distanceMeters) const;
     Q_INVOKABLE QString getSpeedText(double speedMetersPerSecond) const;
     Q_INVOKABLE QString getAreaText(double areaMeters) const;
+    Q_INVOKABLE QString getTimeText(int timeSeconds) const;
 
     Q_INVOKABLE QString deviceImei();
     Q_INVOKABLE bool wifiConnected();
@@ -186,11 +199,24 @@ public:
     Q_INVOKABLE void removeExportFile(const QString& filePath);
     Q_INVOKABLE QVariantList buildExportFilesModel(const QString& projectUid = QString(), const QString& filter = QString());
 
+    Q_INVOKABLE QString renderSvgToPng(const QString& svgUrl, int width, int height) const;
+
+    Q_INVOKABLE QVariantMap esriCreateLocationService(const QString& username, const QString& serviceName, const QString& serviceDescription, const QString& token) const;
+
+    QString renderMapMarker(const QString& url, const QColor& color, int size) const;
+    QString renderMapCallout(const QString& url, int size) const;
+    Q_INVOKABLE QVariantMap createMapCalloutSymbol(const QString& filePath) const;
+    Q_INVOKABLE QVariantMap createMapPointSymbol(const QString& url, const QColor& color) const;
+    Q_INVOKABLE QVariantMap createMapLineSymbol(const QColor& color) const;
+
 signals:
+    void consoleMessage(const QString& message);
+
     void providerEvent(const QString& providerName, const QString& projectUid, const QString& name, const QVariant& value);
     void progressEvent(const QString& projectUid, const QString& operationName, int index, int count);
     void showMessageBox(const QString& title, const QString& text, const QString& details = QString());
     void backPressed();
+    void popPageStack();
     void photoTaken(const QString& filename);
     void barcodeScan(const QString& barcode);
     void alarmFired(const QString& alarmId);
@@ -201,9 +227,9 @@ signals:
     void sightingSaved(const QString& projectUid, const QString& sightingUid, const QString& stateSpace = QString());
     void sightingRemoved(const QString& projectUid, const QString& sightingUid, const QString& stateSpace = QString());
     void sightingModified(const QString& projectUid, const QString& sightingUid, const QString& stateSpace = QString());
+    void sightingFlagsChanged(const QString& projectUid, const QString& sightingUid, const QString& stateSpace = QString());
 
-    void zoomToMapLayer(const QString& layerId);
-    void zoomToMapOverlay(const QString& layerId);
+    void zoomToMapLayer(const QVariantMap& layer);
 
     void exportFilesChanged();
 
@@ -220,14 +246,10 @@ private:
     QMap<QString, ConnectorFactory> m_connectors;
     QMap<QString, ProviderFactory> m_providers;
     QMap<QString, std::pair<QObject*, int>> m_qmlCache;
-   
+
     SimulateNmeaServer m_simulateNmeaServer;
-    int getSimulateGPSFileIndex();
-    void setSimulateGPSFileIndex(int value);
 
     QTranslator m_translator;
-
-    bool requestPermission(const QString& permission, const QString& rationale);
 
     bool m_requestedDisableBatterySaver = false;
 
@@ -243,4 +265,6 @@ private:
 
     int m_lastLocationCounter = 0;
     QTimer m_lastLocationRecentTimer;
+
+    bool requestPermission(const QString& permission, const QString& rationale);
 };

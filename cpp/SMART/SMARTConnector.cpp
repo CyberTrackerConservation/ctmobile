@@ -62,9 +62,13 @@ ApiResult SMARTConnector::bootstrapOffline()
         auto zipFile = *zipFileIt;
 
         // Check for route.
-        if (App::instance()->gotoManager()->bootstrap(zipFile))
+        if (App::instance()->offlineMapManager()->canInstallPackage(zipFile))
         {
-            continue;
+            if (App::instance()->offlineMapManager()->installPackage(zipFile).success)
+            {
+                QFile::remove(zipFile);
+                continue;
+            }
         }
 
         // Check for project.
@@ -98,7 +102,7 @@ ApiResult SMARTConnector::bootstrapOffline()
 
             if (m_database->hasSightings(project->uid(), "*", Sighting::DB_SIGHTING_FLAG | Sighting::DB_LOCATION_FLAG))
             {
-                return Failure(project->title() + "\" " + tr("has unexported data"));
+                return Failure("\"" + project->title() + "\" " + tr("has unexported data"));
             }
 
             m_projectManager->remove(project->uid());
@@ -241,7 +245,12 @@ ApiResult SMARTConnector::hasUpdate(QNetworkAccessManager* networkAccessManager,
     return UpdateAvailable();
 }
 
-bool SMARTConnector::canUpdate(Project* project)
+bool SMARTConnector::canLogin(Project* /*project*/) const
+{
+    return false;
+}
+
+bool SMARTConnector::canUpdate(Project* project) const
 {
     return project->connectorParams().contains("status_url");
 }
@@ -321,6 +330,19 @@ bool SMARTConnector::getZipMetadata(const QString& zipFile, QVariantMap* outMeta
 ApiResult SMARTConnector::updateOffline(Project* project)
 {
     auto projectUid = project->uid();
+
+    // Skip updates if there are any unsent sightings.
+    auto sightingUids = QStringList();
+    m_database->getSightings(projectUid, "*", Sighting::DB_SIGHTING_FLAG, &sightingUids);
+    if (sightingUids.count() > 0)
+    {
+        return Failure(tr("Unexported data"));
+    }
+
+    // Reset the project.
+    m_projectManager->reset(projectUid, true);
+
+    // Update.
     auto updateFolder = m_projectManager->getUpdateFolder(projectUid);
     auto connectorParams = project->connectorParams();
     auto zipPath = m_projectManager->getFilePath(projectUid, "SMART.zip");
@@ -433,18 +455,11 @@ ApiResult SMARTConnector::updateOffline(Project* project)
         }
         else if (mapFileInfo.isDir())
         {
-            auto dir = QDir(updateFolder + "/" + mapSource);
-            auto ext = QStringList({"*.tpk", "*.vtpk", "*.mbtiles", "*.shp", "*.kml", "*.img", "*.I12", "*.dt0", "*.dt1", "*.dt2", "*.tc2", "*.geotiff", "*.tif", "*.tiff", "*.hr1", "*.jpg", "*.jpeg", "*.jp2", "*.ntf", "*.png", "*.i21" });
-
-            auto fileInfos = QFileInfoList(dir.entryInfoList(ext, QDir::Files));
-            for (auto fileInfoIt = fileInfos.constBegin(); fileInfoIt != fileInfos.constEnd(); fileInfoIt++)
+            auto offlineMaps = Utils::buildMapLayerList(mapFileInfo.filePath());
+            for (auto it = offlineMaps.constBegin(); it != offlineMaps.constEnd(); it++)
             {
-                auto mapItem = QVariantMap();
-                mapItem.insert("name", fileInfoIt->baseName());
-                mapItem.insert("file", mapSource + "/" + fileInfoIt->fileName());
-                mapList.append(mapItem);
-
-                App::instance()->telemetry()->aiSendEvent("offlineMap", QVariantMap {{ "connector", SMART_CONNECTOR }, { "name", fileInfoIt->fileName() }, { "type", fileInfoIt->suffix() }});
+                auto fileInfo = QFileInfo(*it);
+                mapList.append(QVariantMap {{ "name", fileInfo.baseName() }, { "file", mapSource + "/" + fileInfo.fileName() }});
             }
         }
 
@@ -458,17 +473,15 @@ ApiResult SMARTConnector::updateOffline(Project* project)
             }
         }
 
-        // Update the maps.
-        project->set_maps(mapList);
+        // Pass the maps to the offline map manager.
+        App::instance()->offlineMapManager()->installProjectMaps(updateFolder, mapList);
     }
 
     // Kiosk mode.
-    if (profile.value("KIOSK_MODE", false).toBool())
-    {
-        project->set_kioskMode(true);
-        project->set_kioskModePin(QString::number(profile.value("EXIT_PIN").toInt()));
-    }
+    project->set_kioskMode(Utils::isAndroid() && App::instance()->config().value("androidKiosk").toBool() && profile.value("KIOSK_MODE").toBool());
+    project->set_kioskModePin(QString::number(profile.value("EXIT_PIN").toInt()));
 
+    // Permissions.
     auto androidPermissions = QStringList();
     androidPermissions << "CAMERA";
     androidPermissions << "RECORD_AUDIO";
@@ -485,6 +498,7 @@ ApiResult SMARTConnector::updateOffline(Project* project)
 
     if (connectorMode != "Collect")
     {
+        project->set_androidBackgroundLocation(true);
         project->set_androidDisableBatterySaver(true);
     }
 
@@ -519,6 +533,14 @@ ApiResult SMARTConnector::updateConnect(Project* project)
         {
             return AlreadyUpToDate();
         }
+    }
+
+    // Skip updates if there are any unsent sightings.
+    auto sightingUids = QStringList();
+    m_database->getSightings(projectUid, "*", Sighting::DB_SIGHTING_FLAG, &sightingUids);
+    if (sightingUids.count() > 0)
+    {
+        return Failure(tr("Unsent data"));
     }
 
     // A new package is available: download it.
@@ -575,7 +597,3 @@ void SMARTConnector::reset(Project* project)
     }
 }
 
-void SMARTConnector::remove(Project* project)
-{
-    App::instance()->gotoManager()->removeLayer(project->uid() + ".json");
-}

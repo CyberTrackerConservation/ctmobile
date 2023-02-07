@@ -25,7 +25,7 @@ void SatelliteManager::start()
     m_refCount++;
     if (m_refCount == 1)
     {
-        m_source = new SatelliteInfoSource(this);
+        m_source = QGeoSatelliteInfoSource::createSource(App::instance()->positionInfoSourceName(), this);
 
         if (m_source)
         {
@@ -34,6 +34,10 @@ void SatelliteManager::start()
 
             m_source->setUpdateInterval(1000);
             m_source->startUpdates();
+        }
+        else
+        {
+            qDebug() << "GPS - satellite source is null";
         }
     }
 }

@@ -1,6 +1,6 @@
 import QtQml 2.12
 import QtQuick 2.12
-import Esri.ArcGISRuntime 100.14 as Esri
+import Esri.ArcGISRuntime 100.15 as Esri
 
 Esri.Basemap {
     id: basemap

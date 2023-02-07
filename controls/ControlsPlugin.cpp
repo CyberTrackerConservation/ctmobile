@@ -1,6 +1,7 @@
 #include "ControlsPlugin.h"
 #include "Skyplot.h"
 #include "Sketchpad.h"
+#include "SquareImage.h"
 
 void registerControls(QQmlEngine* engine)
 {
@@ -10,4 +11,5 @@ void registerControls(QQmlEngine* engine)
 
     qmlRegisterType<Skyplot>("CyberTracker", 1, 0, "Skyplot");
     qmlRegisterType<Sketchpad>("CyberTracker", 1, 0, "Sketchpad");
+    qmlRegisterType<SquareImage>("CyberTracker", 1, 0, "SquareImage");
 }

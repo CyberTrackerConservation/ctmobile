@@ -5,8 +5,13 @@
 class MapLayerListModel : public VariantListModel, public QQmlParserStatus
 {
     Q_OBJECT
-
     Q_INTERFACES (QQmlParserStatus)
+
+    QML_WRITABLE_AUTO_PROPERTY(bool, addTypeHeaders)
+    QML_WRITABLE_AUTO_PROPERTY(bool, addBaseLayers)
+    QML_WRITABLE_AUTO_PROPERTY(bool, addOfflineLayers)
+    QML_WRITABLE_AUTO_PROPERTY(bool, addProjectLayers)
+    QML_WRITABLE_AUTO_PROPERTY(bool, addFormLayers)
 
 public:
     MapLayerListModel(QObject* parent = nullptr);
@@ -15,12 +20,12 @@ public:
     void classBegin() override;
     void componentComplete() override;
 
-    Q_INVOKABLE int layerIdToIndex(const QString& layerId) const;
+    Q_INVOKABLE int indexOfLayer(const QString& layerId) const;
+    Q_INVOKABLE QVariantMap findExtent(const QString& layerId) const;
+    Q_INVOKABLE QVariantList findPath(int pathId) const;
 
     Q_INVOKABLE void setBasemap(const QString& basemapId);
-    Q_INVOKABLE void setProjectLayerState(const QString& layerId, bool checked);
-    Q_INVOKABLE void setDataLayerState(const QString& layerId, bool checked);
-    Q_INVOKABLE void removeGotoLayer(const QString& layerId);
+    Q_INVOKABLE void setLayerState(const QVariantMap& layer, bool checked);
 
 signals:
     void changed();
@@ -31,11 +36,9 @@ private slots:
 private:
     bool m_completed = false;
     bool m_blockRebuild = false;
+    QVariantList m_paths;
 
-    void setChecked(const QString& layerId, bool checked);
-
-    QVariantList buildBaseLayers();
-    QVariantList buildProjectLayers(ProjectManager* projectManager, const QString& filterProjectUid);
-    QVariantList buildGotoLayers();
-    QVariantList buildFormLayers();
+    QVariantList buildBaseLayers() const;
+    QVariantList buildOfflineLayers();
+    QVariantList buildFormLayers(Project* project) const;
 };

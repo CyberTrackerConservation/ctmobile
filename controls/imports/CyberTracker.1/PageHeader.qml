@@ -8,8 +8,6 @@ Rectangle {
 
     property alias topText: topLabel.text
     property alias text: titleLabel.text
-    property alias textStyle: titleLabel.style
-    property alias textStyleColor: titleLabel.styleColor
     property bool menuVisible: false
     property alias menuEnabled: menuButton.enabled
     property alias menuIcon: menuButton.icon.source
@@ -17,20 +15,20 @@ Rectangle {
     property alias backIcon: backButton.icon.source
     property alias backEnabled: backButton.enabled
     property alias backVisible: backButton.visible
+    property string textColor: Utils.lightness(Material.primary) < 128 ? "white" : "black"
 
-    property var textColor: Utils.lightness(Material.primary) < 128 ? "white" : "black"
     color: Material.primary
 
-    implicitHeight: Math.max(toolbarInternal.implicitHeight, titleColumn.implicitHeight + 8)
+    implicitHeight: Math.max(toolbarInternal.implicitHeight, titleRow.implicitHeight + App.scaleByFontSize(topLabel.visible ? 2 : 0))
 
     signal backClicked()
     signal menuClicked()
 
     function sendBackClick() {
+        Qt.inputMethod.hide()
         if (formBack) {
-            Qt.inputMethod.hide()
             if (typeof(formPageStack) !== "undefined") {
-                form.popPage()
+                form.popPageBack()
             } else {
                 appPageStack.pop()
             }
@@ -46,7 +44,8 @@ Rectangle {
     }
 
     Row {
-        anchors.fill: parent
+        id: titleRow
+        width: parent.width
         spacing: 0
 
         ToolButton {
@@ -67,9 +66,9 @@ Rectangle {
 
         Column {
             id: titleColumn
+            anchors.verticalCenter: parent.verticalCenter
             width: parent.width - backButton.width - menuButton.width
             spacing: 0
-            y: (root.implicitHeight - titleColumn.implicitHeight) / 2
 
             Label {
                 id: topLabel

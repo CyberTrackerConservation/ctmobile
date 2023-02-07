@@ -53,6 +53,9 @@ public:
 
     void registerTask(const QString& name, TaskFactory taskFactory, TaskCompleted taskCompleted = nullptr);
     void addTask(const QString& projectUid, const QString& uid, const QString& parentUid, const QVariantMap& input);
+    void addSerialTask(const QString& projectUid, const QString& uid, const QVariantMap& input);
+    void addSingleTask(const QString& projectUid, const QString& uid, const QVariantMap& input);
+    void resetTask(const QString& projectUid, const QString& uid, const QVariantMap& input);
     void getTasks(const QString& projectUid, const QString& uidStartsWith, int stateMask, QStringList* foundUidsOut) const;
     void pauseTask(const QString& projectUid, const QString& uid);
     void resumeTask(const QString& projectUid, const QString& uid, const QString& inputName = QString(), const QVariant& inputValue = QVariant());
@@ -62,6 +65,7 @@ public:
     Q_INVOKABLE bool isTaskComplete(const QString& projectUid, const QString& uid) const;
     Q_INVOKABLE bool waitForTasks(const QString& projectUid);
     Q_INVOKABLE int getIncompleteTaskCount(const QString& projectUid) const;
+    Q_INVOKABLE int getRunningCount(const QString& projectUid) const;
 
 private:
     QMap<QString, TaskFactory> m_taskFactory;
@@ -71,7 +75,6 @@ private:
 
     void setRunning(const QString& projectUid, const QString& uid, bool value);
     bool getRunning(const QString& projectUid, const QString& uid) const;
-    int getRunningCount(const QString& projectUid) const;
 
     void startTask(const QString& projectUid, const QString& uid);
     void processTasks(const QString& projectUid);

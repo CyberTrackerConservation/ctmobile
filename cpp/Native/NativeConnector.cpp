@@ -20,6 +20,11 @@ bool NativeConnector::canShareAuth(Project* /*project*/) const
 
 QVariantMap NativeConnector::getShareData(Project* project, bool /*auth*/) const
 {
+    if (project->webUpdateUrl().isEmpty())
+    {
+        return QVariantMap();
+    }
+
     return QVariantMap
     {
         { "connector", NATIVE_CONNECTOR },
@@ -27,6 +32,11 @@ QVariantMap NativeConnector::getShareData(Project* project, bool /*auth*/) const
         { "projectUid", project->uid() },
         { "launch", true }
     };
+}
+
+bool NativeConnector::canLogin(Project* /*project*/) const
+{
+    return false;
 }
 
 ApiResult NativeConnector::bootstrap(const QVariantMap& params)
@@ -109,7 +119,7 @@ ApiResult NativeConnector::hasUpdate(QNetworkAccessManager* networkAccessManager
     return UpdateAvailable();
 }
 
-bool NativeConnector::canUpdate(Project* project)
+bool NativeConnector::canUpdate(Project* project) const
 {
     return !project->webUpdateUrl().isEmpty();
 }

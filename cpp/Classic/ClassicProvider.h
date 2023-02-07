@@ -13,5 +13,9 @@ public:
 
     static int version();
 
+    bool connectToProject(bool newBuild, bool* formChangedOut) override;
+
     QUrl getStartPage() override;
+    void getElements(ElementManager* elementManager) override;
+    void getFields(FieldManager* fieldManager) override;
 };

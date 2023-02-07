@@ -14,7 +14,9 @@ Project::Project(QObject* parent): QObject(parent)
     m_projectManager = App::instance()->projectManager();
 
     m_version = 0;
-    m_kioskMode = m_updateOnLaunch = m_androidDisableBatterySaver = m_defaultWizardMode = false;
+    m_kioskMode = m_updateOnLaunch = m_androidBackgroundLocation = m_androidDisableBatterySaver =  m_defaultWizardMode = m_defaultImmersive = false;
+    m_defaultSendLocationInterval = 0;
+    m_defaultSubmitInterval = 0;
 }
 
 void Project::saveToQmlFile(const QString& filePath)
@@ -43,11 +45,17 @@ void Project::saveToQmlFile(const QString& filePath)
     Utils::writeQml(stream, 1, "kioskMode", m_kioskMode, false);
     Utils::writeQml(stream, 1, "kioskModePin", m_kioskModePin);
     Utils::writeQml(stream, 1, "androidPermissions", m_androidPermissions);
+    Utils::writeQml(stream, 1, "androidBackgroundLocation", m_androidBackgroundLocation, false);
     Utils::writeQml(stream, 1, "androidDisableBatterySaver", m_androidDisableBatterySaver, false);
     Utils::writeQml(stream, 1, "updateOnLaunch", m_updateOnLaunch, false);
     Utils::writeQml(stream, 1, "startPage", m_startPage);
     Utils::writeQml(stream, 1, "telemetry", m_telemetry);
     Utils::writeQml(stream, 1, "defaultWizardMode", m_defaultWizardMode, false);
+    Utils::writeQml(stream, 1, "defaultImmersive", m_defaultImmersive, false);
+    Utils::writeQml(stream, 1, "defaultSendLocationInterval", m_defaultSendLocationInterval);
+    Utils::writeQml(stream, 1, "esriLocationServiceUrl", m_esriLocationServiceUrl);
+    Utils::writeQml(stream, 1, "defaultSubmitInterval", m_defaultSubmitInterval);
+    Utils::writeQml(stream, 1, "offlineMapUrl", m_offlineMapUrl);
 
     Utils::writeQml(stream, 0, "}");
 }
@@ -120,6 +128,8 @@ QVariantMap Project::save(bool keepAuth) const
     settings.remove("lastBuildString");
     settings.remove("webUpdateUrl");
     settings.remove("webUpdateMetadata");
+    settings.remove("reportedBy");
+    settings.remove("reportedByDefault");
 
     // Remove access tokens.
     if (!keepAuth)
@@ -150,6 +160,11 @@ QVariantMap Project::save(bool keepAuth) const
         { "startPage", m_startPage },
         { "telemetry", m_telemetry },
         { "defaultWizardMode", m_defaultWizardMode },
+        { "defaultImmersive", m_defaultImmersive },
+        { "defaultSendLocationInterval", m_defaultSendLocationInterval },
+        { "esriLocationServiceUrl", m_esriLocationServiceUrl },
+        { "defaultSubmitInterval", m_defaultSubmitInterval },
+        { "offlineMapUrl", m_offlineMapUrl },
         { "settings", settings },
     };
 }
@@ -171,16 +186,36 @@ void Project::load(const QVariantMap& data, bool loadSettings)
     m_kioskMode = data["kioskMode"].toBool();
     m_kioskModePin = data["kioskModePin"].toString();
     m_androidPermissions = data["androidPermissions"].toStringList();
+    m_androidBackgroundLocation = data["androidBackgroundLocation"].toBool();
     m_androidDisableBatterySaver = data["androidDisableBatterySaver"].toBool();
     m_updateOnLaunch = data["updateOnLaunch"].toBool();
     m_startPage = data["startPage"].toString();
     m_telemetry = data["telemetry"].toMap();
     m_defaultWizardMode = data["defaultWizardMode"].toBool();
+    m_defaultImmersive = data["defaultImmersive"].toBool();
+    m_defaultSendLocationInterval = data["defaultSendLocationInterval"].toInt();
+    m_esriLocationServiceUrl = data["esriLocationServiceUrl"].toString();
+    m_defaultSubmitInterval = data["defaultSubmitInterval"].toInt();
+    m_offlineMapUrl = data["offlineMapUrl"].toString();
 
     if (loadSettings)
     {
         App::instance()->createDatabasePtr()->saveProject(m_uid, data["settings"].toMap());
     }
+}
+
+void Project::reload()
+{
+    auto project = m_projectManager->loadPtr(m_uid);
+    auto data = project->save(false);
+    load(data, false);
+}
+
+QUrl Project::displayIcon() const
+{
+    auto filePath = App::instance()->settings()->darkTheme() && !m_iconDark.isEmpty() ? m_iconDark : m_icon;
+
+    return filePath.isEmpty() ? QUrl() : m_projectManager->getFileUrl(m_uid, filePath);
 }
 
 QUrl Project::loginIcon() const
@@ -286,16 +321,27 @@ void UpdateScanTask::run()
         return;
     }
 
-    // Check hasUpdate.
     QNetworkAccessManager networkAccessManager;
     networkAccessManager.setTransferTimeout(10000); // 10s timeout.
-    auto result = connector->hasUpdate(&networkAccessManager, project.get());
 
-    // Unexpected failure, e.g. network error.
+    // Check project update.
+    auto result = connector->hasUpdate(&networkAccessManager, project.get());
     if (!result.expected)
     {
+        // Unexpected failure, e.g. network error.
         emit completed(m_projectUid, false, false);
         return;
+    }
+
+    // Check offline map update.
+    if (!project->offlineMapUrl().isEmpty())
+    {
+        result = App::instance()->offlineMapManager()->hasUpdate(&networkAccessManager, project->offlineMapUrl());
+        if (!result.expected)
+        {
+            emit completed(m_projectUid, false, false);
+            return;
+        }
     }
 
     // Task completed.
@@ -357,14 +403,23 @@ Project* ProjectManager::load(const QString& projectUid) const
     auto filePath = getFilePath(projectUid, "Project.qml");
     auto result = qobject_cast<Project*>(Utils::loadQmlFromFile(filePath));
 
-    if (result && !result->connector().isEmpty())
+    //
+    // Migrate field maps to the offline manager. Build 442.
+    //
+    if (result && !result->maps().isEmpty())
     {
-        return result;
+        App::instance()->offlineMapManager()->installProjectMaps(getFilePath(projectUid), result->maps());
+        result->set_maps(QVariantList());
+        result->saveToQmlFile(filePath);
     }
 
     //
     // Fixup due to design change.
     //
+    if (result && !result->connector().isEmpty())
+    {
+        return result;
+    }
 
     // Read the old file into a stringlist.
     auto lines = QStringList();
@@ -885,7 +940,19 @@ QString ProjectManager::createPackage(const QString& projectUid, bool includePro
     return filePath;
 }
 
-QVariantMap ProjectManager::installPackage(const QString& filePath)
+bool ProjectManager::canInstallPackage(const QString& filePath) const
+{
+    QuaZip zip(filePath);
+    if (!zip.open(QuaZip::mdUnzip))
+    {
+        return false;
+    }
+
+    auto fileNameList = zip.getFileNameList();
+    return fileNameList.contains("project.json");
+}
+
+ApiResult ProjectManager::installPackage(const QString& filePath)
 {
     pauseUpdateScan();
     auto resumeUpdateScanOnExit = qScopeGuard([&] { resumeUpdateScan(); });
@@ -895,7 +962,7 @@ QVariantMap ProjectManager::installPackage(const QString& filePath)
 
     if (packagePath.isEmpty())
     {
-        return ApiResult::ErrorMap(tr("Failed to extract"));
+        return ApiResult::Error(tr("Failed to extract"));
     }
 
     // Read the project json.
@@ -903,7 +970,7 @@ QVariantMap ProjectManager::installPackage(const QString& filePath)
     auto projectUid = projectJson.value("uid").toString();
     if (projectJson.isEmpty() || projectUid.isEmpty())
     {
-        return ApiResult::ErrorMap(tr("Invalid package"));
+        return ApiResult::Error(tr("Invalid package"));
     }
 
     // Install project if one is in the package and it does not already exist.
@@ -915,13 +982,13 @@ QVariantMap ProjectManager::installPackage(const QString& filePath)
         // Initialize the project and Project.qml file.
         if (!init(projectUid, "", QVariantMap(), "", QVariantMap()))
         {
-            return ApiResult::ErrorMap(tr("Failed to initialize project"));
+            return ApiResult::Error(tr("Failed to initialize project"));
         }
 
         projectAdded = true;
 
         auto project = loadPtr(projectUid);
-        project->load(projectJson, false);
+        project->load(projectJson, true);
 
         // Copy project contents.
         if (projectJson.value("connector").toString() == CLASSIC_CONNECTOR)
@@ -931,6 +998,12 @@ QVariantMap ProjectManager::installPackage(const QString& filePath)
         else
         {
             Utils::copyPath(projectPath, getFilePath(projectUid));
+        }
+
+        // Ensure the project has a valid version.
+        if (project->version() == 0)
+        {
+            project->set_version(1);
         }
 
         // Overwrite Project.qml.
@@ -988,12 +1061,12 @@ QVariantMap ProjectManager::installPackage(const QString& filePath)
 
     if (hasProject && !projectAdded && !dataAdded)
     {
-        return ApiResult::ExpectedMap(tr("Already installed"));
+        return ApiResult::Expected(tr("Already installed"));
     }
 
     if (!projectAdded && !dataAdded)
     {
-        return ApiResult::ExpectedMap(tr("Nothing to do"));
+        return ApiResult::Expected(tr("Nothing to do"));
     }
 
     if (projectAdded)
@@ -1001,7 +1074,7 @@ QVariantMap ProjectManager::installPackage(const QString& filePath)
         emit projectsChanged();
     }
 
-    return ApiResult::SuccessMap();
+    return ApiResult::Success();
 }
 
 QVariantMap ProjectManager::webInstall(const QString& webUpdateUrl)
@@ -1145,6 +1218,20 @@ void ProjectManager::resumeUpdateScan()
     qFatalIf(m_blockUpdateScanCounter < 0, "Bad block counter");
 }
 
+bool ProjectManager::canLogin(const QString& projectUid) const
+{
+    auto project = loadPtr(projectUid);
+    if (!project->loggedIn())
+    {
+        return false;
+    }
+
+    // Override for webUpdateUrl.
+    auto connector = project->webUpdateUrl().isEmpty() ? project->connector() : NATIVE_CONNECTOR;
+
+    return App::instance()->createConnectorPtr(connector)->canLogin(project.get());
+}
+
 bool ProjectManager::canUpdate(const QString& projectUid) const
 {
     auto project = loadPtr(projectUid);
@@ -1270,15 +1357,30 @@ QVariantMap ProjectManager::updateAll(const QString& filterConnectorName, const 
                 // Update the project file.
                 updateProject->set_uid(projectUid);
                 updateProject->saveToQmlFile(updateFolder + "/Project.qml");
-
-                // Update settings.
-                updateProject->set_lastUpdate(App::instance()->timeManager()->currentDateTimeISO());
-                updateProject->set_hasUpdate(false);
             }
             else
             {
-                updateResult.success = false;
+                updateResult = ApiResult::Error(tr("Bad project file"));
             }
+        }
+
+        // Get or update the offline map.
+        auto mapUpdateResult = ApiResult::Expected(tr("Up to date"));
+        if (updateResult.success || updateResult.expected)
+        {
+            auto updateProject = std::unique_ptr<Project>(qobject_cast<Project*>(Utils::loadQmlFromFile(updateFolder + "/Project.qml")));
+            auto offlineMapUrl = updateProject ? updateProject->offlineMapUrl() : project->offlineMapUrl();
+            if (!offlineMapUrl.isEmpty())
+            {
+                mapUpdateResult = App::instance()->offlineMapManager()->installOrUpdatePackage(offlineMapUrl);
+            }
+        }
+
+        // Check if map update failed.
+        if (!mapUpdateResult.expected)
+        {
+            // This means that the project and offline map are atomically updated.
+            updateResult = mapUpdateResult;
         }
 
         // The update was successful, so switch the folders.
@@ -1286,16 +1388,37 @@ QVariantMap ProjectManager::updateAll(const QString& filterConnectorName, const 
         {
             m_database->addProject(project->uid());
 
-            auto projectFolderOld = projectFolder + ".old";
+            auto projectFolderOld = App::instance()->backupPath() + "/" + project->uid();
             QDir(projectFolderOld).removeRecursively();
-            updateResult.success = QDir().rename(projectFolder, projectFolderOld) && QDir().rename(updateFolder, projectFolder);
-            if (updateResult.success)
+
+            auto success = QDir().rename(projectFolder, projectFolderOld) && QDir().rename(updateFolder, projectFolder);
+            if (success)
             {
-                if (!QDir(projectFolderOld).removeRecursively())
-                {
-                    // Fail?
-                }
+                // Ensure the backup does not contain a potentially large SMART map.
+                QFile::remove(projectFolderOld + "/map.mbtiles");
             }
+            else
+            {
+                updateResult = ApiResult::Error(tr("Update error"));
+            }
+        }
+
+        // If the only update was the offline map, then mark the update as successful.
+        if (updateResult.expected && mapUpdateResult.success)
+        {
+            updateResult = ApiResult::Success();
+        }
+
+        // Set the lastUpdate if something happened.
+        if (updateResult.success)
+        {
+            project->set_lastUpdate(App::instance()->timeManager()->currentDateTimeISO());
+        }
+
+        // Clear the hasUpdate if there was no failure.
+        if (updateResult.success || updateResult.expected)
+        {
+            project->set_hasUpdate(false);
         }
 
         // Track stats.
@@ -1308,6 +1431,8 @@ QVariantMap ProjectManager::updateAll(const QString& filterConnectorName, const 
         }
 
         result[projectUid] = updateResult.toMap();
+
+        emit projectUpdateComplete(projectUid, updateResult.toMap());
     }
 
     if (okayCount > 0)
@@ -1341,7 +1466,7 @@ void ProjectManager::modify(const QString& projectUid, const std::function<void(
     project->saveToQmlFile(getFilePath(projectUid, "Project.qml"));
 }
 
-void ProjectManager::reset(const QString& projectUid)
+void ProjectManager::reset(const QString& projectUid, bool keepData)
 {
     pauseUpdateScan();
     auto resumeUpdateScanOnExit = qScopeGuard([&] { resumeUpdateScan(); });
@@ -1355,10 +1480,18 @@ void ProjectManager::reset(const QString& projectUid)
     m_database->loadProject(projectUid, &projectValues);
     projectValues.remove("providerState");
 
-    // Remove and re-add the project.
-    m_database->removeProject(projectUid);
-    m_database->addProject(projectUid);
-    m_database->saveProject(projectUid, projectValues);
+    if (keepData)
+    {
+        // Only clear the form state.
+        m_database->deleteFormState(projectUid, "*");
+    }
+    else
+    {
+        // Remove and re-add the project: this clears all state.
+        m_database->removeProject(projectUid);
+        m_database->addProject(projectUid);
+        m_database->saveProject(projectUid, projectValues);
+    }
 
     // Cleanup attachments.
     App::instance()->garbageCollectMedia();

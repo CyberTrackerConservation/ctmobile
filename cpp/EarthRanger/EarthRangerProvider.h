@@ -8,32 +8,32 @@ constexpr char EARTH_RANGER_PROVIDER[] = "EarthRanger";
 class EarthRangerProvider : public Provider
 {
     Q_OBJECT
-    Q_PROPERTY (QString reportedBy READ reportedBy WRITE setReportedBy NOTIFY reportedByChanged)
 
 public:
     EarthRangerProvider(QObject *parent = nullptr);
 
-    bool connectToProject(bool newBuild) override;
+    bool connectToProject(bool newBuild, bool* formChangedOut) override;
 
     QUrl getStartPage() override;
     void getElements(ElementManager* elementManager) override;
     void getFields(FieldManager* fieldManager) override;
 
-    QString getFieldName(const QString& fieldUid) override;
-    bool getFieldTitleVisible(const QString& fieldUid) override;
+    QString getFieldName(const QString& fieldUid) const override;
+    bool getFieldTitleVisible(const QString& fieldUid) const override;
+    QString getSightingSummaryText(Sighting* sighting) const override;
+    QUrl getSightingSummaryIcon(Sighting* sighting) const override;
+    QUrl getSightingStatusIcon(Sighting* sighting, int flags) const override;
+
+    QVariantList buildMapDataLayers() const override;
 
     bool notify(const QVariantMap& message) override;
 
     bool finalizePackage(const QString& packageFilesPath) const override;
 
-signals:
-    void reportedByChanged();
+    Q_INVOKABLE QString banner() const;
 
 private:
     std::atomic_int m_runningUid;
-
-    QString reportedBy();
-    void setReportedBy(const QString& value);
 
     void parseReportedBy();
     void parseEventTypes();

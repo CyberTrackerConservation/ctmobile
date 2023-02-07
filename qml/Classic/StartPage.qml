@@ -20,7 +20,7 @@ Page {
         Component.onCompleted: {
             width = parent.width
             height = parent.height
-            connectToProject(form.project.uid)
+            connectToProject(form)
         }
 
         Connections {
@@ -116,6 +116,15 @@ Page {
         onShutdown: {
             form.popPage();
         }
+
+        onShareData: {
+            if (!form.hasData()) {
+                App.showToast(qsTr("No new data"));
+                return
+            }
+
+            confirmShare.open()
+        }
     }
 
     C.Skyplot {
@@ -126,5 +135,29 @@ Page {
         legendDepth: height / 16
         legendSpace: height / 16
         darkMode: true
+    }
+
+    C.ConfirmPopup {
+        id: confirmShare
+        text: qsTr("Share outstanding data?")
+        confirmText: qsTr("Yes, share it")
+        onConfirmed: {
+            busyCover.doWork = shareData
+            busyCover.start()
+        }
+    }
+
+    function shareData() {
+        let result = form.exportToCSV()
+        if (result.success) {
+            App.showToast(qsTr("Success"))
+            form.pushPage("qrc:/ExportsPage.qml", { projectUid: form.project.uid })
+
+        } else if (result.expected) {
+            App.showToast(result.errorString)
+
+        } else {
+            App.showError(result.errorString)
+        }
     }
 }

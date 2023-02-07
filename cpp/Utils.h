@@ -34,19 +34,19 @@ struct ApiResult
         return make(value["success"].toBool(), value["errorString"].toString(), value["expected"].toBool());
     }
 
-    static ApiResult make(bool success, const QString& errorString = QString(), bool expected = false)
+    static ApiResult make(bool success, const QString& errorString, bool expected)
     {
         return ApiResult { success, errorString, expected };
     }
 
     static ApiResult Success()
     {
-        return make(true);
+        return make(true, "", true);
     }
 
     static ApiResult Error(const QString& errorString)
     {
-        return make(false, errorString);
+        return make(false, errorString, false);
     }
 
     static ApiResult Expected(const QString& errorString)
@@ -69,6 +69,11 @@ struct ApiResult
         return ApiResult { false, errorString, true }.toMap();
     }
 };
+
+inline bool operator==(const ApiResult& lhs, const ApiResult& rhs)
+{
+    return lhs.success == rhs.success && lhs.expected == rhs.expected && lhs.errorString == rhs.errorString;
+}
 
 namespace Utils
 {
@@ -113,16 +118,6 @@ void writeQml(QTextStream& stream, int depth, const QString& name, const int val
 void writeQml(QTextStream& stream, int depth, const QString& name, const double value);
 void writeQml(QTextStream& stream, int depth, const QString& name, const QStringList& value);
 
-ApiResult esriAcquireToken(QNetworkAccessManager* networkAccessManager, const QString& username, const QString& password, QString* tokenOut);
-ApiResult esriAcquireOAuthToken(QNetworkAccessManager* networkAccessManager, const QString& username, const QString& password, QString* accessTokenOut, QString* refreshTokenOut);
-ApiResult esriRefreshOAuthToken(QNetworkAccessManager* networkAccessManager, const QString& refreshToken, QString* accessTokenOut, QString* refreshTokenOut);
-ApiResult esriFetchContent(QNetworkAccessManager* networkAccessManager, const QString& username, const QString& folderId, const QString& token, QVariantMap* contentOut);
-ApiResult esriFetchSurveys(QNetworkAccessManager* networkAccessManager, const QString& token, QVariantMap* contentOut);
-ApiResult esriFetchSurvey(QNetworkAccessManager* networkAccessManager, const QString& surveyId, const QString& token, QVariantMap* surveyOut);
-ApiResult esriFetchSurveyServiceUrl(QNetworkAccessManager* networkAccessManager, const QString& surveyId, const QString& token, QString* serviceUrlOut);
-ApiResult esriFetchPortal(QNetworkAccessManager* networkAccessManager, const QString& token, QVariantMap* portalOut);
-ApiResult esriFetchServiceMetadata(QNetworkAccessManager* networkAccessManager, const QString& serviceUrl, const QString& accessToken, QVariantMap* serviceInfoOut);
-
 void latLonToUTMXY(double lat, double lon, double* xOut, double* yOut, int* zoneOut, bool* northOut);
 void UTMXYToLatLon(double x, double y, int zone, bool north, double* latOut, double* lonOut);
 
@@ -144,7 +139,7 @@ QString urlToLocalFile(const QString& filePathUrl);
 bool mediaScan(const QString& filePath);
 
 void extractResource(const QString& resource, const QString& targetPath);
-void copyPath(const QString& src, const QString& dst);
+bool copyPath(const QString& src, const QString& dst, const QStringList& excludes = QStringList());
 QString removeTrailingSlash(const QString& string);
 
 QStringList searchStandardFolders(const QString& fileSpec);
@@ -157,29 +152,56 @@ QString redirectOnlineDriveUrl(const QString& url);
 bool pingUrl(QNetworkAccessManager* networkAccessManager, const QString& url);
 bool networkAvailable(QNetworkAccessManager* networkAccessManager);
 
+QString encodeFilePath(const QString& filePath);
+QString decodeFilePath(const QString& filePath);
+
 struct HttpResponse
 {
     bool success = false;
     int status = 0;
+    QString errorString = "Unknown error";
     QString reason;
-    QString etag;
+    QString etag = 0;
     QString location;
-    QString errorString;
-    QByteArray data;
+    QString url;
+    QByteArray data = {};
+
+    static HttpResponse Success()
+    {
+        return HttpResponse { true, 0, "" };
+    }
+
+    static HttpResponse Error(const QString& errorString)
+    {
+        return HttpResponse { false, 0, errorString };
+    }
+
+    static HttpResponse ErrorIf(bool condition, const QString& errorString)
+    {
+        return condition ? Error(errorString) : Success();
+    }
 
     QVariantMap toMap()
     {
-        auto result = QVariantMap();
-        result["success"] = success;
-        result["status"] = status;
-        result["reason"] = reason;
-        result["etag"] = etag;
-        result["errorString"] = errorString;
-        result["data"] = data;
-        return result;
+        return QVariantMap
+        {
+            { "success", success },
+            { "status",  status },
+            { "reason", reason },
+            { "etag", etag },
+            { "errorString", errorString },
+            { "data", data },
+        };
+    }
+
+    QVariantMap toApiResult()
+    {
+        return ApiResult::make(success, errorString, false).toMap();
     }
 };
 
+QByteArray makeMultiPartBoundary();
+HttpResponse httpGetHead(QNetworkAccessManager* networkAccessManager, const QString& url);
 HttpResponse httpGet(QNetworkAccessManager* networkAccessManager, const QString& url, const QString& username = QString(), const QString& password = QString());
 HttpResponse httpGetWithToken(QNetworkAccessManager* networkAccessManager, const QString& url, const QString& token, const QString& tokenType = "Bearer");
 HttpResponse httpPostJson(QNetworkAccessManager* networkAccessManager, const QString& url, const QVariantMap& data, const QString& token = QString(), const QString& tokenType = "Bearer", bool deflate = false);
@@ -188,12 +210,36 @@ HttpResponse httpPostQuery(QNetworkAccessManager* networkAccessManager, const QS
 HttpResponse httpPostQuery(QNetworkAccessManager* networkAccessManager, const QString& url, const QVariantMap& queryMap);
 HttpResponse httpPostMultiPart(QNetworkAccessManager* networkAccessManager, const QString& url, QHttpMultiPart* multiPart);
 
-bool httpAcquireOAuthToken(QNetworkAccessManager* networkAccessManager, const QString& server, const QString& clientId, const QString& username, const QString& password, QString* accessTokenOut, QString* refreshTokenOut);
-bool httpRefreshOAuthToken(QNetworkAccessManager* networkAccessManager, const QString& server, const QString& clientId, const QString& refreshToken, QString* accessTokenOut, QString* refreshTokenOut);
+HttpResponse httpAcquireOAuthToken(QNetworkAccessManager* networkAccessManager, const QString& server, const QString& clientId, const QString& username, const QString& password, QString* accessTokenOut, QString* refreshTokenOut);
+HttpResponse httpRefreshOAuthToken(QNetworkAccessManager* networkAccessManager, const QString& server, const QString& clientId, const QString& refreshToken, QString* accessTokenOut, QString* refreshTokenOut);
+
+HttpResponse esriDecodeResponse(const HttpResponse& response);
+HttpResponse esriAcquireToken(QNetworkAccessManager* networkAccessManager, const QString& username, const QString& password, QString* tokenOut);
+HttpResponse esriAcquireOAuthToken(QNetworkAccessManager* networkAccessManager, const QString& username, const QString& password, QString* accessTokenOut, QString* refreshTokenOut);
+HttpResponse esriFetchContent(QNetworkAccessManager* networkAccessManager, const QString& username, const QString& folderId, const QString& token, QVariantMap* contentOut);
+HttpResponse esriFetchSurveys(QNetworkAccessManager* networkAccessManager, const QString& token, QVariantMap* contentOut);
+HttpResponse esriFetchSurvey(QNetworkAccessManager* networkAccessManager, const QString& surveyId, const QString& token, QVariantMap* surveyOut);
+HttpResponse esriFetchSurveyServiceUrl(QNetworkAccessManager* networkAccessManager, const QString& surveyId, const QString& token, QString* serviceUrlOut);
+HttpResponse esriFetchPortal(QNetworkAccessManager* networkAccessManager, const QString& token, QVariantMap* portalOut);
+HttpResponse esriFetchServiceMetadata(QNetworkAccessManager* networkAccessManager, const QString& serviceUrl, const QString& accessToken, QVariantMap* serviceInfoOut);
+HttpResponse esriCreateService(QNetworkAccessManager* networkAccessManager, const QString& username, const QString& payload, const QString& token, QVariantMap* infoOut);
+HttpResponse esriAddToDefinition(QNetworkAccessManager* networkAccessManager, const QString& serviceUrl, const QString& payload, const QString& token, QVariantMap* infoOut);
+HttpResponse esriBuildService(QNetworkAccessManager* networkAccessManager, const QString& username, const QString& serviceDefinition, const QString& layersDefinition, const QString& token, QString* serviceUrlOut);
+HttpResponse esriInitLocationTracking(QNetworkAccessManager* networkAccessManager, const QString& serviceUrl, const QString& token, QVariantMap* esriLocationServiceStateOut);
+HttpResponse esriApplyEdits(QNetworkAccessManager* networkAccessManager, const QString& serviceUrl, const QString& operation, int layerIndex, const QVariantMap& feature, const QString& token, QVariantList* resultsOut);
+HttpResponse esriApplyEdits(QNetworkAccessManager* networkAccessManager, const QString& serviceUrl, const QString& operation, int layerIndex, const QVariantList& features, const QString& token, QVariantList* resultsOut);
+
+QVariantMap esriLayerFromGeoJson(const QString& filename, double symbolScale, const QColor& outlineColor, QVariantList* paths);
 
 QString addBracesToUuid(const QString& uuid);
 QString encodeJsonStringLiteral(const QString& value);
 
+bool renderMapCallout(const QString& iconFilePath, const QString& targetFilePath, const QColor& color, const QColor& outlineColor, int size);
+bool renderMapMarker(const QString& url, const QString& targetFilePath, const QColor& color, const QColor& outlineColor, int width, int height);
+
+QString renderSvgToPng(const QString& url, int width, int height);
+bool renderSvgToPngFile(const QString& url, const QString& targetFilePath, int width, int height);
+bool renderSquarePixmap(QPixmap* pixmap, const QString& filePath, int width, int height);
 QString renderPointsToSvg(const QVariantList& points, const QColor& color, int penWidth, bool fill = false);
 QString renderSketchToSvg(const QVariant& sketch, QColor penColor = Qt::black, int penWidth = 2);
 bool renderSketchToPng(const QVariant& sketch, const QString& filePath, QColor penColor = Qt::black, int penWidth = 2);
@@ -210,36 +256,31 @@ QString extractText(const QString& value, const QString& prefix, const QString& 
 QString lastPathComponent(const QString& path);
 bool compareLastPathComponents(const QString& path1, const QString& path2);
 
+QVariant getParam(const QVariantMap& params, const QString& key, const QVariant& defaultValue = QVariant());
+
 QString androidGetExternalFilesDir();
 void androidHideNavigationBar();
 
 QString classicRoot();
-
-struct LocationMap
-{
-    double x, y, z;
-    double d, a, s;
-    qint64 t;
-
-    QVariantMap toMap()
-    {
-        return QVariantMap
-        {
-            { "x", x }, { "y", y }, { "z", z },
-            { "d", d }, { "a", a }, { "s", s },
-            { "t", t },
-            { "spatialReference", QVariantMap {{ "wkid", 4326 }} }
-        };
-    }
-};
-
-LocationMap decodeLocation(const QGeoPositionInfo& positionInfo);
 
 QString encodeTimestamp(const QDateTime& dateTime);
 QDateTime decodeTimestamp(const QString& isoDateTime);
 qint64 decodeTimestampSecs(const QString& isoDateTime);
 qint64 decodeTimestampMSecs(const QString& isoDateTime);
 qint64 timestampDeltaMs(const QString& startISODateTime, const QString& stopISODateTime);
+
+QMimeDatabase* mimeDatabase();
+
+void enumFiles(const QString& folder, std::function<void(const QFileInfo& fileInfo)> callback);
+void enumFolders(const QString& folder, std::function<void(const QFileInfo& fileInfo)> callback);
+QString computeFileHash(const QString& filePath);
+QString computeFolderHash(const QString& folder);
+
+bool isMapLayerSuffix(const QString& suffix);
+bool isMapLayerVector(const QString& suffix);
+bool isMapLayerRaster(const QString& suffix);
+
+QStringList buildMapLayerList(const QString& folder);
 
 class Api : public QObject
 {
@@ -412,7 +453,7 @@ public:
     {
         auto token = QString();
 
-        auto result = Utils::esriAcquireToken(m_networkAccessManager, username, password, &token).toMap();
+        auto result = Utils::esriAcquireToken(m_networkAccessManager, username, password, &token).toApiResult();
         result["token"] = token;
 
         return result;
@@ -420,14 +461,11 @@ public:
 
     Q_INVOKABLE QVariantMap esriAcquireOAuthToken(const QString& username, const QString& password)
     {
-        auto errorString = QString();
         auto accessToken = QString();
         auto refreshToken = QString();
-
-        auto result = Utils::esriAcquireOAuthToken(m_networkAccessManager, username, password, &accessToken, &refreshToken).toMap();
+        auto result = Utils::esriAcquireOAuthToken(m_networkAccessManager, username, password, &accessToken, &refreshToken).toApiResult();
         result["accessToken"] = accessToken;
         result["refreshToken"] = refreshToken;
-        result["errorString"] = errorString;
 
         return result;
     }
@@ -435,11 +473,8 @@ public:
     Q_INVOKABLE QVariantMap esriFetchContent(const QString& username, const QString& folderId, const QString& token)
     {
         auto content = QVariantMap();
-        auto errorString = QString();
-
-        auto result = Utils::esriFetchContent(m_networkAccessManager, username, folderId, token, &content).toMap();
+        auto result = Utils::esriFetchContent(m_networkAccessManager, username, folderId, token, &content).toApiResult();
         result["content"] = content;
-        result["errorString"] = errorString;
 
         return result;
     }
@@ -447,11 +482,8 @@ public:
     Q_INVOKABLE QVariantMap esriFetchSurveys(const QString& token)
     {
         auto content = QVariantMap();
-        auto errorString = QString();
-
-        auto result = Utils::esriFetchSurveys(m_networkAccessManager, token, &content).toMap();
+        auto result = Utils::esriFetchSurveys(m_networkAccessManager, token, &content).toApiResult();
         result["content"] = content;
-        result["errorString"] = errorString;
 
         return result;
     }
@@ -510,6 +542,54 @@ public:
 
         return result;
     }
-};
 
+    Q_INVOKABLE QString decodeBase64(const QString& data)
+    {
+        return QByteArray::fromBase64(data.toUtf8(), QByteArray::Base64Encoding);
+    }
+
+    Q_INVOKABLE void writeTextToFile(const QString& filePath, const QString& data)
+    {
+        Utils::writeJsonToFile(filePath, data.toLatin1());
+    }
+
+    Q_INVOKABLE QStringList stringToList(const QString& string)
+    {
+        auto result = QStringList();
+        auto items = string.split(' ');
+        for (auto itemIt = items.constBegin(); itemIt != items.constEnd(); itemIt++)
+        {
+            auto s = itemIt->trimmed();
+            if (!s.isEmpty())
+            {
+                result.append(s);
+            }
+        }
+
+        return result;
+    }
+
+    Q_INVOKABLE bool isMimeTypeAnImage(const QString& mimeType)
+    {
+        return QImageReader::supportedMimeTypes().contains(mimeType.toLatin1());
+    }
+
+    Q_INVOKABLE QStringList buildFileDialogFilters(const QString& name, const QString& filter)
+    {
+        if (filter.isEmpty())
+        {
+            return QStringList { name + " (*.*)" };
+        }
+
+        auto dialogFilter = filter;
+        dialogFilter.replace(".", "*.");
+
+        return QStringList { name + "(" + dialogFilter + ")" };
+    }
+
+    Q_INVOKABLE QVariant getParam(const QVariantMap& params, const QString& key, const QVariant& defaultValue)
+    {
+        return Utils::getParam(params, key, defaultValue);
+    }
+};
 }

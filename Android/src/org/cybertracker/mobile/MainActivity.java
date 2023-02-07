@@ -17,6 +17,7 @@ import android.net.Uri;
 import android.net.ConnectivityManager;
 import android.os.PowerManager;
 import android.provider.Settings;
+import android.provider.Settings.Secure;
 import android.telephony.TelephonyManager;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.app.ShareCompat;
@@ -71,6 +72,19 @@ public class MainActivity extends QtActivity
     public String getFlavor()
     {
         return BuildConfig.FLAVOR;
+    }
+
+    public String getDeviceId()
+    {
+        String id = Settings.Secure.getString(getContentResolver(), Secure.ANDROID_ID);
+
+        if (!id.isEmpty())
+        {
+            // Pad to uuid length.
+            id = id + ("00000000000000000000000000000000".substring(id.length()));
+        }
+
+        return id;
     }
 
     public String getImei()
@@ -248,6 +262,9 @@ public class MainActivity extends QtActivity
         super.onCreate(savedInstanceState);
         Log.d(TAG,"OnCreate()");
         s_instance = this;
+
+        // TODO(justin): Remove for Qt6.
+        QtPositioning.setContext(this);
 
         // Pend launch intent for pickup when Qt is ready.
         Intent intent = getIntent();

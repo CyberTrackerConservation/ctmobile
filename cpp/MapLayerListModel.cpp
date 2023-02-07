@@ -3,15 +3,21 @@
 
 MapLayerListModel::MapLayerListModel(QObject* parent): VariantListModel(parent)
 {
+    m_addTypeHeaders = m_addBaseLayers = m_addOfflineLayers = m_addProjectLayers = m_addFormLayers = true;
+
     connect(App::instance()->settings(), &Settings::activeBasemapChanged, this, &MapLayerListModel::rebuild);
-    connect(App::instance()->settings(), &Settings::activeProjectLayersChanged, this, &MapLayerListModel::rebuild);
+    connect(App::instance()->offlineMapManager(), &OfflineMapManager::layersChanged, this, &MapLayerListModel::rebuild);
     connect(App::instance()->projectManager(), &ProjectManager::projectSettingChanged, this, [&](const QString& /*projectUid*/, const QString& name, const QVariant& /*value*/)
     {
-        if (name == "activeProjectLayers")
+        if (name == "activeMapLayers")
         {
             rebuild();
         }
     });
+
+    // Rebuild the data layers.
+    connect(App::instance(), &App::sightingSaved, this, &MapLayerListModel::rebuild);
+    connect(App::instance(), &App::sightingRemoved, this, &MapLayerListModel::rebuild);
 }
 
 MapLayerListModel::~MapLayerListModel()
@@ -28,7 +34,7 @@ void MapLayerListModel::componentComplete()
     rebuild();
 }
 
-int MapLayerListModel::layerIdToIndex(const QString& layerId) const
+int MapLayerListModel::indexOfLayer(const QString& layerId) const
 {
     for (auto i = 0; i < count(); i++)
     {
@@ -42,15 +48,23 @@ int MapLayerListModel::layerIdToIndex(const QString& layerId) const
     return -1;
 }
 
-void MapLayerListModel::setChecked(const QString& layerId, bool checked)
+QVariantMap MapLayerListModel::findExtent(const QString& layerId) const
 {
-    auto index = layerIdToIndex(layerId);
-    if (index != -1)
+    auto index = indexOfLayer(layerId);
+    if (index == -1)
     {
-        auto layer = get(index).toMap();
-        layer["checked"] = checked;
-        replace(index, layer);
+        return QVariantMap();
     }
+
+    auto layer = get(index).toMap();
+
+    return layer["extent"].toMap();
+}
+
+QVariantList MapLayerListModel::findPath(int pathId) const
+{
+    qFatalIf(pathId < 0 || pathId >= m_paths.count(), "Bad path index");
+    return m_paths[pathId].toList();
 }
 
 void MapLayerListModel::setBasemap(const QString& basemapId)
@@ -63,44 +77,44 @@ void MapLayerListModel::setBasemap(const QString& basemapId)
     m_blockRebuild = false;
 }
 
-void MapLayerListModel::setProjectLayerState(const QString& layerId, bool checked)
+void MapLayerListModel::setLayerState(const QVariantMap& layer, bool checked)
 {
-    auto app = App::instance();
-    auto layers = app->settings()->activeProjectLayers();
-    layers[layerId] = checked;
+    auto layerId = layer["id"].toString();
+    auto layerType = layer["type"].toString();
 
-    m_blockRebuild = true;
-    app->settings()->set_activeProjectLayers(layers);
-    m_blockRebuild = false;
-
-    setChecked(layerId, checked);
-}
-
-void MapLayerListModel::setDataLayerState(const QString& layerId, bool checked)
-{
-    auto form = Form::parentForm(this);
-    if (!form)
+    auto layerIndex = indexOfLayer(layerId);
+    if (layerIndex == -1)
     {
+        qDebug() << "Error: unknown layerid" << layer;
         return;
     }
 
-    auto project = form->project();
-
-    auto layers = project->activeProjectLayers();
-    layers[layerId] = checked;
-
     m_blockRebuild = true;
-    project->set_activeProjectLayers(layers);
+    auto removeBlock = qScopeGuard([&] { m_blockRebuild = false; });
+
+    if (layerType == "offline")
+    {
+        App::instance()->offlineMapManager()->setLayerActive(layerId, checked);
+    }
+    else if (layerType == "form")
+    {
+        auto form = Form::parentForm(this);
+        if (!form)
+        {
+            return;
+        }
+
+        auto project = form->project();
+        auto layers = project->activeMapLayers();
+        layers[layerId] = checked;
+        project->set_activeMapLayers(layers);
+    }
+
     m_blockRebuild = false;
 
-    setChecked(layerId, checked);
-}
-
-void MapLayerListModel::removeGotoLayer(const QString& layerId)
-{
-    App::instance()->gotoManager()->removeLayer(layerId);
-
-    rebuild();
+    auto item = get(layerIndex).toMap();
+    item["checked"] = checked;
+    replace(layerIndex, item);
 }
 
 void MapLayerListModel::rebuild()
@@ -118,57 +132,54 @@ void MapLayerListModel::rebuild()
     }
 
     // Pick up the default
-    auto app = App::instance();
     auto form = Form::parentForm(this);
     auto project = form ? form->project() : nullptr;
-    auto settings = app->settings();
-
-    auto activeBasemap = settings->activeBasemap();
-    auto activeProjectLayers = settings->activeProjectLayers();
-    auto activeFormLayers = project ? project->activeProjectLayers() : QVariantMap();
 
     // Build the layers.
     auto layerList = QVariantList();
-    layerList.append(buildFormLayers());
-    layerList.append(buildGotoLayers());
-    layerList.append(buildProjectLayers(app->projectManager(), project ? project->uid() : ""));
-    layerList.append(buildBaseLayers());
 
-    // Populate the "checked" and "divider" attributes.
-    auto lastLayerType = QString();
-    for (auto i = 0; i < layerList.count(); i++)
+    auto appendHeader = [&](const QString& title, bool config = false)
     {
-        auto layer = layerList[i].toMap();
-        auto layerId = layer.value("id").toString();
-        auto layerType = layer.value("type").toString();
-        auto layerChecked = false;
-
-        if (layerType == "basemap")
+        if (m_addTypeHeaders)
         {
-            layerChecked = layerId == activeBasemap;
+            layerList.append(QVariantMap {{ "type", "title" }, { "name", title }, { "config", config }, { "divider", true } });
         }
-        else if (layerType == "project" || layerType == "goto")
-        {
-            layerChecked = activeProjectLayers.value(layerId, true).toBool();
-        }
-        else if (layerType == "form")
-        {
-            layerChecked = activeFormLayers.value(layerId, true).toBool();
-        }
+    };
 
-        // Set the checked property.
-        layer["checked"] = layerChecked;
-        layerList[i] = layer;
-
-        // Add a divider.
-        if (!lastLayerType.isEmpty() && lastLayerType != layerType)
+    auto appendLayers = [&](const QVariantList& layers)
+    {
+        for (auto layerIt = layers.constBegin(); layerIt != layers.constEnd(); layerIt++)
         {
-            auto lastLayer = layerList[i - 1].toMap();
-            lastLayer["divider"] = true;
-            layerList[i - 1] = lastLayer;
+            layerList.append(*layerIt);
         }
+    };
 
-        lastLayerType = layerType;
+    // Form layers.
+    if (m_addFormLayers && project)
+    {
+        appendHeader(tr("Data layers"));
+        appendLayers(buildFormLayers(project));
+    }
+
+    // Offline layers.
+    if (m_addOfflineLayers)
+    {
+        auto layers = buildOfflineLayers();
+        auto kioskMode = App::instance()->kioskMode();
+
+        // Add config button, but not in kiosk mode.
+        if (!layers.isEmpty() || !kioskMode)
+        {
+            appendHeader(tr("Offline layers"), !kioskMode);
+            appendLayers(layers);
+        }
+    }
+
+    // Base map.
+    if (m_addBaseLayers)
+    {
+        appendHeader(tr("Base map"));
+        appendLayers(buildBaseLayers());
     }
 
     appendList(layerList);
@@ -176,173 +187,113 @@ void MapLayerListModel::rebuild()
     emit changed();
 }
 
-QVariantList MapLayerListModel::buildBaseLayers()
+QVariantList MapLayerListModel::buildBaseLayers() const
 {
-    auto layerList = QVariantList();
+    auto results = QVariantList();
 
-    auto addMap = [&](const QString& name, const QString& id) {
-        QVariantMap layer;
-        layer["name"] = name;
-        layer["type"] = "basemap";
-        layer["id"] = id;
-        layerList.append(layer);
+    auto activeBasemap = App::instance()->settings()->activeBasemap();
+    if (activeBasemap.isEmpty())
+    {
+        // Default.
+        activeBasemap = "BasemapNone";
+    }
+
+    auto addMap = [&](const QString& id, const QString& name)
+    {
+        results.append(QVariantMap
+        {
+            { "id", id },
+            { "name", name },
+            { "type", "basemap" },
+            { "checked", activeBasemap == id },
+        });
     };
 
-    addMap(tr("None"), "BasemapNone");
-    addMap("OpenStreetMap", "BasemapOpenStreetMap");
-    addMap("OpenStreetMap - " + tr("Humanitarian"), "BasemapHumanitarian");
-    addMap("OpenTopoMap", "BasemapOpenTopoMap");
-    addMap("National Geographic", "BasemapNatGeo");
-    addMap(tr("Topographic"), "BasemapTopographic");
-    addMap(tr("Streets"), "BasemapStreets");
-    //addMap(tr("Streets (vector)"), "BasemapStreetsVector");
-    //addMap(tr("Streets night (vector)"), "BasemapStreetsNightVector");
-    addMap(tr("Imagery"), "BasemapImagery");
-    addMap(tr("Dark gray canvas"), "BasemapDarkGrayCanvas");
-    //addMap(tr("Dark gray canvas (vector)"), "BasemapDarkGrayCanvasVector");
-    addMap(tr("Light gray canvas"), "BasemapLightGrayCanvas");
-    //addMap(tr("Light gray canvas (vector)"), "BasemapLightGrayCanvasVector");
-    //addMap(tr("Navigation (vector)"), "BasemapNavigationVector");
-    addMap(tr("Oceans"), "BasemapOceans");
+    addMap("BasemapNone", tr("None"));
+    addMap("BasemapOpenStreetMap", "OpenStreetMap");
+    addMap("BasemapHumanitarian", "OpenStreetMap - " + tr("Humanitarian"));
+    addMap("BasemapOpenTopoMap", "OpenTopoMap");
+    addMap("BasemapNatGeo", "National Geographic");
+    addMap("BasemapTopographic", tr("Topographic"));
+    addMap("BasemapStreets", tr("Streets"));
+    addMap("BasemapStreetsVector", tr("Streets (vector)"));
+    addMap("BasemapStreetsNightVector", tr("Streets night (vector)"));
+    addMap("BasemapImagery", tr("Imagery"));
+    addMap("BasemapDarkGrayCanvas", tr("Dark gray canvas"));
+    addMap("BasemapDarkGrayCanvasVector", tr("Dark gray canvas (vector)"));
+    addMap("BasemapLightGrayCanvas", tr("Light gray canvas"));
+    addMap("BasemapLightGrayCanvasVector", tr("Light gray canvas (vector)"));
+    addMap("BasemapNavigationVector", tr("Navigation (vector)"));
+    addMap("BasemapOceans", tr("Oceans"));
 
-    return layerList;
+    return results;
 }
 
-QVariantList MapLayerListModel::buildProjectLayers(ProjectManager* projectManager, const QString& filterProjectUid)
+QVariantList MapLayerListModel::buildOfflineLayers()
 {
-    auto layerList = QVariantList();
+    auto results = QVariantList();
+    auto offlineMapManager = App::instance()->offlineMapManager();
 
-    // Get the offline layers from all projects.
-    auto projects = projectManager->buildList();
-    for (auto it = projects.constBegin(); it != projects.constEnd(); it++)
+    m_paths.clear();
+
+    auto layerIds = offlineMapManager->getLayers();
+    for (auto layerIt = layerIds.constBegin(); layerIt != layerIds.constEnd(); layerIt++)
     {
-        auto project = it->get();
-        if (filterProjectUid != project->uid())
+        auto layerId = *layerIt;
+        auto filePath = offlineMapManager->getLayerFilePath(layerId);
+        auto fileInfo = QFileInfo(layerId);
+        auto format = fileInfo.suffix().toLower();
+        auto vector = Utils::isMapLayerVector(fileInfo.suffix());
+        auto timestamp = Utils::decodeTimestamp(offlineMapManager->getLayerTimestamp(layerId));
+
+        auto layer = QVariantMap
         {
-            continue;
+            { "id", layerId },
+            { "filePath", filePath },
+            { "name", offlineMapManager->getLayerName(layerId) },
+            { "format", format },
+            { "vector", vector },
+            { "type", "offline" },
+            { "timestamp", App::instance()->formatDateTime(timestamp) }
+        };
+
+        if (format == "geojson")
+        {
+            auto symbolScale = App::instance()->scaleByFontSize(1);
+            auto outlineColor = App::instance()->settings()->darkTheme() ? Qt::white : Qt::black;
+            layer.insert(Utils::esriLayerFromGeoJson(filePath, symbolScale, outlineColor, &m_paths));
+        }
+        else if (format == "wms")
+        {
+            auto wmsData = Utils::variantMapFromJsonFile(filePath);
+            layer.insert(wmsData);
         }
 
-        auto maps = project->maps();
-        if (maps.isEmpty())
-        {
-            continue;
-        }
+        layer["checked"] = offlineMapManager->getLayerActive(layerId);
+        layer["opacity"] = offlineMapManager->getLayerOpacity(layerId);
 
-        for (auto it = maps.constBegin(); it != maps.constEnd(); it++)
-        {
-            auto mapItem = it->toMap();
-            auto layer = QVariantMap({{"type", "project"}});
-
-            if (mapItem.contains("file"))
-            {
-                auto file = mapItem.value("file").toString();
-                auto path = projectManager->getFilePath(project->uid(), file);
-                if (!QFile::exists(path))
-                {
-                    qDebug() << "Map not found:" << file;
-                    continue;
-                }
-
-                layer["id"] = path;
-                layer["name"] = mapItem.value("name");
-                layer["format"] = QFileInfo(path).suffix();
-            }
-            else if (mapItem.contains("service"))
-            {
-                layer["id"] = mapItem["layers"].toString() + "_" + mapItem["service"].toString();
-                layer["url"] = mapItem["service"];
-                layer["format"] = mapItem.value("type");
-                layer["name"] = mapItem.value("layers");
-            }
-            else
-            {
-                qDebug() << "Unknown map layer type";
-                continue;
-            }
-
-            layerList.append(layer);
-        }
+        results.append(layer);
     }
 
-    // Get offline layers from the file system.
-    auto searchPaths = QStringList();
-    searchPaths.append(QStandardPaths::standardLocations(QStandardPaths::DownloadLocation));
-
-#if defined(Q_OS_ANDROID)
-    for (auto path: QStringList({ "/sdcard/Download", Utils::androidGetExternalFilesDir(), Utils::androidGetExternalFilesDir() + "/Download" }))
-    {
-        searchPaths << path;
-    }
-#elif defined(Q_OS_IOS)
-    searchPaths.append(QStandardPaths::standardLocations(QStandardPaths::DocumentsLocation));
-#endif
-
-    auto dirToBeScanned = QDir();
-    auto filterExtensions = QStringList({"*.tpk", "*.vtpk", "*.mbtiles", "*.shp", "*.kml", "*.tif", "*.tiff", "*.geotiff"});
-
-    for (auto it = searchPaths.constBegin(); it != searchPaths.constEnd(); it++)
-    {
-        dirToBeScanned.setPath(*it);
-        auto availableFilteredFiles = QFileInfoList(dirToBeScanned.entryInfoList(filterExtensions, QDir::Files));
-        for (auto it = availableFilteredFiles.constBegin(); it != availableFilteredFiles.constEnd(); it++)
-        {
-            auto fileInfo = *it;
-            auto layerId = fileInfo.filePath();
-
-            auto layer = QVariantMap();
-
-            auto name = fileInfo.baseName();
-            auto tpkIndex = name.indexOf("_tpk_");
-            if (tpkIndex > 1)
-            {
-                name = name.left(tpkIndex);
-            }
-
-            layer["name"] = name;
-            layer["type"] = "project";
-            layer["format"] = fileInfo.suffix();
-            layer["id"] = layerId;
-
-            layerList.append(layer);
-        }
-    }
-
-    return layerList;
+    return results;
 }
 
-QVariantList MapLayerListModel::buildGotoLayers()
-{
-    auto layerList = QVariantList();
-    auto app = App::instance();
-
-    // Get the offline layers from all projects.
-    auto gotoLayers = app->gotoManager()->getLayers();
-    for (auto it = gotoLayers.constBegin(); it != gotoLayers.constEnd(); it++)
-    {
-        auto gotoLayerMap = it->toMap();
-        auto layer = QVariantMap();
-        layer["name"] = gotoLayerMap.value("name");
-        layer["type"] = "goto";
-        layer["points"] = gotoLayerMap.value("points");
-        layer["polylines"] = gotoLayerMap.value("polylines");
-        layer["extent"] = gotoLayerMap.value("extent");
-
-        auto id = gotoLayerMap.value("id").toString();
-        layer["id"] = id;
-
-        layerList.append(layer);
-    }
-
-    return layerList;
-}
-
-QVariantList MapLayerListModel::buildFormLayers()
+QVariantList MapLayerListModel::buildFormLayers(Project* project) const
 {
     auto form = Form::parentForm(this);
-    if (!form)
+    qFatalIf(!form, "Project must have come from a form");
+
+    auto results = QVariantList();
+    auto layers = form->provider()->buildMapDataLayers();
+
+    for (auto it = layers.begin(); it != layers.end(); it++)
     {
-        return QVariantList();
+        auto layer = it->toMap();
+        layer["type"] = "form";
+        layer["checked"] = project->activeMapLayers().value(layer["id"].toString(), true).toBool();
+
+        results.append(layer);
     }
 
-    return form->provider()->buildMapDataLayers();
+    return results;
 }

@@ -51,25 +51,6 @@ static void logAnyErrors(const QString& action, const QString& server, QNetworkR
     }
 }
 
-bool refreshAccessToken(QNetworkAccessManager* networkAccessManager, Project* project)
-{
-    auto connectorParams = project->connectorParams();
-    auto server = connectorParams["server"].toString();
-
-    auto accessToken = project->accessToken();
-    auto refreshToken = project->refreshToken();
-
-    if (!Utils::httpRefreshOAuthToken(networkAccessManager, server, EARTH_RANGER_MOBILE_CLIENT_ID, refreshToken, &accessToken, &refreshToken))
-    {
-        return false;
-    }
-
-    project->set_accessToken(accessToken);
-    project->set_refreshToken(refreshToken);
-
-    return true;
-}
-
 // UploadSightingTask.
 class UploadSightingTask: public Task
 {
@@ -101,6 +82,7 @@ public:
             if (unpatchable)
             {
                 App::instance()->database()->setSightingFlags(projectUid, sightingUid, Sighting::DB_READONLY_FLAG);
+                emit App::instance()->sightingFlagsChanged(projectUid, sightingUid);
             }
         }
         else
@@ -181,7 +163,7 @@ public:
         auto output = sendData();
         if (output["status"] == 401)
         {
-            if (refreshAccessToken(&networkAccessManager, project.get()))
+            if (App::instance()->createConnectorPtr(project->connector())->refreshAccessToken(&networkAccessManager, project.get()))
             {
                 output = sendData();
             }
@@ -251,7 +233,7 @@ public:
         auto targetFilename = payload.value("targetFilename").toString();
 
         QHttpMultiPart multipart(QHttpMultiPart::FormDataType);
-        multipart.setBoundary("------WebKitFormBoundarytoHka8LUGjq34sBN");
+        multipart.setBoundary(Utils::makeMultiPartBoundary());
         auto part = QHttpPart();
         part.setHeader(QNetworkRequest::ContentDispositionHeader, "form-data; name=\"filecontent.file\"; filename=\"" + targetFilename + "\"");
         QFile file(sourceFilePath);
@@ -269,7 +251,15 @@ public:
         request.setRawHeader("Connection", "keep-alive");
         request.setRawHeader("Accept", "application/json, text/plain, */*");
         request.setRawHeader("Content-Type", "multipart/form-data; boundary=" + multipart.boundary());
-        request.setUrl(Utils::trimUrl(parentOutput["sightingUrl"].toString()) + "/files/");
+
+        auto sightingUrl = Utils::trimUrl(parentOutput["sightingUrl"].toString());
+        auto eventId = parentOutput["eventId"].toString();
+        if (sightingUrl.isEmpty() && !eventId.isEmpty())
+        {
+            sightingUrl = connectorParams.value("server").toString() + "/api/v1.0/activity/event/" + eventId;
+        }
+
+        request.setUrl(sightingUrl + "/files/");
 
         auto sendData = [&]() -> QVariantMap
         {
@@ -291,7 +281,8 @@ public:
             if (reply->error() == QNetworkReply::NoError)
             {
                 auto jsonObj = QJsonDocument::fromJson(reply->readAll()).object().value("data").toObject();
-                output["eventId"] = jsonObj.value("id").toString();
+                output["eventId"] = eventId;
+                output["photoId"] = jsonObj.value("id").toString();
                 auto sightingUrl = jsonObj.value("url").toString();
                 output["sightingUrl"] = parentOutput["sightingUrl"]; // Chain for next task.
                 output["unpatchable"] = isGoodButUnpatchableResult(sightingUrl, status);
@@ -306,7 +297,7 @@ public:
         auto output = sendData();
         if (output["status"] == 401)
         {
-            if (refreshAccessToken(&networkAccessManager, project.get()))
+            if (App::instance()->createConnectorPtr(project->connector())->refreshAccessToken(&networkAccessManager, project.get()))
             {
                 output = sendData();
             }
@@ -380,16 +371,23 @@ public:
 
             request.setRawHeader("Authorization", QString("Bearer " + accessToken).toUtf8());
 
+            auto sightingUrl = Utils::trimUrl(parentOutput["sightingUrl"].toString());
+            auto eventId = parentOutput["eventId"].toString();
+            if (sightingUrl.isEmpty() && !eventId.isEmpty())
+            {
+                sightingUrl = connectorParams.value("server").toString() + "/api/v1.0/activity/event/" + eventId;
+            }
+
             auto noteId = parentOutput.value("noteId").toString();
             if (noteId.isEmpty())
             {
-                request.setUrl(parentOutput["sightingUrl"].toString() + "/notes/");
+                request.setUrl(sightingUrl + "/notes/");
                 reply.reset(networkAccessManager.post(request, Utils::variantMapToJson(payload)));
             }
             else
             {
                 payload.insert("id", noteId);
-                request.setUrl(parentOutput["sightingUrl"].toString() + "/note/" + noteId + "/");
+                request.setUrl(sightingUrl + "/note/" + noteId + "/");
                 reply.reset(networkAccessManager.sendCustomRequest(request, "PATCH", Utils::variantMapToJson(payload)));
                 noteId.clear();
             }
@@ -419,7 +417,7 @@ public:
         auto output = sendData();
         if (output["status"] == 401)
         {
-            if (refreshAccessToken(&networkAccessManager, project.get()))
+            if (App::instance()->createConnectorPtr(project->connector())->refreshAccessToken(&networkAccessManager, project.get()))
             {
                 output = sendData();
             }
@@ -455,7 +453,7 @@ public:
     {
         auto sightingUid = output.value("sightingUid").toString();
         App::instance()->database()->setSightingFlags(projectUid, sightingUid, Sighting::DB_UPLOADED_FLAG);
-        emit App::instance()->sightingModified(projectUid, sightingUid);
+        emit App::instance()->sightingFlagsChanged(projectUid, sightingUid);
     }
 
     bool doWork() override
@@ -475,21 +473,6 @@ EarthRangerProvider::EarthRangerProvider(QObject *parent) : Provider(parent)
     update_name(EARTH_RANGER_PROVIDER);
 }
 
-QString EarthRangerProvider::reportedBy()
-{
-    return m_project->reportedBy();
-}
-
-void EarthRangerProvider::setReportedBy(const QString& value)
-{
-    auto lastValue = reportedBy();
-    if (value != lastValue)
-    {
-        m_project->set_reportedBy(value);
-        emit reportedByChanged();
-    }
-}
-
 void EarthRangerProvider::parseReportedBy()
 {
     auto schema = Utils::variantMapFromJsonFile(getProjectFilePath("schema.json"));
@@ -501,7 +484,6 @@ void EarthRangerProvider::parseReportedBy()
     m_elementManager->appendElement(nullptr, reportedByElement);
 
     auto targetUsername = m_project->username().toLower();
-    auto currReportedBy = reportedBy();
 
     auto reportedByEnum = props["reported_by"].toMap()["enum_ext"].toList();
     for (auto item: reportedByEnum)
@@ -516,10 +498,9 @@ void EarthRangerProvider::parseReportedBy()
         m_elementManager->appendElement(reportedByElement, element);
 
         // Pick up the default by username.
-        if (currReportedBy.isEmpty() && !targetUsername.isEmpty() && value.value("username").toString().toLower() == targetUsername)
+        if (!targetUsername.isEmpty() && value.value("username").toString().toLower() == targetUsername)
         {
-            currReportedBy = value["id"].toString();
-            setReportedBy(currReportedBy);
+            m_project->set_reportedByDefault(value["id"].toString());
         }
     }
 }
@@ -762,6 +743,7 @@ bool EarthRangerProvider::parseField(const QString& reportUid, RecordField* reco
     auto listItems = jsonField.value("enumNames");
     if (listItems.isObject())
     {
+        auto iconItems = jsonField.value("enumImages").toObject().toVariantMap();
         auto listArray = jsonField.value("enum").toVariant().toStringList();
         auto listObject = listItems.toObject();
 
@@ -773,6 +755,11 @@ bool EarthRangerProvider::parseField(const QString& reportUid, RecordField* reco
             auto name = listObject.value(listItem).toString();
             listElement->set_name(name);
             listElement->set_exportUid(listItem);
+
+            if (iconItems.contains(listItem))
+            {
+                listElement->set_icon("choice_icons/" + iconItems[listItem].toString() + ".svg");
+            }
 
             m_elementManager->appendElement(nameElement, listElement);
         }
@@ -937,7 +924,7 @@ void EarthRangerProvider::parseReport(Element* reportElement)
     m_fieldManager->completeUpdate();
 }
 
-bool EarthRangerProvider::connectToProject(bool newBuild)
+bool EarthRangerProvider::connectToProject(bool newBuild, bool* formChangedOut)
 {
     m_taskManager->registerTask(UploadSightingTask::getName(), UploadSightingTask::createInstance, UploadSightingTask::completed);
     m_taskManager->registerTask(UploadFileTask::getName(), UploadFileTask::createInstance, UploadFileTask::completed);
@@ -947,13 +934,16 @@ bool EarthRangerProvider::connectToProject(bool newBuild)
     auto form = qobject_cast<Form*>(parent());
     connect(form, &Form::sightingSaved, this, [=](const QString& sightingUid)
     {
+        form->setSightingFlag(sightingUid, Sighting::DB_UPLOADED_FLAG, false);
         sendSighting(form, sightingUid);
     });
 
     auto elementsFilePath = getProjectFilePath("Elements.qml");
     auto fieldsFilePath = getProjectFilePath("Fields.qml");
 
-    if (CACHE_ENABLE && !newBuild && QFile::exists(elementsFilePath) && QFile::exists(fieldsFilePath) && !reportedBy().isEmpty())
+    m_project->set_wizardAutosave(false);
+
+    if (CACHE_ENABLE && !newBuild && QFile::exists(elementsFilePath) && QFile::exists(fieldsFilePath) && !m_project->reportedByDefault().isEmpty())
     {
         return true;
     }
@@ -966,13 +956,16 @@ bool EarthRangerProvider::connectToProject(bool newBuild)
     // Commit the Elements and Fields.
     m_elementManager->saveToQmlFile(elementsFilePath);
     m_fieldManager->saveToQmlFile(fieldsFilePath);
+    *formChangedOut = true;
 
     return true;
 }
 
 QUrl EarthRangerProvider::getStartPage()
 {
-    return QUrl("qrc:/EarthRanger/StartPage.qml");
+    auto needReportedBy = m_project->reportedBy().isEmpty() && m_elementManager->getElement(ELEMENT_REPORTED_BY)->elementCount() > 0;
+
+    return QUrl(needReportedBy ? "qrc:/EarthRanger/ReportedByPage.qml" : "qrc:/EarthRanger/StartPage.qml");
 }
 
 void EarthRangerProvider::getElements(ElementManager* elementManager)
@@ -1092,14 +1085,14 @@ bool EarthRangerProvider::sendSighting(Form* form, const QString& sightingUid)
     event["time"] = sighting->createTime();
     event["location"] = location;
 
-    auto reportedByElement = m_elementManager->getElement(reportedBy());
+    auto reportedByElement = m_elementManager->getElement(m_project->reportedBy());
     if (reportedByElement)
     {
         event["reported_by"] = reportedByElement->getTagValue("identity").toMap();
     }
     else
     {
-        qDebug() << "warning: sighting reported_by not found (" << reportedBy() << ")";
+        qDebug() << "warning: sighting reported_by not found (" << m_project->reportedBy() << ")";
     }
 
     auto inputJson = QJsonObject();
@@ -1182,7 +1175,31 @@ bool EarthRangerProvider::sendSighting(Form* form, const QString& sightingUid)
     // Create the completion task.
     m_taskManager->addTask(projectUid, Task::makeUid(UploadCompleteTask::getName(), sightingUid), lastTaskUid, QVariantMap { { "sightingUid", sightingUid } });
 
+    // Show toast if not logged in.
+    if (!m_project->loggedIn())
+    {
+        emit App::instance()->showToast(tr("Login needed"));
+    }
+
     return true;
+}
+
+QVariantList EarthRangerProvider::buildMapDataLayers() const
+{
+    Utils::enforceFolderQuota(App::instance()->mapMarkerCachePath(), 0);
+
+    auto getSightingSymbol = [&](Sighting* sighting) -> QVariantMap
+    {
+        auto reportIconFilePath = getSightingSummaryIcon(sighting).toLocalFile();
+        if (!reportIconFilePath.isEmpty())
+        {
+            return App::instance()->createMapCalloutSymbol(reportIconFilePath);
+        }
+
+        return App::instance()->createMapPointSymbol(":/icons/mark-circle.svg", Qt::darkRed);
+    };
+
+    return QVariantList { qobject_cast<Form*>(parent())->buildSightingMapLayer(tr("Sighting"), getSightingSymbol) };
 }
 
 bool EarthRangerProvider::notify(const QVariantMap& message)
@@ -1204,7 +1221,7 @@ bool EarthRangerProvider::finalizePackage(const QString& packageFilesPath) const
     return true;
 }
 
-QString EarthRangerProvider::getFieldName(const QString& fieldUid)
+QString EarthRangerProvider::getFieldName(const QString& fieldUid) const
 {
     static auto map = QVariantMap
     {
@@ -1216,8 +1233,55 @@ QString EarthRangerProvider::getFieldName(const QString& fieldUid)
     return map.value(fieldUid).toString();
 }
 
-bool EarthRangerProvider::getFieldTitleVisible(const QString& fieldUid)
+bool EarthRangerProvider::getFieldTitleVisible(const QString& fieldUid) const
 {
     return fieldUid != FIELD_PHOTOS;
 }
 
+QString EarthRangerProvider::getSightingSummaryText(Sighting* sighting) const
+{
+    auto reportElementUid = sighting->getRootFieldValue("reportUid").toString();
+    if (reportElementUid.isEmpty())
+    {
+        return QString();
+    }
+
+    return qobject_cast<Form*>(parent())->getElementName(reportElementUid);
+}
+
+QUrl EarthRangerProvider::getSightingSummaryIcon(Sighting* sighting) const
+{
+    auto reportElementUid = sighting->getRootFieldValue("reportUid").toString();
+    if (reportElementUid.isEmpty())
+    {
+        return QUrl();
+    }
+
+    return qobject_cast<Form*>(parent())->getElementIcon(reportElementUid);
+}
+
+QUrl EarthRangerProvider::getSightingStatusIcon(Sighting* /*sighting*/, int flags) const
+{
+    if (flags & Sighting::DB_UPLOADED_FLAG)
+    {
+        return QUrl("qrc:/icons/cloud_done.svg");
+    }
+
+    return QUrl("qrc:/icons/cloud_queue.svg");
+}
+
+QString EarthRangerProvider::banner() const
+{
+    auto result = QString();
+    auto form = qobject_cast<Form*>(parent());
+    auto createTime = form->sighting()->createTime();
+    if (!createTime.isEmpty())
+    {
+        auto timeManager = App::instance()->timeManager();
+        auto dt = timeManager->getDateText(createTime);
+        auto tt = timeManager->getTimeText(createTime);
+        result = tr("Editing report saved on") + " " + dt + " " + tt;
+    }
+
+    return result;
+}

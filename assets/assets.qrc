@@ -6,9 +6,9 @@
         <file>app/qtlogo.svg</file>
         <file>app/gabon.nmea</file>
         <file>app/simulateGPS.nmea</file>
-        <file>app/target.png</file>
         <file>app/target.svg</file>
         <file>app/targetDark.svg</file>
+        <file>app/trackTemplate.kml</file>
         <file>CitSci/logo.svg</file>
         <file>Classic/logo.svg</file>
         <file>Classic/World.ecw</file>
@@ -18,11 +18,20 @@
         <file>Classic/PhotoNotes.png</file>
         <file>Classic/Simple.CTS</file>
         <file>Classic/Simple.png</file>
+        <file>CTO/index.svg</file>
+        <file>CTO/logo.svg</file>
+        <file>CTO/map.svg</file>
+        <file>CTO/save.svg</file>
+        <file>CTO/back.svg</file>
+        <file>CTO/next.svg</file>
         <file>ConSoSci/logo.svg</file>
         <file>EarthRanger/logo.svg</file>
         <file>EarthRanger/logoDark.svg</file>
         <file>Esri/logo.svg</file>
         <file>Esri/Survey123.svg</file>
+        <file>Esri/CreateService.json</file>
+        <file>Esri/CreateLayers.json</file>
+        <file>Esri/LocationTrackingXlsForm.png</file>
         <file>KoBo/logo.svg</file>
         <file>ODK/logo.svg</file>
         <file>SMART/logo.svg</file>
@@ -289,12 +298,14 @@
         <file>icons/access_point_network.svg</file>
         <file>icons/account.svg</file>
         <file>icons/account_circle_outline.svg</file>
+        <file>icons/account_edit.svg</file>
         <file>icons/account_switch.svg</file>
         <file>icons/add.svg</file>
         <file>icons/alert_circle_outline.svg</file>
         <file>icons/alert_outline.svg</file>
         <file>icons/archive_arrow_down_outline.svg</file>
         <file>icons/archive_arrow_up_outline.svg</file>
+        <file>icons/arrange_send_backward.svg</file>
         <file>icons/arrow_back.svg</file>
         <file>icons/arrow_right.svg</file>
         <file>icons/arrow_drop_down.svg</file>
@@ -336,6 +347,7 @@
         <file>icons/camera.svg</file>
         <file>icons/camera_alt.svg</file>
         <file>icons/camera_front.svg</file>
+        <file>icons/camera_plus_outline.svg</file>
         <file>icons/camera_rear.svg</file>
         <file>icons/cancel.svg</file>
         <file>icons/cellphone.svg</file>
@@ -351,6 +363,7 @@
         <file>icons/check_bold.svg</file>
         <file>icons/check_circle.svg</file>
         <file>icons/check_old.svg</file>
+        <file>icons/checkerboard.svg</file>
         <file>icons/chevron_double_right.svg</file>
         <file>icons/chevron_down.svg</file>
         <file>icons/chevron_left.svg</file>
@@ -366,7 +379,9 @@
         <file>icons/cloud_off_outline.svg</file>
         <file>icons/cloud_queue.svg</file>
         <file>icons/cloud_sync_outline.svg</file>
+        <file>icons/cloud_upload.svg</file>
         <file>icons/cloud_upload_outline.svg</file>
+        <file>icons/cogs.svg</file>
         <file>icons/compass_outline.svg</file>
         <file>icons/data_list.svg</file>
         <file>icons/database.svg</file>
@@ -383,9 +398,14 @@
         <file>icons/edit_off.svg</file>
         <file>icons/explore.svg</file>
         <file>icons/export.svg</file>
+        <file>icons/export_left.svg</file>
         <file>icons/fast_forward.svg</file>
         <file>icons/fast_rewind.svg</file>
+        <file>icons/file.svg</file>
         <file>icons/file_outline.svg</file>
+        <file>icons/file_multiple.svg</file>
+        <file>icons/file_multiple_outline.svg</file>
+        <file>icons/file_plus_outline.svg</file>
         <file>icons/finance.svg</file>
         <file>icons/first_page.svg</file>
         <file>icons/flash_auto.svg</file>
@@ -393,6 +413,7 @@
         <file>icons/flash_on.svg</file>
         <file>icons/folder.svg</file>
         <file>icons/folder_outline.svg</file>
+        <file>icons/folder_open_outline.svg</file>
         <file>icons/gps_antenna.svg</file>
         <file>icons/gps_fixed.svg</file>
         <file>icons/gps_not_fixed.svg</file>
@@ -418,8 +439,6 @@
         <file>icons/map.svg</file>
         <file>icons/map_empty.svg</file>
         <file>icons/map_fill.svg</file>
-        <file>icons/map_marker.png</file>
-        <file>icons/map_marker2.png</file>
         <file>icons/map_marker.svg</file>
         <file>icons/map_marker_account_outline.svg</file>
         <file>icons/map_marker_alert_outline.svg</file>
@@ -428,7 +447,15 @@
         <file>icons/map_marker_plus_outline.svg</file>
         <file>icons/map_marker_remove_outline.svg</file>
         <file>icons/map_outline.svg</file>
+        <file>icons/map_plus.svg</file>
         <file>icons/map_search_outline.svg</file>
+        <file>icons/mark-blank.svg</file>
+        <file>icons/mark-change.svg</file>
+        <file>icons/mark-circle.svg</file>
+        <file>icons/mark-pause.svg</file>
+        <file>icons/mark-play.svg</file>
+        <file>icons/mark-resume.svg</file>
+        <file>icons/mark-stop.svg</file>
         <file>icons/menu.svg</file>
         <file>icons/menu_left.svg</file>
         <file>icons/menu_right.svg</file>
@@ -450,7 +477,6 @@
         <file>icons/path_outline.svg</file>
         <file>icons/pause.svg</file>
         <file>icons/pencil_outline.svg</file>
-        <file>icons/person.svg</file>
         <file>icons/play.svg</file>
         <file>icons/play_outline.svg</file>
         <file>icons/plus.svg</file>
@@ -469,6 +495,7 @@
         <file>icons/save.svg</file>
         <file>icons/settings.svg</file>
         <file>icons/settings_outline.svg</file>
+        <file>icons/shape_polygon_plus.svg</file>
         <file>icons/share.svg</file>
         <file>icons/share_outline.svg</file>
         <file>icons/share_variant.svg</file>
@@ -477,6 +504,7 @@
         <file>icons/shoe_print.svg</file>
         <file>icons/skip_next.svg</file>
         <file>icons/skip_previous.svg</file>
+        <file>icons/step_forward.svg</file>
         <file>icons/stop.svg</file>
         <file>icons/sync.svg</file>
         <file>icons/theme_light_dark.svg</file>
@@ -489,6 +517,8 @@
         <file>icons/unarchive.svg</file>
         <file>icons/upload_multiple.svg</file>
         <file>icons/usb.svg</file>
+        <file>icons/vector_polyline.svg</file>
+        <file>icons/vector_polyline_plus.svg</file>
         <file>icons/videocam.svg</file>
         <file>icons/view_grid_plus_outline.svg</file>
         <file>icons/view_grid_plus.svg</file>
@@ -498,5 +528,10 @@
         <file>icons/wb_iridescent.svg</file>
         <file>icons/wb_sunny.svg</file>
         <file>icons/web.svg</file>
+        <file>icons/wifi_strength_off_outline.svg</file>
+        <file>map/acquiringSymbol.svg</file>
+        <file>map/courseSymbol.svg</file>
+        <file>map/defaultSymbol.svg</file>
+        <file>map/headingSymbol.svg</file>
     </qresource>
 </RCC>

@@ -22,21 +22,12 @@ ContentPage {
         y: 8
         spacing: 0
 
-        Image {
+        SquareIcon {
             Layout.alignment: Qt.AlignHCenter
-            sourceSize.width: parent.width * 0.2
-            sourceSize.height: parent.width * 0.2
-            fillMode: Image.PreserveAspectFit
-            width: page.width * 0.2
-            height: page.width * 0.2
+            size: parent.width * 0.2
             source: "qrc:/icons/account.svg"
             opacity: 0.5
-            layer {
-                enabled: true
-                effect: ColorOverlay {
-                    color: Material.foreground
-                }
-            }
+            recolor: true
         }
 
         TextField {

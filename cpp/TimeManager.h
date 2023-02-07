@@ -15,7 +15,7 @@ public:
     explicit TimeManager(QObject* parent = nullptr);
     ~TimeManager();
 
-    void computeTimeError(int methods, double x, double y, double s, qint64 t);
+    void computeTimeError(double x, double y, double s, qint64 t);
 
     Q_INVOKABLE void reset();
 
@@ -25,8 +25,8 @@ public:
     Q_INVOKABLE QString currentDateTimeISO() const;
     Q_INVOKABLE QString formatDateTime(qint64 mSecsSinceEpoch) const;
     Q_INVOKABLE QString formatDateTime(QDateTime dateTime) const;
-    Q_INVOKABLE QString getDateText(const QString& isoDateTime) const;
-    Q_INVOKABLE QString getTimeText(const QString& isoDateTime) const;
+    Q_INVOKABLE QString getDateText(const QString& isoDateTime, const QString& emptyValue = QString()) const;
+    Q_INVOKABLE QString getTimeText(const QString& isoDateTime, const QString& emptyValue = QString()) const;
 
 private:
     int m_correctCounter = 0;

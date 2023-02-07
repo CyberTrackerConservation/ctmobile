@@ -167,6 +167,40 @@ void TaskManager::addTask(const QString& projectUid, const QString& uid, const Q
     resumePausedTasks(projectUid);
 }
 
+void TaskManager::addSerialTask(const QString& projectUid, const QString& uid, const QVariantMap& input)
+{
+    auto lastTaskUid = QString();
+    m_database->getLastTask(projectUid, &lastTaskUid);
+    addTask(projectUid, uid, lastTaskUid, input);
+}
+
+void TaskManager::addSingleTask(const QString& projectUid, const QString& uid, const QVariantMap& input)
+{
+    addTask(projectUid, uid, "", input);
+}
+
+void TaskManager::resetTask(const QString& projectUid, const QString& uid, const QVariantMap& input)
+{
+    QStringList uids;
+    getTasks(projectUid, uid, -1, &uids);
+
+    if (uids.isEmpty())
+    {
+        addSingleTask(projectUid, uid, input);
+        return;
+    }
+
+    if (getRunning(projectUid, uid))
+    {
+        qDebug() << "Cannot reset task, already running";
+        return;
+    }
+
+    m_database->setTaskProperty(projectUid, uid, "input", input);
+    m_database->setTaskProperty(projectUid, uid, "state", Task::State::Paused);
+    resumePausedTasks(projectUid);
+}
+
 void TaskManager::getTasks(const QString& projectUid, const QString& uidStartsWith, int stateMask, QStringList* outFoundUids) const
 {
     QStringList uids, parentUids;

@@ -4,6 +4,8 @@
 
 Skyplot::Skyplot(QQuickItem *parent): QQuickPaintedItem(parent)
 {
+    m_active = false;
+
     m_satelliteManager = App::instance()->satelliteManager();
     m_compass = App::instance()->compass();
 

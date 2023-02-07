@@ -24,30 +24,48 @@ class Project: public QObject
     QML_WRITABLE_AUTO_PROPERTY (bool, kioskMode)
     QML_WRITABLE_AUTO_PROPERTY (QString, kioskModePin)
     QML_WRITABLE_AUTO_PROPERTY (QStringList, androidPermissions)
+    QML_WRITABLE_AUTO_PROPERTY (bool, androidBackgroundLocation)
     QML_WRITABLE_AUTO_PROPERTY (bool, androidDisableBatterySaver)
     QML_WRITABLE_AUTO_PROPERTY (bool, updateOnLaunch)
     QML_WRITABLE_AUTO_PROPERTY (QString, startPage)
     QML_WRITABLE_AUTO_PROPERTY (QVariantMap, telemetry)
     QML_WRITABLE_AUTO_PROPERTY (bool, defaultWizardMode)
+    QML_WRITABLE_AUTO_PROPERTY (bool, defaultImmersive)
+    QML_WRITABLE_AUTO_PROPERTY (int, defaultSendLocationInterval)
+    QML_WRITABLE_AUTO_PROPERTY (QString, esriLocationServiceUrl)
+    QML_WRITABLE_AUTO_PROPERTY (int, defaultSubmitInterval)
+    QML_WRITABLE_AUTO_PROPERTY (QString, offlineMapUrl)
 
     QML_SETTING (QString, lastBuildString, QString())
     QML_SETTING (QString, lastUpdate, QString())
+    QML_SETTING (QString, lastSubmit, QString())
+    QML_SETTING (qint64, formLastModified, 0)
     QML_SETTING (QVariantList, languages, QVariantList())
     QML_SETTING (int, languageIndex, -1)
-    QML_SETTING (QVariantMap, activeProjectLayers, QVariantMap()) // active map layers
+    QML_SETTING (QVariantMap, activeMapLayers, QVariantMap())
     QML_SETTING (bool, wizardMode, m_defaultWizardMode)
+    QML_SETTING (bool, wizardAutosave, true)
+    QML_SETTING (bool, immersive, m_defaultImmersive)
     QML_SETTING (QVariantMap, providerState, QVariantMap())
 
     QML_SETTING (QString, reportedBy, QString())
+    QML_SETTING (QString, reportedByDefault, QString())
 
     QML_SETTING (QString, username, QString())
     QML_SETTING (QString, accessToken, QString())
     QML_SETTING (QString, refreshToken, QString())
 
+    QML_SETTING (int, sendLocationInterval, m_defaultSendLocationInterval)
+    QML_SETTING (QVariantMap, esriLocationServiceState, QVariantMap())
+
+    QML_SETTING (int, submitInterval, m_defaultSubmitInterval)
+
     QML_SETTING (QString, webUpdateUrl, QString())
     QML_SETTING (QVariantMap, webUpdateMetadata, QVariantMap())
 
     QML_SETTING (bool, hasUpdate, false)
+
+    Q_PROPERTY (QUrl displayIcon READ displayIcon CONSTANT)
 
     Q_PROPERTY (QUrl loginIcon READ loginIcon CONSTANT)
     Q_PROPERTY (bool loggedIn READ loggedIn NOTIFY loggedInChanged)
@@ -64,6 +82,9 @@ public:
 
     QVariantMap save(bool keepAuth) const;
     void load(const QVariantMap& data, bool loadSettings);
+    void reload();
+
+    QUrl displayIcon() const;
 
     QUrl loginIcon() const;
     bool loggedIn();
@@ -114,6 +135,7 @@ public:
     Q_INVOKABLE QString getUpdateFolder(const QString& projectUid) const;
 
     Q_INVOKABLE QVariantMap bootstrap(const QString& connectorName, const QVariantMap& params, bool showToasts = true);
+    Q_INVOKABLE bool canLogin(const QString& projectUid) const;
     Q_INVOKABLE bool canUpdate(const QString& projectUid) const;
     Q_INVOKABLE QVariantMap update(const QString& projectUid, bool showToasts = true);
     Q_INVOKABLE QVariantMap updateAll(const QString& connectorName = "", const QString& projectUid = "");
@@ -122,7 +144,7 @@ public:
     Q_INVOKABLE bool init(const QString& projectUid, const QString& provider, const QVariantMap& providerParams, const QString& connector, const QVariantMap& connectorParams);
     Q_INVOKABLE bool exists(const QString& projectUid) const;
 
-    Q_INVOKABLE void reset(const QString& projectUid);
+    Q_INVOKABLE void reset(const QString& projectUid, bool keepData = false);
     Q_INVOKABLE void remove(const QString& projectUid);
 
     Q_INVOKABLE int count() const;
@@ -136,7 +158,9 @@ public:
 
     Q_INVOKABLE bool canSharePackage(const QString& projectUid) const;
     Q_INVOKABLE QString createPackage(const QString& projectUid, bool includeProject = true, bool keepAuth = true, bool includeData = true) const;
-    Q_INVOKABLE QVariantMap installPackage(const QString& filePath);
+
+    bool canInstallPackage(const QString& filePath) const;
+    ApiResult installPackage(const QString& filePath);
 
     Q_INVOKABLE QVariantMap webInstall(const QString& webUpdateUrl);
 
@@ -146,6 +170,7 @@ signals:
     void projectLoggedInChanged(const QString& projectUid, bool loggedIn);
     void projectTriggerLogin(const QString& projectUid);
     void projectUpdateScanComplete();
+    void projectUpdateComplete(const QString& projectUid, const QVariantMap& result);
 
 private:
     Database* m_database;

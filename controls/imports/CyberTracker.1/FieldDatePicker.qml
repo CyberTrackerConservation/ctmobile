@@ -14,10 +14,9 @@ Pane {
     property date minDate: new Date(1920, 0, 1)
     property date maxDate: new Date(2100, 11, 31)
     property int fontPixelSize: App.settings.font16
-    property string value: App.timeManager.currentDateTimeISO()
     signal valueUpdated(var value)
 
-    background: Rectangle { color: Style.colorContent }
+    Material.background: colorContent || Style.colorContent
     contentWidth: row.implicitWidth
     contentHeight: row.implicitHeight
     padding: 10
@@ -137,6 +136,7 @@ Pane {
     QtObject {
         id: internal
         property bool mutex: true
+        property string initialValue: App.timeManager.currentDateTimeISO()
     }
 
     Component.onCompleted: {
@@ -144,7 +144,7 @@ Pane {
             return
         }
 
-        value = fieldBinding.getValue(value)
+        let value = fieldBinding.getValue(internal.initialValue)
         fieldBinding.setValue(value)
         if (fieldBinding.field.minDate !== "") {
             minDate = fieldBinding.field.minDate
@@ -235,7 +235,7 @@ Pane {
             return
         }
 
-        value = fieldBinding.value
+        let value = fieldBinding.getValue(internal.initialValue)
 
         let year = yearTumbler.currentIndex + minDate.getFullYear();
         let month = monthTumbler.currentIndex + 1

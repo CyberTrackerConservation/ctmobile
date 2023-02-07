@@ -1,0 +1,37 @@
+{
+	"name": "{name}",
+	"description": "{description}",
+	"serviceDescription": "Location Tracking",
+	"supportsAppend": true,
+	"supportsApplyEditsWithGlobalIds": true,
+        "syncEnabled": true,
+        "capabilities" : "Create,Delete,Query,Update,Editing,Append,Sync",
+	"editorTrackingInfo": {
+        "enableEditorTracking": true
+    },
+	"spatialReference": {
+		"latestWkid": 4326,
+		"wkid": 4326
+	},
+	"units": "esriDecimalDegrees",
+	"initialExtent": {
+		"spatialReference": {
+			"latestWkid": 4326,
+			"wkid": 4326
+		},
+		"xmax": 180,
+		"xmin": -180,
+		"ymax": 90,
+		"ymin": -90
+	},
+	"fullExtent": {
+		"spatialReference": {
+			"latestWkid": 4326,
+			"wkid": 4326
+		},
+		"xmax": 180,
+		"xmin": -180,
+		"ymax": 90,
+		"ymin": -90
+	}
+}

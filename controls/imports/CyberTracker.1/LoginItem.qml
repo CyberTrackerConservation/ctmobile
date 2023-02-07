@@ -66,15 +66,10 @@ Item {
             visible: iconSource !== ""
         }
 
-        Image {
+        SquareIcon {
             id: iconImage
             Layout.alignment: Qt.AlignHCenter
-            sourceSize.width: root.width * 0.2
-            sourceSize.height: root.width * 0.2
-            fillMode: Image.PreserveAspectFit
-            width: root.width * 0.2
-            height: root.width * 0.2
-            visible: iconSource !== ""
+            size: root.width * 0.2
         }
 
         Item {
@@ -103,6 +98,12 @@ Item {
                 if (root.servers !== undefined && currentIndex === -1) {
                     currentIndex = 0
                 }
+            }
+
+            delegate: ItemDelegate {
+                width: serverSelect.width
+                font.pixelSize: App.settings.font14
+                text: model.name
             }
         }
 

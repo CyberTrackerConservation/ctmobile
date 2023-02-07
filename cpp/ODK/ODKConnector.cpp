@@ -44,6 +44,11 @@ QVariantMap ODKConnector::getShareData(Project* project, bool auth) const
     return result;
 }
 
+bool ODKConnector::canLogin(Project* /*project*/) const
+{
+    return true;
+}
+
 bool ODKConnector::loggedIn(Project* project) const
 {
     return !project->accessToken().isEmpty();
@@ -164,7 +169,7 @@ ApiResult ODKConnector::hasUpdate(QNetworkAccessManager* networkAccessManager, P
     return UpdateAvailable();
 }
 
-bool ODKConnector::canUpdate(Project* project)
+bool ODKConnector::canUpdate(Project* project) const
 {
     return loggedIn(project);
 }
@@ -174,12 +179,15 @@ ApiResult ODKConnector::update(Project* project)
     auto projectUid = project->uid();
 
     // Skip updates if there are any unsent sightings.
-    auto sightingUids = QStringList();
-    m_database->getSightings(projectUid, "", Sighting::DB_SIGHTING_FLAG, &sightingUids);
-    if (sightingUids.count() > 0)
-    {
-        return Failure(tr("Unsent data"));
-    }
+//    auto sightingUids = QStringList();
+//    m_database->getSightings(projectUid, "", Sighting::DB_SIGHTING_FLAG, &sightingUids);
+//    if (sightingUids.count() > 0)
+//    {
+//        return Failure(tr("Unsent data"));
+//    }
+
+    // Reset the project.
+    m_projectManager->reset(projectUid, true);
 
     // Retrieve a new form.
     auto connectorParams = project->connectorParams();
@@ -237,6 +245,12 @@ ApiResult ODKConnector::update(Project* project)
         return Failure(tr("Download failed"));
     }
 
+    auto formSettings = QVariantMap();
+    if (!XlsFormParser::parseSettings(updateFolder + "/form.xlsx", &formSettings))
+    {
+        return Failure(tr("Failed to read form settings sheet"));
+    }
+
     // Download the media.
     response = Utils::httpGetWithToken(networkAccessManager, server + "/v1/projects/" + projectId + "/forms/" + formId + "/versions/" + versionName + "/attachments", token, tokenType);
     if (!response.success)
@@ -281,6 +295,7 @@ ApiResult ODKConnector::update(Project* project)
     updateProject.set_title(formMap["name"].toString());
     updateProject.set_subtitle(QUrl(server).host());
     updateProject.set_icon("qrc:/ODK/logo.svg");
+    updateProject.set_colors(QVariantMap {{ "primary", "#3E77B4" }, { "accent", "#904A22" }});
     updateProject.set_defaultWizardMode(true);
 
     auto androidPermissions = QStringList();
@@ -290,15 +305,21 @@ ApiResult ODKConnector::update(Project* project)
     androidPermissions << "ACCESS_COARSE_LOCATION";
     updateProject.set_androidPermissions(androidPermissions);
 
-    auto colors = QVariantMap();
-    colors["primary"] = "#3E77B4";
-    colors["accent"] = "#904A22";
-    updateProject.set_colors(colors);
+    XlsFormParser::configureProject(&updateProject, formSettings);
 
     updateProject.saveToQmlFile(updateFolder + "/Project.qml");
 
     // Reset the project.
-    m_projectManager->reset(projectUid);
+    m_projectManager->reset(projectUid, true);
 
     return Success();
+}
+
+void ODKConnector::reset(Project* project)
+{
+    auto path = m_projectManager->getFilePath(project->uid());
+
+    QFile::remove(path + "/Elements.qml");
+    QFile::remove(path + "/Fields.qml");
+    QFile::remove(path + "/Settings.json");
 }

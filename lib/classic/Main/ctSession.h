@@ -424,7 +424,7 @@ public:
 
     CHAR *BuildFileName(CHAR *pPrefix = NULL);
 
-    BOOL CreateCTX(CHAR *pFileName, FXFILELIST *pOutMediaFileList, BOOL *pOutHasData, FXEXPORTFILEINFO* pExportFileInfo = NULL);
+    BOOL CreateCTX(CHAR *pFileName, FXFILELIST *pOutMediaFileList, BOOL *pOutHasData, BOOL *pOutHasMore, FXEXPORTFILEINFO* pExportFileInfo = NULL);
     BOOL CreateJSON(CHAR *pFileName, UINT Protocol, FXFILELIST *pOutMediaFileList, BOOL *pOutHasData, INT* startSightingIndex, INT* startWaypointIndex, BOOL *pOverflow);
 
     BOOL CreateTransfer(BOOL ForceClear = FALSE);
@@ -435,6 +435,8 @@ public:
     VOID Disconnect();
 
     VOID OnAlarm();
+
+    static BOOL FlushData(CfxHost *host, const CHAR *pAppName);
 };
 
 //*************************************************************************************************
@@ -465,6 +467,7 @@ public:
 
     VOID OnSessionCommit();
 
+    static BOOL HasData(CfxHost* host, const CHAR *pAppName);
     static VOID Install(const CHAR *pSrcPath, const CHAR *pDstPath, const CHAR *pAppName, const CHAR *pTag, const CHAR *pUrl);
 
     VOID DoUpdateReady(const CHAR *pAppId, const CHAR *pStampId, const CHAR *pTargetPath, const CHAR *pTag, const CHAR *pUrl, UINT ErrorCode);
@@ -514,6 +517,7 @@ protected:
     BOOL _transferOnSave;
 
     UINT _dataUniqueness;
+    BOOL _shareDataEnabled;
 
     CfxEventManager _events;
     CfxActionManager _actions;
@@ -554,6 +558,9 @@ protected:
     VOID SD_Finalize();
     BOOL SD_WriteSighting(CctSighting *pSighting);
     BOOL SD_WriteWaypoint(WAYPOINT *pWaypoint);
+
+    BOOL ArchiveSighting(CctSighting *pSighting);
+    BOOL ArchiveWaypoint(WAYPOINT *pWaypoint);
 
     BOOL ValidateSightingHeader(CfxDatabase *SightingDatabase);
     VOID ForceTitleBar(CfxScreen *pScreen);
@@ -710,6 +717,9 @@ public:
     
     CHAR *GetPendingGotoTitle()             { return _pendingGotoTitle;          }
     VOID SetPendingGotoTitle(CHAR *pTitle)  { MEM_FREE(_pendingGotoTitle); _pendingGotoTitle = AllocString(pTitle); }
+
+    BOOL GetShareDataEnabled()              { return _shareDataEnabled;          }
+    VOID SetShareDataEnabled(BOOL Value)    { _shareDataEnabled = Value;         }
 
     CHAR *GetSightingAccuracyName()         { return _sightingAccuracyName;      }
     FXGPS_ACCURACY *GetSightingAccuracy()   { return &_sightingAccuracy;         }

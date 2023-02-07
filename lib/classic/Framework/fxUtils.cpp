@@ -1499,3 +1499,8 @@ BOOL CompressFile(const char* pSrc_filename, const char *pDst_filename)
 
     return true;
 }
+
+QString GUIDToString(GUID* guid)
+{
+    return QUuid::fromRfc4122(QByteArray((char *)guid, sizeof(GUID))).toString(QUuid::StringFormat::Id128);
+}

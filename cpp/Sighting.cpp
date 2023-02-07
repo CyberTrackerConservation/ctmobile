@@ -27,6 +27,19 @@ namespace
         return qobject_cast<Form*>(s->parent())->globals();
     }
 
+    QString formFieldName(const Sighting* s, const QString& fieldUid, const QString& defaultValue)
+    {
+        auto form = qobject_cast<Form*>(s->parent());
+
+        auto result = form->provider()->getFieldName(fieldUid);
+        if (result.isEmpty())
+        {
+            result = defaultValue;
+        }
+
+        return result;
+    }
+
     QString formUsername(const Sighting* s)
     {
         auto result = App::instance()->settings()->username();
@@ -36,6 +49,21 @@ namespace
         }
 
         return result;
+    }
+
+    bool formImmersive(const Sighting* s)
+    {
+        return qobject_cast<Form*>(s->parent())->project()->immersive();
+    }
+
+    bool formWizardMode(const Sighting* s)
+    {
+        return qobject_cast<Form*>(s->parent())->project()->wizardMode();
+    }
+
+    QUrl formElementIcon(const Sighting* s, const QString& elementUid)
+    {
+        return qobject_cast<Form*>(s->parent())->getElementIcon(elementUid, true);
     }
 }
 
@@ -76,11 +104,12 @@ void Sighting::reset()
     m_controlStates.clear();
     m_pageStack.clear();
     m_wizardRecordUid.clear();
-    m_wizardFieldUids.clear();
+    m_wizardRules.clear();
     m_wizardPageStack.clear();
 
     m_deviceId = m_username = "";
     m_createTime = m_updateTime = "";
+    m_trackFile.clear();
 }
 
 RecordManager* Sighting::recordManager()
@@ -133,6 +162,11 @@ void Sighting::set_pageStack(const QVariantList& value)
     m_pageStack = value;
 }
 
+QString Sighting::lastPageUrl() const
+{
+    return m_pageStack.isEmpty() ? "" : m_pageStack.constLast().toMap().value("pageUrl").toString();
+}
+
 QString Sighting::wizardRecordUid() const
 {
     return m_wizardRecordUid;
@@ -143,14 +177,14 @@ void Sighting::set_wizardRecordUid(const QString& value)
     m_wizardRecordUid = value;
 }
 
-QStringList Sighting::wizardFieldUids() const
+QVariantMap Sighting::wizardRules() const
 {
-    return m_wizardFieldUids;
+    return m_wizardRules;
 }
 
-void Sighting::set_wizardFieldUids(const QStringList& value)
+void Sighting::set_wizardRules(const QVariantMap& value)
 {
-    m_wizardFieldUids = value;
+    m_wizardRules = value;
 }
 
 QVariantList Sighting::wizardPageStack() const
@@ -175,6 +209,8 @@ void Sighting::snapUpdateTime(const QString& now)
 
 QVariantMap Sighting::save(QStringList* attachmentsOut) const
 {
+    attachmentsOut && !m_trackFile.isEmpty() ? attachmentsOut->append(m_trackFile) : void();
+
     return QVariantMap
     {
         { "version", 1 },
@@ -183,17 +219,20 @@ QVariantMap Sighting::save(QStringList* attachmentsOut) const
         { "createTime", m_createTime },
         { "updateTime", m_updateTime },
         { "variables", m_variables },
+        { "trackFile", m_trackFile },
         { "records", m_recordManager->save(false, attachmentsOut) },
         { "controlStates", m_controlStates },
         { "pages", m_pageStack },
         { "wizardRecordUid", m_wizardRecordUid },
-        { "wizardFieldUids", m_wizardFieldUids },
+        { "wizardRules", m_wizardRules },
         { "wizardPages", m_wizardPageStack },
     };
 }
 
 QVariantMap Sighting::saveForExport(QStringList* attachmentsOut) const
 {
+    attachmentsOut && !m_trackFile.isEmpty() ? attachmentsOut->append(m_trackFile) : void();
+
     return QVariantMap
     {
         { "version", 1 },
@@ -202,6 +241,7 @@ QVariantMap Sighting::saveForExport(QStringList* attachmentsOut) const
         { "createTime", m_createTime },
         { "updateTime", m_updateTime },
         { "variables", m_variables },
+        { "trackFile", m_trackFile },
         { "records", m_recordManager->save(true, attachmentsOut) }
     };
 }
@@ -238,10 +278,11 @@ void Sighting::load(const QVariantMap& data)
     // Load everything else.
     m_controlStates = data["controlStates"].toMap();
     m_variables = data["variables"].toMap();
+    m_trackFile = data["trackFile"].toString();
 
     m_pageStack = data["pages"].toList();
     m_wizardRecordUid = data["wizardRecordUid"].toString();
-    m_wizardFieldUids = data["wizardFieldUids"].toStringList();
+    m_wizardRules = data["wizardRules"].toMap();
     m_wizardPageStack = data["wizardPages"].toList();
 
     // Load records: legacy format is serialized JSON.
@@ -264,7 +305,7 @@ QString Sighting::toXml(const QString& formId, const QString& formVersion, QStri
     xmlWriter.setAutoFormatting(true);
     xmlWriter.setCodec("UTF-8");
 
-    xmlWriter.writeStartElement(formId);
+    xmlWriter.writeStartElement("Data");
     xmlWriter.writeNamespace("http://openrosa.org/javarosa", "jr");
     xmlWriter.writeNamespace("http://www.opendatakit.org/xforms", "odk");
     xmlWriter.writeNamespace("http://openrosa.org/xforms", "orx");
@@ -366,31 +407,49 @@ void Sighting::setVariable(const QString& name, const QVariant& value)
     }
 }
 
-QVariantMap Sighting::location() const
+QVariantMap Sighting::locationMap() const
 {
-    auto result = QVariantMap();
+    // Prefer the snapLocationField.
+    auto fieldUid = getSnapLocationFieldUid();
 
-    m_recordManager->rootRecord()->enumFieldValues([&](const FieldValue& fieldValue, bool* stopOut)
+    // If not found, search for the first location field off the root.
+    if (fieldUid.isEmpty())
     {
-        if (!fieldValue.isRelevant() || !fieldValue.isValid() || fieldValue.isRecordField())
+        m_recordManager->rootRecord()->enumFieldValues([&](const FieldValue& fieldValue, bool* stopOut)
         {
-            return;
-        }
+            if (qobject_cast<LocationField*>(fieldValue.field()) == nullptr)
+            {
+                return;
+            }
 
-        if (qobject_cast<LocationField*>(fieldValue.field()))
-        {
-            result = fieldValue.value().toMap();
+            fieldUid = fieldValue.fieldUid();
             *stopOut = true;
-        }
-    });
+        });
+    }
 
-    return result;
+    return !fieldUid.isEmpty() ? m_recordManager->rootRecord()->getFieldValue(fieldUid).toMap() : QVariantMap();
 }
 
-QString Sighting::summary() const
+std::unique_ptr<Location> Sighting::locationPtr() const
+{
+    return std::unique_ptr<Location>(new Location(locationMap(), (QObject*)this));
+}
+
+QString Sighting::summaryText(bool fieldNames) const
 {
     auto result = QStringList();
-    auto titleMode = false;
+
+    auto summaryValue = getFieldParameter(rootRecordUid(), "", "summaryText").toString().trimmed();
+    auto summaryFields = QStringList();
+    if (!summaryValue.isEmpty())
+    {
+        summaryFields = summaryValue.split(' ');
+        summaryFields.removeAll(" ");
+        for (auto i = 0; i < summaryFields.count(); i++)
+        {
+            result.append("");
+        }
+    }
 
     m_recordManager->enumFieldValues(
         rootRecordUid(), true,
@@ -402,14 +461,8 @@ QString Sighting::summary() const
                 return;
             }
 
-            auto title = fieldValue.field()->parameters().contains("title");
-            if (!titleMode && title)
-            {
-                result.clear();
-                titleMode = true;
-            }
-
-            if (titleMode && !title)
+            // Skip location field, since it does not make a good summary field.
+            if (qobject_cast<LocationField*>(fieldValue.field()))
             {
                 return;
             }
@@ -420,12 +473,107 @@ QString Sighting::summary() const
                 return;
             }
 
-            result.append(displayValue);
+            // If no summary fields are specified, just append the value.
+            auto finalValue = fieldNames ? QString("%1 (%2)").arg(fieldValue.name(), displayValue) : displayValue;
+            if (summaryFields.isEmpty())
+            {
+                result.append(finalValue);
+                return;
+            }
+
+            // Place the summary in the specified index.
+            auto index = summaryFields.indexOf(fieldValue.fieldUid());
+            if (index != -1)
+            {
+                result[index] = finalValue;
+                return;
+            }
         },
         nullptr
     );
 
+    result.removeAll(" ");
+
     return result.join(", ");
+}
+
+QUrl Sighting::summaryIcon() const
+{
+    auto elementUid = QString();
+
+    auto summaryValue = getFieldParameter(rootRecordUid(), "", "summaryIcon").toString().trimmed();
+    auto summaryFields = QStringList();
+    if (!summaryValue.isEmpty())
+    {
+        summaryFields = summaryValue.split(' ');
+        summaryFields.removeAll(" ");
+    }
+
+    m_recordManager->enumFieldValues(
+        rootRecordUid(), true,
+        nullptr,
+        [&](const FieldValue& fieldValue)
+        {
+            // Already found it.
+            if (!elementUid.isEmpty())
+            {
+                return;
+            }
+
+            // Skip invisible fields.
+            if (!fieldValue.isVisible())
+            {
+                return;
+            }
+
+            auto index = summaryFields.indexOf(fieldValue.fieldUid());
+            if (index == -1)
+            {
+                return;
+            }
+
+            // Pick up the result of single select fields.
+            auto field = fieldValue.field();
+            if (qobject_cast<StringField*>(field) && !field->listElementUid().isEmpty() && !fieldValue.value().toString().isEmpty())
+            {
+                auto element = elementManager(this)->getElement(fieldValue.value().toString());
+                if (element != nullptr && !element->icon().isEmpty())
+                {
+                    elementUid = element->uid();
+                    return;
+                }
+            }
+
+            // Pick up the fields icon itself.
+            auto nameElementUid = field->nameElementUid();
+            if (!nameElementUid.isEmpty())
+            {
+                auto element = elementManager(this)->getElement(nameElementUid);
+                if (element != nullptr && !element->icon().isEmpty())
+                {
+                    elementUid = element->uid();
+                    return;
+                }
+            }
+        },
+        nullptr
+    );
+
+    return elementUid.isEmpty() ? QUrl() : formElementIcon(this, elementUid);
+}
+
+QUrl Sighting::statusIcon(int flags) const
+{
+    if (flags & Sighting::DB_SUBMITTED_FLAG)
+    {
+        return QUrl("qrc:/icons/cloud_upload_outline.svg");
+    }
+    else if (flags & Sighting::DB_COMPLETED_FLAG)
+    {
+        return QUrl("qrc:/icons/check_bold.svg");
+    }
+
+    return QUrl("qrc:/icons/dots_horizontal.svg");
 }
 
 QVariantMap Sighting::symbols() const
@@ -437,6 +585,7 @@ QVariantMap Sighting::symbols() const
         { "updateTime", m_updateTime },
         { "deviceId", deviceId() },
         { "username", username() },
+        { "wizardMode", formWizardMode(this) }
     };
 }
 
@@ -448,6 +597,16 @@ QVariantMap Sighting::controlStates() const
 QVariantMap Sighting::variables() const
 {
     return m_variables;
+}
+
+QString Sighting::trackFile() const
+{
+    return m_trackFile;
+}
+
+void Sighting::set_trackFile(const QString& value)
+{
+    m_trackFile = value;
 }
 
 void Sighting::regenerateUids()
@@ -503,6 +662,7 @@ void Sighting::regenerateUids()
 
     // Reset the timestamps.
     m_createTime = m_updateTime = "";
+    m_trackFile.clear();
 }
 
 void Sighting::recalculate(FieldValueChange* fieldValueChange)
@@ -639,7 +799,9 @@ void Sighting::buildRecordModel(QVariantList* recordModel, const std::function<b
             auto photoField = qobject_cast<PhotoField*>(field);
             if (photoField)
             {
-                auto photoCount = fieldValue.value().toList().count();
+                auto photoList = fieldValue.value().toStringList();
+                photoList.removeAll("");
+                auto photoCount = photoList.count();
                 if (photoCount > 0)
                 {
                     recordModel->append(QVariantMap {
@@ -660,7 +822,7 @@ void Sighting::buildRecordModel(QVariantList* recordModel, const std::function<b
             {
                 auto map = QVariantMap {
                     { "delegate", "field" },
-                    { "fieldName", fieldValue.name() },
+                    { "fieldName", formFieldName(this, fieldValue.fieldUid(), fieldValue.name()) },
                     { "fieldValue", displayValue },
                     { "recordUid", fieldValue.recordUid() },
                     { "depth", depth } };
@@ -746,6 +908,11 @@ void Sighting::resetFieldValue(const QString& recordUid, const QString& fieldUid
     recalculate(&fieldValueChange);
 }
 
+void Sighting::setFieldState(const QString& recordUid, const QString& fieldUid, FieldState state)
+{
+    getRecord(recordUid)->setFieldState(fieldUid, state);
+}
+
 void Sighting::resetRecord(const QString& recordUid)
 {
     // Reset in order so that side effects are predictable.
@@ -753,4 +920,205 @@ void Sighting::resetRecord(const QString& recordUid)
     {
         resetFieldValue(recordUid, field->uid());
     });
+}
+
+QVariant Sighting::getFieldParameter(const QString& recordUid, const QString& fieldUid, const QString& key, const QVariant& defaultValue) const
+{
+    auto fieldManager = ::fieldManager(this);
+
+    // Get root field parameters.
+    auto globalParams = fieldManager->rootField()->parameters();
+
+    // Get field parameters.
+    auto fieldParams = QVariantMap();
+    if (fieldUid.isEmpty() && !recordUid.isEmpty())
+    {
+        // This is a group, so pick up the record field uid.
+        auto record = getRecord(recordUid);
+        if (record)
+        {
+            fieldParams = record->recordField()->parameters();
+        }
+    }
+    else
+    {
+        fieldParams = fieldManager->getField(fieldUid)->parameters();
+    }
+
+    // Get result.
+    auto fieldResult = Utils::getParam(fieldParams, key);
+    auto fieldResultMap = fieldResult.toMap();
+    auto globalResult = Utils::getParam(globalParams, key);
+    auto globalResultMap = globalResult.toMap();
+
+    // If not a map, process simply.
+    if (fieldResultMap.isEmpty() && globalResultMap.isEmpty())
+    {
+        if (fieldResult.isValid())
+        {
+            return fieldResult;
+        }
+
+        if (globalResult.isValid())
+        {
+            return globalResult;
+        }
+
+        return defaultValue;
+    }
+
+    // Merge maps.
+    auto resultMap = QVariantMap();
+    resultMap.insert(globalResultMap);
+    resultMap.insert(fieldResultMap);
+
+    return QVariant(resultMap);
+}
+
+QString Sighting::getSnapLocationFieldUid() const
+{
+    auto fieldUid = getFieldParameter(rootRecordUid(), "", "save.snapLocation").toString();
+
+    if (fieldUid.isEmpty())
+    {
+        return QString();
+    }
+
+    auto field = qobject_cast<LocationField*>(fieldManager(this)->getField(fieldUid));
+    if (field == nullptr)
+    {
+        qDebug() << "snapLocation is not a location field: " << fieldUid;
+        return QString();
+    }
+
+    return fieldUid;
+}
+
+QVariantMap Sighting::findSnapLocation(const QString& /*recordUid*/, const QString& /*fieldUid*/) const
+{
+    auto locationFieldUid = getSnapLocationFieldUid();
+    if (locationFieldUid.isEmpty())
+    {
+        return QVariantMap();
+    }
+
+    return QVariantMap
+    {
+        { "recordUid", rootRecordUid() },
+        { "fieldUid", locationFieldUid },
+        { "valid", Utils::locationValid(locationMap()) }
+    };
+}
+
+QVariantList Sighting::findSaveTargets(const QString& /*recordUid*/, const QString& fieldUid) const
+{
+    auto result = QVariantList();
+
+    // Check if the field has a "save.targets" parameter.
+    auto targets = getFieldParameter(rootRecordUid(), "", "save.targets").toList();
+    if (targets.isEmpty())
+    {
+        return result;
+    }
+
+    // Build a list of possible targets and drill into groups.
+    auto possibleTargets = QStringList();
+    std::function<void(Record* record)> appendPossibleTargets = [&](Record* record)
+    {
+        record->enumFieldValues([&](const FieldValue& fieldValue, bool* stopOut)
+        {
+            if (fieldValue.isVisible())
+            {
+                possibleTargets.append(Utils::lastPathComponent(fieldValue.fieldUid()));
+
+                auto recordField = RecordField::fromField(fieldValue.field());
+                if (recordField && recordField->group())
+                {
+                    auto groupRecord = m_recordManager->getRecord(fieldValue.value().toStringList().constFirst());
+                    appendPossibleTargets(groupRecord);
+                }
+            }
+
+            *stopOut = Utils::compareLastPathComponents(fieldUid, fieldValue.fieldUid());
+        });
+    };
+
+    appendPossibleTargets(m_recordManager->rootRecord());
+
+    // Build a model of viable targets.
+    for (auto targetIt = targets.constBegin(); targetIt != targets.constEnd(); targetIt++)
+    {
+        auto target = targetIt->toMap();
+        auto targetFieldUid = target.value("question").toString();
+        if (!possibleTargets.contains(targetFieldUid))
+        {
+            qDebug() << "Save target skipped because not reachable: " << target;
+            continue;
+        }
+
+        auto targetElementUid = "saveTarget/" + target.value("choice").toString();
+        if (elementManager(this)->getElement(targetElementUid) == nullptr)
+        {
+            qDebug() << "Save target skipped because choice not found: " << targetElementUid;
+            continue;
+        }
+
+        result.append(QVariantMap {{ "elementUid", targetElementUid }, { "fieldUid", targetFieldUid }});
+    }
+
+    // In the non-immersive case, add an option to go home.
+    if (!formImmersive(this) && !result.isEmpty())
+    {
+        result.append(QVariantMap {{ "name", "Home" }, { "fieldUid", "" }});
+    }
+
+    return result;
+}
+
+QVariantMap Sighting::findTrackSetting() const
+{
+    auto trackSettings = getFieldParameter(rootRecordUid(), "", "save.track").toList();
+
+    auto vars = variables();
+
+    // Find the first matching track condition.
+    for (auto trackSettingIt = trackSettings.constBegin(); trackSettingIt != trackSettings.constEnd(); trackSettingIt++)
+    {
+        auto trackSetting = trackSettingIt->toMap();
+        auto condition = trackSetting.value("condition").toString();
+
+        if (!condition.isEmpty() && !evaluate(condition, rootRecordUid(), "", &vars).toBool())
+        {
+            continue;
+        }
+
+        qDebug() << "save.track match: " << trackSetting;
+        return trackSetting;
+    }
+
+    return QVariantMap();
+}
+
+QString Sighting::getTrackFileFieldUid(QString* formatOut) const
+{
+    auto fieldUid = getFieldParameter(rootRecordUid(), "", "save.trackFile").toString();
+
+    if (fieldUid.isEmpty())
+    {
+        return QString();
+    }
+
+    auto field = qobject_cast<FileField*>(fieldManager(this)->getField(fieldUid));
+    if (field == nullptr)
+    {
+        qDebug() << "snapTrackFile is not a 'file' field: " << fieldUid;
+        return QString();
+    }
+
+    if (formatOut)
+    {
+        *formatOut = field->format().isEmpty() ? "geojson" : field->format();
+    }
+
+    return fieldUid;
 }

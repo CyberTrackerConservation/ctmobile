@@ -103,7 +103,7 @@ QString MBTilesReader::getQml(const QString& filePath)
     QStringList l;
 
     l << "import QtQuick 2.12";
-    l << "import Esri.ArcGISRuntime 100.14";
+    l << "import Esri.ArcGISRuntime 100.15";
     l << "ImageTiledLayer {";
 
     l << "    Component.onDestruction: MBTilesReader.close(\"" + filePath + "\")";
@@ -215,41 +215,8 @@ QUrl MBTilesReader::getTile(const QString& filePath, int level, int row, int col
         return QUrl();
     }
 
-    auto data = query.value(0).toByteArray();
-
-    // Hack start: remove white pixels for SMART 6.
-    auto image = QImage::fromData(data);
-    if (image.width() > 0 && image.height() > 0 && image.bitPlaneCount() == 24 && image.bytesPerLine() == 1024)
-    {
-        image = image.convertToFormat(QImage::Format_ARGB32);
-        auto bits = reinterpret_cast<uint*>(image.bits());
-
-        for (auto i = 0; i < image.sizeInBytes() / 4; i++)
-        {
-            auto color = *bits;
-            if (color == 0xffffffff)
-            {
-                color = 0x00000000;
-            }
-            else
-            {
-                auto r = 3 * ((color & 0xFF0000) >> 16) >> 2;
-                auto g = 3 * ((color & 0x00FF00) >> 8) >> 2;
-                auto b = 3 * ((color & 0x0000FF)) >> 2;
-                color = 0xA0000000 | (r << 16 | g << 8 | b);
-            }
-            *bits = color;
-            bits++;
-        }
-
-        file.open(QIODevice::WriteOnly);
-        image.save(&file);
-    } // Hack end.
-    else
-    {
-        file.open(QIODevice::WriteOnly);
-        file.write(data);
-    }
+    file.open(QIODevice::WriteOnly);
+    file.write(query.value(0).toByteArray());
 
     m_gcCounter++;
     if (m_gcCounter % 16 == 0)

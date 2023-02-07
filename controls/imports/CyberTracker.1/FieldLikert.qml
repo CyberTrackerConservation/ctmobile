@@ -12,6 +12,8 @@ Item {
     property alias recordUid: fieldBinding.recordUid
     property alias fieldUid: fieldBinding.fieldUid
 
+    signal itemClicked(string elementUid)
+
     implicitHeight: likertButton.implicitHeight
 
     C.FieldBinding {
@@ -21,6 +23,7 @@ Item {
     RoundButton {
         id: likertButton
         text: "2"
+        font.pixelSize: App.settings.font14
         visible: false
     }
 
@@ -43,7 +46,10 @@ Item {
                 checkable: true
                 checked: fieldBinding.value === modelData.uid
                 text: form.getElementName(modelData.uid)
-                onClicked: fieldBinding.setValue(modelData.uid)
+                font.pixelSize: App.settings.font14
+                onClicked: {
+                    itemClicked(modelData.uid)
+                }
             }
         }
     }

@@ -83,6 +83,7 @@ class RecordField: public BaseField
     Q_PROPERTY (bool group READ group CONSTANT)
     Q_PROPERTY (bool dynamic READ dynamic CONSTANT)
     Q_PROPERTY (bool wizardFieldList READ wizardFieldList CONSTANT)
+    Q_PROPERTY (QString onlyFieldType READ onlyFieldType CONSTANT)
 
 public:
     explicit RecordField(QObject* parent = nullptr);
@@ -104,6 +105,7 @@ public:
     bool group() const;
     bool dynamic() const;
     bool wizardFieldList() const;
+    QString onlyFieldType() const;
 
     int fieldIndex(BaseField* field) const;
 
@@ -230,6 +232,8 @@ class LocationField: public BaseField
 
 public:
     explicit LocationField(QObject* parent = nullptr);
+
+    static QVariant createValue(double x, double y, double z, double a, double s);
 
     QString toXml(const QVariant& value) const override;
     QVariant fromXml(const QVariant& value) const override;
@@ -369,6 +373,8 @@ class PhotoField: public BaseField
 public:
     explicit PhotoField(QObject* parent = nullptr);
 
+    static QVariant createValue(const QString& filename);
+
     void appendAttachments(const QVariant& value, QStringList* attachmentsOut) const override;
     QVariant save(const QVariant& value) const override;
     QVariant load(const QVariant& value) const override;
@@ -390,6 +396,8 @@ class AudioField: public BaseField
 
 public:
     explicit AudioField(QObject* parent = nullptr);
+
+    static QVariant createValue(const QString& filename);
 
     void appendAttachments(const QVariant& value, QStringList* attachmentsOut) const override;
     QVariant save(const QVariant& value) const override;
@@ -415,6 +423,29 @@ public:
     QVariant load(const QVariant& value) const override;
     void toQml(QTextStream& stream, int depth) const override;
     QString toDisplayValue(ElementManager* elementManager, const QVariant& value) const override;
+    QString toXml(const QVariant& value) const override;
+};
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// FileField
+
+class FileField: public BaseField
+{
+    Q_OBJECT
+
+    QML_WRITABLE_AUTO_PROPERTY (QString, format)
+    QML_WRITABLE_AUTO_PROPERTY (QString, accept)
+
+public:
+    explicit FileField(QObject* parent = nullptr);
+
+    void appendAttachments(const QVariant& value, QStringList* attachmentsOut) const override;
+    QVariant save(const QVariant& value) const override;
+    QVariant load(const QVariant& value) const override;
+
+    void toQml(QTextStream& stream, int depth) const override;
+    QString toDisplayValue(ElementManager* elementManager, const QVariant& value) const override;
+
     QString toXml(const QVariant& value) const override;
 };
 

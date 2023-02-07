@@ -18,6 +18,7 @@ class CtClassicSessionItem : public QQuickPaintedItem
     QML_READONLY_AUTO_PROPERTY(QString, projectUid)
     QML_WRITABLE_AUTO_PROPERTY(QString, lastEditorText)
     QML_WRITABLE_AUTO_PROPERTY(bool, blockResize)
+    QML_READONLY_AUTO_PROPERTY(Form*, ownerForm)
 
 public:
     CtClassicSessionItem(QQuickItem *parent = Q_NULLPTR);
@@ -28,7 +29,7 @@ public:
     void classBegin() override;
     void componentComplete() override;
 
-    Q_INVOKABLE void connectToProject(const QString& projectUid);
+    Q_INVOKABLE void connectToProject(Form* form);
     Q_INVOKABLE void disconnectFromProject();
 
     virtual void paint(QPainter *painter) override;
@@ -43,6 +44,8 @@ signals:
     void showBarcodeDialog();
     void showSkyplot(int x, int y, int width, int height, bool visible);
     void showExports();
+
+    void shareData();
 
     void shutdown();
 

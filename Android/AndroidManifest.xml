@@ -9,19 +9,6 @@
                 <category android:name="android.intent.category.DEFAULT"/>
                 <category android:name="${homeIntentCategory}"/>
             </intent-filter>
-            <!-- Receive files -->
-            <intent-filter>
-                <action android:name="android.intent.action.SEND"/>
-                <category android:name="android.intent.category.DEFAULT"/>
-                <data android:mimeType="application/zip"/>
-            </intent-filter>
-            <intent-filter>
-                <action android:name="android.intent.action.VIEW"/>
-                <category android:name="android.intent.category.DEFAULT"/>
-                <data android:mimeType="application/zip"/>
-                <data android:scheme="file"/>
-                <data android:scheme="content"/>
-            </intent-filter>
             <!-- Command line -->
             <intent-filter android:autoVerify="true">
                 <data android:scheme="https" android:host="cybertrackerwiki.org" android:pathPrefix="/applink"/>
@@ -97,6 +84,7 @@
     <uses-permission android:name="android.permission.WAKE_LOCK"/>
     <uses-permission android:name="android.permission.ACCESS_LOCATION_EXTRA_COMMANDS"/>
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
+    <uses-permission android:name="android.permission.ACCESS_BACKGROUND_LOCATION"/>
     <uses-permission android:name="android.permission.REORDER_TASKS"/>
     <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW"/>
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE"/>

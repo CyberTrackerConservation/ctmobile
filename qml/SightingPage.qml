@@ -9,18 +9,11 @@ C.ContentPage {
     id: page
 
     property var sightingList: []
-    property var currentIndex: 0
-
+    property int currentIndex: 0
     property var forms: ({})
 
     header: C.PageHeader {
-        id: title
         text: qsTr("Sighting")
-        menuIcon: "qrc:/icons/edit.svg"
-        onMenuClicked: {
-            form.saveState()
-            form.pushFormPage({ projectUid: form.project.uid, stateSpace: listView.sightingForm.stateSpace, editSightingUid: listView.sightingUid })
-        }
     }
 
     Connections {
@@ -48,79 +41,71 @@ C.ContentPage {
         font.pixelSize: App.settings.font20
     }
 
-    footer: ColumnLayout {
+    footer: RowLayout {
         spacing: 0
-        width: parent.width
 
-        Rectangle {
-            Layout.fillWidth: true
-            height: 2
-            color: Material.theme === Material.Dark ? "#FFFFFF" : "#000000"
-            opacity: Material.theme === Material.Dark ? 0.12 : 0.12
+        C.FooterButton {
+            text: qsTr("First")
+            icon.source: "qrc:/icons/page_first.svg"
+            enabled: page.currentIndex > 0
+            visible: !deleteButton.visible && !editButton.visible
+            onClicked: page.rebuild(-page.currentIndex)
         }
 
-        RowLayout {
-            id: buttonRow
-            spacing: 0
-            Layout.fillWidth: true
-            property int buttonCount: 4
-            property int buttonWidth: page.width / buttonCount
-            property var buttonColor: Material.theme === Material.Dark ? Material.foreground : Material.primary
+        C.FooterButton {
+            text: qsTr("Previous")
+            icon.source: "qrc:/icons/chevron_left.svg"
+            enabled: page.currentIndex > 0
+            onClicked: page.rebuild(-1)
+        }
 
-            ToolButton {
-                Layout.preferredWidth: buttonRow.buttonWidth
-                Layout.fillWidth: true
-                Layout.fillHeight: true
-                text: qsTr("First")
-                font.pixelSize: App.settings.font10
-                font.capitalization: Font.MixedCase
-                display: Button.TextUnderIcon
-                icon.source: "qrc:/icons/page_first.svg"
-                Material.foreground: buttonRow.buttonColor
-                enabled: page.currentIndex > 0
-                onClicked: page.rebuild(-page.currentIndex)
+        C.FooterButton {
+            text: qsTr("Next")
+            icon.source: "qrc:/icons/chevron_right.svg"
+            enabled: page.currentIndex < page.sightingList.length - 1
+            onClicked: page.rebuild(+1)
+        }
+
+        C.FooterButton {
+            text: qsTr("Last")
+            icon.source: "qrc:/icons/page_last.svg"
+            enabled: page.currentIndex < page.sightingList.length - 1
+            visible: !deleteButton.visible && !editButton.visible
+            onClicked: page.rebuild(page.sightingList.length - page.currentIndex - 1)
+        }
+
+        C.FooterButton {
+            id: deleteButton
+            text: qsTr("Delete")
+            icon.source: "qrc:/icons/delete_outline.svg"
+            visible: form.supportSightingDelete
+            onClicked: {
+                confirmDelete.open()
             }
+        }
 
-            ToolButton {
-                Layout.preferredWidth: buttonRow.buttonWidth
-                Layout.fillWidth: true
-                Layout.fillHeight: true
-                text: qsTr("Previous")
-                font.pixelSize: App.settings.font10
-                font.capitalization: Font.MixedCase
-                display: Button.TextUnderIcon
-                icon.source: "qrc:/icons/chevron_left.svg"
-                Material.foreground: buttonRow.buttonColor
-                enabled: page.currentIndex > 0
-                onClicked: page.rebuild(-1)
+        C.FooterButton {
+            id: editButton
+            text: qsTr("Edit")
+            icon.source: "qrc:/icons/edit.svg"
+            visible: form.supportSightingEdit
+            onClicked: {
+                form.saveState()
+                form.pushFormPage({ projectUid: form.project.uid, stateSpace: listView.sightingForm.stateSpace, editSightingUid: listView.sightingUid })
             }
+        }
+    }
 
-            ToolButton {
-                Layout.preferredWidth: buttonRow.buttonWidth
-                Layout.fillWidth: true
-                Layout.fillHeight: true
-                text: qsTr("Next")
-                font.pixelSize: App.settings.font10
-                font.capitalization: Font.MixedCase
-                display: Button.TextUnderIcon
-                icon.source: "qrc:/icons/chevron_right.svg"
-                Material.foreground: buttonRow.buttonColor
-                enabled: page.currentIndex < page.sightingList.length - 1
-                onClicked: page.rebuild(+1)
-            }
+    C.PopupLoader {
+        id: confirmDelete
 
-            ToolButton {
-                Layout.preferredWidth: buttonRow.buttonWidth
-                Layout.fillWidth: true
-                Layout.fillHeight: true
-                text: qsTr("Last")
-                font.pixelSize: App.settings.font10
-                font.capitalization: Font.MixedCase
-                display: Button.TextUnderIcon
-                icon.source: "qrc:/icons/page_last.svg"
-                Material.foreground: buttonRow.buttonColor
-                enabled: page.currentIndex < page.sightingList.length - 1
-                onClicked: page.rebuild(page.sightingList.length - page.currentIndex - 1)
+        popupComponent: Component {
+            C.ConfirmPopup {
+                text: qsTr("Delete sighting?")
+                onConfirmed: {
+                    form.removeSighting(listView.sightingUid)
+                    form.popPage()
+                }
             }
         }
     }
@@ -139,6 +124,6 @@ C.ContentPage {
         listView.sightingForm = forms[sighting.stateSpace]
         listView.sightingUid = ""   // Ensure change event
         listView.sightingUid = sighting.sightingUid
-        title.menuVisible = listView.sightingForm.canEditSighting(listView.sightingUid)
+        deleteButton.enabled = editButton.enabled = listView.sightingForm.canEditSighting(listView.sightingUid)
     }
 }

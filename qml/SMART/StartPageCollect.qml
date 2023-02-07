@@ -53,9 +53,9 @@ C.ContentPage {
 
     header: C.PageHeader {
         text: form.project.title
-        menuVisible: true
-        menuEnabled: false
+        menuVisible: Qt.platform.os !== "ios"
         menuIcon: App.batteryIcon
+        onMenuClicked: App.showToast(App.batteryText)
     }
 
     ColumnLayout {
@@ -101,9 +101,8 @@ C.ContentPage {
             placeholderText: qsTr("Enter email or phone")
             font.pixelSize: App.settings.font16
             horizontalAlignment: TextField.AlignHCenter
-            inputMethodHints: Qt.ImhEmailCharactersOnly | Qt.ImhLowercaseOnly
+            inputMethodHints: Qt.ImhEmailCharactersOnly | Qt.ImhNoAutoUppercase | Qt.ImhPreferLowercase
             text: form.provider.collectUser
-            onDisplayTextChanged: form.provider.setCollectUser(userId.displayText)
         }
 
         C.ColorButton {
@@ -111,16 +110,21 @@ C.ContentPage {
             Layout.fillWidth: true
             Layout.alignment: Qt.AlignHCenter
             text: qsTr("Start collecting")
+            font.capitalization: Font.MixedCase
             color: Material.accent
             font.pixelSize: App.settings.font16
-            onClicked: form.pushFormPage({ projectUid: form.project.uid, stateSpace: Globals.formSpaceCollect })
-            enabled: form.provider.collectUser.trim() !== ""
+            onClicked: {
+                form.provider.setCollectUser(userId.text.trim())
+                form.pushFormPage({ projectUid: form.project.uid, stateSpace: Globals.formSpaceCollect })
+            }
+            enabled: userId.text.trim() !== ""
         }
 
         C.ColorButton {
             Layout.fillWidth: true
             Layout.alignment: Qt.AlignHCenter
             text: qsTr("Upload data")
+            font.capitalization: Font.MixedCase
             color: Material.color(Material.Green, Material.Shade300)
             font.pixelSize: App.settings.font16
             onClicked: {

@@ -2,8 +2,9 @@ import QtQml 2.12
 import QtQuick 2.12
 import QtQuick.Layouts 1.12
 import QtQuick.Controls 2.12
-import Esri.ArcGISRuntime 100.14 as Esri
+import Esri.ArcGISRuntime 100.15 as Esri
 import QtQuick.Controls.Material 2.12
+import QtQuick.Window 2.15
 import QtLocation 5.12
 import QtSensors 5.12
 import QtPositioning 5.12
@@ -13,7 +14,7 @@ Esri.MapView {
     id: mapView
 
     property bool flagMode: false
-    property var hideDataLayers: false
+    property bool hideDataLayers: false
     property var flagLocation: undefined
     property var centerPoint: undefined
     property bool forceLocationActive: false
@@ -28,11 +29,22 @@ Esri.MapView {
     QtObject {
         id: internal
         property bool loadComplete: false
-        property var projectLayersLookup: ({})
+        property var baseLayersLookup: ({})
+        property var trackTail: ({})
     }
 
     Component.onCompleted: {
         internal.loadComplete = true
+
+        let locationSymbolSize = App.scaleByFontSize(40)
+        mapView.locationDisplay.acquiringSymbol = createPictureMarkerSymbol(":/map/acquiringSymbol.svg", locationSymbolSize)
+        mapView.locationDisplay.courseSymbol = createPictureMarkerSymbol(":/map/courseSymbol.svg", locationSymbolSize)
+        mapView.locationDisplay.defaultSymbol = createPictureMarkerSymbol(":/map/defaultSymbol.svg", locationSymbolSize)
+        mapView.locationDisplay.headingSymbol = createPictureMarkerSymbol(":/map/headingSymbol.svg", locationSymbolSize)
+        let locationSymbolScale = App.scaleByFontSize(2)
+        mapView.locationDisplay.accuracySymbol.outline.width *= locationSymbolScale
+        mapView.locationDisplay.pingAnimationSymbol.outline.width *= locationSymbolScale
+
         mapView.rebuild()
     }
 
@@ -65,8 +77,9 @@ Esri.MapView {
     Connections {
         target: App
 
-        function onZoomToMapLayer(layerId) {
-            let layerIndex = internal.projectLayersLookup[layerId]
+        function onZoomToMapLayer(layer) {
+            // Zoom to base layer.
+            let layerIndex = internal.baseLayersLookup[layer.id]
             if (layerIndex !== undefined) {
                 let layerObj = basemapBuilder.baseLayers.get(layerIndex)
 
@@ -76,14 +89,16 @@ Esri.MapView {
                 } else {
                     mapView.setViewpointGeometry(layerObj.fullExtent)
                 }
-            }
-        }
 
-        function onZoomToMapOverlay(layerId) {
-            let layer = layerListModel.get(layerListModel.layerIdToIndex(layerId))
-            if (layer && layer.extent && layer.extent.xmin !== layer.extent.xmax) {
-                let envelope = Esri.ArcGISRuntimeEnvironment.createObject("Envelope", { "json": layer.extent } )
+                return
+            }
+
+            // Zoom to form layers. .. (layer.id === "Tracks") ? locationOverlay.extent :
+            let extent = layer.extent
+            if (extent && (extent.xmin !== extent.xmax) && (extent.ymin !== extent.ymax)) {
+                let envelope = Esri.ArcGISRuntimeEnvironment.createObject("Envelope", { "json": extent } )
                 mapView.setViewpointGeometryAndPadding(envelope, 64)
+                return
             }
         }
     }
@@ -91,10 +106,18 @@ Esri.MapView {
     Connections {
         target: form
 
-        function onLocationTrack(locationMap, locationUid) {
-            if (!flagMode && locationOverlay.symbol !== undefined) {
-                mapView.appendLinesToLayer(locationOverlay, form.buildTrackMapLayer("Tracks", locationOverlay.symbol, true))
+        function onLocationTrack(location, locationUid) {
+            if (hideDataLayers || flagMode || locationOverlay.symbol === undefined) {
+                return
             }
+
+            internal.trackTail.geometry.paths[0].push([location.x, location.y])
+
+            if (locationOverlay.graphics.count > 1) {
+                locationOverlay.graphics.remove(1, 1)
+            }
+
+            appendLinesToLayer(locationOverlay, internal.trackTail)
         }
     }
 
@@ -150,10 +173,8 @@ Esri.MapView {
                     let viewpoint = Esri.ArcGISRuntimeEnvironment.createObject("ViewpointCenter", { center: point, targetScale: targetScale})
                     mapView.setViewpoint(viewpoint);
 
-                } else if (flagMode && App.lastLocation.x !== undefined) {
-                    let lastLocation = App.lastLocation
-                    lastLocation.spatialReference = { wkid: 4326 }
-                    let point = Esri.ArcGISRuntimeEnvironment.createObject("Point", { "json": lastLocation } );
+                } else if (flagMode && App.lastLocation.isValid) {
+                    let point = Esri.ArcGISRuntimeEnvironment.createObject("Point", { "json": App.lastLocation.toMap } )
                     let viewpoint = Esri.ArcGISRuntimeEnvironment.createObject("ViewpointCenter", { center: point, targetScale: targetScale})
                     mapView.setViewpoint(viewpoint);
 
@@ -271,7 +292,7 @@ Esri.MapView {
                     break
 
                 case gotoPointsOverlay.overlayId:
-                    path = App.gotoManager.findPath(attributes.pathId)
+                    path = layerListModel.findPath(attributes.pathId)
                     gotoPointList.push( {
                         overlayId: overlayId,
                         source: attributes.source,
@@ -298,15 +319,18 @@ Esri.MapView {
     }
 
     locationDisplay {
-        positionSource: PositionSource {
-            active: mapView.forceLocationActive || Qt.application.active
-            name: App.positionInfoSourceName
+        dataSource: Esri.DefaultLocationDataSource {
+            compass: Compass {
+                id: compass
+                active: Qt.application.active
+            }
+
+            positionInfoSource: PositionSource {
+                active: mapView.forceLocationActive || Qt.application.active
+                name: App.positionInfoSourceName
+            }
         }
 
-        compass: Compass {
-            id: compass
-            active: Qt.application.active
-        }
         onAutoPanModeChanged: {
             if (!flagMode) {
                 App.settings.mapPanMode = mapView.locationDisplay.autoPanMode
@@ -315,6 +339,10 @@ Esri.MapView {
     }
 
     function appendPointsToLayer(overlay, layer) {
+        if (layer === undefined || layer.geometry === undefined) {
+            return
+        }
+
         let geometry, symbol, graphic
 
         for (let j = 0; j < layer.geometry.length; j++) {
@@ -355,9 +383,14 @@ Esri.MapView {
 
     function rebuild() {
         rebuildBasemap()
-        rebuildProjectLayers()
+
+        internal.baseLayersLookup = ({})
+        gotoPointsOverlay.graphics.clear()
+        gotoLinesOverlay.graphics.clear()
+
+        rebuildOfflineLayers()
+
         if (!flagMode) {
-            rebuildGotoLayers()
             rebuildFormLayers()
             rebuildGotoTarget()
         } else {
@@ -368,19 +401,19 @@ Esri.MapView {
     function rebuildBasemap() {
         for (let i = 0; i < layerListModel.count; i++) {
             let layer = layerListModel.get(i)
-            if (layer.type === "basemap" && layer.checked) {
-                basemapBuilder.setLayerId(layer.id)
-                break
+            if (layer.type !== "basemap" || !layer.checked) {
+                continue
             }
+
+            basemapBuilder.setLayerId(layer.id)
+            break
         }
     }
 
-    function rebuildProjectLayers() {
-        internal.projectLayersLookup = ({})
-
+    function rebuildOfflineLayers() {
         for (let i = layerListModel.count - 1; i >= 0; i--) {
             let layer = layerListModel.get(i)
-            if (layer.type !== "project" || !layer.checked) {
+            if (layer.type !== "offline" || !layer.checked) {
                 continue
             }
 
@@ -388,15 +421,15 @@ Esri.MapView {
 
             switch (layer.format) {
             case "tpk":
-                layerObj = Esri.ArcGISRuntimeEnvironment.createObject("ArcGISTiledLayer", {url: layer.id})
+                layerObj = Esri.ArcGISRuntimeEnvironment.createObject("ArcGISTiledLayer", {url: layer.filePath})
                 break
 
             case "vtpk":
-                layerObj = Esri.ArcGISRuntimeEnvironment.createObject("ArcGISVectorTiledLayer", {url: layer.id})
+                layerObj = Esri.ArcGISRuntimeEnvironment.createObject("ArcGISVectorTiledLayer", {url: layer.filePath})
                 break
 
             case "img":
-            case "I12":
+            case "i12":
             case "dt0":
             case "dt1":
             case "dt2":
@@ -411,27 +444,39 @@ Esri.MapView {
             case "ntf":
             case "png":
             case "i21":
-                const raster = Esri.ArcGISRuntimeEnvironment.createObject("Raster", { path: "file:///" + layer.id })
+                const raster = Esri.ArcGISRuntimeEnvironment.createObject("Raster", { path: "file:///" + layer.filePath })
                 layerObj = Esri.ArcGISRuntimeEnvironment.createObject("RasterLayer", { raster: raster })
                 break
 
             case "mbtiles":
-                const layerQml = MBTilesReader.getQml(layer.id)
+                const layerQml = MBTilesReader.getQml(layer.filePath)
                 layerObj = Qt.createQmlObject(layerQml, mapView, layer.id)
                 break
 
             case "wms":
-                layerObj = Esri.ArcGISRuntimeEnvironment.createObject("WmsLayer", {url: layer.url, layerNames: [layer.name]})
+                layerObj = Esri.ArcGISRuntimeEnvironment.createObject("WmsLayer", {url: layer.service, layerNames: [layer.layer]})
                 break
 
             case "shp":
-                const featureTable = Esri.ArcGISRuntimeEnvironment.createObject("ShapefileFeatureTable", { path: "file:///" + layer.id })
+                const featureTable = Esri.ArcGISRuntimeEnvironment.createObject("ShapefileFeatureTable", { path: "file:///" + layer.filePath })
                 layerObj = Esri.ArcGISRuntimeEnvironment.createObject("FeatureLayer", { featureTable: featureTable })
                 break
 
             case "kml":
-                const kmlDataset = Esri.ArcGISRuntimeEnvironment.createObject("KmlDataset", { url: "file:///" + layer.id })
+                const kmlDataset = Esri.ArcGISRuntimeEnvironment.createObject("KmlDataset", { url: "file:///" + layer.filePath })
                 layerObj = Esri.ArcGISRuntimeEnvironment.createObject("KmlLayer", { dataset: kmlDataset })
+                break
+
+            case "geojson":
+                if (layer.points !== undefined) {
+                    appendPointsToLayer(gotoPointsOverlay, layer.points)
+                }
+
+                if (layer.polylines !== undefined) {
+                    for (let j = 0; j < layer.polylines.length; j++) {
+                        appendLinesToLayer(gotoLinesOverlay, layer.polylines[j])
+                    }
+                }
                 break
 
             default:
@@ -439,38 +484,14 @@ Esri.MapView {
                 return
             }
 
-            internal.projectLayersLookup[layer.id] = basemapBuilder.baseLayers.count
-
-            layerObj.minScale = Number.MAX_VALUE
-            layerObj.maxScale = Number.MIN_VALUE
-            basemapBuilder.baseLayers.append(layerObj)
-        }
-    }
-
-    function rebuildGotoLayers() {
-        if (hideDataLayers) {
-            return
-        }
-
-        gotoPointsOverlay.graphics.clear()
-        gotoLinesOverlay.graphics.clear()
-
-        for (let i = layerListModel.count - 1; i >= 0; i--) {
-            let layer = layerListModel.get(i)
-            if (layer.type !== "goto" || !layer.checked) {
-                continue
+            if (layerObj !== undefined) {
+                internal.baseLayersLookup[layer.id] = basemapBuilder.baseLayers.count
+                layerObj.minScale = Number.MAX_VALUE
+                layerObj.maxScale = Number.MIN_VALUE
+                layerObj.opacity = layer.opacity
+                basemapBuilder.baseLayers.append(layerObj)
             }
-
-            if (layer.points !== undefined) {
-                appendPointsToLayer(gotoPointsOverlay, layer.points)
-            }
-
-            if (layer.polylines !== undefined) {
-                for (let j = 0; j < layer.polylines.length; j++) {
-                    appendLinesToLayer(gotoLinesOverlay, layer.polylines[j])
-                }
-            }
-        }
+        }            
     }
 
     function rebuildFormLayers() {
@@ -495,6 +516,12 @@ Esri.MapView {
             case "Polyline":
                 locationOverlay.symbol = layer.symbol
                 appendLinesToLayer(locationOverlay, layer)
+
+                internal.trackTail.symbol = layer.symbol
+                internal.trackTail.geometry = ({ spatialReference: layer.geometry.spatialReference, paths: [[]] })
+                if (layer.lastPoint) {
+                    internal.trackTail.geometry.paths[0].push(layer.lastPoint)
+                }
                 break
             }
         }
@@ -514,17 +541,16 @@ Esri.MapView {
 
         let polyline = {
             geometry: {
-                paths: [[[location.x, location.y],
-                         [App.lastLocation.x, App.lastLocation.y]]],
+                paths: [[[location.x, location.y], [App.lastLocation.x, App.lastLocation.y]]],
                 spatialReference: { wkid: 4326 }
             },
             geometryType: "Polyline",
             symbol: {
                 color: [255, 0, 0, 200],
-                style: "esriSLSDot",
+                style: "esriSLSShortDot",
                 symbolType: "SimpleLineSymbol",
                 type: "esriSLS",
-                width: 1.75
+                width: App.scaleByFontSize(1.75)
             },
         }
 
@@ -543,15 +569,7 @@ Esri.MapView {
 
         let geometry = Esri.ArcGISRuntimeEnvironment.createObject("Point", { "json": flagLocation } )
 
-        let symbol = {
-            symbolType: "PictureMarkerSymbol",
-            angle: 0.0,
-            type: "esriPMS",
-            url: "qrc:/icons/map_marker2.png",
-            width: 24,
-            height: 24,
-            yoffset: 12.0
-        }
+        let symbol = App.createMapPointSymbol(":/icons/mark-circle.svg", "red")
 
         symbol = Esri.ArcGISRuntimeEnvironment.createObject(symbol.symbolType, { "json": symbol } )
 
@@ -566,5 +584,9 @@ Esri.MapView {
         let point = Esri.ArcGISRuntimeEnvironment.createObject("Point", { "json": flagLocation } )
         let viewpoint = Esri.ArcGISRuntimeEnvironment.createObject("ViewpointCenter", { center: point })
         mapView.setViewpoint(viewpoint);
+    }
+
+    function createPictureMarkerSymbol(svg, size) {
+        return Esri.ArcGISRuntimeEnvironment.createObject("PictureMarkerSymbol", { url: App.renderSvgToPng(svg, size, size), width: size, height: size } )
     }
 }

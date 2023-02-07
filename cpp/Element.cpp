@@ -107,6 +107,7 @@ void Element::toQml(QTextStream& stream, Element* element, int depth)
     }
 
     Utils::writeQml(stream, depth + 1, "icon", element->m_icon);
+    Utils::writeQml(stream, depth + 1, "audio", element->m_audio);
     Utils::writeQml(stream, depth + 1, "tag", element->m_tag);
     Utils::writeQml(stream, depth + 1, "fieldUids", element->m_fieldUids);
     Utils::writeQml(stream, depth + 1, "elementUids", element->m_elementUids);
@@ -232,24 +233,34 @@ void ElementManager::enumChildren(const QString& parentElementUid, bool leavesOn
     depthFirstSearch(parentElement);
 }
 
-QStringList ElementManager::getLeafElementUids(const QString& parentElementUid)
+QStringList ElementManager::getLeafElementUids(const QString& parentElementUid, bool ignoreHidden) const
 {
     auto result = QStringList();
 
     enumChildren(parentElementUid, true, [&](Element* element)
     {
+        if (ignoreHidden && element->hidden())
+        {
+            return;
+        }
+
         result.append(element->uid());
     });
 
     return result;
 }
 
-QList<Element*> ElementManager::getLeafElements(const QString& parentElementUid)
+QList<Element*> ElementManager::getLeafElements(const QString& parentElementUid, bool ignoreHidden) const
 {
     auto result = QList<Element*>();
 
     enumChildren(parentElementUid, true, [&](Element* element)
     {
+        if (ignoreHidden && element->hidden())
+        {
+            return;
+        }
+
         result.append(element);
     });
 
@@ -280,39 +291,36 @@ QString ElementManager::getElementName(const QString& elementUid, const QString&
         // Simple lookup to allow for common names.
         auto map = QVariantMap
         {
-            { "tr:None",  tr("None")    },
-            { "tr:Yes",   tr("Yes")     },
-            { "tr:No",    tr("No")      },
-            { "tr:Other", tr("Other")   },
+            { "tr:None",  tr("None")  },
+            { "tr:Yes",   tr("Yes")   },
+            { "tr:No",    tr("No")    },
+            { "tr:Other", tr("Other") },
         };
 
         return map.contains(name) ? map[name].toString() : name;
     }
 
     auto nameMap = element->names();
-    auto result = nameMap.value(languageCode);
-    if (result.isString())
+    if (!nameMap.isEmpty())
     {
-        // Language found!
-        return result.toString();
-    }
-    else
-    {
+        auto result = nameMap.value(languageCode);
+        if (result.isString())
+        {
+            // Language found!
+            return result.toString();
+        }
+
         result = nameMap.value(languageCode.left(2));
         if (result.isString())
         {
             return result.toString();
         }
-        else if (!nameMap.isEmpty())
-        {
-            auto fallback = nameMap.contains("default") ? "default" : nameMap.keys().constFirst();
-            return nameMap[fallback].toString();
-        }
-        else
-        {
-            return elementUid;
-        }
+
+        auto fallback = nameMap.contains("default") ? "default" : nameMap.keys().constFirst();
+        return nameMap[fallback].toString();
     }
+
+    return "";
 }
 
 QUrl ElementManager::getElementIcon(const QString& elementUid, bool walkBack) const

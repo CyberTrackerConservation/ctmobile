@@ -17,6 +17,7 @@
 //                                                                                                *
 //************************************************************************************************/
 
+#include "ctMain.h"
 #include "fxDialog.h"
 #include "fxUtils.h"
 #include "fxMath.h"
@@ -32,6 +33,8 @@
 #include "ctDialog_Password.h"
 
 #include "Cab.h"
+
+#define CTX_QUOTA_SIZE (16 * 1024 * 1024) // 16MB
 
 //*************************************************************************************************
 // CctJsonBuilder
@@ -2278,9 +2281,12 @@ CHAR *CctTransferManager::BuildFileName(CHAR *pPrefix)
     return result;
 }
 
-BOOL CctTransferManager::CreateCTX(CHAR *pFileName, FXFILELIST *pOutMediaFileList, BOOL *pOutHasData, FXEXPORTFILEINFO* pExportFileInfo)
+BOOL CctTransferManager::CreateCTX(CHAR *pFileName, FXFILELIST *pOutMediaFileList, BOOL *pOutHasData, BOOL *pOutHasMore, FXEXPORTFILEINFO* pExportFileInfo)
 {
     BOOL success = FALSE;
+
+    *pOutHasMore = FALSE;
+
     CfxStream stream;
     CfxFileStream fileStream;
     UINT index = 0;
@@ -2342,9 +2348,16 @@ BOOL CctTransferManager::CreateCTX(CHAR *pFileName, FXFILELIST *pOutMediaFileLis
 
         if (!HasSentHistoryId(sighting->GetUniqueId()))
         {
+            if (fileStream.GetSize() > CTX_QUOTA_SIZE)
+            {
+                *pOutHasMore = TRUE;
+                Log("CTX file reached quota");
+                break;
+            }
+
             if (!sighting->BuildExport(session, fileStream, pOutMediaFileList))
             {
-                Log("Failed to export sighting to JSON");
+                Log("Failed to export sighting to CTX");
             }
             else
             {
@@ -2401,6 +2414,13 @@ BOOL CctTransferManager::CreateCTX(CHAR *pFileName, FXFILELIST *pOutMediaFileLis
         {
             if (!HasSentHistoryId(&waypoint.Id))
             {
+                if (fileStream.GetSize() > CTX_QUOTA_SIZE)
+                {
+                    *pOutHasMore = TRUE;
+                    Log("CTX file reached quota - waypoints");
+                    break;
+                }
+
                 if (!fileStream.Write(&waypoint, sizeof(WAYPOINT)))
                 {
                     Log("Failed to write waypoint record: %08lx", fileStream.GetLastError());
@@ -2590,8 +2610,6 @@ BOOL CctTransferManager::CreateJSON(CHAR *pFileName, UINT Protocol, FXFILELIST *
     id = INVALID_DBID;
     while (sightingDatabase->Enum(index, &id)) 
     {
-        index++;
-
         // Limit size of sighting files.
         if (fileStream.GetSize() > 65536)
         {
@@ -2605,6 +2623,8 @@ BOOL CctTransferManager::CreateJSON(CHAR *pFileName, UINT Protocol, FXFILELIST *
             *pOverflow = TRUE;
             break;
         }
+
+        index++;
 
         // Skip sightings that don't load or fail to build
         if (!sighting->Load(sightingDatabase, id))
@@ -2678,32 +2698,35 @@ BOOL CctTransferManager::CreateJSON(CHAR *pFileName, UINT Protocol, FXFILELIST *
     strcpy(waypointsName, session->GetName());
     strcat(waypointsName, ".WAY");
     index = *startWaypointIndex;
-    if (host->EnumRecordInit(waypointsName) && host->EnumRecordSetIndex(index, sizeof(WAYPOINT)))
+    if (host->EnumRecordInit(waypointsName))
     {
-        WAYPOINT waypoint;
-
-        // Add new waypoints to the file
-        while (host->EnumRecordNext(&waypoint, sizeof(WAYPOINT)))
+        if (host->EnumRecordSetIndex(index, sizeof(WAYPOINT)))
         {
-            index++;
-            if (!HasSentHistoryId(&waypoint.Id))
-            {
-                // Limit size of waypoint files.
-                if (fileStream.GetSize() > 65536)
-                {
-                    *pOverflow = TRUE;
-                    break;
-                }
+            WAYPOINT waypoint;
 
-                if (!jsonBuilder.WriteWaypoint(&waypoint, (waypointCount == 0)))
+            // Add new waypoints to the file
+            while (host->EnumRecordNext(&waypoint, sizeof(WAYPOINT)))
+            {
+                index++;
+                if (!HasSentHistoryId(&waypoint.Id))
                 {
-                    Log("Failed to write waypoint to JSON");
-                }
-                else
-                {
-                    AddSentHistoryId(&waypoint.Id);
-                    waypointCount++;
-                    *pOutHasData = TRUE;
+                    // Limit size of waypoint files.
+                    if (fileStream.GetSize() > 65536)
+                    {
+                        *pOverflow = TRUE;
+                        break;
+                    }
+
+                    if (!jsonBuilder.WriteWaypoint(&waypoint, (waypointCount == 0)))
+                    {
+                        Log("Failed to write waypoint to JSON");
+                    }
+                    else
+                    {
+                        AddSentHistoryId(&waypoint.Id);
+                        waypointCount++;
+                        *pOutHasData = TRUE;
+                    }
                 }
             }
         }
@@ -2744,6 +2767,28 @@ cleanup:
     return success;
 }
 
+BOOL CctTransferManager::FlushData(CfxHost *host, const CHAR *pAppName)
+{
+    // Create the host
+    auto application = new CctApplication(host);
+
+    // Strip extension
+    CHAR Name2[MAX_PATH];
+    strcpy(Name2, pAppName);
+    CHAR *t = strrchr(Name2, '.');
+    if (t != NULL)
+    {
+        *t = '\0';
+    }
+
+    application->Run(Name2);
+    auto result = application->GetSession()->GetTransferManager()->CreateTransfer(TRUE);
+
+    delete application;
+
+    return result;
+}
+
 BOOL CctTransferManager::CreateTransfer(BOOL ForceClear)
 {
     BOOL success = FALSE;
@@ -2752,6 +2797,8 @@ BOOL CctTransferManager::CreateTransfer(BOOL ForceClear)
     CHAR *outgoingFileNameBase = NULL;
     FXFILELIST mediaFileList;
     BOOL hasData = FALSE;
+    BOOL hasMore = FALSE;
+    INT moreCounter = 0;
     BOOL overflow = FALSE;
     FXSENDDATA sendData = session->GetResourceHeader()->SendData;
     const CHAR *sentHistoryExtension = NULL;
@@ -2796,18 +2843,28 @@ BOOL CctTransferManager::CreateTransfer(BOOL ForceClear)
     {
     case FXSENDDATA_PROTOCOL_UNC:
     case FXSENDDATA_PROTOCOL_FTP:
+    case FXSENDDATA_PROTOCOL_AZURE:
         strcpy(workPath, session->GetOutgoingPath());
         AppendSlash(workPath);
         strcat(workPath, outgoingFileNameBase);
-        success = CreateCTX(workPath, &mediaFileList, &hasData);
 
-        if (success && hasData)
+        moreCounter = 0;
+        success = hasMore = TRUE;
+
+        while (success && hasMore)
         {
-            success = PushToOutgoing(workPath, CLIENT_EXPORT_EXT, &sendData);
-            if (!success)
+            auto filePath = (QString(workPath) + "_" + QString::number(moreCounter++)).toLatin1();
+            auto filePath_str = filePath.data();
+            success = CreateCTX(filePath_str, &mediaFileList, &hasData, &hasMore);
+
+            if (success && hasData)
             {
-                Log("Failed to create data file in queue.");
-                goto cleanup;
+                success = PushToOutgoing(filePath_str, CLIENT_EXPORT_EXT, &sendData);
+                if (!success)
+                {
+                    Log("Failed to create data file in queue.");
+                    goto cleanup;
+                }
             }
         }
         break;
@@ -2817,14 +2874,22 @@ BOOL CctTransferManager::CreateTransfer(BOOL ForceClear)
             strcpy(workPath, session->GetOutgoingPath());
             AppendSlash(workPath);
             strcat(workPath, outgoingFileNameBase);
-            strcat(workPath, CLIENT_EXPORT_EXT);
 
-            FXEXPORTFILEINFO exportFileInfo = {};
-            success = CreateCTX(workPath, &mediaFileList, &hasData, &exportFileInfo);
-            if (FxDoesFileExist(workPath))
+            moreCounter = 0;
+            success = hasMore = TRUE;
+
+            while (success && hasMore)
             {
-                GetHost(this)->RegisterExportFile(workPath, &exportFileInfo);
-                ForceClear = TRUE;
+                auto filePath = (QString(workPath) + "_" + QString::number(moreCounter++) + QString(CLIENT_EXPORT_EXT)).toLatin1();
+                auto filePath_str = filePath.data();
+
+                FXEXPORTFILEINFO exportFileInfo = {};
+                success = CreateCTX(filePath_str, &mediaFileList, &hasData, &hasMore, &exportFileInfo);
+                if (FxDoesFileExist(filePath_str))
+                {
+                    GetHost(this)->RegisterExportFile(filePath_str, &exportFileInfo);
+                    ForceClear = TRUE;
+                }
             }
         }
 
@@ -2834,8 +2899,17 @@ BOOL CctTransferManager::CreateTransfer(BOOL ForceClear)
         strcpy(workPath, session->GetBackupPath() ? session->GetBackupPath() : session->GetOutgoingPath());
         AppendSlash(workPath);
         strcat(workPath, outgoingFileNameBase);
-        strcat(workPath, CLIENT_EXPORT_EXT);
-        success = CreateCTX(workPath, &mediaFileList, &hasData);
+
+        moreCounter = 0;
+        success = hasMore = TRUE;
+
+        while (success && hasMore)
+        {
+            auto filePath = (QString(workPath) + "_" + QString::number(moreCounter++) + QString(CLIENT_EXPORT_EXT)).toLatin1();
+            auto filePath_str = filePath.data();
+
+            success = CreateCTX(filePath_str, &mediaFileList, &hasData, &hasMore);
+        }
         break;
 
     case FXSENDDATA_PROTOCOL_HTTP:
@@ -2916,7 +2990,7 @@ BOOL CctTransferManager::CreateTransfer(BOOL ForceClear)
     // Cleanup data if required.
     //
 
-    if (session->GetResourceHeader()->ClearDataOnSend || ForceClear)
+    if (success && (session->GetResourceHeader()->ClearDataOnSend || ForceClear))
     {
         // Delete sighting database.
         session->GetSightingDatabase()->DeleteAll();
@@ -3104,7 +3178,7 @@ VOID CctTransferManager::OnAlarm()
 }
 
 //*************************************************************************************************
-// CctTransferManager
+// CctUpdateManager
 
 CctUpdateManager::CctUpdateManager(CfxPersistent *pOwner): CfxPersistent(pOwner)
 {
@@ -3264,6 +3338,16 @@ VOID CctUpdateManager::Connect()
 VOID CctUpdateManager::Disconnect()
 {
     GetEngine(this)->KillAlarm(this);
+}
+
+BOOL CctUpdateManager::HasData(CfxHost* host, const CHAR *pAppName)
+{
+    auto dbName = QString(pAppName) + ".DAT";
+    auto db = host->CreateDatabase((char *)dbName.toStdString().c_str());
+    auto result = db->GetCount() > 1;
+    delete db;
+
+    return result;
 }
 
 VOID CctUpdateManager::Install(const CHAR *pSrcPath, const CHAR *pDstPath, const CHAR *pAppName, const CHAR *pTag, const CHAR *pUrl)
@@ -3521,6 +3605,7 @@ CctSession::CctSession(CfxPersistent *pOwner, CfxControl *pParent): CfxControl(p
     InitXGuid(&_firstScreenId);
 
     _dataUniqueness = 0;
+    _shareDataEnabled = FALSE;
 
     _sightingId = INVALID_DBID;
     _resourceStampId = GUID_0;
@@ -3775,6 +3860,56 @@ VOID CctSession::SD_Finalize()
     }
 }
 
+BOOL CctSession::ArchiveSighting(CctSighting *pSighting)
+{
+    if (!_shareDataEnabled) return FALSE;
+
+    auto attributes = QVariantMap();
+
+    for (auto i = 0; i < (int)pSighting->GetAttributes()->GetCount(); i++)
+    {
+        ATTRIBUTE *attribute = pSighting->GetAttributes()->GetPtr(i);
+
+        auto name = GUIDToString(&attribute->ElementGuid);
+        auto value = QString();
+
+        if (!IsNullXGuid(&attribute->ValueId))
+        {
+            FXTEXTRESOURCE* element = (FXTEXTRESOURCE *)_resource->GetObject(this, attribute->ValueId, eaName);
+            if (element != NULL)
+            {
+                value = GUIDToString(&element->Guid);
+                _resource->ReleaseObject(element);
+            }
+        }
+        else
+        {
+            CfxString s;
+            Type_VariantToText(attribute->Value, s);
+            value = s.Get();
+        }
+
+        if (!Type_IsText((FXDATATYPE)(attribute->Value->Type)))
+        {
+            if (value.isEmpty())
+            {
+                value = "1";
+            }
+        }
+
+        if (attribute->IsMedia())
+        {
+            value = QString("media://") + QString(attribute->GetMediaName());
+        }
+
+        attributes.insert(name, value);
+    }
+
+    GetHost(this)->ArchiveSighting(pSighting->GetUniqueId(), pSighting->GetDateTime(), pSighting->GetGPS(), attributes);
+
+    return TRUE;
+}
+
 BOOL CctSession::SD_WriteSighting(CctSighting *pSighting)
 {
     if (!UseSDStorage()) return FALSE;
@@ -3821,6 +3956,24 @@ BOOL CctSession::SD_WriteSighting(CctSighting *pSighting)
     Fault(Result, "Error saving sighting to SD");
 
     return Result;
+}
+
+BOOL CctSession::ArchiveWaypoint(WAYPOINT *pWaypoint)
+{
+    if (!_shareDataEnabled) return FALSE;
+
+    FXDATETIME dateTime = {};
+    DecodeDateTime(pWaypoint->DateCurrent, &dateTime);
+    FXGPS_POSITION position = {};
+    position.Quality = fq3D;
+    position.Latitude = pWaypoint->Latitude;
+    position.Longitude = pWaypoint->Longitude;
+    position.Altitude = pWaypoint->Altitude;
+    position.Accuracy = pWaypoint->Accuracy;
+
+    GetHost(this)->ArchiveWaypoint(&pWaypoint->Id, &dateTime, &position);
+
+    return TRUE;
 }
 
 BOOL CctSession::SD_WriteWaypoint(WAYPOINT *pWaypoint)
@@ -4747,22 +4900,7 @@ VOID CctSession::Fault(BOOL Condition, CHAR *pError)
 
 VOID CctSession::ShowMessage(const CHAR *pMessage, COLOR BackColor)
 { 
-    // Disable the screen
-    GetWindow()->SetEnabled(FALSE);
-
-    // Force an align in case this happened on startup and we don't yet have a valid size
-    GetEngine(this)->AlignControls(GetApplication(this)->GetScreen());
-
-    // Setup fault window
-    UINT h = (GetHost(this)->GetProfile()->ScaleY * 40) / 100;
-    GetMessageWindow()->SetBounds(_left - 1, _top + (_height - h) / 2, _width + 2, h);
-    GetMessageWindow()->SetVisible(TRUE);
-
-    _messageBackColor = BackColor;
-    strncpy(_messageText, pMessage, sizeof(_messageText)-1);
-
-    // Repaint to show the fault message
-    Repaint();
+    GetHost(this)->ShowToast(pMessage);
 }
 
 VOID CctSession::Confirm(CfxControl *pControl, CHAR *pTitle, CHAR *pMessage)
@@ -5029,6 +5167,20 @@ VOID CctSession::DefineState(CfxFiler &F)
     {
         GetHost(this)->SetGPSTimeOffset(gpsTimeOffset);
     }
+
+    // Share data support
+    // Hack because we did not change the resource version number.
+    auto reachedEnd = FALSE;
+    if (F.IsReader())
+    {
+        if (static_cast<CfxReader&>(F).IsEnd())
+        {
+            _shareDataEnabled = FALSE;
+            return;
+        }
+    }
+
+    F.DefineValue("ShareDataEnabled", dtBoolean, &_shareDataEnabled);
 }
 
 VOID CctSession::DefinePropertiesUI(CfxFilerUI &F) 
@@ -5074,7 +5226,7 @@ VOID CctSession::LoadState()
 
     if (database->Read(databaseId, &buffer) && buffer && (MEM_SIZE(buffer) > 0))
     {
-        CfxStream stream(buffer);
+        CfxStream stream(buffer, MEM_SIZE(buffer));
         CfxReader reader(&stream);
         DefineState(reader);
 
@@ -5635,6 +5787,7 @@ VOID CctSession::DoCommit(XGUID TargetScreenId, BOOL DoRepaint)
     FreeSightingDatabase(database);
     database = NULL;
 
+    ArchiveSighting(&_sighting);
     SD_WriteSighting(&_sighting);
 
     // Update the data uniqueness
@@ -5753,6 +5906,7 @@ VOID CctSession::DoCommitInplace()
     FreeSightingDatabase(database);
     database = NULL;
 
+    ArchiveSighting(&_sighting);
     SD_WriteSighting(&_sighting);
 
     // Update the data uniqueness
@@ -5851,6 +6005,7 @@ VOID CctSession::DoAcceptEdit()
     FreeSightingDatabase(database);
     database = NULL;
 
+    ArchiveSighting(&_sighting);
     SD_WriteSighting(&_sighting);
 
     // Assign the backup sighting
@@ -6170,6 +6325,7 @@ BOOL CctSession::StoreWaypoint(WAYPOINT *pWaypoint, BOOL CheckTime)
 
     GetHost(this)->AppendRecord(name, pWaypoint, sizeof(WAYPOINT));
 
+    ArchiveWaypoint(pWaypoint);
     SD_WriteWaypoint(pWaypoint);
 
     // Check for timer track break.

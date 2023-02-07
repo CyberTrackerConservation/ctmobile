@@ -11,6 +11,12 @@ ANDROID_VERSION_CODE = $$sprintf("%1%2%3%4", \
     $$format_number($${VER_PAT}, width=2 zeropad), \
     0)
 
+HEADERS += \
+    $$PWD/../cpp/LocationAndroid.h
+
+SOURCES += \
+    $$PWD/../cpp/LocationAndroid.cpp
+
 # Files.
 ANDROID_PACKAGE_SOURCE_DIR += $$PWD
 
@@ -29,7 +35,8 @@ OTHER_FILES += \
     $$ANDROID_PACKAGE_SOURCE_DIR/src/org/cybertracker/mobile/LocationWakeupService.java \
     $$ANDROID_PACKAGE_SOURCE_DIR/src/org/cybertracker/mobile/AlarmJobService.java \
     $$ANDROID_PACKAGE_SOURCE_DIR/src/org/cybertracker/mobile/AdminReceiver.java \
-    $$ANDROID_PACKAGE_SOURCE_DIR/src/org/cybertracker/mobile/Utils.java
+    $$ANDROID_PACKAGE_SOURCE_DIR/src/org/cybertracker/mobile/QtPositioning.java \
+    $$ANDROID_PACKAGE_SOURCE_DIR/src/org/cybertracker/mobile/Utils.java \
 
 # Default.
 OTHER_FILES += \

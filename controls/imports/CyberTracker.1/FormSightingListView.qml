@@ -14,7 +14,7 @@ C.ListViewV {
     onSightingFormChanged: sightingUid = ""
 
     onSightingUidChanged: {
-        if (sightingForm !== null && sightingUid !== "") {
+        if (sightingForm != null && sightingUid !== "") {
             listView.model = sightingForm.buildSightingView(sightingUid)
         } else {
             listView.model = undefined
@@ -51,10 +51,10 @@ C.ListViewV {
                     verticalAlignment: Text.AlignVCenter
                 }
 
-                Image {
+                SquareIcon {
                     Layout.alignment: Qt.AlignRight
                     source: sightingForm.getElementIcon(modelData.elementUid, true)
-                    sourceSize.height: controlLabel.height * 2
+                    size: Style.minRowHeight
                 }
             }
         }
@@ -67,7 +67,7 @@ C.ListViewV {
                 horizontalAlignment: Text.AlignHCenter
                 font.bold: true
                 font.pixelSize: App.settings.font14
-                fontSizeMode: Label.Fit
+                wrapMode: Label.WordWrap
                 text: App.formatDateTime(modelData.createTime)
             }
         }
@@ -80,7 +80,7 @@ C.ListViewV {
                 horizontalAlignment: Text.AlignHCenter
                 font.bold: true
                 font.pixelSize: App.settings.font14
-                fontSizeMode: Label.Fit
+                wrapMode: Label.WordWrap
                 text: App.getLocationText(modelData.value.x, modelData.value.y, modelData.value.z)
             }
         }
@@ -137,7 +137,7 @@ C.ListViewV {
             Control {
                 anchors.fill: parent
                 implicitHeight: imageSize
-                property var imageSize: 96
+                property int imageSize: 96
 
                 C.ListViewH {
                     id: listViewPhotos

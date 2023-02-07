@@ -10,18 +10,17 @@ Item {
     property alias fieldUid: fieldBinding.fieldUid
     property string listElementUid
 
-    property var backColor: Material.foreground
-    property var textColor: Material.foreground
-    property var displayColor: Style.colorContent
-    property var digitColor: Style.colorContent
-    property var otherColor: Qt.lighter(Style.colorContent, 0.80)
-    property var wspace: 2
-    property var keyW: width / 4
-    property var keyH: (height - displayH) / 4
-    property var displayW: width - wspace * 2
-    property var displayH: height / 5
-    property var digitFontPixelSize: App.settings.font18 * 1.5
-    property var displayFontPixelSize: App.settings.font20 * 1.5
+    property color textColor: Material.foreground
+    property color displayColor: colorContent || Style.colorContent
+    property color digitColor: colorContent || Style.colorContent
+    property color otherColor: Qt.lighter(colorContent || Style.colorContent, 0.80)
+    property int wspace: Style.lineWidth1
+    property int keyW: width / 4
+    property int keyH: (height - displayH) / 4
+    property int displayW: width - wspace * 2
+    property int displayH: height / 5
+    property int digitFontPixelSize: App.settings.font18 * 1.5
+    property int displayFontPixelSize: App.settings.font20 * 1.5
 
     C.FieldBinding {
         id: fieldBinding
@@ -149,8 +148,8 @@ Item {
         Rectangle {
             color: otherColor; Layout.fillWidth: true; Layout.fillHeight: true
             ToolButton {
-                anchors.fill: parent; flat: true; font.pixelSize: digitFontPixelSize
-                text: "."; onClicked: buttonClick(".")
+                anchors.fill: parent; flat: true; font.pixelSize: digitFontPixelSize; enabled: fieldBinding.field.decimals > 0
+                text: enabled ? "." : ""; onClicked: buttonClick(".")
             }
         }
 

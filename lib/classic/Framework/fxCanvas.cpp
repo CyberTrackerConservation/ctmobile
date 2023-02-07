@@ -1305,6 +1305,33 @@ UINT CfxCanvas::DrawBattery(UINT Level, FXRECT *pRect, UINT AlignFlags, COLOR Ba
     return nw;
 }
 
+VOID CfxCanvas::DrawShare(FXRECT *pRect, COLOR BackColor, COLOR ForeColor, BOOL Invert, BOOL Transparent)
+{
+    if (!Transparent)
+    {
+        State.BrushColor = InvertColor(BackColor, Invert);
+        FillRect(pRect);
+    }
+    State.BrushColor = InvertColor(ForeColor, Invert);
+    State.LineColor = InvertColor(ForeColor, Invert);
+
+    INT w = pRect->Right - pRect->Left - 1;
+    INT h = pRect->Bottom - pRect->Top - 1;
+
+    INT r = min(w, h) / 8;
+    INT x = pRect->Left + 1;
+    INT y = pRect->Top + 1;
+    w--;
+    h--;
+
+    FillEllipse(x + w / 8, y + h / 2, r, r);
+    FillEllipse(x + w - w / 8, y + h / 8, r, r);
+    FillEllipse(x + w - w / 8, y + h - h / 8, r, r);
+
+    Line(x + w / 8, y + h / 2, x + w - w / 8, y + h / 8);
+    Line(x + w / 8, y + h / 2, x + w - w / 8, y + h - h / 8);
+}
+
 //*************************************************************************************************
 // Rectangle
 

@@ -12,9 +12,9 @@ C.ContentPage {
         text: qsTr("Settings")
     }
 
-    property var halfWidth: (width - 20) / 2
+    property int halfWidth: (width - 20) / 2
     property var routes
-    property var fontSize: App.settings.font16
+    property int fontSize: App.settings.font16
 
     Flickable {
         anchors.fill: parent
@@ -28,8 +28,9 @@ C.ContentPage {
             width: parent.width
 
             ItemDelegate {
-                id: row0
                 Layout.fillWidth: true
+                Layout.minimumHeight: C.Style.minRowHeight
+
                 contentItem: RowLayout {
                     Label {
                         Layout.preferredWidth: page.width / 3
@@ -40,6 +41,7 @@ C.ContentPage {
 
                     C.FormLanguageComboBox {
                         Layout.fillWidth: true
+                        Layout.fillHeight: true
                         font.pixelSize: page.fontSize
                     }
                 }
@@ -49,6 +51,8 @@ C.ContentPage {
 
             ItemDelegate {
                 Layout.fillWidth: true
+                Layout.minimumHeight: C.Style.minRowHeight
+
                 contentItem: RowLayout {
                     spacing: 0
                     Label {
@@ -63,14 +67,32 @@ C.ContentPage {
                         Layout.alignment: Qt.AlignRight
                         font.pixelSize: page.fontSize
                         checked: App.settings.darkTheme
-                        onClicked: App.settings.darkTheme = checkTheme.checked
+                        onCheckedChanged: {
+                            App.settings.darkTheme = checkTheme.checked
+                        }
                     }
                 }
 
-                onClicked: {
-                    if (App.config.fullRowCheck) {
-                        checkTheme.checked = !checkTheme.checked
-                        checkTheme.clicked()
+                C.HorizontalDivider {}
+            }
+
+            ItemDelegate {
+                visible: false
+                Layout.fillWidth: true
+                Layout.minimumHeight: C.Style.minRowHeight
+
+                contentItem: RowLayout {
+                    Label {
+                        Layout.fillWidth: true
+                        text: qsTr("Page mode")
+                        font.pixelSize: page.fontSize
+                    }
+
+                    Switch {
+                        checked: form.project.wizardMode
+                        onCheckedChanged: {
+                            form.project.wizardMode = checked
+                        }
                     }
                 }
 
@@ -80,7 +102,8 @@ C.ContentPage {
             ItemDelegate {
                 id: selectRoutes
                 Layout.fillWidth: true
-                Layout.minimumHeight: row0.height
+                Layout.minimumHeight: C.Style.minRowHeight
+
                 enabled: form.project.connectorParams.navigation_url !== undefined && form.project.connectorParams.api_key !== undefined
                 contentItem: RowLayout {
                     Label {
@@ -103,7 +126,8 @@ C.ContentPage {
 
             ItemDelegate {
                 Layout.fillWidth: true
-                Layout.minimumHeight: row0.height
+                Layout.minimumHeight: C.Style.minRowHeight
+
                 contentItem: RowLayout {
                     Label {
                         Layout.fillWidth: true
@@ -123,7 +147,8 @@ C.ContentPage {
             ItemDelegate {
                 id: showExports
                 Layout.fillWidth: true
-                Layout.minimumHeight: row0.height
+                Layout.minimumHeight: C.Style.minRowHeight
+
                 contentItem: RowLayout {
                     Label {
                         Layout.fillWidth: true
@@ -142,7 +167,8 @@ C.ContentPage {
 
             ItemDelegate {
                 Layout.fillWidth: true
-                Layout.minimumHeight: row0.height
+                Layout.minimumHeight: C.Style.minRowHeight
+
                 contentItem: RowLayout {
                     Label {
                         Layout.fillWidth: true
@@ -162,7 +188,7 @@ C.ContentPage {
             ItemDelegate {
                 id: recoverData
                 Layout.fillWidth: true
-                Layout.minimumHeight: row0.height
+                Layout.minimumHeight: C.Style.minRowHeight
 
                 enabled: {
                     Globals.patrolChangeCount

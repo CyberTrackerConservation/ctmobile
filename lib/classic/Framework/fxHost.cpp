@@ -94,7 +94,15 @@ VOID CfxHost::ShowSkyplot(INT /*Left*/, INT /*Top*/, UINT /*Width*/, UINT /*Heig
 {
 }
 
+VOID CfxHost::ShowToast(const CHAR *pMessage)
+{
+}
+
 VOID CfxHost::ShowExports()
+{
+}
+
+VOID CfxHost::ShareData()
 {
 }
 
@@ -350,6 +358,16 @@ VOID CfxHost::CheckForUpdate(GUID AppId, GUID StampId, CHAR *pWebUpdateUrl, CHAR
 }
 
 VOID CfxHost::RegisterExportFile(CHAR *pExportFilePath, FXEXPORTFILEINFO* exportFileInfo)
+{
+
+}
+
+VOID CfxHost::ArchiveSighting(GUID* pId, FXDATETIME* dateTime, FXGPS_POSITION* gps, const QVariantMap& content)
+{
+
+}
+
+VOID CfxHost::ArchiveWaypoint(GUID* pId, FXDATETIME* dateTime, FXGPS_POSITION* gps)
 {
 
 }
