@@ -21,7 +21,7 @@ C.ContentPage {
     }
 
     header: C.PageHeader {
-        text: qsTr("%1 Connect").arg(internal.account.title)
+        text: qsTr("Connect to %1").arg(internal.account.title)
     }
 
     ColumnLayout {
@@ -70,6 +70,7 @@ C.ContentPage {
 
         C.ColorButton {
             Layout.fillWidth: true
+            Layout.preferredHeight: C.Style.minRowHeight
             text: qsTr("Choose forms")
             font.pixelSize: App.settings.font12
             font.bold: true

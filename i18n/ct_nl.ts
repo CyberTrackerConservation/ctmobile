@@ -14,22 +14,22 @@
         <translation type="unfinished">Aangedreven door</translation>
     </message>
     <message>
-        <location filename="../qml/AboutPage.qml" line="109" />
+        <location filename="../qml/AboutPage.qml" line="107" />
         <source>Privacy statement</source>
         <translation type="unfinished">Privacyverklaring</translation>
     </message>
     <message>
-        <location filename="../qml/AboutPage.qml" line="122" />
+        <location filename="../qml/AboutPage.qml" line="121" />
         <source>Software license</source>
         <translation type="unfinished">Softwarelicentie</translation>
     </message>
     <message>
-        <location filename="../qml/AboutPage.qml" line="135" />
+        <location filename="../qml/AboutPage.qml" line="134" />
         <source>Support forum</source>
         <translation type="unfinished">Ondersteuning forum</translation>
     </message>
     <message>
-        <location filename="../qml/AboutPage.qml" line="148" />
+        <location filename="../qml/AboutPage.qml" line="147" />
         <source>More resources</source>
         <translation type="unfinished">Meer middelen</translation>
     </message>
@@ -37,7 +37,7 @@
 <context>
     <name>AcknowledgeField</name>
     <message>
-        <location filename="../cpp/Field.cpp" line="704" />
+        <location filename="../cpp/Field.cpp" line="705" />
         <source>OK</source>
         <translation type="unfinished">OK</translation>
     </message>
@@ -45,156 +45,208 @@
 <context>
     <name>App</name>
     <message>
-        <location filename="../cpp/App.cpp" line="719" />
+        <location filename="../cpp/App.cpp" line="755" />
         <source>Accuracy</source>
         <translation type="unfinished">Nauwkeurigheid</translation>
     </message>
     <message>
-        <location filename="../cpp/App.cpp" line="864" />
-        <location filename="../cpp/App.cpp" line="920" />
-        <location filename="../cpp/App.cpp" line="934" />
+        <location filename="../cpp/App.cpp" line="899" />
+        <location filename="../cpp/App.cpp" line="953" />
         <source>Permission request</source>
         <translation type="unfinished">Verzoek om toestemming</translation>
     </message>
     <message>
-        <location filename="../cpp/App.cpp" line="920" />
-        <source>This project requires access to some features of the device. Please allow these requests in order to proceed.</source>
-        <translation type="unfinished">Dit project vereist toegang tot sommige functies van het apparaat. Sta deze verzoeken toe om verder te kunnen gaan.</translation>
-    </message>
-    <message>
-        <location filename="../cpp/App.cpp" line="934" />
-        <source>This project requires background GPS access. Please allow this request in order to proceed.</source>
-        <translation type="unfinished">Dit project vereist GPS-toegang op de achtergrond. Sta dit verzoek toe om door te gaan.</translation>
-    </message>
-    <message>
-        <location filename="../cpp/App.cpp" line="946" />
-        <source>Recording audio and video requires permission. Please allow the request in order to proceed.</source>
-        <translation type="unfinished">Voor het opnemen van audio en video is toestemming nodig. Sta het verzoek toe om door te gaan.</translation>
-    </message>
-    <message>
-        <location filename="../cpp/App.cpp" line="951" />
-        <location filename="../cpp/App.cpp" line="952" />
+        <location filename="../cpp/App.cpp" line="1000" />
         <source>Access to GPS is required for this feature to work. Please allow the request in order to proceed.</source>
         <translation type="unfinished">Toegang tot GPS is vereist om deze functie te laten werken. Sta het verzoek toe om verder te gaan.</translation>
     </message>
     <message>
-        <location filename="../cpp/App.cpp" line="960" />
+        <location filename="../cpp/App.cpp" line="1012" />
         <source>Background access to GPS is required. Please allow the request in order to proceed.</source>
         <translation type="unfinished">Toegang tot GPS op de achtergrond is vereist. Sta het verzoek toe om verder te gaan.</translation>
     </message>
     <message>
-        <location filename="../cpp/App.cpp" line="969" />
-        <location filename="../cpp/App.cpp" line="974" />
-        <source>Access to external storage is required for this feature to work. Please allow the request in order to proceed.</source>
-        <translation type="unfinished">Toegang tot externe opslag is vereist om deze functie te laten werken. Sta het verzoek toe om verder te gaan.</translation>
-    </message>
-    <message>
-        <location filename="../cpp/App.cpp" line="1002" />
+        <location filename="../cpp/App.cpp" line="1138" />
         <source>Battery level</source>
         <translation type="unfinished">Batterijniveau</translation>
     </message>
     <message>
-        <location filename="../cpp/App.cpp" line="1408" />
+        <location filename="../cpp/App.cpp" line="1562" />
         <source>Download failed</source>
         <translation type="unfinished">Download mislukt</translation>
     </message>
     <message>
-        <location filename="../cpp/App.cpp" line="1465" />
+        <location filename="../cpp/App.cpp" line="1616" />
+        <source>Empty link</source>
+        <translation type="unfinished">Lege link</translation>
+    </message>
+    <message>
+        <location filename="../cpp/App.cpp" line="1664" />
         <source>Bad link</source>
         <translation type="unfinished">Slechte link</translation>
     </message>
     <message>
-        <location filename="../cpp/App.cpp" line="1502" />
+        <location filename="../cpp/App.cpp" line="1701" />
         <source>Unknown command</source>
         <translation type="unfinished">Onbekende opdracht</translation>
     </message>
     <message>
-        <location filename="../cpp/App.cpp" line="1523" />
+        <location filename="../cpp/App.cpp" line="1722" />
         <source>Not an installable package</source>
         <translation type="unfinished">Geen installeerbaar pakket</translation>
     </message>
     <message>
-        <location filename="../cpp/App.cpp" line="1531" />
+        <location filename="../cpp/App.cpp" line="1730" />
         <source>Install successful</source>
         <translation type="unfinished">Installatie geslaagd</translation>
     </message>
     <message>
-        <location filename="../cpp/App.cpp" line="1691" />
+        <location filename="../cpp/App.cpp" line="1903" />
         <source>second</source>
         <translation type="unfinished">tweede</translation>
     </message>
     <message>
-        <location filename="../cpp/App.cpp" line="1691" />
+        <location filename="../cpp/App.cpp" line="1903" />
         <source>seconds</source>
         <translation type="unfinished">seconden</translation>
     </message>
     <message>
-        <location filename="../cpp/App.cpp" line="1696" />
+        <location filename="../cpp/App.cpp" line="1908" />
         <source>minute</source>
         <translation type="unfinished">minuut</translation>
     </message>
     <message>
-        <location filename="../cpp/App.cpp" line="1696" />
+        <location filename="../cpp/App.cpp" line="1908" />
         <source>minutes</source>
         <translation type="unfinished">minuten</translation>
     </message>
     <message>
-        <location filename="../cpp/App.cpp" line="1701" />
+        <location filename="../cpp/App.cpp" line="1913" />
         <source>hour</source>
         <translation type="unfinished">uur</translation>
     </message>
     <message>
-        <location filename="../cpp/App.cpp" line="1701" />
+        <location filename="../cpp/App.cpp" line="1913" />
         <source>hours</source>
         <translation type="unfinished">uren</translation>
     </message>
     <message>
-        <location filename="../cpp/App.cpp" line="1816" />
+        <location filename="../cpp/App.cpp" line="2028" />
         <source>Export missing</source>
         <translation type="unfinished">Export ontbreekt</translation>
     </message>
     <message>
-        <location filename="../cpp/App.cpp" line="1824" />
+        <location filename="../cpp/App.cpp" line="2036" />
         <source>%1 deleted</source>
         <translation type="unfinished">%1 verwijderd</translation>
     </message>
     <message>
-        <location filename="../cpp/App.cpp" line="1886" />
+        <location filename="../cpp/App.cpp" line="688" />
         <source>Project</source>
         <translation type="unfinished">Project</translation>
     </message>
     <message>
-        <location filename="../cpp/App.cpp" line="1887" />
+        <location filename="../cpp/App.cpp" line="689" />
+        <source>Projects</source>
+        <translation type="unfinished">Projecten</translation>
+    </message>
+    <message>
+        <location filename="../cpp/App.cpp" line="690" />
+        <source>project</source>
+        <translation type="unfinished">project</translation>
+    </message>
+    <message>
+        <location filename="../cpp/App.cpp" line="691" />
+        <source>projects</source>
+        <translation type="unfinished">projecten</translation>
+    </message>
+    <message>
+        <location filename="../cpp/App.cpp" line="695" />
+        <source>Form</source>
+        <translation type="unfinished">Formulier</translation>
+    </message>
+    <message>
+        <location filename="../cpp/App.cpp" line="696" />
+        <source>Forms</source>
+        <translation type="unfinished">Formulieren</translation>
+    </message>
+    <message>
+        <location filename="../cpp/App.cpp" line="697" />
+        <source>form</source>
+        <translation type="unfinished">formulier</translation>
+    </message>
+    <message>
+        <location filename="../cpp/App.cpp" line="698" />
+        <source>forms</source>
+        <translation type="unfinished">formulieren</translation>
+    </message>
+    <message>
+        <location filename="../cpp/App.cpp" line="702" />
+        <source>Survey</source>
+        <translation type="unfinished">Enquête</translation>
+    </message>
+    <message>
+        <location filename="../cpp/App.cpp" line="703" />
+        <source>Surveys</source>
+        <translation type="unfinished">Enquêtes</translation>
+    </message>
+    <message>
+        <location filename="../cpp/App.cpp" line="704" />
+        <source>survey</source>
+        <translation type="unfinished">enquête</translation>
+    </message>
+    <message>
+        <location filename="../cpp/App.cpp" line="705" />
+        <source>surveys</source>
+        <translation type="unfinished">enquêtes</translation>
+    </message>
+    <message>
+        <location filename="../cpp/App.cpp" line="953" />
+        <source>This %1 requires access to some features of the device. Please allow these requests in order to proceed.</source>
+        <translation type="unfinished">Dit %1 vereist toegang tot sommige functies van het apparaat. Sta deze verzoeken toe om verder te kunnen gaan.</translation>
+    </message>
+    <message>
+        <location filename="../cpp/App.cpp" line="989" />
+        <source>Using the camera requires permission. Please allow the request in order to proceed.</source>
+        <translation type="unfinished">Voor het gebruik van de camera is toestemming nodig. Sta het verzoek toe om verder te gaan.</translation>
+    </message>
+    <message>
+        <location filename="../cpp/App.cpp" line="994" />
+        <source>Recording audio requires permission. Please allow the request in order to proceed.</source>
+        <translation type="unfinished">Voor het opnemen van audio is toestemming nodig. Sta het verzoek toe om verder te gaan.</translation>
+    </message>
+    <message>
+        <location filename="../cpp/App.cpp" line="2099" />
         <source>Start date</source>
         <translation type="unfinished">Startdatum</translation>
     </message>
     <message>
-        <location filename="../cpp/App.cpp" line="1888" />
+        <location filename="../cpp/App.cpp" line="2100" />
         <source>Start time</source>
         <translation type="unfinished">Begintijd</translation>
     </message>
     <message>
-        <location filename="../cpp/App.cpp" line="1889" />
+        <location filename="../cpp/App.cpp" line="2101" />
         <source>Stop date</source>
         <translation type="unfinished">Stopdatum</translation>
     </message>
     <message>
-        <location filename="../cpp/App.cpp" line="1890" />
+        <location filename="../cpp/App.cpp" line="2102" />
         <source>Stop time</source>
         <translation type="unfinished">Stop de tijd</translation>
     </message>
     <message>
-        <location filename="../cpp/App.cpp" line="1891" />
+        <location filename="../cpp/App.cpp" line="2103" />
         <source>Sightings</source>
         <translation type="unfinished">Waarnemingen</translation>
     </message>
     <message>
-        <location filename="../cpp/App.cpp" line="1892" />
+        <location filename="../cpp/App.cpp" line="2104" />
         <source>Locations</source>
         <translation type="unfinished">Locaties</translation>
     </message>
     <message>
-        <location filename="../cpp/App.cpp" line="1920" />
+        <location filename="../cpp/App.cpp" line="2132" />
         <source>Failed to load service template</source>
         <translation type="unfinished">Mislukt om dienstsjabloon te laden</translation>
     </message>
@@ -202,91 +254,151 @@
 <context>
     <name>AppMain</name>
     <message>
-        <location filename="../qml/AppMain.qml" line="52" />
-        <location filename="../qml/AppMain.qml" line="65" />
+        <location filename="../qml/AppMain.qml" line="53" />
+        <location filename="../qml/AppMain.qml" line="66" />
         <source>Choose a file</source>
         <translation type="unfinished">Kies een bestand</translation>
     </message>
     <message>
-        <location filename="../qml/AppMain.qml" line="57" />
+        <location filename="../qml/AppMain.qml" line="58" />
         <source>Image files</source>
         <translation type="unfinished">Beeldbestanden</translation>
     </message>
     <message>
-        <location filename="../qml/AppMain.qml" line="70" />
+        <location filename="../qml/AppMain.qml" line="71" />
         <source>Package files</source>
         <translation type="unfinished">Pakketbestanden</translation>
     </message>
     <message>
-        <location filename="../qml/AppMain.qml" line="82" />
+        <location filename="../qml/AppMain.qml" line="83" />
         <source>&amp;File</source>
         <translation type="unfinished">&amp;File</translation>
     </message>
     <message>
-        <location filename="../qml/AppMain.qml" line="84" />
+        <location filename="../qml/AppMain.qml" line="85" />
         <source>Save &amp;As...</source>
         <translation type="unfinished">Opslaan en...</translation>
     </message>
     <message>
-        <location filename="../qml/AppMain.qml" line="91" />
+        <location filename="../qml/AppMain.qml" line="92" />
         <source>Install package</source>
         <translation type="unfinished">Pakket installeren</translation>
     </message>
     <message>
-        <location filename="../qml/AppMain.qml" line="97" />
+        <location filename="../qml/AppMain.qml" line="98" />
         <source>Connect using clipboard link</source>
         <translation type="unfinished">Verbinden via klembordlink</translation>
     </message>
     <message>
-        <location filename="../qml/AppMain.qml" line="104" />
+        <location filename="../qml/AppMain.qml" line="105" />
+        <source>Reset cache</source>
+        <translation type="unfinished">Cache resetten</translation>
+    </message>
+    <message>
+        <location filename="../qml/AppMain.qml" line="112" />
         <source>&amp;Quit</source>
         <translation type="unfinished">&amp;Quit</translation>
     </message>
     <message>
-        <location filename="../qml/AppMain.qml" line="109" />
+        <location filename="../qml/AppMain.qml" line="117" />
         <source>&amp;Edit</source>
         <translation type="unfinished">&amp;Edit</translation>
     </message>
     <message>
-        <location filename="../qml/AppMain.qml" line="111" />
+        <location filename="../qml/AppMain.qml" line="119" />
         <source>&amp;Copy to clipboard</source>
         <translation type="unfinished">&amp;Kopiëren naar klembord</translation>
     </message>
     <message>
-        <location filename="../qml/AppMain.qml" line="116" />
+        <location filename="../qml/AppMain.qml" line="124" />
         <source>&amp;Tools</source>
         <translation type="unfinished">&amp;Tools</translation>
     </message>
     <message>
-        <location filename="../qml/AppMain.qml" line="118" />
+        <location filename="../qml/AppMain.qml" line="126" />
         <source>Create ArcGIS location service</source>
         <translation type="unfinished">ArcGIS-locatieservice aanmaken</translation>
     </message>
     <message>
-        <location filename="../qml/AppMain.qml" line="123" />
+        <location filename="../qml/AppMain.qml" line="131" />
         <source>&amp;Window</source>
         <translation type="unfinished">&amp;Window</translation>
     </message>
     <message>
-        <location filename="../qml/AppMain.qml" line="125" />
+        <location filename="../qml/AppMain.qml" line="133" />
         <source>Reset window size</source>
-        <translation type="unfinished">Venster opnieuw instellen</translation>
+        <translation type="unfinished">Venstergrootte opnieuw instellen</translation>
     </message>
     <message>
-        <location filename="../qml/AppMain.qml" line="133" />
+        <location filename="../qml/AppMain.qml" line="141" />
         <source>Toggle developer console</source>
         <translation type="unfinished">Ontwikkelaarsconsole inschakelen</translation>
     </message>
     <message>
-        <location filename="../qml/AppMain.qml" line="370" />
+        <location filename="../qml/AppMain.qml" line="408" />
         <source>Offline</source>
         <translation type="unfinished">Offline</translation>
+    </message>
+    <message>
+        <location filename="../qml/AppMain.qml" line="432" />
+        <source>%1 detected</source>
+        <translation type="unfinished">%1 gedetecteerd</translation>
+    </message>
+    <message>
+        <location filename="../qml/AppMain.qml" line="433" />
+        <source>Use the %1 app to allow background activity for %2.</source>
+        <translation type="unfinished">Gebruik de %1 app om achtergrondactiviteit toe te staan voor %2.</translation>
+    </message>
+    <message>
+        <location filename="../qml/AppMain.qml" line="434" />
+        <source>This is required to ensure that a proper track of your location is created.</source>
+        <translation type="unfinished">Dit is nodig om ervoor te zorgen dat een goed spoor van uw locatie wordt gecreëerd.</translation>
+    </message>
+    <message>
+        <location filename="../qml/AppMain.qml" line="451" />
+        <source>Background location required</source>
+        <translation type="unfinished">Achtergrond locatie vereist</translation>
+    </message>
+    <message>
+        <location filename="../qml/AppMain.qml" line="471" />
+        <source>Location required</source>
+        <translation type="unfinished">Vereiste locatie</translation>
+    </message>
+    <message>
+        <location filename="../qml/AppMain.qml" line="472" />
+        <source>Permission to use your location is needed for mapping and data collection.</source>
+        <translation type="unfinished">Voor het in kaart brengen en verzamelen van gegevens is toestemming nodig om uw locatie te gebruiken.</translation>
+    </message>
+    <message>
+        <location filename="../qml/AppMain.qml" line="473" />
+        <source>Tap %1 below and allow it to be used.</source>
+        <translation type="unfinished">Tik op %1 hieronder en sta toe dat het gebruikt wordt.</translation>
+    </message>
+    <message>
+        <location filename="../qml/AppMain.qml" line="453" />
+        <source>This %1 requires permission to capture location in the background. This is needed to ensure that a proper track of your location is created.</source>
+        <translation type="unfinished">Dit %1 heeft toestemming nodig om locatie op de achtergrond vast te leggen. Dit is nodig om ervoor te zorgen dat een goed spoor van uw locatie wordt gemaakt.</translation>
+    </message>
+    <message>
+        <location filename="../qml/AppMain.qml" line="452" />
+        <source>Allow all the time</source>
+        <translation type="unfinished">De hele tijd toestaan</translation>
+    </message>
+    <message>
+        <location filename="../qml/AppMain.qml" line="452" />
+        <source>You must select %1 on the next screen.</source>
+        <translation type="unfinished">U moet %1 selecteren op het volgende scherm.</translation>
+    </message>
+    <message>
+        <location filename="../qml/AppMain.qml" line="473" />
+        <source>OK</source>
+        <translation type="unfinished">OK</translation>
     </message>
 </context>
 <context>
     <name>AreaField</name>
     <message>
-        <location filename="../cpp/Field.cpp" line="881" />
+        <location filename="../cpp/Field.cpp" line="882" />
         <source>points</source>
         <translation type="unfinished">punten</translation>
     </message>
@@ -294,7 +406,7 @@
 <context>
     <name>AudioField</name>
     <message>
-        <location filename="../cpp/Field.cpp" line="1270" />
+        <location filename="../cpp/Field.cpp" line="1277" />
         <source>seconds</source>
         <translation type="unfinished">seconden</translation>
     </message>
@@ -328,24 +440,24 @@
         <translation type="unfinished">Verslag opgeslagen</translation>
     </message>
     <message>
+        <location filename="../qml/BugReportPage.qml" line="16" />
+        <source>Share bug report</source>
+        <translation type="unfinished">Bugrapport delen</translation>
+    </message>
+    <message>
+        <location filename="../qml/BugReportPage.qml" line="16" />
+        <source>Save bug report</source>
+        <translation type="unfinished">Bugrapport opslaan</translation>
+    </message>
+    <message>
         <location filename="../qml/BugReportPage.qml" line="62" />
         <source>Failed to copy report</source>
-        <translation type="unfinished">Mislukt om verslag te kopiëren</translation>
+        <translation type="unfinished">Rapport niet gekopieerd</translation>
     </message>
     <message>
         <location filename="../qml/BugReportPage.qml" line="39" />
         <source>Describe the issue</source>
         <translation type="unfinished">Beschrijf de kwestie</translation>
-    </message>
-    <message>
-        <location filename="../qml/BugReportPage.qml" line="16" />
-        <source>Share report</source>
-        <translation type="unfinished">Verslag delen</translation>
-    </message>
-    <message>
-        <location filename="../qml/BugReportPage.qml" line="16" />
-        <source>Save report</source>
-        <translation type="unfinished">Rapport opslaan</translation>
     </message>
     <message>
         <location filename="../qml/BugReportPage.qml" line="40" />
@@ -366,48 +478,48 @@
 <context>
     <name>CHost_Qt</name>
     <message>
-        <location filename="../lib/classic/Host/Qt/QtHost.cpp" line="1261" />
+        <location filename="../lib/classic/Host/Qt/QtHost.cpp" line="1266" />
         <source>Data exported</source>
-        <translation type="unfinished">Geëxporteerde gegevens</translation>
+        <translation type="unfinished">Uitgevoerde gegevens</translation>
     </message>
 </context>
 <context>
     <name>CTOConnector</name>
     <message>
-        <location filename="../cpp/CTO/CTOConnector.cpp" line="82" />
-        <source>Failed to create project</source>
-        <translation type="unfinished">Mislukt om project aan te maken</translation>
+        <location filename="../cpp/CTO/CTOConnector.cpp" line="87" />
+        <source>Failed to create %1</source>
+        <translation type="unfinished">Niet gelukt om %1 aan te maken</translation>
     </message>
     <message>
-        <location filename="../cpp/CTO/CTOConnector.cpp" line="135" />
+        <location filename="../cpp/CTO/CTOConnector.cpp" line="140" />
         <source>Logged out</source>
         <translation type="unfinished">Uitgelogd</translation>
     </message>
     <message>
-        <location filename="../cpp/CTO/CTOConnector.cpp" line="163" />
+        <location filename="../cpp/CTO/CTOConnector.cpp" line="153" />
+        <source>Unsent data</source>
+        <translation type="unfinished">Niet verzonden gegevens</translation>
+    </message>
+    <message>
+        <location filename="../cpp/CTO/CTOConnector.cpp" line="168" />
         <source>Form download failed</source>
         <translation type="unfinished">Formulier downloaden mislukt</translation>
     </message>
     <message>
-        <location filename="../cpp/CTO/CTOConnector.cpp" line="170" />
+        <location filename="../cpp/CTO/CTOConnector.cpp" line="175" />
         <source>Bad package</source>
         <translation type="unfinished">Slecht pakket</translation>
-    </message>
-    <message>
-        <location filename="../cpp/CTO/CTOConnector.cpp" line="177" />
-        <source>Failed to read form settings sheet</source>
-        <translation type="unfinished">Formulierinstellingen niet gelezen</translation>
     </message>
 </context>
 <context>
     <name>CheckField</name>
     <message>
-        <location filename="../cpp/Field.cpp" line="655" />
+        <location filename="../cpp/Field.cpp" line="656" />
         <source>Yes</source>
         <translation type="unfinished">Ja</translation>
     </message>
     <message>
-        <location filename="../cpp/Field.cpp" line="655" />
+        <location filename="../cpp/Field.cpp" line="656" />
         <source>No</source>
         <translation type="unfinished">Geen</translation>
     </message>
@@ -416,8 +528,8 @@
     <name>ClassicConnector</name>
     <message>
         <location filename="../cpp/Classic/ClassicConnector.cpp" line="77" />
-        <location filename="../cpp/Classic/ClassicConnector.cpp" line="510" />
-        <location filename="../cpp/Classic/ClassicConnector.cpp" line="550" />
+        <location filename="../cpp/Classic/ClassicConnector.cpp" line="517" />
+        <location filename="../cpp/Classic/ClassicConnector.cpp" line="557" />
         <source>Cannot create path</source>
         <translation type="unfinished">Kan geen pad aanmaken</translation>
     </message>
@@ -427,40 +539,40 @@
         <translation type="unfinished">Server niet gevonden</translation>
     </message>
     <message>
-        <location filename="../cpp/Classic/ClassicConnector.cpp" line="308" />
+        <location filename="../cpp/Classic/ClassicConnector.cpp" line="315" />
         <source>Not supported</source>
         <translation type="unfinished">Niet ondersteund</translation>
     </message>
     <message>
-        <location filename="../cpp/Classic/ClassicConnector.cpp" line="323" />
+        <location filename="../cpp/Classic/ClassicConnector.cpp" line="330" />
         <source>Unsent data</source>
         <translation type="unfinished">Niet verzonden gegevens</translation>
     </message>
     <message>
-        <location filename="../cpp/Classic/ClassicConnector.cpp" line="330" />
+        <location filename="../cpp/Classic/ClassicConnector.cpp" line="337" />
         <source>Not found</source>
         <translation type="unfinished">Niet gevonden.</translation>
     </message>
     <message>
-        <location filename="../cpp/Classic/ClassicConnector.cpp" line="279" />
-        <location filename="../cpp/Classic/ClassicConnector.cpp" line="336" />
+        <location filename="../cpp/Classic/ClassicConnector.cpp" line="525" />
+        <source>Failed to read %1</source>
+        <translation type="unfinished">Kan %1 niet lezen</translation>
+    </message>
+    <message>
+        <location filename="../cpp/Classic/ClassicConnector.cpp" line="286" />
+        <location filename="../cpp/Classic/ClassicConnector.cpp" line="343" />
         <source>DEF file corrupt</source>
         <translation type="unfinished">DEF bestand corrupt</translation>
     </message>
     <message>
-        <location filename="../cpp/Classic/ClassicConnector.cpp" line="360" />
+        <location filename="../cpp/Classic/ClassicConnector.cpp" line="367" />
         <source>Download failed</source>
         <translation type="unfinished">Download mislukt</translation>
     </message>
     <message>
-        <location filename="../cpp/Classic/ClassicConnector.cpp" line="369" />
+        <location filename="../cpp/Classic/ClassicConnector.cpp" line="376" />
         <source>Bad archive</source>
         <translation type="unfinished">Slecht archief</translation>
-    </message>
-    <message>
-        <location filename="../cpp/Classic/ClassicConnector.cpp" line="518" />
-        <source>Failed to read classic project</source>
-        <translation type="unfinished">Mislukt om klassiek project te lezen</translation>
     </message>
 </context>
 <context>
@@ -487,6 +599,44 @@
         <location filename="../controls/imports/CyberTracker.1/ConfirmPopup.qml" line="12" />
         <source>Cancel</source>
         <translation type="unfinished">Annuleren</translation>
+    </message>
+</context>
+<context>
+    <name>ConnectClassicPage</name>
+    <message>
+        <location filename="../qml/Classic/ConnectClassicPage.qml" line="11" />
+        <source>Connect to</source>
+        <translation type="unfinished">Maak verbinding met</translation>
+    </message>
+    <message>
+        <location filename="../qml/Classic/ConnectClassicPage.qml" line="26" />
+        <source>Desktop install</source>
+        <translation type="unfinished">Desktop installatie</translation>
+    </message>
+    <message>
+        <location filename="../qml/Classic/ConnectClassicPage.qml" line="27" />
+        <source>Scan for %1 installed by CyberTracker desktop</source>
+        <translation type="unfinished">Scan voor %1 geïnstalleerd door CyberTracker desktop</translation>
+    </message>
+    <message>
+        <location filename="../qml/Classic/ConnectClassicPage.qml" line="41" />
+        <source>Web install</source>
+        <translation type="unfinished">Web installeren</translation>
+    </message>
+    <message>
+        <location filename="../qml/Classic/ConnectClassicPage.qml" line="42" />
+        <source>Install a %1 from the web. Requires a link from the %2 publisher.</source>
+        <translation type="unfinished">Installeer een %1 van het web. Vereist een link van de uitgever %2.</translation>
+    </message>
+    <message>
+        <location filename="../qml/Classic/ConnectClassicPage.qml" line="53" />
+        <source>Samples</source>
+        <translation type="unfinished">Monsters</translation>
+    </message>
+    <message>
+        <location filename="../qml/Classic/ConnectClassicPage.qml" line="54" />
+        <source>Install a sample to see CyberTracker in action. Saved data will not be kept.</source>
+        <translation type="unfinished">Installeer een voorbeeld om CyberTracker in actie te zien. Opgeslagen gegevens worden niet bewaard.</translation>
     </message>
 </context>
 <context>
@@ -572,17 +722,17 @@
 <context>
     <name>ConnectFormPage</name>
     <message>
-        <location filename="../qml/ConnectFormPage.qml" line="16" />
+        <location filename="../qml/ConnectFormPage.qml" line="17" />
         <source>Select forms</source>
         <translation type="unfinished">Formulieren kiezen</translation>
     </message>
     <message>
-        <location filename="../qml/ConnectFormPage.qml" line="34" />
+        <location filename="../qml/ConnectFormPage.qml" line="39" />
         <source>All</source>
         <translation type="unfinished">Alle</translation>
     </message>
     <message>
-        <location filename="../qml/ConnectFormPage.qml" line="47" />
+        <location filename="../qml/ConnectFormPage.qml" line="52" />
         <source>None</source>
         <translation type="unfinished">Geen</translation>
     </message>
@@ -591,8 +741,8 @@
     <name>ConnectKoBoPage</name>
     <message>
         <location filename="../qml/ODK/ConnectKoBoPage.qml" line="19" />
-        <source>Connect</source>
-        <translation type="unfinished">Verbind</translation>
+        <source>Connect to %1</source>
+        <translation type="unfinished">Maak verbinding met %1</translation>
     </message>
     <message>
         <location filename="../qml/ODK/ConnectKoBoPage.qml" line="28" />
@@ -624,8 +774,8 @@
     <name>ConnectKoBoSharedPage</name>
     <message>
         <location filename="../qml/ODK/ConnectKoBoSharedPage.qml" line="24" />
-        <source>%1 Connect</source>
-        <translation type="unfinished">%1 Connect</translation>
+        <source>Connect to %1</source>
+        <translation type="unfinished">Maak verbinding met %1</translation>
     </message>
     <message>
         <location filename="../qml/ODK/ConnectKoBoSharedPage.qml" line="44" />
@@ -638,22 +788,22 @@
         <translation type="unfinished">Gebruik %1 voor sjablonen</translation>
     </message>
     <message>
-        <location filename="../qml/ODK/ConnectKoBoSharedPage.qml" line="73" />
+        <location filename="../qml/ODK/ConnectKoBoSharedPage.qml" line="74" />
         <source>Choose forms</source>
         <translation type="unfinished">Formulieren kiezen</translation>
     </message>
     <message>
-        <location filename="../qml/ODK/ConnectKoBoSharedPage.qml" line="109" />
+        <location filename="../qml/ODK/ConnectKoBoSharedPage.qml" line="110" />
         <source>Connection failed</source>
         <translation type="unfinished">Verbinding mislukt</translation>
     </message>
     <message>
-        <location filename="../qml/ODK/ConnectKoBoSharedPage.qml" line="141" />
+        <location filename="../qml/ODK/ConnectKoBoSharedPage.qml" line="142" />
         <source>No forms found</source>
         <translation type="unfinished">Geen formulieren gevonden</translation>
     </message>
     <message>
-        <location filename="../qml/ODK/ConnectKoBoSharedPage.qml" line="154" />
+        <location filename="../qml/ODK/ConnectKoBoSharedPage.qml" line="155" />
         <source>Error retrieving form</source>
         <translation type="unfinished">Fout bij het ophalen van het formulier</translation>
     </message>
@@ -662,18 +812,18 @@
     <name>ConnectODKCentralPage</name>
     <message>
         <location filename="../qml/ODK/ConnectODKCentralPage.qml" line="20" />
-        <source>Connect</source>
-        <translation type="unfinished">Verbind</translation>
+        <source>Connect to %1</source>
+        <translation type="unfinished">Maak verbinding met %1</translation>
     </message>
     <message>
         <location filename="../qml/ODK/ConnectODKCentralPage.qml" line="40" />
-        <source>Select project</source>
-        <translation type="unfinished">Selecteer project</translation>
+        <source>Select %1</source>
+        <translation type="unfinished">Selecteer %1</translation>
     </message>
     <message>
         <location filename="../qml/ODK/ConnectODKCentralPage.qml" line="97" />
-        <source>No projects found</source>
-        <translation type="unfinished">Geen projecten gevonden</translation>
+        <source>No %1 found</source>
+        <translation type="unfinished">Geen %1 gevonden</translation>
     </message>
     <message>
         <location filename="../qml/ODK/ConnectODKCentralPage.qml" line="120" />
@@ -682,69 +832,87 @@
     </message>
 </context>
 <context>
+    <name>ConnectOnlinePage</name>
+    <message>
+        <location filename="../qml/Classic/ConnectOnlinePage.qml" line="13" />
+        <source>Connect to %1</source>
+        <translation type="unfinished">Maak verbinding met %1</translation>
+    </message>
+    <message>
+        <location filename="../qml/Classic/ConnectOnlinePage.qml" line="47" />
+        <source>%1 from %2</source>
+        <translation type="unfinished">%1 van %2</translation>
+    </message>
+    <message>
+        <location filename="../qml/Classic/ConnectOnlinePage.qml" line="47" />
+        <source>Scan QR code</source>
+        <translation type="unfinished">Scan QR-code</translation>
+    </message>
+    <message>
+        <location filename="../qml/Classic/ConnectOnlinePage.qml" line="73" />
+        <source>Getting started</source>
+        <translation type="unfinished">Aan de slag</translation>
+    </message>
+</context>
+<context>
     <name>ConnectPage</name>
     <message>
         <location filename="../qml/ConnectPage.qml" line="12" />
-        <location filename="../qml/SMART/ConnectPage.qml" line="43" />
+        <location filename="../qml/SMART/ConnectPage.qml" line="41" />
         <source>Connect</source>
         <translation type="unfinished">Verbind</translation>
     </message>
     <message>
-        <location filename="../qml/Classic/ConnectPage.qml" line="26" />
         <location filename="../qml/SMART/ConnectPage.qml" line="26" />
         <source>Desktop install</source>
         <translation type="unfinished">Desktop installatie</translation>
     </message>
     <message>
-        <location filename="../qml/Classic/ConnectPage.qml" line="27" />
-        <source>Scan for projects installed by CyberTracker desktop</source>
-        <translation type="unfinished">Scannen naar projecten geïnstalleerd door CyberTracker desktop</translation>
+        <location filename="../qml/SMART/ConnectPage.qml" line="42" />
+        <source>Add a %1 from SMART Connect</source>
+        <translation type="unfinished">Voeg een %1 toe van SMART Connect</translation>
     </message>
     <message>
-        <location filename="../qml/Classic/ConnectPage.qml" line="43" />
-        <source>Web install</source>
-        <translation type="unfinished">Web installeren</translation>
-    </message>
-    <message>
-        <location filename="../qml/Classic/ConnectPage.qml" line="44" />
-        <source>Install a project from a web source. Requires a web link from the project publisher.</source>
-        <translation type="unfinished">Installeer een project van een webbron. Vereist een weblink van de uitgever van het project.</translation>
-    </message>
-    <message>
-        <location filename="../qml/Classic/ConnectPage.qml" line="55" />
-        <source>Samples</source>
-        <translation type="unfinished">Monsters</translation>
-    </message>
-    <message>
-        <location filename="../qml/Classic/ConnectPage.qml" line="56" />
-        <source>Install a sample to see CyberTracker in action. Saved data will not be kept.</source>
-        <translation type="unfinished">Installeer een voorbeeld om CyberTracker in actie te zien. Opgeslagen gegevens worden niet bewaard.</translation>
+        <location filename="../qml/SMART/ConnectPage.qml" line="54" />
+        <source>Add a %1 from SMART Collect</source>
+        <translation type="unfinished">Voeg een %1 toe van SMART Collect</translation>
     </message>
     <message>
         <location filename="../qml/EarthRanger/ConnectPage.qml" line="8" />
-        <location filename="../qml/Esri/ConnectPage.qml" line="19" />
         <source>Connect to</source>
         <translation type="unfinished">Maak verbinding met</translation>
     </message>
     <message>
+        <location filename="../qml/Google/ConnectPage.qml" line="47" />
+        <source>Scan QR code</source>
+        <translation type="unfinished">Scan QR-code</translation>
+    </message>
+    <message>
+        <location filename="../qml/Google/ConnectPage.qml" line="47" />
+        <source>%1 from the %2 add-on for %3</source>
+        <translation type="unfinished">%1 van de %2 add-on voor %3</translation>
+    </message>
+    <message>
+        <location filename="../qml/Google/ConnectPage.qml" line="73" />
+        <source>Getting started</source>
+        <translation type="unfinished">Aan de slag</translation>
+    </message>
+    <message>
         <location filename="../qml/SMART/ConnectPage.qml" line="27" />
-        <source>Scan for projects installed by SMART Desktop</source>
-        <translation type="unfinished">Scannen naar projecten geïnstalleerd door SMART Desktop</translation>
+        <source>Scan for %1 installed by SMART Desktop</source>
+        <translation type="unfinished">Scan voor %1 geïnstalleerd door SMART Desktop</translation>
     </message>
     <message>
-        <location filename="../qml/SMART/ConnectPage.qml" line="44" />
-        <source>Install a project from SMART Connect</source>
-        <translation type="unfinished">Een project installeren vanuit SMART Connect</translation>
-    </message>
-    <message>
-        <location filename="../qml/SMART/ConnectPage.qml" line="55" />
+        <location filename="../qml/SMART/ConnectPage.qml" line="53" />
         <source>Collect</source>
         <translation type="unfinished">Verzamel</translation>
     </message>
     <message>
-        <location filename="../qml/SMART/ConnectPage.qml" line="56" />
-        <source>Install a project from SMART Collect</source>
-        <translation type="unfinished">Een project installeren vanuit SMART Collect</translation>
+        <location filename="../qml/Esri/ConnectPage.qml" line="19" />
+        <location filename="../qml/Google/ConnectPage.qml" line="13" />
+        <location filename="../qml/SMART/ConnectPage.qml" line="11" />
+        <source>Connect to %1</source>
+        <translation type="unfinished">Maak verbinding met %1</translation>
     </message>
     <message>
         <location filename="../qml/Esri/ConnectPage.qml" line="40" />
@@ -760,7 +928,17 @@
 <context>
     <name>ConnectPane</name>
     <message>
-        <location filename="../qml/ConnectPane.qml" line="101" />
+        <location filename="../qml/ConnectPane.qml" line="108" />
+        <source>Scan QR code</source>
+        <translation type="unfinished">Scan QR-code</translation>
+    </message>
+    <message>
+        <location filename="../qml/ConnectPane.qml" line="109" />
+        <source>Scan QR code to install a %1</source>
+        <translation type="unfinished">Scan QR-code om een %1 te installeren</translation>
+    </message>
+    <message>
+        <location filename="../qml/ConnectPane.qml" line="135" />
         <source>Coming soon...</source>
         <translation type="unfinished">Binnenkort...</translation>
     </message>
@@ -768,27 +946,27 @@
 <context>
     <name>ConnectPaneSM</name>
     <message>
-        <location filename="../qml/SMART/ConnectPaneSM.qml" line="35" />
-        <source>Scan for desktop projects</source>
-        <translation type="unfinished">Scannen voor desktop projecten</translation>
+        <location filename="../qml/SMART/ConnectPaneSM.qml" line="36" />
+        <source>Scan for desktop %1</source>
+        <translation type="unfinished">Scannen naar bureaublad %1</translation>
     </message>
     <message>
-        <location filename="../qml/SMART/ConnectPaneSM.qml" line="53" />
-        <source>Connect to an online project</source>
-        <translation type="unfinished">Verbinding maken met een online project</translation>
+        <location filename="../qml/SMART/ConnectPaneSM.qml" line="52" />
+        <source>Connect to an online %1</source>
+        <translation type="unfinished">Maak verbinding met een online %1</translation>
     </message>
     <message>
-        <location filename="../qml/SMART/ConnectPaneSM.qml" line="65" />
-        <source>Connect to a community project</source>
-        <translation type="unfinished">Aansluiten bij een gemeenschapsproject</translation>
+        <location filename="../qml/SMART/ConnectPaneSM.qml" line="64" />
+        <source>Connect to a community %1</source>
+        <translation type="unfinished">Maak verbinding met een gemeenschap %1</translation>
     </message>
     <message>
-        <location filename="../qml/SMART/ConnectPaneSM.qml" line="73" />
+        <location filename="../qml/SMART/ConnectPaneSM.qml" line="72" />
         <source>Scan QR code</source>
         <translation type="unfinished">Scan QR-code</translation>
     </message>
     <message>
-        <location filename="../qml/SMART/ConnectPaneSM.qml" line="77" />
+        <location filename="../qml/SMART/ConnectPaneSM.qml" line="76" />
         <source>Install from a shared QR code</source>
         <translation type="unfinished">Installeren vanaf een gedeelde QR-code</translation>
     </message>
@@ -796,7 +974,7 @@
 <context>
     <name>ConnectQRCodePage</name>
     <message>
-        <location filename="../qml/ConnectQRCodePage.qml" line="17" />
+        <location filename="../qml/ConnectQRCodePage.qml" line="18" />
         <source>Scan QR code</source>
         <translation type="unfinished">Scan QR-code</translation>
     </message>
@@ -850,12 +1028,12 @@
         <translation type="unfinished">Webinstallatie</translation>
     </message>
     <message>
-        <location filename="../qml/Classic/ConnectWebInstallPage.qml" line="40" />
+        <location filename="../qml/Classic/ConnectWebInstallPage.qml" line="38" />
         <source>Enter web address</source>
         <translation type="unfinished">Voer webadres in</translation>
     </message>
     <message>
-        <location filename="../qml/Classic/ConnectWebInstallPage.qml" line="45" />
+        <location filename="../qml/Classic/ConnectWebInstallPage.qml" line="43" />
         <source>Install</source>
         <translation type="unfinished">Installeer</translation>
     </message>
@@ -907,8 +1085,8 @@
     </message>
     <message>
         <location filename="../qml/CreateEsriServiceWindow.qml" line="46" />
-        <source>Create an ArcGIS Online hosted feature service which will receive location track data from Survey123 projects.</source>
-        <translation type="unfinished">Maak een ArcGIS Online gehoste feature service die locatie track data van Survey123 projecten zal ontvangen.</translation>
+        <source>Create an ArcGIS Online hosted feature service which will receive location track data from Survey123 %1.</source>
+        <translation type="unfinished">Maak een ArcGIS Online gehoste feature service die locatietrackgegevens zal ontvangen van Survey123 %1.</translation>
     </message>
     <message>
         <location filename="../qml/CreateEsriServiceWindow.qml" line="86" />
@@ -975,8 +1153,8 @@
     <name>EarthRangerConnector</name>
     <message>
         <location filename="../cpp/EarthRanger/EarthRangerConnector.cpp" line="108" />
-        <source>Failed to create project</source>
-        <translation type="unfinished">Mislukt om project aan te maken</translation>
+        <source>Failed to create %1</source>
+        <translation type="unfinished">Niet gelukt om %1 aan te maken</translation>
     </message>
     <message>
         <location filename="../cpp/EarthRanger/EarthRangerConnector.cpp" line="206" />
@@ -1044,65 +1222,65 @@
         <source>Other</source>
         <translation type="unfinished">Andere</translation>
     </message>
+    <message>
+        <location filename="../cpp/Element.cpp" line="298" />
+        <source>Empty</source>
+        <translation type="unfinished">Leeg</translation>
+    </message>
 </context>
 <context>
     <name>EsriConnector</name>
     <message>
-        <location filename="../cpp/Esri/EsriConnector.cpp" line="96" />
-        <source>Failed to create project</source>
-        <translation type="unfinished">Mislukt om project aan te maken</translation>
-    </message>
-    <message>
-        <location filename="../cpp/Esri/EsriConnector.cpp" line="184" />
+        <location filename="../cpp/Esri/EsriConnector.cpp" line="185" />
         <source>Logged out</source>
         <translation type="unfinished">Uitgelogd</translation>
     </message>
     <message>
-        <location filename="../cpp/Esri/EsriConnector.cpp" line="290" />
+        <location filename="../cpp/Esri/EsriConnector.cpp" line="291" />
         <source>Form not found</source>
         <translation type="unfinished">Formulier niet gevonden</translation>
     </message>
     <message>
-        <location filename="../cpp/Esri/EsriConnector.cpp" line="157" />
-        <location filename="../cpp/Esri/EsriConnector.cpp" line="213" />
+        <location filename="../cpp/Esri/EsriConnector.cpp" line="158" />
+        <location filename="../cpp/Esri/EsriConnector.cpp" line="214" />
         <source>Could not retrieve survey</source>
         <translation type="unfinished">Kon de enquête niet ophalen</translation>
     </message>
     <message>
-        <location filename="../cpp/Esri/EsriConnector.cpp" line="201" />
+        <location filename="../cpp/Esri/EsriConnector.cpp" line="97" />
+        <source>Failed to create %1</source>
+        <translation type="unfinished">Niet gelukt om %1 aan te maken</translation>
+    </message>
+    <message>
+        <location filename="../cpp/Esri/EsriConnector.cpp" line="202" />
         <source>Login required</source>
         <translation type="unfinished">Inloggen verplicht</translation>
     </message>
     <message>
-        <location filename="../cpp/Esri/EsriConnector.cpp" line="266" />
+        <location filename="../cpp/Esri/EsriConnector.cpp" line="267" />
         <source>Form download failed</source>
         <translation type="unfinished">Formulier downloaden mislukt</translation>
     </message>
     <message>
-        <location filename="../cpp/Esri/EsriConnector.cpp" line="273" />
+        <location filename="../cpp/Esri/EsriConnector.cpp" line="274" />
         <source>Bad form zip</source>
         <translation type="unfinished">Slechte vorm rits</translation>
     </message>
     <message>
-        <location filename="../cpp/Esri/EsriConnector.cpp" line="280" />
+        <location filename="../cpp/Esri/EsriConnector.cpp" line="281" />
         <source>Bad form</source>
         <translation type="unfinished">Slechte vorm</translation>
     </message>
     <message>
-        <location filename="../cpp/Esri/EsriConnector.cpp" line="297" />
+        <location filename="../cpp/Esri/EsriConnector.cpp" line="298" />
         <source>Failed to copy form file</source>
         <translation type="unfinished">Kopiëren van formulierbestand mislukt</translation>
-    </message>
-    <message>
-        <location filename="../cpp/Esri/EsriConnector.cpp" line="330" />
-        <source>Failed to read form settings sheet</source>
-        <translation type="unfinished">Formulierinstellingen niet gelezen</translation>
     </message>
 </context>
 <context>
     <name>EsriMapView</name>
     <message>
-        <location filename="../controls/imports/CyberTracker.1/EsriMapView.qml" line="288" />
+        <location filename="../controls/imports/CyberTracker.1/EsriMapView.qml" line="275" />
         <source>Sighting</source>
         <translation type="unfinished">Waarneming</translation>
     </message>
@@ -1164,17 +1342,17 @@
 <context>
     <name>FieldAudio</name>
     <message>
-        <location filename="../controls/imports/CyberTracker.1/FieldAudio.qml" line="113" />
+        <location filename="../controls/imports/CyberTracker.1/FieldAudio.qml" line="115" />
         <source>Delete the recording?</source>
         <translation type="unfinished">De opname wissen?</translation>
     </message>
     <message>
-        <location filename="../controls/imports/CyberTracker.1/FieldAudio.qml" line="114" />
+        <location filename="../controls/imports/CyberTracker.1/FieldAudio.qml" line="116" />
         <source>Yes, delete it</source>
         <translation type="unfinished">Ja, verwijder het</translation>
     </message>
     <message>
-        <location filename="../controls/imports/CyberTracker.1/FieldAudio.qml" line="163" />
+        <location filename="../controls/imports/CyberTracker.1/FieldAudio.qml" line="165" />
         <source>seconds</source>
         <translation type="unfinished">seconden</translation>
     </message>
@@ -1190,12 +1368,12 @@
 <context>
     <name>FieldBarcodePane</name>
     <message>
-        <location filename="../controls/imports/CyberTracker.1/FieldBarcodePane.qml" line="69" />
+        <location filename="../controls/imports/CyberTracker.1/FieldBarcodePane.qml" line="68" />
         <source>Clear code?</source>
         <translation type="unfinished">Duidelijke code?</translation>
     </message>
     <message>
-        <location filename="../controls/imports/CyberTracker.1/FieldBarcodePane.qml" line="70" />
+        <location filename="../controls/imports/CyberTracker.1/FieldBarcodePane.qml" line="69" />
         <source>Yes, clear it</source>
         <translation type="unfinished">Ja, maak het vrij.</translation>
     </message>
@@ -1203,24 +1381,24 @@
 <context>
     <name>FieldCamera</name>
     <message>
-        <location filename="../controls/imports/CyberTracker.1/FieldCamera.qml" line="75" />
+        <location filename="../controls/imports/CyberTracker.1/FieldCamera.qml" line="77" />
         <source>Failed to copy</source>
         <translation type="unfinished">Niet gekopieerd</translation>
     </message>
     <message>
-        <location filename="../controls/imports/CyberTracker.1/FieldCamera.qml" line="245" />
+        <location filename="../controls/imports/CyberTracker.1/FieldCamera.qml" line="247" />
         <source>Delete the image?</source>
         <translation type="unfinished">Het beeld verwijderen?</translation>
     </message>
     <message>
-        <location filename="../controls/imports/CyberTracker.1/FieldCamera.qml" line="246" />
+        <location filename="../controls/imports/CyberTracker.1/FieldCamera.qml" line="248" />
         <source>Yes, delete it</source>
         <translation type="unfinished">Ja, verwijder het</translation>
     </message>
     <message>
-        <location filename="../controls/imports/CyberTracker.1/FieldCamera.qml" line="482" />
+        <location filename="../controls/imports/CyberTracker.1/FieldCamera.qml" line="484" />
         <source>Failed to move</source>
-        <translation type="unfinished">Geen beweging.</translation>
+        <translation type="unfinished">Geen beweging mogelijk.</translation>
     </message>
 </context>
 <context>
@@ -1234,12 +1412,12 @@
 <context>
     <name>FieldCameraPane</name>
     <message>
-        <location filename="../controls/imports/CyberTracker.1/FieldCameraPane.qml" line="69" />
+        <location filename="../controls/imports/CyberTracker.1/FieldCameraPane.qml" line="68" />
         <source>Delete the image?</source>
         <translation type="unfinished">Het beeld verwijderen?</translation>
     </message>
     <message>
-        <location filename="../controls/imports/CyberTracker.1/FieldCameraPane.qml" line="70" />
+        <location filename="../controls/imports/CyberTracker.1/FieldCameraPane.qml" line="69" />
         <source>Yes, delete it</source>
         <translation type="unfinished">Ja, verwijder het</translation>
     </message>
@@ -1255,32 +1433,32 @@
 <context>
     <name>FieldEditorDelegate</name>
     <message>
-        <location filename="../controls/imports/CyberTracker.1/FieldEditorDelegate.qml" line="183" />
+        <location filename="../controls/imports/CyberTracker.1/FieldEditorDelegate.qml" line="186" />
         <source>Location</source>
         <translation type="unfinished">Locatie</translation>
     </message>
     <message>
-        <location filename="../controls/imports/CyberTracker.1/FieldEditorDelegate.qml" line="199" />
+        <location filename="../controls/imports/CyberTracker.1/FieldEditorDelegate.qml" line="202" />
         <source>Waiting for time correction</source>
         <translation type="unfinished">Wachten op tijdcorrectie</translation>
     </message>
     <message>
-        <location filename="../controls/imports/CyberTracker.1/FieldEditorDelegate.qml" line="356" />
+        <location filename="../controls/imports/CyberTracker.1/FieldEditorDelegate.qml" line="369" />
         <source>Tap to scan</source>
         <translation type="unfinished">Tikken om te scannen</translation>
     </message>
     <message>
-        <location filename="../controls/imports/CyberTracker.1/FieldEditorDelegate.qml" line="1034" />
+        <location filename="../controls/imports/CyberTracker.1/FieldEditorDelegate.qml" line="1047" />
         <source>Reset data?</source>
         <translation type="unfinished">Gegevens resetten?</translation>
     </message>
     <message>
-        <location filename="../controls/imports/CyberTracker.1/FieldEditorDelegate.qml" line="1044" />
+        <location filename="../controls/imports/CyberTracker.1/FieldEditorDelegate.qml" line="1057" />
         <source>Yes</source>
         <translation type="unfinished">Ja</translation>
     </message>
     <message>
-        <location filename="../controls/imports/CyberTracker.1/FieldEditorDelegate.qml" line="1057" />
+        <location filename="../controls/imports/CyberTracker.1/FieldEditorDelegate.qml" line="1070" />
         <source>No</source>
         <translation type="unfinished">Geen</translation>
     </message>
@@ -1296,17 +1474,17 @@
 <context>
     <name>FieldFilePane</name>
     <message>
-        <location filename="../controls/imports/CyberTracker.1/FieldFilePane.qml" line="126" />
+        <location filename="../controls/imports/CyberTracker.1/FieldFilePane.qml" line="125" />
         <source>Clear file?</source>
         <translation type="unfinished">Duidelijk bestand?</translation>
     </message>
     <message>
-        <location filename="../controls/imports/CyberTracker.1/FieldFilePane.qml" line="127" />
+        <location filename="../controls/imports/CyberTracker.1/FieldFilePane.qml" line="126" />
         <source>The original will not be deleted.</source>
         <translation type="unfinished">Het origineel wordt niet gewist.</translation>
     </message>
     <message>
-        <location filename="../controls/imports/CyberTracker.1/FieldFilePane.qml" line="128" />
+        <location filename="../controls/imports/CyberTracker.1/FieldFilePane.qml" line="127" />
         <source>Yes, remove it</source>
         <translation type="unfinished">Ja, verwijder het</translation>
     </message>
@@ -1402,17 +1580,17 @@
 <context>
     <name>FieldLinePane</name>
     <message>
-        <location filename="../controls/imports/CyberTracker.1/FieldLinePane.qml" line="92" />
+        <location filename="../controls/imports/CyberTracker.1/FieldLinePane.qml" line="91" />
         <source>Clear area?</source>
         <translation type="unfinished">Duidelijk gebied?</translation>
     </message>
     <message>
-        <location filename="../controls/imports/CyberTracker.1/FieldLinePane.qml" line="92" />
+        <location filename="../controls/imports/CyberTracker.1/FieldLinePane.qml" line="91" />
         <source>Clear line?</source>
         <translation type="unfinished">Duidelijke lijn?</translation>
     </message>
     <message>
-        <location filename="../controls/imports/CyberTracker.1/FieldLinePane.qml" line="93" />
+        <location filename="../controls/imports/CyberTracker.1/FieldLinePane.qml" line="92" />
         <source>Yes, clear all points</source>
         <translation type="unfinished">Ja, alle punten wissen</translation>
     </message>
@@ -1423,6 +1601,14 @@
         <location filename="../controls/imports/CyberTracker.1/FieldListView.qml" line="33" />
         <source>Search</source>
         <translation type="unfinished">Zoek op</translation>
+    </message>
+</context>
+<context>
+    <name>FieldListViewEditor</name>
+    <message>
+        <location filename="../controls/imports/CyberTracker.1/FieldListViewEditor.qml" line="85" />
+        <source>Value required</source>
+        <translation type="unfinished">Vereiste waarde</translation>
     </message>
 </context>
 <context>
@@ -1471,27 +1657,27 @@
 <context>
     <name>FieldRecordListView</name>
     <message>
-        <location filename="../controls/imports/CyberTracker.1/FieldRecordListView.qml" line="99" />
+        <location filename="../controls/imports/CyberTracker.1/FieldRecordListView.qml" line="101" />
         <source>Delete record?</source>
         <translation type="unfinished">Record verwijderen?</translation>
     </message>
     <message>
-        <location filename="../controls/imports/CyberTracker.1/FieldRecordListView.qml" line="99" />
+        <location filename="../controls/imports/CyberTracker.1/FieldRecordListView.qml" line="101" />
         <source>Reset record?</source>
         <translation type="unfinished">Record resetten?</translation>
     </message>
     <message>
-        <location filename="../controls/imports/CyberTracker.1/FieldRecordListView.qml" line="109" />
+        <location filename="../controls/imports/CyberTracker.1/FieldRecordListView.qml" line="111" />
         <source>Yes</source>
         <translation type="unfinished">Ja</translation>
     </message>
     <message>
-        <location filename="../controls/imports/CyberTracker.1/FieldRecordListView.qml" line="126" />
+        <location filename="../controls/imports/CyberTracker.1/FieldRecordListView.qml" line="128" />
         <source>No</source>
         <translation type="unfinished">Geen</translation>
     </message>
     <message>
-        <location filename="../controls/imports/CyberTracker.1/FieldRecordListView.qml" line="159" />
+        <location filename="../controls/imports/CyberTracker.1/FieldRecordListView.qml" line="161" />
         <source>Add record</source>
         <translation type="unfinished">Record toevoegen</translation>
     </message>
@@ -1499,9 +1685,9 @@
 <context>
     <name>FieldRecordNumberGridView</name>
     <message>
-        <location filename="../controls/imports/CyberTracker.1/FieldRecordNumberGridView.qml" line="199" />
-        <source>Group field not a number</source>
-        <translation type="unfinished">Groepsveld geen nummer</translation>
+        <location filename="../controls/imports/CyberTracker.1/FieldRecordNumberGridView.qml" line="201" />
+        <source>Value required</source>
+        <translation type="unfinished">Vereiste waarde</translation>
     </message>
 </context>
 <context>
@@ -1520,7 +1706,7 @@
 <context>
     <name>FileField</name>
     <message>
-        <location filename="../cpp/Field.cpp" line="1390" />
+        <location filename="../cpp/Field.cpp" line="1397" />
         <source>file</source>
         <translation type="unfinished">bestand</translation>
     </message>
@@ -1528,37 +1714,37 @@
 <context>
     <name>Form</name>
     <message>
-        <location filename="../cpp/Form.cpp" line="26" />
+        <location filename="../cpp/Form.cpp" line="28" />
         <source>Track</source>
         <translation type="unfinished">Track</translation>
     </message>
     <message>
-        <location filename="../cpp/Form.cpp" line="28" />
+        <location filename="../cpp/Form.cpp" line="30" />
         <source>Location</source>
         <translation type="unfinished">Locatie</translation>
     </message>
     <message>
-        <location filename="../cpp/Form.cpp" line="1416" />
+        <location filename="../cpp/Form.cpp" line="1476" />
         <source>Missing track field or service</source>
         <translation type="unfinished">Ontbrekend spoorveld of dienst</translation>
     </message>
     <message>
-        <location filename="../cpp/Form.cpp" line="1769" />
+        <location filename="../cpp/Form.cpp" line="1821" />
         <source>CSV sighting export failed</source>
         <translation type="unfinished">CSV-waarnemingsexport mislukt</translation>
     </message>
     <message>
-        <location filename="../cpp/Form.cpp" line="1813" />
+        <location filename="../cpp/Form.cpp" line="1865" />
         <source>CSV location export failed</source>
         <translation type="unfinished">CSV locatie export mislukt</translation>
     </message>
     <message>
-        <location filename="../cpp/Form.cpp" line="1821" />
+        <location filename="../cpp/Form.cpp" line="1873" />
         <source>No new data</source>
         <translation type="unfinished">Geen nieuwe gegevens</translation>
     </message>
     <message>
-        <location filename="../cpp/Form.cpp" line="1829" />
+        <location filename="../cpp/Form.cpp" line="1881" />
         <source>Failed to compress file</source>
         <translation type="unfinished">Mislukt om bestand te comprimeren</translation>
     </message>
@@ -1566,42 +1752,42 @@
 <context>
     <name>FormSettingsListView</name>
     <message>
-        <location filename="../controls/imports/CyberTracker.1/FormSettingsListView.qml" line="65" />
+        <location filename="../controls/imports/CyberTracker.1/FormSettingsListView.qml" line="64" />
         <source>Form version</source>
         <translation type="unfinished">Formulier versie</translation>
     </message>
     <message>
-        <location filename="../controls/imports/CyberTracker.1/FormSettingsListView.qml" line="77" />
+        <location filename="../controls/imports/CyberTracker.1/FormSettingsListView.qml" line="76" />
         <source>Not specified</source>
         <translation type="unfinished">Niet gespecificeerd</translation>
     </message>
     <message>
-        <location filename="../controls/imports/CyberTracker.1/FormSettingsListView.qml" line="87" />
+        <location filename="../controls/imports/CyberTracker.1/FormSettingsListView.qml" line="86" />
         <source>Update</source>
         <translation type="unfinished">Update</translation>
     </message>
     <message>
-        <location filename="../controls/imports/CyberTracker.1/FormSettingsListView.qml" line="98" />
+        <location filename="../controls/imports/CyberTracker.1/FormSettingsListView.qml" line="97" />
         <source>Offline</source>
         <translation type="unfinished">Offline</translation>
     </message>
     <message>
-        <location filename="../controls/imports/CyberTracker.1/FormSettingsListView.qml" line="123" />
+        <location filename="../controls/imports/CyberTracker.1/FormSettingsListView.qml" line="122" />
         <source>Logged in as</source>
         <translation type="unfinished">Aangemeld als</translation>
     </message>
     <message>
-        <location filename="../controls/imports/CyberTracker.1/FormSettingsListView.qml" line="123" />
+        <location filename="../controls/imports/CyberTracker.1/FormSettingsListView.qml" line="122" />
         <source>Logged out</source>
         <translation type="unfinished">Uitgelogd</translation>
     </message>
     <message>
-        <location filename="../controls/imports/CyberTracker.1/FormSettingsListView.qml" line="139" />
+        <location filename="../controls/imports/CyberTracker.1/FormSettingsListView.qml" line="138" />
         <source>Logout</source>
         <translation type="unfinished">Afmelden</translation>
     </message>
     <message>
-        <location filename="../controls/imports/CyberTracker.1/FormSettingsListView.qml" line="139" />
+        <location filename="../controls/imports/CyberTracker.1/FormSettingsListView.qml" line="138" />
         <source>Login</source>
         <translation type="unfinished">Inloggen</translation>
     </message>
@@ -1611,44 +1797,50 @@
         <translation type="unfinished">Taal</translation>
     </message>
     <message>
-        <location filename="../controls/imports/CyberTracker.1/FormSettingsListView.qml" line="192" />
+        <location filename="../controls/imports/CyberTracker.1/FormSettingsListView.qml" line="193" />
         <source>Immersive mode</source>
         <translation type="unfinished">Immersieve modus</translation>
     </message>
     <message>
-        <location filename="../controls/imports/CyberTracker.1/FormSettingsListView.qml" line="201" />
+        <location filename="../controls/imports/CyberTracker.1/FormSettingsListView.qml" line="202" />
         <source>Hide sighting home page</source>
         <translation type="unfinished">Verberg waarneming home page</translation>
     </message>
     <message>
-        <location filename="../controls/imports/CyberTracker.1/FormSettingsListView.qml" line="238" />
+        <location filename="../controls/imports/CyberTracker.1/FormSettingsListView.qml" line="239" />
         <source>Page mode</source>
         <translation type="unfinished">Pagina modus</translation>
     </message>
     <message>
-        <location filename="../controls/imports/CyberTracker.1/FormSettingsListView.qml" line="247" />
+        <location filename="../controls/imports/CyberTracker.1/FormSettingsListView.qml" line="248" />
         <source>One page per question</source>
         <translation type="unfinished">Een pagina per vraag</translation>
     </message>
     <message>
-        <location filename="../controls/imports/CyberTracker.1/FormSettingsListView.qml" line="332" />
+        <location filename="../controls/imports/CyberTracker.1/FormSettingsListView.qml" line="318" />
+        <location filename="../controls/imports/CyberTracker.1/FormSettingsListView.qml" line="384" />
+        <source>Custom interval</source>
+        <translation type="unfinished">Aangepast interval</translation>
+    </message>
+    <message>
+        <location filename="../controls/imports/CyberTracker.1/FormSettingsListView.qml" line="333" />
         <source>Autosend location</source>
         <translation type="unfinished">Autosend locatie</translation>
     </message>
     <message>
-        <location filename="../controls/imports/CyberTracker.1/FormSettingsListView.qml" line="282" />
-        <location filename="../controls/imports/CyberTracker.1/FormSettingsListView.qml" line="343" />
+        <location filename="../controls/imports/CyberTracker.1/FormSettingsListView.qml" line="283" />
+        <location filename="../controls/imports/CyberTracker.1/FormSettingsListView.qml" line="344" />
         <source>Off</source>
         <translation type="unfinished">Uit</translation>
     </message>
     <message>
-        <location filename="../controls/imports/CyberTracker.1/FormSettingsListView.qml" line="344" />
+        <location filename="../controls/imports/CyberTracker.1/FormSettingsListView.qml" line="345" />
         <source>30 seconds</source>
         <translation type="unfinished">30 seconden.</translation>
     </message>
     <message>
-        <location filename="../controls/imports/CyberTracker.1/FormSettingsListView.qml" line="284" />
-        <location filename="../controls/imports/CyberTracker.1/FormSettingsListView.qml" line="345" />
+        <location filename="../controls/imports/CyberTracker.1/FormSettingsListView.qml" line="285" />
+        <location filename="../controls/imports/CyberTracker.1/FormSettingsListView.qml" line="346" />
         <source>5 minutes</source>
         <translation type="unfinished">5 minuten.</translation>
     </message>
@@ -1658,41 +1850,35 @@
         <translation type="unfinished">Systeeminstellingen</translation>
     </message>
     <message>
-        <location filename="../controls/imports/CyberTracker.1/FormSettingsListView.qml" line="271" />
+        <location filename="../controls/imports/CyberTracker.1/FormSettingsListView.qml" line="272" />
         <source>Auto-submit</source>
         <translation type="unfinished">Automatisch verzenden</translation>
     </message>
     <message>
-        <location filename="../controls/imports/CyberTracker.1/FormSettingsListView.qml" line="283" />
+        <location filename="../controls/imports/CyberTracker.1/FormSettingsListView.qml" line="284" />
         <source>On save</source>
         <translation type="unfinished">Op save</translation>
     </message>
     <message>
-        <location filename="../controls/imports/CyberTracker.1/FormSettingsListView.qml" line="285" />
-        <location filename="../controls/imports/CyberTracker.1/FormSettingsListView.qml" line="346" />
+        <location filename="../controls/imports/CyberTracker.1/FormSettingsListView.qml" line="286" />
+        <location filename="../controls/imports/CyberTracker.1/FormSettingsListView.qml" line="347" />
         <source>10 minutes</source>
         <translation type="unfinished">10 minuten.</translation>
     </message>
     <message>
-        <location filename="../controls/imports/CyberTracker.1/FormSettingsListView.qml" line="286" />
-        <location filename="../controls/imports/CyberTracker.1/FormSettingsListView.qml" line="347" />
+        <location filename="../controls/imports/CyberTracker.1/FormSettingsListView.qml" line="287" />
+        <location filename="../controls/imports/CyberTracker.1/FormSettingsListView.qml" line="348" />
         <source>30 minutes</source>
         <translation type="unfinished">30 minuten</translation>
     </message>
     <message>
-        <location filename="../controls/imports/CyberTracker.1/FormSettingsListView.qml" line="287" />
-        <location filename="../controls/imports/CyberTracker.1/FormSettingsListView.qml" line="348" />
+        <location filename="../controls/imports/CyberTracker.1/FormSettingsListView.qml" line="288" />
+        <location filename="../controls/imports/CyberTracker.1/FormSettingsListView.qml" line="349" />
         <source>1 hour</source>
         <translation type="unfinished">1 uur.</translation>
     </message>
     <message>
-        <location filename="../controls/imports/CyberTracker.1/FormSettingsListView.qml" line="317" />
-        <location filename="../controls/imports/CyberTracker.1/FormSettingsListView.qml" line="383" />
-        <source>Unknown interval</source>
-        <translation type="unfinished">Onbekend interval</translation>
-    </message>
-    <message>
-        <location filename="../controls/imports/CyberTracker.1/FormSettingsListView.qml" line="394" />
+        <location filename="../controls/imports/CyberTracker.1/FormSettingsListView.qml" line="395" />
         <source>Logout?</source>
         <translation type="unfinished">Uitloggen?</translation>
     </message>
@@ -1716,32 +1902,32 @@
 <context>
     <name>FormSightingsListView</name>
     <message>
-        <location filename="../controls/imports/CyberTracker.1/FormSightingsListView.qml" line="129" />
+        <location filename="../controls/imports/CyberTracker.1/FormSightingsListView.qml" line="127" />
         <source>No data</source>
         <translation type="unfinished">Geen gegevens.</translation>
     </message>
     <message>
-        <location filename="../controls/imports/CyberTracker.1/FormSightingsListView.qml" line="147" />
+        <location filename="../controls/imports/CyberTracker.1/FormSightingsListView.qml" line="145" />
         <source>Continue editing</source>
         <translation type="unfinished">Doorgaan met bewerken</translation>
     </message>
     <message>
-        <location filename="../controls/imports/CyberTracker.1/FormSightingsListView.qml" line="148" />
+        <location filename="../controls/imports/CyberTracker.1/FormSightingsListView.qml" line="146" />
         <source>Delete sighting</source>
         <translation type="unfinished">Waarneming verwijderen</translation>
     </message>
     <message>
-        <location filename="../controls/imports/CyberTracker.1/FormSightingsListView.qml" line="160" />
+        <location filename="../controls/imports/CyberTracker.1/FormSightingsListView.qml" line="158" />
         <source>Sighting deleted</source>
         <translation type="unfinished">Waarneming verwijderd</translation>
     </message>
     <message>
-        <location filename="../controls/imports/CyberTracker.1/FormSightingsListView.qml" line="173" />
+        <location filename="../controls/imports/CyberTracker.1/FormSightingsListView.qml" line="171" />
         <source>Submit data?</source>
         <translation type="unfinished">Gegevens indienen?</translation>
     </message>
     <message>
-        <location filename="../controls/imports/CyberTracker.1/FormSightingsListView.qml" line="188" />
+        <location filename="../controls/imports/CyberTracker.1/FormSightingsListView.qml" line="187" />
         <source>No supported in demo mode</source>
         <translation type="unfinished">Geen ondersteuning in demomodus</translation>
     </message>
@@ -1749,9 +1935,69 @@
 <context>
     <name>FormView</name>
     <message>
-        <location filename="../controls/imports/CyberTracker.1/FormView.qml" line="219" />
+        <location filename="../controls/imports/CyberTracker.1/FormView.qml" line="224" />
         <source>Bad username or password</source>
         <translation type="unfinished">Slechte gebruikersnaam of wachtwoord</translation>
+    </message>
+</context>
+<context>
+    <name>GoogleConnector</name>
+    <message>
+        <location filename="../cpp/Google/GoogleConnector.cpp" line="51" />
+        <source>Failed to create %1</source>
+        <translation type="unfinished">Niet gelukt om %1 aan te maken</translation>
+    </message>
+    <message>
+        <location filename="../cpp/Google/GoogleConnector.cpp" line="89" />
+        <source>Unsent data</source>
+        <translation type="unfinished">Niet verzonden gegevens</translation>
+    </message>
+</context>
+<context>
+    <name>GoogleFormParser</name>
+    <message>
+        <location filename="../cpp/Google/GoogleFormParser.cpp" line="33" />
+        <source>Untitled form</source>
+        <translation type="unfinished">Vorm zonder titel</translation>
+    </message>
+    <message>
+        <location filename="../cpp/Google/GoogleFormParser.cpp" line="156" />
+        <source>No questions</source>
+        <translation type="unfinished">Geen vragen.</translation>
+    </message>
+</context>
+<context>
+    <name>GoogleLoginButton</name>
+    <message>
+        <location filename="../controls/imports/CyberTracker.1/GoogleLoginButton.qml" line="34" />
+        <source>Sign in with Google</source>
+        <translation type="unfinished">Aanmelden met Google</translation>
+    </message>
+</context>
+<context>
+    <name>GoogleLoginItem</name>
+    <message>
+        <location filename="../controls/imports/CyberTracker.1/GoogleLoginItem.qml" line="34" />
+        <source>Requesting access...</source>
+        <translation type="unfinished">Verzoek om toegang...</translation>
+    </message>
+    <message>
+        <location filename="../controls/imports/CyberTracker.1/GoogleLoginItem.qml" line="44" />
+        <source>Refreshing token...</source>
+        <translation type="unfinished">Verfrissende penning...</translation>
+    </message>
+    <message>
+        <location filename="../controls/imports/CyberTracker.1/GoogleLoginItem.qml" line="116" />
+        <source>Login to a Google account. Form access is required to retrieve forms.</source>
+        <translation type="unfinished">Inloggen op een Google-account. Formuliertoegang is vereist om formulieren op te halen.</translation>
+    </message>
+</context>
+<context>
+    <name>GoogleProvider</name>
+    <message>
+        <location filename="../cpp/Google/GoogleProvider.cpp" line="211" />
+        <source>Missing %1 attribute</source>
+        <translation type="unfinished">Ontbrekend kenmerk %1</translation>
     </message>
 </context>
 <context>
@@ -1806,6 +2052,11 @@
 <context>
     <name>KoBoConnector</name>
     <message>
+        <location filename="../cpp/KoBo/KoBoConnector.cpp" line="129" />
+        <source>Failed to create %1</source>
+        <translation type="unfinished">Niet gelukt om %1 aan te maken</translation>
+    </message>
+    <message>
         <location filename="../cpp/KoBo/KoBoConnector.cpp" line="250" />
         <source>No deployment links</source>
         <translation type="unfinished">Geen inzetkoppelingen</translation>
@@ -1816,11 +2067,6 @@
         <translation type="unfinished">Geen deployment url</translation>
     </message>
     <message>
-        <location filename="../cpp/KoBo/KoBoConnector.cpp" line="284" />
-        <source>Failed to read form settings sheet</source>
-        <translation type="unfinished">Formulierinstellingen niet gelezen</translation>
-    </message>
-    <message>
         <location filename="../cpp/KoBo/KoBoConnector.cpp" line="351" />
         <source>Global server</source>
         <translation type="unfinished">Wereldwijde server</translation>
@@ -1829,11 +2075,6 @@
         <location filename="../cpp/KoBo/KoBoConnector.cpp" line="355" />
         <source>Humanitarian server</source>
         <translation type="unfinished">Humanitaire server</translation>
-    </message>
-    <message>
-        <location filename="../cpp/KoBo/KoBoConnector.cpp" line="129" />
-        <source>Failed to create project</source>
-        <translation type="unfinished">Mislukt om project aan te maken</translation>
     </message>
     <message>
         <location filename="../cpp/KoBo/KoBoConnector.cpp" line="189" />
@@ -1849,7 +2090,7 @@
 <context>
     <name>LineField</name>
     <message>
-        <location filename="../cpp/Field.cpp" line="815" />
+        <location filename="../cpp/Field.cpp" line="816" />
         <source>points</source>
         <translation type="unfinished">punten</translation>
     </message>
@@ -1951,22 +2192,22 @@
         <translation type="unfinished">Locatie verwerven</translation>
     </message>
     <message>
-        <location filename="../qml/SMART/LocationPage.qml" line="164" />
+        <location filename="../qml/SMART/LocationPage.qml" line="162" />
         <source>Waiting for time correction</source>
         <translation type="unfinished">Wachten op tijdcorrectie</translation>
     </message>
     <message>
-        <location filename="../qml/SMART/LocationPage.qml" line="177" />
+        <location filename="../qml/SMART/LocationPage.qml" line="175" />
         <source>Completing patrol</source>
         <translation type="unfinished">Patrouille voltooien</translation>
     </message>
     <message>
-        <location filename="../qml/SMART/LocationPage.qml" line="177" />
+        <location filename="../qml/SMART/LocationPage.qml" line="175" />
         <source>Completing survey</source>
         <translation type="unfinished">Invullen van de enquête</translation>
     </message>
     <message>
-        <location filename="../qml/SMART/LocationPage.qml" line="196" />
+        <location filename="../qml/SMART/LocationPage.qml" line="201" />
         <source>Skip GPS</source>
         <translation type="unfinished">GPS overslaan</translation>
     </message>
@@ -2020,7 +2261,7 @@
 <context>
     <name>LocationPopup</name>
     <message>
-        <location filename="../controls/imports/CyberTracker.1/LocationPopup.qml" line="64" />
+        <location filename="../controls/imports/CyberTracker.1/LocationPopup.qml" line="67" />
         <source>Waiting for time correction</source>
         <translation type="unfinished">Wachten op tijdcorrectie</translation>
     </message>
@@ -2046,27 +2287,27 @@
         <translation type="unfinished">Slechte gebruikersnaam of wachtwoord</translation>
     </message>
     <message>
-        <location filename="../controls/imports/CyberTracker.1/LoginItem.qml" line="117" />
+        <location filename="../controls/imports/CyberTracker.1/LoginItem.qml" line="124" />
         <source>Server</source>
         <translation type="unfinished">Server</translation>
     </message>
     <message>
-        <location filename="../controls/imports/CyberTracker.1/LoginItem.qml" line="130" />
+        <location filename="../controls/imports/CyberTracker.1/LoginItem.qml" line="132" />
         <source>User name</source>
         <translation type="unfinished">Naam van de gebruiker</translation>
     </message>
     <message>
-        <location filename="../controls/imports/CyberTracker.1/LoginItem.qml" line="143" />
+        <location filename="../controls/imports/CyberTracker.1/LoginItem.qml" line="140" />
         <source>Password</source>
         <translation type="unfinished">Wachtwoord</translation>
     </message>
     <message>
-        <location filename="../controls/imports/CyberTracker.1/LoginItem.qml" line="148" />
+        <location filename="../controls/imports/CyberTracker.1/LoginItem.qml" line="146" />
         <source>Login</source>
         <translation type="unfinished">Inloggen</translation>
     </message>
     <message>
-        <location filename="../controls/imports/CyberTracker.1/LoginItem.qml" line="182" />
+        <location filename="../controls/imports/CyberTracker.1/LoginItem.qml" line="180" />
         <source>Skip and login later</source>
         <translation type="unfinished">Overslaan en later inloggen</translation>
     </message>
@@ -2079,17 +2320,12 @@
         <translation type="unfinished">Verbind</translation>
     </message>
     <message>
-        <location filename="../qml/MainPage.qml" line="42" />
-        <source>Projects</source>
-        <translation type="unfinished">Projecten</translation>
-    </message>
-    <message>
-        <location filename="../qml/MainPage.qml" line="51" />
+        <location filename="../qml/MainPage.qml" line="52" />
         <source>Map</source>
         <translation type="unfinished">Kaart</translation>
     </message>
     <message>
-        <location filename="../qml/MainPage.qml" line="61" />
+        <location filename="../qml/MainPage.qml" line="60" />
         <source>Settings</source>
         <translation type="unfinished">Instellingen</translation>
     </message>
@@ -2272,6 +2508,14 @@
     </message>
 </context>
 <context>
+    <name>MessagePopup</name>
+    <message>
+        <location filename="../controls/imports/CyberTracker.1/MessagePopup.qml" line="12" />
+        <source>OK</source>
+        <translation type="unfinished">OK</translation>
+    </message>
+</context>
+<context>
     <name>MetadataPage</name>
     <message>
         <location filename="../qml/SMART/MetadataPage.qml" line="67" />
@@ -2320,7 +2564,7 @@
         <location filename="../cpp/Native/NativeConnector.cpp" line="107" />
         <location filename="../cpp/Native/NativeConnector.cpp" line="142" />
         <source>Package mismatch</source>
-        <translation type="unfinished">Foutief pakket</translation>
+        <translation type="unfinished">Foutieve verpakking</translation>
     </message>
     <message>
         <location filename="../cpp/Native/NativeConnector.cpp" line="166" />
@@ -2334,8 +2578,8 @@
     </message>
     <message>
         <location filename="../cpp/Native/NativeConnector.cpp" line="179" />
-        <source>No project in package</source>
-        <translation type="unfinished">Geen project in pakket</translation>
+        <source>No %1 in package</source>
+        <translation type="unfinished">Geen %1 in pakket</translation>
     </message>
     <message>
         <location filename="../cpp/Native/NativeConnector.cpp" line="158" />
@@ -2344,55 +2588,58 @@
     </message>
 </context>
 <context>
+    <name>OAuth2</name>
+    <message>
+        <location filename="../controls/OAuth2.cpp" line="134" />
+        <source>Timeout</source>
+        <translation type="unfinished">Time-out</translation>
+    </message>
+</context>
+<context>
     <name>ODKConnector</name>
     <message>
         <location filename="../cpp/ODK/ODKConnector.cpp" line="114" />
-        <source>Failed to create project</source>
-        <translation type="unfinished">Mislukt om project aan te maken</translation>
+        <source>Failed to create %1</source>
+        <translation type="unfinished">Niet gelukt om %1 aan te maken</translation>
     </message>
     <message>
         <location filename="../cpp/ODK/ODKConnector.cpp" line="245" />
         <source>Download failed</source>
         <translation type="unfinished">Download mislukt</translation>
     </message>
-    <message>
-        <location filename="../cpp/ODK/ODKConnector.cpp" line="251" />
-        <source>Failed to read form settings sheet</source>
-        <translation type="unfinished">Formulierinstellingen niet gelezen</translation>
-    </message>
 </context>
 <context>
     <name>OfflineMapManager</name>
     <message>
-        <location filename="../cpp/OfflineMap.cpp" line="442" />
-        <location filename="../cpp/OfflineMap.cpp" line="449" />
+        <location filename="../cpp/OfflineMap.cpp" line="450" />
+        <location filename="../cpp/OfflineMap.cpp" line="457" />
         <source>No a valid route file</source>
         <translation type="unfinished">Geen geldig routebestand</translation>
     </message>
     <message>
-        <location filename="../cpp/OfflineMap.cpp" line="468" />
-        <location filename="../cpp/OfflineMap.cpp" line="660" />
+        <location filename="../cpp/OfflineMap.cpp" line="476" />
+        <location filename="../cpp/OfflineMap.cpp" line="673" />
         <source>No maps found</source>
         <translation type="unfinished">Geen kaarten gevonden</translation>
     </message>
     <message>
-        <location filename="../cpp/OfflineMap.cpp" line="487" />
-        <location filename="../cpp/OfflineMap.cpp" line="678" />
+        <location filename="../cpp/OfflineMap.cpp" line="495" />
+        <location filename="../cpp/OfflineMap.cpp" line="692" />
         <source>Install failed</source>
         <translation type="unfinished">Installeren mislukt</translation>
     </message>
     <message>
-        <location filename="../cpp/OfflineMap.cpp" line="522" />
+        <location filename="../cpp/OfflineMap.cpp" line="530" />
         <source>Up to date</source>
         <translation type="unfinished">Tot op heden</translation>
     </message>
     <message>
-        <location filename="../cpp/OfflineMap.cpp" line="554" />
+        <location filename="../cpp/OfflineMap.cpp" line="562" />
         <source>Map download failed</source>
         <translation type="unfinished">Downloaden van kaart mislukt</translation>
     </message>
     <message>
-        <location filename="../cpp/OfflineMap.cpp" line="568" />
+        <location filename="../cpp/OfflineMap.cpp" line="576" />
         <source>Invalid map format</source>
         <translation type="unfinished">Ongeldig kaartformaat</translation>
     </message>
@@ -2406,71 +2653,61 @@
     </message>
     <message>
         <location filename="../qml/OfflineMapPage.qml" line="22" />
-        <source>Move up</source>
-        <translation type="unfinished">Omhoog.</translation>
-    </message>
-    <message>
-        <location filename="../qml/OfflineMapPage.qml" line="33" />
-        <source>Move down</source>
-        <translation type="unfinished">Naar beneden.</translation>
-    </message>
-    <message>
-        <location filename="../qml/OfflineMapPage.qml" line="44" />
         <source>Share</source>
         <translation type="unfinished">Deel</translation>
     </message>
     <message>
-        <location filename="../qml/OfflineMapPage.qml" line="50" />
+        <location filename="../qml/OfflineMapPage.qml" line="28" />
         <source>Packaging failed</source>
         <translation type="unfinished">De verpakking is mislukt</translation>
     </message>
     <message>
-        <location filename="../qml/OfflineMapPage.qml" line="60" />
+        <location filename="../qml/OfflineMapPage.qml" line="38" />
         <source>Offline map</source>
         <translation type="unfinished">Offline kaart</translation>
     </message>
     <message>
-        <location filename="../qml/OfflineMapPage.qml" line="65" />
+        <location filename="../qml/OfflineMapPage.qml" line="43" />
         <source>Delete</source>
         <translation type="unfinished">Verwijder</translation>
     </message>
     <message>
-        <location filename="../qml/OfflineMapPage.qml" line="74" />
+        <location filename="../qml/OfflineMapPage.qml" line="52" />
         <source>Add</source>
         <translation type="unfinished">Toevoegen</translation>
     </message>
     <message>
-        <location filename="../qml/OfflineMapPage.qml" line="93" />
+        <location filename="../qml/OfflineMapPage.qml" line="71" />
         <source>No layers</source>
         <translation type="unfinished">Geen lagen</translation>
     </message>
     <message>
-        <location filename="../qml/OfflineMapPage.qml" line="163" />
+        <location filename="../qml/OfflineMapPage.qml" line="172" />
         <source>Not a map package</source>
         <translation type="unfinished">Geen kaartenpakket</translation>
     </message>
     <message>
-        <location filename="../qml/OfflineMapPage.qml" line="182" />
+        <location filename="../qml/OfflineMapPage.qml" line="191" />
         <source>Save map package</source>
         <translation type="unfinished">Kaartpakket opslaan</translation>
     </message>
     <message>
-        <location filename="../qml/OfflineMapPage.qml" line="191" />
+        <location filename="../qml/OfflineMapPage.qml" line="200" />
         <source>Copied to clipboard</source>
         <translation type="unfinished">Gekopieerd naar klembord</translation>
     </message>
     <message>
-        <location filename="../qml/OfflineMapPage.qml" line="193" />
+        <location filename="../qml/OfflineMapPage.qml" line="202" />
         <source>Failed to save package</source>
         <translation type="unfinished">Kan pakket niet opslaan</translation>
     </message>
     <message>
-        <location filename="../qml/OfflineMapPage.qml" line="203" />
+        <location filename="../qml/OfflineMapPage.qml" line="212" />
         <source>Yes, delete it</source>
         <translation type="unfinished">Ja, verwijder het</translation>
     </message>
     <message>
-        <location filename="../qml/OfflineMapPage.qml" line="211" />
+        <location filename="../qml/OfflineMapPage.qml" line="220" />
         <source>Delete layer?</source>
         <translation type="unfinished">Laag verwijderen?</translation>
     </message>
@@ -2519,7 +2756,7 @@
 <context>
     <name>PhotoField</name>
     <message>
-        <location filename="../cpp/Field.cpp" line="1188" />
+        <location filename="../cpp/Field.cpp" line="1195" />
         <source>Photos</source>
         <translation type="unfinished">Foto's</translation>
     </message>
@@ -2535,27 +2772,17 @@
 <context>
     <name>ProjectChangePage</name>
     <message>
-        <location filename="../qml/SMART/ProjectChangePage.qml" line="9" />
-        <source>Change Project</source>
-        <translation type="unfinished">Veranderingsproject</translation>
+        <location filename="../qml/ProjectChangePage.qml" line="9" />
+        <source>Change %1</source>
+        <translation type="unfinished">Verander %1</translation>
     </message>
 </context>
 <context>
     <name>ProjectDetailsPage</name>
     <message>
-        <location filename="../qml/ProjectDetailsPage.qml" line="21" />
-        <source>Project details</source>
-        <translation type="unfinished">Details van het project</translation>
-    </message>
-    <message>
         <location filename="../qml/ProjectDetailsPage.qml" line="26" />
         <source>Exported data</source>
         <translation type="unfinished">Geëxporteerde gegevens</translation>
-    </message>
-    <message>
-        <location filename="../qml/ProjectDetailsPage.qml" line="27" />
-        <source>Project data waiting for import</source>
-        <translation type="unfinished">Projectgegevens wachten op import</translation>
     </message>
     <message>
         <location filename="../qml/ProjectDetailsPage.qml" line="34" />
@@ -2563,19 +2790,9 @@
         <translation type="unfinished">QR-code</translation>
     </message>
     <message>
-        <location filename="../qml/ProjectDetailsPage.qml" line="35" />
-        <source>Share a link to this project</source>
-        <translation type="unfinished">Deel een link naar dit project</translation>
-    </message>
-    <message>
         <location filename="../qml/ProjectDetailsPage.qml" line="42" />
         <source>Send package</source>
         <translation type="unfinished">Pakket versturen</translation>
-    </message>
-    <message>
-        <location filename="../qml/ProjectDetailsPage.qml" line="43" />
-        <source>Share this project with others</source>
-        <translation type="unfinished">Deel dit project met anderen</translation>
     </message>
     <message>
         <location filename="../qml/ProjectDetailsPage.qml" line="49" />
@@ -2588,24 +2805,84 @@
         <translation type="unfinished">Controleren op updates</translation>
     </message>
     <message>
+        <location filename="../qml/ProjectDetailsPage.qml" line="21" />
+        <source>%1 options</source>
+        <translation type="unfinished">%1 opties</translation>
+    </message>
+    <message>
+        <location filename="../qml/ProjectDetailsPage.qml" line="27" />
+        <source>%1 data waiting for import</source>
+        <translation type="unfinished">%1 gegevens wachten op import</translation>
+    </message>
+    <message>
+        <location filename="../qml/ProjectDetailsPage.qml" line="35" />
+        <source>Share a link to this %1</source>
+        <translation type="unfinished">Deel een link naar deze %1</translation>
+    </message>
+    <message>
+        <location filename="../qml/ProjectDetailsPage.qml" line="43" />
+        <source>Share this %1 with others</source>
+        <translation type="unfinished">Deel deze %1 met anderen</translation>
+    </message>
+    <message>
         <location filename="../qml/ProjectDetailsPage.qml" line="56" />
-        <source>Reset project</source>
-        <translation type="unfinished">Reset project</translation>
+        <source>Reset %1</source>
+        <translation type="unfinished">Reset %1</translation>
     </message>
     <message>
         <location filename="../qml/ProjectDetailsPage.qml" line="57" />
-        <source>Delete all project data</source>
-        <translation type="unfinished">Alle projectgegevens verwijderen</translation>
+        <source>Reset %1 state and data</source>
+        <translation type="unfinished">Reset %1 toestand en gegevens</translation>
     </message>
     <message>
         <location filename="../qml/ProjectDetailsPage.qml" line="63" />
-        <source>Delete project</source>
-        <translation type="unfinished">Project verwijderen</translation>
+        <source>Delete %1</source>
+        <translation type="unfinished">Verwijder %1</translation>
     </message>
     <message>
         <location filename="../qml/ProjectDetailsPage.qml" line="64" />
-        <source>Delete the project and all data</source>
-        <translation type="unfinished">Het project en alle gegevens verwijderen</translation>
+        <source>Delete the %1 and all data</source>
+        <translation type="unfinished">Wis de %1 en alle gegevens</translation>
+    </message>
+    <message>
+        <location filename="../qml/ProjectDetailsPage.qml" line="208" />
+        <source>Reset %1?</source>
+        <translation type="unfinished">Reset %1?</translation>
+    </message>
+    <message>
+        <location filename="../qml/ProjectDetailsPage.qml" line="209" />
+        <source>Data will be permanently removed from the device.</source>
+        <translation type="unfinished">De gegevens worden permanent van het apparaat verwijderd.</translation>
+    </message>
+    <message>
+        <location filename="../qml/ProjectDetailsPage.qml" line="213" />
+        <source>State only</source>
+        <translation type="unfinished">Alleen de staat</translation>
+    </message>
+    <message>
+        <location filename="../qml/ProjectDetailsPage.qml" line="214" />
+        <source>State and data</source>
+        <translation type="unfinished">Staat en gegevens</translation>
+    </message>
+    <message>
+        <location filename="../qml/ProjectDetailsPage.qml" line="215" />
+        <source>Cancel</source>
+        <translation type="unfinished">Annuleren</translation>
+    </message>
+    <message>
+        <location filename="../qml/ProjectDetailsPage.qml" line="223" />
+        <source>%1 state reset</source>
+        <translation type="unfinished">%1 status reset</translation>
+    </message>
+    <message>
+        <location filename="../qml/ProjectDetailsPage.qml" line="246" />
+        <source>Delete %1?</source>
+        <translation type="unfinished">%1 verwijderen?</translation>
+    </message>
+    <message>
+        <location filename="../qml/ProjectDetailsPage.qml" line="247" />
+        <source>The %1 and all of its data will be permanently removed.</source>
+        <translation type="unfinished">De %1 en al zijn gegevens worden permanent verwijderd.</translation>
     </message>
     <message>
         <location filename="../qml/ProjectDetailsPage.qml" line="158" />
@@ -2628,42 +2905,17 @@
         <translation type="unfinished">Kan pakket niet opslaan</translation>
     </message>
     <message>
-        <location filename="../qml/ProjectDetailsPage.qml" line="207" />
-        <source>Reset project?</source>
-        <translation type="unfinished">Reset project?</translation>
-    </message>
-    <message>
-        <location filename="../qml/ProjectDetailsPage.qml" line="208" />
-        <source>All project data will be permanently removed from the device.</source>
-        <translation type="unfinished">Alle projectgegevens worden permanent van het apparaat verwijderd.</translation>
-    </message>
-    <message>
-        <location filename="../qml/ProjectDetailsPage.qml" line="209" />
-        <source>Yes, reset it</source>
-        <translation type="unfinished">Ja, reset het</translation>
-    </message>
-    <message>
-        <location filename="../qml/ProjectDetailsPage.qml" line="214" />
+        <location filename="../qml/ProjectDetailsPage.qml" line="229" />
         <source>%1 reset</source>
         <translation type="unfinished">%1 reset</translation>
     </message>
     <message>
-        <location filename="../qml/ProjectDetailsPage.qml" line="225" />
-        <source>Delete project?</source>
-        <translation type="unfinished">Project verwijderen?</translation>
-    </message>
-    <message>
-        <location filename="../qml/ProjectDetailsPage.qml" line="226" />
-        <source>The project and all of its data will be permanently removed.</source>
-        <translation type="unfinished">Het project en al zijn gegevens worden permanent verwijderd.</translation>
-    </message>
-    <message>
-        <location filename="../qml/ProjectDetailsPage.qml" line="227" />
+        <location filename="../qml/ProjectDetailsPage.qml" line="248" />
         <source>Yes, delete it</source>
         <translation type="unfinished">Ja, verwijder het</translation>
     </message>
     <message>
-        <location filename="../qml/ProjectDetailsPage.qml" line="232" />
+        <location filename="../qml/ProjectDetailsPage.qml" line="253" />
         <source>%1 deleted</source>
         <translation type="unfinished">%1 verwijderd</translation>
     </message>
@@ -2671,78 +2923,131 @@
 <context>
     <name>ProjectManager</name>
     <message>
-        <location filename="../cpp/Project.cpp" line="965" />
+        <location filename="../cpp/Project.cpp" line="1057" />
         <source>Failed to extract</source>
         <translation type="unfinished">Niet gelukt om uit te pakken</translation>
     </message>
     <message>
-        <location filename="../cpp/Project.cpp" line="973" />
+        <location filename="../cpp/Project.cpp" line="1065" />
         <source>Invalid package</source>
         <translation type="unfinished">Ongeldig pakket</translation>
     </message>
     <message>
-        <location filename="../cpp/Project.cpp" line="985" />
-        <source>Failed to initialize project</source>
-        <translation type="unfinished">Project niet geïnitialiseerd</translation>
+        <location filename="../cpp/Project.cpp" line="1077" />
+        <source>Failed to initialize %1</source>
+        <translation type="unfinished">Kan %1 niet initialiseren</translation>
     </message>
     <message>
-        <location filename="../cpp/Project.cpp" line="1064" />
+        <location filename="../cpp/Project.cpp" line="1156" />
         <source>Already installed</source>
         <translation type="unfinished">Reeds geïnstalleerd</translation>
     </message>
     <message>
-        <location filename="../cpp/Project.cpp" line="1069" />
+        <location filename="../cpp/Project.cpp" line="1161" />
         <source>Nothing to do</source>
         <translation type="unfinished">Niets te doen.</translation>
     </message>
     <message>
-        <location filename="../cpp/Project.cpp" line="1088" />
+        <location filename="../cpp/Project.cpp" line="1180" />
         <source>File not found</source>
         <translation type="unfinished">Bestand niet gevonden</translation>
     </message>
     <message>
-        <location filename="../cpp/Project.cpp" line="1096" />
-        <source>Permissions not granted</source>
-        <translation type="unfinished">Geen toestemming verleend</translation>
-    </message>
-    <message>
-        <location filename="../cpp/Project.cpp" line="1109" />
+        <location filename="../cpp/Project.cpp" line="1196" />
         <source>Bad definition format</source>
         <translation type="unfinished">Slecht definitieformaat</translation>
     </message>
     <message>
-        <location filename="../cpp/Project.cpp" line="1258" />
+        <location filename="../cpp/Project.cpp" line="1341" />
         <source>Update Complete</source>
         <translation type="unfinished">Update voltooid</translation>
     </message>
     <message>
-        <location filename="../cpp/Project.cpp" line="1363" />
-        <source>Bad project file</source>
-        <translation type="unfinished">Slecht projectbestand</translation>
+        <location filename="../cpp/Project.cpp" line="1446" />
+        <source>Bad %1 file</source>
+        <translation type="unfinished">Slecht %1 bestand</translation>
     </message>
     <message>
-        <location filename="../cpp/Project.cpp" line="1368" />
+        <location filename="../cpp/Project.cpp" line="1451" />
         <source>Up to date</source>
         <translation type="unfinished">Tot op heden</translation>
     </message>
     <message>
-        <location filename="../cpp/Project.cpp" line="1402" />
+        <location filename="../cpp/Project.cpp" line="1485" />
         <source>Update error</source>
         <translation type="unfinished">Fout bijwerken</translation>
     </message>
 </context>
 <context>
-    <name>ProjectsPage</name>
+    <name>ProjectsEditPage</name>
     <message>
-        <location filename="../qml/ProjectsPage.qml" line="13" />
-        <source>Projects</source>
-        <translation type="unfinished">Projecten</translation>
+        <location filename="../qml/ProjectsEditPage.qml" line="15" />
+        <source>Edit %1</source>
+        <translation type="unfinished">Bewerk %1</translation>
     </message>
     <message>
+        <location filename="../qml/ProjectsEditPage.qml" line="22" />
+        <source>Options</source>
+        <translation type="unfinished">Opties</translation>
+    </message>
+    <message>
+        <location filename="../qml/ProjectsEditPage.qml" line="31" />
+        <source>Delete</source>
+        <translation type="unfinished">Verwijder</translation>
+    </message>
+    <message>
+        <location filename="../qml/ProjectsEditPage.qml" line="40" />
+        <source>Add</source>
+        <translation type="unfinished">Toevoegen</translation>
+    </message>
+    <message>
+        <location filename="../qml/ProjectsEditPage.qml" line="54" />
+        <source>No %1</source>
+        <translation type="unfinished">Nee %1</translation>
+    </message>
+    <message>
+        <location filename="../qml/ProjectsEditPage.qml" line="173" />
+        <source>Save %1 package</source>
+        <translation type="unfinished">Bewaar %1 pakket</translation>
+    </message>
+    <message>
+        <location filename="../qml/ProjectsEditPage.qml" line="196" />
+        <source>Delete %1?</source>
+        <translation type="unfinished">%1 verwijderen?</translation>
+    </message>
+    <message>
+        <location filename="../qml/ProjectsEditPage.qml" line="197" />
+        <source>The %1 and all of its data will be permanently removed.</source>
+        <translation type="unfinished">De %1 en al zijn gegevens worden permanent verwijderd.</translation>
+    </message>
+    <message>
+        <location filename="../qml/ProjectsEditPage.qml" line="182" />
+        <source>Copied to clipboard</source>
+        <translation type="unfinished">Gekopieerd naar klembord</translation>
+    </message>
+    <message>
+        <location filename="../qml/ProjectsEditPage.qml" line="184" />
+        <source>Failed to save package</source>
+        <translation type="unfinished">Kan pakket niet opslaan</translation>
+    </message>
+    <message>
+        <location filename="../qml/ProjectsEditPage.qml" line="198" />
+        <source>Yes, delete it</source>
+        <translation type="unfinished">Ja, verwijder het</translation>
+    </message>
+    <message>
+        <location filename="../qml/ProjectsEditPage.qml" line="205" />
+        <source>%1 deleted</source>
+        <translation type="unfinished">%1 verwijderd</translation>
+    </message>
+</context>
+<context>
+    <name>ProjectsPage</name>
+    <message>
         <location filename="../qml/ProjectsPage.qml" line="54" />
-        <location filename="../qml/ProjectsPage.qml" line="168" />
-        <source>Delete project?</source>
-        <translation type="unfinished">Project verwijderen?</translation>
+        <location filename="../qml/ProjectsPage.qml" line="263" />
+        <source>Delete %1?</source>
+        <translation type="unfinished">%1 verwijderen?</translation>
     </message>
     <message>
         <location filename="../qml/ProjectsPage.qml" line="64" />
@@ -2760,42 +3065,62 @@
         <translation type="unfinished">Offline</translation>
     </message>
     <message>
-        <location filename="../qml/ProjectsPage.qml" line="138" />
-        <source>No provider</source>
-        <translation type="unfinished">Geen aanbieder</translation>
+        <location filename="../qml/ProjectsPage.qml" line="174" />
+        <source>No %1</source>
+        <translation type="unfinished">Nee %1</translation>
     </message>
     <message>
-        <location filename="../qml/ProjectsPage.qml" line="169" />
-        <source>The project and all of its data will be permanently removed.</source>
-        <translation type="unfinished">Het project en al zijn gegevens worden permanent verwijderd.</translation>
+        <location filename="../qml/ProjectsPage.qml" line="211" />
+        <source>Getting started</source>
+        <translation type="unfinished">Aan de slag</translation>
     </message>
     <message>
-        <location filename="../qml/ProjectsPage.qml" line="170" />
+        <location filename="../qml/ProjectsPage.qml" line="264" />
+        <source>The %1 and all of its data will be permanently removed.</source>
+        <translation type="unfinished">De %1 en al zijn gegevens worden permanent verwijderd.</translation>
+    </message>
+    <message>
+        <location filename="../qml/ProjectsPage.qml" line="284" />
+        <source>Update %1?</source>
+        <translation type="unfinished">Update %1?</translation>
+    </message>
+    <message>
+        <location filename="../qml/ProjectsPage.qml" line="265" />
         <source>Yes, delete it</source>
         <translation type="unfinished">Ja, verwijder het</translation>
     </message>
     <message>
-        <location filename="../qml/ProjectsPage.qml" line="175" />
+        <location filename="../qml/ProjectsPage.qml" line="185" />
+        <source>Scan QR code</source>
+        <translation type="unfinished">Scan QR-code</translation>
+    </message>
+    <message>
+        <location filename="../qml/ProjectsPage.qml" line="187" />
+        <source>%1 or tap the %2 button below to add a %3</source>
+        <translation type="unfinished">%1 of tik op de %2 knop hieronder om een %3</translation>
+    </message>
+    <message>
+        <location filename="../qml/ProjectsPage.qml" line="189" />
+        <source>%1 to add a %2</source>
+        <translation type="unfinished">%1 om een %2 toe te voegen</translation>
+    </message>
+    <message>
+        <location filename="../qml/ProjectsPage.qml" line="270" />
         <source>%1 deleted</source>
         <translation type="unfinished">%1 verwijderd</translation>
     </message>
     <message>
-        <location filename="../qml/ProjectsPage.qml" line="189" />
-        <source>Update project?</source>
-        <translation type="unfinished">Project bijwerken?</translation>
-    </message>
-    <message>
-        <location filename="../qml/ProjectsPage.qml" line="190" />
+        <location filename="../qml/ProjectsPage.qml" line="285" />
         <source>A new version is available.</source>
         <translation type="unfinished">Er is een nieuwe versie beschikbaar.</translation>
     </message>
     <message>
-        <location filename="../qml/ProjectsPage.qml" line="191" />
+        <location filename="../qml/ProjectsPage.qml" line="286" />
         <source>Yes, update now</source>
         <translation type="unfinished">Ja, nu bijwerken</translation>
     </message>
     <message>
-        <location filename="../qml/ProjectsPage.qml" line="193" />
+        <location filename="../qml/ProjectsPage.qml" line="288" />
         <source>No, update later</source>
         <translation type="unfinished">Nee, update later.</translation>
     </message>
@@ -2809,19 +3134,302 @@
     </message>
 </context>
 <context>
+    <name>QKeychain::DeletePasswordJobPrivate</name>
+    <message>
+        <location filename="../lib/qtkeychain/keychain_android.cpp" line="173" />
+        <source>Could not open keystore</source>
+        <translation type="unfinished">Kon de sleutelbewaarplaats niet openen</translation>
+    </message>
+    <message>
+        <location filename="../lib/qtkeychain/keychain_android.cpp" line="179" />
+        <source>Could not remove private key from keystore</source>
+        <translation type="unfinished">Kan privésleutel niet verwijderen uit sleutelbewaarplaats</translation>
+    </message>
+    <message>
+        <location filename="../lib/qtkeychain/keychain_unix.cpp" line="552" />
+        <location filename="../lib/qtkeychain/keychain_unix.cpp" line="560" />
+        <source>Unknown error</source>
+        <translation type="unfinished">Onbekende fout</translation>
+    </message>
+    <message>
+        <location filename="../lib/qtkeychain/keychain_unix.cpp" line="578" />
+        <source>Could not open wallet: %1; %2</source>
+        <translation type="unfinished">Kon portefeuille niet openen: %1; %2</translation>
+    </message>
+    <message>
+        <location filename="../lib/qtkeychain/keychain_win.cpp" line="104" />
+        <source>Password entry not found</source>
+        <translation type="unfinished">Wachtwoordinvoer niet gevonden</translation>
+    </message>
+    <message>
+        <location filename="../lib/qtkeychain/keychain_win.cpp" line="108" />
+        <source>Could not decrypt data</source>
+        <translation type="unfinished">Kon gegevens niet decoderen</translation>
+    </message>
+</context>
+<context>
+    <name>QKeychain::JobPrivate</name>
+    <message>
+        <location filename="../lib/qtkeychain/keychain_unix.cpp" line="265" />
+        <source>Unknown error</source>
+        <translation type="unfinished">Onbekende fout</translation>
+    </message>
+    <message>
+        <location filename="../lib/qtkeychain/keychain_unix.cpp" line="509" />
+        <source>Access to keychain denied</source>
+        <translation type="unfinished">Toegang tot sleutelhanger geweigerd</translation>
+    </message>
+</context>
+<context>
+    <name>QKeychain::PlainTextStore</name>
+    <message>
+        <location filename="../lib/qtkeychain/plaintextstore.cpp" line="65" />
+        <source>Could not store data in settings: access error</source>
+        <translation type="unfinished">Kon gegevens niet opslaan in instellingen: toegangsfout</translation>
+    </message>
+    <message>
+        <location filename="../lib/qtkeychain/plaintextstore.cpp" line="67" />
+        <source>Could not store data in settings: format error</source>
+        <translation type="unfinished">Kon gegevens niet opslaan in instellingen: formaatfout</translation>
+    </message>
+    <message>
+        <location filename="../lib/qtkeychain/plaintextstore.cpp" line="85" />
+        <source>Could not delete data from settings: access error</source>
+        <translation type="unfinished">Kon geen gegevens uit instellingen verwijderen: toegangsfout</translation>
+    </message>
+    <message>
+        <location filename="../lib/qtkeychain/plaintextstore.cpp" line="87" />
+        <source>Could not delete data from settings: format error</source>
+        <translation type="unfinished">Kon gegevens niet verwijderen uit instellingen: formaatfout</translation>
+    </message>
+    <message>
+        <location filename="../lib/qtkeychain/plaintextstore.cpp" line="104" />
+        <source>Entry not found</source>
+        <translation type="unfinished">Item niet gevonden</translation>
+    </message>
+</context>
+<context>
+    <name>QKeychain::ReadPasswordJobPrivate</name>
+    <message>
+        <location filename="../lib/qtkeychain/keychain_android.cpp" line="52" />
+        <location filename="../lib/qtkeychain/keychain_unix.cpp" line="363" />
+        <source>Entry not found</source>
+        <translation type="unfinished">Item niet gevonden</translation>
+    </message>
+    <message>
+        <location filename="../lib/qtkeychain/keychain_android.cpp" line="60" />
+        <source>Could not open keystore</source>
+        <translation type="unfinished">Kon de sleutelbewaarplaats niet openen</translation>
+    </message>
+    <message>
+        <location filename="../lib/qtkeychain/keychain_android.cpp" line="68" />
+        <source>Could not retrieve private key from keystore</source>
+        <translation type="unfinished">Kon privé-sleutel niet ophalen uit sleutelbewaarplaats</translation>
+    </message>
+    <message>
+        <location filename="../lib/qtkeychain/keychain_android.cpp" line="75" />
+        <source>Could not create decryption cipher</source>
+        <translation type="unfinished">Kon geen decryptiecode maken</translation>
+    </message>
+    <message>
+        <location filename="../lib/qtkeychain/keychain_unix.cpp" line="178" />
+        <source>D-Bus is not running</source>
+        <translation type="unfinished">D-Bus is niet actief</translation>
+    </message>
+    <message>
+        <location filename="../lib/qtkeychain/keychain_unix.cpp" line="187" />
+        <location filename="../lib/qtkeychain/keychain_unix.cpp" line="197" />
+        <source>Unknown error</source>
+        <translation type="unfinished">Onbekende fout</translation>
+    </message>
+    <message>
+        <location filename="../lib/qtkeychain/keychain_unix.cpp" line="286" />
+        <source>No keychain service available</source>
+        <translation type="unfinished">Geen sleutelhanger service beschikbaar</translation>
+    </message>
+    <message>
+        <location filename="../lib/qtkeychain/keychain_unix.cpp" line="288" />
+        <source>Could not open wallet: %1; %2</source>
+        <translation type="unfinished">Kon portefeuille niet openen: %1; %2</translation>
+    </message>
+    <message>
+        <location filename="../lib/qtkeychain/keychain_unix.cpp" line="333" />
+        <source>Access to keychain denied</source>
+        <translation type="unfinished">Toegang tot sleutelhanger geweigerd</translation>
+    </message>
+    <message>
+        <location filename="../lib/qtkeychain/keychain_unix.cpp" line="354" />
+        <source>Could not determine data type: %1; %2</source>
+        <translation type="unfinished">Kon gegevenstype niet bepalen: %1; %2</translation>
+    </message>
+    <message>
+        <location filename="../lib/qtkeychain/keychain_unix.cpp" line="372" />
+        <source>Unsupported entry type 'Map'</source>
+        <translation type="unfinished">Niet ondersteund invoertype "Kaart</translation>
+    </message>
+    <message>
+        <location filename="../lib/qtkeychain/keychain_unix.cpp" line="375" />
+        <source>Unknown kwallet entry type '%1'</source>
+        <translation type="unfinished">Onbekend kwallet entry type '%1'</translation>
+    </message>
+    <message>
+        <location filename="../lib/qtkeychain/keychain_win.cpp" line="32" />
+        <source>Password entry not found</source>
+        <translation type="unfinished">Wachtwoordinvoer niet gevonden</translation>
+    </message>
+    <message>
+        <location filename="../lib/qtkeychain/keychain_win.cpp" line="36" />
+        <location filename="../lib/qtkeychain/keychain_win.cpp" line="139" />
+        <source>Could not decrypt data</source>
+        <translation type="unfinished">Kon gegevens niet decoderen</translation>
+    </message>
+</context>
+<context>
+    <name>QKeychain::WritePasswordJobPrivate</name>
+    <message>
+        <location filename="../lib/qtkeychain/keychain_android.cpp" line="95" />
+        <source>Could not open keystore</source>
+        <translation type="unfinished">Kon de sleutelbewaarplaats niet openen</translation>
+    </message>
+    <message>
+        <location filename="../lib/qtkeychain/keychain_android.cpp" line="124" />
+        <source>Could not create private key generator</source>
+        <translation type="unfinished">Kon geen private sleutel generator aanmaken</translation>
+    </message>
+    <message>
+        <location filename="../lib/qtkeychain/keychain_android.cpp" line="131" />
+        <source>Could not generate new private key</source>
+        <translation type="unfinished">Kon geen nieuwe privésleutel genereren</translation>
+    </message>
+    <message>
+        <location filename="../lib/qtkeychain/keychain_android.cpp" line="139" />
+        <source>Could not retrieve private key from keystore</source>
+        <translation type="unfinished">Kon de private sleutel niet ophalen uit de sleutelbewaarplaats</translation>
+    </message>
+    <message>
+        <location filename="../lib/qtkeychain/keychain_android.cpp" line="147" />
+        <source>Could not create encryption cipher</source>
+        <translation type="unfinished">Kon geen encryptiecode aanmaken</translation>
+    </message>
+    <message>
+        <location filename="../lib/qtkeychain/keychain_android.cpp" line="155" />
+        <source>Could not encrypt data</source>
+        <translation type="unfinished">Kon gegevens niet versleutelen</translation>
+    </message>
+    <message>
+        <location filename="../lib/qtkeychain/keychain_unix.cpp" line="415" />
+        <source>D-Bus is not running</source>
+        <translation type="unfinished">D-Bus is niet actief</translation>
+    </message>
+    <message>
+        <location filename="../lib/qtkeychain/keychain_unix.cpp" line="425" />
+        <location filename="../lib/qtkeychain/keychain_unix.cpp" line="452" />
+        <source>Unknown error</source>
+        <translation type="unfinished">Onbekende fout</translation>
+    </message>
+    <message>
+        <location filename="../lib/qtkeychain/keychain_unix.cpp" line="468" />
+        <source>Could not open wallet: %1; %2</source>
+        <translation type="unfinished">Kon portefeuille niet openen: %1; %2</translation>
+    </message>
+    <message>
+        <location filename="../lib/qtkeychain/keychain_win.cpp" line="78" />
+        <source>Credential size exceeds maximum size of %1</source>
+        <translation type="unfinished">Credential grootte overschrijdt maximum grootte van %1</translation>
+    </message>
+    <message>
+        <location filename="../lib/qtkeychain/keychain_win.cpp" line="87" />
+        <source>Credential key exceeds maximum size of %1</source>
+        <translation type="unfinished">Credentialsleutel overschrijdt maximale grootte van %1</translation>
+    </message>
+    <message>
+        <location filename="../lib/qtkeychain/keychain_win.cpp" line="92" />
+        <source>Writing credentials failed: Win32 error code %1</source>
+        <translation type="unfinished">Schrijven van referenties mislukt: Win32 foutcode %1</translation>
+    </message>
+    <message>
+        <location filename="../lib/qtkeychain/keychain_win.cpp" line="162" />
+        <source>Encryption failed</source>
+        <translation type="unfinished">Encryptie mislukt</translation>
+    </message>
+</context>
+<context>
+    <name>QObject</name>
+    <message>
+        <location filename="../lib/qtkeychain/keychain_unix.cpp" line="225" />
+        <source>Access to keychain denied</source>
+        <translation type="unfinished">Toegang tot sleutelhanger geweigerd</translation>
+    </message>
+    <message>
+        <location filename="../lib/qtkeychain/keychain_unix.cpp" line="227" />
+        <source>No keyring daemon</source>
+        <translation type="unfinished">Geen sleutelhanger-daemon</translation>
+    </message>
+    <message>
+        <location filename="../lib/qtkeychain/keychain_unix.cpp" line="229" />
+        <source>Already unlocked</source>
+        <translation type="unfinished">Reeds ontgrendeld</translation>
+    </message>
+    <message>
+        <location filename="../lib/qtkeychain/keychain_unix.cpp" line="231" />
+        <source>No such keyring</source>
+        <translation type="unfinished">Geen sleutelhanger.</translation>
+    </message>
+    <message>
+        <location filename="../lib/qtkeychain/keychain_unix.cpp" line="233" />
+        <source>Bad arguments</source>
+        <translation type="unfinished">Slechte argumenten</translation>
+    </message>
+    <message>
+        <location filename="../lib/qtkeychain/keychain_unix.cpp" line="235" />
+        <source>I/O error</source>
+        <translation type="unfinished">I/O-fout</translation>
+    </message>
+    <message>
+        <location filename="../lib/qtkeychain/keychain_unix.cpp" line="237" />
+        <source>Cancelled</source>
+        <translation type="unfinished">Geannuleerd</translation>
+    </message>
+    <message>
+        <location filename="../lib/qtkeychain/keychain_unix.cpp" line="239" />
+        <source>Keyring already exists</source>
+        <translation type="unfinished">De sleutelhanger bestaat al</translation>
+    </message>
+    <message>
+        <location filename="../lib/qtkeychain/keychain_unix.cpp" line="241" />
+        <source>No match</source>
+        <translation type="unfinished">Geen match.</translation>
+    </message>
+    <message>
+        <location filename="../lib/qtkeychain/keychain_unix.cpp" line="246" />
+        <source>Unknown error</source>
+        <translation type="unfinished">Onbekende fout</translation>
+    </message>
+    <message>
+        <location filename="../lib/qtkeychain/libsecret.cpp" line="119" />
+        <source>Entry not found</source>
+        <translation type="unfinished">Item niet gevonden</translation>
+    </message>
+</context>
+<context>
     <name>Record</name>
     <message>
-        <location filename="../cpp/Record.cpp" line="392" />
+        <location filename="../cpp/Record.cpp" line="397" />
         <source>Record</source>
         <translation type="unfinished">Record</translation>
     </message>
     <message>
-        <location filename="../cpp/Record.cpp" line="680" />
+        <location filename="../cpp/Record.cpp" line="702" />
         <source>Records</source>
         <translation type="unfinished">Records</translation>
     </message>
     <message>
-        <location filename="../cpp/Record.cpp" line="708" />
+        <location filename="../cpp/Record.cpp" line="730" />
+        <source>Value incorrect</source>
+        <translation type="unfinished">Waarde onjuist</translation>
+    </message>
+    <message>
+        <location filename="../cpp/Record.cpp" line="744" />
         <source>Value required</source>
         <translation type="unfinished">Vereiste waarde</translation>
     </message>
@@ -2829,12 +3437,12 @@
 <context>
     <name>RecordField</name>
     <message>
-        <location filename="../cpp/Field.cpp" line="320" />
+        <location filename="../cpp/Field.cpp" line="321" />
         <source>record</source>
         <translation type="unfinished">record</translation>
     </message>
     <message>
-        <location filename="../cpp/Field.cpp" line="320" />
+        <location filename="../cpp/Field.cpp" line="321" />
         <source>records</source>
         <translation type="unfinished">records</translation>
     </message>
@@ -2873,18 +3481,18 @@
     </message>
     <message>
         <location filename="../qml/SMART/RecoverDataPage.qml" line="73" />
-        <source>Data is ready for import from the desktop</source>
-        <translation type="unfinished">Gegevens zijn klaar voor import vanaf de desktop</translation>
+        <source>Data is ready for import from the desktop.</source>
+        <translation type="unfinished">Gegevens zijn klaar voor import vanaf de desktop.</translation>
+    </message>
+    <message>
+        <location filename="../qml/SMART/RecoverDataPage.qml" line="76" />
+        <source>An error occurred during data export.</source>
+        <translation type="unfinished">Er is een fout opgetreden tijdens het exporteren van de gegevens.</translation>
     </message>
     <message>
         <location filename="../qml/SMART/RecoverDataPage.qml" line="75" />
         <source>Error</source>
         <translation type="unfinished">Fout</translation>
-    </message>
-    <message>
-        <location filename="../qml/SMART/RecoverDataPage.qml" line="76" />
-        <source>An error occurred during data export</source>
-        <translation type="unfinished">Er is een fout opgetreden tijdens het exporteren van gegevens</translation>
     </message>
 </context>
 <context>
@@ -2898,9 +3506,9 @@
 <context>
     <name>SMARTConnector</name>
     <message>
-        <location filename="../cpp/SMART/SMARTConnector.cpp" line="105" />
+        <location filename="../cpp/SMART/SMARTConnector.cpp" line="114" />
         <source>has unexported data</source>
-        <translation type="unfinished">heeft niet-geëxporteerde gegevens</translation>
+        <translation type="unfinished">heeft niet-uitgevoerde gegevens</translation>
     </message>
     <message>
         <location filename="../cpp/SMART/SMARTConnector.cpp" line="14" />
@@ -2908,36 +3516,44 @@
         <translation type="unfinished">vereist</translation>
     </message>
     <message>
-        <location filename="../cpp/SMART/SMARTConnector.cpp" line="171" />
+        <location filename="../cpp/SMART/SMARTConnector.cpp" line="184" />
         <source>Download failed</source>
         <translation type="unfinished">Download mislukt</translation>
     </message>
     <message>
-        <location filename="../cpp/SMART/SMARTConnector.cpp" line="181" />
+        <location filename="../cpp/SMART/SMARTConnector.cpp" line="194" />
         <source>Download bad</source>
         <translation type="unfinished">Slechte download</translation>
     </message>
     <message>
-        <location filename="../cpp/SMART/SMARTConnector.cpp" line="339" />
+        <location filename="../cpp/SMART/SMARTConnector.cpp" line="327" />
         <source>Unexported data</source>
         <translation type="unfinished">Niet-geëxporteerde gegevens</translation>
     </message>
     <message>
-        <location filename="../cpp/SMART/SMARTConnector.cpp" line="355" />
-        <location filename="../cpp/SMART/SMARTConnector.cpp" line="551" />
+        <location filename="../cpp/SMART/SMARTConnector.cpp" line="343" />
         <source>Bad project file</source>
         <translation type="unfinished">Slecht projectbestand</translation>
     </message>
     <message>
-        <location filename="../cpp/SMART/SMARTConnector.cpp" line="367" />
-        <location filename="../cpp/SMART/SMARTConnector.cpp" line="560" />
+        <location filename="../cpp/SMART/SMARTConnector.cpp" line="355" />
         <source>Cannot unpack project</source>
         <translation type="unfinished">Kan project niet uitpakken</translation>
     </message>
     <message>
-        <location filename="../cpp/SMART/SMARTConnector.cpp" line="543" />
+        <location filename="../cpp/SMART/SMARTConnector.cpp" line="521" />
         <source>Unsent data</source>
         <translation type="unfinished">Niet verzonden gegevens</translation>
+    </message>
+    <message>
+        <location filename="../cpp/SMART/SMARTConnector.cpp" line="529" />
+        <source>Bad %1 file</source>
+        <translation type="unfinished">Slecht %1 bestand</translation>
+    </message>
+    <message>
+        <location filename="../cpp/SMART/SMARTConnector.cpp" line="538" />
+        <source>Cannot unpack %1</source>
+        <translation type="unfinished">Kan %1 niet uitpakken</translation>
     </message>
 </context>
 <context>
@@ -3323,7 +3939,7 @@
 <context>
     <name>Settings</name>
     <message>
-        <location filename="../cpp/Settings.cpp" line="90" />
+        <location filename="../cpp/Settings.cpp" line="151" />
         <source>Default</source>
         <translation type="unfinished">Standaard</translation>
     </message>
@@ -3343,90 +3959,90 @@
         <translation type="unfinished">Systeeminstellingen</translation>
     </message>
     <message>
-        <location filename="../qml/EarthRanger/SettingsPage.qml" line="67" />
+        <location filename="../qml/EarthRanger/SettingsPage.qml" line="66" />
         <source>Last updated</source>
         <translation type="unfinished">Laatst bijgewerkt</translation>
     </message>
     <message>
-        <location filename="../qml/EarthRanger/SettingsPage.qml" line="84" />
+        <location filename="../qml/EarthRanger/SettingsPage.qml" line="83" />
         <source>Update</source>
         <translation type="unfinished">Update</translation>
     </message>
     <message>
-        <location filename="../qml/EarthRanger/SettingsPage.qml" line="120" />
+        <location filename="../qml/EarthRanger/SettingsPage.qml" line="119" />
         <source>Logged in as</source>
         <translation type="unfinished">Aangemeld als</translation>
     </message>
     <message>
-        <location filename="../qml/EarthRanger/SettingsPage.qml" line="120" />
+        <location filename="../qml/EarthRanger/SettingsPage.qml" line="119" />
         <source>Logged out</source>
         <translation type="unfinished">Uitgelogd</translation>
     </message>
     <message>
-        <location filename="../qml/EarthRanger/SettingsPage.qml" line="135" />
+        <location filename="../qml/EarthRanger/SettingsPage.qml" line="134" />
         <source>Logout</source>
         <translation type="unfinished">Afmelden</translation>
     </message>
     <message>
-        <location filename="../qml/EarthRanger/SettingsPage.qml" line="135" />
+        <location filename="../qml/EarthRanger/SettingsPage.qml" line="134" />
         <source>Login</source>
         <translation type="unfinished">Inloggen</translation>
     </message>
     <message>
-        <location filename="../qml/EarthRanger/SettingsPage.qml" line="165" />
+        <location filename="../qml/EarthRanger/SettingsPage.qml" line="164" />
         <source>Reported by</source>
         <translation type="unfinished">Gerapporteerd door</translation>
     </message>
     <message>
-        <location filename="../qml/EarthRanger/SettingsPage.qml" line="200" />
+        <location filename="../qml/EarthRanger/SettingsPage.qml" line="199" />
         <source>Merge categories</source>
         <translation type="unfinished">Categorieën samenvoegen</translation>
     </message>
     <message>
-        <location filename="../qml/EarthRanger/SettingsPage.qml" line="243" />
+        <location filename="../qml/EarthRanger/SettingsPage.qml" line="242" />
         <source>One page per question</source>
         <translation type="unfinished">Een pagina per vraag</translation>
     </message>
     <message>
-        <location filename="../qml/EarthRanger/SettingsPage.qml" line="268" />
+        <location filename="../qml/EarthRanger/SettingsPage.qml" line="267" />
         <source>Visible reports</source>
         <translation type="unfinished">Zichtbare rapporten</translation>
     </message>
     <message>
-        <location filename="../qml/EarthRanger/SettingsPage.qml" line="285" />
+        <location filename="../qml/EarthRanger/SettingsPage.qml" line="284" />
         <source>Logout?</source>
         <translation type="unfinished">Uitloggen?</translation>
     </message>
     <message>
-        <location filename="../qml/EarthRanger/SettingsPage.qml" line="95" />
+        <location filename="../qml/EarthRanger/SettingsPage.qml" line="94" />
         <source>Offline</source>
         <translation type="unfinished">Offline</translation>
     </message>
     <message>
-        <location filename="../qml/EarthRanger/SettingsPage.qml" line="175" />
+        <location filename="../qml/EarthRanger/SettingsPage.qml" line="174" />
         <source>Unknown</source>
         <translation type="unfinished">Onbekend</translation>
     </message>
     <message>
-        <location filename="../qml/SettingsPage.qml" line="111" />
+        <location filename="../qml/SettingsPage.qml" line="138" />
         <source>Collect as</source>
         <translation type="unfinished">Verzamel als</translation>
     </message>
     <message>
         <location filename="../qml/SMART/SettingsPage.qml" line="38" />
-        <location filename="../qml/SettingsPage.qml" line="154" />
+        <location filename="../qml/SettingsPage.qml" line="180" />
         <source>Language</source>
         <translation type="unfinished">Taal</translation>
-    </message>
-    <message>
-        <location filename="../qml/SMART/SettingsPage.qml" line="135" />
-        <source>Change project</source>
-        <translation type="unfinished">Veranderingsproject</translation>
     </message>
     <message>
         <location filename="../qml/SMART/SettingsPage.qml" line="113" />
         <source>Select routes</source>
         <translation type="unfinished">Selecteer routes</translation>
+    </message>
+    <message>
+        <location filename="../qml/SMART/SettingsPage.qml" line="135" />
+        <source>Change %1</source>
+        <translation type="unfinished">Verander %1</translation>
     </message>
     <message>
         <location filename="../qml/SMART/SettingsPage.qml" line="156" />
@@ -3450,23 +4066,23 @@
         <translation type="unfinished">Geen routes gevonden</translation>
     </message>
     <message>
-        <location filename="../qml/SettingsPage.qml" line="232" />
+        <location filename="../qml/SettingsPage.qml" line="315" />
         <source>Toolbar captions</source>
         <translation type="unfinished">Bijschriften op de werkbalk</translation>
     </message>
     <message>
-        <location filename="../qml/SettingsPage.qml" line="258" />
+        <location filename="../qml/SettingsPage.qml" line="341" />
         <source>Metric units</source>
         <translation type="unfinished">Metrische eenheden</translation>
     </message>
     <message>
-        <location filename="../qml/SettingsPage.qml" line="285" />
+        <location filename="../qml/SettingsPage.qml" line="368" />
         <source>Full screen</source>
         <translation type="unfinished">Volledig scherm</translation>
     </message>
     <message>
         <location filename="../qml/SMART/SettingsPage.qml" line="60" />
-        <location filename="../qml/SettingsPage.qml" line="207" />
+        <location filename="../qml/SettingsPage.qml" line="290" />
         <source>Dark theme</source>
         <translation type="unfinished">Donker thema</translation>
     </message>
@@ -3476,102 +4092,117 @@
         <translation type="unfinished">Over</translation>
     </message>
     <message>
-        <location filename="../qml/SettingsPage.qml" line="76" />
+        <location filename="../qml/SettingsPage.qml" line="104" />
         <source>Offline maps</source>
         <translation type="unfinished">Offline kaarten</translation>
     </message>
     <message>
-        <location filename="../qml/SettingsPage.qml" line="313" />
+        <location filename="../qml/SettingsPage.qml" line="232" />
+        <source>Auto launch</source>
+        <translation type="unfinished">Automatische lancering</translation>
+    </message>
+    <message>
+        <location filename="../qml/SettingsPage.qml" line="255" />
+        <source></source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../qml/SettingsPage.qml" line="76" />
+        <source>Edit %1</source>
+        <translation type="unfinished">Bewerk %1</translation>
+    </message>
+    <message>
+        <location filename="../qml/SettingsPage.qml" line="396" />
         <source>Font size</source>
         <translation type="unfinished">Lettergrootte</translation>
     </message>
     <message>
-        <location filename="../qml/SettingsPage.qml" line="346" />
+        <location filename="../qml/SettingsPage.qml" line="429" />
         <source>Coordinates</source>
         <translation type="unfinished">Coördinaten</translation>
     </message>
     <message>
-        <location filename="../qml/SettingsPage.qml" line="356" />
+        <location filename="../qml/SettingsPage.qml" line="439" />
         <source>Decimal degrees</source>
         <translation type="unfinished">Decimale graden</translation>
     </message>
     <message>
-        <location filename="../qml/SettingsPage.qml" line="356" />
+        <location filename="../qml/SettingsPage.qml" line="439" />
         <source>Degrees minutes seconds</source>
         <translation type="unfinished">Graden minuten seconden</translation>
     </message>
     <message>
-        <location filename="../qml/SettingsPage.qml" line="356" />
+        <location filename="../qml/SettingsPage.qml" line="439" />
         <source>Degrees decimal minutes</source>
         <translation type="unfinished">Graden decimale minuten</translation>
     </message>
     <message>
-        <location filename="../qml/SettingsPage.qml" line="383" />
+        <location filename="../qml/SettingsPage.qml" line="466" />
         <source>GPS accuracy</source>
         <translation type="unfinished">GPS-nauwkeurigheid</translation>
     </message>
     <message>
-        <location filename="../qml/SettingsPage.qml" line="383" />
+        <location filename="../qml/SettingsPage.qml" line="466" />
         <source>meters</source>
         <translation type="unfinished">meters</translation>
     </message>
     <message>
-        <location filename="../qml/SettingsPage.qml" line="429" />
+        <location filename="../qml/SettingsPage.qml" line="512" />
         <source>Simulate location</source>
         <translation type="unfinished">Locatie simuleren</translation>
     </message>
     <message>
-        <location filename="../qml/SettingsPage.qml" line="454" />
+        <location filename="../qml/SettingsPage.qml" line="537" />
         <source>Source file</source>
         <translation type="unfinished">Bronbestand</translation>
     </message>
     <message>
-        <location filename="../qml/SettingsPage.qml" line="510" />
+        <location filename="../qml/SettingsPage.qml" line="591" />
         <source>Upload requires WiFi</source>
         <translation type="unfinished">Uploaden vereist WiFi</translation>
     </message>
     <message>
-        <location filename="../qml/SettingsPage.qml" line="534" />
+        <location filename="../qml/SettingsPage.qml" line="615" />
         <source>Share bug report</source>
         <translation type="unfinished">Bugrapport delen</translation>
     </message>
     <message>
-        <location filename="../qml/SettingsPage.qml" line="542" />
+        <location filename="../qml/SettingsPage.qml" line="623" />
         <source>Share over email, text, etc.</source>
         <translation type="unfinished">Delen via e-mail, tekst, enz.</translation>
     </message>
     <message>
-        <location filename="../qml/SettingsPage.qml" line="571" />
+        <location filename="../qml/SettingsPage.qml" line="651" />
         <source>Save bug report</source>
         <translation type="unfinished">Bugrapport opslaan</translation>
     </message>
     <message>
-        <location filename="../qml/SettingsPage.qml" line="579" />
+        <location filename="../qml/SettingsPage.qml" line="659" />
         <source>Save to device for manual copy</source>
         <translation type="unfinished">Opslaan op apparaat voor handmatige kopie</translation>
     </message>
     <message>
-        <location filename="../qml/SettingsPage.qml" line="608" />
+        <location filename="../qml/SettingsPage.qml" line="687" />
         <source>Simulation source</source>
         <translation type="unfinished">Simulatiebron</translation>
     </message>
     <message>
-        <location filename="../qml/SettingsPage.qml" line="617" />
+        <location filename="../qml/SettingsPage.qml" line="696" />
         <source>Generate track file using</source>
         <translation type="unfinished">Genereer spoorbestand met behulp van</translation>
     </message>
     <message>
-        <location filename="../qml/SettingsPage.qml" line="624" />
+        <location filename="../qml/SettingsPage.qml" line="703" />
         <source>Copy to the Download folder</source>
         <translation type="unfinished">Kopieer naar de downloadmap</translation>
     </message>
     <message>
-        <location filename="../qml/SettingsPage.qml" line="631" />
+        <location filename="../qml/SettingsPage.qml" line="710" />
         <source>Restart</source>
         <translation type="unfinished">Herstart</translation>
     </message>
     <message>
-        <location filename="../qml/EarthRanger/SettingsPage.qml" line="234" />
+        <location filename="../qml/EarthRanger/SettingsPage.qml" line="233" />
         <location filename="../qml/SMART/SettingsPage.qml" line="87" />
         <source>Page mode</source>
         <translation type="unfinished">Pagina modus</translation>
@@ -3618,12 +4249,12 @@
 <context>
     <name>Sighting</name>
     <message>
-        <location filename="../cpp/Sighting.cpp" line="810" />
+        <location filename="../cpp/Sighting.cpp" line="856" />
         <source>photo</source>
         <translation type="unfinished">foto</translation>
     </message>
     <message>
-        <location filename="../cpp/Sighting.cpp" line="810" />
+        <location filename="../cpp/Sighting.cpp" line="856" />
         <source>photos</source>
         <translation type="unfinished">foto's</translation>
     </message>
@@ -3696,47 +4327,47 @@
         <translation type="unfinished">Groep</translation>
     </message>
     <message>
-        <location filename="../qml/SMART/SightingHomePage.qml" line="430" />
+        <location filename="../qml/SMART/SightingHomePage.qml" line="429" />
         <source>Create a new group</source>
         <translation type="unfinished">Een nieuwe groep aanmaken</translation>
     </message>
     <message>
-        <location filename="../qml/SMART/SightingHomePage.qml" line="459" />
+        <location filename="../qml/SMART/SightingHomePage.qml" line="458" />
         <source>Make observation</source>
         <translation type="unfinished">Observatie maken</translation>
     </message>
     <message>
-        <location filename="../qml/SMART/SightingHomePage.qml" line="459" />
+        <location filename="../qml/SMART/SightingHomePage.qml" line="458" />
         <source>Add observation</source>
         <translation type="unfinished">Opmerking toevoegen</translation>
     </message>
     <message>
-        <location filename="../qml/SMART/SightingHomePage.qml" line="511" />
+        <location filename="../qml/SMART/SightingHomePage.qml" line="510" />
         <source>Delete group?</source>
         <translation type="unfinished">Groep verwijderen?</translation>
     </message>
     <message>
-        <location filename="../qml/SMART/SightingHomePage.qml" line="512" />
+        <location filename="../qml/SMART/SightingHomePage.qml" line="511" />
         <source>Delete item?</source>
         <translation type="unfinished">Item verwijderen?</translation>
     </message>
     <message>
-        <location filename="../qml/SMART/SightingHomePage.qml" line="524" />
+        <location filename="../qml/SMART/SightingHomePage.qml" line="523" />
         <source>Yes</source>
         <translation type="unfinished">Ja</translation>
     </message>
     <message>
-        <location filename="../qml/SMART/SightingHomePage.qml" line="548" />
+        <location filename="../qml/SMART/SightingHomePage.qml" line="547" />
         <source>No</source>
         <translation type="unfinished">Geen</translation>
     </message>
     <message>
-        <location filename="../qml/SMART/SightingHomePage.qml" line="626" />
+        <location filename="../qml/SMART/SightingHomePage.qml" line="625" />
         <source>Statistics</source>
         <translation type="unfinished">Statistieken</translation>
     </message>
     <message>
-        <location filename="../qml/SMART/SightingHomePage.qml" line="640" />
+        <location filename="../qml/SMART/SightingHomePage.qml" line="639" />
         <source>Toggle dark theme</source>
         <translation type="unfinished">Toggle donker thema</translation>
     </message>
@@ -3810,7 +4441,7 @@
 <context>
     <name>SketchField</name>
     <message>
-        <location filename="../cpp/Field.cpp" line="1327" />
+        <location filename="../cpp/Field.cpp" line="1334" />
         <source>Yes</source>
         <translation type="unfinished">Ja</translation>
     </message>
@@ -3866,45 +4497,25 @@
         <translation type="unfinished">Geen nieuwe gegevens</translation>
     </message>
     <message>
-        <location filename="../qml/Classic/StartPage.qml" line="142" />
+        <location filename="../qml/Classic/StartPage.qml" line="140" />
         <source>Share outstanding data?</source>
         <translation type="unfinished">Uitstaande gegevens delen?</translation>
     </message>
     <message>
-        <location filename="../qml/Classic/StartPage.qml" line="143" />
+        <location filename="../qml/Classic/StartPage.qml" line="141" />
         <source>Yes, share it</source>
         <translation type="unfinished">Ja, deel het</translation>
     </message>
     <message>
-        <location filename="../qml/Classic/StartPage.qml" line="153" />
-        <location filename="../qml/SMART/StartPage.qml" line="111" />
+        <location filename="../qml/Classic/StartPage.qml" line="151" />
+        <location filename="../qml/SMART/StartPage.qml" line="112" />
         <source>Success</source>
         <translation type="unfinished">Succes</translation>
     </message>
     <message>
-        <location filename="../qml/SMART/StartPage.qml" line="111" />
+        <location filename="../qml/SMART/StartPage.qml" line="112" />
         <source>Error</source>
         <translation type="unfinished">Fout</translation>
-    </message>
-    <message>
-        <location filename="../qml/SMART/StartPage.qml" line="92" />
-        <source>All data has been uploaded</source>
-        <translation type="unfinished">Alle gegevens zijn geüpload</translation>
-    </message>
-    <message>
-        <location filename="../qml/SMART/StartPage.qml" line="93" />
-        <source>Connection failed</source>
-        <translation type="unfinished">Verbinding mislukt</translation>
-    </message>
-    <message>
-        <location filename="../qml/SMART/StartPage.qml" line="100" />
-        <source>Data is ready for import from the desktop</source>
-        <translation type="unfinished">Gegevens zijn klaar voor import vanaf de desktop</translation>
-    </message>
-    <message>
-        <location filename="../qml/SMART/StartPage.qml" line="101" />
-        <source>Export may have failed</source>
-        <translation type="unfinished">Export kan mislukt zijn</translation>
     </message>
     <message>
         <location filename="../qml/SMART/StartPage.qml" line="43" />
@@ -3922,12 +4533,32 @@
         <translation type="unfinished">Incident melden</translation>
     </message>
     <message>
+        <location filename="../qml/SMART/StartPage.qml" line="92" />
+        <source>All data has been uploaded.</source>
+        <translation type="unfinished">Alle gegevens zijn geüpload.</translation>
+    </message>
+    <message>
+        <location filename="../qml/SMART/StartPage.qml" line="93" />
+        <source>Connection failed. Please try again later.</source>
+        <translation type="unfinished">Verbinding mislukt. Probeer het later nog eens.</translation>
+    </message>
+    <message>
+        <location filename="../qml/SMART/StartPage.qml" line="100" />
+        <source>Data is ready for import from the desktop.</source>
+        <translation type="unfinished">Gegevens zijn klaar voor import vanaf de desktop.</translation>
+    </message>
+    <message>
+        <location filename="../qml/SMART/StartPage.qml" line="101" />
+        <source>Export may have failed.</source>
+        <translation type="unfinished">De export kan mislukt zijn.</translation>
+    </message>
+    <message>
         <location filename="../qml/ODK/StartPage.qml" line="26" />
         <source>Submit</source>
         <translation type="unfinished">Dien  in</translation>
     </message>
     <message>
-        <location filename="../qml/ODK/StartPage.qml" line="115" />
+        <location filename="../qml/ODK/StartPage.qml" line="113" />
         <source>Form error</source>
         <translation type="unfinished">Vormfout</translation>
     </message>
@@ -3935,52 +4566,73 @@
 <context>
     <name>StartPageCollect</name>
     <message>
-        <location filename="../qml/SMART/StartPageCollect.qml" line="149" />
-        <source>All data has been uploaded</source>
-        <translation type="unfinished">Alle gegevens zijn geüpload</translation>
-    </message>
-    <message>
-        <location filename="../qml/SMART/StartPageCollect.qml" line="150" />
-        <source>Connection failed</source>
-        <translation type="unfinished">Verbinding mislukt</translation>
-    </message>
-    <message>
-        <location filename="../qml/SMART/StartPageCollect.qml" line="23" />
+        <location filename="../qml/SMART/StartPageCollect.qml" line="117" />
         <source>Success</source>
         <translation type="unfinished">Succes</translation>
     </message>
     <message>
-        <location filename="../qml/SMART/StartPageCollect.qml" line="23" />
+        <location filename="../qml/SMART/StartPageCollect.qml" line="117" />
         <source>Error</source>
         <translation type="unfinished">Fout</translation>
     </message>
     <message>
-        <location filename="../qml/SMART/StartPageCollect.qml" line="101" />
+        <location filename="../qml/SMART/StartPageCollect.qml" line="59" />
         <source>Enter email or phone</source>
         <translation type="unfinished">Voer e-mail of telefoon in</translation>
     </message>
     <message>
-        <location filename="../qml/SMART/StartPageCollect.qml" line="112" />
+        <location filename="../qml/SMART/StartPageCollect.qml" line="71" />
         <source>Start collecting</source>
         <translation type="unfinished">Begin met verzamelen</translation>
     </message>
     <message>
-        <location filename="../qml/SMART/StartPageCollect.qml" line="126" />
+        <location filename="../qml/SMART/StartPageCollect.qml" line="86" />
         <source>Upload data</source>
         <translation type="unfinished">Gegevens uploaden</translation>
+    </message>
+    <message>
+        <location filename="../qml/SMART/StartPageCollect.qml" line="113" />
+        <source>All data has been uploaded.</source>
+        <translation type="unfinished">Alle gegevens zijn geüpload.</translation>
+    </message>
+    <message>
+        <location filename="../qml/SMART/StartPageCollect.qml" line="114" />
+        <source>Connection failed. Please try again later.</source>
+        <translation type="unfinished">Verbinding mislukt. Probeer het later nog eens.</translation>
     </message>
 </context>
 <context>
     <name>SubmitButton</name>
     <message>
-        <location filename="../controls/imports/CyberTracker.1/SubmitButton.qml" line="94" />
+        <location filename="../controls/imports/CyberTracker.1/SubmitButton.qml" line="89" />
         <source>Upload failed</source>
         <translation type="unfinished">Uploaden mislukt</translation>
     </message>
     <message>
-        <location filename="../controls/imports/CyberTracker.1/SubmitButton.qml" line="156" />
+        <location filename="../controls/imports/CyberTracker.1/SubmitButton.qml" line="151" />
         <source>Submit data?</source>
         <translation type="unfinished">Gegevens indienen?</translation>
+    </message>
+</context>
+<context>
+    <name>UnsupportedPage</name>
+    <message>
+        <location filename="../qml/Google/UnsupportedPage.qml" line="29" />
+        <source>Forms containing *File upload* questions are not currently supported.</source>
+        <translation type="unfinished">Formulieren met *Bestand uploaden* vragen worden momenteel niet ondersteund.</translation>
+    </message>
+    <message>
+        <location filename="../qml/Google/UnsupportedPage.qml" line="39" />
+        <source>Remove the question and update the form to continue.</source>
+        <translation type="unfinished">Verwijder de vraag en werk het formulier bij om verder te gaan.</translation>
+    </message>
+</context>
+<context>
+    <name>UploadFileTask</name>
+    <message>
+        <location filename="../cpp/Google/GoogleProvider.cpp" line="131" />
+        <source>Incorrect %1 tag</source>
+        <translation type="unfinished">Onjuiste tag %1</translation>
     </message>
 </context>
 <context>
@@ -3997,8 +4649,8 @@
     </message>
     <message>
         <location filename="../controls/imports/CyberTracker.1/UsernamePage.qml" line="65" />
-        <source>Data will be tagged with this name. This setting applies to all projects.</source>
-        <translation type="unfinished">Gegevens worden met deze naam gemarkeerd. Deze instelling geldt voor alle projecten.</translation>
+        <source>Data will be tagged with this name. This setting applies to all %1.</source>
+        <translation type="unfinished">Gegevens worden met deze naam gemarkeerd. Deze instelling geldt voor alle %1.</translation>
     </message>
 </context>
 <context>
@@ -4020,7 +4672,7 @@
 <context>
     <name>Wizard</name>
     <message>
-        <location filename="../cpp/Wizard.cpp" line="431" />
+        <location filename="../cpp/Wizard.cpp" line="438" />
         <source>Form incomplete</source>
         <translation type="unfinished">Formulier onvolledig</translation>
     </message>
@@ -4038,7 +4690,7 @@
         <translation type="unfinished">Opgeslagen waarnemingen</translation>
     </message>
     <message>
-        <location filename="../controls/imports/CyberTracker.1/WizardOptionsPage.qml" line="102" />
+        <location filename="../controls/imports/CyberTracker.1/WizardOptionsPage.qml" line="26" />
         <source>Submit</source>
         <translation type="unfinished">Dien  in</translation>
     </message>
@@ -4046,42 +4698,63 @@
 <context>
     <name>WizardPage</name>
     <message>
-        <location filename="../controls/imports/CyberTracker.1/WizardPage.qml" line="352" />
+        <location filename="../controls/imports/CyberTracker.1/WizardPage.qml" line="400" />
         <source>Yes</source>
         <translation type="unfinished">Ja</translation>
     </message>
     <message>
-        <location filename="../controls/imports/CyberTracker.1/WizardPage.qml" line="352" />
+        <location filename="../controls/imports/CyberTracker.1/WizardPage.qml" line="400" />
         <source>No</source>
         <translation type="unfinished">Geen</translation>
     </message>
     <message>
-        <location filename="../controls/imports/CyberTracker.1/WizardPage.qml" line="389" />
+        <location filename="../controls/imports/CyberTracker.1/WizardPage.qml" line="437" />
         <source>OK</source>
         <translation type="unfinished">OK</translation>
     </message>
     <message>
-        <location filename="../controls/imports/CyberTracker.1/WizardPage.qml" line="712" />
+        <location filename="../controls/imports/CyberTracker.1/WizardPage.qml" line="772" />
         <source>Unsaved data?</source>
         <translation type="unfinished">Niet opgeslagen gegevens?</translation>
     </message>
     <message>
-        <location filename="../controls/imports/CyberTracker.1/WizardPage.qml" line="713" />
+        <location filename="../controls/imports/CyberTracker.1/WizardPage.qml" line="773" />
         <source>This sighting has not been saved.</source>
         <translation type="unfinished">Deze waarneming is niet opgeslagen.</translation>
     </message>
     <message>
-        <location filename="../controls/imports/CyberTracker.1/WizardPage.qml" line="714" />
+        <location filename="../controls/imports/CyberTracker.1/WizardPage.qml" line="774" />
         <source>Yes, discard it</source>
         <translation type="unfinished">Ja, gooi het weg.</translation>
     </message>
     <message>
-        <location filename="../controls/imports/CyberTracker.1/WizardPage.qml" line="788" />
+        <location filename="../controls/imports/CyberTracker.1/WizardPage.qml" line="798" />
+        <source>Change %1</source>
+        <translation type="unfinished">Verander %1</translation>
+    </message>
+    <message>
+        <location filename="../controls/imports/CyberTracker.1/WizardPage.qml" line="799" />
+        <source>Update %1</source>
+        <translation type="unfinished">Update %1</translation>
+    </message>
+    <message>
+        <location filename="../controls/imports/CyberTracker.1/WizardPage.qml" line="800" />
+        <source>Settings</source>
+        <translation type="unfinished">Instellingen</translation>
+    </message>
+    <message>
+        <location filename="../controls/imports/CyberTracker.1/WizardPage.qml" line="801" />
+        <location filename="../controls/imports/CyberTracker.1/WizardPage.qml" line="922" />
         <source>Home</source>
         <translation type="unfinished">Home</translation>
     </message>
     <message>
-        <location filename="../controls/imports/CyberTracker.1/WizardPage.qml" line="963" />
+        <location filename="../controls/imports/CyberTracker.1/WizardPage.qml" line="821" />
+        <source>Offline</source>
+        <translation type="unfinished">Offline</translation>
+    </message>
+    <message>
+        <location filename="../controls/imports/CyberTracker.1/WizardPage.qml" line="1103" />
         <source>Error saving observation</source>
         <translation type="unfinished">Fout bij het opslaan van de waarneming</translation>
     </message>

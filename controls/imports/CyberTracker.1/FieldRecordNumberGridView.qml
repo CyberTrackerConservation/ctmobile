@@ -8,8 +8,9 @@ import CyberTracker 1.0 as C
 GridViewV {
     id: root
 
-    property alias recordUid: fieldBinding.recordUid
-    property alias fieldUid: fieldBinding.fieldUid
+    property alias recordUid: fieldListModel.recordUid
+    property string fieldUid
+    property bool highlightInvalid: false
 
     signal itemClicked(string recordUid, string fieldUid)
 
@@ -43,8 +44,9 @@ GridViewV {
         }
     }
 
-    C.FieldBinding {
-        id: fieldBinding
+    model: C.FieldListProxyModel {
+        id: fieldListModel
+        recordUid: root.recordUid
     }
 
     delegate: GridFrameDelegate {
@@ -59,8 +61,8 @@ GridViewV {
 
         C.FieldBinding {
             id: fieldBindingDelegate
-            recordUid: modelData.recordUid
-            fieldUid: modelData.fieldUid
+            recordUid: model.recordUid
+            fieldUid: model.fieldUid
         }
 
         Component {
@@ -84,7 +86,7 @@ GridViewV {
                     elide: Text.ElideLeft
                     font.pixelSize: root.fontSize
                     font.bold: root.fontBold
-                    color: Material.foreground
+                    color: getTextColor(fieldBindingDelegate)
                     clip: true
                     text: {
                         let result = fieldBindingDelegate.displayValue
@@ -106,15 +108,16 @@ GridViewV {
                     elide: Text.ElideRight
                     text: fieldBindingDelegate.fieldName
                     font.pixelSize: root.fontSize
+                    font.bold: root.fontBold
                     verticalAlignment: Text.AlignVCenter
-                    color: Material.foreground
+                    color: getTextColor(fieldBindingDelegate)
                 }
                 Text {
                     Layout.alignment: Qt.AlignRight
                     Layout.fillHeight: true
                     font.pixelSize: root.fontSize
                     font.bold: root.fontBold
-                    color: Material.foreground
+                    color: getTextColor(fieldBindingDelegate)
                     verticalAlignment: Text.AlignVCenter
                     text: {
                         let result = fieldBindingDelegate.displayValue
@@ -140,15 +143,16 @@ GridViewV {
                     elide: Text.ElideRight
                     text: fieldBindingDelegate.fieldName
                     font.pixelSize: root.fontSize
+                    font.bold: root.fontBold
                     verticalAlignment: Text.AlignVCenter
-                    color: Material.foreground
+                    color: getTextColor(fieldBindingDelegate)
                 }
                 Text {
                     Layout.alignment: Qt.AlignRight
                     Layout.fillHeight: true
                     font.pixelSize: root.fontSize
                     font.bold: root.fontBold
-                    color: Material.foreground
+                    color: getTextColor(fieldBindingDelegate)
                     verticalAlignment: Text.AlignVCenter
                     text: {
                         let result = fieldBindingDelegate.displayValue
@@ -175,33 +179,37 @@ GridViewV {
         }
 
         onClicked: {
-            root.itemClicked(modelData.recordUid, modelData.fieldUid)
+            root.itemClicked(model.recordUid, model.fieldUid)
         }
     }
 
-    Component.onCompleted: {
-        root.model = rebuild()
+    function getTextColor(fieldBinding) {
+        return (highlightInvalid && !fieldBinding.isValid) ? Style.colorInvalid : Material.foreground
     }
 
-    function rebuild() {
-        let result = []
-        let recordFieldUid = form.getRecordFieldUid(recordUid)
-        let recordField = form.getField(recordFieldUid)
-
-        for (let i = 0; i < recordField.fields.length; i++) {
-            let field = recordField.fields[i]
-
-            if (!form.getFieldVisible(recordUid, field.uid)) {
+    function validate() {
+        for (let i = 0; i < model.count; i++) {
+            let fieldValue = model.get(i)
+            if (fieldValue.valid) {
                 continue
             }
 
-            if (form.getFieldType(field.uid) !== "NumberField") {
-                App.showError(qsTr("Group field not a number"))
-            }
+            highlightInvalid = true
+            console.log("Binding value invalid: " + fieldValue.fieldUid)
+            root.positionViewAtIndex(i, GridView.Center)
 
-            result.push({ recordUid: recordUid, fieldUid: field.uid })
+            let message = qsTr("Value required")
+            if (fieldValue.constraintMessage !== "") {
+                message = fieldValue.constraintMessage
+            } else if (fieldValue.requiredMessage !== "") {
+                message = fieldValue.requiredMessage
+            }
+            showError(message)
+
+            return false
         }
 
-        return result
+        highlightInvalid = false
+        return true
     }
 }

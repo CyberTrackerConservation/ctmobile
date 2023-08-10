@@ -1,6 +1,7 @@
 import QtQuick 2.12
 import QtQuick.Controls 2.12
 import QtQuick.Layouts 1.12
+import QtQuick.Controls.Material 2.12
 import CyberTracker 1.0 as C
 
 Pane {
@@ -9,6 +10,7 @@ Pane {
     property var model: []
 
     padding: 0
+    Material.background: Style.colorContent
 
     contentItem: C.ListViewV {
         id: listView
@@ -19,7 +21,7 @@ Pane {
             height: modelData.name === "-" ? 2 : implicitContentHeight + padding
 
             contentItem: RowLayout {
-                spacing: 4
+                spacing: App.scaleByFontSize(4)
                 opacity: 0.75
                 visible: modelData.name !== "-"
 

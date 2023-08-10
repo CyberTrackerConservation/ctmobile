@@ -91,6 +91,13 @@ class App: public QObject
     QML_READONLY_AUTO_PROPERTY (QString, batteryIcon)
     QML_READONLY_AUTO_PROPERTY (QString, batteryText)
 
+    QML_READONLY_AUTO_PROPERTY (QVariantMap, googleCredentials)
+
+    QML_READONLY_AUTO_PROPERTY (QString, alias_Project)
+    QML_READONLY_AUTO_PROPERTY (QString, alias_Projects)
+    QML_READONLY_AUTO_PROPERTY (QString, alias_project)
+    QML_READONLY_AUTO_PROPERTY (QString, alias_projects)
+
 public:
     App(QObject* parent = nullptr);
     App(QGuiApplication* guiApplication, QQmlApplicationEngine* qmlEngine, const QVariantMap& config);
@@ -141,12 +148,15 @@ public:
     Q_INVOKABLE void initProgress(const QString& projectUid, const QString& operation, const QVector<int>& phases);
     Q_INVOKABLE void sendProgress(int value, int phase = 0);
 
+    Q_INVOKABLE bool hasPermission(const QString& permission) const;
+    Q_INVOKABLE bool requestPermissionCamera();
     Q_INVOKABLE bool requestPermissionRecordAudio();
     Q_INVOKABLE bool requestPermissionLocation();
     Q_INVOKABLE bool requestPermissionBackgroundLocation();
-    Q_INVOKABLE bool requestPermissionReadExternalStorage();
-    Q_INVOKABLE bool requestPermissionWriteExternalStorage();
     Q_INVOKABLE bool requestPermissions(const QString& projectUid);
+    Q_INVOKABLE bool promptForLocation(const QString& projectUid = QString()) const;
+    Q_INVOKABLE bool promptForBackgroundLocation(const QString& projectUid) const;
+    Q_INVOKABLE bool promptForBlackviewMessage(const QString& projectUid) const;
 
     Q_INVOKABLE bool getActive();
 
@@ -176,6 +186,7 @@ public:
     Q_INVOKABLE void runQRCode(const QString& tag);
     Q_INVOKABLE QVariantMap installPackage(const QString& filePathUrl, bool showToasts = true);
 
+    Q_INVOKABLE void clearDeviceCache();
     Q_INVOKABLE void clearComponentCache();
 
     Q_INVOKABLE QString getDirectionText(double directionDegrees) const;
@@ -184,8 +195,8 @@ public:
     Q_INVOKABLE QString getAreaText(double areaMeters) const;
     Q_INVOKABLE QString getTimeText(int timeSeconds) const;
 
-    Q_INVOKABLE QString deviceImei();
-    Q_INVOKABLE bool wifiConnected();
+    Q_INVOKABLE QString deviceImei() const;
+    Q_INVOKABLE bool wifiConnected() const;
     Q_INVOKABLE bool pingUrl(const QString& url) const;
     Q_INVOKABLE bool networkAvailable() const;
 
@@ -214,7 +225,7 @@ signals:
 
     void providerEvent(const QString& providerName, const QString& projectUid, const QString& name, const QVariant& value);
     void progressEvent(const QString& projectUid, const QString& operationName, int index, int count);
-    void showMessageBox(const QString& title, const QString& text, const QString& details = QString());
+    void showMessageBox(const QString& title, const QString& message1, const QString& message2 = QString(), const QString& message3 = QString());
     void backPressed();
     void popPageStack();
     void photoTaken(const QString& filename);

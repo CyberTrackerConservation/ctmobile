@@ -32,6 +32,9 @@
         <file>Esri/CreateService.json</file>
         <file>Esri/CreateLayers.json</file>
         <file>Esri/LocationTrackingXlsForm.png</file>
+        <file>Google/ggforms.svg</file>
+        <file>Google/GoogleLogin.svg</file>
+        <file>Google/logo.svg</file>
         <file>KoBo/logo.svg</file>
         <file>ODK/logo.svg</file>
         <file>SMART/logo.svg</file>
@@ -301,8 +304,12 @@
         <file>icons/account_edit.svg</file>
         <file>icons/account_switch.svg</file>
         <file>icons/add.svg</file>
+        <file>icons/addon.svg</file>
         <file>icons/alert_circle_outline.svg</file>
         <file>icons/alert_outline.svg</file>
+        <file>icons/apple.svg</file>
+        <file>icons/application_settings_outline.svg</file>
+        <file>icons/android.svg</file>
         <file>icons/archive_arrow_down_outline.svg</file>
         <file>icons/archive_arrow_up_outline.svg</file>
         <file>icons/arrange_send_backward.svg</file>
@@ -374,6 +381,7 @@
         <file>icons/clipboard_remove_outline.svg</file>
         <file>icons/clipboard_text_outline.svg</file>
         <file>icons/close.svg</file>
+        <file>icons/close_circle_outline.svg</file>
         <file>icons/cloud_check_outline.svg</file>
         <file>icons/cloud_done.svg</file>
         <file>icons/cloud_off_outline.svg</file>
@@ -388,6 +396,7 @@
         <file>icons/delete.svg</file>
         <file>icons/delete_outline.svg</file>
         <file>icons/directions.svg</file>
+        <file>icons/document_plus_outline.svg</file>
         <file>icons/dots_horizontal.svg</file>
         <file>icons/dots_horizontal_circle.svg</file>
         <file>icons/dots_horizontal_circle_outline.svg</file>
@@ -402,6 +411,7 @@
         <file>icons/fast_forward.svg</file>
         <file>icons/fast_rewind.svg</file>
         <file>icons/file.svg</file>
+        <file>icons/file_document_alert_outline.svg</file>
         <file>icons/file_outline.svg</file>
         <file>icons/file_multiple.svg</file>
         <file>icons/file_multiple_outline.svg</file>
@@ -420,11 +430,14 @@
         <file>icons/gps_off.svg</file>
         <file>icons/gps_unknown.svg</file>
         <file>icons/heart.svg</file>
+        <file>icons/help.svg</file>
         <file>icons/history.svg</file>
         <file>icons/home.svg</file>
         <file>icons/home_import_outline.svg</file>
+        <file>icons/image_outline.svg</file>
         <file>icons/info.svg</file>
         <file>icons/info_fill.svg</file>
+        <file>icons/ios.svg</file>
         <file>icons/keyboard.svg</file>
         <file>icons/keyboard_outline.svg</file>
         <file>icons/last_page.svg</file>
@@ -467,6 +480,9 @@
         <file>icons/navigation2_empty.svg</file>
         <file>icons/nature_people.svg</file>
         <file>icons/north_direction.svg</file>
+        <file>icons/number1.svg</file>
+        <file>icons/number2.svg</file>
+        <file>icons/number3.svg</file>
         <file>icons/offline_pin.svg</file>
         <file>icons/ok.svg</file>
         <file>icons/package_closed.svg</file>
@@ -481,6 +497,7 @@
         <file>icons/play_outline.svg</file>
         <file>icons/plus.svg</file>
         <file>icons/progress_upload.svg</file>
+        <file>icons/publish.svg</file>
         <file>icons/push_pin.svg</file>
         <file>icons/push_pin_outline.svg</file>
         <file>icons/qrcode.svg</file>
@@ -519,6 +536,7 @@
         <file>icons/usb.svg</file>
         <file>icons/vector_polyline.svg</file>
         <file>icons/vector_polyline_plus.svg</file>
+        <file>icons/video_outline.svg</file>
         <file>icons/videocam.svg</file>
         <file>icons/view_grid_plus_outline.svg</file>
         <file>icons/view_grid_plus.svg</file>
@@ -529,6 +547,7 @@
         <file>icons/wb_sunny.svg</file>
         <file>icons/web.svg</file>
         <file>icons/wifi_strength_off_outline.svg</file>
+        <file>icons/youtube.svg</file>
         <file>map/acquiringSymbol.svg</file>
         <file>map/courseSymbol.svg</file>
         <file>map/defaultSymbol.svg</file>

@@ -70,6 +70,7 @@ public:
     Q_INVOKABLE void setCollectUser(const QString& user);
 
     Q_INVOKABLE bool exportData();
+    Q_INVOKABLE bool hasUploadData() const;
     Q_INVOKABLE bool uploadData();
     Q_INVOKABLE bool clearCompletedData();
     Q_INVOKABLE bool recoverAndClearData();

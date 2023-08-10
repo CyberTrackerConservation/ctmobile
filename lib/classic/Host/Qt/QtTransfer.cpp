@@ -260,17 +260,7 @@ bool QtTransfer::sendDataHTTP(const QString& filename, const QString& url, const
     QObject::connect(reply.get(), &QNetworkReply::finished, &eventLoop, &QEventLoop::quit);
     eventLoop.exec();
 
-    auto result = Utils::HttpResponse();
-
-    result.success = reply->error() == QNetworkReply::NoError;
-    result.status = reply->attribute(QNetworkRequest::HttpStatusCodeAttribute).toInt();
-    result.reason = reply->attribute(QNetworkRequest::HttpReasonPhraseAttribute).toString();
-    result.etag = reply->header(QNetworkRequest::ETagHeader).toString();
-    result.location = reply->header(QNetworkRequest::LocationHeader).toString();
-    result.url = url;
-    result.errorString = reply->errorString();
-    result.data = QByteArray(reply->readAll());
-
+    auto result = Utils::HttpResponse::fromReply(url, reply.get());
     if (!result.success)
     {
         qDebug() << "HTTP error: " << result.errorString;

@@ -8,6 +8,7 @@ class SightingListModel: public VariantListModel, public QQmlParserStatus
 
     Q_INTERFACES (QQmlParserStatus)
     QML_READONLY_AUTO_PROPERTY(bool, canSubmit)
+    QML_WRITABLE_AUTO_PROPERTY(bool, groupExported)
 
 public:
     SightingListModel(QObject* parent = nullptr);

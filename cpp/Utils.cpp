@@ -36,6 +36,37 @@ QVariantMap variantMapFromJsonFile(const QString& filePath)
     return jsonObject.toVariantMap();
 }
 
+QVariantMap variantMapFromFileInZip(const QString& zipFilePath, const QString& jsonFileName)
+{
+    QuaZip zip(zipFilePath);
+    if (!zip.open(QuaZip::mdUnzip))
+    {
+        return QVariantMap();
+    }
+
+    zip.setCurrentFile(jsonFileName, QuaZip::csInsensitive);
+    if (!zip.hasCurrentFile())
+    {
+        return QVariantMap();
+    }
+
+    QuaZipFile jsonFile(&zip);
+    if (!jsonFile.open(QIODevice::ReadOnly))
+    {
+        return QVariantMap();
+    }
+
+    QJsonParseError jsonErrorCode;
+    auto json = QJsonDocument::fromJson(jsonFile.readAll(), &jsonErrorCode);
+    if (jsonErrorCode.error != QJsonParseError::NoError)
+    {
+        qDebug() << "Bad json";
+        return QVariantMap();
+    }
+
+    return json.object().toVariantMap();
+}
+
 QByteArray variantMapToJson(const QVariantMap& map, QJsonDocument::JsonFormat format)
 {
     auto jsonObject = QJsonObject::fromVariantMap(map);
@@ -165,6 +196,60 @@ QVariant variantFromJSValue(const QVariant& value)
     }
 
     return result;
+}
+
+void insertParameter(QVariantMap* params, const QString& name, const QString& value)
+{
+    auto valueText = value.trimmed();
+    if (valueText.isEmpty())
+    {
+        return;
+    }
+
+    // Convert "TRUE", "FALSE", "YES", "NO" to lowercase boolean values.
+    auto fixups = QMap<QString, QString> { { "TRUE", "true" }, { "FALSE", "false" }, { "YES", "true" }, { "NO", "false" } };
+    valueText = fixups.value(valueText.toUpper(), valueText);
+
+    // Try a JSON type.
+    auto valueJson = "{ \"v\": " + valueText + " }";
+    auto v = QJsonDocument::fromJson(valueJson.toLatin1()).object().toVariantMap().value("v");
+    if (!v.isValid() || v.isNull())
+    {
+        // object, array, bool, integer and double failed -> must be text.
+        v = valueText;
+    }
+
+    // 'parameters' must be an object.
+    if (name == "parameters")
+    {
+        params->insert(v.toMap());
+        return;
+    }
+
+    // Check for full attribute value.
+    auto parts = name.split('.');
+
+    // attribute is full name.
+    if (parts.length() == 1)
+    {
+        params->insert(name, v);
+        return;
+    }
+
+    // attribute is a.b format, e.g. content.style.
+    if (parts.length() == 2)
+    {
+        auto mapName = parts.constFirst();
+        auto mapValue = parts.constLast();
+
+        auto paramMap = params->value(mapName).toMap();
+        paramMap[mapValue] = v;
+        params->insert(mapName, paramMap);
+        return;
+    }
+
+    // Format not supported.
+    qDebug() << "Invalid attribute name: " << name;
 }
 
 QString unpackZip(const QString& targetPath, const QString& targetFolder, const QString& zipFilePath)
@@ -530,6 +615,20 @@ bool mediaScan(const QString& filePath)
 #endif
 }
 
+QString resolveContentUri(const QString& contentUri)
+{
+#if defined(Q_OS_ANDROID)
+    if (contentUri.startsWith("content:"))
+    {
+        QAndroidJniObject jsPath = QAndroidJniObject::fromString(contentUri);
+        auto result = QtAndroid::androidActivity().callObjectMethod("resolveContentUri", "(Ljava/lang/String;)Ljava/lang/String;", jsPath.object<jstring>()).toString();
+        return result.isEmpty() ? contentUri : result;
+    }
+#endif
+
+    return contentUri;
+}
+
 bool locationValid(const QVariantMap& locationMap)
 {
     return !locationMap.isEmpty() &&
@@ -777,11 +876,11 @@ HttpResponse httpGetHead(QNetworkAccessManager* networkAccessManager, const QStr
     auto result = HttpResponse();
 
     QNetworkRequest request;
-    QEventLoop eventLoop;
 
     auto finalUrl = url;
     for (;;)
     {
+        QEventLoop eventLoop;
         request.setUrl(finalUrl);
         auto reply = std::unique_ptr<QNetworkReply>(networkAccessManager->head(request));
         reply->ignoreSslErrors();
@@ -796,15 +895,7 @@ HttpResponse httpGetHead(QNetworkAccessManager* networkAccessManager, const QStr
             continue;
         }
 
-        result.success = reply->error() == QNetworkReply::NoError;
-        result.status = reply->attribute(QNetworkRequest::HttpStatusCodeAttribute).toInt();
-        result.reason = reply->attribute(QNetworkRequest::HttpReasonPhraseAttribute).toString();
-        result.etag = reply->header(QNetworkRequest::ETagHeader).toString();
-        result.location = reply->header(QNetworkRequest::LocationHeader).toString();
-        result.url = finalUrl;
-        result.errorString = reply->errorString();
-        result.data = reply->isOpen() ? QByteArray(reply->readAll()) : QByteArray();
-
+        result = HttpResponse::fromReply(finalUrl, reply.get());
         if (!result.success)
         {
             qDebug() << "HTTP error: " << result.errorString;
@@ -822,7 +913,6 @@ HttpResponse httpGet(QNetworkAccessManager* networkAccessManager, const QString&
     auto result = HttpResponse();
 
     QNetworkRequest request;
-    QEventLoop eventLoop;
 
     if (!username.isEmpty() && !password.isEmpty())
     {
@@ -833,6 +923,7 @@ HttpResponse httpGet(QNetworkAccessManager* networkAccessManager, const QString&
     auto finalUrl = url;
     for (;;)
     {
+        QEventLoop eventLoop;
         request.setUrl(finalUrl);
         auto reply = std::unique_ptr<QNetworkReply>(networkAccessManager->get(request));
         reply->ignoreSslErrors();
@@ -847,15 +938,7 @@ HttpResponse httpGet(QNetworkAccessManager* networkAccessManager, const QString&
             continue;
         }
 
-        result.success = reply->error() == QNetworkReply::NoError;
-        result.status = reply->attribute(QNetworkRequest::HttpStatusCodeAttribute).toInt();
-        result.reason = reply->attribute(QNetworkRequest::HttpReasonPhraseAttribute).toString();
-        result.etag = reply->header(QNetworkRequest::ETagHeader).toString();
-        result.location = reply->header(QNetworkRequest::LocationHeader).toString();
-        result.url = finalUrl;
-        result.errorString = reply->errorString();
-        result.data = reply->isOpen() ? QByteArray(reply->readAll()) : QByteArray();
-
+        result = HttpResponse::fromReply(finalUrl, reply.get());
         if (!result.success)
         {
             qDebug() << "HTTP error: " << result.errorString;
@@ -873,7 +956,6 @@ HttpResponse httpGetWithToken(QNetworkAccessManager* networkAccessManager, const
     auto result = HttpResponse();
 
     QNetworkRequest request;
-    QEventLoop eventLoop;
 
     request.setRawHeader("Connection", "keep-alive");
     request.setRawHeader("Accept", "application/json, text/plain, */*");
@@ -882,6 +964,7 @@ HttpResponse httpGetWithToken(QNetworkAccessManager* networkAccessManager, const
     auto finalUrl = url;
     for (;;)
     {
+        QEventLoop eventLoop;
         request.setUrl(finalUrl);
         auto reply = std::unique_ptr<QNetworkReply>(networkAccessManager->get(request));
         reply->ignoreSslErrors();
@@ -896,15 +979,7 @@ HttpResponse httpGetWithToken(QNetworkAccessManager* networkAccessManager, const
             continue;
         }
 
-        result.success = reply->error() == QNetworkReply::NoError;
-        result.status = reply->attribute(QNetworkRequest::HttpStatusCodeAttribute).toInt();
-        result.reason = reply->attribute(QNetworkRequest::HttpReasonPhraseAttribute).toString();
-        result.etag = reply->header(QNetworkRequest::ETagHeader).toString();
-        result.location = reply->header(QNetworkRequest::LocationHeader).toString();
-        result.url = finalUrl;
-        result.errorString = reply->errorString();
-        result.data = reply->isOpen() ? QByteArray(reply->readAll()) : QByteArray();
-
+        result = HttpResponse::fromReply(finalUrl, reply.get());
         if (!result.success)
         {
             qDebug() << "HTTP error: " << result.errorString;
@@ -919,8 +994,6 @@ HttpResponse httpGetWithToken(QNetworkAccessManager* networkAccessManager, const
 
 HttpResponse httpPostJson(QNetworkAccessManager* networkAccessManager, const QString& url, const QVariantMap& payloadJson, const QString& token, const QString& tokenType, bool deflate)
 {
-    auto result = HttpResponse();
-
     QNetworkRequest request;
     QEventLoop eventLoop;
 
@@ -949,22 +1022,18 @@ HttpResponse httpPostJson(QNetworkAccessManager* networkAccessManager, const QSt
     QObject::connect(reply.get(), &QNetworkReply::finished, &eventLoop, &QEventLoop::quit);
     eventLoop.exec();
 
-    result.success = reply->error() == QNetworkReply::NoError;
-    result.status = reply->attribute(QNetworkRequest::HttpStatusCodeAttribute).toInt();
-    result.reason = reply->attribute(QNetworkRequest::HttpReasonPhraseAttribute).toString();
-    result.etag = reply->header(QNetworkRequest::ETagHeader).toString();
-    result.location = reply->header(QNetworkRequest::LocationHeader).toString();
-    result.url = url;
-    result.errorString = reply->errorString();
-    result.data = reply->isOpen() ? QByteArray(reply->readAll()) : QByteArray();
+    auto result = HttpResponse::fromReply(url, reply.get());
+    if (!result.success)
+    {
+        qDebug() << "HTTP error: " << result.errorString;
+        qDebug() << "HTTP error: " << result.data;
+    }
 
     return result;
 }
 
 HttpResponse httpPostData(QNetworkAccessManager* networkAccessManager, const QString& url, const QByteArray& payload, const QString& token, const QString& tokenType, bool deflate)
 {
-    auto result = HttpResponse();
-
     QNetworkRequest request;
     QEventLoop eventLoop;
     request.setRawHeader("Connection", "keep-alive");
@@ -990,15 +1059,7 @@ HttpResponse httpPostData(QNetworkAccessManager* networkAccessManager, const QSt
     QObject::connect(reply.get(), &QNetworkReply::finished, &eventLoop, &QEventLoop::quit);
     eventLoop.exec();
 
-    result.success = reply->error() == QNetworkReply::NoError;
-    result.status = reply->attribute(QNetworkRequest::HttpStatusCodeAttribute).toInt();
-    result.reason = reply->attribute(QNetworkRequest::HttpReasonPhraseAttribute).toString();
-    result.etag = reply->header(QNetworkRequest::ETagHeader).toString();
-    result.location = reply->header(QNetworkRequest::LocationHeader).toString();
-    result.url = url;
-    result.errorString = reply->errorString();
-    result.data = reply->isOpen() ? QByteArray(reply->readAll()) : QByteArray();
-
+    auto result = HttpResponse::fromReply(url, reply.get());
     if (!result.success)
     {
         qDebug() << "HTTP error: " << result.errorString;
@@ -1010,8 +1071,6 @@ HttpResponse httpPostData(QNetworkAccessManager* networkAccessManager, const QSt
 
 HttpResponse httpPostQuery(QNetworkAccessManager* networkAccessManager, const QString& url, const QUrlQuery& query)
 {
-    auto result = HttpResponse();
-
     QNetworkRequest request;
     QEventLoop eventLoop;
     request.setRawHeader("Connection", "keep-alive");
@@ -1027,15 +1086,7 @@ HttpResponse httpPostQuery(QNetworkAccessManager* networkAccessManager, const QS
     QObject::connect(reply.get(), &QNetworkReply::finished, &eventLoop, &QEventLoop::quit);
     eventLoop.exec();
 
-    result.success = reply->error() == QNetworkReply::NoError;
-    result.status = reply->attribute(QNetworkRequest::HttpStatusCodeAttribute).toInt();
-    result.reason = reply->attribute(QNetworkRequest::HttpReasonPhraseAttribute).toString();
-    result.etag = reply->header(QNetworkRequest::ETagHeader).toString();
-    result.location = reply->header(QNetworkRequest::LocationHeader).toString();
-    result.url = url;
-    result.errorString = reply->errorString();
-    result.data = reply->isOpen() ? QByteArray(reply->readAll()) : QByteArray();
-
+    auto result = HttpResponse::fromReply(url, reply.get());
     if (!result.success)
     {
         qDebug() << "HTTP error: " << result.errorString;
@@ -1058,8 +1109,6 @@ HttpResponse httpPostQuery(QNetworkAccessManager* networkAccessManager, const QS
 
 HttpResponse httpPostMultiPart(QNetworkAccessManager* networkAccessManager, const QString& url, QHttpMultiPart* multiPart)
 {
-    auto result = HttpResponse();
-
     multiPart->setBoundary(Utils::makeMultiPartBoundary());
 
     QNetworkRequest request;
@@ -1075,15 +1124,7 @@ HttpResponse httpPostMultiPart(QNetworkAccessManager* networkAccessManager, cons
     QObject::connect(reply.get(), &QNetworkReply::finished, &eventLoop, &QEventLoop::quit);
     eventLoop.exec();
 
-    result.success = reply->error() == QNetworkReply::NoError;
-    result.status = reply->attribute(QNetworkRequest::HttpStatusCodeAttribute).toInt();
-    result.reason = reply->attribute(QNetworkRequest::HttpReasonPhraseAttribute).toString();
-    result.etag = reply->header(QNetworkRequest::ETagHeader).toString();
-    result.location = reply->header(QNetworkRequest::LocationHeader).toString();
-    result.url = url;
-    result.errorString = reply->errorString();
-    result.data = reply->isOpen() ? QByteArray(reply->readAll()) : QByteArray();
-
+    auto result = HttpResponse::fromReply(url, reply.get());
     if (!result.success)
     {
         qDebug() << "HTTP error: " << result.errorString;
@@ -1360,7 +1401,7 @@ bool renderSvgToPngFile(const QString& url, const QString& targetFilePath, int w
     return true;
 }
 
-bool renderSquarePixmap(QPixmap* pixmap, const QString& filePath, int width, int height)
+bool renderSquarePixmap(QPixmap* pixmap, const QString& filePath, int width, int height, int angle)
 {
     if (pixmap->width() != width || pixmap->height() != height)
     {
@@ -1374,6 +1415,15 @@ bool renderSquarePixmap(QPixmap* pixmap, const QString& filePath, int width, int
 
     pixmap->fill(Qt::transparent);
     QPainter painter(pixmap);
+
+    if (angle != 0)
+    {
+        QTransform transform;
+        transform.translate(width / 2, height / 2);
+        transform.rotate(angle);
+        transform.translate(-width / 2, -height / 2);
+        painter.setTransform(transform);
+    }
 
     auto suffix = QFileInfo(filePath).suffix().toLower();
     if (suffix == "svg")
@@ -1954,6 +2004,11 @@ QMimeDatabase* mimeDatabase()
     }
 
     return s_mimeDatabase;
+}
+
+QString detectFileSuffix(const QString& filePath)
+{
+    return mimeDatabase()->mimeTypeForFile(filePath).preferredSuffix().toLower();
 }
 
 void enumFiles(const QString& folder, std::function<void(const QFileInfo& fileInfo)> callback)

@@ -8,49 +8,6 @@ import CyberTracker 1.0 as C
 C.ContentPage {
     id: page
 
-    C.PopupBase {
-        id: popupExportComplete
-
-        width: parent.width * 0.7
-        height: width * 0.75
-        property bool success
-        property alias message: labelExportMessage.text
-
-        contentItem: ColumnLayout {
-            Component.onCompleted: formPageStack.setProjectColors(this)
-            Label {
-                Layout.fillWidth: true
-                text: popupExportComplete.success ? qsTr("Success") : qsTr("Error")
-                font.pixelSize: App.settings.font18
-                font.bold: true
-                horizontalAlignment: Text.AlignHCenter
-            }
-
-            Label {
-                Layout.fillWidth: true
-                horizontalAlignment: Label.AlignHCenter
-                id: labelExportMessage
-                font.pixelSize: App.settings.font13
-                wrapMode: Label.Wrap
-            }
-
-            RowLayout {
-                spacing: 10
-                Layout.alignment: Qt.AlignHCenter | Qt.AlignBottom
-
-                RoundButton {
-                    Layout.alignment: Qt.AlignRight
-                    icon.source: popupExportComplete.success ? "qrc:/icons/ok.svg" : "qrc:/icons/cancel.svg"
-                    icon.color: Material.foreground
-                    icon.width: 40
-                    icon.height: 40
-                    Material.background: popupExportComplete.success ? Material.accent : Material.color(Material.Red, Material.Shade300)
-                    onClicked: popupExportComplete.close()
-                }
-            }
-        }
-    }
-
     header: C.PageHeader {
         text: form.project.title
         menuVisible: Qt.platform.os !== "ios"
@@ -62,7 +19,7 @@ C.ContentPage {
 
         width: parent.width * 0.8
         anchors.horizontalCenter: parent.horizontalCenter
-        spacing: 4
+        spacing: App.scaleByFontSize(4)
 
         onYChanged: {
             if (y < 0) {
@@ -93,6 +50,7 @@ C.ContentPage {
 
         C.FormLanguageComboBox {
             Layout.fillWidth: true
+            Layout.preferredHeight: C.Style.minRowHeight
         }
 
         TextField {
@@ -108,6 +66,7 @@ C.ContentPage {
         C.ColorButton {
             id: startButton
             Layout.fillWidth: true
+            Layout.preferredHeight: Style.minRowHeight
             Layout.alignment: Qt.AlignHCenter
             text: qsTr("Start collecting")
             font.capitalization: Font.MixedCase
@@ -122,6 +81,7 @@ C.ContentPage {
 
         C.ColorButton {
             Layout.fillWidth: true
+            Layout.preferredHeight: Style.minRowHeight
             Layout.alignment: Qt.AlignHCenter
             text: qsTr("Upload data")
             font.capitalization: Font.MixedCase
@@ -139,6 +99,10 @@ C.ContentPage {
         }
     }
 
+    C.MessagePopup {
+        id: popupExportComplete
+    }
+
     function completeData() {
         let success = App.taskManager.waitForTasks(form.project.uid)
 
@@ -146,11 +110,12 @@ C.ContentPage {
             form.provider.clearCompletedData()
         }
 
-        let successMessage = qsTr("All data has been uploaded")
-        let failureMessage = qsTr("Connection failed")
+        let successMessage = qsTr("All data has been uploaded.")
+        let failureMessage = qsTr("Connection failed. Please try again later.")
 
-        popupExportComplete.success = success
-        popupExportComplete.message = success ? successMessage : failureMessage
+        popupExportComplete.icon = success ? "qrc:/icons/cloud_done.svg" : "qrc:/icons/cloud_off_outline.svg"
+        popupExportComplete.title = success ? qsTr("Success") : qsTr("Error")
+        popupExportComplete.message1 = success ? successMessage : failureMessage
         popupExportComplete.open()
 
         Globals.patrolChangeCount++

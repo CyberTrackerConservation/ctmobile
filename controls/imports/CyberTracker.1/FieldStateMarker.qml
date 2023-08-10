@@ -25,8 +25,8 @@ Item {
         id: marker
         anchors.fill: parent
         icon.source: "qrc:/icons/asterisk.svg"
-        icon.width: 16
-        icon.height: 16
+        icon.width: App.scaleByFontSize(12)
+        icon.height: App.scaleByFontSize(12)
         icon.color: Material.foreground
         opacity: 0.6
         enabled: false

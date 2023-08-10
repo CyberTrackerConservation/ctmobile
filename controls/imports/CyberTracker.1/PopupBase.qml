@@ -18,7 +18,7 @@ Popup {
     focus: true
 
     property bool closeOnBack: true
-    property int insets: -16
+    property int insets: -App.scaleByFontSize(8)
 
     Component.onCompleted: {
         topInset = insets

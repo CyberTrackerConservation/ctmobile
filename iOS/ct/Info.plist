@@ -30,6 +30,8 @@
 	<true/>
 	<key>LSSupportsOpeningDocumentsInPlace</key>
 	<true/>
+	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
+	<string>This project requires permission to capture location in the background. This is needed to ensure that a proper track of your location is created.</string>
 	<key>NSBluetoothAlwaysUsageDescription</key>
 	<string>App would like to access Bluetooth</string>
 	<key>NSCameraUsageDescription</key>

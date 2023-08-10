@@ -60,9 +60,9 @@ ContentPage {
 
             ColumnLayout {
                 id: column
-                width: parent.width - 32
-                x: 16
-                spacing: 16
+                width: parent.width - App.scaleByFontSize(32)
+                x: App.scaleByFontSize(16)
+                spacing: App.scaleByFontSize(16)
 
                 Item {
                     height: 1
@@ -73,6 +73,7 @@ ContentPage {
                     text: internal.text
                     font.pixelSize: App.settings.font14
                     wrapMode: Label.WordWrap
+                    textFormat: Label.MarkdownText
                     visible: internal.iconLocation === "AFTER"
                 }
 
@@ -88,6 +89,7 @@ ContentPage {
                     text: internal.text
                     font.pixelSize: App.settings.font14
                     wrapMode: Label.WordWrap
+                    textFormat: Label.MarkdownText
                     visible: internal.iconLocation === "BEFORE"
                 }
 

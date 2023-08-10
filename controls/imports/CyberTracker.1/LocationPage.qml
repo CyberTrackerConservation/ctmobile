@@ -134,8 +134,8 @@ ContentPage {
                 y: 16
                 width: parent.width - 32
                 columns: 2
-                columnSpacing: 8
-                rowSpacing: 8
+                columnSpacing: App.scaleByFontSize(8)
+                rowSpacing: App.scaleByFontSize(8)
 
                 Label {
                     Layout.columnSpan: 2

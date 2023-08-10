@@ -10,9 +10,14 @@
     "nativeName": "Afrikaans"
   },
   {
+    "code": "ak",
+    "name": "Akan",
+    "nativeName": "Akan"
+  },
+  {
     "code": "sq",
     "name": "Albanian",
-    "nativeName": "Shqiptar"
+    "nativeName": "Shqiptare"
   },
   {
     "code": "am",
@@ -22,7 +27,7 @@
   {
     "code": "ar",
     "name": "Arabic",
-    "nativeName": "عربى"
+    "nativeName": "عربي"
   },
   {
     "code": "hy",
@@ -30,24 +35,44 @@
     "nativeName": "Հայերեն"
   },
   {
+    "code": "as",
+    "name": "Assamese",
+    "nativeName": "অসমীয়া"
+  },
+  {
+    "code": "ay",
+    "name": "Aymara",
+    "nativeName": "Aymara"
+  },
+  {
     "code": "az",
     "name": "Azerbaijani",
     "nativeName": "Azərbaycan"
   },
   {
+    "code": "bm",
+    "name": "Bambara",
+    "nativeName": "Bamanankan"
+  },
+  {
     "code": "eu",
     "name": "Basque",
-    "nativeName": "Euskal"
+    "nativeName": "Euskara"
   },
   {
     "code": "be",
     "name": "Belarusian",
-    "nativeName": "Беларус"
+    "nativeName": "Беларускі"
   },
   {
     "code": "bn",
     "name": "Bengali",
     "nativeName": "বাংলা"
+  },
+  {
+    "code": "bho",
+    "name": "Bhojpuri",
+    "nativeName": "भोजपुरी"
   },
   {
     "code": "bs",
@@ -110,6 +135,16 @@
     "nativeName": "دری"
   },
   {
+    "code": "dv",
+    "name": "Divehi",
+    "nativeName": "ދިވެހި..."
+  },
+  {
+    "code": "doi",
+    "name": "Dogri",
+    "nativeName": "डोगरी"
+  },
+  {
     "code": "nl",
     "name": "Dutch",
     "nativeName": "Nederlands"
@@ -127,12 +162,17 @@
   {
     "code": "et",
     "name": "Estonian",
-    "nativeName": "Eestlane"
+    "nativeName": "Eesti keel"
+  },
+  {
+    "code": "ee",
+    "name": "Ewe",
+    "nativeName": "Eʋegbe"
   },
   {
     "code": "tl",
     "name": "Filipino",
-    "nativeName": "Pilipino"
+    "nativeName": "Filipino"
   },
   {
     "code": "fi",
@@ -155,19 +195,34 @@
     "nativeName": "Galego"
   },
   {
+    "code": "lg",
+    "name": "Ganda",
+    "nativeName": "Ganda"
+  },
+  {
     "code": "ka",
     "name": "Georgian",
-    "nativeName": "ქართული"
+    "nativeName": "Ქართული"
   },
   {
     "code": "de",
     "name": "German",
-    "nativeName": "Deutsche"
+    "nativeName": "Deutsch"
+  },
+  {
+    "code": "gom",
+    "name": "Goan Konkani",
+    "nativeName": "गोंय कोंकणी"
   },
   {
     "code": "el",
     "name": "Greek",
     "nativeName": "Ελληνικά"
+  },
+  {
+    "code": "gn",
+    "name": "Guarani",
+    "nativeName": "Guarani"
   },
   {
     "code": "gu",
@@ -177,7 +232,7 @@
   {
     "code": "ht",
     "name": "Haitian Creole",
-    "nativeName": "Kreyòl Ayisyen"
+    "nativeName": "Kreyòl ayisyen"
   },
   {
     "code": "ha",
@@ -187,12 +242,12 @@
   {
     "code": "haw",
     "name": "Hawaiian",
-    "nativeName": "Ōlelo Hawaiʻi"
+    "nativeName": "ʻŌlelo Hawaiʻi"
   },
   {
     "code": "iw",
     "name": "Hebrew",
-    "nativeName": "עברית"
+    "nativeName": "עִברִית"
   },
   {
     "code": "hi",
@@ -202,7 +257,7 @@
   {
     "code": "hmn",
     "name": "Hmong",
-    "nativeName": "Hmong"
+    "nativeName": "Hmoob"
   },
   {
     "code": "hu",
@@ -212,12 +267,17 @@
   {
     "code": "is",
     "name": "Icelandic",
-    "nativeName": "Íslensku"
+    "nativeName": "Íslenskur"
   },
   {
     "code": "ig",
     "name": "Igbo",
-    "nativeName": "Ndi Igbo"
+    "nativeName": "Igbo"
+  },
+  {
+    "code": "ilo",
+    "name": "Iloko",
+    "nativeName": "Iloko"
   },
   {
     "code": "id",
@@ -242,7 +302,12 @@
   {
     "code": "ja",
     "name": "Japanese",
-    "nativeName": "日本語"
+    "nativeName": "日本"
+  },
+  {
+    "code": "jv",
+    "name": "Javanese",
+    "nativeName": "Basa jawa"
   },
   {
     "code": "jw",
@@ -265,14 +330,29 @@
     "nativeName": "ខ្មែរ"
   },
   {
+    "code": "rw",
+    "name": "Kinyarwanda",
+    "nativeName": "Kinyarwanda"
+  },
+  {
     "code": "ko",
     "name": "Korean",
-    "nativeName": "한국어"
+    "nativeName": "한국인"
+  },
+  {
+    "code": "kri",
+    "name": "Krio",
+    "nativeName": "Krio"
   },
   {
     "code": "ku",
     "name": "Kurdish (Kurmanji)",
     "nativeName": "Kurdî (Kurmancî)"
+  },
+  {
+    "code": "ckb",
+    "name": "Kurdish (Sorani)",
+    "nativeName": "کوردی (سۆرانی)"
   },
   {
     "code": "ky",
@@ -282,22 +362,27 @@
   {
     "code": "lo",
     "name": "Lao",
-    "nativeName": "ລາວ"
+    "nativeName": "ພາສາລາວ"
   },
   {
     "code": "la",
     "name": "Latin",
-    "nativeName": "Latine"
+    "nativeName": "Latinus"
   },
   {
     "code": "lv",
     "name": "Latvian",
-    "nativeName": "Latvietis"
+    "nativeName": "Latviski"
+  },
+  {
+    "code": "ln",
+    "name": "Lingala",
+    "nativeName": "Lingala"
   },
   {
     "code": "lt",
     "name": "Lithuanian",
-    "nativeName": "Lietuvis"
+    "nativeName": "Lietuvių"
   },
   {
     "code": "lb",
@@ -308,6 +393,11 @@
     "code": "mk",
     "name": "Macedonian",
     "nativeName": "Македонски"
+  },
+  {
+    "code": "mai",
+    "name": "Maithili",
+    "nativeName": "मैथिली"
   },
   {
     "code": "mg",
@@ -330,6 +420,11 @@
     "nativeName": "Malti"
   },
   {
+    "code": "mni-Mtei",
+    "name": "Manipuri (Meitei Mayek)",
+    "nativeName": "ꯃꯅꯤꯄꯨꯔꯤ (ꯃꯦꯏꯇꯦꯏ ꯃꯌꯦꯛ)"
+  },
+  {
     "code": "mi",
     "name": "Maori",
     "nativeName": "Maori"
@@ -340,6 +435,11 @@
     "nativeName": "मराठी"
   },
   {
+    "code": "lus",
+    "name": "Mizo",
+    "nativeName": "Mizo tawng"
+  },
+  {
     "code": "mn",
     "name": "Mongolian",
     "nativeName": "Монгол"
@@ -347,7 +447,7 @@
   {
     "code": "my",
     "name": "Myanmar (Burmese)",
-    "nativeName": "မြန်မာ (မြန်မာ)"
+    "nativeName": "မြန်မာ (ဗမာ)၊"
   },
   {
     "code": "ne",
@@ -355,9 +455,24 @@
     "nativeName": "नेपाली"
   },
   {
+    "code": "nso",
+    "name": "Northern Sotho",
+    "nativeName": "Sesotho sa Leboa"
+  },
+  {
     "code": "no",
     "name": "Norwegian",
     "nativeName": "Norsk"
+  },
+  {
+    "code": "or",
+    "name": "Odia (Oriya)",
+    "nativeName": "ଓଡିଆ (ଓଡିଆ)"
+  },
+  {
+    "code": "om",
+    "name": "Oromo",
+    "nativeName": "Afaan Oromoo"
   },
   {
     "code": "ps",
@@ -372,7 +487,7 @@
   {
     "code": "pl",
     "name": "Polish",
-    "nativeName": "Polskie"
+    "nativeName": "Polski"
   },
   {
     "code": "pt",
@@ -383,6 +498,11 @@
     "code": "pa",
     "name": "Punjabi",
     "nativeName": "ਪੰਜਾਬੀ"
+  },
+  {
+    "code": "qu",
+    "name": "Quechua",
+    "nativeName": "Runasimi"
   },
   {
     "code": "ro",
@@ -398,6 +518,11 @@
     "code": "sm",
     "name": "Samoan",
     "nativeName": "Samoa"
+  },
+  {
+    "code": "sa",
+    "name": "Sanskrit",
+    "nativeName": "संस्कृत"
   },
   {
     "code": "gd",
@@ -452,7 +577,7 @@
   {
     "code": "su",
     "name": "Sundanese",
-    "nativeName": "Urang Sunda"
+    "nativeName": "Basa Sunda"
   },
   {
     "code": "sw",
@@ -467,12 +592,17 @@
   {
     "code": "tg",
     "name": "Tajik",
-    "nativeName": "Точик"
+    "nativeName": "Тоҷикӣ"
   },
   {
     "code": "ta",
     "name": "Tamil",
     "nativeName": "தமிழ்"
+  },
+  {
+    "code": "tt",
+    "name": "Tatar",
+    "nativeName": "Татар"
   },
   {
     "code": "te",
@@ -482,12 +612,27 @@
   {
     "code": "th",
     "name": "Thai",
-    "nativeName": "ไทย"
+    "nativeName": "แบบไทย"
+  },
+  {
+    "code": "ti",
+    "name": "Tigrinya",
+    "nativeName": "ትግሪኛ"
+  },
+  {
+    "code": "ts",
+    "name": "Tsonga",
+    "nativeName": "Tsonga"
   },
   {
     "code": "tr",
     "name": "Turkish",
-    "nativeName": "Türk"
+    "nativeName": "Türkçe"
+  },
+  {
+    "code": "tk",
+    "name": "Turkmen",
+    "nativeName": "Türkmenler"
   },
   {
     "code": "uk",
@@ -498,6 +643,11 @@
     "code": "ur",
     "name": "Urdu",
     "nativeName": "اردو"
+  },
+  {
+    "code": "ug",
+    "name": "Uyghur",
+    "nativeName": "ئۇيغۇر"
   },
   {
     "code": "uz",
@@ -532,6 +682,6 @@
   {
     "code": "zu",
     "name": "Zulu",
-    "nativeName": "IsiZulu"
+    "nativeName": "Zulu"
   }
 ]

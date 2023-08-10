@@ -10,6 +10,7 @@ C.ContentPage {
     id: page
 
     Component.onCompleted: {
+        App.requestPermissionCamera()
         zxingFilter.active = true
     }
 

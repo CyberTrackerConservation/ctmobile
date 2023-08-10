@@ -31,6 +31,7 @@
 #include "Esri/EsriConnector.h"
 #include "KoBo/KoBoConnector.h"
 #include "ODK/ODKConnector.h"
+#include "Google/GoogleConnector.h"
 
 // Providers.
 #include "Native/NativeProvider.h"
@@ -40,6 +41,7 @@
 #include "EarthRanger/EarthRangerProvider.h"
 #include "Esri/EsriProvider.h"
 #include "ODK/ODKProvider.h"
+#include "Google/GoogleProvider.h"
 
 // We have to do this because otherwise Qt intellisense doesn't work.
 #define ENGINE_URI "CyberTracker"
@@ -165,6 +167,11 @@ Connector* createODKConnector(QObject *parent)
     return new ODKConnector(parent);
 }
 
+Connector* createGoogleConnector(QObject *parent)
+{
+    return new GoogleConnector(parent);
+}
+
 void registerConnectors(QQmlEngine* /*engine*/)
 {
     auto app = App::instance();
@@ -176,6 +183,7 @@ void registerConnectors(QQmlEngine* /*engine*/)
     app->registerConnector(ESRI_CONNECTOR, &createEsriConnector);
     app->registerConnector(KOBO_CONNECTOR, &createKoBoConnector);
     app->registerConnector(ODK_CONNECTOR, &createODKConnector);
+    app->registerConnector(GOOGLE_CONNECTOR, &createGoogleConnector);
 }
 
 //=================================================================================================
@@ -211,6 +219,11 @@ Provider* createODKProvider(QObject *parent)
     return new ODKProvider(parent);
 }
 
+Provider* createGoogleProvider(QObject *parent)
+{
+    return new GoogleProvider(parent);
+}
+
 void registerProviders(QQmlEngine* /*engine*/)
 {
     qmlRegisterType<CtClassicSessionItem>("CyberTracker.Classic", 1, 0, "ClassicSession");
@@ -222,4 +235,5 @@ void registerProviders(QQmlEngine* /*engine*/)
     app->registerProvider(EARTH_RANGER_PROVIDER, &createEarthRangerProvider);
     app->registerProvider(ESRI_PROVIDER, &createEsriProvider);
     app->registerProvider(ODK_PROVIDER, &createODKProvider);
+    app->registerProvider(GOOGLE_PROVIDER, &createGoogleProvider);
 }

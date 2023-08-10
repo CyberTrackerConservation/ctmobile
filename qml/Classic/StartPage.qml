@@ -45,7 +45,7 @@ Page {
             width: 100
             height: 100
             visible: false
-            padding: 4
+            padding: App.scaleByFontSize(4)
             wrapMode: Text.Wrap
             text: classicSession.lastEditorText
             inputMethodHints: Qt.ImhNoPredictiveText
@@ -131,9 +131,7 @@ Page {
         id: skyplot
         visible: false
         active: false
-        legendVisible: true
-        legendDepth: height / 16
-        legendSpace: height / 16
+        legendVisible: false
         darkMode: true
     }
 

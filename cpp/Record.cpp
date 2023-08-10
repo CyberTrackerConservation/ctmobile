@@ -114,6 +114,11 @@ QString FieldValue::constraintMessage() const
     return record()->getFieldConstraintMessage(m_fieldUid);
 }
 
+QString FieldValue::requiredMessage() const
+{
+    return record()->getFieldRequiredMessage(m_fieldUid);
+}
+
 bool FieldValue::isRelevant() const
 {
     return record()->testFieldFlag(m_fieldUid, FieldFlag::Relevant);
@@ -486,6 +491,23 @@ void Record::resetFieldValue(const QString& fieldUid)
         return;
     }
 
+    // Reset the fields inside a group - this means that there are no side effects (like having to recreate records).
+    if (getFieldFlags(fieldUid).testFlag(FieldFlag::Record) && !RecordField::fromField(::fieldManager(this)->getField(fieldUid))->dynamic())
+    {
+        auto recordUids = m_fieldValues.value(fieldUid).value.toStringList();
+        for (auto recordIt = recordUids.constBegin(); recordIt != recordUids.constEnd(); recordIt++)
+        {
+            auto record = recordManager()->getRecord(*recordIt);
+            record->enumFieldValues([&](const FieldValue& fieldValue, bool* /*stopOut*/)
+            {
+                record->resetFieldValue(fieldValue.fieldUid());
+            });
+        }
+
+        return;
+    }
+
+    // Reset flat fields.
     m_fieldValues.remove(fieldUid);
     m_fieldValues.insert(fieldUid, ValueData { QVariant(), FieldState::None, FieldFlags() });
 }
@@ -700,9 +722,23 @@ QString Record::getFieldConstraintMessage(const QString& fieldUid) const
     auto elementManager = ::elementManager(this);
 
     auto field = fieldManager->getField(fieldUid);
-    if (!field->constraint().isEmpty() && !field->constraintElementUid().isEmpty())
+    if (!field->constraintElementUid().isEmpty())
     {
         return recordManager()->expandFieldText(m_recordUid, elementManager->getElementName(field->constraintElementUid()));
+    }
+
+    return tr("Value incorrect");
+}
+
+QString Record::getFieldRequiredMessage(const QString& fieldUid) const
+{
+    auto fieldManager = ::fieldManager(this);
+    auto elementManager = ::elementManager(this);
+
+    auto field = fieldManager->getField(fieldUid);
+    if (!field->requiredElementUid().isEmpty())
+    {
+        return recordManager()->expandFieldText(m_recordUid, elementManager->getElementName(field->requiredElementUid()));
     }
 
     return tr("Value required");
@@ -802,9 +838,16 @@ void RecordManager::load(const QVariantList& recordsArray)
         auto recordData = it->toMap();
         auto recordFieldUid = recordData["fieldUid"].toString();
 
-        if (!fieldManager->getField(recordFieldUid))
+        auto recordField = fieldManager->getField(recordFieldUid);
+        if (!recordField)
         {
-            qDebug() << "Ignoring record because field missing: " << recordFieldUid;
+            qDebug() << "Error: ignoring record because field missing: " << recordFieldUid;
+            continue;
+        }
+
+        if (!recordField->isRecordField())
+        {
+            qDebug() << "Error: ignoring record because not a recordField: " << recordFieldUid;
             continue;
         }
 

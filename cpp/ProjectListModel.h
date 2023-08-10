@@ -15,6 +15,9 @@ public:
     void classBegin() override;
     void componentComplete() override;
 
+signals:
+    void changed();
+
 private:
     QStringList m_projectUids;
 

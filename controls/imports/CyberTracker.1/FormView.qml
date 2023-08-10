@@ -190,6 +190,11 @@ C.Form {
             busyCover.start()
         }
 
+        onLoggedIn: function (username) {
+            loginPage.visible = false
+            form.project.login(username)
+        }
+
         onSkipClicked: {
             loginPage.visible = false
         }

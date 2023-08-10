@@ -5,6 +5,7 @@
 SightingListModel::SightingListModel(QObject* parent): VariantListModel(parent)
 {
     m_canSubmit = false;
+    m_groupExported = true;
 }
 
 SightingListModel::~SightingListModel()
@@ -126,7 +127,7 @@ void SightingListModel::rebuild()
         auto sighting = m_form->createSightingPtr(data);
 
         // Build group.
-        if (flags & Sighting::DB_EXPORTED_FLAG)
+        if (m_groupExported && (flags & Sighting::DB_EXPORTED_FLAG))
         {
             auto deviceId = sighting->deviceId();
             auto createTime = Utils::decodeTimestamp(sighting->createTime());

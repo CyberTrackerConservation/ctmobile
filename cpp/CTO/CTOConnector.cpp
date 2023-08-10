@@ -14,13 +14,18 @@ bool CTOConnector::canSharePackage(Project* /*project*/) const
     return true;
 }
 
-bool CTOConnector::canShareAuth(Project* project) const
+bool CTOConnector::canShareAuth(Project* /*project*/) const
 {
-    return loggedIn(project);
+    return false;
 }
 
 QVariantMap CTOConnector::getShareData(Project* project, bool /*auth*/) const
 {
+    if (project->connectorParams().isEmpty())
+    {
+        return QVariantMap();
+    }
+
     auto result = QVariantMap
     {
         { "connector", CTO_CONNECTOR },
@@ -79,7 +84,7 @@ ApiResult CTOConnector::bootstrap(const QVariantMap& params)
 
     if (!m_projectManager->init(projectUid, ODK_PROVIDER, QVariantMap(), CTO_CONNECTOR, connectorParams))
     {
-        return Failure(tr("Failed to create project"));
+        return Failure(QString(tr("Failed to create %1")).arg(App::instance()->alias_project()));
     }
 
     m_projectManager->modify(projectUid, [&](Project* project)
@@ -141,12 +146,12 @@ ApiResult CTOConnector::update(Project* project)
     }
 
     // Skip updates if there are any unsent sightings.
-//    auto sightingUids = QStringList();
-//    m_database->getSightings(project->uid(), "", Sighting::DB_SIGHTING_FLAG, &sightingUids);
-//    if (sightingUids.count() > 0)
-//    {
-//        return Failure(tr("Unsent data"));
-//    }
+    auto sightingUids = QStringList();
+    m_database->getSightings(project->uid(), "", Sighting::DB_SIGHTING_FLAG, &sightingUids);
+    if (sightingUids.count() > 0)
+    {
+        return Failure(tr("Unsent data"));
+    }
 
     // Fetch the survey metadata.
     auto connectorParams = project->connectorParams();
@@ -174,7 +179,7 @@ ApiResult CTOConnector::update(Project* project)
     auto formSettings = QVariantMap();
     if (!XlsFormParser::parseSettings(packagePath + "/project/form.xlsx", &formSettings))
     {
-        return Failure(tr("Failed to read form settings sheet"));
+        qDebug() << "Failed to read form settings sheet";
     }
     connectorParams["version"] = formSettings.value("version").toString();
 
@@ -200,13 +205,6 @@ ApiResult CTOConnector::update(Project* project)
     {
         updateProject.set_icon("qrc:/app/appicon.svg");
     }
-
-    QStringList androidPermissions = QStringList();
-    androidPermissions << "CAMERA";
-    androidPermissions << "RECORD_AUDIO";
-    androidPermissions << "ACCESS_FINE_LOCATION";
-    androidPermissions << "ACCESS_COARSE_LOCATION";
-    updateProject.set_androidPermissions(androidPermissions);
 
     XlsFormParser::configureProject(&updateProject, formSettings);
 

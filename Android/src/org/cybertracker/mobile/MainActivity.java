@@ -12,6 +12,7 @@ import android.content.BroadcastReceiver;
 import android.os.BatteryManager;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.AsyncTask;
 import android.util.Log;
 import android.net.Uri;
 import android.net.ConnectivityManager;
@@ -19,10 +20,18 @@ import android.os.PowerManager;
 import android.provider.Settings;
 import android.provider.Settings.Secure;
 import android.telephony.TelephonyManager;
-import android.support.v4.content.ContextCompat;
-import android.support.v4.app.ShareCompat;
-import android.support.v4.content.FileProvider;
+import androidx.core.content.ContextCompat;
+import androidx.core.app.ShareCompat;
+import androidx.core.content.FileProvider;
 import java.io.File;
+import com.google.android.gms.auth.api.signin.GoogleSignIn;
+import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
+import com.google.android.gms.auth.api.signin.GoogleSignInClient;
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
+import com.google.android.gms.common.api.Scope;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.android.gms.common.api.ApiException;
 
 public class MainActivity extends QtActivity
 {
@@ -55,6 +64,9 @@ public class MainActivity extends QtActivity
     private static IntentFilter s_batteryChangedIntentFilter = new IntentFilter(Intent.ACTION_BATTERY_CHANGED);
     private native void batteryStateChange(int level, boolean charging);
 
+    public static native void authGranted(String message);
+    public static native void authFailed(String message);
+
     private final BroadcastReceiver m_batteryChangedReceiver = new BroadcastReceiver()
     {
         @Override
@@ -74,6 +86,16 @@ public class MainActivity extends QtActivity
         return BuildConfig.FLAVOR;
     }
 
+    public String getModel()
+    {
+        return android.os.Build.MODEL;
+    }
+
+    public String getManufacturer()
+    {
+        return android.os.Build.MANUFACTURER;
+    }
+
     public String getDeviceId()
     {
         String id = Settings.Secure.getString(getContentResolver(), Secure.ANDROID_ID);
@@ -85,6 +107,11 @@ public class MainActivity extends QtActivity
         }
 
         return id;
+    }
+
+    public String resolveContentUri(final String uri)
+    {
+        return Utils.getContentName(getContentResolver(), Uri.parse(uri));
     }
 
     public String getImei()
@@ -350,17 +377,18 @@ public class MainActivity extends QtActivity
 
         Uri intentUri;
         String intentScheme;
-        String intentAction;
 
         // SEND or VIEW (see manifest).
-        if (intent.getAction().equals("android.intent.action.VIEW"))
+        if (intent.getAction() == null)
         {
-            intentAction = "VIEW";
+            return;
+        }
+        else if (intent.getAction().equals("android.intent.action.VIEW"))
+        {
             intentUri = intent.getData();
         }
         else if (intent.getAction().equals("android.intent.action.SEND"))
         {
-            intentAction = "SEND";
             Bundle bundle = intent.getExtras();
             intentUri = (Uri)bundle.get(Intent.EXTRA_STREAM);
         }
@@ -419,5 +447,62 @@ public class MainActivity extends QtActivity
         }
 
         fileReceived(filePath);
+    }
+
+    // Google signin.
+    private GoogleSignInClient m_googleSignInClient;
+    private static final int RC_GET_AUTH_CODE = 9001;
+
+    public void googleLogin(String serverClientId, String spaceSeparatedScopes)
+    {
+        String[] scopes = spaceSeparatedScopes.split(" ");
+
+        GoogleSignInOptions.Builder builder = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN);
+
+        for (String scope : scopes)
+        {
+            builder.requestScopes(new Scope(scope));
+        }
+
+        builder.requestServerAuthCode(serverClientId, true);
+
+        GoogleSignInOptions gso = builder.build();
+
+        m_googleSignInClient = GoogleSignIn.getClient(this, gso);
+
+        startActivityForResult(m_googleSignInClient.getSignInIntent(), RC_GET_AUTH_CODE);
+    }
+
+    public void googleLogout()
+    {
+        GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN).build();
+
+        m_googleSignInClient = GoogleSignIn.getClient(this, gso);
+        m_googleSignInClient.signOut();
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data)
+    {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        // Result returned from launching the Intent from GoogleSignInApi.getSignInIntent(...);
+        if (requestCode == RC_GET_AUTH_CODE)
+        {
+            Task<GoogleSignInAccount> task = GoogleSignIn.getSignedInAccountFromIntent(data);
+
+            try
+            {
+                GoogleSignInAccount account = task.getResult(ApiException.class);
+                String authCode = account.getServerAuthCode();
+                authGranted(authCode);
+            }
+            catch (ApiException e)
+            {
+                authFailed(e.getMessage());
+            }
+
+            m_googleSignInClient = null;
+        }
     }
 }

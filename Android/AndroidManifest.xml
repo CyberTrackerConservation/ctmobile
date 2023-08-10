@@ -2,20 +2,24 @@
 <manifest package="org.cybertracker.mobile"
     xmlns:android="http://schemas.android.com/apk/res/android" android:versionName="-- %%INSERT_VERSION_NAME%% --" android:versionCode="-- %%INSERT_VERSION_CODE%% --" android:installLocation="auto">
     <application android:extractNativeLibs="true" android:hardwareAccelerated="true" android:resizeableActivity="true" android:name="org.qtproject.qt5.android.bindings.QtApplication" android:label="${appName}" android:icon="${appIcon}" android:roundIcon="${appRoundIcon}">
-        <activity android:exported="true" android:windowSoftInputMode="adjustPan" android:configChanges="orientation|uiMode|screenLayout|screenSize|smallestScreenSize|layoutDirection|locale|fontScale|keyboard|keyboardHidden|navigation" android:name=".MainActivity" android:label="${appName}" android:screenOrientation="fullUser" android:launchMode="singleTask" android:noHistory="false" android:theme="@style/SplashScreenTheme">
+        <!-- LinkActivity -->
+        <activity android:exported="true" android:name=".LinkActivity">
+            <intent-filter android:autoVerify="true">
+                <data android:scheme="https" android:host="${appLinkHost}" android:pathPrefix="${appLinkPath1}"/>
+                <data android:scheme="https" android:host="${appLinkHost}" android:pathPrefix="${appLinkPath2}"/>
+                <data android:scheme="https" android:host="${appLinkHost}" android:pathPrefix="${appLinkPath3}"/>
+                <action android:name="android.intent.action.VIEW"/>
+                <category android:name="android.intent.category.DEFAULT"/>
+                <category android:name="android.intent.category.BROWSABLE"/>
+            </intent-filter>
+        </activity>
+        <!-- MainActivity -->
+        <activity android:exported="true" android:windowSoftInputMode="adjustPan" android:configChanges="orientation|uiMode|screenLayout|screenSize|smallestScreenSize|layoutDirection|locale|fontScale|keyboard|keyboardHidden|navigation" android:name=".MainActivity" android:label="${appName}" android:screenOrientation="fullUser" android:launchMode="singleTop" android:noHistory="false" android:theme="@style/SplashScreenTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
                 <category android:name="android.intent.category.LAUNCHER"/>
                 <category android:name="android.intent.category.DEFAULT"/>
                 <category android:name="${homeIntentCategory}"/>
-            </intent-filter>
-            <!-- Command line -->
-            <intent-filter android:autoVerify="true">
-                <data android:scheme="https" android:host="cybertrackerwiki.org" android:pathPrefix="/applink"/>
-                <data android:scheme="https" android:host="cybertrackerwiki.org" android:pathPrefix="/applink-smart"/>
-                <action android:name="android.intent.action.VIEW"/>
-                <category android:name="android.intent.category.DEFAULT"/>
-                <category android:name="android.intent.category.BROWSABLE"/>
             </intent-filter>
             <!-- Application arguments -->
             <!-- meta-data android:name="android.app.arguments" android:value="arg1 arg2 arg3"/ -->
@@ -64,7 +68,7 @@
             </intent-filter>
         </receiver>
         <!-- file provider needed for letting external apps (like camera) write to a file of the app -->
-        <provider android:name="android.support.v4.content.FileProvider" android:authorities="${applicationId}.FileProvider" android:exported="false" android:grantUriPermissions="true">
+        <provider android:name="androidx.core.content.FileProvider" android:authorities="${applicationId}.FileProvider" android:exported="false" android:grantUriPermissions="true">
             <meta-data android:name="android.support.FILE_PROVIDER_PATHS" android:resource="@xml/file_paths"/>
         </provider>
         <!-- For adding service(s) please check: https://wiki.qt.io/AndroidServices -->
@@ -76,18 +80,15 @@
     <!-- %%INSERT_PERMISSIONS -->
     <uses-permission android:name="android.permission.READ_PHONE_STATE"/>
     <uses-permission android:name="android.permission.READ_USER_DICTIONARY"/>
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
-    <uses-permission android:name="android.permission.BLUETOOTH"/>
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED"/>
     <uses-permission android:name="android.permission.DISABLE_KEYGUARD"/>
     <uses-permission android:name="android.permission.FLAG_SHOW_WHEN_LOCKED"/>
     <uses-permission android:name="android.permission.WAKE_LOCK"/>
     <uses-permission android:name="android.permission.ACCESS_LOCATION_EXTRA_COMMANDS"/>
-    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
-    <uses-permission android:name="android.permission.ACCESS_BACKGROUND_LOCATION"/>
     <uses-permission android:name="android.permission.REORDER_TASKS"/>
     <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW"/>
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE"/>
     <uses-permission android:name="android.permission.REQUEST_IGNORE_BATTERY_OPTIMIZATIONS"/>
+    <uses-permission android:name="android.permission.${extraPermission}"/>
     <!-- %%INSERT_FEATURES -->
 </manifest>

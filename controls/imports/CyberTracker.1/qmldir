@@ -57,6 +57,7 @@ FieldLocationPane 1.0 FieldLocationPane.qml
 FieldName 1.0 FieldName.qml
 FieldNumberListViewPage 1.0 FieldNumberListViewPage.qml
 FieldPhotoButton 1.0 FieldPhotoButton.qml
+FieldPhotoGridView 1.0 FieldPhotoGridView.qml
 FieldPhotoListView 1.0 FieldPhotoListView.qml
 FieldRange 1.0 FieldRange.qml
 FieldRangePage 1.0 FieldRangePage.qml
@@ -81,6 +82,8 @@ FormSightingListView 1.0 FormSightingListView.qml
 FormSightingsListView 1.0 FormSightingsListView.qml
 FormView 1.0 FormView.qml
 FormWizardPage 1.0 FormWizardPage.qml
+GoogleLoginButton 1.0 GoogleLoginButton.qml
+GoogleLoginItem 1.0 GoogleLoginItem.qml
 GotoLocation 1.0 GotoLocation.qml
 GridFrameDelegate 1.0 GridFrameDelegate.qml
 GridViewV 1.0 GridViewV.qml

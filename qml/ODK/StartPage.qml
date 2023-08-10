@@ -53,14 +53,12 @@ C.ContentPage {
     }
 
     // Watermark.
-    Control {
-        anchors.fill: parent
-        padding: parent.width / 4
+    C.SquareIcon {
+        anchors.centerIn: parent
+        source: form.project.icon !== "" ? App.projectManager.getFileUrl(form.project.uid, form.project.icon) : ""
+        size: Math.min(parent.width, parent.height) / 2
         opacity: 0.15
-        contentItem: Image {
-            source: form.project.icon !== "" ? App.projectManager.getFileUrl(form.project.uid, form.project.icon) : ""
-            fillMode: Image.PreserveAspectFit
-        }
+        recolor: false
     }
 
     C.FormSightingsListView {

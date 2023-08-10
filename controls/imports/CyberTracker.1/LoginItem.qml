@@ -55,136 +55,135 @@ Item {
         password.text = cacheValue.password
     }
 
-    ColumnLayout {
-        id: layout
-        
-        anchors.horizontalCenter: parent.horizontalCenter
-        width: parent.width * 0.8
+    Flickable {
+        anchors.fill: parent
+        contentWidth: parent.width
+        contentHeight: layout.height
 
-        Item {
-            height: 8
-            visible: iconSource !== ""
-        }
+        ColumnLayout {
+            id: layout
 
-        SquareIcon {
-            id: iconImage
-            Layout.alignment: Qt.AlignHCenter
-            size: root.width * 0.2
-        }
+            spacing: App.scaleByFontSize(8)
+            anchors.horizontalCenter: parent.horizontalCenter
+            width: parent.width * 0.8
 
-        Item {
-            height: 8
-            visible: iconSource !== ""
-        }
-
-        ComboBox {
-            id: serverSelect
-            font.pixelSize: App.settings.font14
-            property bool customServer: false
-            Layout.fillWidth: true
-            visible: serverVisible && root.servers !== undefined
-            enabled: serverEnabled
-            model: root.servers
-            textRole: "name"
-            onCurrentIndexChanged: {
-                if (currentIndex !== -1) {
-                    let curr = model.get(currentIndex)
-                    server.text = curr.server
-                    customServer = curr.custom === true
-                }
+            Item {
+                height: 1
+                visible: iconSource !== ""
             }
 
-            Component.onCompleted: {
-                if (root.servers !== undefined && currentIndex === -1) {
-                    currentIndex = 0
-                }
+            SquareIcon {
+                id: iconImage
+                Layout.alignment: Qt.AlignHCenter
+                size: Style.iconSize64
             }
 
-            delegate: ItemDelegate {
-                width: serverSelect.width
+            Item {
+                height: 1
+                visible: iconSource !== ""
+            }
+
+            ComboBox {
+                id: serverSelect
                 font.pixelSize: App.settings.font14
-                text: model.name
-            }
-        }
-
-        TextField {
-            id: server
-            Layout.fillWidth: true
-            enabled: serverEnabled
-            font.pixelSize: App.settings.font14
-            visible: serverVisible && (root.servers === undefined || serverSelect.customServer)
-            inputMethodHints: Qt.ImhUrlCharactersOnly | Qt.ImhNoAutoUppercase
-            placeholderText: qsTr("Server")
-        }
-
-        Item {
-            height: 8
-            visible: iconSource !== ""
-        }
-
-        TextField {
-            id: username
-            Layout.fillWidth: true
-            font.pixelSize: App.settings.font14
-            inputMethodHints: Qt.ImhEmailCharactersOnly | Qt.ImhNoAutoUppercase | Qt.ImhPreferLowercase
-            placeholderText: qsTr("User name")
-        }
-
-        Item {
-            height: 8
-            visible: iconSource !== ""
-        }
-
-        TextField {
-            id: password
-            Layout.fillWidth: true
-            font.pixelSize: App.settings.font14
-            echoMode: TextInput.Password
-            placeholderText: qsTr("Password")
-        }
-
-        ColorButton {
-            Layout.fillWidth: true
-            text: qsTr("Login")
-            font.pixelSize: App.settings.font12
-            font.bold: true
-            font.capitalization: Font.MixedCase
-            color: Material.accent
-            enabled: {
-                if (serverVisible && server.text.trim() === "") {
-                    return false
+                property bool customServer: false
+                Layout.fillWidth: true
+                Layout.preferredHeight: Style.minRowHeight
+                visible: serverVisible && root.servers !== undefined
+                enabled: serverEnabled
+                model: root.servers
+                textRole: "name"
+                onCurrentIndexChanged: {
+                    if (currentIndex !== -1) {
+                        let curr = model.get(currentIndex)
+                        server.text = curr.server
+                        customServer = curr.custom === true
+                    }
                 }
 
-                if (username.text.trim() === "" || password.text.trim() === "") {
-                    return false
+                Component.onCompleted: {
+                    if (root.servers !== undefined && currentIndex === -1) {
+                        currentIndex = 0
+                    }
                 }
 
-                return true
+                delegate: ItemDelegate {
+                    width: serverSelect.width
+                    font.pixelSize: App.settings.font14
+                    text: model.name
+                }
             }
 
-            onClicked: {
-                root.errorText = ""
+            TextField {
+                id: server
+                Layout.fillWidth: true
+                enabled: serverEnabled
+                font.pixelSize: App.settings.font14
+                visible: serverVisible && (root.servers === undefined || serverSelect.customServer)
+                inputMethodHints: Qt.ImhUrlCharactersOnly | Qt.ImhNoAutoUppercase
+                placeholderText: qsTr("Server")
+            }
 
-                let s = server.text.trim()
-                let u = username.text.trim()
-                let p = password.text.trim()
+            TextField {
+                id: username
+                Layout.fillWidth: true
+                font.pixelSize: App.settings.font14
+                inputMethodHints: Qt.ImhEmailCharactersOnly | Qt.ImhNoAutoUppercase | Qt.ImhPreferLowercase
+                placeholderText: qsTr("User name")
+            }
 
-                if (cacheKey !== "") {
-                    App.setLogin(cacheKey, { server: s, serverIndex: serverSelect.currentIndex, username: u, password: p, cachePassword: cachePassword })
+            TextField {
+                id: password
+                Layout.fillWidth: true
+                font.pixelSize: App.settings.font14
+                echoMode: TextInput.Password
+                placeholderText: qsTr("Password")
+            }
+
+            ColorButton {
+                Layout.fillWidth: true
+                Layout.preferredHeight: Style.minRowHeight
+                text: qsTr("Login")
+                font.pixelSize: App.settings.font12
+                font.bold: true
+                font.capitalization: Font.MixedCase
+                color: Material.accent
+                enabled: {
+                    if (serverVisible && server.text.trim() === "") {
+                        return false
+                    }
+
+                    if (username.text.trim() === "" || password.text.trim() === "") {
+                        return false
+                    }
+
+                    return true
                 }
 
-                loginClicked(provider, s, u, p)
-            }
-        }
+                onClicked: {
+                    root.errorText = ""
 
-        Button {
-            Layout.fillWidth: true
-            text: qsTr("Skip and login later")
-            font.pixelSize: App.settings.font12
-            font.bold: true
-            font.capitalization: Font.MixedCase
-            visible: skipAllowed
-            onClicked: skipClicked()
+                    let s = server.text.trim()
+                    let u = username.text.trim()
+                    let p = password.text.trim()
+
+                    if (cacheKey !== "") {
+                        App.setLogin(cacheKey, { server: s, serverIndex: serverSelect.currentIndex, username: u, password: p, cachePassword: cachePassword })
+                    }
+
+                    loginClicked(provider, s, u, p)
+                }
+            }
+
+            Button {
+                Layout.fillWidth: true
+                text: qsTr("Skip and login later")
+                font.pixelSize: App.settings.font12
+                font.bold: true
+                font.capitalization: Font.MixedCase
+                visible: skipAllowed
+                onClicked: skipClicked()
+            }
         }
     }
 }

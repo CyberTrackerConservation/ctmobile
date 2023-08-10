@@ -105,15 +105,11 @@ QVariant FieldListModel::data(const QModelIndex & index, int role) const
     }
     else if (role == ConstraintMessageRole)
     {
-        auto field = m_form->getField(fieldUid);
-        if (!field->constraint().isEmpty() && !field->constraintElementUid().isEmpty())
-        {
-            return m_form->getFieldConstraintMessage(m_recordUid, fieldUid);
-        }
-        else
-        {
-            return QString();
-        }
+        return !m_form->getField(fieldUid)->constraintElementUid().isEmpty() ? m_form->getFieldConstraintMessage(m_recordUid, fieldUid) : QString();
+    }
+    else if (role == RequiredMessageRole)
+    {
+        return !m_form->getField(fieldUid)->requiredElementUid().isEmpty() ? m_form->getFieldRequiredMessage(m_recordUid, fieldUid) : QString();
     }
 
     return QVariant();
@@ -129,6 +125,7 @@ QHash<int, QByteArray> FieldListModel::roleNames() const
     roles[TitleVisibleRole] = "titleVisible";
     roles[ValidRole] = "valid";
     roles[ConstraintMessageRole] = "constraintMessage";
+    roles[RequiredMessageRole] = "requiredMessage";
 
     return roles;
 }

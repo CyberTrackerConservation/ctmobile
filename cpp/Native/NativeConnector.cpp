@@ -176,7 +176,7 @@ ApiResult NativeConnector::update(Project* project)
     auto projectPath = packagePath + "/project";
     if (!QDir(projectPath).exists())
     {
-        return Failure(tr("No project in package"));
+        return Failure(QString(tr("No %1 in package")).arg(App::instance()->alias_project()));
     }
 
     auto updateFolder = m_projectManager->getUpdateFolder(projectUid);

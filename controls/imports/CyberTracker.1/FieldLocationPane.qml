@@ -27,7 +27,7 @@ Pane {
     contentItem: ColumnLayout {
         id: content
         width: parent.width
-        spacing: 8
+        spacing: App.scaleByFontSize(8)
 
         property var location: fieldBinding.value
         property bool hasTimestamp: content.location !== undefined && content.location.ts !== undefined && content.location.ts !== null
@@ -60,8 +60,8 @@ Pane {
             columns: 2
             Layout.fillWidth: true
             visible: !fieldLocation.active
-            rowSpacing: 8
-            columnSpacing: 16
+            rowSpacing: App.scaleByFontSize(8)
+            columnSpacing: App.scaleByFontSize(16)
 
             property int w: (content.width - rowSpacing) / 2
 
@@ -213,8 +213,8 @@ Pane {
             spacing: parent.width / 8
             property var buttonColor: Utils.changeAlpha(Material.foreground, 128)
 
-            RoundButton {
-                display: RoundButton.IconOnly
+            ToolButton {
+                display: ToolButton.IconOnly
                 font.pixelSize: App.settings.font10
                 font.capitalization: Font.MixedCase
                 icon.source: fieldLocation.active ? "qrc:/icons/cancel.svg" : "qrc:/icons/refresh.svg"
@@ -227,8 +227,8 @@ Pane {
                 }
             }
 
-            RoundButton {
-                display: RoundButton.IconOnly
+            ToolButton {
+                display: ToolButton.IconOnly
                 font.pixelSize: App.settings.font10
                 font.capitalization: Font.MixedCase
                 icon.source: "qrc:/icons/delete_outline.svg"
@@ -240,7 +240,7 @@ Pane {
                 onClicked: fieldBinding.resetValue()
             }
 
-            RoundButton {
+            ToolButton {
                 display: ToolButton.IconOnly
                 font.pixelSize: App.settings.font10
                 font.capitalization: Font.MixedCase

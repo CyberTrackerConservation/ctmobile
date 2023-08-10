@@ -6,6 +6,7 @@ import QtPositioning 5.12
 import QtMultimedia 5.12
 import QtQuick.Window 2.12
 import QtWebView 1.1
+import QtQuick.Layouts 1.12
 import Qt.labs.platform 1.0 as Labs
 import Qt.labs.settings 1.0 as Labs
 import Esri.ArcGISRuntime 100.15
@@ -16,9 +17,11 @@ import CyberTracker 1.0 as C
 ApplicationWindow {
     id: appWindow
 
+    property bool videoMode: false
+
     property var appPageStackList: [ { stackView: appPageStack, form: undefined } ]
     property int popupCount: 0
-    property bool frameless: false
+    property bool frameless: videoMode
 
     flags: frameless ? Qt.FramelessWindowHint | Qt.Window : Qt.Window
 
@@ -101,6 +104,13 @@ ApplicationWindow {
                 }
                 Labs.MenuSeparator { }
                 Labs.MenuItem {
+                    text: qsTr("Reset cache")
+                    onTriggered: {
+                        App.clearDeviceCache()
+                    }
+                }
+                Labs.MenuSeparator { }
+                Labs.MenuItem {
                     text: qsTr("&Quit")
                     onTriggered: Qt.quit()
                 }
@@ -137,13 +147,13 @@ ApplicationWindow {
         }
     }
 
-    // Message dialog.
-    Dialogs.MessageDialog {
-        id: messageDialog
-        icon: Dialogs.StandardIcon.Information
-        standardButtons: Dialogs.StandardButton.Ok
-        onAccepted: close()
-        modality: App.mobileOS ? Qt.ApplicationModal : Qt.WindowModal
+    // Message popup.
+    C.PopupLoader {
+        id: messagePopup
+
+        popupComponent: Component {
+            C.MessagePopup {}
+        }
     }
 
     // Setting the state declaratively does not stick.
@@ -174,6 +184,40 @@ ApplicationWindow {
         App.backPressed()
     }
 
+    Rectangle {
+        anchors.fill: parent
+        color: "#007bff"
+        visible: videoMode
+
+        Rectangle {
+            anchors.fill: parent
+            color: "black"
+            radius: 8
+        }
+
+        RowLayout {
+            y: 4
+            anchors.horizontalCenter: parent.horizontalCenter
+
+            C.SquareIcon {
+                source: "qrc:/icons/apple.svg"
+                color: Material.background
+                size: 32
+            }
+
+            C.SquareIcon {
+                source: App.config.logo
+                size: 32
+            }
+
+            C.SquareIcon {
+                source: "qrc:/icons/android.svg"
+                color: Material.background
+                size: 32
+            }
+        }
+    }
+
     StackView {
         id: appPageStack
 
@@ -193,13 +237,30 @@ ApplicationWindow {
                     // Scale to screen coordinates.
                     keyboardHeight /= Screen.devicePixelRatio
                 }
-                
+
                 return keyboardHeight
             }
         }
 
         initialItem: Loader {
             source: App.config.mainPage
+        }
+
+        Component.onCompleted: {
+            visible = App.settings.autoLaunchProjectUid === ""
+
+            if (videoMode) {
+                appWindow.x = 2200
+                appWindow.y = 200
+                appWindow.width = 360 + 32
+                appWindow.height = 800 + 56
+
+                appPageStack.anchors.fill = ContingentNullValue
+                x = 16
+                y = 40
+                width = 360
+                height = 800
+            }
         }
     }
 
@@ -242,12 +303,38 @@ ApplicationWindow {
         popToRootTimer.start()
     }
 
-    function changeToProject(projectUid) {
+    function changeToProject(projectUid, transition = StackView.Immediate) {
+        App.clearComponentCache()
+
+        if (App.promptForLocation(projectUid)) {
+            popupRequestLocation.open({ callback: () => { changeToProject(projectUid, transition) } })
+            return
+        }
+
+        if (App.promptForBackgroundLocation(projectUid)) {
+            popupRequestBackgroundLocation.open({ projectUid: projectUid, transition: transition })
+            return
+        }
+
+        if (!App.requestPermissions(projectUid)) {
+            return
+        }
+
+        if (App.promptForBlackviewMessage(projectUid)) {
+            App.settings.blackviewMessageShown = true
+            popupBlackviewMessage.open({ projectUid: projectUid, transition: transition })
+            return
+        }
+
+        appPageStack.visible = false
         appPageStack.pop(null)
         appPageStackList = [appPageStackList[0]]
 
-        if (App.requestPermissions(projectUid)) {
-            appPageStack.push(FormViewUrl, { projectUid: projectUid })
+        try {
+            appPageStack.push(FormViewUrl, { projectUid: projectUid }, transition)
+        }
+        finally {
+            appPageStack.visible = true
         }
     }
 
@@ -278,6 +365,11 @@ ApplicationWindow {
                 busyCover.doWork = runCommandLine
                 busyCover.start()
                 return
+            }
+
+            let projectUid = App.settings.autoLaunchProjectUid
+            if (projectUid !== "") {
+                changeToProject(projectUid)
             }
         }
     }
@@ -322,11 +414,8 @@ ApplicationWindow {
             showError(info)
         }
 
-        function onShowMessageBox(title, text, details) {
-            messageDialog.title = title
-            messageDialog.text = text
-            messageDialog.detailedText = details
-            messageDialog.open()
+        function onShowMessageBox(title, message1, message2, message3) {
+            messagePopup.open({ title: title, message1: message1, message2: message2, message3: message3 })
         }
 
         function onPopPageStack() {
@@ -354,9 +443,7 @@ ApplicationWindow {
 
         let projectUid = App.projectManager.lastNewProjectUid
         if (result.launch === true && projectUid !== "" && App.projectManager.exists(projectUid)) {
-            if (App.requestPermissions(projectUid)) {
-                appPageStack.push(FormViewUrl, { projectUid: projectUid })
-            }
+            changeToProject(projectUid)
         }
     }
 
@@ -380,5 +467,65 @@ ApplicationWindow {
 
     function getParamColor(params, key, defaultValue = undefined) {
         return params !== undefined ? Utils.getParam(params, key + (App.settings.darkTheme ? "Dark" : ""), defaultValue) : defaultValue
+    }
+
+    C.PopupLoader {
+        id: popupBlackviewMessage
+
+        popupComponent: Component {
+            C.MessagePopup {
+                property string projectUid: ""
+                property int transition: StackView.Immediate
+
+                icon: "qrc:/icons/alert_outline.svg"
+                title: qsTr("%1 detected").arg("Blackview")
+                message1: qsTr("Use the %1 app to allow background activity for %2.").arg("**'System Manager'**").arg(App.config.title)
+                message2: qsTr("This is required to ensure that a proper track of your location is created.").arg(App.alias_project)
+                onClicked: {
+                    changeToProject(projectUid, transition)
+                }
+            }
+        }
+    }
+
+    C.PopupLoader {
+        id: popupRequestBackgroundLocation
+
+        popupComponent: Component {
+            C.MessagePopup {
+                property string projectUid: ""
+                property int transition: StackView.Immediate
+
+                icon: "qrc:/icons/map_marker_multiple_outline.svg"
+                title: qsTr("Background location required")
+                message1: qsTr("You must select %1 on the next screen.").arg("**'" + qsTr("Allow all the time") + "'**")
+                message2: qsTr("This %1 requires permission to capture location in the background. This is needed to ensure that a proper track of your location is created.").arg(App.alias_project)
+                onClicked: function (index) {
+                    if (App.requestPermissionBackgroundLocation(projectUid)) {
+                        changeToProject(projectUid, transition)
+                    }
+                }
+            }
+        }
+    }
+
+    C.PopupLoader {
+        id: popupRequestLocation
+
+        popupComponent: Component {
+            C.MessagePopup {
+                property var callback: undefined
+
+                icon: "qrc:/icons/map_marker.svg"
+                title: qsTr("Location required")
+                message1: qsTr("Permission to use your location is needed for mapping and data collection.")
+                message2: qsTr("Tap %1 below and allow it to be used.").arg("**" + qsTr("OK") + "**")
+                onClicked: function (index) {
+                    if (App.requestPermissionLocation() && callback !== undefined) {
+                        callback()
+                    }
+                }
+            }
+        }
     }
 }

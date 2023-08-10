@@ -13,13 +13,13 @@ QtObject {
     property color colorAccent: App.config.colorAccent
     property color colorForeground: Material.foreground
 
-    property color colorGroove: getColorGroove(Material.background)
+    property color colorGroove: getColorGroove(Material.foreground)
     property color colorContent: getColorContent(Material.background)
     property color colorToolbar: getColorToolbar(Material.background)
+    property color colorHighlight: getColorHighlight(Material.foreground)
 
     property color colorCalculated: darkTheme ? "lightsteelblue" : "steelblue"
     property color colorInvalid: darkTheme ? "red" : "crimson"
-    property var colorHighlighted: darkTheme ? "lightsteelblue" : "steelblue"
 
     property int toolButtonSize: (24 * App.settings.fontSize) / 100
     property int minRowHeight: Math.max(40, (40 * App.settings.fontSize) / 100)
@@ -40,9 +40,8 @@ QtObject {
     readonly property string okIconSource: "qrc:/icons/ok.svg"
     readonly property string cancelIconSource: "qrc:/icons/cancel.svg"
 
-    function getColorGroove(backgroundColor) {
-        let tintColor = Utils.lightness(backgroundColor) < 128 ? "#C0FFFFFF" : "#58000000"
-        return Qt.tint(backgroundColor, tintColor)
+    function getColorGroove(foregroundColor) {
+        return Qt.rgba(foregroundColor.r, foregroundColor.g, foregroundColor.b, 0.25)
     }
 
     function getColorContent(backgroundColor) {
@@ -53,4 +52,7 @@ QtObject {
         return Qt.lighter(backgroundColor, Style.darkTheme ? 0.5 : 1.0)
     }
 
+    function getColorHighlight(highlightColor) {
+        return Qt.rgba(highlightColor.r, highlightColor.g, highlightColor.b, 0.65)
+    }
 }

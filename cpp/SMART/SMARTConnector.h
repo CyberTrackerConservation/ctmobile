@@ -28,9 +28,9 @@ public:
 
 private:
     QString m_smart7Required;
-    bool getZipMetadata(const QString& zipFile, QVariantMap* metadataOut, int* smartVersionOut = nullptr);
+    bool getZipMetadata(const QString& zipFilePath, QVariantMap* metadataOut, int* smartVersionOut = nullptr);
 
-    ApiResult bootstrapOffline();
+    ApiResult bootstrapOffline(const QString& zipFilePath);
     ApiResult bootstrapConnect(const QVariantMap& params);
 
     ApiResult updateOffline(Project* project);

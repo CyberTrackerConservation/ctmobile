@@ -3,9 +3,11 @@
 SquareImage::SquareImage(QQuickItem *parent): QQuickPaintedItem(parent)
 {
     m_size = 0;
+    m_angle = 0;
     m_source = "";
 
     connect(this, &SquareImage::sizeChanged, this, &SquareImage::render);
+    connect(this, &SquareImage::angleChanged, this, &SquareImage::render);
     connect(this, &SquareImage::sourceChanged, this, &SquareImage::render);
 }
 
@@ -16,7 +18,7 @@ void SquareImage::render()
         return;
     }
 
-    auto renderSig = m_source + QString::number(m_size);
+    auto renderSig = m_source + QString::number(m_size) + QString::number(m_angle);
     if (m_renderSig == renderSig)
     {
         return;
@@ -39,7 +41,7 @@ void SquareImage::render()
         filename = QUrl(filename).toLocalFile();
     }
 
-    Utils::renderSquarePixmap(&m_pixmap, filename, m_size, m_size);
+    Utils::renderSquarePixmap(&m_pixmap, filename, m_size, m_size, m_angle);
 
     m_renderSig = renderSig;
     update();

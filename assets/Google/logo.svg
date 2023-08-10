@@ -1,0 +1,278 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   width="65"
+   height="65"
+   viewBox="0 0 65 65"
+   version="1.1"
+   id="svg194"
+   sodipodi:docname="logo.svg"
+   inkscape:version="1.2 (dc2aedaf03, 2022-05-15)"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:xlink="http://www.w3.org/1999/xlink"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:dc="http://purl.org/dc/elements/1.1/">
+  <sodipodi:namedview
+     id="namedview196"
+     pagecolor="#ffffff"
+     bordercolor="#000000"
+     borderopacity="0.25"
+     inkscape:showpageshadow="2"
+     inkscape:pageopacity="0.0"
+     inkscape:pagecheckerboard="0"
+     inkscape:deskcolor="#d1d1d1"
+     showgrid="false"
+     inkscape:zoom="15.560606"
+     inkscape:cx="22.653359"
+     inkscape:cy="32.967868"
+     inkscape:window-width="3440"
+     inkscape:window-height="1369"
+     inkscape:window-x="-8"
+     inkscape:window-y="-8"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="svg194" />
+  <!-- Generator: Sketch 54.1 (76490) - https://sketchapp.com -->
+  <title
+     id="title100">Forms-icon</title>
+  <desc
+     id="desc102">Created with Sketch.</desc>
+  <defs
+     id="defs121">
+    <path
+       d="M 29.583333,0 H 4.4375 C 1.996875,0 0,1.996875 0,4.4375 v 56.208333 c 0,2.440625 1.996875,4.4375 4.4375,4.4375 h 38.458333 c 2.440625,0 4.4375,-1.996875 4.4375,-4.4375 V 17.75 Z"
+       id="path-1" />
+    <path
+       d="M 29.583333,0 H 4.4375 C 1.996875,0 0,1.996875 0,4.4375 v 56.208333 c 0,2.440625 1.996875,4.4375 4.4375,4.4375 h 38.458333 c 2.440625,0 4.4375,-1.996875 4.4375,-4.4375 V 17.75 Z"
+       id="path-3" />
+    <path
+       d="M 29.583333,0 H 4.4375 C 1.996875,0 0,1.996875 0,4.4375 v 56.208333 c 0,2.440625 1.996875,4.4375 4.4375,4.4375 h 38.458333 c 2.440625,0 4.4375,-1.996875 4.4375,-4.4375 V 17.75 Z"
+       id="path-5" />
+    <linearGradient
+       x1="39.103809"
+       y1="17.866346"
+       x2="39.103809"
+       y2="32.906357"
+       id="linearGradient-7"
+       gradientTransform="scale(1.0001124,0.99988764)"
+       gradientUnits="userSpaceOnUse">
+      <stop
+         stop-color="#311B92"
+         stop-opacity="0.2"
+         offset="0%"
+         id="stop107" />
+      <stop
+         stop-color="#311B92"
+         stop-opacity="0.02"
+         offset="100%"
+         id="stop109" />
+    </linearGradient>
+    <path
+       d="M 29.583333,0 H 4.4375 C 1.996875,0 0,1.996875 0,4.4375 v 56.208333 c 0,2.440625 1.996875,4.4375 4.4375,4.4375 h 38.458333 c 2.440625,0 4.4375,-1.996875 4.4375,-4.4375 V 17.75 Z"
+       id="path-8" />
+    <path
+       d="M 29.583333,0 H 4.4375 C 1.996875,0 0,1.996875 0,4.4375 v 56.208333 c 0,2.440625 1.996875,4.4375 4.4375,4.4375 h 38.458333 c 2.440625,0 4.4375,-1.996875 4.4375,-4.4375 V 17.75 Z"
+       id="path-10" />
+    <path
+       d="M 29.583333,0 H 4.4375 C 1.996875,0 0,1.996875 0,4.4375 v 56.208333 c 0,2.440625 1.996875,4.4375 4.4375,4.4375 h 38.458333 c 2.440625,0 4.4375,-1.996875 4.4375,-4.4375 V 17.75 Z"
+       id="path-12" />
+    <path
+       d="M 29.583333,0 H 4.4375 C 1.996875,0 0,1.996875 0,4.4375 v 56.208333 c 0,2.440625 1.996875,4.4375 4.4375,4.4375 h 38.458333 c 2.440625,0 4.4375,-1.996875 4.4375,-4.4375 V 17.75 Z"
+       id="path-14" />
+    <radialGradient
+       cx="1.7583691"
+       cy="1.5082694"
+       fx="1.7583691"
+       fy="1.5082694"
+       r="89.498169"
+       gradientTransform="scale(0.85280286,1.1726039)"
+       id="radialGradient-16"
+       gradientUnits="userSpaceOnUse">
+      <stop
+         stop-color="#FFFFFF"
+         stop-opacity="0.1"
+         offset="0%"
+         id="stop116" />
+      <stop
+         stop-color="#FFFFFF"
+         stop-opacity="0"
+         offset="100%"
+         id="stop118" />
+    </radialGradient>
+  </defs>
+  <g
+     id="Page-1"
+     stroke="none"
+     stroke-width="1"
+     fill="none"
+     fill-rule="evenodd"
+     transform="translate(10)">
+    <g
+       id="Consumer-Apps-Forms-Large-VD-R8"
+       transform="translate(-449,-452)">
+      <g
+         id="Hero"
+         transform="translate(0,63)">
+        <g
+           id="Personal"
+           transform="translate(277,299)">
+          <g
+             id="Forms-icon"
+             transform="translate(172,90)">
+            <g
+               id="g185">
+              <g
+                 id="Clipped">
+                <mask
+                   id="mask-2"
+                   fill="#ffffff">
+                  <use
+                     xlink:href="#path-1"
+                     id="use123" />
+                </mask>
+                <g
+                   id="SVGID_20_" />
+                <path
+                   d="M 29.583333,0 H 4.4375 C 1.996875,0 0,1.996875 0,4.4375 v 56.208333 c 0,2.440625 1.996875,4.4375 4.4375,4.4375 h 38.458333 c 2.440625,0 4.4375,-1.996875 4.4375,-4.4375 V 17.75 L 36.979167,10.354167 Z"
+                   id="Path"
+                   fill="#673ab7"
+                   fill-rule="nonzero"
+                   mask="url(#mask-2)" />
+              </g>
+              <g
+                 id="g135">
+                <mask
+                   id="mask-4"
+                   fill="#ffffff">
+                  <use
+                     xlink:href="#path-3"
+                     id="use129" />
+                </mask>
+                <g
+                   id="g132" />
+                <path
+                   d="M 19.229167,50.291667 H 35.5 V 47.333333 H 19.229167 Z m 0,-17.75 V 35.5 H 35.5 v -2.958333 z m -3.697917,1.479166 c 0,1.224011 -0.99474,2.21875 -2.21875,2.21875 -1.22401,0 -2.21875,-0.994739 -2.21875,-2.21875 0,-1.22401 0.99474,-2.21875 2.21875,-2.21875 1.22401,0 2.21875,0.99474 2.21875,2.21875 z m 0,7.395834 c 0,1.22401 -0.99474,2.21875 -2.21875,2.21875 -1.22401,0 -2.21875,-0.99474 -2.21875,-2.21875 0,-1.224011 0.99474,-2.21875 2.21875,-2.21875 1.22401,0 2.21875,0.994739 2.21875,2.21875 z m 0,7.395833 c 0,1.22401 -0.99474,2.21875 -2.21875,2.21875 -1.22401,0 -2.21875,-0.99474 -2.21875,-2.21875 0,-1.22401 0.99474,-2.21875 2.21875,-2.21875 1.22401,0 2.21875,0.99474 2.21875,2.21875 z m 3.697917,-5.916667 H 35.5 V 39.9375 H 19.229167 Z"
+                   id="Shape"
+                   fill="#f1f1f1"
+                   fill-rule="nonzero"
+                   mask="url(#mask-4)" />
+              </g>
+              <g
+                 id="g144">
+                <mask
+                   id="mask-6"
+                   fill="#ffffff">
+                  <use
+                     xlink:href="#path-5"
+                     id="use137" />
+                </mask>
+                <g
+                   id="g140" />
+                <polygon
+                   id="polygon142"
+                   fill="url(#linearGradient-7)"
+                   fill-rule="nonzero"
+                   mask="url(#mask-6)"
+                   points="47.333333,17.75 30.881302,16.452031 47.333333,32.900365 "
+                   style="fill:url(#linearGradient-7)" />
+              </g>
+              <g
+                 id="g156">
+                <mask
+                   id="mask-9"
+                   fill="#ffffff">
+                  <use
+                     xlink:href="#path-8"
+                     id="use146" />
+                </mask>
+                <g
+                   id="g149" />
+                <g
+                   id="Group"
+                   mask="url(#mask-9)">
+                  <g
+                     transform="translate(26.625,-2.958333)"
+                     id="g153">
+                    <path
+                       d="M 2.9583333,2.9583333 V 16.270833 c 0,2.451719 1.9857813,4.4375 4.4375,4.4375 H 20.708333 Z"
+                       id="path151"
+                       fill="#b39ddb"
+                       fill-rule="nonzero" />
+                  </g>
+                </g>
+              </g>
+              <g
+                 id="g165">
+                <mask
+                   id="mask-11"
+                   fill="#ffffff">
+                  <use
+                     xlink:href="#path-10"
+                     id="use158" />
+                </mask>
+                <g
+                   id="g161" />
+                <path
+                   d="M 4.4375,0 C 1.996875,0 0,1.996875 0,4.4375 V 4.8072917 C 0,2.3666667 1.996875,0.36979167 4.4375,0.36979167 H 29.583333 V 0 Z"
+                   id="path163"
+                   fill-opacity="0.2"
+                   fill="#ffffff"
+                   fill-rule="nonzero"
+                   mask="url(#mask-11)" />
+              </g>
+              <g
+                 id="g174">
+                <mask
+                   id="mask-13"
+                   fill="#ffffff">
+                  <use
+                     xlink:href="#path-12"
+                     id="use167" />
+                </mask>
+                <g
+                   id="g170" />
+                <path
+                   d="M 42.895833,64.713542 H 4.4375 C 1.996875,64.713542 0,62.716667 0,60.276042 v 0.369791 c 0,2.440625 1.996875,4.4375 4.4375,4.4375 h 38.458333 c 2.440625,0 4.4375,-1.996875 4.4375,-4.4375 v -0.369791 c 0,2.440625 -1.996875,4.4375 -4.4375,4.4375 z"
+                   id="path172"
+                   fill-opacity="0.2"
+                   fill="#311b92"
+                   fill-rule="nonzero"
+                   mask="url(#mask-13)" />
+              </g>
+              <g
+                 id="g183">
+                <mask
+                   id="mask-15"
+                   fill="#ffffff">
+                  <use
+                     xlink:href="#path-14"
+                     id="use176" />
+                </mask>
+                <g
+                   id="g179" />
+                <path
+                   d="m 34.020833,17.75 c -2.451718,0 -4.4375,-1.985781 -4.4375,-4.4375 v 0.369792 c 0,2.451718 1.985782,4.4375 4.4375,4.4375 h 13.3125 V 17.75 Z"
+                   id="path181"
+                   fill-opacity="0.1"
+                   fill="#311b92"
+                   fill-rule="nonzero"
+                   mask="url(#mask-15)" />
+              </g>
+            </g>
+          </g>
+        </g>
+      </g>
+    </g>
+  </g>
+  <metadata
+     id="metadata980">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:title>Forms-icon</dc:title>
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+</svg>

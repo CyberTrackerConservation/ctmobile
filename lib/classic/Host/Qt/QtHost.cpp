@@ -420,6 +420,11 @@ BOOL CHost_Qt::IsSoundPlaying()
     return _mediaPlayer.state() == QMediaPlayer::PlayingState;
 }
 
+BOOL CHost_Qt::RequestPermissionRecordAudio()
+{
+    return App::instance()->requestPermissionRecordAudio();
+}
+
 BOOL CHost_Qt::StartRecording(CHAR *pFileNameNoExt, UINT Duration, UINT Frequency)
 {
     StopSound();

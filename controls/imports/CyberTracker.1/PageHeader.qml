@@ -15,7 +15,8 @@ Rectangle {
     property alias backIcon: backButton.icon.source
     property alias backEnabled: backButton.enabled
     property alias backVisible: backButton.visible
-    property string textColor: Utils.lightness(Material.primary) < 128 ? "white" : "black"
+    property string textColor: Utils.lightness(Material.primary) < 130 ? "white" : "black"
+    property bool fontBold: false
 
     color: Material.primary
 
@@ -74,6 +75,7 @@ Rectangle {
                 id: topLabel
                 width: parent.width
                 font.pixelSize: App.settings.font16
+                font.bold: root.fontBold
                 wrapMode: Label.WordWrap
                 horizontalAlignment: Qt.AlignHCenter
                 elide: Label.ElideRight
@@ -87,6 +89,7 @@ Rectangle {
                 width: parent.width
                 height: Math.min(implicitHeight, 128)
                 font.pixelSize: App.settings.font20
+                font.bold: root.fontBold
                 font.preferShaping: !text.includes("Cy") // Hack to fix iOS bug
                 wrapMode: Label.WordWrap
                 horizontalAlignment: Qt.AlignHCenter

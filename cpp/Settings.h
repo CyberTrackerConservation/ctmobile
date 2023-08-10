@@ -1,5 +1,6 @@
 #pragma once
 #include "pch.h"
+#include "keychain.h"
 
 class Settings: public QObject
 {
@@ -54,6 +55,8 @@ class Settings: public QObject
     QML_SETTING (QVariantMap, mapViewpointCenter, QVariantMap())
     QML_SETTING (int, mapPanMode, 1)              // Enums.LocationDisplayAutoPanModeRecenter
 
+    QML_SETTING (QStringList, projects, QStringList())
+
     QML_SETTING (QString, activeBasemap, "BasemapOpenStreetMap")
     QML_SETTING (QStringList, offlineMapLayers, QStringList())
     QML_SETTING (QVariantMap, offlineMapPackages, QVariantMap())
@@ -79,12 +82,22 @@ class Settings: public QObject
 
     QML_SETTING (bool, metricUnits, QLocale::system().measurementSystem() == QLocale::MetricSystem)
 
+//    QML_SECURE_SETTING (QString, googleEmail, QString())
+//    QML_SECURE_SETTING (QString, googleAccessToken, QString())
+//    QML_SECURE_SETTING (QString, googleRefreshToken, QString())
+
+    QML_SETTING (QString, autoLaunchProjectUid, QString())
+    QML_SETTING (bool, blackviewMessageShown, false)
+
 public:
     explicit Settings(QObject* parent = nullptr);
-    explicit Settings(const QString& filePath, QObject* parent = nullptr);
+    explicit Settings(const QString& filePath, const QString& vaultName, QObject* parent = nullptr);
 
     QVariant getSetting(const QString& name, const QVariant& defaultValue) const;
     void setSetting(const QString& name, const QVariant& value);
+
+    QVariant getSecureSetting(const QString& name, const QVariant& defaultValue) const;
+    void setSecureSetting(const QString& name, const QVariant& value);
 
     int font10() const;
     int font11() const;
@@ -102,7 +115,13 @@ public:
     QString simulateGPSFilename() const;
     void set_simulateGPSFilename(const QString& value);
 
+signals:
+    void secureSettingChanged();
+
 private:
     QString m_filePath;
     QVariantMap m_cache;
+    QVariantMap m_vaultCache;
+    QKeychain::ReadPasswordJob* m_vaultReadJob = nullptr;
+    QKeychain::WritePasswordJob* m_vaultWriteJob = nullptr;
 };

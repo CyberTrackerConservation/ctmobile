@@ -143,7 +143,7 @@ C.ListViewV {
                     id: listViewPhotos
                     anchors.fill: parent
                     leftMargin: spacing
-                    spacing: 8
+                    spacing: App.scaleByFontSize(8)
                     model: modelData.filenames
                     delegate: ItemDelegate {
                         width: imageSize
@@ -171,7 +171,7 @@ C.ListViewV {
             id: wrapDelegate
             anchors.fill: parent
 
-            padding: 8
+            padding: App.scaleByFontSize(8)
 
             function getComponent() {
                 backColor.color = "transparent"

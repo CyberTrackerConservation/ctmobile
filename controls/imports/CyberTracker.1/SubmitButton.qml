@@ -26,9 +26,8 @@ RoundButton {
                 script: {
                     root.enabled = false
                     timerWiFi.running = timerProgress.running = timerBusy.running = false
-                    centerIcon.rotation = 0
+                    centerIcon.angle = 0
                     centerIcon.source = "qrc:/icons/cloud_done.svg"
-                    progressCircle.visible = false
                     progressCircle.arcEnd = 0
                     internal.initialPendingUploadCount = internal.currentPendingUploadCount = 0
                 }
@@ -41,9 +40,8 @@ RoundButton {
                     root.enabled = false
                     timerWiFi.running = true
                     timerProgress.running = timerBusy.running = false
-                    centerIcon.rotation = 0
+                    centerIcon.angle = 0
                     centerIcon.source = "qrc:/icons/wifi_strength_off_outline.svg"
-                    progressCircle.visible = false
                     progressCircle.arcEnd = 0
                     internal.initialPendingUploadCount = internal.currentPendingUploadCount = 0
                 }
@@ -56,9 +54,8 @@ RoundButton {
                 script: {
                     root.enabled = true
                     timerWiFi.running = timerProgress.running = timerBusy.running = false
-                    centerIcon.rotation = 0
+                    centerIcon.angle = 0
                     centerIcon.source = "qrc:/icons/upload_multiple.svg"
-                    progressCircle.visible = false
                     progressCircle.arcEnd = 0
                     internal.initialPendingUploadCount = internal.currentPendingUploadCount = 0
                 }
@@ -72,9 +69,8 @@ RoundButton {
                     timerWiFi.running = false
                     timerProgress.running = true
                     timerBusy.running = true
-                    centerIcon.rotation = 0
+                    centerIcon.angle = 0
                     centerIcon.source = "qrc:/icons/sync.svg"
-                    progressCircle.visible = true
                     progressCircle.arcEnd = 0
                     internal.initialPendingUploadCount = internal.currentPendingUploadCount = form.getPendingUploadCount()
                 }
@@ -86,9 +82,8 @@ RoundButton {
                 script: {
                     root.enabled = true
                     timerWiFi.running = timerProgress.running = timerBusy.running = false
-                    centerIcon.rotation = 0
+                    centerIcon.angle = 0
                     centerIcon.source = "qrc:/icons/upload_multiple.svg"
-                    progressCircle.visible = false
                     progressCircle.arcEnd = 0
                     internal.initialPendingUploadCount = internal.currentPendingUploadCount = 0
                     App.showError(qsTr("Upload failed"))
@@ -97,24 +92,24 @@ RoundButton {
         }
     ]
 
-    SquareIcon {
-        id: centerIcon
-        anchors.fill: parent
-        size: parent.width / 2
-        opacity: root.enabled ? 0.8 : 0.2
-        recolor: true
-    }
-
-    ProgressCircle {
+    contentItem: ProgressCircle {
         id: progressCircle
         anchors.fill: parent
-        size: parent.width
+        size: root.width
         lineWidth: App.scaleByFontSize(5)
         colorCircle: Material.accent
-        colorBackground: Style.colorGroove
+        colorBackground: Utils.changeAlpha(Style.colorGroove, 128)
         showBackground: true
         arcBegin: 0
         arcEnd: 0
+
+        SquareIcon {
+            id: centerIcon
+            anchors.fill: parent
+            size: root.width / 2
+            opacity: root.enabled ? 0.8 : 0.2
+            recolor: true
+        }
     }
 
     Timer {
@@ -141,10 +136,10 @@ RoundButton {
 
     Timer {
         id: timerBusy
-        interval: 100
+        interval: 20
         repeat: true
         onTriggered: {
-            centerIcon.rotation += 10
+            centerIcon.angle += 2
         }
     }
 

@@ -9,12 +9,12 @@ ItemDelegate {
     Binding {
         target: background
         property: "color"
-        value: root.highlighted ? (Style.darkTheme ? Material.background : Material.foreground) : (colorContent || Style.colorContent)
+        value: root.highlighted ? (colorHighlight || Style.colorHighlight) : (colorContent || Style.colorContent)
     }
 
     Binding {
         target: background
         property: "opacity"
-        value: root.highlighted ? 0.5 : 1.0
+        value: root.highlighted ? 0.75 : 1.0
     }
 }

@@ -12,6 +12,7 @@ C.ContentPage {
     property var getFormName
     property var getFormSubText
     property var connectForms
+    property bool backToRoot: false
 
     title: qsTr("Select forms")
 
@@ -24,6 +25,10 @@ C.ContentPage {
         onMenuClicked: {
             busyCover.doWork = page.connectForms
             busyCover.start()
+        }
+        formBack: !page.backToRoot
+        onBackClicked: {
+            postPopToRoot()
         }
     }
 

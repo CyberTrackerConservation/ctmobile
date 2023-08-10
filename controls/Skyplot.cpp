@@ -1,5 +1,7 @@
 #include "Skyplot.h"
 
+static float s_lastShieldAngle = 0;
+
 //====================================================================================================================================
 
 Skyplot::Skyplot(QQuickItem *parent): QQuickPaintedItem(parent)
@@ -20,21 +22,36 @@ Skyplot::Skyplot(QQuickItem *parent): QQuickPaintedItem(parent)
     m_progressVisible = false;
     m_progressPercent = 0;
     m_currentProgressPercent = 0.0;
+    m_shieldAngle = s_lastShieldAngle;
 
     m_shieldAnimation.setEasingCurve(QEasingCurve::Linear);
 
-    connect(&m_shieldAnimation, &QVariantAnimation::valueChanged, [this](const QVariant& value)
+    connect(&m_shieldAnimation, &QVariantAnimation::valueChanged, this, [&](const QVariant& value)
     {
-        setShieldAngle(value.toFloat());
+        if (!value.isValid())
+        {
+            qDebug() << "Invalid shield angle";
+            return;
+        }
+
+        auto valueFloat = value.toFloat();
+        if (std::isnan(valueFloat))
+        {
+            qDebug() << "NAN shield angle";
+            return;
+        }
+
+        s_lastShieldAngle = valueFloat;
+        setShieldAngle(valueFloat);
     });
 
-    connect(&m_progressAnimation, &QVariantAnimation::valueChanged, [this](const QVariant& value)
+    connect(&m_progressAnimation, &QVariantAnimation::valueChanged, this, [&](const QVariant& value)
     {
         m_currentProgressPercent = value.toFloat();
         update();
     });
 
-    connect(this, &Skyplot::progressPercentChanged, [this]()
+    connect(this, &Skyplot::progressPercentChanged, this, [&]()
     {
         m_progressAnimation.stop();
 
@@ -196,14 +213,14 @@ void Skyplot::renderShield(QPainter* target, int side, int offsetX, int offsetY,
         {
             auto angleDeg = (i * 360) / m_numberOfDegreeTexts;
             auto angleRad = DEG2RAD(angleDeg);
-            auto length = m_miniMode ? r : r * 0.92;
+            auto length = m_miniMode ? r : r * (1 - App::instance()->scaleByFontSize(0.08));
             auto tx = cx + length * qSin(angleRad);
             auto ty = cy - length * qCos(angleRad);
             painter.drawLine(cx, cy, tx, ty);
         }
 
         // First inner circle.
-        auto innerDelta = m_miniMode ? 0 : iside * 0.04;
+        auto innerDelta = App::instance()->scaleByFontSize(m_miniMode ? 0 : iside) * 0.04;
         if (!m_miniMode)
         {
             painter.drawEllipse(center, r - innerDelta, r - innerDelta);
@@ -227,7 +244,7 @@ void Skyplot::renderShield(QPainter* target, int side, int offsetX, int offsetY,
         {
             auto font = painter.font();
             font.setFamily("sans serif");
-            font.setPointSize(iside * 0.03);
+            font.setPointSize(App::instance()->scaleByFontSize(iside) * 0.03);
             painter.setFont(font);
             painter.setPen(m_shieldColorLines);
 
@@ -238,8 +255,9 @@ void Skyplot::renderShield(QPainter* target, int side, int offsetX, int offsetY,
                 auto angleRad = DEG2RAD(angleDeg);
                 auto angleText = QString::number(angleDeg);
 
-                auto tx = cx + r * 0.96 * qSin(angleRad);
-                auto ty = cy - r * 0.96 * qCos(angleRad);
+                auto v = 1 - App::instance()->scaleByFontSize(0.04);
+                auto tx = cx + r * v * qSin(angleRad);
+                auto ty = cy - r * v * qCos(angleRad);
 
                 painter.save();
                 QPainterPath path;
@@ -694,7 +712,7 @@ void Skyplot::setMiniMode(bool value)
 {
     m_miniMode = value;
 
-    m_padding = value ? 2 : 8;
+    m_padding = App::instance()->scaleByFontSize(value ? 2 : 8);
     m_numberOfInnerCircles = value ? 2 : 3;
     m_numberOfStraightLines = value ? 4 : 12;
     m_numberOfDegreeTexts = value ? 4 : 12;

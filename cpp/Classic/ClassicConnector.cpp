@@ -198,6 +198,7 @@ ApiResult ClassicConnector::bootstrap(const QVariantMap& params)
         auto ctsMetadata = ctsFile.toMap();
         auto projectUid = "CLASSIC2_" + QUuid::createUuid().toString(QUuid::Id128);
         bool replaceExisting = false;
+        auto webUpdateUrl = QString();
 
         // Look for a duplicate to replace.
         for (auto project: projects)
@@ -212,19 +213,24 @@ ApiResult ClassicConnector::bootstrap(const QVariantMap& params)
                 continue;
             }
 
-            projectUid = project->uid();
             replaceExisting = true;
+            projectUid = project->uid();
+            webUpdateUrl = project->connectorParams().value("webUpdateUrl").toString();
+
+            // Override the update url if existing one is empty.
+            if (webUpdateUrl.isEmpty())
+            {
+                webUpdateUrl = ctsMetadata["webUpdateUrl"].toString();
+            }
 
             break;
         }
 
         // Create Project.qml files for the project.
-        auto ctsFilePath = ctsMetadata["path"].toString();
-
         QVariantMap connectorParams;
         connectorParams["serverFileName"] = ctsMetadata["serverFileName"];
         connectorParams["app"] = ctsMetadata["app"];
-        connectorParams["webUpdateUrl"] = ctsMetadata["webUpdateUrl"];
+        connectorParams["webUpdateUrl"] = webUpdateUrl;
 
         if (!replaceExisting)
         {
@@ -238,6 +244,7 @@ ApiResult ClassicConnector::bootstrap(const QVariantMap& params)
         project->set_subtitle(getSubtitle(ctsMetadata["serverFileName"].toString()));
         project->set_updateOnLaunch(!connectorParams["webUpdateUrl"].toString().isEmpty());
         project->set_connectorParams(connectorParams);
+        project->set_androidPermissions(QStringList { "CAMERA", "RECORD_AUDIO", "ACCESS_FINE_LOCATION", "ACCESS_COARSE_LOCATION" });
         project->set_androidBackgroundLocation(true);
         project->set_androidDisableBatterySaver(true);
         project->set_telemetry(ctsMetadata["telemetry"].toMap());
@@ -515,7 +522,7 @@ ApiResult ClassicConnector::copyAppFiles(Project* project, const QString& target
     auto metadata = QVariantMap();
     if (!getCTSMetadata(rootPath + "/" + app + ".CTS", &metadata))
     {
-        return Failure(tr("Failed to read classic project"));
+        return Failure(QString(tr("Failed to read %1")).arg(App::instance()->alias_project()));
     }
 
     auto copyFile = [&](const QString& suffix)

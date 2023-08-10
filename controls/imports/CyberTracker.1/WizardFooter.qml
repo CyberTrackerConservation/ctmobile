@@ -21,6 +21,7 @@ ColumnLayout {
     QtObject {
         id: internal
 
+        property bool clickReady: false
         property var buttonColor: getParamColor(params, "buttonColor")
         property int buttonCount: buttons.length
         property int buttonWidth: root.width / buttonCount
@@ -110,6 +111,15 @@ ColumnLayout {
         }
     }
 
+    Timer {
+        interval: 250
+        repeat: false
+        running: true
+        onTriggered: {
+            internal.clickReady = true
+        }
+    }
+
     Component {
         id: emptySpaceComponent
 
@@ -129,6 +139,10 @@ ColumnLayout {
             extraScale: internal.buttonScale
             colorOverride: internal.buttonColor
             onClicked: {
+                if (!page.canHome()) {
+                    return
+                }
+
                 if (form.wizard.immersive && form.editing) {
                     form.popPagesToParent()
                     return
@@ -156,12 +170,9 @@ ColumnLayout {
             extraScale: internal.buttonScale
             colorOverride: internal.buttonColor
             onClicked: {
-                if (page.backClicked !== undefined) {
-                    page.backClicked()
-                    return
+                if (page.canBack()) {
+                    form.wizard.back()
                 }
-
-                form.wizard.back()
             }
         }
     }
@@ -178,7 +189,13 @@ ColumnLayout {
             extraScale: internal.buttonScale
             colorOverride: internal.buttonColor
             onClicked: {
-                form.wizard.next(root.recordUid, root.fieldUid)
+                if (!internal.clickReady) {
+                    return
+                }
+
+                if (page.canNext()) {
+                    form.wizard.next(root.recordUid, root.fieldUid)
+                }
             }
         }
     }
@@ -195,7 +212,9 @@ ColumnLayout {
             extraScale: internal.buttonScale
             colorOverride: internal.buttonColor
             onClicked: {
-                saveStart()
+                if (page.canSave()) {
+                    saveStart()
+                }
             }
         }
     }
@@ -214,12 +233,16 @@ ColumnLayout {
             separatorTop: false
 
             onClicked: {
-                if (saveMode) {
-                    saveStart()
+                if (!internal.clickReady) {
                     return
                 }
 
-                form.wizard.next(root.recordUid, root.fieldUid)
+                if (saveMode && page.canSave()) {
+                    saveStart()
+
+                } else if (page.canNext()) {
+                    form.wizard.next(root.recordUid, root.fieldUid)
+                }
             }
         }
     }

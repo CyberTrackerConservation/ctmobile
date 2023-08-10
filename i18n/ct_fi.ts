@@ -14,22 +14,22 @@
         <translation type="unfinished">Powered by</translation>
     </message>
     <message>
-        <location filename="../qml/AboutPage.qml" line="109" />
+        <location filename="../qml/AboutPage.qml" line="107" />
         <source>Privacy statement</source>
         <translation type="unfinished">Tietosuojaseloste</translation>
     </message>
     <message>
-        <location filename="../qml/AboutPage.qml" line="122" />
+        <location filename="../qml/AboutPage.qml" line="121" />
         <source>Software license</source>
         <translation type="unfinished">Ohjelmiston lisenssi</translation>
     </message>
     <message>
-        <location filename="../qml/AboutPage.qml" line="135" />
+        <location filename="../qml/AboutPage.qml" line="134" />
         <source>Support forum</source>
         <translation type="unfinished">Tukifoorumi</translation>
     </message>
     <message>
-        <location filename="../qml/AboutPage.qml" line="148" />
+        <location filename="../qml/AboutPage.qml" line="147" />
         <source>More resources</source>
         <translation type="unfinished">Lisää resursseja</translation>
     </message>
@@ -37,7 +37,7 @@
 <context>
     <name>AcknowledgeField</name>
     <message>
-        <location filename="../cpp/Field.cpp" line="704" />
+        <location filename="../cpp/Field.cpp" line="705" />
         <source>OK</source>
         <translation type="unfinished">OK</translation>
     </message>
@@ -45,156 +45,208 @@
 <context>
     <name>App</name>
     <message>
-        <location filename="../cpp/App.cpp" line="719" />
+        <location filename="../cpp/App.cpp" line="755" />
         <source>Accuracy</source>
         <translation type="unfinished">Tarkkuus</translation>
     </message>
     <message>
-        <location filename="../cpp/App.cpp" line="864" />
-        <location filename="../cpp/App.cpp" line="920" />
-        <location filename="../cpp/App.cpp" line="934" />
+        <location filename="../cpp/App.cpp" line="899" />
+        <location filename="../cpp/App.cpp" line="953" />
         <source>Permission request</source>
         <translation type="unfinished">Lupapyyntö</translation>
     </message>
     <message>
-        <location filename="../cpp/App.cpp" line="920" />
-        <source>This project requires access to some features of the device. Please allow these requests in order to proceed.</source>
-        <translation type="unfinished">Tämä projekti edellyttää pääsyä joihinkin laitteen ominaisuuksiin. Salli nämä pyynnöt, jotta voit jatkaa.</translation>
-    </message>
-    <message>
-        <location filename="../cpp/App.cpp" line="934" />
-        <source>This project requires background GPS access. Please allow this request in order to proceed.</source>
-        <translation type="unfinished">Tämä hanke edellyttää taustatietoja GPS:stä. Hyväksy tämä pyyntö, jotta voit jatkaa.</translation>
-    </message>
-    <message>
-        <location filename="../cpp/App.cpp" line="946" />
-        <source>Recording audio and video requires permission. Please allow the request in order to proceed.</source>
-        <translation type="unfinished">Äänen ja videon tallentaminen vaatii luvan. Pyydämme lupaa, jotta voimme jatkaa.</translation>
-    </message>
-    <message>
-        <location filename="../cpp/App.cpp" line="951" />
-        <location filename="../cpp/App.cpp" line="952" />
+        <location filename="../cpp/App.cpp" line="1000" />
         <source>Access to GPS is required for this feature to work. Please allow the request in order to proceed.</source>
         <translation type="unfinished">GPS-yhteys vaaditaan, jotta tämä toiminto toimii. Hyväksy pyyntö jatkaaksesi.</translation>
     </message>
     <message>
-        <location filename="../cpp/App.cpp" line="960" />
+        <location filename="../cpp/App.cpp" line="1012" />
         <source>Background access to GPS is required. Please allow the request in order to proceed.</source>
         <translation type="unfinished">Taustalla on oltava GPS-yhteys. Hyväksy pyyntö jatkaaksesi.</translation>
     </message>
     <message>
-        <location filename="../cpp/App.cpp" line="969" />
-        <location filename="../cpp/App.cpp" line="974" />
-        <source>Access to external storage is required for this feature to work. Please allow the request in order to proceed.</source>
-        <translation type="unfinished">Tämän ominaisuuden käyttäminen edellyttää pääsyä ulkoiseen tallennustilaan. Hyväksy pyyntö jatkaaksesi.</translation>
-    </message>
-    <message>
-        <location filename="../cpp/App.cpp" line="1002" />
+        <location filename="../cpp/App.cpp" line="1138" />
         <source>Battery level</source>
         <translation type="unfinished">Akun varaustaso</translation>
     </message>
     <message>
-        <location filename="../cpp/App.cpp" line="1408" />
+        <location filename="../cpp/App.cpp" line="1562" />
         <source>Download failed</source>
         <translation type="unfinished">Lataa epäonnistunut</translation>
     </message>
     <message>
-        <location filename="../cpp/App.cpp" line="1465" />
+        <location filename="../cpp/App.cpp" line="1616" />
+        <source>Empty link</source>
+        <translation type="unfinished">Tyhjä linkki</translation>
+    </message>
+    <message>
+        <location filename="../cpp/App.cpp" line="1664" />
         <source>Bad link</source>
         <translation type="unfinished">Huono linkki</translation>
     </message>
     <message>
-        <location filename="../cpp/App.cpp" line="1502" />
+        <location filename="../cpp/App.cpp" line="1701" />
         <source>Unknown command</source>
         <translation type="unfinished">Tuntematon komento</translation>
     </message>
     <message>
-        <location filename="../cpp/App.cpp" line="1523" />
+        <location filename="../cpp/App.cpp" line="1722" />
         <source>Not an installable package</source>
         <translation type="unfinished">Ei asennettava paketti</translation>
     </message>
     <message>
-        <location filename="../cpp/App.cpp" line="1531" />
+        <location filename="../cpp/App.cpp" line="1730" />
         <source>Install successful</source>
         <translation type="unfinished">Asennus onnistui</translation>
     </message>
     <message>
-        <location filename="../cpp/App.cpp" line="1691" />
+        <location filename="../cpp/App.cpp" line="1903" />
         <source>second</source>
         <translation type="unfinished">toinen</translation>
     </message>
     <message>
-        <location filename="../cpp/App.cpp" line="1691" />
+        <location filename="../cpp/App.cpp" line="1903" />
         <source>seconds</source>
         <translation type="unfinished">sekuntia</translation>
     </message>
     <message>
-        <location filename="../cpp/App.cpp" line="1696" />
+        <location filename="../cpp/App.cpp" line="1908" />
         <source>minute</source>
         <translation type="unfinished">minuutti</translation>
     </message>
     <message>
-        <location filename="../cpp/App.cpp" line="1696" />
+        <location filename="../cpp/App.cpp" line="1908" />
         <source>minutes</source>
         <translation type="unfinished">minuuttia</translation>
     </message>
     <message>
-        <location filename="../cpp/App.cpp" line="1701" />
+        <location filename="../cpp/App.cpp" line="1913" />
         <source>hour</source>
         <translation type="unfinished">tunti</translation>
     </message>
     <message>
-        <location filename="../cpp/App.cpp" line="1701" />
+        <location filename="../cpp/App.cpp" line="1913" />
         <source>hours</source>
         <translation type="unfinished">tuntia</translation>
     </message>
     <message>
-        <location filename="../cpp/App.cpp" line="1816" />
+        <location filename="../cpp/App.cpp" line="2028" />
         <source>Export missing</source>
         <translation type="unfinished">Vienti puuttuu</translation>
     </message>
     <message>
-        <location filename="../cpp/App.cpp" line="1824" />
+        <location filename="../cpp/App.cpp" line="2036" />
         <source>%1 deleted</source>
         <translation type="unfinished">%1 poistettu</translation>
     </message>
     <message>
-        <location filename="../cpp/App.cpp" line="1886" />
+        <location filename="../cpp/App.cpp" line="688" />
         <source>Project</source>
         <translation type="unfinished">Hanke</translation>
     </message>
     <message>
-        <location filename="../cpp/App.cpp" line="1887" />
+        <location filename="../cpp/App.cpp" line="689" />
+        <source>Projects</source>
+        <translation type="unfinished">Hankkeet</translation>
+    </message>
+    <message>
+        <location filename="../cpp/App.cpp" line="690" />
+        <source>project</source>
+        <translation type="unfinished">projekti</translation>
+    </message>
+    <message>
+        <location filename="../cpp/App.cpp" line="691" />
+        <source>projects</source>
+        <translation type="unfinished">hankkeet</translation>
+    </message>
+    <message>
+        <location filename="../cpp/App.cpp" line="695" />
+        <source>Form</source>
+        <translation type="unfinished">Lomake</translation>
+    </message>
+    <message>
+        <location filename="../cpp/App.cpp" line="696" />
+        <source>Forms</source>
+        <translation type="unfinished">Lomakkeet</translation>
+    </message>
+    <message>
+        <location filename="../cpp/App.cpp" line="697" />
+        <source>form</source>
+        <translation type="unfinished">lomake</translation>
+    </message>
+    <message>
+        <location filename="../cpp/App.cpp" line="698" />
+        <source>forms</source>
+        <translation type="unfinished">lomakkeet</translation>
+    </message>
+    <message>
+        <location filename="../cpp/App.cpp" line="702" />
+        <source>Survey</source>
+        <translation type="unfinished">Tutkimus</translation>
+    </message>
+    <message>
+        <location filename="../cpp/App.cpp" line="703" />
+        <source>Surveys</source>
+        <translation type="unfinished">Kyselyt</translation>
+    </message>
+    <message>
+        <location filename="../cpp/App.cpp" line="704" />
+        <source>survey</source>
+        <translation type="unfinished">tutkimus</translation>
+    </message>
+    <message>
+        <location filename="../cpp/App.cpp" line="705" />
+        <source>surveys</source>
+        <translation type="unfinished">tutkimukset</translation>
+    </message>
+    <message>
+        <location filename="../cpp/App.cpp" line="953" />
+        <source>This %1 requires access to some features of the device. Please allow these requests in order to proceed.</source>
+        <translation type="unfinished">Tämä %1 edellyttää pääsyä joihinkin laitteen ominaisuuksiin. Salli nämä pyynnöt, jotta voit jatkaa.</translation>
+    </message>
+    <message>
+        <location filename="../cpp/App.cpp" line="989" />
+        <source>Using the camera requires permission. Please allow the request in order to proceed.</source>
+        <translation type="unfinished">Kameran käyttö edellyttää lupaa. Anna lupa pyyntöön, jotta voit jatkaa.</translation>
+    </message>
+    <message>
+        <location filename="../cpp/App.cpp" line="994" />
+        <source>Recording audio requires permission. Please allow the request in order to proceed.</source>
+        <translation type="unfinished">Äänen tallentaminen vaatii luvan. Anna lupa, jotta voit jatkaa.</translation>
+    </message>
+    <message>
+        <location filename="../cpp/App.cpp" line="2099" />
         <source>Start date</source>
         <translation type="unfinished">Aloituspäivä</translation>
     </message>
     <message>
-        <location filename="../cpp/App.cpp" line="1888" />
+        <location filename="../cpp/App.cpp" line="2100" />
         <source>Start time</source>
         <translation type="unfinished">Aloitusaika</translation>
     </message>
     <message>
-        <location filename="../cpp/App.cpp" line="1889" />
+        <location filename="../cpp/App.cpp" line="2101" />
         <source>Stop date</source>
         <translation type="unfinished">Lopetuspäivä</translation>
     </message>
     <message>
-        <location filename="../cpp/App.cpp" line="1890" />
+        <location filename="../cpp/App.cpp" line="2102" />
         <source>Stop time</source>
         <translation type="unfinished">Pysäytä aika</translation>
     </message>
     <message>
-        <location filename="../cpp/App.cpp" line="1891" />
+        <location filename="../cpp/App.cpp" line="2103" />
         <source>Sightings</source>
         <translation type="unfinished">Havaintoja</translation>
     </message>
     <message>
-        <location filename="../cpp/App.cpp" line="1892" />
+        <location filename="../cpp/App.cpp" line="2104" />
         <source>Locations</source>
         <translation type="unfinished">Toimipaikat</translation>
     </message>
     <message>
-        <location filename="../cpp/App.cpp" line="1920" />
+        <location filename="../cpp/App.cpp" line="2132" />
         <source>Failed to load service template</source>
         <translation type="unfinished">Palvelumallin lataaminen epäonnistui</translation>
     </message>
@@ -202,91 +254,151 @@
 <context>
     <name>AppMain</name>
     <message>
-        <location filename="../qml/AppMain.qml" line="52" />
-        <location filename="../qml/AppMain.qml" line="65" />
+        <location filename="../qml/AppMain.qml" line="53" />
+        <location filename="../qml/AppMain.qml" line="66" />
         <source>Choose a file</source>
         <translation type="unfinished">Valitse tiedosto</translation>
     </message>
     <message>
-        <location filename="../qml/AppMain.qml" line="57" />
+        <location filename="../qml/AppMain.qml" line="58" />
         <source>Image files</source>
         <translation type="unfinished">Kuvatiedostot</translation>
     </message>
     <message>
-        <location filename="../qml/AppMain.qml" line="70" />
+        <location filename="../qml/AppMain.qml" line="71" />
         <source>Package files</source>
         <translation type="unfinished">Pakettitiedostot</translation>
     </message>
     <message>
-        <location filename="../qml/AppMain.qml" line="82" />
+        <location filename="../qml/AppMain.qml" line="83" />
         <source>&amp;File</source>
         <translation type="unfinished">&amp;File</translation>
     </message>
     <message>
-        <location filename="../qml/AppMain.qml" line="84" />
+        <location filename="../qml/AppMain.qml" line="85" />
         <source>Save &amp;As...</source>
         <translation type="unfinished">Tallenna &amp;As...</translation>
     </message>
     <message>
-        <location filename="../qml/AppMain.qml" line="91" />
+        <location filename="../qml/AppMain.qml" line="92" />
         <source>Install package</source>
         <translation type="unfinished">Asenna paketti</translation>
     </message>
     <message>
-        <location filename="../qml/AppMain.qml" line="97" />
+        <location filename="../qml/AppMain.qml" line="98" />
         <source>Connect using clipboard link</source>
         <translation type="unfinished">Yhdistä leikepöydän linkin avulla</translation>
     </message>
     <message>
-        <location filename="../qml/AppMain.qml" line="104" />
+        <location filename="../qml/AppMain.qml" line="105" />
+        <source>Reset cache</source>
+        <translation type="unfinished">Nollaa välimuisti</translation>
+    </message>
+    <message>
+        <location filename="../qml/AppMain.qml" line="112" />
         <source>&amp;Quit</source>
         <translation type="unfinished">&amp;Quit</translation>
     </message>
     <message>
-        <location filename="../qml/AppMain.qml" line="109" />
+        <location filename="../qml/AppMain.qml" line="117" />
         <source>&amp;Edit</source>
         <translation type="unfinished">&amp;Edit</translation>
     </message>
     <message>
-        <location filename="../qml/AppMain.qml" line="111" />
+        <location filename="../qml/AppMain.qml" line="119" />
         <source>&amp;Copy to clipboard</source>
         <translation type="unfinished">&amp;Kopioi leikepöydälle</translation>
     </message>
     <message>
-        <location filename="../qml/AppMain.qml" line="116" />
+        <location filename="../qml/AppMain.qml" line="124" />
         <source>&amp;Tools</source>
         <translation type="unfinished">&amp;Työkalut</translation>
     </message>
     <message>
-        <location filename="../qml/AppMain.qml" line="118" />
+        <location filename="../qml/AppMain.qml" line="126" />
         <source>Create ArcGIS location service</source>
         <translation type="unfinished">ArcGIS-sijaintipalvelun luominen</translation>
     </message>
     <message>
-        <location filename="../qml/AppMain.qml" line="123" />
+        <location filename="../qml/AppMain.qml" line="131" />
         <source>&amp;Window</source>
         <translation type="unfinished">&amp;Ikkuna</translation>
     </message>
     <message>
-        <location filename="../qml/AppMain.qml" line="125" />
+        <location filename="../qml/AppMain.qml" line="133" />
         <source>Reset window size</source>
         <translation type="unfinished">Nollaa ikkunan koko</translation>
     </message>
     <message>
-        <location filename="../qml/AppMain.qml" line="133" />
+        <location filename="../qml/AppMain.qml" line="141" />
         <source>Toggle developer console</source>
         <translation type="unfinished">Kehittäjäkonsolin vaihtaminen</translation>
     </message>
     <message>
-        <location filename="../qml/AppMain.qml" line="370" />
+        <location filename="../qml/AppMain.qml" line="408" />
         <source>Offline</source>
         <translation type="unfinished">Offline</translation>
+    </message>
+    <message>
+        <location filename="../qml/AppMain.qml" line="432" />
+        <source>%1 detected</source>
+        <translation type="unfinished">%1 havaittu</translation>
+    </message>
+    <message>
+        <location filename="../qml/AppMain.qml" line="433" />
+        <source>Use the %1 app to allow background activity for %2.</source>
+        <translation type="unfinished">Käytä %1-sovellusta salliaksesi taustatoiminnot %2:lle.</translation>
+    </message>
+    <message>
+        <location filename="../qml/AppMain.qml" line="434" />
+        <source>This is required to ensure that a proper track of your location is created.</source>
+        <translation type="unfinished">Tämä on tarpeen, jotta sijaintisi voidaan jäljittää asianmukaisesti.</translation>
+    </message>
+    <message>
+        <location filename="../qml/AppMain.qml" line="451" />
+        <source>Background location required</source>
+        <translation type="unfinished">Vaadittu taustapaikka</translation>
+    </message>
+    <message>
+        <location filename="../qml/AppMain.qml" line="471" />
+        <source>Location required</source>
+        <translation type="unfinished">Tarvittava sijainti</translation>
+    </message>
+    <message>
+        <location filename="../qml/AppMain.qml" line="472" />
+        <source>Permission to use your location is needed for mapping and data collection.</source>
+        <translation type="unfinished">Sijaintisi käyttämiseen tarvitaan lupa kartoitusta ja tiedonkeruuta varten.</translation>
+    </message>
+    <message>
+        <location filename="../qml/AppMain.qml" line="473" />
+        <source>Tap %1 below and allow it to be used.</source>
+        <translation type="unfinished">Napauta alla olevaa %1 ja anna sen olla käytössä.</translation>
+    </message>
+    <message>
+        <location filename="../qml/AppMain.qml" line="453" />
+        <source>This %1 requires permission to capture location in the background. This is needed to ensure that a proper track of your location is created.</source>
+        <translation type="unfinished">Tämä %1 vaatii luvan tallentaa sijainnin taustalla. Tätä tarvitaan, jotta sijaintisi voidaan jäljittää asianmukaisesti.</translation>
+    </message>
+    <message>
+        <location filename="../qml/AppMain.qml" line="452" />
+        <source>Allow all the time</source>
+        <translation type="unfinished">Salli koko ajan</translation>
+    </message>
+    <message>
+        <location filename="../qml/AppMain.qml" line="452" />
+        <source>You must select %1 on the next screen.</source>
+        <translation type="unfinished">Seuraavassa näytössä on valittava %1.</translation>
+    </message>
+    <message>
+        <location filename="../qml/AppMain.qml" line="473" />
+        <source>OK</source>
+        <translation type="unfinished">OK</translation>
     </message>
 </context>
 <context>
     <name>AreaField</name>
     <message>
-        <location filename="../cpp/Field.cpp" line="881" />
+        <location filename="../cpp/Field.cpp" line="882" />
         <source>points</source>
         <translation type="unfinished">pisteet</translation>
     </message>
@@ -294,7 +406,7 @@
 <context>
     <name>AudioField</name>
     <message>
-        <location filename="../cpp/Field.cpp" line="1270" />
+        <location filename="../cpp/Field.cpp" line="1277" />
         <source>seconds</source>
         <translation type="unfinished">sekuntia</translation>
     </message>
@@ -328,6 +440,16 @@
         <translation type="unfinished">Raportti tallennettu</translation>
     </message>
     <message>
+        <location filename="../qml/BugReportPage.qml" line="16" />
+        <source>Share bug report</source>
+        <translation type="unfinished">Jaa vikailmoitus</translation>
+    </message>
+    <message>
+        <location filename="../qml/BugReportPage.qml" line="16" />
+        <source>Save bug report</source>
+        <translation type="unfinished">Tallenna vikailmoitus</translation>
+    </message>
+    <message>
         <location filename="../qml/BugReportPage.qml" line="62" />
         <source>Failed to copy report</source>
         <translation type="unfinished">Raportin kopiointi epäonnistui</translation>
@@ -336,16 +458,6 @@
         <location filename="../qml/BugReportPage.qml" line="39" />
         <source>Describe the issue</source>
         <translation type="unfinished">Kuvaa asia</translation>
-    </message>
-    <message>
-        <location filename="../qml/BugReportPage.qml" line="16" />
-        <source>Share report</source>
-        <translation type="unfinished">Jaa raportti</translation>
-    </message>
-    <message>
-        <location filename="../qml/BugReportPage.qml" line="16" />
-        <source>Save report</source>
-        <translation type="unfinished">Tallenna raportti</translation>
     </message>
     <message>
         <location filename="../qml/BugReportPage.qml" line="40" />
@@ -366,7 +478,7 @@
 <context>
     <name>CHost_Qt</name>
     <message>
-        <location filename="../lib/classic/Host/Qt/QtHost.cpp" line="1261" />
+        <location filename="../lib/classic/Host/Qt/QtHost.cpp" line="1266" />
         <source>Data exported</source>
         <translation type="unfinished">Vietyjä tietoja</translation>
     </message>
@@ -374,40 +486,40 @@
 <context>
     <name>CTOConnector</name>
     <message>
-        <location filename="../cpp/CTO/CTOConnector.cpp" line="82" />
-        <source>Failed to create project</source>
-        <translation type="unfinished">Projektin luominen epäonnistui</translation>
+        <location filename="../cpp/CTO/CTOConnector.cpp" line="87" />
+        <source>Failed to create %1</source>
+        <translation type="unfinished">Epäonnistuin luomaan %1</translation>
     </message>
     <message>
-        <location filename="../cpp/CTO/CTOConnector.cpp" line="135" />
+        <location filename="../cpp/CTO/CTOConnector.cpp" line="140" />
         <source>Logged out</source>
         <translation type="unfinished">Kirjautunut ulos</translation>
     </message>
     <message>
-        <location filename="../cpp/CTO/CTOConnector.cpp" line="163" />
+        <location filename="../cpp/CTO/CTOConnector.cpp" line="153" />
+        <source>Unsent data</source>
+        <translation type="unfinished">Lähettämättömät tiedot</translation>
+    </message>
+    <message>
+        <location filename="../cpp/CTO/CTOConnector.cpp" line="168" />
         <source>Form download failed</source>
         <translation type="unfinished">Lomakkeen lataus epäonnistui</translation>
     </message>
     <message>
-        <location filename="../cpp/CTO/CTOConnector.cpp" line="170" />
+        <location filename="../cpp/CTO/CTOConnector.cpp" line="175" />
         <source>Bad package</source>
         <translation type="unfinished">Huono paketti</translation>
-    </message>
-    <message>
-        <location filename="../cpp/CTO/CTOConnector.cpp" line="177" />
-        <source>Failed to read form settings sheet</source>
-        <translation type="unfinished">Lomakkeen asetusten lukeminen epäonnistui</translation>
     </message>
 </context>
 <context>
     <name>CheckField</name>
     <message>
-        <location filename="../cpp/Field.cpp" line="655" />
+        <location filename="../cpp/Field.cpp" line="656" />
         <source>Yes</source>
         <translation type="unfinished">Kyllä</translation>
     </message>
     <message>
-        <location filename="../cpp/Field.cpp" line="655" />
+        <location filename="../cpp/Field.cpp" line="656" />
         <source>No</source>
         <translation type="unfinished">Ei</translation>
     </message>
@@ -416,8 +528,8 @@
     <name>ClassicConnector</name>
     <message>
         <location filename="../cpp/Classic/ClassicConnector.cpp" line="77" />
-        <location filename="../cpp/Classic/ClassicConnector.cpp" line="510" />
-        <location filename="../cpp/Classic/ClassicConnector.cpp" line="550" />
+        <location filename="../cpp/Classic/ClassicConnector.cpp" line="517" />
+        <location filename="../cpp/Classic/ClassicConnector.cpp" line="557" />
         <source>Cannot create path</source>
         <translation type="unfinished">Polkua ei voida luoda</translation>
     </message>
@@ -427,40 +539,40 @@
         <translation type="unfinished">Palvelinta ei löydy</translation>
     </message>
     <message>
-        <location filename="../cpp/Classic/ClassicConnector.cpp" line="308" />
+        <location filename="../cpp/Classic/ClassicConnector.cpp" line="315" />
         <source>Not supported</source>
         <translation type="unfinished">Ei tuettu</translation>
     </message>
     <message>
-        <location filename="../cpp/Classic/ClassicConnector.cpp" line="323" />
+        <location filename="../cpp/Classic/ClassicConnector.cpp" line="330" />
         <source>Unsent data</source>
         <translation type="unfinished">Lähettämättömät tiedot</translation>
     </message>
     <message>
-        <location filename="../cpp/Classic/ClassicConnector.cpp" line="330" />
+        <location filename="../cpp/Classic/ClassicConnector.cpp" line="337" />
         <source>Not found</source>
         <translation type="unfinished">Ei löydy</translation>
     </message>
     <message>
-        <location filename="../cpp/Classic/ClassicConnector.cpp" line="279" />
-        <location filename="../cpp/Classic/ClassicConnector.cpp" line="336" />
+        <location filename="../cpp/Classic/ClassicConnector.cpp" line="525" />
+        <source>Failed to read %1</source>
+        <translation type="unfinished">Lukeminen %1 epäonnistui</translation>
+    </message>
+    <message>
+        <location filename="../cpp/Classic/ClassicConnector.cpp" line="286" />
+        <location filename="../cpp/Classic/ClassicConnector.cpp" line="343" />
         <source>DEF file corrupt</source>
         <translation type="unfinished">DEF-tiedosto on korruptoitunut</translation>
     </message>
     <message>
-        <location filename="../cpp/Classic/ClassicConnector.cpp" line="360" />
+        <location filename="../cpp/Classic/ClassicConnector.cpp" line="367" />
         <source>Download failed</source>
         <translation type="unfinished">Lataa epäonnistunut</translation>
     </message>
     <message>
-        <location filename="../cpp/Classic/ClassicConnector.cpp" line="369" />
+        <location filename="../cpp/Classic/ClassicConnector.cpp" line="376" />
         <source>Bad archive</source>
         <translation type="unfinished">Huono arkisto</translation>
-    </message>
-    <message>
-        <location filename="../cpp/Classic/ClassicConnector.cpp" line="518" />
-        <source>Failed to read classic project</source>
-        <translation type="unfinished">Klassisen projektin lukeminen epäonnistui</translation>
     </message>
 </context>
 <context>
@@ -487,6 +599,44 @@
         <location filename="../controls/imports/CyberTracker.1/ConfirmPopup.qml" line="12" />
         <source>Cancel</source>
         <translation type="unfinished">Peruuta</translation>
+    </message>
+</context>
+<context>
+    <name>ConnectClassicPage</name>
+    <message>
+        <location filename="../qml/Classic/ConnectClassicPage.qml" line="11" />
+        <source>Connect to</source>
+        <translation type="unfinished">Yhdistä</translation>
+    </message>
+    <message>
+        <location filename="../qml/Classic/ConnectClassicPage.qml" line="26" />
+        <source>Desktop install</source>
+        <translation type="unfinished">Työpöydän asennus</translation>
+    </message>
+    <message>
+        <location filename="../qml/Classic/ConnectClassicPage.qml" line="27" />
+        <source>Scan for %1 installed by CyberTracker desktop</source>
+        <translation type="unfinished">Skannaa %1 asennettu CyberTracker työpöydälle</translation>
+    </message>
+    <message>
+        <location filename="../qml/Classic/ConnectClassicPage.qml" line="41" />
+        <source>Web install</source>
+        <translation type="unfinished">Verkkoasennus</translation>
+    </message>
+    <message>
+        <location filename="../qml/Classic/ConnectClassicPage.qml" line="42" />
+        <source>Install a %1 from the web. Requires a link from the %2 publisher.</source>
+        <translation type="unfinished">Asenna %1 verkosta. Vaatii linkin %2 julkaisijalta.</translation>
+    </message>
+    <message>
+        <location filename="../qml/Classic/ConnectClassicPage.qml" line="53" />
+        <source>Samples</source>
+        <translation type="unfinished">Näytteet</translation>
+    </message>
+    <message>
+        <location filename="../qml/Classic/ConnectClassicPage.qml" line="54" />
+        <source>Install a sample to see CyberTracker in action. Saved data will not be kept.</source>
+        <translation type="unfinished">Asenna näyte nähdäksesi CyberTrackerin toiminnassa. Tallennettuja tietoja ei säilytetä.</translation>
     </message>
 </context>
 <context>
@@ -572,17 +722,17 @@
 <context>
     <name>ConnectFormPage</name>
     <message>
-        <location filename="../qml/ConnectFormPage.qml" line="16" />
+        <location filename="../qml/ConnectFormPage.qml" line="17" />
         <source>Select forms</source>
         <translation type="unfinished">Valitse lomakkeet</translation>
     </message>
     <message>
-        <location filename="../qml/ConnectFormPage.qml" line="34" />
+        <location filename="../qml/ConnectFormPage.qml" line="39" />
         <source>All</source>
         <translation type="unfinished">Kaikki</translation>
     </message>
     <message>
-        <location filename="../qml/ConnectFormPage.qml" line="47" />
+        <location filename="../qml/ConnectFormPage.qml" line="52" />
         <source>None</source>
         <translation type="unfinished">Ei ole</translation>
     </message>
@@ -591,8 +741,8 @@
     <name>ConnectKoBoPage</name>
     <message>
         <location filename="../qml/ODK/ConnectKoBoPage.qml" line="19" />
-        <source>Connect</source>
-        <translation type="unfinished">Yhdistä</translation>
+        <source>Connect to %1</source>
+        <translation type="unfinished">Yhdistä %1:een</translation>
     </message>
     <message>
         <location filename="../qml/ODK/ConnectKoBoPage.qml" line="28" />
@@ -624,8 +774,8 @@
     <name>ConnectKoBoSharedPage</name>
     <message>
         <location filename="../qml/ODK/ConnectKoBoSharedPage.qml" line="24" />
-        <source>%1 Connect</source>
-        <translation type="unfinished">%1 Yhdistä</translation>
+        <source>Connect to %1</source>
+        <translation type="unfinished">Yhdistä %1:een</translation>
     </message>
     <message>
         <location filename="../qml/ODK/ConnectKoBoSharedPage.qml" line="44" />
@@ -638,22 +788,22 @@
         <translation type="unfinished">Käytä %1 malleja varten</translation>
     </message>
     <message>
-        <location filename="../qml/ODK/ConnectKoBoSharedPage.qml" line="73" />
+        <location filename="../qml/ODK/ConnectKoBoSharedPage.qml" line="74" />
         <source>Choose forms</source>
         <translation type="unfinished">Valitse lomakkeet</translation>
     </message>
     <message>
-        <location filename="../qml/ODK/ConnectKoBoSharedPage.qml" line="109" />
+        <location filename="../qml/ODK/ConnectKoBoSharedPage.qml" line="110" />
         <source>Connection failed</source>
         <translation type="unfinished">Yhteys epäonnistui</translation>
     </message>
     <message>
-        <location filename="../qml/ODK/ConnectKoBoSharedPage.qml" line="141" />
+        <location filename="../qml/ODK/ConnectKoBoSharedPage.qml" line="142" />
         <source>No forms found</source>
         <translation type="unfinished">Lomakkeita ei löytynyt</translation>
     </message>
     <message>
-        <location filename="../qml/ODK/ConnectKoBoSharedPage.qml" line="154" />
+        <location filename="../qml/ODK/ConnectKoBoSharedPage.qml" line="155" />
         <source>Error retrieving form</source>
         <translation type="unfinished">Virhe lomakkeen hakemisessa</translation>
     </message>
@@ -662,18 +812,18 @@
     <name>ConnectODKCentralPage</name>
     <message>
         <location filename="../qml/ODK/ConnectODKCentralPage.qml" line="20" />
-        <source>Connect</source>
-        <translation type="unfinished">Yhdistä</translation>
+        <source>Connect to %1</source>
+        <translation type="unfinished">Yhdistä %1:een</translation>
     </message>
     <message>
         <location filename="../qml/ODK/ConnectODKCentralPage.qml" line="40" />
-        <source>Select project</source>
-        <translation type="unfinished">Valitse projekti</translation>
+        <source>Select %1</source>
+        <translation type="unfinished">Valitse %1</translation>
     </message>
     <message>
         <location filename="../qml/ODK/ConnectODKCentralPage.qml" line="97" />
-        <source>No projects found</source>
-        <translation type="unfinished">Hankkeita ei löytynyt</translation>
+        <source>No %1 found</source>
+        <translation type="unfinished">Ei %1 löytynyt</translation>
     </message>
     <message>
         <location filename="../qml/ODK/ConnectODKCentralPage.qml" line="120" />
@@ -682,69 +832,87 @@
     </message>
 </context>
 <context>
+    <name>ConnectOnlinePage</name>
+    <message>
+        <location filename="../qml/Classic/ConnectOnlinePage.qml" line="13" />
+        <source>Connect to %1</source>
+        <translation type="unfinished">Yhdistä %1:een</translation>
+    </message>
+    <message>
+        <location filename="../qml/Classic/ConnectOnlinePage.qml" line="47" />
+        <source>%1 from %2</source>
+        <translation type="unfinished">%1 alkaen %2</translation>
+    </message>
+    <message>
+        <location filename="../qml/Classic/ConnectOnlinePage.qml" line="47" />
+        <source>Scan QR code</source>
+        <translation type="unfinished">Skannaa QR-koodi</translation>
+    </message>
+    <message>
+        <location filename="../qml/Classic/ConnectOnlinePage.qml" line="73" />
+        <source>Getting started</source>
+        <translation type="unfinished">Aloittaminen</translation>
+    </message>
+</context>
+<context>
     <name>ConnectPage</name>
     <message>
         <location filename="../qml/ConnectPage.qml" line="12" />
-        <location filename="../qml/SMART/ConnectPage.qml" line="43" />
+        <location filename="../qml/SMART/ConnectPage.qml" line="41" />
         <source>Connect</source>
         <translation type="unfinished">Yhdistä</translation>
     </message>
     <message>
-        <location filename="../qml/Classic/ConnectPage.qml" line="26" />
         <location filename="../qml/SMART/ConnectPage.qml" line="26" />
         <source>Desktop install</source>
         <translation type="unfinished">Työpöydän asennus</translation>
     </message>
     <message>
-        <location filename="../qml/Classic/ConnectPage.qml" line="27" />
-        <source>Scan for projects installed by CyberTracker desktop</source>
-        <translation type="unfinished">CyberTracker desktopin asentamien projektien skannaus</translation>
+        <location filename="../qml/SMART/ConnectPage.qml" line="42" />
+        <source>Add a %1 from SMART Connect</source>
+        <translation type="unfinished">Lisää %1 SMART Connectista</translation>
     </message>
     <message>
-        <location filename="../qml/Classic/ConnectPage.qml" line="43" />
-        <source>Web install</source>
-        <translation type="unfinished">Verkkoasennus</translation>
-    </message>
-    <message>
-        <location filename="../qml/Classic/ConnectPage.qml" line="44" />
-        <source>Install a project from a web source. Requires a web link from the project publisher.</source>
-        <translation type="unfinished">Asenna projekti verkkolähteestä. Vaatii web-linkin projektin julkaisijalta.</translation>
-    </message>
-    <message>
-        <location filename="../qml/Classic/ConnectPage.qml" line="55" />
-        <source>Samples</source>
-        <translation type="unfinished">Näytteet</translation>
-    </message>
-    <message>
-        <location filename="../qml/Classic/ConnectPage.qml" line="56" />
-        <source>Install a sample to see CyberTracker in action. Saved data will not be kept.</source>
-        <translation type="unfinished">Asenna näyte nähdäksesi CyberTrackerin toiminnassa. Tallennettuja tietoja ei säilytetä.</translation>
+        <location filename="../qml/SMART/ConnectPage.qml" line="54" />
+        <source>Add a %1 from SMART Collect</source>
+        <translation type="unfinished">Lisää %1 SMART Collectista</translation>
     </message>
     <message>
         <location filename="../qml/EarthRanger/ConnectPage.qml" line="8" />
-        <location filename="../qml/Esri/ConnectPage.qml" line="19" />
         <source>Connect to</source>
         <translation type="unfinished">Yhdistä</translation>
     </message>
     <message>
+        <location filename="../qml/Google/ConnectPage.qml" line="47" />
+        <source>Scan QR code</source>
+        <translation type="unfinished">Skannaa QR-koodi</translation>
+    </message>
+    <message>
+        <location filename="../qml/Google/ConnectPage.qml" line="47" />
+        <source>%1 from the %2 add-on for %3</source>
+        <translation type="unfinished">%1 lisäosasta %2 lisäosasta %3 %1.</translation>
+    </message>
+    <message>
+        <location filename="../qml/Google/ConnectPage.qml" line="73" />
+        <source>Getting started</source>
+        <translation type="unfinished">Aloittaminen</translation>
+    </message>
+    <message>
         <location filename="../qml/SMART/ConnectPage.qml" line="27" />
-        <source>Scan for projects installed by SMART Desktop</source>
-        <translation type="unfinished">SMART Desktopin asentamien projektien skannaus</translation>
+        <source>Scan for %1 installed by SMART Desktop</source>
+        <translation type="unfinished">SMART Desktopin asentaman %1:n tarkistus</translation>
     </message>
     <message>
-        <location filename="../qml/SMART/ConnectPage.qml" line="44" />
-        <source>Install a project from SMART Connect</source>
-        <translation type="unfinished">Asenna projekti SMART Connectista</translation>
-    </message>
-    <message>
-        <location filename="../qml/SMART/ConnectPage.qml" line="55" />
+        <location filename="../qml/SMART/ConnectPage.qml" line="53" />
         <source>Collect</source>
         <translation type="unfinished">Kerää</translation>
     </message>
     <message>
-        <location filename="../qml/SMART/ConnectPage.qml" line="56" />
-        <source>Install a project from SMART Collect</source>
-        <translation type="unfinished">Asenna projekti SMART Collectista</translation>
+        <location filename="../qml/Esri/ConnectPage.qml" line="19" />
+        <location filename="../qml/Google/ConnectPage.qml" line="13" />
+        <location filename="../qml/SMART/ConnectPage.qml" line="11" />
+        <source>Connect to %1</source>
+        <translation type="unfinished">Yhdistä %1:een</translation>
     </message>
     <message>
         <location filename="../qml/Esri/ConnectPage.qml" line="40" />
@@ -760,7 +928,17 @@
 <context>
     <name>ConnectPane</name>
     <message>
-        <location filename="../qml/ConnectPane.qml" line="101" />
+        <location filename="../qml/ConnectPane.qml" line="108" />
+        <source>Scan QR code</source>
+        <translation type="unfinished">Skannaa QR-koodi</translation>
+    </message>
+    <message>
+        <location filename="../qml/ConnectPane.qml" line="109" />
+        <source>Scan QR code to install a %1</source>
+        <translation type="unfinished">Skannaa QR-koodi asentaaksesi %1</translation>
+    </message>
+    <message>
+        <location filename="../qml/ConnectPane.qml" line="135" />
         <source>Coming soon...</source>
         <translation type="unfinished">Tulossa pian...</translation>
     </message>
@@ -768,27 +946,27 @@
 <context>
     <name>ConnectPaneSM</name>
     <message>
-        <location filename="../qml/SMART/ConnectPaneSM.qml" line="35" />
-        <source>Scan for desktop projects</source>
-        <translation type="unfinished">Skannaa työpöytäprojekteja varten</translation>
+        <location filename="../qml/SMART/ConnectPaneSM.qml" line="36" />
+        <source>Scan for desktop %1</source>
+        <translation type="unfinished">Skannaa työpöytä %1</translation>
     </message>
     <message>
-        <location filename="../qml/SMART/ConnectPaneSM.qml" line="53" />
-        <source>Connect to an online project</source>
-        <translation type="unfinished">Yhdistä verkkoprojektiin</translation>
+        <location filename="../qml/SMART/ConnectPaneSM.qml" line="52" />
+        <source>Connect to an online %1</source>
+        <translation type="unfinished">Yhteys verkkoon %1</translation>
     </message>
     <message>
-        <location filename="../qml/SMART/ConnectPaneSM.qml" line="65" />
-        <source>Connect to a community project</source>
-        <translation type="unfinished">Liity yhteisön hankkeeseen</translation>
+        <location filename="../qml/SMART/ConnectPaneSM.qml" line="64" />
+        <source>Connect to a community %1</source>
+        <translation type="unfinished">Yhteys yhteisöön %1</translation>
     </message>
     <message>
-        <location filename="../qml/SMART/ConnectPaneSM.qml" line="73" />
+        <location filename="../qml/SMART/ConnectPaneSM.qml" line="72" />
         <source>Scan QR code</source>
         <translation type="unfinished">Skannaa QR-koodi</translation>
     </message>
     <message>
-        <location filename="../qml/SMART/ConnectPaneSM.qml" line="77" />
+        <location filename="../qml/SMART/ConnectPaneSM.qml" line="76" />
         <source>Install from a shared QR code</source>
         <translation type="unfinished">Asenna jaetusta QR-koodista</translation>
     </message>
@@ -796,7 +974,7 @@
 <context>
     <name>ConnectQRCodePage</name>
     <message>
-        <location filename="../qml/ConnectQRCodePage.qml" line="17" />
+        <location filename="../qml/ConnectQRCodePage.qml" line="18" />
         <source>Scan QR code</source>
         <translation type="unfinished">Skannaa QR-koodi</translation>
     </message>
@@ -850,12 +1028,12 @@
         <translation type="unfinished">Asennus Internetissä</translation>
     </message>
     <message>
-        <location filename="../qml/Classic/ConnectWebInstallPage.qml" line="40" />
+        <location filename="../qml/Classic/ConnectWebInstallPage.qml" line="38" />
         <source>Enter web address</source>
         <translation type="unfinished">Kirjoita verkko-osoite</translation>
     </message>
     <message>
-        <location filename="../qml/Classic/ConnectWebInstallPage.qml" line="45" />
+        <location filename="../qml/Classic/ConnectWebInstallPage.qml" line="43" />
         <source>Install</source>
         <translation type="unfinished">Asenna</translation>
     </message>
@@ -907,8 +1085,8 @@
     </message>
     <message>
         <location filename="../qml/CreateEsriServiceWindow.qml" line="46" />
-        <source>Create an ArcGIS Online hosted feature service which will receive location track data from Survey123 projects.</source>
-        <translation type="unfinished">Luo ArcGIS Online -palvelu, joka vastaanottaa Survey123-projektien paikkatietoja.</translation>
+        <source>Create an ArcGIS Online hosted feature service which will receive location track data from Survey123 %1.</source>
+        <translation type="unfinished">Luo ArcGIS Online -palvelun ominaisuuspalvelu, joka vastaanottaa sijaintitietoja Survey123:sta %1.</translation>
     </message>
     <message>
         <location filename="../qml/CreateEsriServiceWindow.qml" line="86" />
@@ -948,7 +1126,7 @@
     <message>
         <location filename="../qml/CreateEsriServiceWindow.qml" line="170" />
         <source>Create a column named 'bind::ct:esriLocationServiceUrl' in the 'settings' sheet of the XlsForm and set it to the content below. Republish and install or update the form in CyberTracker.</source>
-        <translation type="unfinished">Luo sarake nimeltä 'bind::ct:esriLocationServiceUrl' XlsForm-arkin 'settings'-lomakkeessa ja aseta sille alla oleva sisältö. Julkaise lomake uudelleen ja asenna tai päivitä se CyberTrackeriin.</translation>
+        <translation type="unfinished">Luo sarake nimeltä 'bind::ct:esriLocationServiceUrl' XlsForm- lomakkeen 'settings'-lomakkeessa ja aseta sille alla oleva sisältö. Julkaise lomake uudelleen ja asenna tai päivitä se CyberTrackeriin.</translation>
     </message>
     <message>
         <location filename="../qml/CreateEsriServiceWindow.qml" line="199" />
@@ -975,8 +1153,8 @@
     <name>EarthRangerConnector</name>
     <message>
         <location filename="../cpp/EarthRanger/EarthRangerConnector.cpp" line="108" />
-        <source>Failed to create project</source>
-        <translation type="unfinished">Projektin luominen epäonnistui</translation>
+        <source>Failed to create %1</source>
+        <translation type="unfinished">Epäonnistuin luomaan %1</translation>
     </message>
     <message>
         <location filename="../cpp/EarthRanger/EarthRangerConnector.cpp" line="206" />
@@ -1044,65 +1222,65 @@
         <source>Other</source>
         <translation type="unfinished">Muut</translation>
     </message>
+    <message>
+        <location filename="../cpp/Element.cpp" line="298" />
+        <source>Empty</source>
+        <translation type="unfinished">Tyhjä</translation>
+    </message>
 </context>
 <context>
     <name>EsriConnector</name>
     <message>
-        <location filename="../cpp/Esri/EsriConnector.cpp" line="96" />
-        <source>Failed to create project</source>
-        <translation type="unfinished">Projektin luominen epäonnistui</translation>
-    </message>
-    <message>
-        <location filename="../cpp/Esri/EsriConnector.cpp" line="184" />
+        <location filename="../cpp/Esri/EsriConnector.cpp" line="185" />
         <source>Logged out</source>
         <translation type="unfinished">Kirjautunut ulos</translation>
     </message>
     <message>
-        <location filename="../cpp/Esri/EsriConnector.cpp" line="290" />
+        <location filename="../cpp/Esri/EsriConnector.cpp" line="291" />
         <source>Form not found</source>
         <translation type="unfinished">Lomaketta ei löydy</translation>
     </message>
     <message>
-        <location filename="../cpp/Esri/EsriConnector.cpp" line="157" />
-        <location filename="../cpp/Esri/EsriConnector.cpp" line="213" />
+        <location filename="../cpp/Esri/EsriConnector.cpp" line="158" />
+        <location filename="../cpp/Esri/EsriConnector.cpp" line="214" />
         <source>Could not retrieve survey</source>
         <translation type="unfinished">Kyselyä ei voitu hakea</translation>
     </message>
     <message>
-        <location filename="../cpp/Esri/EsriConnector.cpp" line="201" />
+        <location filename="../cpp/Esri/EsriConnector.cpp" line="97" />
+        <source>Failed to create %1</source>
+        <translation type="unfinished">Epäonnistuin luomaan %1</translation>
+    </message>
+    <message>
+        <location filename="../cpp/Esri/EsriConnector.cpp" line="202" />
         <source>Login required</source>
         <translation type="unfinished">Kirjautuminen vaaditaan</translation>
     </message>
     <message>
-        <location filename="../cpp/Esri/EsriConnector.cpp" line="266" />
+        <location filename="../cpp/Esri/EsriConnector.cpp" line="267" />
         <source>Form download failed</source>
         <translation type="unfinished">Lomakkeen lataus epäonnistui</translation>
     </message>
     <message>
-        <location filename="../cpp/Esri/EsriConnector.cpp" line="273" />
+        <location filename="../cpp/Esri/EsriConnector.cpp" line="274" />
         <source>Bad form zip</source>
         <translation type="unfinished">Huono muoto zip</translation>
     </message>
     <message>
-        <location filename="../cpp/Esri/EsriConnector.cpp" line="280" />
+        <location filename="../cpp/Esri/EsriConnector.cpp" line="281" />
         <source>Bad form</source>
         <translation type="unfinished">Huono muoto</translation>
     </message>
     <message>
-        <location filename="../cpp/Esri/EsriConnector.cpp" line="297" />
+        <location filename="../cpp/Esri/EsriConnector.cpp" line="298" />
         <source>Failed to copy form file</source>
         <translation type="unfinished">Lomaketiedoston kopiointi epäonnistui</translation>
-    </message>
-    <message>
-        <location filename="../cpp/Esri/EsriConnector.cpp" line="330" />
-        <source>Failed to read form settings sheet</source>
-        <translation type="unfinished">Lomakkeen asetusten lukeminen epäonnistui</translation>
     </message>
 </context>
 <context>
     <name>EsriMapView</name>
     <message>
-        <location filename="../controls/imports/CyberTracker.1/EsriMapView.qml" line="288" />
+        <location filename="../controls/imports/CyberTracker.1/EsriMapView.qml" line="275" />
         <source>Sighting</source>
         <translation type="unfinished">Havainto</translation>
     </message>
@@ -1164,17 +1342,17 @@
 <context>
     <name>FieldAudio</name>
     <message>
-        <location filename="../controls/imports/CyberTracker.1/FieldAudio.qml" line="113" />
+        <location filename="../controls/imports/CyberTracker.1/FieldAudio.qml" line="115" />
         <source>Delete the recording?</source>
         <translation type="unfinished">Poista tallennus?</translation>
     </message>
     <message>
-        <location filename="../controls/imports/CyberTracker.1/FieldAudio.qml" line="114" />
+        <location filename="../controls/imports/CyberTracker.1/FieldAudio.qml" line="116" />
         <source>Yes, delete it</source>
         <translation type="unfinished">Kyllä, poista se</translation>
     </message>
     <message>
-        <location filename="../controls/imports/CyberTracker.1/FieldAudio.qml" line="163" />
+        <location filename="../controls/imports/CyberTracker.1/FieldAudio.qml" line="165" />
         <source>seconds</source>
         <translation type="unfinished">sekuntia</translation>
     </message>
@@ -1190,12 +1368,12 @@
 <context>
     <name>FieldBarcodePane</name>
     <message>
-        <location filename="../controls/imports/CyberTracker.1/FieldBarcodePane.qml" line="69" />
+        <location filename="../controls/imports/CyberTracker.1/FieldBarcodePane.qml" line="68" />
         <source>Clear code?</source>
         <translation type="unfinished">Tyhjä koodi?</translation>
     </message>
     <message>
-        <location filename="../controls/imports/CyberTracker.1/FieldBarcodePane.qml" line="70" />
+        <location filename="../controls/imports/CyberTracker.1/FieldBarcodePane.qml" line="69" />
         <source>Yes, clear it</source>
         <translation type="unfinished">Kyllä, tyhjennä se</translation>
     </message>
@@ -1203,22 +1381,22 @@
 <context>
     <name>FieldCamera</name>
     <message>
-        <location filename="../controls/imports/CyberTracker.1/FieldCamera.qml" line="75" />
+        <location filename="../controls/imports/CyberTracker.1/FieldCamera.qml" line="77" />
         <source>Failed to copy</source>
         <translation type="unfinished">Kopiointi epäonnistui</translation>
     </message>
     <message>
-        <location filename="../controls/imports/CyberTracker.1/FieldCamera.qml" line="245" />
+        <location filename="../controls/imports/CyberTracker.1/FieldCamera.qml" line="247" />
         <source>Delete the image?</source>
         <translation type="unfinished">Poista kuva?</translation>
     </message>
     <message>
-        <location filename="../controls/imports/CyberTracker.1/FieldCamera.qml" line="246" />
+        <location filename="../controls/imports/CyberTracker.1/FieldCamera.qml" line="248" />
         <source>Yes, delete it</source>
         <translation type="unfinished">Kyllä, poista se</translation>
     </message>
     <message>
-        <location filename="../controls/imports/CyberTracker.1/FieldCamera.qml" line="482" />
+        <location filename="../controls/imports/CyberTracker.1/FieldCamera.qml" line="484" />
         <source>Failed to move</source>
         <translation type="unfinished">Ei onnistunut siirtymään</translation>
     </message>
@@ -1234,12 +1412,12 @@
 <context>
     <name>FieldCameraPane</name>
     <message>
-        <location filename="../controls/imports/CyberTracker.1/FieldCameraPane.qml" line="69" />
+        <location filename="../controls/imports/CyberTracker.1/FieldCameraPane.qml" line="68" />
         <source>Delete the image?</source>
         <translation type="unfinished">Poista kuva?</translation>
     </message>
     <message>
-        <location filename="../controls/imports/CyberTracker.1/FieldCameraPane.qml" line="70" />
+        <location filename="../controls/imports/CyberTracker.1/FieldCameraPane.qml" line="69" />
         <source>Yes, delete it</source>
         <translation type="unfinished">Kyllä, poista se</translation>
     </message>
@@ -1255,32 +1433,32 @@
 <context>
     <name>FieldEditorDelegate</name>
     <message>
-        <location filename="../controls/imports/CyberTracker.1/FieldEditorDelegate.qml" line="183" />
+        <location filename="../controls/imports/CyberTracker.1/FieldEditorDelegate.qml" line="186" />
         <source>Location</source>
         <translation type="unfinished">Sijainti</translation>
     </message>
     <message>
-        <location filename="../controls/imports/CyberTracker.1/FieldEditorDelegate.qml" line="199" />
+        <location filename="../controls/imports/CyberTracker.1/FieldEditorDelegate.qml" line="202" />
         <source>Waiting for time correction</source>
         <translation type="unfinished">Ajan korjausta odotettaessa</translation>
     </message>
     <message>
-        <location filename="../controls/imports/CyberTracker.1/FieldEditorDelegate.qml" line="356" />
+        <location filename="../controls/imports/CyberTracker.1/FieldEditorDelegate.qml" line="369" />
         <source>Tap to scan</source>
         <translation type="unfinished">Skannaa napauttamalla</translation>
     </message>
     <message>
-        <location filename="../controls/imports/CyberTracker.1/FieldEditorDelegate.qml" line="1034" />
+        <location filename="../controls/imports/CyberTracker.1/FieldEditorDelegate.qml" line="1047" />
         <source>Reset data?</source>
         <translation type="unfinished">Nollaa tiedot?</translation>
     </message>
     <message>
-        <location filename="../controls/imports/CyberTracker.1/FieldEditorDelegate.qml" line="1044" />
+        <location filename="../controls/imports/CyberTracker.1/FieldEditorDelegate.qml" line="1057" />
         <source>Yes</source>
         <translation type="unfinished">Kyllä</translation>
     </message>
     <message>
-        <location filename="../controls/imports/CyberTracker.1/FieldEditorDelegate.qml" line="1057" />
+        <location filename="../controls/imports/CyberTracker.1/FieldEditorDelegate.qml" line="1070" />
         <source>No</source>
         <translation type="unfinished">Ei</translation>
     </message>
@@ -1296,17 +1474,17 @@
 <context>
     <name>FieldFilePane</name>
     <message>
-        <location filename="../controls/imports/CyberTracker.1/FieldFilePane.qml" line="126" />
+        <location filename="../controls/imports/CyberTracker.1/FieldFilePane.qml" line="125" />
         <source>Clear file?</source>
         <translation type="unfinished">Tyhjä tiedosto?</translation>
     </message>
     <message>
-        <location filename="../controls/imports/CyberTracker.1/FieldFilePane.qml" line="127" />
+        <location filename="../controls/imports/CyberTracker.1/FieldFilePane.qml" line="126" />
         <source>The original will not be deleted.</source>
         <translation type="unfinished">Alkuperäistä ei poisteta.</translation>
     </message>
     <message>
-        <location filename="../controls/imports/CyberTracker.1/FieldFilePane.qml" line="128" />
+        <location filename="../controls/imports/CyberTracker.1/FieldFilePane.qml" line="127" />
         <source>Yes, remove it</source>
         <translation type="unfinished">Kyllä, poista se</translation>
     </message>
@@ -1402,17 +1580,17 @@
 <context>
     <name>FieldLinePane</name>
     <message>
-        <location filename="../controls/imports/CyberTracker.1/FieldLinePane.qml" line="92" />
+        <location filename="../controls/imports/CyberTracker.1/FieldLinePane.qml" line="91" />
         <source>Clear area?</source>
         <translation type="unfinished">Tyhjä alue?</translation>
     </message>
     <message>
-        <location filename="../controls/imports/CyberTracker.1/FieldLinePane.qml" line="92" />
+        <location filename="../controls/imports/CyberTracker.1/FieldLinePane.qml" line="91" />
         <source>Clear line?</source>
         <translation type="unfinished">Selkeä linja?</translation>
     </message>
     <message>
-        <location filename="../controls/imports/CyberTracker.1/FieldLinePane.qml" line="93" />
+        <location filename="../controls/imports/CyberTracker.1/FieldLinePane.qml" line="92" />
         <source>Yes, clear all points</source>
         <translation type="unfinished">Kyllä, tyhjennä kaikki kohdat</translation>
     </message>
@@ -1423,6 +1601,14 @@
         <location filename="../controls/imports/CyberTracker.1/FieldListView.qml" line="33" />
         <source>Search</source>
         <translation type="unfinished">Etsi</translation>
+    </message>
+</context>
+<context>
+    <name>FieldListViewEditor</name>
+    <message>
+        <location filename="../controls/imports/CyberTracker.1/FieldListViewEditor.qml" line="85" />
+        <source>Value required</source>
+        <translation type="unfinished">Vaadittu arvo</translation>
     </message>
 </context>
 <context>
@@ -1471,27 +1657,27 @@
 <context>
     <name>FieldRecordListView</name>
     <message>
-        <location filename="../controls/imports/CyberTracker.1/FieldRecordListView.qml" line="99" />
+        <location filename="../controls/imports/CyberTracker.1/FieldRecordListView.qml" line="101" />
         <source>Delete record?</source>
         <translation type="unfinished">Poista tietue?</translation>
     </message>
     <message>
-        <location filename="../controls/imports/CyberTracker.1/FieldRecordListView.qml" line="99" />
+        <location filename="../controls/imports/CyberTracker.1/FieldRecordListView.qml" line="101" />
         <source>Reset record?</source>
         <translation type="unfinished">Nollaa ennätys?</translation>
     </message>
     <message>
-        <location filename="../controls/imports/CyberTracker.1/FieldRecordListView.qml" line="109" />
+        <location filename="../controls/imports/CyberTracker.1/FieldRecordListView.qml" line="111" />
         <source>Yes</source>
         <translation type="unfinished">Kyllä</translation>
     </message>
     <message>
-        <location filename="../controls/imports/CyberTracker.1/FieldRecordListView.qml" line="126" />
+        <location filename="../controls/imports/CyberTracker.1/FieldRecordListView.qml" line="128" />
         <source>No</source>
         <translation type="unfinished">Ei</translation>
     </message>
     <message>
-        <location filename="../controls/imports/CyberTracker.1/FieldRecordListView.qml" line="159" />
+        <location filename="../controls/imports/CyberTracker.1/FieldRecordListView.qml" line="161" />
         <source>Add record</source>
         <translation type="unfinished">Lisää tietue</translation>
     </message>
@@ -1499,9 +1685,9 @@
 <context>
     <name>FieldRecordNumberGridView</name>
     <message>
-        <location filename="../controls/imports/CyberTracker.1/FieldRecordNumberGridView.qml" line="199" />
-        <source>Group field not a number</source>
-        <translation type="unfinished">Ryhmäkenttä ei ole numero</translation>
+        <location filename="../controls/imports/CyberTracker.1/FieldRecordNumberGridView.qml" line="201" />
+        <source>Value required</source>
+        <translation type="unfinished">Vaadittu arvo</translation>
     </message>
 </context>
 <context>
@@ -1520,7 +1706,7 @@
 <context>
     <name>FileField</name>
     <message>
-        <location filename="../cpp/Field.cpp" line="1390" />
+        <location filename="../cpp/Field.cpp" line="1397" />
         <source>file</source>
         <translation type="unfinished">tiedosto</translation>
     </message>
@@ -1528,37 +1714,37 @@
 <context>
     <name>Form</name>
     <message>
-        <location filename="../cpp/Form.cpp" line="26" />
+        <location filename="../cpp/Form.cpp" line="28" />
         <source>Track</source>
         <translation type="unfinished">Seuraa</translation>
     </message>
     <message>
-        <location filename="../cpp/Form.cpp" line="28" />
+        <location filename="../cpp/Form.cpp" line="30" />
         <source>Location</source>
         <translation type="unfinished">Sijainti</translation>
     </message>
     <message>
-        <location filename="../cpp/Form.cpp" line="1416" />
+        <location filename="../cpp/Form.cpp" line="1476" />
         <source>Missing track field or service</source>
         <translation type="unfinished">Puuttuva ratakenttä tai palvelu</translation>
     </message>
     <message>
-        <location filename="../cpp/Form.cpp" line="1769" />
+        <location filename="../cpp/Form.cpp" line="1821" />
         <source>CSV sighting export failed</source>
         <translation type="unfinished">CSV-havaintojen vienti epäonnistui</translation>
     </message>
     <message>
-        <location filename="../cpp/Form.cpp" line="1813" />
+        <location filename="../cpp/Form.cpp" line="1865" />
         <source>CSV location export failed</source>
         <translation type="unfinished">CSV-sijainnin vienti epäonnistui</translation>
     </message>
     <message>
-        <location filename="../cpp/Form.cpp" line="1821" />
+        <location filename="../cpp/Form.cpp" line="1873" />
         <source>No new data</source>
         <translation type="unfinished">Ei uusia tietoja</translation>
     </message>
     <message>
-        <location filename="../cpp/Form.cpp" line="1829" />
+        <location filename="../cpp/Form.cpp" line="1881" />
         <source>Failed to compress file</source>
         <translation type="unfinished">Tiedoston pakkaaminen epäonnistui</translation>
     </message>
@@ -1566,42 +1752,42 @@
 <context>
     <name>FormSettingsListView</name>
     <message>
-        <location filename="../controls/imports/CyberTracker.1/FormSettingsListView.qml" line="65" />
+        <location filename="../controls/imports/CyberTracker.1/FormSettingsListView.qml" line="64" />
         <source>Form version</source>
         <translation type="unfinished">Lomakeversio</translation>
     </message>
     <message>
-        <location filename="../controls/imports/CyberTracker.1/FormSettingsListView.qml" line="77" />
+        <location filename="../controls/imports/CyberTracker.1/FormSettingsListView.qml" line="76" />
         <source>Not specified</source>
         <translation type="unfinished">Ei määritelty</translation>
     </message>
     <message>
-        <location filename="../controls/imports/CyberTracker.1/FormSettingsListView.qml" line="87" />
+        <location filename="../controls/imports/CyberTracker.1/FormSettingsListView.qml" line="86" />
         <source>Update</source>
         <translation type="unfinished">Päivitys</translation>
     </message>
     <message>
-        <location filename="../controls/imports/CyberTracker.1/FormSettingsListView.qml" line="98" />
+        <location filename="../controls/imports/CyberTracker.1/FormSettingsListView.qml" line="97" />
         <source>Offline</source>
         <translation type="unfinished">Offline</translation>
     </message>
     <message>
-        <location filename="../controls/imports/CyberTracker.1/FormSettingsListView.qml" line="123" />
+        <location filename="../controls/imports/CyberTracker.1/FormSettingsListView.qml" line="122" />
         <source>Logged in as</source>
         <translation type="unfinished">Kirjautunut sisään nimellä</translation>
     </message>
     <message>
-        <location filename="../controls/imports/CyberTracker.1/FormSettingsListView.qml" line="123" />
+        <location filename="../controls/imports/CyberTracker.1/FormSettingsListView.qml" line="122" />
         <source>Logged out</source>
         <translation type="unfinished">Kirjautunut ulos</translation>
     </message>
     <message>
-        <location filename="../controls/imports/CyberTracker.1/FormSettingsListView.qml" line="139" />
+        <location filename="../controls/imports/CyberTracker.1/FormSettingsListView.qml" line="138" />
         <source>Logout</source>
         <translation type="unfinished">Kirjaudu ulos</translation>
     </message>
     <message>
-        <location filename="../controls/imports/CyberTracker.1/FormSettingsListView.qml" line="139" />
+        <location filename="../controls/imports/CyberTracker.1/FormSettingsListView.qml" line="138" />
         <source>Login</source>
         <translation type="unfinished">Kirjaudu sisään</translation>
     </message>
@@ -1611,44 +1797,50 @@
         <translation type="unfinished">Kieli</translation>
     </message>
     <message>
-        <location filename="../controls/imports/CyberTracker.1/FormSettingsListView.qml" line="192" />
+        <location filename="../controls/imports/CyberTracker.1/FormSettingsListView.qml" line="193" />
         <source>Immersive mode</source>
         <translation type="unfinished">Immersiivinen tila</translation>
     </message>
     <message>
-        <location filename="../controls/imports/CyberTracker.1/FormSettingsListView.qml" line="201" />
+        <location filename="../controls/imports/CyberTracker.1/FormSettingsListView.qml" line="202" />
         <source>Hide sighting home page</source>
         <translation type="unfinished">Piilota havainto etusivu</translation>
     </message>
     <message>
-        <location filename="../controls/imports/CyberTracker.1/FormSettingsListView.qml" line="238" />
+        <location filename="../controls/imports/CyberTracker.1/FormSettingsListView.qml" line="239" />
         <source>Page mode</source>
         <translation type="unfinished">Sivutila</translation>
     </message>
     <message>
-        <location filename="../controls/imports/CyberTracker.1/FormSettingsListView.qml" line="247" />
+        <location filename="../controls/imports/CyberTracker.1/FormSettingsListView.qml" line="248" />
         <source>One page per question</source>
         <translation type="unfinished">Yksi sivu kysymystä kohden</translation>
     </message>
     <message>
-        <location filename="../controls/imports/CyberTracker.1/FormSettingsListView.qml" line="332" />
+        <location filename="../controls/imports/CyberTracker.1/FormSettingsListView.qml" line="318" />
+        <location filename="../controls/imports/CyberTracker.1/FormSettingsListView.qml" line="384" />
+        <source>Custom interval</source>
+        <translation type="unfinished">Mukautettu aikaväli</translation>
+    </message>
+    <message>
+        <location filename="../controls/imports/CyberTracker.1/FormSettingsListView.qml" line="333" />
         <source>Autosend location</source>
         <translation type="unfinished">Automaattisen lähetyksen sijainti</translation>
     </message>
     <message>
-        <location filename="../controls/imports/CyberTracker.1/FormSettingsListView.qml" line="282" />
-        <location filename="../controls/imports/CyberTracker.1/FormSettingsListView.qml" line="343" />
+        <location filename="../controls/imports/CyberTracker.1/FormSettingsListView.qml" line="283" />
+        <location filename="../controls/imports/CyberTracker.1/FormSettingsListView.qml" line="344" />
         <source>Off</source>
         <translation type="unfinished">Off</translation>
     </message>
     <message>
-        <location filename="../controls/imports/CyberTracker.1/FormSettingsListView.qml" line="344" />
+        <location filename="../controls/imports/CyberTracker.1/FormSettingsListView.qml" line="345" />
         <source>30 seconds</source>
         <translation type="unfinished">30 sekuntia</translation>
     </message>
     <message>
-        <location filename="../controls/imports/CyberTracker.1/FormSettingsListView.qml" line="284" />
-        <location filename="../controls/imports/CyberTracker.1/FormSettingsListView.qml" line="345" />
+        <location filename="../controls/imports/CyberTracker.1/FormSettingsListView.qml" line="285" />
+        <location filename="../controls/imports/CyberTracker.1/FormSettingsListView.qml" line="346" />
         <source>5 minutes</source>
         <translation type="unfinished">5 minuuttia</translation>
     </message>
@@ -1658,41 +1850,35 @@
         <translation type="unfinished">Järjestelmän asetukset</translation>
     </message>
     <message>
-        <location filename="../controls/imports/CyberTracker.1/FormSettingsListView.qml" line="271" />
+        <location filename="../controls/imports/CyberTracker.1/FormSettingsListView.qml" line="272" />
         <source>Auto-submit</source>
         <translation type="unfinished">Automaattinen lähetys</translation>
     </message>
     <message>
-        <location filename="../controls/imports/CyberTracker.1/FormSettingsListView.qml" line="283" />
+        <location filename="../controls/imports/CyberTracker.1/FormSettingsListView.qml" line="284" />
         <source>On save</source>
         <translation type="unfinished">Tallenna</translation>
     </message>
     <message>
-        <location filename="../controls/imports/CyberTracker.1/FormSettingsListView.qml" line="285" />
-        <location filename="../controls/imports/CyberTracker.1/FormSettingsListView.qml" line="346" />
+        <location filename="../controls/imports/CyberTracker.1/FormSettingsListView.qml" line="286" />
+        <location filename="../controls/imports/CyberTracker.1/FormSettingsListView.qml" line="347" />
         <source>10 minutes</source>
         <translation type="unfinished">10 minuuttia</translation>
     </message>
     <message>
-        <location filename="../controls/imports/CyberTracker.1/FormSettingsListView.qml" line="286" />
-        <location filename="../controls/imports/CyberTracker.1/FormSettingsListView.qml" line="347" />
+        <location filename="../controls/imports/CyberTracker.1/FormSettingsListView.qml" line="287" />
+        <location filename="../controls/imports/CyberTracker.1/FormSettingsListView.qml" line="348" />
         <source>30 minutes</source>
         <translation type="unfinished">30 minuuttia</translation>
     </message>
     <message>
-        <location filename="../controls/imports/CyberTracker.1/FormSettingsListView.qml" line="287" />
-        <location filename="../controls/imports/CyberTracker.1/FormSettingsListView.qml" line="348" />
+        <location filename="../controls/imports/CyberTracker.1/FormSettingsListView.qml" line="288" />
+        <location filename="../controls/imports/CyberTracker.1/FormSettingsListView.qml" line="349" />
         <source>1 hour</source>
         <translation type="unfinished">1 tunti</translation>
     </message>
     <message>
-        <location filename="../controls/imports/CyberTracker.1/FormSettingsListView.qml" line="317" />
-        <location filename="../controls/imports/CyberTracker.1/FormSettingsListView.qml" line="383" />
-        <source>Unknown interval</source>
-        <translation type="unfinished">Tuntematon väli</translation>
-    </message>
-    <message>
-        <location filename="../controls/imports/CyberTracker.1/FormSettingsListView.qml" line="394" />
+        <location filename="../controls/imports/CyberTracker.1/FormSettingsListView.qml" line="395" />
         <source>Logout?</source>
         <translation type="unfinished">Kirjaudu ulos?</translation>
     </message>
@@ -1716,32 +1902,32 @@
 <context>
     <name>FormSightingsListView</name>
     <message>
-        <location filename="../controls/imports/CyberTracker.1/FormSightingsListView.qml" line="129" />
+        <location filename="../controls/imports/CyberTracker.1/FormSightingsListView.qml" line="127" />
         <source>No data</source>
         <translation type="unfinished">Ei tietoja</translation>
     </message>
     <message>
-        <location filename="../controls/imports/CyberTracker.1/FormSightingsListView.qml" line="147" />
+        <location filename="../controls/imports/CyberTracker.1/FormSightingsListView.qml" line="145" />
         <source>Continue editing</source>
         <translation type="unfinished">Jatka muokkaamista</translation>
     </message>
     <message>
-        <location filename="../controls/imports/CyberTracker.1/FormSightingsListView.qml" line="148" />
+        <location filename="../controls/imports/CyberTracker.1/FormSightingsListView.qml" line="146" />
         <source>Delete sighting</source>
         <translation type="unfinished">Poista havainto</translation>
     </message>
     <message>
-        <location filename="../controls/imports/CyberTracker.1/FormSightingsListView.qml" line="160" />
+        <location filename="../controls/imports/CyberTracker.1/FormSightingsListView.qml" line="158" />
         <source>Sighting deleted</source>
         <translation type="unfinished">Havainto poistettu</translation>
     </message>
     <message>
-        <location filename="../controls/imports/CyberTracker.1/FormSightingsListView.qml" line="173" />
+        <location filename="../controls/imports/CyberTracker.1/FormSightingsListView.qml" line="171" />
         <source>Submit data?</source>
         <translation type="unfinished">Tietojen toimittaminen?</translation>
     </message>
     <message>
-        <location filename="../controls/imports/CyberTracker.1/FormSightingsListView.qml" line="188" />
+        <location filename="../controls/imports/CyberTracker.1/FormSightingsListView.qml" line="187" />
         <source>No supported in demo mode</source>
         <translation type="unfinished">Ei tuettu demotilassa</translation>
     </message>
@@ -1749,9 +1935,69 @@
 <context>
     <name>FormView</name>
     <message>
-        <location filename="../controls/imports/CyberTracker.1/FormView.qml" line="219" />
+        <location filename="../controls/imports/CyberTracker.1/FormView.qml" line="224" />
         <source>Bad username or password</source>
         <translation type="unfinished">Huono käyttäjätunnus tai salasana</translation>
+    </message>
+</context>
+<context>
+    <name>GoogleConnector</name>
+    <message>
+        <location filename="../cpp/Google/GoogleConnector.cpp" line="51" />
+        <source>Failed to create %1</source>
+        <translation type="unfinished">Epäonnistuin luomaan %1</translation>
+    </message>
+    <message>
+        <location filename="../cpp/Google/GoogleConnector.cpp" line="89" />
+        <source>Unsent data</source>
+        <translation type="unfinished">Lähettämättömät tiedot</translation>
+    </message>
+</context>
+<context>
+    <name>GoogleFormParser</name>
+    <message>
+        <location filename="../cpp/Google/GoogleFormParser.cpp" line="33" />
+        <source>Untitled form</source>
+        <translation type="unfinished">Nimetön muoto</translation>
+    </message>
+    <message>
+        <location filename="../cpp/Google/GoogleFormParser.cpp" line="156" />
+        <source>No questions</source>
+        <translation type="unfinished">Ei kysymyksiä</translation>
+    </message>
+</context>
+<context>
+    <name>GoogleLoginButton</name>
+    <message>
+        <location filename="../controls/imports/CyberTracker.1/GoogleLoginButton.qml" line="34" />
+        <source>Sign in with Google</source>
+        <translation type="unfinished">Kirjaudu sisään Googlen avulla</translation>
+    </message>
+</context>
+<context>
+    <name>GoogleLoginItem</name>
+    <message>
+        <location filename="../controls/imports/CyberTracker.1/GoogleLoginItem.qml" line="34" />
+        <source>Requesting access...</source>
+        <translation type="unfinished">Pyydän pääsyä...</translation>
+    </message>
+    <message>
+        <location filename="../controls/imports/CyberTracker.1/GoogleLoginItem.qml" line="44" />
+        <source>Refreshing token...</source>
+        <translation type="unfinished">Virkistävä merkki...</translation>
+    </message>
+    <message>
+        <location filename="../controls/imports/CyberTracker.1/GoogleLoginItem.qml" line="116" />
+        <source>Login to a Google account. Form access is required to retrieve forms.</source>
+        <translation type="unfinished">Kirjaudu sisään Google-tilille. Lomakkeiden hakeminen edellyttää lomakkeen käyttöoikeutta.</translation>
+    </message>
+</context>
+<context>
+    <name>GoogleProvider</name>
+    <message>
+        <location filename="../cpp/Google/GoogleProvider.cpp" line="211" />
+        <source>Missing %1 attribute</source>
+        <translation type="unfinished">Puuttuva attribuutti %1</translation>
     </message>
 </context>
 <context>
@@ -1806,6 +2052,11 @@
 <context>
     <name>KoBoConnector</name>
     <message>
+        <location filename="../cpp/KoBo/KoBoConnector.cpp" line="129" />
+        <source>Failed to create %1</source>
+        <translation type="unfinished">Epäonnistuin luomaan %1</translation>
+    </message>
+    <message>
         <location filename="../cpp/KoBo/KoBoConnector.cpp" line="250" />
         <source>No deployment links</source>
         <translation type="unfinished">Ei käyttöönottolinkkejä</translation>
@@ -1816,11 +2067,6 @@
         <translation type="unfinished">Ei käyttöönotto-urlia</translation>
     </message>
     <message>
-        <location filename="../cpp/KoBo/KoBoConnector.cpp" line="284" />
-        <source>Failed to read form settings sheet</source>
-        <translation type="unfinished">Lomakkeen asetusten lukeminen epäonnistui</translation>
-    </message>
-    <message>
         <location filename="../cpp/KoBo/KoBoConnector.cpp" line="351" />
         <source>Global server</source>
         <translation type="unfinished">Maailmanlaajuinen palvelin</translation>
@@ -1829,11 +2075,6 @@
         <location filename="../cpp/KoBo/KoBoConnector.cpp" line="355" />
         <source>Humanitarian server</source>
         <translation type="unfinished">Humanitaarinen palvelin</translation>
-    </message>
-    <message>
-        <location filename="../cpp/KoBo/KoBoConnector.cpp" line="129" />
-        <source>Failed to create project</source>
-        <translation type="unfinished">Projektin luominen epäonnistui</translation>
     </message>
     <message>
         <location filename="../cpp/KoBo/KoBoConnector.cpp" line="189" />
@@ -1849,7 +2090,7 @@
 <context>
     <name>LineField</name>
     <message>
-        <location filename="../cpp/Field.cpp" line="815" />
+        <location filename="../cpp/Field.cpp" line="816" />
         <source>points</source>
         <translation type="unfinished">pisteet</translation>
     </message>
@@ -1951,22 +2192,22 @@
         <translation type="unfinished">Sijainnin hankkiminen</translation>
     </message>
     <message>
-        <location filename="../qml/SMART/LocationPage.qml" line="164" />
+        <location filename="../qml/SMART/LocationPage.qml" line="162" />
         <source>Waiting for time correction</source>
         <translation type="unfinished">Ajan korjausta odotettaessa</translation>
     </message>
     <message>
-        <location filename="../qml/SMART/LocationPage.qml" line="177" />
+        <location filename="../qml/SMART/LocationPage.qml" line="175" />
         <source>Completing patrol</source>
         <translation type="unfinished">Partion suorittaminen</translation>
     </message>
     <message>
-        <location filename="../qml/SMART/LocationPage.qml" line="177" />
+        <location filename="../qml/SMART/LocationPage.qml" line="175" />
         <source>Completing survey</source>
         <translation type="unfinished">Kyselyn täyttäminen</translation>
     </message>
     <message>
-        <location filename="../qml/SMART/LocationPage.qml" line="196" />
+        <location filename="../qml/SMART/LocationPage.qml" line="201" />
         <source>Skip GPS</source>
         <translation type="unfinished">Ohita GPS</translation>
     </message>
@@ -2020,7 +2261,7 @@
 <context>
     <name>LocationPopup</name>
     <message>
-        <location filename="../controls/imports/CyberTracker.1/LocationPopup.qml" line="64" />
+        <location filename="../controls/imports/CyberTracker.1/LocationPopup.qml" line="67" />
         <source>Waiting for time correction</source>
         <translation type="unfinished">Ajan korjausta odotettaessa</translation>
     </message>
@@ -2046,27 +2287,27 @@
         <translation type="unfinished">Huono käyttäjänimi tai salasana</translation>
     </message>
     <message>
-        <location filename="../controls/imports/CyberTracker.1/LoginItem.qml" line="117" />
+        <location filename="../controls/imports/CyberTracker.1/LoginItem.qml" line="124" />
         <source>Server</source>
         <translation type="unfinished">Palvelin</translation>
     </message>
     <message>
-        <location filename="../controls/imports/CyberTracker.1/LoginItem.qml" line="130" />
+        <location filename="../controls/imports/CyberTracker.1/LoginItem.qml" line="132" />
         <source>User name</source>
         <translation type="unfinished">Käyttäjän nimi</translation>
     </message>
     <message>
-        <location filename="../controls/imports/CyberTracker.1/LoginItem.qml" line="143" />
+        <location filename="../controls/imports/CyberTracker.1/LoginItem.qml" line="140" />
         <source>Password</source>
         <translation type="unfinished">Salasana</translation>
     </message>
     <message>
-        <location filename="../controls/imports/CyberTracker.1/LoginItem.qml" line="148" />
+        <location filename="../controls/imports/CyberTracker.1/LoginItem.qml" line="146" />
         <source>Login</source>
         <translation type="unfinished">Kirjaudu sisään</translation>
     </message>
     <message>
-        <location filename="../controls/imports/CyberTracker.1/LoginItem.qml" line="182" />
+        <location filename="../controls/imports/CyberTracker.1/LoginItem.qml" line="180" />
         <source>Skip and login later</source>
         <translation type="unfinished">Ohita ja kirjaudu sisään myöhemmin</translation>
     </message>
@@ -2079,17 +2320,12 @@
         <translation type="unfinished">Yhdistä</translation>
     </message>
     <message>
-        <location filename="../qml/MainPage.qml" line="42" />
-        <source>Projects</source>
-        <translation type="unfinished">Hankkeet</translation>
-    </message>
-    <message>
-        <location filename="../qml/MainPage.qml" line="51" />
+        <location filename="../qml/MainPage.qml" line="52" />
         <source>Map</source>
         <translation type="unfinished">Kartta</translation>
     </message>
     <message>
-        <location filename="../qml/MainPage.qml" line="61" />
+        <location filename="../qml/MainPage.qml" line="60" />
         <source>Settings</source>
         <translation type="unfinished">Asetukset</translation>
     </message>
@@ -2272,6 +2508,14 @@
     </message>
 </context>
 <context>
+    <name>MessagePopup</name>
+    <message>
+        <location filename="../controls/imports/CyberTracker.1/MessagePopup.qml" line="12" />
+        <source>OK</source>
+        <translation type="unfinished">OK</translation>
+    </message>
+</context>
+<context>
     <name>MetadataPage</name>
     <message>
         <location filename="../qml/SMART/MetadataPage.qml" line="67" />
@@ -2309,7 +2553,7 @@
     <message>
         <location filename="../cpp/Native/NativeConnector.cpp" line="48" />
         <source>Install kind not found</source>
-        <translation type="unfinished">Asennuslajia ei löydy</translation>
+        <translation type="unfinished">Asennustyyppiä ei löydy</translation>
     </message>
     <message>
         <location filename="../cpp/Native/NativeConnector.cpp" line="63" />
@@ -2334,8 +2578,8 @@
     </message>
     <message>
         <location filename="../cpp/Native/NativeConnector.cpp" line="179" />
-        <source>No project in package</source>
-        <translation type="unfinished">Ei projektia paketissa</translation>
+        <source>No %1 in package</source>
+        <translation type="unfinished">Ei %1 paketissa</translation>
     </message>
     <message>
         <location filename="../cpp/Native/NativeConnector.cpp" line="158" />
@@ -2344,55 +2588,58 @@
     </message>
 </context>
 <context>
+    <name>OAuth2</name>
+    <message>
+        <location filename="../controls/OAuth2.cpp" line="134" />
+        <source>Timeout</source>
+        <translation type="unfinished">Aikakatkaisu</translation>
+    </message>
+</context>
+<context>
     <name>ODKConnector</name>
     <message>
         <location filename="../cpp/ODK/ODKConnector.cpp" line="114" />
-        <source>Failed to create project</source>
-        <translation type="unfinished">Projektin luominen epäonnistui</translation>
+        <source>Failed to create %1</source>
+        <translation type="unfinished">Epäonnistuin luomaan %1</translation>
     </message>
     <message>
         <location filename="../cpp/ODK/ODKConnector.cpp" line="245" />
         <source>Download failed</source>
         <translation type="unfinished">Lataa epäonnistunut</translation>
     </message>
-    <message>
-        <location filename="../cpp/ODK/ODKConnector.cpp" line="251" />
-        <source>Failed to read form settings sheet</source>
-        <translation type="unfinished">Lomakkeen asetusten lukeminen epäonnistui</translation>
-    </message>
 </context>
 <context>
     <name>OfflineMapManager</name>
     <message>
-        <location filename="../cpp/OfflineMap.cpp" line="442" />
-        <location filename="../cpp/OfflineMap.cpp" line="449" />
+        <location filename="../cpp/OfflineMap.cpp" line="450" />
+        <location filename="../cpp/OfflineMap.cpp" line="457" />
         <source>No a valid route file</source>
         <translation type="unfinished">Ei kelvollista reittitiedostoa</translation>
     </message>
     <message>
-        <location filename="../cpp/OfflineMap.cpp" line="468" />
-        <location filename="../cpp/OfflineMap.cpp" line="660" />
+        <location filename="../cpp/OfflineMap.cpp" line="476" />
+        <location filename="../cpp/OfflineMap.cpp" line="673" />
         <source>No maps found</source>
         <translation type="unfinished">Karttoja ei löytynyt</translation>
     </message>
     <message>
-        <location filename="../cpp/OfflineMap.cpp" line="487" />
-        <location filename="../cpp/OfflineMap.cpp" line="678" />
+        <location filename="../cpp/OfflineMap.cpp" line="495" />
+        <location filename="../cpp/OfflineMap.cpp" line="692" />
         <source>Install failed</source>
         <translation type="unfinished">Asennus epäonnistui</translation>
     </message>
     <message>
-        <location filename="../cpp/OfflineMap.cpp" line="522" />
+        <location filename="../cpp/OfflineMap.cpp" line="530" />
         <source>Up to date</source>
         <translation type="unfinished">Ajan tasalla</translation>
     </message>
     <message>
-        <location filename="../cpp/OfflineMap.cpp" line="554" />
+        <location filename="../cpp/OfflineMap.cpp" line="562" />
         <source>Map download failed</source>
         <translation type="unfinished">Kartan lataus epäonnistui</translation>
     </message>
     <message>
-        <location filename="../cpp/OfflineMap.cpp" line="568" />
+        <location filename="../cpp/OfflineMap.cpp" line="576" />
         <source>Invalid map format</source>
         <translation type="unfinished">Virheellinen karttaformaatti</translation>
     </message>
@@ -2406,71 +2653,61 @@
     </message>
     <message>
         <location filename="../qml/OfflineMapPage.qml" line="22" />
-        <source>Move up</source>
-        <translation type="unfinished">Siirry ylöspäin</translation>
-    </message>
-    <message>
-        <location filename="../qml/OfflineMapPage.qml" line="33" />
-        <source>Move down</source>
-        <translation type="unfinished">Siirry alaspäin</translation>
-    </message>
-    <message>
-        <location filename="../qml/OfflineMapPage.qml" line="44" />
         <source>Share</source>
         <translation type="unfinished">Jaa</translation>
     </message>
     <message>
-        <location filename="../qml/OfflineMapPage.qml" line="50" />
+        <location filename="../qml/OfflineMapPage.qml" line="28" />
         <source>Packaging failed</source>
         <translation type="unfinished">Pakkaus epäonnistui</translation>
     </message>
     <message>
-        <location filename="../qml/OfflineMapPage.qml" line="60" />
+        <location filename="../qml/OfflineMapPage.qml" line="38" />
         <source>Offline map</source>
         <translation type="unfinished">Offline-kartta</translation>
     </message>
     <message>
-        <location filename="../qml/OfflineMapPage.qml" line="65" />
+        <location filename="../qml/OfflineMapPage.qml" line="43" />
         <source>Delete</source>
         <translation type="unfinished">Poista</translation>
     </message>
     <message>
-        <location filename="../qml/OfflineMapPage.qml" line="74" />
+        <location filename="../qml/OfflineMapPage.qml" line="52" />
         <source>Add</source>
         <translation type="unfinished">Lisää</translation>
     </message>
     <message>
-        <location filename="../qml/OfflineMapPage.qml" line="93" />
+        <location filename="../qml/OfflineMapPage.qml" line="71" />
         <source>No layers</source>
         <translation type="unfinished">Ei kerroksia</translation>
     </message>
     <message>
-        <location filename="../qml/OfflineMapPage.qml" line="163" />
+        <location filename="../qml/OfflineMapPage.qml" line="172" />
         <source>Not a map package</source>
         <translation type="unfinished">Ei karttapaketti</translation>
     </message>
     <message>
-        <location filename="../qml/OfflineMapPage.qml" line="182" />
+        <location filename="../qml/OfflineMapPage.qml" line="191" />
         <source>Save map package</source>
         <translation type="unfinished">Tallenna karttapaketti</translation>
     </message>
     <message>
-        <location filename="../qml/OfflineMapPage.qml" line="191" />
+        <location filename="../qml/OfflineMapPage.qml" line="200" />
         <source>Copied to clipboard</source>
         <translation type="unfinished">Kopioitu leikepöydälle</translation>
     </message>
     <message>
-        <location filename="../qml/OfflineMapPage.qml" line="193" />
+        <location filename="../qml/OfflineMapPage.qml" line="202" />
         <source>Failed to save package</source>
         <translation type="unfinished">Paketin tallentaminen epäonnistui</translation>
     </message>
     <message>
-        <location filename="../qml/OfflineMapPage.qml" line="203" />
+        <location filename="../qml/OfflineMapPage.qml" line="212" />
         <source>Yes, delete it</source>
         <translation type="unfinished">Kyllä, poista se</translation>
     </message>
     <message>
-        <location filename="../qml/OfflineMapPage.qml" line="211" />
+        <location filename="../qml/OfflineMapPage.qml" line="220" />
         <source>Delete layer?</source>
         <translation type="unfinished">Poista taso?</translation>
     </message>
@@ -2519,7 +2756,7 @@
 <context>
     <name>PhotoField</name>
     <message>
-        <location filename="../cpp/Field.cpp" line="1188" />
+        <location filename="../cpp/Field.cpp" line="1195" />
         <source>Photos</source>
         <translation type="unfinished">Kuvat</translation>
     </message>
@@ -2535,27 +2772,17 @@
 <context>
     <name>ProjectChangePage</name>
     <message>
-        <location filename="../qml/SMART/ProjectChangePage.qml" line="9" />
-        <source>Change Project</source>
-        <translation type="unfinished">Muutosprojekti</translation>
+        <location filename="../qml/ProjectChangePage.qml" line="9" />
+        <source>Change %1</source>
+        <translation type="unfinished">Muuta %1</translation>
     </message>
 </context>
 <context>
     <name>ProjectDetailsPage</name>
     <message>
-        <location filename="../qml/ProjectDetailsPage.qml" line="21" />
-        <source>Project details</source>
-        <translation type="unfinished">Hankkeen yksityiskohdat</translation>
-    </message>
-    <message>
         <location filename="../qml/ProjectDetailsPage.qml" line="26" />
         <source>Exported data</source>
         <translation type="unfinished">Vietyjä tietoja</translation>
-    </message>
-    <message>
-        <location filename="../qml/ProjectDetailsPage.qml" line="27" />
-        <source>Project data waiting for import</source>
-        <translation type="unfinished">Projektin tiedot odottavat tuontia</translation>
     </message>
     <message>
         <location filename="../qml/ProjectDetailsPage.qml" line="34" />
@@ -2563,19 +2790,9 @@
         <translation type="unfinished">QR-koodi</translation>
     </message>
     <message>
-        <location filename="../qml/ProjectDetailsPage.qml" line="35" />
-        <source>Share a link to this project</source>
-        <translation type="unfinished">Jaa linkki tähän hankkeeseen</translation>
-    </message>
-    <message>
         <location filename="../qml/ProjectDetailsPage.qml" line="42" />
         <source>Send package</source>
         <translation type="unfinished">Lähetä paketti</translation>
-    </message>
-    <message>
-        <location filename="../qml/ProjectDetailsPage.qml" line="43" />
-        <source>Share this project with others</source>
-        <translation type="unfinished">Jaa tämä projekti muiden kanssa</translation>
     </message>
     <message>
         <location filename="../qml/ProjectDetailsPage.qml" line="49" />
@@ -2588,24 +2805,84 @@
         <translation type="unfinished">Tarkista päivitykset</translation>
     </message>
     <message>
+        <location filename="../qml/ProjectDetailsPage.qml" line="21" />
+        <source>%1 options</source>
+        <translation type="unfinished">%1 vaihtoehdot</translation>
+    </message>
+    <message>
+        <location filename="../qml/ProjectDetailsPage.qml" line="27" />
+        <source>%1 data waiting for import</source>
+        <translation type="unfinished">%1 data odottaa tuontia</translation>
+    </message>
+    <message>
+        <location filename="../qml/ProjectDetailsPage.qml" line="35" />
+        <source>Share a link to this %1</source>
+        <translation type="unfinished">Jaa linkki tähän %1</translation>
+    </message>
+    <message>
+        <location filename="../qml/ProjectDetailsPage.qml" line="43" />
+        <source>Share this %1 with others</source>
+        <translation type="unfinished">Jaa tämä %1 muiden kanssa</translation>
+    </message>
+    <message>
         <location filename="../qml/ProjectDetailsPage.qml" line="56" />
-        <source>Reset project</source>
-        <translation type="unfinished">Projektin nollaus</translation>
+        <source>Reset %1</source>
+        <translation type="unfinished">Nollaa %1</translation>
     </message>
     <message>
         <location filename="../qml/ProjectDetailsPage.qml" line="57" />
-        <source>Delete all project data</source>
-        <translation type="unfinished">Poista kaikki projektin tiedot</translation>
+        <source>Reset %1 state and data</source>
+        <translation type="unfinished">Nollaa %1 tila ja tiedot</translation>
     </message>
     <message>
         <location filename="../qml/ProjectDetailsPage.qml" line="63" />
-        <source>Delete project</source>
-        <translation type="unfinished">Poista projekti</translation>
+        <source>Delete %1</source>
+        <translation type="unfinished">Poista %1</translation>
     </message>
     <message>
         <location filename="../qml/ProjectDetailsPage.qml" line="64" />
-        <source>Delete the project and all data</source>
-        <translation type="unfinished">Poista projekti ja kaikki tiedot</translation>
+        <source>Delete the %1 and all data</source>
+        <translation type="unfinished">Poista %1 ja kaikki tiedot</translation>
+    </message>
+    <message>
+        <location filename="../qml/ProjectDetailsPage.qml" line="208" />
+        <source>Reset %1?</source>
+        <translation type="unfinished">Nollaa %1?</translation>
+    </message>
+    <message>
+        <location filename="../qml/ProjectDetailsPage.qml" line="209" />
+        <source>Data will be permanently removed from the device.</source>
+        <translation type="unfinished">Tiedot poistetaan pysyvästi laitteesta.</translation>
+    </message>
+    <message>
+        <location filename="../qml/ProjectDetailsPage.qml" line="213" />
+        <source>State only</source>
+        <translation type="unfinished">Vain valtio</translation>
+    </message>
+    <message>
+        <location filename="../qml/ProjectDetailsPage.qml" line="214" />
+        <source>State and data</source>
+        <translation type="unfinished">Valtio ja tiedot</translation>
+    </message>
+    <message>
+        <location filename="../qml/ProjectDetailsPage.qml" line="215" />
+        <source>Cancel</source>
+        <translation type="unfinished">Peruuta</translation>
+    </message>
+    <message>
+        <location filename="../qml/ProjectDetailsPage.qml" line="223" />
+        <source>%1 state reset</source>
+        <translation type="unfinished">%1 tilan nollaus</translation>
+    </message>
+    <message>
+        <location filename="../qml/ProjectDetailsPage.qml" line="246" />
+        <source>Delete %1?</source>
+        <translation type="unfinished">Poista %1?</translation>
+    </message>
+    <message>
+        <location filename="../qml/ProjectDetailsPage.qml" line="247" />
+        <source>The %1 and all of its data will be permanently removed.</source>
+        <translation type="unfinished">%1 ja kaikki sen tiedot poistetaan pysyvästi.</translation>
     </message>
     <message>
         <location filename="../qml/ProjectDetailsPage.qml" line="158" />
@@ -2628,42 +2905,17 @@
         <translation type="unfinished">Paketin tallentaminen epäonnistui</translation>
     </message>
     <message>
-        <location filename="../qml/ProjectDetailsPage.qml" line="207" />
-        <source>Reset project?</source>
-        <translation type="unfinished">Nollaa projekti?</translation>
-    </message>
-    <message>
-        <location filename="../qml/ProjectDetailsPage.qml" line="208" />
-        <source>All project data will be permanently removed from the device.</source>
-        <translation type="unfinished">Kaikki projektitiedot poistetaan pysyvästi laitteesta.</translation>
-    </message>
-    <message>
-        <location filename="../qml/ProjectDetailsPage.qml" line="209" />
-        <source>Yes, reset it</source>
-        <translation type="unfinished">Kyllä, nollaa se</translation>
-    </message>
-    <message>
-        <location filename="../qml/ProjectDetailsPage.qml" line="214" />
+        <location filename="../qml/ProjectDetailsPage.qml" line="229" />
         <source>%1 reset</source>
         <translation type="unfinished">%1 nollaus</translation>
     </message>
     <message>
-        <location filename="../qml/ProjectDetailsPage.qml" line="225" />
-        <source>Delete project?</source>
-        <translation type="unfinished">Poista projekti?</translation>
-    </message>
-    <message>
-        <location filename="../qml/ProjectDetailsPage.qml" line="226" />
-        <source>The project and all of its data will be permanently removed.</source>
-        <translation type="unfinished">Hanke ja kaikki sen tiedot poistetaan pysyvästi.</translation>
-    </message>
-    <message>
-        <location filename="../qml/ProjectDetailsPage.qml" line="227" />
+        <location filename="../qml/ProjectDetailsPage.qml" line="248" />
         <source>Yes, delete it</source>
         <translation type="unfinished">Kyllä, poista se</translation>
     </message>
     <message>
-        <location filename="../qml/ProjectDetailsPage.qml" line="232" />
+        <location filename="../qml/ProjectDetailsPage.qml" line="253" />
         <source>%1 deleted</source>
         <translation type="unfinished">%1 poistettu</translation>
     </message>
@@ -2671,78 +2923,131 @@
 <context>
     <name>ProjectManager</name>
     <message>
-        <location filename="../cpp/Project.cpp" line="965" />
+        <location filename="../cpp/Project.cpp" line="1057" />
         <source>Failed to extract</source>
         <translation type="unfinished">Ei onnistunut purkaa</translation>
     </message>
     <message>
-        <location filename="../cpp/Project.cpp" line="973" />
+        <location filename="../cpp/Project.cpp" line="1065" />
         <source>Invalid package</source>
         <translation type="unfinished">Virheellinen paketti</translation>
     </message>
     <message>
-        <location filename="../cpp/Project.cpp" line="985" />
-        <source>Failed to initialize project</source>
-        <translation type="unfinished">Projektin alustaminen epäonnistui</translation>
+        <location filename="../cpp/Project.cpp" line="1077" />
+        <source>Failed to initialize %1</source>
+        <translation type="unfinished">Alustaminen %1 epäonnistui</translation>
     </message>
     <message>
-        <location filename="../cpp/Project.cpp" line="1064" />
+        <location filename="../cpp/Project.cpp" line="1156" />
         <source>Already installed</source>
         <translation type="unfinished">Jo asennettu</translation>
     </message>
     <message>
-        <location filename="../cpp/Project.cpp" line="1069" />
+        <location filename="../cpp/Project.cpp" line="1161" />
         <source>Nothing to do</source>
         <translation type="unfinished">Ei mitään tekemistä</translation>
     </message>
     <message>
-        <location filename="../cpp/Project.cpp" line="1088" />
+        <location filename="../cpp/Project.cpp" line="1180" />
         <source>File not found</source>
         <translation type="unfinished">Tiedostoa ei löydy</translation>
     </message>
     <message>
-        <location filename="../cpp/Project.cpp" line="1096" />
-        <source>Permissions not granted</source>
-        <translation type="unfinished">Lupia ei myönnetä</translation>
-    </message>
-    <message>
-        <location filename="../cpp/Project.cpp" line="1109" />
+        <location filename="../cpp/Project.cpp" line="1196" />
         <source>Bad definition format</source>
         <translation type="unfinished">Huono määritelmän muoto</translation>
     </message>
     <message>
-        <location filename="../cpp/Project.cpp" line="1258" />
+        <location filename="../cpp/Project.cpp" line="1341" />
         <source>Update Complete</source>
         <translation type="unfinished">Päivitys valmis</translation>
     </message>
     <message>
-        <location filename="../cpp/Project.cpp" line="1363" />
-        <source>Bad project file</source>
-        <translation type="unfinished">Huono projektitiedosto</translation>
+        <location filename="../cpp/Project.cpp" line="1446" />
+        <source>Bad %1 file</source>
+        <translation type="unfinished">Huono %1 tiedosto</translation>
     </message>
     <message>
-        <location filename="../cpp/Project.cpp" line="1368" />
+        <location filename="../cpp/Project.cpp" line="1451" />
         <source>Up to date</source>
         <translation type="unfinished">Ajan tasalla</translation>
     </message>
     <message>
-        <location filename="../cpp/Project.cpp" line="1402" />
+        <location filename="../cpp/Project.cpp" line="1485" />
         <source>Update error</source>
         <translation type="unfinished">Päivitysvirhe</translation>
     </message>
 </context>
 <context>
-    <name>ProjectsPage</name>
+    <name>ProjectsEditPage</name>
     <message>
-        <location filename="../qml/ProjectsPage.qml" line="13" />
-        <source>Projects</source>
-        <translation type="unfinished">Hankkeet</translation>
+        <location filename="../qml/ProjectsEditPage.qml" line="15" />
+        <source>Edit %1</source>
+        <translation type="unfinished">Muokkaa %1</translation>
     </message>
     <message>
+        <location filename="../qml/ProjectsEditPage.qml" line="22" />
+        <source>Options</source>
+        <translation type="unfinished">Vaihtoehdot</translation>
+    </message>
+    <message>
+        <location filename="../qml/ProjectsEditPage.qml" line="31" />
+        <source>Delete</source>
+        <translation type="unfinished">Poista</translation>
+    </message>
+    <message>
+        <location filename="../qml/ProjectsEditPage.qml" line="40" />
+        <source>Add</source>
+        <translation type="unfinished">Lisää</translation>
+    </message>
+    <message>
+        <location filename="../qml/ProjectsEditPage.qml" line="54" />
+        <source>No %1</source>
+        <translation type="unfinished">Ei %1</translation>
+    </message>
+    <message>
+        <location filename="../qml/ProjectsEditPage.qml" line="173" />
+        <source>Save %1 package</source>
+        <translation type="unfinished">Tallenna %1-paketti</translation>
+    </message>
+    <message>
+        <location filename="../qml/ProjectsEditPage.qml" line="196" />
+        <source>Delete %1?</source>
+        <translation type="unfinished">Poista %1?</translation>
+    </message>
+    <message>
+        <location filename="../qml/ProjectsEditPage.qml" line="197" />
+        <source>The %1 and all of its data will be permanently removed.</source>
+        <translation type="unfinished">%1 ja kaikki sen tiedot poistetaan pysyvästi.</translation>
+    </message>
+    <message>
+        <location filename="../qml/ProjectsEditPage.qml" line="182" />
+        <source>Copied to clipboard</source>
+        <translation type="unfinished">Kopioitu leikepöydälle</translation>
+    </message>
+    <message>
+        <location filename="../qml/ProjectsEditPage.qml" line="184" />
+        <source>Failed to save package</source>
+        <translation type="unfinished">Paketin tallentaminen epäonnistui</translation>
+    </message>
+    <message>
+        <location filename="../qml/ProjectsEditPage.qml" line="198" />
+        <source>Yes, delete it</source>
+        <translation type="unfinished">Kyllä, poista se</translation>
+    </message>
+    <message>
+        <location filename="../qml/ProjectsEditPage.qml" line="205" />
+        <source>%1 deleted</source>
+        <translation type="unfinished">%1 poistettu</translation>
+    </message>
+</context>
+<context>
+    <name>ProjectsPage</name>
+    <message>
         <location filename="../qml/ProjectsPage.qml" line="54" />
-        <location filename="../qml/ProjectsPage.qml" line="168" />
-        <source>Delete project?</source>
-        <translation type="unfinished">Poista projekti?</translation>
+        <location filename="../qml/ProjectsPage.qml" line="263" />
+        <source>Delete %1?</source>
+        <translation type="unfinished">Poista %1?</translation>
     </message>
     <message>
         <location filename="../qml/ProjectsPage.qml" line="64" />
@@ -2760,42 +3065,62 @@
         <translation type="unfinished">Offline</translation>
     </message>
     <message>
-        <location filename="../qml/ProjectsPage.qml" line="138" />
-        <source>No provider</source>
-        <translation type="unfinished">Ei palveluntarjoajaa</translation>
+        <location filename="../qml/ProjectsPage.qml" line="174" />
+        <source>No %1</source>
+        <translation type="unfinished">Ei %1</translation>
     </message>
     <message>
-        <location filename="../qml/ProjectsPage.qml" line="169" />
-        <source>The project and all of its data will be permanently removed.</source>
-        <translation type="unfinished">Hanke ja kaikki sen tiedot poistetaan pysyvästi.</translation>
+        <location filename="../qml/ProjectsPage.qml" line="211" />
+        <source>Getting started</source>
+        <translation type="unfinished">Aloittaminen</translation>
     </message>
     <message>
-        <location filename="../qml/ProjectsPage.qml" line="170" />
+        <location filename="../qml/ProjectsPage.qml" line="264" />
+        <source>The %1 and all of its data will be permanently removed.</source>
+        <translation type="unfinished">%1 ja kaikki sen tiedot poistetaan pysyvästi.</translation>
+    </message>
+    <message>
+        <location filename="../qml/ProjectsPage.qml" line="284" />
+        <source>Update %1?</source>
+        <translation type="unfinished">Päivitä %1?</translation>
+    </message>
+    <message>
+        <location filename="../qml/ProjectsPage.qml" line="265" />
         <source>Yes, delete it</source>
         <translation type="unfinished">Kyllä, poista se</translation>
     </message>
     <message>
-        <location filename="../qml/ProjectsPage.qml" line="175" />
+        <location filename="../qml/ProjectsPage.qml" line="185" />
+        <source>Scan QR code</source>
+        <translation type="unfinished">Skannaa QR-koodi</translation>
+    </message>
+    <message>
+        <location filename="../qml/ProjectsPage.qml" line="187" />
+        <source>%1 or tap the %2 button below to add a %3</source>
+        <translation type="unfinished">%1 tai napauta alla olevaa %2-painiketta lisätäksesi %3</translation>
+    </message>
+    <message>
+        <location filename="../qml/ProjectsPage.qml" line="189" />
+        <source>%1 to add a %2</source>
+        <translation type="unfinished">%1 lisätäksesi %2</translation>
+    </message>
+    <message>
+        <location filename="../qml/ProjectsPage.qml" line="270" />
         <source>%1 deleted</source>
         <translation type="unfinished">%1 poistettu</translation>
     </message>
     <message>
-        <location filename="../qml/ProjectsPage.qml" line="189" />
-        <source>Update project?</source>
-        <translation type="unfinished">Päivitysprojekti?</translation>
-    </message>
-    <message>
-        <location filename="../qml/ProjectsPage.qml" line="190" />
+        <location filename="../qml/ProjectsPage.qml" line="285" />
         <source>A new version is available.</source>
         <translation type="unfinished">Uusi versio on saatavilla.</translation>
     </message>
     <message>
-        <location filename="../qml/ProjectsPage.qml" line="191" />
+        <location filename="../qml/ProjectsPage.qml" line="286" />
         <source>Yes, update now</source>
         <translation type="unfinished">Kyllä, päivitä nyt</translation>
     </message>
     <message>
-        <location filename="../qml/ProjectsPage.qml" line="193" />
+        <location filename="../qml/ProjectsPage.qml" line="288" />
         <source>No, update later</source>
         <translation type="unfinished">Ei, päivitys myöhemmin</translation>
     </message>
@@ -2809,19 +3134,302 @@
     </message>
 </context>
 <context>
+    <name>QKeychain::DeletePasswordJobPrivate</name>
+    <message>
+        <location filename="../lib/qtkeychain/keychain_android.cpp" line="173" />
+        <source>Could not open keystore</source>
+        <translation type="unfinished">Avainsäilöä ei voitu avata</translation>
+    </message>
+    <message>
+        <location filename="../lib/qtkeychain/keychain_android.cpp" line="179" />
+        <source>Could not remove private key from keystore</source>
+        <translation type="unfinished">Yksityistä avainta ei voitu poistaa avainsäilöstä</translation>
+    </message>
+    <message>
+        <location filename="../lib/qtkeychain/keychain_unix.cpp" line="552" />
+        <location filename="../lib/qtkeychain/keychain_unix.cpp" line="560" />
+        <source>Unknown error</source>
+        <translation type="unfinished">Tuntematon virhe</translation>
+    </message>
+    <message>
+        <location filename="../lib/qtkeychain/keychain_unix.cpp" line="578" />
+        <source>Could not open wallet: %1; %2</source>
+        <translation type="unfinished">Lompakkoa ei voitu avata: %1; %2</translation>
+    </message>
+    <message>
+        <location filename="../lib/qtkeychain/keychain_win.cpp" line="104" />
+        <source>Password entry not found</source>
+        <translation type="unfinished">Salasanaa ei löydy</translation>
+    </message>
+    <message>
+        <location filename="../lib/qtkeychain/keychain_win.cpp" line="108" />
+        <source>Could not decrypt data</source>
+        <translation type="unfinished">Tietoja ei voitu purkaa</translation>
+    </message>
+</context>
+<context>
+    <name>QKeychain::JobPrivate</name>
+    <message>
+        <location filename="../lib/qtkeychain/keychain_unix.cpp" line="265" />
+        <source>Unknown error</source>
+        <translation type="unfinished">Tuntematon virhe</translation>
+    </message>
+    <message>
+        <location filename="../lib/qtkeychain/keychain_unix.cpp" line="509" />
+        <source>Access to keychain denied</source>
+        <translation type="unfinished">Avaimenperän käyttöoikeus evätty</translation>
+    </message>
+</context>
+<context>
+    <name>QKeychain::PlainTextStore</name>
+    <message>
+        <location filename="../lib/qtkeychain/plaintextstore.cpp" line="65" />
+        <source>Could not store data in settings: access error</source>
+        <translation type="unfinished">Tietoja ei voitu tallentaa asetuksiin: käyttövirhe</translation>
+    </message>
+    <message>
+        <location filename="../lib/qtkeychain/plaintextstore.cpp" line="67" />
+        <source>Could not store data in settings: format error</source>
+        <translation type="unfinished">Tietoja ei voitu tallentaa asetuksiin: muotovirhe</translation>
+    </message>
+    <message>
+        <location filename="../lib/qtkeychain/plaintextstore.cpp" line="85" />
+        <source>Could not delete data from settings: access error</source>
+        <translation type="unfinished">Tietoja ei voitu poistaa asetuksista: käyttövirhe</translation>
+    </message>
+    <message>
+        <location filename="../lib/qtkeychain/plaintextstore.cpp" line="87" />
+        <source>Could not delete data from settings: format error</source>
+        <translation type="unfinished">Tietoja ei voitu poistaa asetuksista: muotovirhe</translation>
+    </message>
+    <message>
+        <location filename="../lib/qtkeychain/plaintextstore.cpp" line="104" />
+        <source>Entry not found</source>
+        <translation type="unfinished">Merkintää ei löydy</translation>
+    </message>
+</context>
+<context>
+    <name>QKeychain::ReadPasswordJobPrivate</name>
+    <message>
+        <location filename="../lib/qtkeychain/keychain_android.cpp" line="52" />
+        <location filename="../lib/qtkeychain/keychain_unix.cpp" line="363" />
+        <source>Entry not found</source>
+        <translation type="unfinished">Merkintää ei löydy</translation>
+    </message>
+    <message>
+        <location filename="../lib/qtkeychain/keychain_android.cpp" line="60" />
+        <source>Could not open keystore</source>
+        <translation type="unfinished">Avainsäilöä ei voitu avata</translation>
+    </message>
+    <message>
+        <location filename="../lib/qtkeychain/keychain_android.cpp" line="68" />
+        <source>Could not retrieve private key from keystore</source>
+        <translation type="unfinished">Yksityistä avainta ei voitu hakea avainsäilöstä</translation>
+    </message>
+    <message>
+        <location filename="../lib/qtkeychain/keychain_android.cpp" line="75" />
+        <source>Could not create decryption cipher</source>
+        <translation type="unfinished">Ei pystynyt luomaan salauksen purkujärjestelmää</translation>
+    </message>
+    <message>
+        <location filename="../lib/qtkeychain/keychain_unix.cpp" line="178" />
+        <source>D-Bus is not running</source>
+        <translation type="unfinished">D-Bus ei ole käynnissä</translation>
+    </message>
+    <message>
+        <location filename="../lib/qtkeychain/keychain_unix.cpp" line="187" />
+        <location filename="../lib/qtkeychain/keychain_unix.cpp" line="197" />
+        <source>Unknown error</source>
+        <translation type="unfinished">Tuntematon virhe</translation>
+    </message>
+    <message>
+        <location filename="../lib/qtkeychain/keychain_unix.cpp" line="286" />
+        <source>No keychain service available</source>
+        <translation type="unfinished">Avaimenperäpalvelua ei ole saatavilla</translation>
+    </message>
+    <message>
+        <location filename="../lib/qtkeychain/keychain_unix.cpp" line="288" />
+        <source>Could not open wallet: %1; %2</source>
+        <translation type="unfinished">Lompakkoa ei voitu avata: %1; %2</translation>
+    </message>
+    <message>
+        <location filename="../lib/qtkeychain/keychain_unix.cpp" line="333" />
+        <source>Access to keychain denied</source>
+        <translation type="unfinished">Avaimenperän käyttöoikeus evätty</translation>
+    </message>
+    <message>
+        <location filename="../lib/qtkeychain/keychain_unix.cpp" line="354" />
+        <source>Could not determine data type: %1; %2</source>
+        <translation type="unfinished">Tietotyyppiä ei voitu määrittää: %1; %2</translation>
+    </message>
+    <message>
+        <location filename="../lib/qtkeychain/keychain_unix.cpp" line="372" />
+        <source>Unsupported entry type 'Map'</source>
+        <translation type="unfinished">Ei tuettu merkintätyyppi 'Map'</translation>
+    </message>
+    <message>
+        <location filename="../lib/qtkeychain/keychain_unix.cpp" line="375" />
+        <source>Unknown kwallet entry type '%1'</source>
+        <translation type="unfinished">Tuntematon kwallet-tietueen tyyppi '%1'.</translation>
+    </message>
+    <message>
+        <location filename="../lib/qtkeychain/keychain_win.cpp" line="32" />
+        <source>Password entry not found</source>
+        <translation type="unfinished">Salasanaa ei löydy</translation>
+    </message>
+    <message>
+        <location filename="../lib/qtkeychain/keychain_win.cpp" line="36" />
+        <location filename="../lib/qtkeychain/keychain_win.cpp" line="139" />
+        <source>Could not decrypt data</source>
+        <translation type="unfinished">Tietoja ei voitu purkaa</translation>
+    </message>
+</context>
+<context>
+    <name>QKeychain::WritePasswordJobPrivate</name>
+    <message>
+        <location filename="../lib/qtkeychain/keychain_android.cpp" line="95" />
+        <source>Could not open keystore</source>
+        <translation type="unfinished">Avainsäilöä ei voitu avata</translation>
+    </message>
+    <message>
+        <location filename="../lib/qtkeychain/keychain_android.cpp" line="124" />
+        <source>Could not create private key generator</source>
+        <translation type="unfinished">Yksityisen avaimen generaattoria ei voitu luoda</translation>
+    </message>
+    <message>
+        <location filename="../lib/qtkeychain/keychain_android.cpp" line="131" />
+        <source>Could not generate new private key</source>
+        <translation type="unfinished">Uutta yksityistä avainta ei voitu luoda</translation>
+    </message>
+    <message>
+        <location filename="../lib/qtkeychain/keychain_android.cpp" line="139" />
+        <source>Could not retrieve private key from keystore</source>
+        <translation type="unfinished">Yksityistä avainta ei voitu hakea avainsäilöstä</translation>
+    </message>
+    <message>
+        <location filename="../lib/qtkeychain/keychain_android.cpp" line="147" />
+        <source>Could not create encryption cipher</source>
+        <translation type="unfinished">Ei pystynyt luomaan salaussalausta</translation>
+    </message>
+    <message>
+        <location filename="../lib/qtkeychain/keychain_android.cpp" line="155" />
+        <source>Could not encrypt data</source>
+        <translation type="unfinished">Tietoja ei voitu salata</translation>
+    </message>
+    <message>
+        <location filename="../lib/qtkeychain/keychain_unix.cpp" line="415" />
+        <source>D-Bus is not running</source>
+        <translation type="unfinished">D-Bus ei ole käynnissä</translation>
+    </message>
+    <message>
+        <location filename="../lib/qtkeychain/keychain_unix.cpp" line="425" />
+        <location filename="../lib/qtkeychain/keychain_unix.cpp" line="452" />
+        <source>Unknown error</source>
+        <translation type="unfinished">Tuntematon virhe</translation>
+    </message>
+    <message>
+        <location filename="../lib/qtkeychain/keychain_unix.cpp" line="468" />
+        <source>Could not open wallet: %1; %2</source>
+        <translation type="unfinished">Lompakkoa ei voitu avata: %1; %2</translation>
+    </message>
+    <message>
+        <location filename="../lib/qtkeychain/keychain_win.cpp" line="78" />
+        <source>Credential size exceeds maximum size of %1</source>
+        <translation type="unfinished">Valtakirjan koko ylittää %1:n enimmäiskoon.</translation>
+    </message>
+    <message>
+        <location filename="../lib/qtkeychain/keychain_win.cpp" line="87" />
+        <source>Credential key exceeds maximum size of %1</source>
+        <translation type="unfinished">Valtakirja-avain ylittää %1:n enimmäiskoon.</translation>
+    </message>
+    <message>
+        <location filename="../lib/qtkeychain/keychain_win.cpp" line="92" />
+        <source>Writing credentials failed: Win32 error code %1</source>
+        <translation type="unfinished">Valtakirjojen kirjoittaminen epäonnistui: Win32-virhekoodi %1</translation>
+    </message>
+    <message>
+        <location filename="../lib/qtkeychain/keychain_win.cpp" line="162" />
+        <source>Encryption failed</source>
+        <translation type="unfinished">Salaus epäonnistui</translation>
+    </message>
+</context>
+<context>
+    <name>QObject</name>
+    <message>
+        <location filename="../lib/qtkeychain/keychain_unix.cpp" line="225" />
+        <source>Access to keychain denied</source>
+        <translation type="unfinished">Avaimenperän käyttöoikeus evätty</translation>
+    </message>
+    <message>
+        <location filename="../lib/qtkeychain/keychain_unix.cpp" line="227" />
+        <source>No keyring daemon</source>
+        <translation type="unfinished">Ei keyring-demonia</translation>
+    </message>
+    <message>
+        <location filename="../lib/qtkeychain/keychain_unix.cpp" line="229" />
+        <source>Already unlocked</source>
+        <translation type="unfinished">Jo avattu</translation>
+    </message>
+    <message>
+        <location filename="../lib/qtkeychain/keychain_unix.cpp" line="231" />
+        <source>No such keyring</source>
+        <translation type="unfinished">Tällaista avaimenperää ei ole</translation>
+    </message>
+    <message>
+        <location filename="../lib/qtkeychain/keychain_unix.cpp" line="233" />
+        <source>Bad arguments</source>
+        <translation type="unfinished">Huonot perustelut</translation>
+    </message>
+    <message>
+        <location filename="../lib/qtkeychain/keychain_unix.cpp" line="235" />
+        <source>I/O error</source>
+        <translation type="unfinished">I/O-virhe</translation>
+    </message>
+    <message>
+        <location filename="../lib/qtkeychain/keychain_unix.cpp" line="237" />
+        <source>Cancelled</source>
+        <translation type="unfinished">Peruutettu</translation>
+    </message>
+    <message>
+        <location filename="../lib/qtkeychain/keychain_unix.cpp" line="239" />
+        <source>Keyring already exists</source>
+        <translation type="unfinished">Avaimenperä on jo olemassa</translation>
+    </message>
+    <message>
+        <location filename="../lib/qtkeychain/keychain_unix.cpp" line="241" />
+        <source>No match</source>
+        <translation type="unfinished">Ei vastaavuutta</translation>
+    </message>
+    <message>
+        <location filename="../lib/qtkeychain/keychain_unix.cpp" line="246" />
+        <source>Unknown error</source>
+        <translation type="unfinished">Tuntematon virhe</translation>
+    </message>
+    <message>
+        <location filename="../lib/qtkeychain/libsecret.cpp" line="119" />
+        <source>Entry not found</source>
+        <translation type="unfinished">Merkintää ei löydy</translation>
+    </message>
+</context>
+<context>
     <name>Record</name>
     <message>
-        <location filename="../cpp/Record.cpp" line="392" />
+        <location filename="../cpp/Record.cpp" line="397" />
         <source>Record</source>
         <translation type="unfinished">Record</translation>
     </message>
     <message>
-        <location filename="../cpp/Record.cpp" line="680" />
+        <location filename="../cpp/Record.cpp" line="702" />
         <source>Records</source>
         <translation type="unfinished">Tietueet</translation>
     </message>
     <message>
-        <location filename="../cpp/Record.cpp" line="708" />
+        <location filename="../cpp/Record.cpp" line="730" />
+        <source>Value incorrect</source>
+        <translation type="unfinished">Arvo virheellinen</translation>
+    </message>
+    <message>
+        <location filename="../cpp/Record.cpp" line="744" />
         <source>Value required</source>
         <translation type="unfinished">Vaadittu arvo</translation>
     </message>
@@ -2829,12 +3437,12 @@
 <context>
     <name>RecordField</name>
     <message>
-        <location filename="../cpp/Field.cpp" line="320" />
+        <location filename="../cpp/Field.cpp" line="321" />
         <source>record</source>
         <translation type="unfinished">kirjaa</translation>
     </message>
     <message>
-        <location filename="../cpp/Field.cpp" line="320" />
+        <location filename="../cpp/Field.cpp" line="321" />
         <source>records</source>
         <translation type="unfinished">tietueet</translation>
     </message>
@@ -2873,18 +3481,18 @@
     </message>
     <message>
         <location filename="../qml/SMART/RecoverDataPage.qml" line="73" />
-        <source>Data is ready for import from the desktop</source>
-        <translation type="unfinished">Tiedot ovat valmiita tuotavaksi työpöydältä</translation>
+        <source>Data is ready for import from the desktop.</source>
+        <translation type="unfinished">Tiedot ovat valmiita tuotavaksi työpöydältä.</translation>
+    </message>
+    <message>
+        <location filename="../qml/SMART/RecoverDataPage.qml" line="76" />
+        <source>An error occurred during data export.</source>
+        <translation type="unfinished">Tietojen viennissä tapahtui virhe.</translation>
     </message>
     <message>
         <location filename="../qml/SMART/RecoverDataPage.qml" line="75" />
         <source>Error</source>
         <translation type="unfinished">Virhe</translation>
-    </message>
-    <message>
-        <location filename="../qml/SMART/RecoverDataPage.qml" line="76" />
-        <source>An error occurred during data export</source>
-        <translation type="unfinished">Tietojen viennissä tapahtui virhe</translation>
     </message>
 </context>
 <context>
@@ -2898,9 +3506,9 @@
 <context>
     <name>SMARTConnector</name>
     <message>
-        <location filename="../cpp/SMART/SMARTConnector.cpp" line="105" />
+        <location filename="../cpp/SMART/SMARTConnector.cpp" line="114" />
         <source>has unexported data</source>
-        <translation type="unfinished">on vientimättömiä tietoja</translation>
+        <translation type="unfinished">on vientitietoja, joita ei ole siirretty</translation>
     </message>
     <message>
         <location filename="../cpp/SMART/SMARTConnector.cpp" line="14" />
@@ -2908,36 +3516,44 @@
         <translation type="unfinished">vaadittu</translation>
     </message>
     <message>
-        <location filename="../cpp/SMART/SMARTConnector.cpp" line="171" />
+        <location filename="../cpp/SMART/SMARTConnector.cpp" line="184" />
         <source>Download failed</source>
         <translation type="unfinished">Lataa epäonnistunut</translation>
     </message>
     <message>
-        <location filename="../cpp/SMART/SMARTConnector.cpp" line="181" />
+        <location filename="../cpp/SMART/SMARTConnector.cpp" line="194" />
         <source>Download bad</source>
         <translation type="unfinished">Lataa huono</translation>
     </message>
     <message>
-        <location filename="../cpp/SMART/SMARTConnector.cpp" line="339" />
+        <location filename="../cpp/SMART/SMARTConnector.cpp" line="327" />
         <source>Unexported data</source>
         <translation type="unfinished">Tuomatta jääneet tiedot</translation>
     </message>
     <message>
-        <location filename="../cpp/SMART/SMARTConnector.cpp" line="355" />
-        <location filename="../cpp/SMART/SMARTConnector.cpp" line="551" />
+        <location filename="../cpp/SMART/SMARTConnector.cpp" line="343" />
         <source>Bad project file</source>
         <translation type="unfinished">Huono projektitiedosto</translation>
     </message>
     <message>
-        <location filename="../cpp/SMART/SMARTConnector.cpp" line="367" />
-        <location filename="../cpp/SMART/SMARTConnector.cpp" line="560" />
+        <location filename="../cpp/SMART/SMARTConnector.cpp" line="355" />
         <source>Cannot unpack project</source>
         <translation type="unfinished">Projektia ei voi purkaa</translation>
     </message>
     <message>
-        <location filename="../cpp/SMART/SMARTConnector.cpp" line="543" />
+        <location filename="../cpp/SMART/SMARTConnector.cpp" line="521" />
         <source>Unsent data</source>
         <translation type="unfinished">Lähettämättömät tiedot</translation>
+    </message>
+    <message>
+        <location filename="../cpp/SMART/SMARTConnector.cpp" line="529" />
+        <source>Bad %1 file</source>
+        <translation type="unfinished">Huono %1 tiedosto</translation>
+    </message>
+    <message>
+        <location filename="../cpp/SMART/SMARTConnector.cpp" line="538" />
+        <source>Cannot unpack %1</source>
+        <translation type="unfinished">Ei voi purkaa pakkausta %1</translation>
     </message>
 </context>
 <context>
@@ -3164,7 +3780,7 @@
     <message>
         <location filename="../cpp/SMART/SMARTProvider.cpp" line="288" />
         <source>Resize photos</source>
-        <translation type="unfinished">Kuvien koon muuttaminen</translation>
+        <translation type="unfinished">Koon muuttaminen</translation>
     </message>
     <message>
         <location filename="../cpp/SMART/SMARTProvider.cpp" line="290" />
@@ -3323,7 +3939,7 @@
 <context>
     <name>Settings</name>
     <message>
-        <location filename="../cpp/Settings.cpp" line="90" />
+        <location filename="../cpp/Settings.cpp" line="151" />
         <source>Default</source>
         <translation type="unfinished">Oletus</translation>
     </message>
@@ -3343,90 +3959,90 @@
         <translation type="unfinished">Järjestelmän asetukset</translation>
     </message>
     <message>
-        <location filename="../qml/EarthRanger/SettingsPage.qml" line="67" />
+        <location filename="../qml/EarthRanger/SettingsPage.qml" line="66" />
         <source>Last updated</source>
         <translation type="unfinished">Viimeksi päivitetty</translation>
     </message>
     <message>
-        <location filename="../qml/EarthRanger/SettingsPage.qml" line="84" />
+        <location filename="../qml/EarthRanger/SettingsPage.qml" line="83" />
         <source>Update</source>
         <translation type="unfinished">Päivitys</translation>
     </message>
     <message>
-        <location filename="../qml/EarthRanger/SettingsPage.qml" line="120" />
+        <location filename="../qml/EarthRanger/SettingsPage.qml" line="119" />
         <source>Logged in as</source>
         <translation type="unfinished">Kirjautunut sisään nimellä</translation>
     </message>
     <message>
-        <location filename="../qml/EarthRanger/SettingsPage.qml" line="120" />
+        <location filename="../qml/EarthRanger/SettingsPage.qml" line="119" />
         <source>Logged out</source>
         <translation type="unfinished">Kirjautunut ulos</translation>
     </message>
     <message>
-        <location filename="../qml/EarthRanger/SettingsPage.qml" line="135" />
+        <location filename="../qml/EarthRanger/SettingsPage.qml" line="134" />
         <source>Logout</source>
         <translation type="unfinished">Kirjaudu ulos</translation>
     </message>
     <message>
-        <location filename="../qml/EarthRanger/SettingsPage.qml" line="135" />
+        <location filename="../qml/EarthRanger/SettingsPage.qml" line="134" />
         <source>Login</source>
         <translation type="unfinished">Kirjaudu sisään</translation>
     </message>
     <message>
-        <location filename="../qml/EarthRanger/SettingsPage.qml" line="165" />
+        <location filename="../qml/EarthRanger/SettingsPage.qml" line="164" />
         <source>Reported by</source>
         <translation type="unfinished">Raportoija</translation>
     </message>
     <message>
-        <location filename="../qml/EarthRanger/SettingsPage.qml" line="200" />
+        <location filename="../qml/EarthRanger/SettingsPage.qml" line="199" />
         <source>Merge categories</source>
         <translation type="unfinished">Luokkien yhdistäminen</translation>
     </message>
     <message>
-        <location filename="../qml/EarthRanger/SettingsPage.qml" line="243" />
+        <location filename="../qml/EarthRanger/SettingsPage.qml" line="242" />
         <source>One page per question</source>
         <translation type="unfinished">Yksi sivu kysymystä kohden</translation>
     </message>
     <message>
-        <location filename="../qml/EarthRanger/SettingsPage.qml" line="268" />
+        <location filename="../qml/EarthRanger/SettingsPage.qml" line="267" />
         <source>Visible reports</source>
         <translation type="unfinished">Näkyvät raportit</translation>
     </message>
     <message>
-        <location filename="../qml/EarthRanger/SettingsPage.qml" line="285" />
+        <location filename="../qml/EarthRanger/SettingsPage.qml" line="284" />
         <source>Logout?</source>
         <translation type="unfinished">Kirjaudu ulos?</translation>
     </message>
     <message>
-        <location filename="../qml/EarthRanger/SettingsPage.qml" line="95" />
+        <location filename="../qml/EarthRanger/SettingsPage.qml" line="94" />
         <source>Offline</source>
         <translation type="unfinished">Offline</translation>
     </message>
     <message>
-        <location filename="../qml/EarthRanger/SettingsPage.qml" line="175" />
+        <location filename="../qml/EarthRanger/SettingsPage.qml" line="174" />
         <source>Unknown</source>
         <translation type="unfinished">Tuntematon</translation>
     </message>
     <message>
-        <location filename="../qml/SettingsPage.qml" line="111" />
+        <location filename="../qml/SettingsPage.qml" line="138" />
         <source>Collect as</source>
         <translation type="unfinished">Kerää kuin</translation>
     </message>
     <message>
         <location filename="../qml/SMART/SettingsPage.qml" line="38" />
-        <location filename="../qml/SettingsPage.qml" line="154" />
+        <location filename="../qml/SettingsPage.qml" line="180" />
         <source>Language</source>
         <translation type="unfinished">Kieli</translation>
-    </message>
-    <message>
-        <location filename="../qml/SMART/SettingsPage.qml" line="135" />
-        <source>Change project</source>
-        <translation type="unfinished">Muutosprojekti</translation>
     </message>
     <message>
         <location filename="../qml/SMART/SettingsPage.qml" line="113" />
         <source>Select routes</source>
         <translation type="unfinished">Valitse reitit</translation>
+    </message>
+    <message>
+        <location filename="../qml/SMART/SettingsPage.qml" line="135" />
+        <source>Change %1</source>
+        <translation type="unfinished">Muuta %1</translation>
     </message>
     <message>
         <location filename="../qml/SMART/SettingsPage.qml" line="156" />
@@ -3450,23 +4066,23 @@
         <translation type="unfinished">Reittejä ei löytynyt</translation>
     </message>
     <message>
-        <location filename="../qml/SettingsPage.qml" line="232" />
+        <location filename="../qml/SettingsPage.qml" line="315" />
         <source>Toolbar captions</source>
         <translation type="unfinished">Työkalurivin kuvatekstit</translation>
     </message>
     <message>
-        <location filename="../qml/SettingsPage.qml" line="258" />
+        <location filename="../qml/SettingsPage.qml" line="341" />
         <source>Metric units</source>
         <translation type="unfinished">Metriset yksiköt</translation>
     </message>
     <message>
-        <location filename="../qml/SettingsPage.qml" line="285" />
+        <location filename="../qml/SettingsPage.qml" line="368" />
         <source>Full screen</source>
         <translation type="unfinished">Koko näyttö</translation>
     </message>
     <message>
         <location filename="../qml/SMART/SettingsPage.qml" line="60" />
-        <location filename="../qml/SettingsPage.qml" line="207" />
+        <location filename="../qml/SettingsPage.qml" line="290" />
         <source>Dark theme</source>
         <translation type="unfinished">Tumma teema</translation>
     </message>
@@ -3476,102 +4092,117 @@
         <translation type="unfinished">Tietoja</translation>
     </message>
     <message>
-        <location filename="../qml/SettingsPage.qml" line="76" />
+        <location filename="../qml/SettingsPage.qml" line="104" />
         <source>Offline maps</source>
         <translation type="unfinished">Offline-kartat</translation>
     </message>
     <message>
-        <location filename="../qml/SettingsPage.qml" line="313" />
+        <location filename="../qml/SettingsPage.qml" line="232" />
+        <source>Auto launch</source>
+        <translation type="unfinished">Automaattinen käynnistys</translation>
+    </message>
+    <message>
+        <location filename="../qml/SettingsPage.qml" line="255" />
+        <source></source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../qml/SettingsPage.qml" line="76" />
+        <source>Edit %1</source>
+        <translation type="unfinished">Muokkaa %1</translation>
+    </message>
+    <message>
+        <location filename="../qml/SettingsPage.qml" line="396" />
         <source>Font size</source>
         <translation type="unfinished">Kirjasinkoko</translation>
     </message>
     <message>
-        <location filename="../qml/SettingsPage.qml" line="346" />
+        <location filename="../qml/SettingsPage.qml" line="429" />
         <source>Coordinates</source>
         <translation type="unfinished">Koordinaatit</translation>
     </message>
     <message>
-        <location filename="../qml/SettingsPage.qml" line="356" />
+        <location filename="../qml/SettingsPage.qml" line="439" />
         <source>Decimal degrees</source>
         <translation type="unfinished">Desimaaliasteet</translation>
     </message>
     <message>
-        <location filename="../qml/SettingsPage.qml" line="356" />
+        <location filename="../qml/SettingsPage.qml" line="439" />
         <source>Degrees minutes seconds</source>
         <translation type="unfinished">Asteet minuutit sekunnit</translation>
     </message>
     <message>
-        <location filename="../qml/SettingsPage.qml" line="356" />
+        <location filename="../qml/SettingsPage.qml" line="439" />
         <source>Degrees decimal minutes</source>
         <translation type="unfinished">Asteet desimaaliminuutit</translation>
     </message>
     <message>
-        <location filename="../qml/SettingsPage.qml" line="383" />
+        <location filename="../qml/SettingsPage.qml" line="466" />
         <source>GPS accuracy</source>
         <translation type="unfinished">GPS-tarkkuus</translation>
     </message>
     <message>
-        <location filename="../qml/SettingsPage.qml" line="383" />
+        <location filename="../qml/SettingsPage.qml" line="466" />
         <source>meters</source>
         <translation type="unfinished">metriä</translation>
     </message>
     <message>
-        <location filename="../qml/SettingsPage.qml" line="429" />
+        <location filename="../qml/SettingsPage.qml" line="512" />
         <source>Simulate location</source>
         <translation type="unfinished">Simuloi sijainti</translation>
     </message>
     <message>
-        <location filename="../qml/SettingsPage.qml" line="454" />
+        <location filename="../qml/SettingsPage.qml" line="537" />
         <source>Source file</source>
         <translation type="unfinished">Lähdetiedosto</translation>
     </message>
     <message>
-        <location filename="../qml/SettingsPage.qml" line="510" />
+        <location filename="../qml/SettingsPage.qml" line="591" />
         <source>Upload requires WiFi</source>
         <translation type="unfinished">Lataus vaatii WiFin</translation>
     </message>
     <message>
-        <location filename="../qml/SettingsPage.qml" line="534" />
+        <location filename="../qml/SettingsPage.qml" line="615" />
         <source>Share bug report</source>
         <translation type="unfinished">Jaa vikailmoitus</translation>
     </message>
     <message>
-        <location filename="../qml/SettingsPage.qml" line="542" />
+        <location filename="../qml/SettingsPage.qml" line="623" />
         <source>Share over email, text, etc.</source>
         <translation type="unfinished">Jaa sähköpostitse, tekstiviestillä jne.</translation>
     </message>
     <message>
-        <location filename="../qml/SettingsPage.qml" line="571" />
+        <location filename="../qml/SettingsPage.qml" line="651" />
         <source>Save bug report</source>
         <translation type="unfinished">Tallenna vikailmoitus</translation>
     </message>
     <message>
-        <location filename="../qml/SettingsPage.qml" line="579" />
+        <location filename="../qml/SettingsPage.qml" line="659" />
         <source>Save to device for manual copy</source>
         <translation type="unfinished">Tallenna laitteeseen manuaalista kopiointia varten</translation>
     </message>
     <message>
-        <location filename="../qml/SettingsPage.qml" line="608" />
+        <location filename="../qml/SettingsPage.qml" line="687" />
         <source>Simulation source</source>
         <translation type="unfinished">Simuloinnin lähde</translation>
     </message>
     <message>
-        <location filename="../qml/SettingsPage.qml" line="617" />
+        <location filename="../qml/SettingsPage.qml" line="696" />
         <source>Generate track file using</source>
         <translation type="unfinished">Luo ratatiedosto käyttämällä</translation>
     </message>
     <message>
-        <location filename="../qml/SettingsPage.qml" line="624" />
+        <location filename="../qml/SettingsPage.qml" line="703" />
         <source>Copy to the Download folder</source>
         <translation type="unfinished">Kopioi latauskansioon</translation>
     </message>
     <message>
-        <location filename="../qml/SettingsPage.qml" line="631" />
+        <location filename="../qml/SettingsPage.qml" line="710" />
         <source>Restart</source>
         <translation type="unfinished">Käynnistä uudelleen</translation>
     </message>
     <message>
-        <location filename="../qml/EarthRanger/SettingsPage.qml" line="234" />
+        <location filename="../qml/EarthRanger/SettingsPage.qml" line="233" />
         <location filename="../qml/SMART/SettingsPage.qml" line="87" />
         <source>Page mode</source>
         <translation type="unfinished">Sivutila</translation>
@@ -3618,12 +4249,12 @@
 <context>
     <name>Sighting</name>
     <message>
-        <location filename="../cpp/Sighting.cpp" line="810" />
+        <location filename="../cpp/Sighting.cpp" line="856" />
         <source>photo</source>
         <translation type="unfinished">kuva</translation>
     </message>
     <message>
-        <location filename="../cpp/Sighting.cpp" line="810" />
+        <location filename="../cpp/Sighting.cpp" line="856" />
         <source>photos</source>
         <translation type="unfinished">kuvat</translation>
     </message>
@@ -3648,7 +4279,7 @@
     <message>
         <location filename="../qml/SMART/SightingHomePage.qml" line="63" />
         <source>Stop collecting?</source>
-        <translation type="unfinished">Lopeta keräily?</translation>
+        <translation type="unfinished">Lopetatko keräilyn?</translation>
     </message>
     <message>
         <location filename="../qml/SMART/SightingHomePage.qml" line="99" />
@@ -3696,47 +4327,47 @@
         <translation type="unfinished">Ryhmä</translation>
     </message>
     <message>
-        <location filename="../qml/SMART/SightingHomePage.qml" line="430" />
+        <location filename="../qml/SMART/SightingHomePage.qml" line="429" />
         <source>Create a new group</source>
         <translation type="unfinished">Luo uusi ryhmä</translation>
     </message>
     <message>
-        <location filename="../qml/SMART/SightingHomePage.qml" line="459" />
+        <location filename="../qml/SMART/SightingHomePage.qml" line="458" />
         <source>Make observation</source>
         <translation type="unfinished">Tee havainto</translation>
     </message>
     <message>
-        <location filename="../qml/SMART/SightingHomePage.qml" line="459" />
+        <location filename="../qml/SMART/SightingHomePage.qml" line="458" />
         <source>Add observation</source>
         <translation type="unfinished">Lisää havainto</translation>
     </message>
     <message>
-        <location filename="../qml/SMART/SightingHomePage.qml" line="511" />
+        <location filename="../qml/SMART/SightingHomePage.qml" line="510" />
         <source>Delete group?</source>
         <translation type="unfinished">Poista ryhmä?</translation>
     </message>
     <message>
-        <location filename="../qml/SMART/SightingHomePage.qml" line="512" />
+        <location filename="../qml/SMART/SightingHomePage.qml" line="511" />
         <source>Delete item?</source>
         <translation type="unfinished">Poista kohde?</translation>
     </message>
     <message>
-        <location filename="../qml/SMART/SightingHomePage.qml" line="524" />
+        <location filename="../qml/SMART/SightingHomePage.qml" line="523" />
         <source>Yes</source>
         <translation type="unfinished">Kyllä</translation>
     </message>
     <message>
-        <location filename="../qml/SMART/SightingHomePage.qml" line="548" />
+        <location filename="../qml/SMART/SightingHomePage.qml" line="547" />
         <source>No</source>
         <translation type="unfinished">Ei</translation>
     </message>
     <message>
-        <location filename="../qml/SMART/SightingHomePage.qml" line="626" />
+        <location filename="../qml/SMART/SightingHomePage.qml" line="625" />
         <source>Statistics</source>
         <translation type="unfinished">Tilastot</translation>
     </message>
     <message>
-        <location filename="../qml/SMART/SightingHomePage.qml" line="640" />
+        <location filename="../qml/SMART/SightingHomePage.qml" line="639" />
         <source>Toggle dark theme</source>
         <translation type="unfinished">Vaihda tumma teema</translation>
     </message>
@@ -3810,7 +4441,7 @@
 <context>
     <name>SketchField</name>
     <message>
-        <location filename="../cpp/Field.cpp" line="1327" />
+        <location filename="../cpp/Field.cpp" line="1334" />
         <source>Yes</source>
         <translation type="unfinished">Kyllä</translation>
     </message>
@@ -3866,45 +4497,25 @@
         <translation type="unfinished">Ei uusia tietoja</translation>
     </message>
     <message>
-        <location filename="../qml/Classic/StartPage.qml" line="142" />
+        <location filename="../qml/Classic/StartPage.qml" line="140" />
         <source>Share outstanding data?</source>
         <translation type="unfinished">Jaa jäljellä olevat tiedot?</translation>
     </message>
     <message>
-        <location filename="../qml/Classic/StartPage.qml" line="143" />
+        <location filename="../qml/Classic/StartPage.qml" line="141" />
         <source>Yes, share it</source>
         <translation type="unfinished">Kyllä, jaa se</translation>
     </message>
     <message>
-        <location filename="../qml/Classic/StartPage.qml" line="153" />
-        <location filename="../qml/SMART/StartPage.qml" line="111" />
+        <location filename="../qml/Classic/StartPage.qml" line="151" />
+        <location filename="../qml/SMART/StartPage.qml" line="112" />
         <source>Success</source>
         <translation type="unfinished">Menestys</translation>
     </message>
     <message>
-        <location filename="../qml/SMART/StartPage.qml" line="111" />
+        <location filename="../qml/SMART/StartPage.qml" line="112" />
         <source>Error</source>
         <translation type="unfinished">Virhe</translation>
-    </message>
-    <message>
-        <location filename="../qml/SMART/StartPage.qml" line="92" />
-        <source>All data has been uploaded</source>
-        <translation type="unfinished">Kaikki tiedot on ladattu</translation>
-    </message>
-    <message>
-        <location filename="../qml/SMART/StartPage.qml" line="93" />
-        <source>Connection failed</source>
-        <translation type="unfinished">Yhteys epäonnistui</translation>
-    </message>
-    <message>
-        <location filename="../qml/SMART/StartPage.qml" line="100" />
-        <source>Data is ready for import from the desktop</source>
-        <translation type="unfinished">Tiedot ovat valmiita tuotavaksi työpöydältä</translation>
-    </message>
-    <message>
-        <location filename="../qml/SMART/StartPage.qml" line="101" />
-        <source>Export may have failed</source>
-        <translation type="unfinished">Vienti on saattanut epäonnistua</translation>
     </message>
     <message>
         <location filename="../qml/SMART/StartPage.qml" line="43" />
@@ -3922,12 +4533,32 @@
         <translation type="unfinished">Ilmoita tapahtumasta</translation>
     </message>
     <message>
+        <location filename="../qml/SMART/StartPage.qml" line="92" />
+        <source>All data has been uploaded.</source>
+        <translation type="unfinished">Kaikki tiedot on ladattu.</translation>
+    </message>
+    <message>
+        <location filename="../qml/SMART/StartPage.qml" line="93" />
+        <source>Connection failed. Please try again later.</source>
+        <translation type="unfinished">Yhteys epäonnistui. Yritä myöhemmin uudelleen.</translation>
+    </message>
+    <message>
+        <location filename="../qml/SMART/StartPage.qml" line="100" />
+        <source>Data is ready for import from the desktop.</source>
+        <translation type="unfinished">Tiedot ovat valmiita tuotavaksi työpöydältä.</translation>
+    </message>
+    <message>
+        <location filename="../qml/SMART/StartPage.qml" line="101" />
+        <source>Export may have failed.</source>
+        <translation type="unfinished">Vienti on saattanut epäonnistua.</translation>
+    </message>
+    <message>
         <location filename="../qml/ODK/StartPage.qml" line="26" />
         <source>Submit</source>
         <translation type="unfinished">Lähetä</translation>
     </message>
     <message>
-        <location filename="../qml/ODK/StartPage.qml" line="115" />
+        <location filename="../qml/ODK/StartPage.qml" line="113" />
         <source>Form error</source>
         <translation type="unfinished">Lomakevirhe</translation>
     </message>
@@ -3935,52 +4566,73 @@
 <context>
     <name>StartPageCollect</name>
     <message>
-        <location filename="../qml/SMART/StartPageCollect.qml" line="149" />
-        <source>All data has been uploaded</source>
-        <translation type="unfinished">Kaikki tiedot on ladattu</translation>
-    </message>
-    <message>
-        <location filename="../qml/SMART/StartPageCollect.qml" line="150" />
-        <source>Connection failed</source>
-        <translation type="unfinished">Yhteys epäonnistui</translation>
-    </message>
-    <message>
-        <location filename="../qml/SMART/StartPageCollect.qml" line="23" />
+        <location filename="../qml/SMART/StartPageCollect.qml" line="117" />
         <source>Success</source>
         <translation type="unfinished">Menestys</translation>
     </message>
     <message>
-        <location filename="../qml/SMART/StartPageCollect.qml" line="23" />
+        <location filename="../qml/SMART/StartPageCollect.qml" line="117" />
         <source>Error</source>
         <translation type="unfinished">Virhe</translation>
     </message>
     <message>
-        <location filename="../qml/SMART/StartPageCollect.qml" line="101" />
+        <location filename="../qml/SMART/StartPageCollect.qml" line="59" />
         <source>Enter email or phone</source>
         <translation type="unfinished">Kirjoita sähköpostiosoite tai puhelin</translation>
     </message>
     <message>
-        <location filename="../qml/SMART/StartPageCollect.qml" line="112" />
+        <location filename="../qml/SMART/StartPageCollect.qml" line="71" />
         <source>Start collecting</source>
         <translation type="unfinished">Aloita kerääminen</translation>
     </message>
     <message>
-        <location filename="../qml/SMART/StartPageCollect.qml" line="126" />
+        <location filename="../qml/SMART/StartPageCollect.qml" line="86" />
         <source>Upload data</source>
         <translation type="unfinished">Lataa tiedot</translation>
+    </message>
+    <message>
+        <location filename="../qml/SMART/StartPageCollect.qml" line="113" />
+        <source>All data has been uploaded.</source>
+        <translation type="unfinished">Kaikki tiedot on ladattu.</translation>
+    </message>
+    <message>
+        <location filename="../qml/SMART/StartPageCollect.qml" line="114" />
+        <source>Connection failed. Please try again later.</source>
+        <translation type="unfinished">Yhteys epäonnistui. Yritä myöhemmin uudelleen.</translation>
     </message>
 </context>
 <context>
     <name>SubmitButton</name>
     <message>
-        <location filename="../controls/imports/CyberTracker.1/SubmitButton.qml" line="94" />
+        <location filename="../controls/imports/CyberTracker.1/SubmitButton.qml" line="89" />
         <source>Upload failed</source>
         <translation type="unfinished">Lataus epäonnistui</translation>
     </message>
     <message>
-        <location filename="../controls/imports/CyberTracker.1/SubmitButton.qml" line="156" />
+        <location filename="../controls/imports/CyberTracker.1/SubmitButton.qml" line="151" />
         <source>Submit data?</source>
         <translation type="unfinished">Tietojen toimittaminen?</translation>
+    </message>
+</context>
+<context>
+    <name>UnsupportedPage</name>
+    <message>
+        <location filename="../qml/Google/UnsupportedPage.qml" line="29" />
+        <source>Forms containing *File upload* questions are not currently supported.</source>
+        <translation type="unfinished">Tällä hetkellä ei tueta lomakkeita, jotka sisältävät *tiedoston lataamista* koskevia kysymyksiä.</translation>
+    </message>
+    <message>
+        <location filename="../qml/Google/UnsupportedPage.qml" line="39" />
+        <source>Remove the question and update the form to continue.</source>
+        <translation type="unfinished">Poista kysymys ja päivitä lomake jatkaaksesi.</translation>
+    </message>
+</context>
+<context>
+    <name>UploadFileTask</name>
+    <message>
+        <location filename="../cpp/Google/GoogleProvider.cpp" line="131" />
+        <source>Incorrect %1 tag</source>
+        <translation type="unfinished">Virheellinen %1-tunniste</translation>
     </message>
 </context>
 <context>
@@ -3997,8 +4649,8 @@
     </message>
     <message>
         <location filename="../controls/imports/CyberTracker.1/UsernamePage.qml" line="65" />
-        <source>Data will be tagged with this name. This setting applies to all projects.</source>
-        <translation type="unfinished">Tiedot merkitään tällä nimellä. Tämä asetus koskee kaikkia projekteja.</translation>
+        <source>Data will be tagged with this name. This setting applies to all %1.</source>
+        <translation type="unfinished">Tiedot merkitään tällä nimellä. Tämä asetus koskee kaikkia %1.</translation>
     </message>
 </context>
 <context>
@@ -4020,7 +4672,7 @@
 <context>
     <name>Wizard</name>
     <message>
-        <location filename="../cpp/Wizard.cpp" line="431" />
+        <location filename="../cpp/Wizard.cpp" line="438" />
         <source>Form incomplete</source>
         <translation type="unfinished">Lomake puutteellinen</translation>
     </message>
@@ -4038,7 +4690,7 @@
         <translation type="unfinished">Tallennetut havainnot</translation>
     </message>
     <message>
-        <location filename="../controls/imports/CyberTracker.1/WizardOptionsPage.qml" line="102" />
+        <location filename="../controls/imports/CyberTracker.1/WizardOptionsPage.qml" line="26" />
         <source>Submit</source>
         <translation type="unfinished">Lähetä</translation>
     </message>
@@ -4046,42 +4698,63 @@
 <context>
     <name>WizardPage</name>
     <message>
-        <location filename="../controls/imports/CyberTracker.1/WizardPage.qml" line="352" />
+        <location filename="../controls/imports/CyberTracker.1/WizardPage.qml" line="400" />
         <source>Yes</source>
         <translation type="unfinished">Kyllä</translation>
     </message>
     <message>
-        <location filename="../controls/imports/CyberTracker.1/WizardPage.qml" line="352" />
+        <location filename="../controls/imports/CyberTracker.1/WizardPage.qml" line="400" />
         <source>No</source>
         <translation type="unfinished">Ei</translation>
     </message>
     <message>
-        <location filename="../controls/imports/CyberTracker.1/WizardPage.qml" line="389" />
+        <location filename="../controls/imports/CyberTracker.1/WizardPage.qml" line="437" />
         <source>OK</source>
         <translation type="unfinished">OK</translation>
     </message>
     <message>
-        <location filename="../controls/imports/CyberTracker.1/WizardPage.qml" line="712" />
+        <location filename="../controls/imports/CyberTracker.1/WizardPage.qml" line="772" />
         <source>Unsaved data?</source>
         <translation type="unfinished">Tallentamattomat tiedot?</translation>
     </message>
     <message>
-        <location filename="../controls/imports/CyberTracker.1/WizardPage.qml" line="713" />
+        <location filename="../controls/imports/CyberTracker.1/WizardPage.qml" line="773" />
         <source>This sighting has not been saved.</source>
         <translation type="unfinished">Tätä havaintoa ei ole tallennettu.</translation>
     </message>
     <message>
-        <location filename="../controls/imports/CyberTracker.1/WizardPage.qml" line="714" />
+        <location filename="../controls/imports/CyberTracker.1/WizardPage.qml" line="774" />
         <source>Yes, discard it</source>
         <translation type="unfinished">Kyllä, hävitä se</translation>
     </message>
     <message>
-        <location filename="../controls/imports/CyberTracker.1/WizardPage.qml" line="788" />
+        <location filename="../controls/imports/CyberTracker.1/WizardPage.qml" line="798" />
+        <source>Change %1</source>
+        <translation type="unfinished">Muuta %1</translation>
+    </message>
+    <message>
+        <location filename="../controls/imports/CyberTracker.1/WizardPage.qml" line="799" />
+        <source>Update %1</source>
+        <translation type="unfinished">Päivitä %1</translation>
+    </message>
+    <message>
+        <location filename="../controls/imports/CyberTracker.1/WizardPage.qml" line="800" />
+        <source>Settings</source>
+        <translation type="unfinished">Asetukset</translation>
+    </message>
+    <message>
+        <location filename="../controls/imports/CyberTracker.1/WizardPage.qml" line="801" />
+        <location filename="../controls/imports/CyberTracker.1/WizardPage.qml" line="922" />
         <source>Home</source>
         <translation type="unfinished">Etusivu</translation>
     </message>
     <message>
-        <location filename="../controls/imports/CyberTracker.1/WizardPage.qml" line="963" />
+        <location filename="../controls/imports/CyberTracker.1/WizardPage.qml" line="821" />
+        <source>Offline</source>
+        <translation type="unfinished">Offline</translation>
+    </message>
+    <message>
+        <location filename="../controls/imports/CyberTracker.1/WizardPage.qml" line="1103" />
         <source>Error saving observation</source>
         <translation type="unfinished">Virhe havainnon tallentamisessa</translation>
     </message>

@@ -3,7 +3,6 @@
 #ifdef QT_WEBENGINE_LIB
 #include <QtWebEngine>
 #endif
-
 #ifdef QT_WEBVIEW_LIB
 #include <QtWebView>
 #endif
@@ -118,22 +117,9 @@ int main(int argc, char *argv[])
     QQmlFileSelector::get(&appEngine)->setExtraSelectors(extraSelectors);
     appEngine.addImportPath(QDir(QCoreApplication::applicationDirPath()).filePath("qml"));
 
-    QString arcGISRuntimeImportPath = QUOTE(ARCGIS_RUNTIME_IMPORT_PATH);
-    QString arcGISToolkitImportPath = QUOTE(ARCGIS_TOOLKIT_IMPORT_PATH);
-
-#if defined(LINUX_PLATFORM_REPLACEMENT)
-    // on some linux platforms the string 'linux' is replaced with 1
-    // fix the replacement paths which were created
-    QString replaceString = QUOTE(LINUX_PLATFORM_REPLACEMENT);
-    arcGISRuntimeImportPath = arcGISRuntimeImportPath.replace(replaceString, "linux", Qt::CaseSensitive);
-    arcGISToolkitImportPath = arcGISToolkitImportPath.replace(replaceString, "linux", Qt::CaseSensitive);
+#ifdef ARCGIS_RUNTIME_IMPORT_PATH_2
+    appEngine.addImportPath(ARCGIS_RUNTIME_IMPORT_PATH_2);
 #endif
-
-    // Add the Runtime and Extras path.
-    appEngine.addImportPath(arcGISRuntimeImportPath);
-
-    // Add the Toolkit path.
-    appEngine.addImportPath(arcGISToolkitImportPath);
 
     // Register QZXing.
     QZXing::registerQMLTypes();
@@ -172,9 +158,7 @@ int main(int argc, char *argv[])
 
     auto topLevelObject = appEngine.rootObjects().value(0);
     qDebug() << Q_FUNC_INFO << topLevelObject;
-    qDebug() << QSslSocket::supportsSsl()
-             << QSslSocket::sslLibraryBuildVersionString()
-             << QSslSocket::sslLibraryVersionString();
+    qDebug() << QSslSocket::supportsSsl() << QSslSocket::sslLibraryBuildVersionString() << QSslSocket::sslLibraryVersionString();
     auto window = qobject_cast<QQuickWindow *>(topLevelObject);
     if (!window)
     {
@@ -182,44 +166,7 @@ int main(int argc, char *argv[])
         return -1;
     }
 
-#if !defined(Q_OS_IOS) && !defined(Q_OS_ANDROID)
-    // Process command line.
-    QCommandLineOption showOption(kArgShowName, kArgShowDescription, kArgShowValueName, kArgShowDefault);
-
-    QCommandLineParser commandLineParser;
-
-    commandLineParser.setApplicationDescription(config["title"].toString());
-    commandLineParser.addOption(showOption);
-    commandLineParser.addHelpOption();
-    commandLineParser.addVersionOption();
-    commandLineParser.process(app);
-
-    // Show app window.
-    auto showValue = commandLineParser.value(kArgShowName).toLower();
-
-    if (showValue.compare(kShowMaximized) == 0)
-    {
-        window->showMaximized();
-    }
-    else if (showValue.compare(kShowMinimized) == 0)
-    {
-        window->showMinimized();
-    }
-    else if (showValue.compare(kShowFullScreen) == 0)
-    {
-        window->showFullScreen();
-    }
-    else if (showValue.compare(kShowNormal) == 0)
-    {
-        window->showNormal();
-    }
-    else
-    {
-        window->show();
-    }
-#else
     window->show();
-#endif
 
 #if defined(Q_OS_ANDROID)
     QtAndroid::hideSplashScreen();

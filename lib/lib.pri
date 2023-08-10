@@ -24,3 +24,5 @@ include ($$PWD/qxlnt/Qxlnt.pri)
 
 DEFINES += QTCSV_STATIC_LIB
 include ($$PWD/qtcsv/qtcsv.pri)
+
+include ($$PWD/qtkeychain/qtkeychain.pri)

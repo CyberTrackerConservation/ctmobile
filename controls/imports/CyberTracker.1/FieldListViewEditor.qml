@@ -72,8 +72,6 @@ C.ListViewV  {
     }
 
     function validate() {
-        let oneErrorShown = false
-
         for (let i = 0; i < model.count; i++) {
             let fieldValue = model.get(i)
             if (fieldValue.valid) {
@@ -84,10 +82,13 @@ C.ListViewV  {
             console.log("Binding value invalid: " + fieldValue.fieldUid)
             root.positionViewAtIndex(i, ListView.Center)
 
-            if (!oneErrorShown && fieldValue.constraintMessage !== "") {
-                oneErrorShown = true
-                showError(fieldValue.constraintMessage)
+            let message = qsTr("Value required")
+            if (fieldValue.constraintMessage !== "") {
+                message = fieldValue.constraintMessage
+            } else if (fieldValue.requiredMessage !== "") {
+                message = fieldValue.requiredMessage
             }
+            showError(message)
 
             return false
         }

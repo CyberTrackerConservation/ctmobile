@@ -32,7 +32,6 @@ C.ContentPage {
 
                 C.SquareIcon {
                     Layout.alignment: Qt.AlignRight
-                    recolor: true
                     visible: modelData.uid === form.project.reportedBy || modelData.uid === form.project.reportedByDefault
                     source: modelData.uid === form.project.reportedBy ? "qrc:/icons/ok.svg" : "qrc:/icons/account.svg"
                 }

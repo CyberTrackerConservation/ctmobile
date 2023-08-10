@@ -68,6 +68,7 @@ void BaseField::toQml(QTextStream& stream, int depth) const
     Utils::writeQml(stream, depth, "listOther", m_listOther, false);
     Utils::writeQml(stream, depth, "tag", m_tag);
     Utils::writeQml(stream, depth, "required", m_required);
+    Utils::writeQml(stream, depth, "requiredElementUid", m_requiredElementUid);
     Utils::writeQml(stream, depth, "hidden", m_hidden, false);
     Utils::writeQml(stream, depth, "readonly", m_readonly, false);
     Utils::writeQml(stream, depth, "relevant", m_relevant);
@@ -235,7 +236,7 @@ bool RecordField::dynamic() const
         return true;
     }
 
-    return m_masterFieldUid.isEmpty() && m_matrixCount == 0 && m_repeatCount.isEmpty();
+    return m_masterFieldUid.isEmpty() && m_matrixCount == 0 && m_repeatCount.isEmpty() && !group();
 }
 
 bool RecordField::wizardFieldList() const
@@ -886,6 +887,7 @@ QString AreaField::toDisplayValue(ElementManager* /*elementManager*/, const QVar
 
 DateField::DateField(QObject* parent): BaseField(parent)
 {
+    m_hideYear = false;
 }
 
 QString DateField::toXml(const QVariant& value) const
@@ -914,6 +916,7 @@ void DateField::toQml(QTextStream& stream, int depth) const
 {
     Utils::writeQml(stream, depth, "DateField {");
     BaseField::toQml(stream, depth + 1);
+    Utils::writeQml(stream, depth + 1, "hideYear", m_hideYear, false);
     Utils::writeQml(stream, depth + 1, "minDate", m_minDate);
     Utils::writeQml(stream, depth + 1, "maxDate", m_maxDate);
     Utils::writeQml(stream, depth, "}");
@@ -964,6 +967,7 @@ QString DateField::toDisplayValue(ElementManager* /*elementManager*/, const QVar
 
 DateTimeField::DateTimeField(QObject* parent): BaseField(parent)
 {
+    m_hideYear = false;
 }
 
 QVariant DateTimeField::save(const QVariant& value) const
@@ -980,6 +984,7 @@ void DateTimeField::toQml(QTextStream& stream, int depth) const
 {
     Utils::writeQml(stream, depth, "DateTimeField {");
     BaseField::toQml(stream, depth + 1);
+    Utils::writeQml(stream, depth + 1, "hideYear", m_hideYear, false);
     Utils::writeQml(stream, depth + 1, "minDate", m_minDate);
     Utils::writeQml(stream, depth + 1, "maxDate", m_maxDate);
     Utils::writeQml(stream, depth, "}");
@@ -1131,7 +1136,9 @@ QVariant PhotoField::createValue(const QString& filename)
 
 void PhotoField::appendAttachments(const QVariant& value, QStringList* attachmentsOut) const
 {
-    attachmentsOut->append(value.toStringList());
+    auto photoList = value.toStringList();
+    photoList.removeAll("");
+    attachmentsOut->append(photoList);
 }
 
 QVariant PhotoField::save(const QVariant& value) const

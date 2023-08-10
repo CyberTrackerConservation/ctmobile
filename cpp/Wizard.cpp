@@ -251,10 +251,11 @@ bool Wizard::advance(const QString& recordUid, const QString& fieldUid, QVariant
         // Group record.
         auto nextRecordUid = m_sighting->getRecord(recordUid)->getFieldValue(nextRecordField->uid()).toStringList().first();
 
-        // Group record with field-list.
+        // Group record without field-list.
         if (!nextRecordField->wizardFieldList())
         {
-            return advance(nextRecordUid, "", wizardPageStackOut, errorOut, lastPageOut);
+            // Ignore error, because the whole record may not be valid yet.
+            return advance(nextRecordUid, "", wizardPageStackOut, nullptr/*errorOut*/, lastPageOut);
         }
 
         wizardPageStackOut->append(QVariantMap {{ "recordUid", nextRecordUid }, { "fieldUid", "" }});
@@ -310,19 +311,23 @@ void Wizard::reverse(QVariantList* wizardPageStackOut, const std::function<bool(
 
 void Wizard::edit(const QString &recordUid, const QString& fieldUid, int transition)
 {
-    // Drill down if not in record view.
+    auto updateButtonsOnLeave = qScopeGuard([this] { updateButtons(); });
+    auto wizardPageStack = m_sighting->wizardPageStack();
+
     auto recordField = m_sighting->getRecord(recordUid)->recordField();
     if (fieldUid.isEmpty() && !recordField->wizardFieldList())
     {
-        next(recordUid, "", transition);
-        return;
+        auto lastPage = false;
+        if (!advance(recordUid, "", &wizardPageStack, nullptr, &lastPage))
+        {
+            return;
+        }
+    }
+    else
+    {
+        wizardPageStack.append(QVariantMap {{ "recordUid", recordUid }, { "fieldUid", fieldUid }});
     }
 
-    // Record view.
-    auto updateButtonsOnLeave = qScopeGuard([this] { updateButtons(); });
-
-    auto wizardPageStack = m_sighting->wizardPageStack();
-    wizardPageStack.append(QVariantMap {{ "recordUid", recordUid }, { "fieldUid", fieldUid }});
     m_sighting->set_wizardPageStack(wizardPageStack);
 
     emit rebuildPage(transition);
@@ -340,8 +345,10 @@ void Wizard::next(const QString& recordUid, const QString& fieldUid, int transit
     {
         if (!error.isEmpty())
         {
-            emit form(this)->highlightInvalid();
             emit App::instance()->showError(error);
+
+            // Do this after the showError, as it may trump with a better error message.
+            emit form(this)->highlightInvalid();
         }
 
         return;
@@ -456,11 +463,15 @@ bool Wizard::save(const QString& targetFieldUid, int transition)
     auto sighting = form->createSightingPtr(sightingData);
     auto wizardPageStack = sighting->wizardPageStack();
     auto foundTargetFieldUid = false;
+
+    auto pageRecordUid = QString();
+    auto pageFieldUid = QString();
+
     for (;;)
     {
         auto pageParams = wizardPageStack.constLast().toMap();
-        auto pageRecordUid = pageParams["recordUid"].toString();
-        auto pageFieldUid = pageParams["fieldUid"].toString();
+        pageRecordUid = pageParams["recordUid"].toString();
+        pageFieldUid = pageParams["fieldUid"].toString();
 
         // An empty fieldUid means the page represents the full record, i.e. a field-list. Convert to record + field.
         if (pageFieldUid.isEmpty())
@@ -469,9 +480,6 @@ bool Wizard::save(const QString& targetFieldUid, int transition)
             pageRecordUid = record->parentRecordUid();
             pageFieldUid = record->recordFieldUid();
         }
-
-        // Reset field values.
-        sighting->getRecord(pageRecordUid)->resetFieldValue(pageFieldUid);
 
         // Check for the first page.
         if (wizardPageStack.count() == 1)
@@ -488,6 +496,24 @@ bool Wizard::save(const QString& targetFieldUid, int transition)
 
         // Remove page.
         wizardPageStack.removeLast();
+    }
+
+    // Reset all the fields after the target.
+    if (!pageFieldUid.isEmpty())
+    {
+        auto fieldManager = ::fieldManager(this);
+        auto rootField = fieldManager->rootField();
+        auto field = fieldManager->getField(pageFieldUid);
+        while (field->parentField() != rootField)
+        {
+            field = field->parentField();
+        }
+
+        auto fieldIndex = rootField->fieldIndex(field);
+        for (auto i = fieldIndex; i < rootField->fieldCount(); i++)
+        {
+            sighting->resetRootFieldValue(rootField->field(i)->uid());
+        }
     }
 
     // Reset the snap location field if provided.
@@ -601,19 +627,66 @@ void Wizard::options(const QString& recordUid, const QString& fieldUid, int tran
 
 QString Wizard::error(const QString& recordUid, const QString& fieldUid) const
 {
-    auto constraintMessage = m_sighting->getRecord(recordUid)->getFieldConstraintMessage(fieldUid);
+    auto finalRecordUid = recordUid;
+    auto finalFieldUid = fieldUid;
+    auto recordValid = true;
+    auto fieldValid = true;
 
-    if (!fieldUid.isEmpty() && !m_sighting->getRecord(recordUid)->testFieldFlag(fieldUid, FieldFlag::Valid))
+    // Empty field means use the recordUid only.
+    if (fieldUid.isEmpty())
     {
-        return constraintMessage;
+        // Skip root record.
+        if (recordUid == m_sighting->wizardRecordUid())
+        {
+            return QString();
+        }
+
+        // Pick up the group.
+        auto record = m_sighting->getRecord(recordUid);
+        finalRecordUid = record->parentRecordUid();
+        finalFieldUid = record->recordFieldUid();
+        recordValid = record->isValid();
+    }
+    else  // Validate child records.
+    {
+        auto field = fieldManager(this)->getField(fieldUid);
+        if (field->isRecordField())
+        {
+            auto records = m_sighting->getFieldValue(recordUid, fieldUid, QStringList()).toStringList();
+            for (auto recordIt = records.constBegin(); recordIt != records.constEnd(); recordIt++)
+            {
+                recordValid = m_sighting->getRecord(*recordIt)->isValid();
+                if (!recordValid)
+                {
+                    break;
+                }
+            }
+        }
     }
 
-    if (fieldUid.isEmpty() && !m_sighting->getRecord(recordUid)->isValid() && m_sighting->getRecord(recordUid)->recordField()->wizardFieldList())
+    auto record = m_sighting->getRecord(finalRecordUid);
+    fieldValid = record->testFieldFlag(finalFieldUid, FieldFlag::Valid);
+
+    // No error for valid fields.
+    if (recordValid && fieldValid)
     {
-        return constraintMessage;
+        return QString();
     }
 
-    return QString();
+    // If constraint is not met -> show constraint message.
+    if (!recordValid || !record->testFieldFlag(finalFieldUid, FieldFlag::Constraint))
+    {
+        return record->getFieldConstraintMessage(finalFieldUid);
+    }
+
+    // If required -> show the required message.
+    if (!recordValid || record->testFieldFlag(finalFieldUid, FieldFlag::Required))
+    {
+        return record->getFieldRequiredMessage(finalFieldUid);
+    }
+
+    // This is reached when the field validation (e.g. NumberField) says the value is invalid, but no constraint has been set.
+    return record->getFieldConstraintMessage(finalFieldUid);
 }
 
 void Wizard::updateButtons()

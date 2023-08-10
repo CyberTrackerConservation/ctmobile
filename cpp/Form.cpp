@@ -12,6 +12,8 @@ Form::Form(QObject* /*parent*/)
     m_editing = false;
     m_stateSpace = "";
     m_readonly = false;
+    resetSessionId();
+
     m_languageCode = QLocale::system().name();
     m_depth = -1;
     m_tracePageChanges = false;
@@ -54,12 +56,17 @@ Form::Form(QObject* /*parent*/)
         m_wizard->updateButtons();
     });
 
-    // Update requireUsername.
+    // Update requireUsername and snap the username for the current sighting.
     connect(App::instance()->settings(), &Settings::usernameChanged, this, [&]()
     {
         if (m_connected)
         {
             update_requireUsername(m_provider->requireUsername());
+
+            if (!m_editing && !m_readonly)
+            {
+                m_sighting->snapUsername();
+            }
         }
     });
 
@@ -133,7 +140,7 @@ Form::Form(QObject* /*parent*/)
     // Forward global Sighting events.
     auto matchToThis = [](Form* form, const QString& projectUid, const QString& stateSpace) -> bool
     {
-        return form->connected() && form->projectUid() == projectUid && form->stateSpace() == stateSpace;
+        return form->connected() && form->projectUid() == projectUid && (form->stateSpace() == stateSpace || stateSpace == "*");
     };
 
     connect(App::instance(), &App::sightingsChanged, this, [&, this](const QString& projectUid, const QString& stateSpace)
@@ -152,9 +159,9 @@ Form::Form(QObject* /*parent*/)
         }
     });
 
-    connect(App::instance(), &App::sightingRemoved, this, [&, this](const QString& projectUid, const QString& sightingUid, const QString& stateSpace)
+    connect(App::instance(), &App::sightingRemoved, this, [&, this](const QString& projectUid, const QString& sightingUid, const QString& /*stateSpace*/)
     {
-        if (matchToThis(this, projectUid, stateSpace))
+        if (matchToThis(this, projectUid, "*")) // Removed goes to all, so it is easy to remove from any context.
         {
             emit sightingRemoved(sightingUid);
         }
@@ -405,6 +412,11 @@ std::unique_ptr<Sighting> Form::createSightingPtr(const QString& sightingUid) co
     return createSightingPtr(data);
 }
 
+void Form::resetSessionId()
+{
+    m_sessionId = QUuid::createUuid().toString(QUuid::Id128);
+}
+
 void Form::loadState(bool formChanged)
 {
     auto formState = QVariantMap();
@@ -432,6 +444,9 @@ void Form::loadState(bool formChanged)
     // Load the globals.
     m_globals = formState.value("globals", QVariantMap()).toMap();
 
+    // Load the current session id (pick up the existing one if missing).
+    m_sessionId = formState.value("sessionId", m_sessionId).toString();
+
     // Load the provider state.
     auto providerState = formState.value("provider", QVariantMap()).toMap();
     m_provider->load(providerState);
@@ -447,6 +462,9 @@ void Form::loadState(bool formChanged)
         {
             m_pointStreamer->start(m_project->sendLocationInterval() * 1000);
         }
+
+        // Snap the current username in case it changed.
+        m_sighting->snapUsername();
     }
 
     // Recalculate to bring back field flags that may not have been stored.
@@ -598,7 +616,7 @@ void Form::processAutoSubmit()
     App::instance()->setAlarm(m_submitAlarmId, submitInterval);
 }
 
-void Form::saveState()
+void Form::saveState() const
 {
     if (m_readonly)
     {
@@ -607,6 +625,7 @@ void Form::saveState()
 
     auto state = QVariantMap();
     state["globals"] = m_globals;
+    state["sessionId"] = m_sessionId;
     auto attachments = QStringList();
     state["currSighting"] = m_sighting->save(&attachments);
 
@@ -1004,6 +1023,15 @@ void Form::nextSighting()
     loadSighting(sightingUids[currentIndex + 1]);
 }
 
+void Form::newSessionId()
+{
+    qFatalIf(m_editing || m_readonly, "Edit in progress");
+
+    resetSessionId();
+    m_sighting->snapSessionId();
+    saveState();
+}
+
 void Form::snapCreateTime()
 {
     m_sighting->snapCreateTime();
@@ -1209,6 +1237,11 @@ QString Form::getFieldConstraintMessage(const QString& recordUid, const QString&
     return getRecord(recordUid)->getFieldConstraintMessage(fieldUid);
 }
 
+QString Form::getFieldRequiredMessage(const QString& recordUid, const QString& fieldUid) const
+{
+    return getRecord(recordUid)->getFieldRequiredMessage(fieldUid);
+}
+
 QString Form::getRecordFieldUid(const QString& recordUid) const
 {
     return getRecord(recordUid)->recordFieldUid();
@@ -1395,19 +1428,46 @@ QVariantMap Form::getSaveCommands(const QString& recordUid, const QString& field
 
 void Form::applyTrackCommand()
 {
+    auto trackCommand = m_sighting->findTrackCommand();
+    if (trackCommand.isEmpty())
+    {
+        return;
+    }
+
+    if (trackCommand.value("snapTrack").toBool())
+    {
+        snapTrack();
+    }
+
+    if (trackCommand.value("newSessionId").toBool())
+    {
+        // Do not use newSessionId(), because that will modify the current sighting.
+        // This way, the next sighting will pick up a new sessionId.
+        resetSessionId();
+    }
+
+    auto updateIntervalSeconds = trackCommand.value("updateIntervalSeconds", -1).toInt();
+    if (updateIntervalSeconds == -1)
+    {
+        return;
+    }
+
+    auto distanceFilterMeters = trackCommand.value("distanceFilterMeters", 0).toInt();
+
+    startTrackStreamer(updateIntervalSeconds, distanceFilterMeters);
+}
+
+void Form::startTrackStreamer(int updateIntervalSeconds, int distanceFilterMeters)
+{
     if (m_editing)
     {
+        qDebug() << "Error: cannot start the track while editing";
         return;
     }
 
     if (isSightingCompleted(rootRecordUid()))
     {
-        return;
-    }
-
-    auto trackSetting = m_sighting->findTrackSetting();
-    if (trackSetting.isEmpty())
-    {
+        qDebug() << "Error: cannot start the track for completed sightings";
         return;
     }
 
@@ -1416,19 +1476,6 @@ void Form::applyTrackCommand()
         emit App::instance()->showError(tr("Missing track field or service"));
         return;
     }
-
-    if (trackSetting.value("snapTrack").toBool())
-    {
-        snapTrack();
-    }
-
-    auto updateIntervalSeconds = trackSetting.value("updateIntervalSeconds", -1).toInt();
-    if (updateIntervalSeconds == -1)
-    {
-        return;
-    }
-
-    auto distanceFilterMeters = trackSetting.value("distanceFilterMeters", 0).toInt();
 
     if (updateIntervalSeconds > 0)
     {
@@ -1440,6 +1487,11 @@ void Form::applyTrackCommand()
     {
         m_trackStreamer->stop();
     }
+}
+
+void Form::stopTrackStreamer()
+{
+    startTrackStreamer(0, 0);
 }
 
 void Form::pushPage(const QString& pageUrl, const QVariantMap& params, int transition)

@@ -14,22 +14,22 @@
         <translation type="unfinished">Impulsat per</translation>
     </message>
     <message>
-        <location filename="../qml/AboutPage.qml" line="109" />
+        <location filename="../qml/AboutPage.qml" line="107" />
         <source>Privacy statement</source>
         <translation type="unfinished">Declaració de privacitat</translation>
     </message>
     <message>
-        <location filename="../qml/AboutPage.qml" line="122" />
+        <location filename="../qml/AboutPage.qml" line="121" />
         <source>Software license</source>
         <translation type="unfinished">Llicència de programari</translation>
     </message>
     <message>
-        <location filename="../qml/AboutPage.qml" line="135" />
+        <location filename="../qml/AboutPage.qml" line="134" />
         <source>Support forum</source>
         <translation type="unfinished">Fòrum de suport</translation>
     </message>
     <message>
-        <location filename="../qml/AboutPage.qml" line="148" />
+        <location filename="../qml/AboutPage.qml" line="147" />
         <source>More resources</source>
         <translation type="unfinished">Més recursos</translation>
     </message>
@@ -37,7 +37,7 @@
 <context>
     <name>AcknowledgeField</name>
     <message>
-        <location filename="../cpp/Field.cpp" line="704" />
+        <location filename="../cpp/Field.cpp" line="705" />
         <source>OK</source>
         <translation type="unfinished">D'acord</translation>
     </message>
@@ -45,156 +45,208 @@
 <context>
     <name>App</name>
     <message>
-        <location filename="../cpp/App.cpp" line="719" />
+        <location filename="../cpp/App.cpp" line="755" />
         <source>Accuracy</source>
         <translation type="unfinished">Precisió</translation>
     </message>
     <message>
-        <location filename="../cpp/App.cpp" line="864" />
-        <location filename="../cpp/App.cpp" line="920" />
-        <location filename="../cpp/App.cpp" line="934" />
+        <location filename="../cpp/App.cpp" line="899" />
+        <location filename="../cpp/App.cpp" line="953" />
         <source>Permission request</source>
         <translation type="unfinished">Sol·licitud de permís</translation>
     </message>
     <message>
-        <location filename="../cpp/App.cpp" line="920" />
-        <source>This project requires access to some features of the device. Please allow these requests in order to proceed.</source>
-        <translation type="unfinished">Aquest projecte requereix accés a algunes funcions del dispositiu. Permeteu aquestes sol·licituds per continuar.</translation>
-    </message>
-    <message>
-        <location filename="../cpp/App.cpp" line="934" />
-        <source>This project requires background GPS access. Please allow this request in order to proceed.</source>
-        <translation type="unfinished">Aquest projecte requereix accés GPS de fons. Permeteu aquesta sol·licitud per continuar.</translation>
-    </message>
-    <message>
-        <location filename="../cpp/App.cpp" line="946" />
-        <source>Recording audio and video requires permission. Please allow the request in order to proceed.</source>
-        <translation type="unfinished">La gravació d'àudio i vídeo requereix permís. Permeteu la sol·licitud per continuar.</translation>
-    </message>
-    <message>
-        <location filename="../cpp/App.cpp" line="951" />
-        <location filename="../cpp/App.cpp" line="952" />
+        <location filename="../cpp/App.cpp" line="1000" />
         <source>Access to GPS is required for this feature to work. Please allow the request in order to proceed.</source>
         <translation type="unfinished">És necessari accedir al GPS perquè aquesta funció funcioni. Permeteu la sol·licitud per continuar.</translation>
     </message>
     <message>
-        <location filename="../cpp/App.cpp" line="960" />
+        <location filename="../cpp/App.cpp" line="1012" />
         <source>Background access to GPS is required. Please allow the request in order to proceed.</source>
         <translation type="unfinished">Es requereix accés en segon pla al GPS. Permeteu la sol·licitud per continuar.</translation>
     </message>
     <message>
-        <location filename="../cpp/App.cpp" line="969" />
-        <location filename="../cpp/App.cpp" line="974" />
-        <source>Access to external storage is required for this feature to work. Please allow the request in order to proceed.</source>
-        <translation type="unfinished">És necessari accedir a l'emmagatzematge extern perquè aquesta funció funcioni. Permeteu la sol·licitud per continuar.</translation>
-    </message>
-    <message>
-        <location filename="../cpp/App.cpp" line="1002" />
+        <location filename="../cpp/App.cpp" line="1138" />
         <source>Battery level</source>
         <translation type="unfinished">Nivell de bateria</translation>
     </message>
     <message>
-        <location filename="../cpp/App.cpp" line="1408" />
+        <location filename="../cpp/App.cpp" line="1562" />
         <source>Download failed</source>
         <translation type="unfinished">La baixada ha fallat</translation>
     </message>
     <message>
-        <location filename="../cpp/App.cpp" line="1465" />
+        <location filename="../cpp/App.cpp" line="1616" />
+        <source>Empty link</source>
+        <translation type="unfinished">Enllaç buit</translation>
+    </message>
+    <message>
+        <location filename="../cpp/App.cpp" line="1664" />
         <source>Bad link</source>
         <translation type="unfinished">Mal enllaç</translation>
     </message>
     <message>
-        <location filename="../cpp/App.cpp" line="1502" />
+        <location filename="../cpp/App.cpp" line="1701" />
         <source>Unknown command</source>
         <translation type="unfinished">Ordre desconeguda</translation>
     </message>
     <message>
-        <location filename="../cpp/App.cpp" line="1523" />
+        <location filename="../cpp/App.cpp" line="1722" />
         <source>Not an installable package</source>
         <translation type="unfinished">No és un paquet instal·lable</translation>
     </message>
     <message>
-        <location filename="../cpp/App.cpp" line="1531" />
+        <location filename="../cpp/App.cpp" line="1730" />
         <source>Install successful</source>
         <translation type="unfinished">Instal·lació correcta</translation>
     </message>
     <message>
-        <location filename="../cpp/App.cpp" line="1691" />
+        <location filename="../cpp/App.cpp" line="1903" />
         <source>second</source>
         <translation type="unfinished">segon</translation>
     </message>
     <message>
-        <location filename="../cpp/App.cpp" line="1691" />
+        <location filename="../cpp/App.cpp" line="1903" />
         <source>seconds</source>
         <translation type="unfinished">segons</translation>
     </message>
     <message>
-        <location filename="../cpp/App.cpp" line="1696" />
+        <location filename="../cpp/App.cpp" line="1908" />
         <source>minute</source>
         <translation type="unfinished">minut</translation>
     </message>
     <message>
-        <location filename="../cpp/App.cpp" line="1696" />
+        <location filename="../cpp/App.cpp" line="1908" />
         <source>minutes</source>
         <translation type="unfinished">minuts</translation>
     </message>
     <message>
-        <location filename="../cpp/App.cpp" line="1701" />
+        <location filename="../cpp/App.cpp" line="1913" />
         <source>hour</source>
         <translation type="unfinished">hores</translation>
     </message>
     <message>
-        <location filename="../cpp/App.cpp" line="1701" />
+        <location filename="../cpp/App.cpp" line="1913" />
         <source>hours</source>
         <translation type="unfinished">hores</translation>
     </message>
     <message>
-        <location filename="../cpp/App.cpp" line="1816" />
+        <location filename="../cpp/App.cpp" line="2028" />
         <source>Export missing</source>
         <translation type="unfinished">Falta l'exportació</translation>
     </message>
     <message>
-        <location filename="../cpp/App.cpp" line="1824" />
+        <location filename="../cpp/App.cpp" line="2036" />
         <source>%1 deleted</source>
         <translation type="unfinished">%1 suprimit</translation>
     </message>
     <message>
-        <location filename="../cpp/App.cpp" line="1886" />
+        <location filename="../cpp/App.cpp" line="688" />
         <source>Project</source>
         <translation type="unfinished">Projecte</translation>
     </message>
     <message>
-        <location filename="../cpp/App.cpp" line="1887" />
+        <location filename="../cpp/App.cpp" line="689" />
+        <source>Projects</source>
+        <translation type="unfinished">Projectes</translation>
+    </message>
+    <message>
+        <location filename="../cpp/App.cpp" line="690" />
+        <source>project</source>
+        <translation type="unfinished">projecte</translation>
+    </message>
+    <message>
+        <location filename="../cpp/App.cpp" line="691" />
+        <source>projects</source>
+        <translation type="unfinished">projectes</translation>
+    </message>
+    <message>
+        <location filename="../cpp/App.cpp" line="695" />
+        <source>Form</source>
+        <translation type="unfinished">Formulari</translation>
+    </message>
+    <message>
+        <location filename="../cpp/App.cpp" line="696" />
+        <source>Forms</source>
+        <translation type="unfinished">Formes</translation>
+    </message>
+    <message>
+        <location filename="../cpp/App.cpp" line="697" />
+        <source>form</source>
+        <translation type="unfinished">forma</translation>
+    </message>
+    <message>
+        <location filename="../cpp/App.cpp" line="698" />
+        <source>forms</source>
+        <translation type="unfinished">formes</translation>
+    </message>
+    <message>
+        <location filename="../cpp/App.cpp" line="702" />
+        <source>Survey</source>
+        <translation type="unfinished">Enquesta</translation>
+    </message>
+    <message>
+        <location filename="../cpp/App.cpp" line="703" />
+        <source>Surveys</source>
+        <translation type="unfinished">Enquestes</translation>
+    </message>
+    <message>
+        <location filename="../cpp/App.cpp" line="704" />
+        <source>survey</source>
+        <translation type="unfinished">enquesta</translation>
+    </message>
+    <message>
+        <location filename="../cpp/App.cpp" line="705" />
+        <source>surveys</source>
+        <translation type="unfinished">enquestes</translation>
+    </message>
+    <message>
+        <location filename="../cpp/App.cpp" line="953" />
+        <source>This %1 requires access to some features of the device. Please allow these requests in order to proceed.</source>
+        <translation type="unfinished">Aquest %1 requereix accés a algunes funcions del dispositiu. Permeteu aquestes sol·licituds per continuar.</translation>
+    </message>
+    <message>
+        <location filename="../cpp/App.cpp" line="989" />
+        <source>Using the camera requires permission. Please allow the request in order to proceed.</source>
+        <translation type="unfinished">L'ús de la càmera requereix permís. Permeteu la sol·licitud per continuar.</translation>
+    </message>
+    <message>
+        <location filename="../cpp/App.cpp" line="994" />
+        <source>Recording audio requires permission. Please allow the request in order to proceed.</source>
+        <translation type="unfinished">La gravació d'àudio requereix permís. Permeteu la sol·licitud per continuar.</translation>
+    </message>
+    <message>
+        <location filename="../cpp/App.cpp" line="2099" />
         <source>Start date</source>
         <translation type="unfinished">Data d'inici</translation>
     </message>
     <message>
-        <location filename="../cpp/App.cpp" line="1888" />
+        <location filename="../cpp/App.cpp" line="2100" />
         <source>Start time</source>
         <translation type="unfinished">L'hora d'inici</translation>
     </message>
     <message>
-        <location filename="../cpp/App.cpp" line="1889" />
+        <location filename="../cpp/App.cpp" line="2101" />
         <source>Stop date</source>
         <translation type="unfinished">Data d'aturada</translation>
     </message>
     <message>
-        <location filename="../cpp/App.cpp" line="1890" />
+        <location filename="../cpp/App.cpp" line="2102" />
         <source>Stop time</source>
         <translation type="unfinished">Atura el temps</translation>
     </message>
     <message>
-        <location filename="../cpp/App.cpp" line="1891" />
+        <location filename="../cpp/App.cpp" line="2103" />
         <source>Sightings</source>
         <translation type="unfinished">Albiraments</translation>
     </message>
     <message>
-        <location filename="../cpp/App.cpp" line="1892" />
+        <location filename="../cpp/App.cpp" line="2104" />
         <source>Locations</source>
         <translation type="unfinished">Ubicacions</translation>
     </message>
     <message>
-        <location filename="../cpp/App.cpp" line="1920" />
+        <location filename="../cpp/App.cpp" line="2132" />
         <source>Failed to load service template</source>
         <translation type="unfinished">No s'ha pogut carregar la plantilla del servei</translation>
     </message>
@@ -202,91 +254,151 @@
 <context>
     <name>AppMain</name>
     <message>
-        <location filename="../qml/AppMain.qml" line="52" />
-        <location filename="../qml/AppMain.qml" line="65" />
+        <location filename="../qml/AppMain.qml" line="53" />
+        <location filename="../qml/AppMain.qml" line="66" />
         <source>Choose a file</source>
         <translation type="unfinished">Trieu un fitxer</translation>
     </message>
     <message>
-        <location filename="../qml/AppMain.qml" line="57" />
+        <location filename="../qml/AppMain.qml" line="58" />
         <source>Image files</source>
         <translation type="unfinished">Fitxers d'imatge</translation>
     </message>
     <message>
-        <location filename="../qml/AppMain.qml" line="70" />
+        <location filename="../qml/AppMain.qml" line="71" />
         <source>Package files</source>
         <translation type="unfinished">Arxius de paquets</translation>
     </message>
     <message>
-        <location filename="../qml/AppMain.qml" line="82" />
+        <location filename="../qml/AppMain.qml" line="83" />
         <source>&amp;File</source>
         <translation type="unfinished">&amp;Dossier</translation>
     </message>
     <message>
-        <location filename="../qml/AppMain.qml" line="84" />
+        <location filename="../qml/AppMain.qml" line="85" />
         <source>Save &amp;As...</source>
         <translation type="unfinished">Guardar com...</translation>
     </message>
     <message>
-        <location filename="../qml/AppMain.qml" line="91" />
+        <location filename="../qml/AppMain.qml" line="92" />
         <source>Install package</source>
         <translation type="unfinished">Instal·leu el paquet</translation>
     </message>
     <message>
-        <location filename="../qml/AppMain.qml" line="97" />
+        <location filename="../qml/AppMain.qml" line="98" />
         <source>Connect using clipboard link</source>
         <translation type="unfinished">Connecteu-vos mitjançant l'enllaç del porta-retalls</translation>
     </message>
     <message>
-        <location filename="../qml/AppMain.qml" line="104" />
+        <location filename="../qml/AppMain.qml" line="105" />
+        <source>Reset cache</source>
+        <translation type="unfinished">Restableix la memòria cau</translation>
+    </message>
+    <message>
+        <location filename="../qml/AppMain.qml" line="112" />
         <source>&amp;Quit</source>
         <translation type="unfinished">&amp;Surt</translation>
     </message>
     <message>
-        <location filename="../qml/AppMain.qml" line="109" />
+        <location filename="../qml/AppMain.qml" line="117" />
         <source>&amp;Edit</source>
         <translation type="unfinished">&amp;Edita</translation>
     </message>
     <message>
-        <location filename="../qml/AppMain.qml" line="111" />
+        <location filename="../qml/AppMain.qml" line="119" />
         <source>&amp;Copy to clipboard</source>
         <translation type="unfinished">&amp;Copiar al portapapers</translation>
     </message>
     <message>
-        <location filename="../qml/AppMain.qml" line="116" />
+        <location filename="../qml/AppMain.qml" line="124" />
         <source>&amp;Tools</source>
         <translation type="unfinished">&amp;Eines</translation>
     </message>
     <message>
-        <location filename="../qml/AppMain.qml" line="118" />
+        <location filename="../qml/AppMain.qml" line="126" />
         <source>Create ArcGIS location service</source>
         <translation type="unfinished">Creeu el servei d'ubicació d'ArcGIS</translation>
     </message>
     <message>
-        <location filename="../qml/AppMain.qml" line="123" />
+        <location filename="../qml/AppMain.qml" line="131" />
         <source>&amp;Window</source>
         <translation type="unfinished">&amp;Finestra</translation>
     </message>
     <message>
-        <location filename="../qml/AppMain.qml" line="125" />
+        <location filename="../qml/AppMain.qml" line="133" />
         <source>Reset window size</source>
         <translation type="unfinished">Restableix la mida de la finestra</translation>
     </message>
     <message>
-        <location filename="../qml/AppMain.qml" line="133" />
+        <location filename="../qml/AppMain.qml" line="141" />
         <source>Toggle developer console</source>
-        <translation type="unfinished">Commuta la consola del desenvolupador</translation>
+        <translation type="unfinished">Commuta la consola de desenvolupadors</translation>
     </message>
     <message>
-        <location filename="../qml/AppMain.qml" line="370" />
+        <location filename="../qml/AppMain.qml" line="408" />
         <source>Offline</source>
         <translation type="unfinished">Fora de línia</translation>
+    </message>
+    <message>
+        <location filename="../qml/AppMain.qml" line="432" />
+        <source>%1 detected</source>
+        <translation type="unfinished">S'ha detectat %1</translation>
+    </message>
+    <message>
+        <location filename="../qml/AppMain.qml" line="433" />
+        <source>Use the %1 app to allow background activity for %2.</source>
+        <translation type="unfinished">Utilitzeu l'aplicació %1 per permetre l'activitat en segon pla per a %2.</translation>
+    </message>
+    <message>
+        <location filename="../qml/AppMain.qml" line="434" />
+        <source>This is required to ensure that a proper track of your location is created.</source>
+        <translation type="unfinished">Això és necessari per garantir que es crea un seguiment adequat de la vostra ubicació.</translation>
+    </message>
+    <message>
+        <location filename="../qml/AppMain.qml" line="451" />
+        <source>Background location required</source>
+        <translation type="unfinished">Es requereix una ubicació de fons</translation>
+    </message>
+    <message>
+        <location filename="../qml/AppMain.qml" line="471" />
+        <source>Location required</source>
+        <translation type="unfinished">Ubicació necessària</translation>
+    </message>
+    <message>
+        <location filename="../qml/AppMain.qml" line="472" />
+        <source>Permission to use your location is needed for mapping and data collection.</source>
+        <translation type="unfinished">Es necessita permís per utilitzar la vostra ubicació per a la cartografia i la recollida de dades.</translation>
+    </message>
+    <message>
+        <location filename="../qml/AppMain.qml" line="473" />
+        <source>Tap %1 below and allow it to be used.</source>
+        <translation type="unfinished">Toca %1 a continuació i permet que s'utilitzi.</translation>
+    </message>
+    <message>
+        <location filename="../qml/AppMain.qml" line="453" />
+        <source>This %1 requires permission to capture location in the background. This is needed to ensure that a proper track of your location is created.</source>
+        <translation type="unfinished">Aquest %1 requereix permís per capturar la ubicació en segon pla. Això és necessari per garantir que es crea un seguiment adequat de la vostra ubicació.</translation>
+    </message>
+    <message>
+        <location filename="../qml/AppMain.qml" line="452" />
+        <source>Allow all the time</source>
+        <translation type="unfinished">Permeteu-ho tot el temps</translation>
+    </message>
+    <message>
+        <location filename="../qml/AppMain.qml" line="452" />
+        <source>You must select %1 on the next screen.</source>
+        <translation type="unfinished">Heu de seleccionar %1 a la pantalla següent.</translation>
+    </message>
+    <message>
+        <location filename="../qml/AppMain.qml" line="473" />
+        <source>OK</source>
+        <translation type="unfinished">D'acord</translation>
     </message>
 </context>
 <context>
     <name>AreaField</name>
     <message>
-        <location filename="../cpp/Field.cpp" line="881" />
+        <location filename="../cpp/Field.cpp" line="882" />
         <source>points</source>
         <translation type="unfinished">punts</translation>
     </message>
@@ -294,7 +406,7 @@
 <context>
     <name>AudioField</name>
     <message>
-        <location filename="../cpp/Field.cpp" line="1270" />
+        <location filename="../cpp/Field.cpp" line="1277" />
         <source>seconds</source>
         <translation type="unfinished">segons</translation>
     </message>
@@ -328,6 +440,16 @@
         <translation type="unfinished">S'ha desat l'informe</translation>
     </message>
     <message>
+        <location filename="../qml/BugReportPage.qml" line="16" />
+        <source>Share bug report</source>
+        <translation type="unfinished">Comparteix l'informe d'error</translation>
+    </message>
+    <message>
+        <location filename="../qml/BugReportPage.qml" line="16" />
+        <source>Save bug report</source>
+        <translation type="unfinished">Desa l'informe d'error</translation>
+    </message>
+    <message>
         <location filename="../qml/BugReportPage.qml" line="62" />
         <source>Failed to copy report</source>
         <translation type="unfinished">No s'ha pogut copiar l'informe</translation>
@@ -336,16 +458,6 @@
         <location filename="../qml/BugReportPage.qml" line="39" />
         <source>Describe the issue</source>
         <translation type="unfinished">Descriu el problema</translation>
-    </message>
-    <message>
-        <location filename="../qml/BugReportPage.qml" line="16" />
-        <source>Share report</source>
-        <translation type="unfinished">Comparteix l'informe</translation>
-    </message>
-    <message>
-        <location filename="../qml/BugReportPage.qml" line="16" />
-        <source>Save report</source>
-        <translation type="unfinished">Guarda l'informe</translation>
     </message>
     <message>
         <location filename="../qml/BugReportPage.qml" line="40" />
@@ -366,7 +478,7 @@
 <context>
     <name>CHost_Qt</name>
     <message>
-        <location filename="../lib/classic/Host/Qt/QtHost.cpp" line="1261" />
+        <location filename="../lib/classic/Host/Qt/QtHost.cpp" line="1266" />
         <source>Data exported</source>
         <translation type="unfinished">Dades exportades</translation>
     </message>
@@ -374,40 +486,40 @@
 <context>
     <name>CTOConnector</name>
     <message>
-        <location filename="../cpp/CTO/CTOConnector.cpp" line="82" />
-        <source>Failed to create project</source>
-        <translation type="unfinished">No s'ha pogut crear el projecte</translation>
+        <location filename="../cpp/CTO/CTOConnector.cpp" line="87" />
+        <source>Failed to create %1</source>
+        <translation type="unfinished">No s'ha pogut crear %1</translation>
     </message>
     <message>
-        <location filename="../cpp/CTO/CTOConnector.cpp" line="135" />
+        <location filename="../cpp/CTO/CTOConnector.cpp" line="140" />
         <source>Logged out</source>
         <translation type="unfinished">Desconnectat</translation>
     </message>
     <message>
-        <location filename="../cpp/CTO/CTOConnector.cpp" line="163" />
+        <location filename="../cpp/CTO/CTOConnector.cpp" line="153" />
+        <source>Unsent data</source>
+        <translation type="unfinished">Dades no enviades</translation>
+    </message>
+    <message>
+        <location filename="../cpp/CTO/CTOConnector.cpp" line="168" />
         <source>Form download failed</source>
         <translation type="unfinished">La baixada del formulari ha fallat</translation>
     </message>
     <message>
-        <location filename="../cpp/CTO/CTOConnector.cpp" line="170" />
+        <location filename="../cpp/CTO/CTOConnector.cpp" line="175" />
         <source>Bad package</source>
         <translation type="unfinished">Mal paquet</translation>
-    </message>
-    <message>
-        <location filename="../cpp/CTO/CTOConnector.cpp" line="177" />
-        <source>Failed to read form settings sheet</source>
-        <translation type="unfinished">No s'ha pogut llegir el full de configuració del formulari</translation>
     </message>
 </context>
 <context>
     <name>CheckField</name>
     <message>
-        <location filename="../cpp/Field.cpp" line="655" />
+        <location filename="../cpp/Field.cpp" line="656" />
         <source>Yes</source>
         <translation type="unfinished">Sí</translation>
     </message>
     <message>
-        <location filename="../cpp/Field.cpp" line="655" />
+        <location filename="../cpp/Field.cpp" line="656" />
         <source>No</source>
         <translation type="unfinished">No</translation>
     </message>
@@ -416,8 +528,8 @@
     <name>ClassicConnector</name>
     <message>
         <location filename="../cpp/Classic/ClassicConnector.cpp" line="77" />
-        <location filename="../cpp/Classic/ClassicConnector.cpp" line="510" />
-        <location filename="../cpp/Classic/ClassicConnector.cpp" line="550" />
+        <location filename="../cpp/Classic/ClassicConnector.cpp" line="517" />
+        <location filename="../cpp/Classic/ClassicConnector.cpp" line="557" />
         <source>Cannot create path</source>
         <translation type="unfinished">No es pot crear el camí</translation>
     </message>
@@ -427,40 +539,40 @@
         <translation type="unfinished">Servidor no trobat</translation>
     </message>
     <message>
-        <location filename="../cpp/Classic/ClassicConnector.cpp" line="308" />
+        <location filename="../cpp/Classic/ClassicConnector.cpp" line="315" />
         <source>Not supported</source>
         <translation type="unfinished">No compatible</translation>
     </message>
     <message>
-        <location filename="../cpp/Classic/ClassicConnector.cpp" line="323" />
+        <location filename="../cpp/Classic/ClassicConnector.cpp" line="330" />
         <source>Unsent data</source>
         <translation type="unfinished">Dades no enviades</translation>
     </message>
     <message>
-        <location filename="../cpp/Classic/ClassicConnector.cpp" line="330" />
+        <location filename="../cpp/Classic/ClassicConnector.cpp" line="337" />
         <source>Not found</source>
         <translation type="unfinished">No trobat</translation>
     </message>
     <message>
-        <location filename="../cpp/Classic/ClassicConnector.cpp" line="279" />
-        <location filename="../cpp/Classic/ClassicConnector.cpp" line="336" />
+        <location filename="../cpp/Classic/ClassicConnector.cpp" line="525" />
+        <source>Failed to read %1</source>
+        <translation type="unfinished">No s'ha pogut llegir %1</translation>
+    </message>
+    <message>
+        <location filename="../cpp/Classic/ClassicConnector.cpp" line="286" />
+        <location filename="../cpp/Classic/ClassicConnector.cpp" line="343" />
         <source>DEF file corrupt</source>
         <translation type="unfinished">Fitxer DEF corrupte</translation>
     </message>
     <message>
-        <location filename="../cpp/Classic/ClassicConnector.cpp" line="360" />
+        <location filename="../cpp/Classic/ClassicConnector.cpp" line="367" />
         <source>Download failed</source>
         <translation type="unfinished">La baixada ha fallat</translation>
     </message>
     <message>
-        <location filename="../cpp/Classic/ClassicConnector.cpp" line="369" />
+        <location filename="../cpp/Classic/ClassicConnector.cpp" line="376" />
         <source>Bad archive</source>
         <translation type="unfinished">Mal arxiu</translation>
-    </message>
-    <message>
-        <location filename="../cpp/Classic/ClassicConnector.cpp" line="518" />
-        <source>Failed to read classic project</source>
-        <translation type="unfinished">No s'ha pogut llegir el projecte clàssic</translation>
     </message>
 </context>
 <context>
@@ -487,6 +599,44 @@
         <location filename="../controls/imports/CyberTracker.1/ConfirmPopup.qml" line="12" />
         <source>Cancel</source>
         <translation type="unfinished">Cancel · lar</translation>
+    </message>
+</context>
+<context>
+    <name>ConnectClassicPage</name>
+    <message>
+        <location filename="../qml/Classic/ConnectClassicPage.qml" line="11" />
+        <source>Connect to</source>
+        <translation type="unfinished">Conectat amb</translation>
+    </message>
+    <message>
+        <location filename="../qml/Classic/ConnectClassicPage.qml" line="26" />
+        <source>Desktop install</source>
+        <translation type="unfinished">Instal·lació d'escriptori</translation>
+    </message>
+    <message>
+        <location filename="../qml/Classic/ConnectClassicPage.qml" line="27" />
+        <source>Scan for %1 installed by CyberTracker desktop</source>
+        <translation type="unfinished">Busca %1 instal·lat per l'escriptori CyberTracker</translation>
+    </message>
+    <message>
+        <location filename="../qml/Classic/ConnectClassicPage.qml" line="41" />
+        <source>Web install</source>
+        <translation type="unfinished">Instal·lació web</translation>
+    </message>
+    <message>
+        <location filename="../qml/Classic/ConnectClassicPage.qml" line="42" />
+        <source>Install a %1 from the web. Requires a link from the %2 publisher.</source>
+        <translation type="unfinished">Instal·leu un %1 des del web. Requereix un enllaç de l'editor %2.</translation>
+    </message>
+    <message>
+        <location filename="../qml/Classic/ConnectClassicPage.qml" line="53" />
+        <source>Samples</source>
+        <translation type="unfinished">Mostres</translation>
+    </message>
+    <message>
+        <location filename="../qml/Classic/ConnectClassicPage.qml" line="54" />
+        <source>Install a sample to see CyberTracker in action. Saved data will not be kept.</source>
+        <translation type="unfinished">Instal·leu una mostra per veure CyberTracker en acció. Les dades desades no es conservaran.</translation>
     </message>
 </context>
 <context>
@@ -572,17 +722,17 @@
 <context>
     <name>ConnectFormPage</name>
     <message>
-        <location filename="../qml/ConnectFormPage.qml" line="16" />
+        <location filename="../qml/ConnectFormPage.qml" line="17" />
         <source>Select forms</source>
         <translation type="unfinished">Seleccioneu formularis</translation>
     </message>
     <message>
-        <location filename="../qml/ConnectFormPage.qml" line="34" />
+        <location filename="../qml/ConnectFormPage.qml" line="39" />
         <source>All</source>
         <translation type="unfinished">Tots</translation>
     </message>
     <message>
-        <location filename="../qml/ConnectFormPage.qml" line="47" />
+        <location filename="../qml/ConnectFormPage.qml" line="52" />
         <source>None</source>
         <translation type="unfinished">Cap</translation>
     </message>
@@ -591,8 +741,8 @@
     <name>ConnectKoBoPage</name>
     <message>
         <location filename="../qml/ODK/ConnectKoBoPage.qml" line="19" />
-        <source>Connect</source>
-        <translation type="unfinished">Connecta't</translation>
+        <source>Connect to %1</source>
+        <translation type="unfinished">Connecta't a %1</translation>
     </message>
     <message>
         <location filename="../qml/ODK/ConnectKoBoPage.qml" line="28" />
@@ -624,8 +774,8 @@
     <name>ConnectKoBoSharedPage</name>
     <message>
         <location filename="../qml/ODK/ConnectKoBoSharedPage.qml" line="24" />
-        <source>%1 Connect</source>
-        <translation type="unfinished">%1 Connecta</translation>
+        <source>Connect to %1</source>
+        <translation type="unfinished">Connecta't a %1</translation>
     </message>
     <message>
         <location filename="../qml/ODK/ConnectKoBoSharedPage.qml" line="44" />
@@ -638,22 +788,22 @@
         <translation type="unfinished">Utilitzeu %1 per a les plantilles</translation>
     </message>
     <message>
-        <location filename="../qml/ODK/ConnectKoBoSharedPage.qml" line="73" />
+        <location filename="../qml/ODK/ConnectKoBoSharedPage.qml" line="74" />
         <source>Choose forms</source>
         <translation type="unfinished">Trieu formularis</translation>
     </message>
     <message>
-        <location filename="../qml/ODK/ConnectKoBoSharedPage.qml" line="109" />
+        <location filename="../qml/ODK/ConnectKoBoSharedPage.qml" line="110" />
         <source>Connection failed</source>
         <translation type="unfinished">Connexió fallida</translation>
     </message>
     <message>
-        <location filename="../qml/ODK/ConnectKoBoSharedPage.qml" line="141" />
+        <location filename="../qml/ODK/ConnectKoBoSharedPage.qml" line="142" />
         <source>No forms found</source>
         <translation type="unfinished">No s'han trobat formularis</translation>
     </message>
     <message>
-        <location filename="../qml/ODK/ConnectKoBoSharedPage.qml" line="154" />
+        <location filename="../qml/ODK/ConnectKoBoSharedPage.qml" line="155" />
         <source>Error retrieving form</source>
         <translation type="unfinished">S'ha produït un error en recuperar el formulari</translation>
     </message>
@@ -662,18 +812,18 @@
     <name>ConnectODKCentralPage</name>
     <message>
         <location filename="../qml/ODK/ConnectODKCentralPage.qml" line="20" />
-        <source>Connect</source>
-        <translation type="unfinished">Connecta't</translation>
+        <source>Connect to %1</source>
+        <translation type="unfinished">Connecta't a %1</translation>
     </message>
     <message>
         <location filename="../qml/ODK/ConnectODKCentralPage.qml" line="40" />
-        <source>Select project</source>
-        <translation type="unfinished">Seleccioneu el projecte</translation>
+        <source>Select %1</source>
+        <translation type="unfinished">Seleccioneu %1</translation>
     </message>
     <message>
         <location filename="../qml/ODK/ConnectODKCentralPage.qml" line="97" />
-        <source>No projects found</source>
-        <translation type="unfinished">No s'han trobat projectes</translation>
+        <source>No %1 found</source>
+        <translation type="unfinished">No s'ha trobat cap %1</translation>
     </message>
     <message>
         <location filename="../qml/ODK/ConnectODKCentralPage.qml" line="120" />
@@ -682,69 +832,87 @@
     </message>
 </context>
 <context>
+    <name>ConnectOnlinePage</name>
+    <message>
+        <location filename="../qml/Classic/ConnectOnlinePage.qml" line="13" />
+        <source>Connect to %1</source>
+        <translation type="unfinished">Connecta't a %1</translation>
+    </message>
+    <message>
+        <location filename="../qml/Classic/ConnectOnlinePage.qml" line="47" />
+        <source>%1 from %2</source>
+        <translation type="unfinished">%1 de %2</translation>
+    </message>
+    <message>
+        <location filename="../qml/Classic/ConnectOnlinePage.qml" line="47" />
+        <source>Scan QR code</source>
+        <translation type="unfinished">Escaneja el codi QR</translation>
+    </message>
+    <message>
+        <location filename="../qml/Classic/ConnectOnlinePage.qml" line="73" />
+        <source>Getting started</source>
+        <translation type="unfinished">Començant</translation>
+    </message>
+</context>
+<context>
     <name>ConnectPage</name>
     <message>
         <location filename="../qml/ConnectPage.qml" line="12" />
-        <location filename="../qml/SMART/ConnectPage.qml" line="43" />
+        <location filename="../qml/SMART/ConnectPage.qml" line="41" />
         <source>Connect</source>
         <translation type="unfinished">Connecta't</translation>
     </message>
     <message>
-        <location filename="../qml/Classic/ConnectPage.qml" line="26" />
         <location filename="../qml/SMART/ConnectPage.qml" line="26" />
         <source>Desktop install</source>
         <translation type="unfinished">Instal·lació d'escriptori</translation>
     </message>
     <message>
-        <location filename="../qml/Classic/ConnectPage.qml" line="27" />
-        <source>Scan for projects installed by CyberTracker desktop</source>
-        <translation type="unfinished">Busca projectes instal·lats per l'escriptori CyberTracker</translation>
+        <location filename="../qml/SMART/ConnectPage.qml" line="42" />
+        <source>Add a %1 from SMART Connect</source>
+        <translation type="unfinished">Afegiu un %1 des de SMART Connect</translation>
     </message>
     <message>
-        <location filename="../qml/Classic/ConnectPage.qml" line="43" />
-        <source>Web install</source>
-        <translation type="unfinished">Instal·lació web</translation>
-    </message>
-    <message>
-        <location filename="../qml/Classic/ConnectPage.qml" line="44" />
-        <source>Install a project from a web source. Requires a web link from the project publisher.</source>
-        <translation type="unfinished">Instal·leu un projecte des d'una font web. Requereix un enllaç web de l'editor del projecte.</translation>
-    </message>
-    <message>
-        <location filename="../qml/Classic/ConnectPage.qml" line="55" />
-        <source>Samples</source>
-        <translation type="unfinished">Mostres</translation>
-    </message>
-    <message>
-        <location filename="../qml/Classic/ConnectPage.qml" line="56" />
-        <source>Install a sample to see CyberTracker in action. Saved data will not be kept.</source>
-        <translation type="unfinished">Instal·leu una mostra per veure CyberTracker en acció. Les dades desades no es conservaran.</translation>
+        <location filename="../qml/SMART/ConnectPage.qml" line="54" />
+        <source>Add a %1 from SMART Collect</source>
+        <translation type="unfinished">Afegiu un %1 de SMART Collect</translation>
     </message>
     <message>
         <location filename="../qml/EarthRanger/ConnectPage.qml" line="8" />
-        <location filename="../qml/Esri/ConnectPage.qml" line="19" />
         <source>Connect to</source>
         <translation type="unfinished">Conectat amb</translation>
     </message>
     <message>
+        <location filename="../qml/Google/ConnectPage.qml" line="47" />
+        <source>Scan QR code</source>
+        <translation type="unfinished">Escaneja el codi QR</translation>
+    </message>
+    <message>
+        <location filename="../qml/Google/ConnectPage.qml" line="47" />
+        <source>%1 from the %2 add-on for %3</source>
+        <translation type="unfinished">%1 del complement %2 per a %3</translation>
+    </message>
+    <message>
+        <location filename="../qml/Google/ConnectPage.qml" line="73" />
+        <source>Getting started</source>
+        <translation type="unfinished">Començant</translation>
+    </message>
+    <message>
         <location filename="../qml/SMART/ConnectPage.qml" line="27" />
-        <source>Scan for projects installed by SMART Desktop</source>
-        <translation type="unfinished">Busca projectes instal·lats per SMART Desktop</translation>
+        <source>Scan for %1 installed by SMART Desktop</source>
+        <translation type="unfinished">Busca %1 instal·lat per SMART Desktop</translation>
     </message>
     <message>
-        <location filename="../qml/SMART/ConnectPage.qml" line="44" />
-        <source>Install a project from SMART Connect</source>
-        <translation type="unfinished">Instal·leu un projecte des de SMART Connect</translation>
-    </message>
-    <message>
-        <location filename="../qml/SMART/ConnectPage.qml" line="55" />
+        <location filename="../qml/SMART/ConnectPage.qml" line="53" />
         <source>Collect</source>
         <translation type="unfinished">Recull</translation>
     </message>
     <message>
-        <location filename="../qml/SMART/ConnectPage.qml" line="56" />
-        <source>Install a project from SMART Collect</source>
-        <translation type="unfinished">Instal·leu un projecte des de SMART Collect</translation>
+        <location filename="../qml/Esri/ConnectPage.qml" line="19" />
+        <location filename="../qml/Google/ConnectPage.qml" line="13" />
+        <location filename="../qml/SMART/ConnectPage.qml" line="11" />
+        <source>Connect to %1</source>
+        <translation type="unfinished">Connecta't a %1</translation>
     </message>
     <message>
         <location filename="../qml/Esri/ConnectPage.qml" line="40" />
@@ -760,7 +928,17 @@
 <context>
     <name>ConnectPane</name>
     <message>
-        <location filename="../qml/ConnectPane.qml" line="101" />
+        <location filename="../qml/ConnectPane.qml" line="108" />
+        <source>Scan QR code</source>
+        <translation type="unfinished">Escaneja el codi QR</translation>
+    </message>
+    <message>
+        <location filename="../qml/ConnectPane.qml" line="109" />
+        <source>Scan QR code to install a %1</source>
+        <translation type="unfinished">Escaneja el codi QR per instal·lar un %1</translation>
+    </message>
+    <message>
+        <location filename="../qml/ConnectPane.qml" line="135" />
         <source>Coming soon...</source>
         <translation type="unfinished">Pròximament...</translation>
     </message>
@@ -768,27 +946,27 @@
 <context>
     <name>ConnectPaneSM</name>
     <message>
-        <location filename="../qml/SMART/ConnectPaneSM.qml" line="35" />
-        <source>Scan for desktop projects</source>
-        <translation type="unfinished">Busca projectes d'escriptori</translation>
+        <location filename="../qml/SMART/ConnectPaneSM.qml" line="36" />
+        <source>Scan for desktop %1</source>
+        <translation type="unfinished">Busca l'escriptori %1</translation>
     </message>
     <message>
-        <location filename="../qml/SMART/ConnectPaneSM.qml" line="53" />
-        <source>Connect to an online project</source>
-        <translation type="unfinished">Connecteu-vos a un projecte en línia</translation>
+        <location filename="../qml/SMART/ConnectPaneSM.qml" line="52" />
+        <source>Connect to an online %1</source>
+        <translation type="unfinished">Connecteu-vos a un %1 en línia</translation>
     </message>
     <message>
-        <location filename="../qml/SMART/ConnectPaneSM.qml" line="65" />
-        <source>Connect to a community project</source>
-        <translation type="unfinished">Connectar-se a un projecte comunitari</translation>
+        <location filename="../qml/SMART/ConnectPaneSM.qml" line="64" />
+        <source>Connect to a community %1</source>
+        <translation type="unfinished">Connecta't a una comunitat %1</translation>
     </message>
     <message>
-        <location filename="../qml/SMART/ConnectPaneSM.qml" line="73" />
+        <location filename="../qml/SMART/ConnectPaneSM.qml" line="72" />
         <source>Scan QR code</source>
         <translation type="unfinished">Escaneja el codi QR</translation>
     </message>
     <message>
-        <location filename="../qml/SMART/ConnectPaneSM.qml" line="77" />
+        <location filename="../qml/SMART/ConnectPaneSM.qml" line="76" />
         <source>Install from a shared QR code</source>
         <translation type="unfinished">Instal·la des d'un codi QR compartit</translation>
     </message>
@@ -796,7 +974,7 @@
 <context>
     <name>ConnectQRCodePage</name>
     <message>
-        <location filename="../qml/ConnectQRCodePage.qml" line="17" />
+        <location filename="../qml/ConnectQRCodePage.qml" line="18" />
         <source>Scan QR code</source>
         <translation type="unfinished">Escaneja el codi QR</translation>
     </message>
@@ -850,12 +1028,12 @@
         <translation type="unfinished">Instal·lació web</translation>
     </message>
     <message>
-        <location filename="../qml/Classic/ConnectWebInstallPage.qml" line="40" />
+        <location filename="../qml/Classic/ConnectWebInstallPage.qml" line="38" />
         <source>Enter web address</source>
         <translation type="unfinished">Introduïu l'adreça web</translation>
     </message>
     <message>
-        <location filename="../qml/Classic/ConnectWebInstallPage.qml" line="45" />
+        <location filename="../qml/Classic/ConnectWebInstallPage.qml" line="43" />
         <source>Install</source>
         <translation type="unfinished">Instal·lar</translation>
     </message>
@@ -907,8 +1085,8 @@
     </message>
     <message>
         <location filename="../qml/CreateEsriServiceWindow.qml" line="46" />
-        <source>Create an ArcGIS Online hosted feature service which will receive location track data from Survey123 projects.</source>
-        <translation type="unfinished">Creeu un servei de funcions allotjats d'ArcGIS Online que rebrà dades de seguiment d'ubicacions dels projectes Survey123.</translation>
+        <source>Create an ArcGIS Online hosted feature service which will receive location track data from Survey123 %1.</source>
+        <translation type="unfinished">Creeu un servei de funcions allotjats d'ArcGIS Online que rebrà dades de seguiment de la ubicació de Survey123 %1.</translation>
     </message>
     <message>
         <location filename="../qml/CreateEsriServiceWindow.qml" line="86" />
@@ -975,8 +1153,8 @@
     <name>EarthRangerConnector</name>
     <message>
         <location filename="../cpp/EarthRanger/EarthRangerConnector.cpp" line="108" />
-        <source>Failed to create project</source>
-        <translation type="unfinished">No s'ha pogut crear el projecte</translation>
+        <source>Failed to create %1</source>
+        <translation type="unfinished">No s'ha pogut crear %1</translation>
     </message>
     <message>
         <location filename="../cpp/EarthRanger/EarthRangerConnector.cpp" line="206" />
@@ -1044,65 +1222,65 @@
         <source>Other</source>
         <translation type="unfinished">Altres</translation>
     </message>
+    <message>
+        <location filename="../cpp/Element.cpp" line="298" />
+        <source>Empty</source>
+        <translation type="unfinished">Buit</translation>
+    </message>
 </context>
 <context>
     <name>EsriConnector</name>
     <message>
-        <location filename="../cpp/Esri/EsriConnector.cpp" line="96" />
-        <source>Failed to create project</source>
-        <translation type="unfinished">No s'ha pogut crear el projecte</translation>
-    </message>
-    <message>
-        <location filename="../cpp/Esri/EsriConnector.cpp" line="184" />
+        <location filename="../cpp/Esri/EsriConnector.cpp" line="185" />
         <source>Logged out</source>
         <translation type="unfinished">Desconnectat</translation>
     </message>
     <message>
-        <location filename="../cpp/Esri/EsriConnector.cpp" line="290" />
+        <location filename="../cpp/Esri/EsriConnector.cpp" line="291" />
         <source>Form not found</source>
         <translation type="unfinished">No s'ha trobat el formulari</translation>
     </message>
     <message>
-        <location filename="../cpp/Esri/EsriConnector.cpp" line="157" />
-        <location filename="../cpp/Esri/EsriConnector.cpp" line="213" />
+        <location filename="../cpp/Esri/EsriConnector.cpp" line="158" />
+        <location filename="../cpp/Esri/EsriConnector.cpp" line="214" />
         <source>Could not retrieve survey</source>
         <translation type="unfinished">No s'ha pogut recuperar l'enquesta</translation>
     </message>
     <message>
-        <location filename="../cpp/Esri/EsriConnector.cpp" line="201" />
+        <location filename="../cpp/Esri/EsriConnector.cpp" line="97" />
+        <source>Failed to create %1</source>
+        <translation type="unfinished">No s'ha pogut crear %1</translation>
+    </message>
+    <message>
+        <location filename="../cpp/Esri/EsriConnector.cpp" line="202" />
         <source>Login required</source>
         <translation type="unfinished">Cal iniciar sessió</translation>
     </message>
     <message>
-        <location filename="../cpp/Esri/EsriConnector.cpp" line="266" />
+        <location filename="../cpp/Esri/EsriConnector.cpp" line="267" />
         <source>Form download failed</source>
         <translation type="unfinished">La baixada del formulari ha fallat</translation>
     </message>
     <message>
-        <location filename="../cpp/Esri/EsriConnector.cpp" line="273" />
+        <location filename="../cpp/Esri/EsriConnector.cpp" line="274" />
         <source>Bad form zip</source>
         <translation type="unfinished">Cremallera de mala forma</translation>
     </message>
     <message>
-        <location filename="../cpp/Esri/EsriConnector.cpp" line="280" />
+        <location filename="../cpp/Esri/EsriConnector.cpp" line="281" />
         <source>Bad form</source>
         <translation type="unfinished">Mala forma</translation>
     </message>
     <message>
-        <location filename="../cpp/Esri/EsriConnector.cpp" line="297" />
+        <location filename="../cpp/Esri/EsriConnector.cpp" line="298" />
         <source>Failed to copy form file</source>
         <translation type="unfinished">No s'ha pogut copiar el fitxer del formulari</translation>
-    </message>
-    <message>
-        <location filename="../cpp/Esri/EsriConnector.cpp" line="330" />
-        <source>Failed to read form settings sheet</source>
-        <translation type="unfinished">No s'ha pogut llegir el full de configuració del formulari</translation>
     </message>
 </context>
 <context>
     <name>EsriMapView</name>
     <message>
-        <location filename="../controls/imports/CyberTracker.1/EsriMapView.qml" line="288" />
+        <location filename="../controls/imports/CyberTracker.1/EsriMapView.qml" line="275" />
         <source>Sighting</source>
         <translation type="unfinished">Albirament</translation>
     </message>
@@ -1153,7 +1331,7 @@
     <message>
         <location filename="../qml/ExportsPage.qml" line="39" />
         <source>The files listed below are awaiting import. If the import is not working, click on a file and send it using another channel.</source>
-        <translation type="unfinished">Els fitxers que s'enumeren a continuació estan pendents d'importació. Si la importació no funciona, feu clic a un fitxer i envieu-lo mitjançant un altre canal.</translation>
+        <translation type="unfinished">Els fitxers enumerats a continuació estan pendents d'importació. Si la importació no funciona, feu clic a un fitxer i envieu-lo mitjançant un altre canal.</translation>
     </message>
     <message>
         <location filename="../qml/ExportsPage.qml" line="92" />
@@ -1164,17 +1342,17 @@
 <context>
     <name>FieldAudio</name>
     <message>
-        <location filename="../controls/imports/CyberTracker.1/FieldAudio.qml" line="113" />
+        <location filename="../controls/imports/CyberTracker.1/FieldAudio.qml" line="115" />
         <source>Delete the recording?</source>
         <translation type="unfinished">Vols suprimir la gravació?</translation>
     </message>
     <message>
-        <location filename="../controls/imports/CyberTracker.1/FieldAudio.qml" line="114" />
+        <location filename="../controls/imports/CyberTracker.1/FieldAudio.qml" line="116" />
         <source>Yes, delete it</source>
         <translation type="unfinished">Sí, elimina-ho</translation>
     </message>
     <message>
-        <location filename="../controls/imports/CyberTracker.1/FieldAudio.qml" line="163" />
+        <location filename="../controls/imports/CyberTracker.1/FieldAudio.qml" line="165" />
         <source>seconds</source>
         <translation type="unfinished">segons</translation>
     </message>
@@ -1190,12 +1368,12 @@
 <context>
     <name>FieldBarcodePane</name>
     <message>
-        <location filename="../controls/imports/CyberTracker.1/FieldBarcodePane.qml" line="69" />
+        <location filename="../controls/imports/CyberTracker.1/FieldBarcodePane.qml" line="68" />
         <source>Clear code?</source>
         <translation type="unfinished">Esborrar el codi?</translation>
     </message>
     <message>
-        <location filename="../controls/imports/CyberTracker.1/FieldBarcodePane.qml" line="70" />
+        <location filename="../controls/imports/CyberTracker.1/FieldBarcodePane.qml" line="69" />
         <source>Yes, clear it</source>
         <translation type="unfinished">Sí, aclareix-ho</translation>
     </message>
@@ -1203,22 +1381,22 @@
 <context>
     <name>FieldCamera</name>
     <message>
-        <location filename="../controls/imports/CyberTracker.1/FieldCamera.qml" line="75" />
+        <location filename="../controls/imports/CyberTracker.1/FieldCamera.qml" line="77" />
         <source>Failed to copy</source>
         <translation type="unfinished">No s'ha pogut copiar</translation>
     </message>
     <message>
-        <location filename="../controls/imports/CyberTracker.1/FieldCamera.qml" line="245" />
+        <location filename="../controls/imports/CyberTracker.1/FieldCamera.qml" line="247" />
         <source>Delete the image?</source>
         <translation type="unfinished">Vols suprimir la imatge?</translation>
     </message>
     <message>
-        <location filename="../controls/imports/CyberTracker.1/FieldCamera.qml" line="246" />
+        <location filename="../controls/imports/CyberTracker.1/FieldCamera.qml" line="248" />
         <source>Yes, delete it</source>
         <translation type="unfinished">Sí, elimina-ho</translation>
     </message>
     <message>
-        <location filename="../controls/imports/CyberTracker.1/FieldCamera.qml" line="482" />
+        <location filename="../controls/imports/CyberTracker.1/FieldCamera.qml" line="484" />
         <source>Failed to move</source>
         <translation type="unfinished">No s'ha pogut moure</translation>
     </message>
@@ -1234,12 +1412,12 @@
 <context>
     <name>FieldCameraPane</name>
     <message>
-        <location filename="../controls/imports/CyberTracker.1/FieldCameraPane.qml" line="69" />
+        <location filename="../controls/imports/CyberTracker.1/FieldCameraPane.qml" line="68" />
         <source>Delete the image?</source>
         <translation type="unfinished">Vols suprimir la imatge?</translation>
     </message>
     <message>
-        <location filename="../controls/imports/CyberTracker.1/FieldCameraPane.qml" line="70" />
+        <location filename="../controls/imports/CyberTracker.1/FieldCameraPane.qml" line="69" />
         <source>Yes, delete it</source>
         <translation type="unfinished">Sí, elimina-ho</translation>
     </message>
@@ -1255,32 +1433,32 @@
 <context>
     <name>FieldEditorDelegate</name>
     <message>
-        <location filename="../controls/imports/CyberTracker.1/FieldEditorDelegate.qml" line="183" />
+        <location filename="../controls/imports/CyberTracker.1/FieldEditorDelegate.qml" line="186" />
         <source>Location</source>
         <translation type="unfinished">Ubicació</translation>
     </message>
     <message>
-        <location filename="../controls/imports/CyberTracker.1/FieldEditorDelegate.qml" line="199" />
+        <location filename="../controls/imports/CyberTracker.1/FieldEditorDelegate.qml" line="202" />
         <source>Waiting for time correction</source>
         <translation type="unfinished">Esperant la correcció de temps</translation>
     </message>
     <message>
-        <location filename="../controls/imports/CyberTracker.1/FieldEditorDelegate.qml" line="356" />
+        <location filename="../controls/imports/CyberTracker.1/FieldEditorDelegate.qml" line="369" />
         <source>Tap to scan</source>
         <translation type="unfinished">Toqueu per escanejar</translation>
     </message>
     <message>
-        <location filename="../controls/imports/CyberTracker.1/FieldEditorDelegate.qml" line="1034" />
+        <location filename="../controls/imports/CyberTracker.1/FieldEditorDelegate.qml" line="1047" />
         <source>Reset data?</source>
         <translation type="unfinished">Restableix les dades?</translation>
     </message>
     <message>
-        <location filename="../controls/imports/CyberTracker.1/FieldEditorDelegate.qml" line="1044" />
+        <location filename="../controls/imports/CyberTracker.1/FieldEditorDelegate.qml" line="1057" />
         <source>Yes</source>
         <translation type="unfinished">Sí</translation>
     </message>
     <message>
-        <location filename="../controls/imports/CyberTracker.1/FieldEditorDelegate.qml" line="1057" />
+        <location filename="../controls/imports/CyberTracker.1/FieldEditorDelegate.qml" line="1070" />
         <source>No</source>
         <translation type="unfinished">No</translation>
     </message>
@@ -1296,17 +1474,17 @@
 <context>
     <name>FieldFilePane</name>
     <message>
-        <location filename="../controls/imports/CyberTracker.1/FieldFilePane.qml" line="126" />
+        <location filename="../controls/imports/CyberTracker.1/FieldFilePane.qml" line="125" />
         <source>Clear file?</source>
         <translation type="unfinished">Esborrar el fitxer?</translation>
     </message>
     <message>
-        <location filename="../controls/imports/CyberTracker.1/FieldFilePane.qml" line="127" />
+        <location filename="../controls/imports/CyberTracker.1/FieldFilePane.qml" line="126" />
         <source>The original will not be deleted.</source>
         <translation type="unfinished">L'original no se suprimirà.</translation>
     </message>
     <message>
-        <location filename="../controls/imports/CyberTracker.1/FieldFilePane.qml" line="128" />
+        <location filename="../controls/imports/CyberTracker.1/FieldFilePane.qml" line="127" />
         <source>Yes, remove it</source>
         <translation type="unfinished">Sí, elimina-ho</translation>
     </message>
@@ -1402,17 +1580,17 @@
 <context>
     <name>FieldLinePane</name>
     <message>
-        <location filename="../controls/imports/CyberTracker.1/FieldLinePane.qml" line="92" />
+        <location filename="../controls/imports/CyberTracker.1/FieldLinePane.qml" line="91" />
         <source>Clear area?</source>
         <translation type="unfinished">Zona clara?</translation>
     </message>
     <message>
-        <location filename="../controls/imports/CyberTracker.1/FieldLinePane.qml" line="92" />
+        <location filename="../controls/imports/CyberTracker.1/FieldLinePane.qml" line="91" />
         <source>Clear line?</source>
         <translation type="unfinished">Línia clara?</translation>
     </message>
     <message>
-        <location filename="../controls/imports/CyberTracker.1/FieldLinePane.qml" line="93" />
+        <location filename="../controls/imports/CyberTracker.1/FieldLinePane.qml" line="92" />
         <source>Yes, clear all points</source>
         <translation type="unfinished">Sí, esborra tots els punts</translation>
     </message>
@@ -1423,6 +1601,14 @@
         <location filename="../controls/imports/CyberTracker.1/FieldListView.qml" line="33" />
         <source>Search</source>
         <translation type="unfinished">Cerca</translation>
+    </message>
+</context>
+<context>
+    <name>FieldListViewEditor</name>
+    <message>
+        <location filename="../controls/imports/CyberTracker.1/FieldListViewEditor.qml" line="85" />
+        <source>Value required</source>
+        <translation type="unfinished">Valor requerit</translation>
     </message>
 </context>
 <context>
@@ -1471,27 +1657,27 @@
 <context>
     <name>FieldRecordListView</name>
     <message>
-        <location filename="../controls/imports/CyberTracker.1/FieldRecordListView.qml" line="99" />
+        <location filename="../controls/imports/CyberTracker.1/FieldRecordListView.qml" line="101" />
         <source>Delete record?</source>
         <translation type="unfinished">Vols suprimir el registre?</translation>
     </message>
     <message>
-        <location filename="../controls/imports/CyberTracker.1/FieldRecordListView.qml" line="99" />
+        <location filename="../controls/imports/CyberTracker.1/FieldRecordListView.qml" line="101" />
         <source>Reset record?</source>
         <translation type="unfinished">Restableix el registre?</translation>
     </message>
     <message>
-        <location filename="../controls/imports/CyberTracker.1/FieldRecordListView.qml" line="109" />
+        <location filename="../controls/imports/CyberTracker.1/FieldRecordListView.qml" line="111" />
         <source>Yes</source>
         <translation type="unfinished">Sí</translation>
     </message>
     <message>
-        <location filename="../controls/imports/CyberTracker.1/FieldRecordListView.qml" line="126" />
+        <location filename="../controls/imports/CyberTracker.1/FieldRecordListView.qml" line="128" />
         <source>No</source>
         <translation type="unfinished">No</translation>
     </message>
     <message>
-        <location filename="../controls/imports/CyberTracker.1/FieldRecordListView.qml" line="159" />
+        <location filename="../controls/imports/CyberTracker.1/FieldRecordListView.qml" line="161" />
         <source>Add record</source>
         <translation type="unfinished">Afegeix registre</translation>
     </message>
@@ -1499,9 +1685,9 @@
 <context>
     <name>FieldRecordNumberGridView</name>
     <message>
-        <location filename="../controls/imports/CyberTracker.1/FieldRecordNumberGridView.qml" line="199" />
-        <source>Group field not a number</source>
-        <translation type="unfinished">El camp del grup no és un número</translation>
+        <location filename="../controls/imports/CyberTracker.1/FieldRecordNumberGridView.qml" line="201" />
+        <source>Value required</source>
+        <translation type="unfinished">Valor requerit</translation>
     </message>
 </context>
 <context>
@@ -1520,7 +1706,7 @@
 <context>
     <name>FileField</name>
     <message>
-        <location filename="../cpp/Field.cpp" line="1390" />
+        <location filename="../cpp/Field.cpp" line="1397" />
         <source>file</source>
         <translation type="unfinished">dossier</translation>
     </message>
@@ -1528,37 +1714,37 @@
 <context>
     <name>Form</name>
     <message>
-        <location filename="../cpp/Form.cpp" line="26" />
+        <location filename="../cpp/Form.cpp" line="28" />
         <source>Track</source>
         <translation type="unfinished">Pista</translation>
     </message>
     <message>
-        <location filename="../cpp/Form.cpp" line="28" />
+        <location filename="../cpp/Form.cpp" line="30" />
         <source>Location</source>
         <translation type="unfinished">Ubicació</translation>
     </message>
     <message>
-        <location filename="../cpp/Form.cpp" line="1416" />
+        <location filename="../cpp/Form.cpp" line="1476" />
         <source>Missing track field or service</source>
         <translation type="unfinished">Falta camp o servei de pista</translation>
     </message>
     <message>
-        <location filename="../cpp/Form.cpp" line="1769" />
+        <location filename="../cpp/Form.cpp" line="1821" />
         <source>CSV sighting export failed</source>
         <translation type="unfinished">S'ha produït un error en l'exportació d'albiraments CSV</translation>
     </message>
     <message>
-        <location filename="../cpp/Form.cpp" line="1813" />
+        <location filename="../cpp/Form.cpp" line="1865" />
         <source>CSV location export failed</source>
         <translation type="unfinished">No s'ha pogut exportar la ubicació CSV</translation>
     </message>
     <message>
-        <location filename="../cpp/Form.cpp" line="1821" />
+        <location filename="../cpp/Form.cpp" line="1873" />
         <source>No new data</source>
         <translation type="unfinished">No hi ha dades noves</translation>
     </message>
     <message>
-        <location filename="../cpp/Form.cpp" line="1829" />
+        <location filename="../cpp/Form.cpp" line="1881" />
         <source>Failed to compress file</source>
         <translation type="unfinished">No s'ha pogut comprimir el fitxer</translation>
     </message>
@@ -1566,42 +1752,42 @@
 <context>
     <name>FormSettingsListView</name>
     <message>
-        <location filename="../controls/imports/CyberTracker.1/FormSettingsListView.qml" line="65" />
+        <location filename="../controls/imports/CyberTracker.1/FormSettingsListView.qml" line="64" />
         <source>Form version</source>
         <translation type="unfinished">Versió del formulari</translation>
     </message>
     <message>
-        <location filename="../controls/imports/CyberTracker.1/FormSettingsListView.qml" line="77" />
+        <location filename="../controls/imports/CyberTracker.1/FormSettingsListView.qml" line="76" />
         <source>Not specified</source>
         <translation type="unfinished">Sense especificar</translation>
     </message>
     <message>
-        <location filename="../controls/imports/CyberTracker.1/FormSettingsListView.qml" line="87" />
+        <location filename="../controls/imports/CyberTracker.1/FormSettingsListView.qml" line="86" />
         <source>Update</source>
         <translation type="unfinished">Actualització</translation>
     </message>
     <message>
-        <location filename="../controls/imports/CyberTracker.1/FormSettingsListView.qml" line="98" />
+        <location filename="../controls/imports/CyberTracker.1/FormSettingsListView.qml" line="97" />
         <source>Offline</source>
         <translation type="unfinished">Fora de línia</translation>
     </message>
     <message>
-        <location filename="../controls/imports/CyberTracker.1/FormSettingsListView.qml" line="123" />
+        <location filename="../controls/imports/CyberTracker.1/FormSettingsListView.qml" line="122" />
         <source>Logged in as</source>
         <translation type="unfinished">Sessió iniciada com</translation>
     </message>
     <message>
-        <location filename="../controls/imports/CyberTracker.1/FormSettingsListView.qml" line="123" />
+        <location filename="../controls/imports/CyberTracker.1/FormSettingsListView.qml" line="122" />
         <source>Logged out</source>
         <translation type="unfinished">Desconnectat</translation>
     </message>
     <message>
-        <location filename="../controls/imports/CyberTracker.1/FormSettingsListView.qml" line="139" />
+        <location filename="../controls/imports/CyberTracker.1/FormSettingsListView.qml" line="138" />
         <source>Logout</source>
         <translation type="unfinished">Tancar sessió</translation>
     </message>
     <message>
-        <location filename="../controls/imports/CyberTracker.1/FormSettingsListView.qml" line="139" />
+        <location filename="../controls/imports/CyberTracker.1/FormSettingsListView.qml" line="138" />
         <source>Login</source>
         <translation type="unfinished">Iniciar Sessió</translation>
     </message>
@@ -1611,44 +1797,50 @@
         <translation type="unfinished">Llenguatge</translation>
     </message>
     <message>
-        <location filename="../controls/imports/CyberTracker.1/FormSettingsListView.qml" line="192" />
+        <location filename="../controls/imports/CyberTracker.1/FormSettingsListView.qml" line="193" />
         <source>Immersive mode</source>
         <translation type="unfinished">Mode immersiu</translation>
     </message>
     <message>
-        <location filename="../controls/imports/CyberTracker.1/FormSettingsListView.qml" line="201" />
+        <location filename="../controls/imports/CyberTracker.1/FormSettingsListView.qml" line="202" />
         <source>Hide sighting home page</source>
         <translation type="unfinished">Amaga la pàgina d'inici de l'albirament</translation>
     </message>
     <message>
-        <location filename="../controls/imports/CyberTracker.1/FormSettingsListView.qml" line="238" />
+        <location filename="../controls/imports/CyberTracker.1/FormSettingsListView.qml" line="239" />
         <source>Page mode</source>
         <translation type="unfinished">Mode de pàgina</translation>
     </message>
     <message>
-        <location filename="../controls/imports/CyberTracker.1/FormSettingsListView.qml" line="247" />
+        <location filename="../controls/imports/CyberTracker.1/FormSettingsListView.qml" line="248" />
         <source>One page per question</source>
         <translation type="unfinished">Una pàgina per pregunta</translation>
     </message>
     <message>
-        <location filename="../controls/imports/CyberTracker.1/FormSettingsListView.qml" line="332" />
+        <location filename="../controls/imports/CyberTracker.1/FormSettingsListView.qml" line="318" />
+        <location filename="../controls/imports/CyberTracker.1/FormSettingsListView.qml" line="384" />
+        <source>Custom interval</source>
+        <translation type="unfinished">Interval personalitzat</translation>
+    </message>
+    <message>
+        <location filename="../controls/imports/CyberTracker.1/FormSettingsListView.qml" line="333" />
         <source>Autosend location</source>
         <translation type="unfinished">Ubicació d'enviament automàtic</translation>
     </message>
     <message>
-        <location filename="../controls/imports/CyberTracker.1/FormSettingsListView.qml" line="282" />
-        <location filename="../controls/imports/CyberTracker.1/FormSettingsListView.qml" line="343" />
+        <location filename="../controls/imports/CyberTracker.1/FormSettingsListView.qml" line="283" />
+        <location filename="../controls/imports/CyberTracker.1/FormSettingsListView.qml" line="344" />
         <source>Off</source>
         <translation type="unfinished">Apagat</translation>
     </message>
     <message>
-        <location filename="../controls/imports/CyberTracker.1/FormSettingsListView.qml" line="344" />
+        <location filename="../controls/imports/CyberTracker.1/FormSettingsListView.qml" line="345" />
         <source>30 seconds</source>
         <translation type="unfinished">30 segons</translation>
     </message>
     <message>
-        <location filename="../controls/imports/CyberTracker.1/FormSettingsListView.qml" line="284" />
-        <location filename="../controls/imports/CyberTracker.1/FormSettingsListView.qml" line="345" />
+        <location filename="../controls/imports/CyberTracker.1/FormSettingsListView.qml" line="285" />
+        <location filename="../controls/imports/CyberTracker.1/FormSettingsListView.qml" line="346" />
         <source>5 minutes</source>
         <translation type="unfinished">5 minuts</translation>
     </message>
@@ -1658,41 +1850,35 @@
         <translation type="unfinished">Ajustos del sistema</translation>
     </message>
     <message>
-        <location filename="../controls/imports/CyberTracker.1/FormSettingsListView.qml" line="271" />
+        <location filename="../controls/imports/CyberTracker.1/FormSettingsListView.qml" line="272" />
         <source>Auto-submit</source>
         <translation type="unfinished">Enviament automàtic</translation>
     </message>
     <message>
-        <location filename="../controls/imports/CyberTracker.1/FormSettingsListView.qml" line="283" />
+        <location filename="../controls/imports/CyberTracker.1/FormSettingsListView.qml" line="284" />
         <source>On save</source>
         <translation type="unfinished">En desar</translation>
     </message>
     <message>
-        <location filename="../controls/imports/CyberTracker.1/FormSettingsListView.qml" line="285" />
-        <location filename="../controls/imports/CyberTracker.1/FormSettingsListView.qml" line="346" />
+        <location filename="../controls/imports/CyberTracker.1/FormSettingsListView.qml" line="286" />
+        <location filename="../controls/imports/CyberTracker.1/FormSettingsListView.qml" line="347" />
         <source>10 minutes</source>
         <translation type="unfinished">10 minuts</translation>
     </message>
     <message>
-        <location filename="../controls/imports/CyberTracker.1/FormSettingsListView.qml" line="286" />
-        <location filename="../controls/imports/CyberTracker.1/FormSettingsListView.qml" line="347" />
+        <location filename="../controls/imports/CyberTracker.1/FormSettingsListView.qml" line="287" />
+        <location filename="../controls/imports/CyberTracker.1/FormSettingsListView.qml" line="348" />
         <source>30 minutes</source>
         <translation type="unfinished">30 minuts</translation>
     </message>
     <message>
-        <location filename="../controls/imports/CyberTracker.1/FormSettingsListView.qml" line="287" />
-        <location filename="../controls/imports/CyberTracker.1/FormSettingsListView.qml" line="348" />
+        <location filename="../controls/imports/CyberTracker.1/FormSettingsListView.qml" line="288" />
+        <location filename="../controls/imports/CyberTracker.1/FormSettingsListView.qml" line="349" />
         <source>1 hour</source>
         <translation type="unfinished">1 hora</translation>
     </message>
     <message>
-        <location filename="../controls/imports/CyberTracker.1/FormSettingsListView.qml" line="317" />
-        <location filename="../controls/imports/CyberTracker.1/FormSettingsListView.qml" line="383" />
-        <source>Unknown interval</source>
-        <translation type="unfinished">Interval desconegut</translation>
-    </message>
-    <message>
-        <location filename="../controls/imports/CyberTracker.1/FormSettingsListView.qml" line="394" />
+        <location filename="../controls/imports/CyberTracker.1/FormSettingsListView.qml" line="395" />
         <source>Logout?</source>
         <translation type="unfinished">Tancar sessió?</translation>
     </message>
@@ -1716,32 +1902,32 @@
 <context>
     <name>FormSightingsListView</name>
     <message>
-        <location filename="../controls/imports/CyberTracker.1/FormSightingsListView.qml" line="129" />
+        <location filename="../controls/imports/CyberTracker.1/FormSightingsListView.qml" line="127" />
         <source>No data</source>
         <translation type="unfinished">No hi ha dades</translation>
     </message>
     <message>
-        <location filename="../controls/imports/CyberTracker.1/FormSightingsListView.qml" line="147" />
+        <location filename="../controls/imports/CyberTracker.1/FormSightingsListView.qml" line="145" />
         <source>Continue editing</source>
         <translation type="unfinished">Continua editant</translation>
     </message>
     <message>
-        <location filename="../controls/imports/CyberTracker.1/FormSightingsListView.qml" line="148" />
+        <location filename="../controls/imports/CyberTracker.1/FormSightingsListView.qml" line="146" />
         <source>Delete sighting</source>
         <translation type="unfinished">Elimina l'albirament</translation>
     </message>
     <message>
-        <location filename="../controls/imports/CyberTracker.1/FormSightingsListView.qml" line="160" />
+        <location filename="../controls/imports/CyberTracker.1/FormSightingsListView.qml" line="158" />
         <source>Sighting deleted</source>
         <translation type="unfinished">S'ha suprimit l'albirament</translation>
     </message>
     <message>
-        <location filename="../controls/imports/CyberTracker.1/FormSightingsListView.qml" line="173" />
+        <location filename="../controls/imports/CyberTracker.1/FormSightingsListView.qml" line="171" />
         <source>Submit data?</source>
         <translation type="unfinished">Envieu dades?</translation>
     </message>
     <message>
-        <location filename="../controls/imports/CyberTracker.1/FormSightingsListView.qml" line="188" />
+        <location filename="../controls/imports/CyberTracker.1/FormSightingsListView.qml" line="187" />
         <source>No supported in demo mode</source>
         <translation type="unfinished">No és compatible amb el mode de demostració</translation>
     </message>
@@ -1749,9 +1935,69 @@
 <context>
     <name>FormView</name>
     <message>
-        <location filename="../controls/imports/CyberTracker.1/FormView.qml" line="219" />
+        <location filename="../controls/imports/CyberTracker.1/FormView.qml" line="224" />
         <source>Bad username or password</source>
         <translation type="unfinished">Nom d'usuari o contrasenya incorrectes</translation>
+    </message>
+</context>
+<context>
+    <name>GoogleConnector</name>
+    <message>
+        <location filename="../cpp/Google/GoogleConnector.cpp" line="51" />
+        <source>Failed to create %1</source>
+        <translation type="unfinished">No s'ha pogut crear %1</translation>
+    </message>
+    <message>
+        <location filename="../cpp/Google/GoogleConnector.cpp" line="89" />
+        <source>Unsent data</source>
+        <translation type="unfinished">Dades no enviades</translation>
+    </message>
+</context>
+<context>
+    <name>GoogleFormParser</name>
+    <message>
+        <location filename="../cpp/Google/GoogleFormParser.cpp" line="33" />
+        <source>Untitled form</source>
+        <translation type="unfinished">Forma sense títol</translation>
+    </message>
+    <message>
+        <location filename="../cpp/Google/GoogleFormParser.cpp" line="156" />
+        <source>No questions</source>
+        <translation type="unfinished">Sense preguntes</translation>
+    </message>
+</context>
+<context>
+    <name>GoogleLoginButton</name>
+    <message>
+        <location filename="../controls/imports/CyberTracker.1/GoogleLoginButton.qml" line="34" />
+        <source>Sign in with Google</source>
+        <translation type="unfinished">Inicieu la sessió amb Google</translation>
+    </message>
+</context>
+<context>
+    <name>GoogleLoginItem</name>
+    <message>
+        <location filename="../controls/imports/CyberTracker.1/GoogleLoginItem.qml" line="34" />
+        <source>Requesting access...</source>
+        <translation type="unfinished">S'està demanant accés...</translation>
+    </message>
+    <message>
+        <location filename="../controls/imports/CyberTracker.1/GoogleLoginItem.qml" line="44" />
+        <source>Refreshing token...</source>
+        <translation type="unfinished">S'està refrescant el testimoni...</translation>
+    </message>
+    <message>
+        <location filename="../controls/imports/CyberTracker.1/GoogleLoginItem.qml" line="116" />
+        <source>Login to a Google account. Form access is required to retrieve forms.</source>
+        <translation type="unfinished">Inicieu sessió a un compte de Google. L'accés al formulari és necessari per recuperar els formularis.</translation>
+    </message>
+</context>
+<context>
+    <name>GoogleProvider</name>
+    <message>
+        <location filename="../cpp/Google/GoogleProvider.cpp" line="211" />
+        <source>Missing %1 attribute</source>
+        <translation type="unfinished">Falta l'atribut %1</translation>
     </message>
 </context>
 <context>
@@ -1806,6 +2052,11 @@
 <context>
     <name>KoBoConnector</name>
     <message>
+        <location filename="../cpp/KoBo/KoBoConnector.cpp" line="129" />
+        <source>Failed to create %1</source>
+        <translation type="unfinished">No s'ha pogut crear %1</translation>
+    </message>
+    <message>
         <location filename="../cpp/KoBo/KoBoConnector.cpp" line="250" />
         <source>No deployment links</source>
         <translation type="unfinished">No hi ha enllaços de desplegament</translation>
@@ -1816,11 +2067,6 @@
         <translation type="unfinished">No hi ha URL de desplegament</translation>
     </message>
     <message>
-        <location filename="../cpp/KoBo/KoBoConnector.cpp" line="284" />
-        <source>Failed to read form settings sheet</source>
-        <translation type="unfinished">No s'ha pogut llegir el full de configuració del formulari</translation>
-    </message>
-    <message>
         <location filename="../cpp/KoBo/KoBoConnector.cpp" line="351" />
         <source>Global server</source>
         <translation type="unfinished">Servidor global</translation>
@@ -1829,11 +2075,6 @@
         <location filename="../cpp/KoBo/KoBoConnector.cpp" line="355" />
         <source>Humanitarian server</source>
         <translation type="unfinished">Servidor humanitari</translation>
-    </message>
-    <message>
-        <location filename="../cpp/KoBo/KoBoConnector.cpp" line="129" />
-        <source>Failed to create project</source>
-        <translation type="unfinished">No s'ha pogut crear el projecte</translation>
     </message>
     <message>
         <location filename="../cpp/KoBo/KoBoConnector.cpp" line="189" />
@@ -1849,7 +2090,7 @@
 <context>
     <name>LineField</name>
     <message>
-        <location filename="../cpp/Field.cpp" line="815" />
+        <location filename="../cpp/Field.cpp" line="816" />
         <source>points</source>
         <translation type="unfinished">punts</translation>
     </message>
@@ -1951,22 +2192,22 @@
         <translation type="unfinished">Adquisició d'ubicació</translation>
     </message>
     <message>
-        <location filename="../qml/SMART/LocationPage.qml" line="164" />
+        <location filename="../qml/SMART/LocationPage.qml" line="162" />
         <source>Waiting for time correction</source>
         <translation type="unfinished">Esperant la correcció de temps</translation>
     </message>
     <message>
-        <location filename="../qml/SMART/LocationPage.qml" line="177" />
+        <location filename="../qml/SMART/LocationPage.qml" line="175" />
         <source>Completing patrol</source>
         <translation type="unfinished">Completant la patrulla</translation>
     </message>
     <message>
-        <location filename="../qml/SMART/LocationPage.qml" line="177" />
+        <location filename="../qml/SMART/LocationPage.qml" line="175" />
         <source>Completing survey</source>
         <translation type="unfinished">Completant l'enquesta</translation>
     </message>
     <message>
-        <location filename="../qml/SMART/LocationPage.qml" line="196" />
+        <location filename="../qml/SMART/LocationPage.qml" line="201" />
         <source>Skip GPS</source>
         <translation type="unfinished">Omet el GPS</translation>
     </message>
@@ -2020,7 +2261,7 @@
 <context>
     <name>LocationPopup</name>
     <message>
-        <location filename="../controls/imports/CyberTracker.1/LocationPopup.qml" line="64" />
+        <location filename="../controls/imports/CyberTracker.1/LocationPopup.qml" line="67" />
         <source>Waiting for time correction</source>
         <translation type="unfinished">Esperant la correcció de temps</translation>
     </message>
@@ -2046,27 +2287,27 @@
         <translation type="unfinished">Nom d'usuari o contrasenya incorrectes</translation>
     </message>
     <message>
-        <location filename="../controls/imports/CyberTracker.1/LoginItem.qml" line="117" />
+        <location filename="../controls/imports/CyberTracker.1/LoginItem.qml" line="124" />
         <source>Server</source>
         <translation type="unfinished">Servidor</translation>
     </message>
     <message>
-        <location filename="../controls/imports/CyberTracker.1/LoginItem.qml" line="130" />
+        <location filename="../controls/imports/CyberTracker.1/LoginItem.qml" line="132" />
         <source>User name</source>
         <translation type="unfinished">Nom d'usuari</translation>
     </message>
     <message>
-        <location filename="../controls/imports/CyberTracker.1/LoginItem.qml" line="143" />
+        <location filename="../controls/imports/CyberTracker.1/LoginItem.qml" line="140" />
         <source>Password</source>
         <translation type="unfinished">Contrasenya</translation>
     </message>
     <message>
-        <location filename="../controls/imports/CyberTracker.1/LoginItem.qml" line="148" />
+        <location filename="../controls/imports/CyberTracker.1/LoginItem.qml" line="146" />
         <source>Login</source>
         <translation type="unfinished">Iniciar Sessió</translation>
     </message>
     <message>
-        <location filename="../controls/imports/CyberTracker.1/LoginItem.qml" line="182" />
+        <location filename="../controls/imports/CyberTracker.1/LoginItem.qml" line="180" />
         <source>Skip and login later</source>
         <translation type="unfinished">Omet i inicieu sessió més tard</translation>
     </message>
@@ -2079,17 +2320,12 @@
         <translation type="unfinished">Connecta't</translation>
     </message>
     <message>
-        <location filename="../qml/MainPage.qml" line="42" />
-        <source>Projects</source>
-        <translation type="unfinished">Projectes</translation>
-    </message>
-    <message>
-        <location filename="../qml/MainPage.qml" line="51" />
+        <location filename="../qml/MainPage.qml" line="52" />
         <source>Map</source>
         <translation type="unfinished">Mapa</translation>
     </message>
     <message>
-        <location filename="../qml/MainPage.qml" line="61" />
+        <location filename="../qml/MainPage.qml" line="60" />
         <source>Settings</source>
         <translation type="unfinished">Configuració</translation>
     </message>
@@ -2272,6 +2508,14 @@
     </message>
 </context>
 <context>
+    <name>MessagePopup</name>
+    <message>
+        <location filename="../controls/imports/CyberTracker.1/MessagePopup.qml" line="12" />
+        <source>OK</source>
+        <translation type="unfinished">D'acord</translation>
+    </message>
+</context>
+<context>
     <name>MetadataPage</name>
     <message>
         <location filename="../qml/SMART/MetadataPage.qml" line="67" />
@@ -2334,8 +2578,8 @@
     </message>
     <message>
         <location filename="../cpp/Native/NativeConnector.cpp" line="179" />
-        <source>No project in package</source>
-        <translation type="unfinished">Cap projecte al paquet</translation>
+        <source>No %1 in package</source>
+        <translation type="unfinished">No %1 al paquet</translation>
     </message>
     <message>
         <location filename="../cpp/Native/NativeConnector.cpp" line="158" />
@@ -2344,55 +2588,58 @@
     </message>
 </context>
 <context>
+    <name>OAuth2</name>
+    <message>
+        <location filename="../controls/OAuth2.cpp" line="134" />
+        <source>Timeout</source>
+        <translation type="unfinished">Temps mort</translation>
+    </message>
+</context>
+<context>
     <name>ODKConnector</name>
     <message>
         <location filename="../cpp/ODK/ODKConnector.cpp" line="114" />
-        <source>Failed to create project</source>
-        <translation type="unfinished">No s'ha pogut crear el projecte</translation>
+        <source>Failed to create %1</source>
+        <translation type="unfinished">No s'ha pogut crear %1</translation>
     </message>
     <message>
         <location filename="../cpp/ODK/ODKConnector.cpp" line="245" />
         <source>Download failed</source>
         <translation type="unfinished">La baixada ha fallat</translation>
     </message>
-    <message>
-        <location filename="../cpp/ODK/ODKConnector.cpp" line="251" />
-        <source>Failed to read form settings sheet</source>
-        <translation type="unfinished">No s'ha pogut llegir el full de configuració del formulari</translation>
-    </message>
 </context>
 <context>
     <name>OfflineMapManager</name>
     <message>
-        <location filename="../cpp/OfflineMap.cpp" line="442" />
-        <location filename="../cpp/OfflineMap.cpp" line="449" />
+        <location filename="../cpp/OfflineMap.cpp" line="450" />
+        <location filename="../cpp/OfflineMap.cpp" line="457" />
         <source>No a valid route file</source>
         <translation type="unfinished">No hi ha un fitxer de ruta vàlid</translation>
     </message>
     <message>
-        <location filename="../cpp/OfflineMap.cpp" line="468" />
-        <location filename="../cpp/OfflineMap.cpp" line="660" />
+        <location filename="../cpp/OfflineMap.cpp" line="476" />
+        <location filename="../cpp/OfflineMap.cpp" line="673" />
         <source>No maps found</source>
         <translation type="unfinished">No s'han trobat mapes</translation>
     </message>
     <message>
-        <location filename="../cpp/OfflineMap.cpp" line="487" />
-        <location filename="../cpp/OfflineMap.cpp" line="678" />
+        <location filename="../cpp/OfflineMap.cpp" line="495" />
+        <location filename="../cpp/OfflineMap.cpp" line="692" />
         <source>Install failed</source>
         <translation type="unfinished">La instal·lació ha fallat</translation>
     </message>
     <message>
-        <location filename="../cpp/OfflineMap.cpp" line="522" />
+        <location filename="../cpp/OfflineMap.cpp" line="530" />
         <source>Up to date</source>
         <translation type="unfinished">Actualitzat</translation>
     </message>
     <message>
-        <location filename="../cpp/OfflineMap.cpp" line="554" />
+        <location filename="../cpp/OfflineMap.cpp" line="562" />
         <source>Map download failed</source>
         <translation type="unfinished">La baixada del mapa ha fallat</translation>
     </message>
     <message>
-        <location filename="../cpp/OfflineMap.cpp" line="568" />
+        <location filename="../cpp/OfflineMap.cpp" line="576" />
         <source>Invalid map format</source>
         <translation type="unfinished">Format de mapa no vàlid</translation>
     </message>
@@ -2406,71 +2653,61 @@
     </message>
     <message>
         <location filename="../qml/OfflineMapPage.qml" line="22" />
-        <source>Move up</source>
-        <translation type="unfinished">Mou-te</translation>
-    </message>
-    <message>
-        <location filename="../qml/OfflineMapPage.qml" line="33" />
-        <source>Move down</source>
-        <translation type="unfinished">Moure cap avall</translation>
-    </message>
-    <message>
-        <location filename="../qml/OfflineMapPage.qml" line="44" />
         <source>Share</source>
         <translation type="unfinished">Compartir</translation>
     </message>
     <message>
-        <location filename="../qml/OfflineMapPage.qml" line="50" />
+        <location filename="../qml/OfflineMapPage.qml" line="28" />
         <source>Packaging failed</source>
-        <translation type="unfinished">Ha fallat l'embalatge</translation>
+        <translation type="unfinished">L'embalatge ha fallat</translation>
     </message>
     <message>
-        <location filename="../qml/OfflineMapPage.qml" line="60" />
+        <location filename="../qml/OfflineMapPage.qml" line="38" />
         <source>Offline map</source>
         <translation type="unfinished">Mapa fora de línia</translation>
     </message>
     <message>
-        <location filename="../qml/OfflineMapPage.qml" line="65" />
+        <location filename="../qml/OfflineMapPage.qml" line="43" />
         <source>Delete</source>
         <translation type="unfinished">Suprimeix</translation>
     </message>
     <message>
-        <location filename="../qml/OfflineMapPage.qml" line="74" />
+        <location filename="../qml/OfflineMapPage.qml" line="52" />
         <source>Add</source>
         <translation type="unfinished">Afegeix</translation>
     </message>
     <message>
-        <location filename="../qml/OfflineMapPage.qml" line="93" />
+        <location filename="../qml/OfflineMapPage.qml" line="71" />
         <source>No layers</source>
         <translation type="unfinished">Sense capes</translation>
     </message>
     <message>
-        <location filename="../qml/OfflineMapPage.qml" line="163" />
+        <location filename="../qml/OfflineMapPage.qml" line="172" />
         <source>Not a map package</source>
         <translation type="unfinished">No és un paquet de mapes</translation>
     </message>
     <message>
-        <location filename="../qml/OfflineMapPage.qml" line="182" />
+        <location filename="../qml/OfflineMapPage.qml" line="191" />
         <source>Save map package</source>
         <translation type="unfinished">Desa el paquet de mapes</translation>
     </message>
     <message>
-        <location filename="../qml/OfflineMapPage.qml" line="191" />
+        <location filename="../qml/OfflineMapPage.qml" line="200" />
         <source>Copied to clipboard</source>
         <translation type="unfinished">S'ha copiat al porta-retalls</translation>
     </message>
     <message>
-        <location filename="../qml/OfflineMapPage.qml" line="193" />
+        <location filename="../qml/OfflineMapPage.qml" line="202" />
         <source>Failed to save package</source>
         <translation type="unfinished">No s'ha pogut desar el paquet</translation>
     </message>
     <message>
-        <location filename="../qml/OfflineMapPage.qml" line="203" />
+        <location filename="../qml/OfflineMapPage.qml" line="212" />
         <source>Yes, delete it</source>
         <translation type="unfinished">Sí, elimina-ho</translation>
     </message>
     <message>
-        <location filename="../qml/OfflineMapPage.qml" line="211" />
+        <location filename="../qml/OfflineMapPage.qml" line="220" />
         <source>Delete layer?</source>
         <translation type="unfinished">Vols suprimir la capa?</translation>
     </message>
@@ -2519,7 +2756,7 @@
 <context>
     <name>PhotoField</name>
     <message>
-        <location filename="../cpp/Field.cpp" line="1188" />
+        <location filename="../cpp/Field.cpp" line="1195" />
         <source>Photos</source>
         <translation type="unfinished">Fotografies</translation>
     </message>
@@ -2535,27 +2772,17 @@
 <context>
     <name>ProjectChangePage</name>
     <message>
-        <location filename="../qml/SMART/ProjectChangePage.qml" line="9" />
-        <source>Change Project</source>
-        <translation type="unfinished">Projecte de canvi</translation>
+        <location filename="../qml/ProjectChangePage.qml" line="9" />
+        <source>Change %1</source>
+        <translation type="unfinished">Canvia %1</translation>
     </message>
 </context>
 <context>
     <name>ProjectDetailsPage</name>
     <message>
-        <location filename="../qml/ProjectDetailsPage.qml" line="21" />
-        <source>Project details</source>
-        <translation type="unfinished">Detalls del projecte</translation>
-    </message>
-    <message>
         <location filename="../qml/ProjectDetailsPage.qml" line="26" />
         <source>Exported data</source>
         <translation type="unfinished">Dades exportades</translation>
-    </message>
-    <message>
-        <location filename="../qml/ProjectDetailsPage.qml" line="27" />
-        <source>Project data waiting for import</source>
-        <translation type="unfinished">Dades del projecte pendents d'importació</translation>
     </message>
     <message>
         <location filename="../qml/ProjectDetailsPage.qml" line="34" />
@@ -2563,19 +2790,9 @@
         <translation type="unfinished">Codi QR</translation>
     </message>
     <message>
-        <location filename="../qml/ProjectDetailsPage.qml" line="35" />
-        <source>Share a link to this project</source>
-        <translation type="unfinished">Comparteix un enllaç a aquest projecte</translation>
-    </message>
-    <message>
         <location filename="../qml/ProjectDetailsPage.qml" line="42" />
         <source>Send package</source>
         <translation type="unfinished">Enviar paquet</translation>
-    </message>
-    <message>
-        <location filename="../qml/ProjectDetailsPage.qml" line="43" />
-        <source>Share this project with others</source>
-        <translation type="unfinished">Comparteix aquest projecte amb altres persones</translation>
     </message>
     <message>
         <location filename="../qml/ProjectDetailsPage.qml" line="49" />
@@ -2588,24 +2805,84 @@
         <translation type="unfinished">Buscar actualitzacions</translation>
     </message>
     <message>
+        <location filename="../qml/ProjectDetailsPage.qml" line="21" />
+        <source>%1 options</source>
+        <translation type="unfinished">%1 opcions</translation>
+    </message>
+    <message>
+        <location filename="../qml/ProjectDetailsPage.qml" line="27" />
+        <source>%1 data waiting for import</source>
+        <translation type="unfinished">%1 dades pendents d'importació</translation>
+    </message>
+    <message>
+        <location filename="../qml/ProjectDetailsPage.qml" line="35" />
+        <source>Share a link to this %1</source>
+        <translation type="unfinished">Comparteix un enllaç a aquest %1</translation>
+    </message>
+    <message>
+        <location filename="../qml/ProjectDetailsPage.qml" line="43" />
+        <source>Share this %1 with others</source>
+        <translation type="unfinished">Comparteix aquest %1 amb altres persones</translation>
+    </message>
+    <message>
         <location filename="../qml/ProjectDetailsPage.qml" line="56" />
-        <source>Reset project</source>
-        <translation type="unfinished">Restableix el projecte</translation>
+        <source>Reset %1</source>
+        <translation type="unfinished">Restableix %1</translation>
     </message>
     <message>
         <location filename="../qml/ProjectDetailsPage.qml" line="57" />
-        <source>Delete all project data</source>
-        <translation type="unfinished">Suprimeix totes les dades del projecte</translation>
+        <source>Reset %1 state and data</source>
+        <translation type="unfinished">Restableix l'estat i les dades de %1</translation>
     </message>
     <message>
         <location filename="../qml/ProjectDetailsPage.qml" line="63" />
-        <source>Delete project</source>
-        <translation type="unfinished">Esborra el projecte</translation>
+        <source>Delete %1</source>
+        <translation type="unfinished">Suprimeix %1</translation>
     </message>
     <message>
         <location filename="../qml/ProjectDetailsPage.qml" line="64" />
-        <source>Delete the project and all data</source>
-        <translation type="unfinished">Elimina el projecte i totes les dades</translation>
+        <source>Delete the %1 and all data</source>
+        <translation type="unfinished">Suprimeix el %1 i totes les dades</translation>
+    </message>
+    <message>
+        <location filename="../qml/ProjectDetailsPage.qml" line="208" />
+        <source>Reset %1?</source>
+        <translation type="unfinished">Restablir %1?</translation>
+    </message>
+    <message>
+        <location filename="../qml/ProjectDetailsPage.qml" line="209" />
+        <source>Data will be permanently removed from the device.</source>
+        <translation type="unfinished">Les dades s'eliminaran permanentment del dispositiu.</translation>
+    </message>
+    <message>
+        <location filename="../qml/ProjectDetailsPage.qml" line="213" />
+        <source>State only</source>
+        <translation type="unfinished">Només l'estat</translation>
+    </message>
+    <message>
+        <location filename="../qml/ProjectDetailsPage.qml" line="214" />
+        <source>State and data</source>
+        <translation type="unfinished">Estat i dades</translation>
+    </message>
+    <message>
+        <location filename="../qml/ProjectDetailsPage.qml" line="215" />
+        <source>Cancel</source>
+        <translation type="unfinished">Cancel · lar</translation>
+    </message>
+    <message>
+        <location filename="../qml/ProjectDetailsPage.qml" line="223" />
+        <source>%1 state reset</source>
+        <translation type="unfinished">%1 restabliment de l'estat</translation>
+    </message>
+    <message>
+        <location filename="../qml/ProjectDetailsPage.qml" line="246" />
+        <source>Delete %1?</source>
+        <translation type="unfinished">Vols suprimir %1?</translation>
+    </message>
+    <message>
+        <location filename="../qml/ProjectDetailsPage.qml" line="247" />
+        <source>The %1 and all of its data will be permanently removed.</source>
+        <translation type="unfinished">El %1 i totes les seves dades s'eliminaran permanentment.</translation>
     </message>
     <message>
         <location filename="../qml/ProjectDetailsPage.qml" line="158" />
@@ -2628,42 +2905,17 @@
         <translation type="unfinished">No s'ha pogut desar el paquet</translation>
     </message>
     <message>
-        <location filename="../qml/ProjectDetailsPage.qml" line="207" />
-        <source>Reset project?</source>
-        <translation type="unfinished">Restableix el projecte?</translation>
-    </message>
-    <message>
-        <location filename="../qml/ProjectDetailsPage.qml" line="208" />
-        <source>All project data will be permanently removed from the device.</source>
-        <translation type="unfinished">Totes les dades del projecte s'eliminaran permanentment del dispositiu.</translation>
-    </message>
-    <message>
-        <location filename="../qml/ProjectDetailsPage.qml" line="209" />
-        <source>Yes, reset it</source>
-        <translation type="unfinished">Sí, reinicieu-lo</translation>
-    </message>
-    <message>
-        <location filename="../qml/ProjectDetailsPage.qml" line="214" />
+        <location filename="../qml/ProjectDetailsPage.qml" line="229" />
         <source>%1 reset</source>
         <translation type="unfinished">%1 restablert</translation>
     </message>
     <message>
-        <location filename="../qml/ProjectDetailsPage.qml" line="225" />
-        <source>Delete project?</source>
-        <translation type="unfinished">Vols suprimir el projecte?</translation>
-    </message>
-    <message>
-        <location filename="../qml/ProjectDetailsPage.qml" line="226" />
-        <source>The project and all of its data will be permanently removed.</source>
-        <translation type="unfinished">El projecte i totes les seves dades s'eliminaran permanentment.</translation>
-    </message>
-    <message>
-        <location filename="../qml/ProjectDetailsPage.qml" line="227" />
+        <location filename="../qml/ProjectDetailsPage.qml" line="248" />
         <source>Yes, delete it</source>
-        <translation type="unfinished">Sí, esborra-ho</translation>
+        <translation type="unfinished">Sí, elimina-ho</translation>
     </message>
     <message>
-        <location filename="../qml/ProjectDetailsPage.qml" line="232" />
+        <location filename="../qml/ProjectDetailsPage.qml" line="253" />
         <source>%1 deleted</source>
         <translation type="unfinished">%1 suprimit</translation>
     </message>
@@ -2671,78 +2923,131 @@
 <context>
     <name>ProjectManager</name>
     <message>
-        <location filename="../cpp/Project.cpp" line="965" />
+        <location filename="../cpp/Project.cpp" line="1057" />
         <source>Failed to extract</source>
         <translation type="unfinished">No s'ha pogut extreure</translation>
     </message>
     <message>
-        <location filename="../cpp/Project.cpp" line="973" />
+        <location filename="../cpp/Project.cpp" line="1065" />
         <source>Invalid package</source>
         <translation type="unfinished">Paquet no vàlid</translation>
     </message>
     <message>
-        <location filename="../cpp/Project.cpp" line="985" />
-        <source>Failed to initialize project</source>
-        <translation type="unfinished">No s'ha pogut inicialitzar el projecte</translation>
+        <location filename="../cpp/Project.cpp" line="1077" />
+        <source>Failed to initialize %1</source>
+        <translation type="unfinished">No s'ha pogut inicialitzar %1</translation>
     </message>
     <message>
-        <location filename="../cpp/Project.cpp" line="1064" />
+        <location filename="../cpp/Project.cpp" line="1156" />
         <source>Already installed</source>
         <translation type="unfinished">Ja instal·lat</translation>
     </message>
     <message>
-        <location filename="../cpp/Project.cpp" line="1069" />
+        <location filename="../cpp/Project.cpp" line="1161" />
         <source>Nothing to do</source>
         <translation type="unfinished">Res a fer</translation>
     </message>
     <message>
-        <location filename="../cpp/Project.cpp" line="1088" />
+        <location filename="../cpp/Project.cpp" line="1180" />
         <source>File not found</source>
         <translation type="unfinished">Arxiu no trobat</translation>
     </message>
     <message>
-        <location filename="../cpp/Project.cpp" line="1096" />
-        <source>Permissions not granted</source>
-        <translation type="unfinished">Permisos no concedits</translation>
-    </message>
-    <message>
-        <location filename="../cpp/Project.cpp" line="1109" />
+        <location filename="../cpp/Project.cpp" line="1196" />
         <source>Bad definition format</source>
         <translation type="unfinished">Mal format de definició</translation>
     </message>
     <message>
-        <location filename="../cpp/Project.cpp" line="1258" />
+        <location filename="../cpp/Project.cpp" line="1341" />
         <source>Update Complete</source>
         <translation type="unfinished">Actualització completada</translation>
     </message>
     <message>
-        <location filename="../cpp/Project.cpp" line="1363" />
-        <source>Bad project file</source>
-        <translation type="unfinished">Fitxer de projecte incorrecte</translation>
+        <location filename="../cpp/Project.cpp" line="1446" />
+        <source>Bad %1 file</source>
+        <translation type="unfinished">Fitxer %1 incorrecte</translation>
     </message>
     <message>
-        <location filename="../cpp/Project.cpp" line="1368" />
+        <location filename="../cpp/Project.cpp" line="1451" />
         <source>Up to date</source>
         <translation type="unfinished">Actualitzat</translation>
     </message>
     <message>
-        <location filename="../cpp/Project.cpp" line="1402" />
+        <location filename="../cpp/Project.cpp" line="1485" />
         <source>Update error</source>
         <translation type="unfinished">Error d'actualització</translation>
     </message>
 </context>
 <context>
-    <name>ProjectsPage</name>
+    <name>ProjectsEditPage</name>
     <message>
-        <location filename="../qml/ProjectsPage.qml" line="13" />
-        <source>Projects</source>
-        <translation type="unfinished">Projectes</translation>
+        <location filename="../qml/ProjectsEditPage.qml" line="15" />
+        <source>Edit %1</source>
+        <translation type="unfinished">Edita %1</translation>
     </message>
     <message>
+        <location filename="../qml/ProjectsEditPage.qml" line="22" />
+        <source>Options</source>
+        <translation type="unfinished">Opcions</translation>
+    </message>
+    <message>
+        <location filename="../qml/ProjectsEditPage.qml" line="31" />
+        <source>Delete</source>
+        <translation type="unfinished">Suprimeix</translation>
+    </message>
+    <message>
+        <location filename="../qml/ProjectsEditPage.qml" line="40" />
+        <source>Add</source>
+        <translation type="unfinished">Afegeix</translation>
+    </message>
+    <message>
+        <location filename="../qml/ProjectsEditPage.qml" line="54" />
+        <source>No %1</source>
+        <translation type="unfinished">No %1</translation>
+    </message>
+    <message>
+        <location filename="../qml/ProjectsEditPage.qml" line="173" />
+        <source>Save %1 package</source>
+        <translation type="unfinished">Desa %1 paquet</translation>
+    </message>
+    <message>
+        <location filename="../qml/ProjectsEditPage.qml" line="196" />
+        <source>Delete %1?</source>
+        <translation type="unfinished">Vols suprimir %1?</translation>
+    </message>
+    <message>
+        <location filename="../qml/ProjectsEditPage.qml" line="197" />
+        <source>The %1 and all of its data will be permanently removed.</source>
+        <translation type="unfinished">El %1 i totes les seves dades s'eliminaran permanentment.</translation>
+    </message>
+    <message>
+        <location filename="../qml/ProjectsEditPage.qml" line="182" />
+        <source>Copied to clipboard</source>
+        <translation type="unfinished">S'ha copiat al porta-retalls</translation>
+    </message>
+    <message>
+        <location filename="../qml/ProjectsEditPage.qml" line="184" />
+        <source>Failed to save package</source>
+        <translation type="unfinished">No s'ha pogut desar el paquet</translation>
+    </message>
+    <message>
+        <location filename="../qml/ProjectsEditPage.qml" line="198" />
+        <source>Yes, delete it</source>
+        <translation type="unfinished">Sí, elimina-ho</translation>
+    </message>
+    <message>
+        <location filename="../qml/ProjectsEditPage.qml" line="205" />
+        <source>%1 deleted</source>
+        <translation type="unfinished">%1 suprimit</translation>
+    </message>
+</context>
+<context>
+    <name>ProjectsPage</name>
+    <message>
         <location filename="../qml/ProjectsPage.qml" line="54" />
-        <location filename="../qml/ProjectsPage.qml" line="168" />
-        <source>Delete project?</source>
-        <translation type="unfinished">Vols suprimir el projecte?</translation>
+        <location filename="../qml/ProjectsPage.qml" line="263" />
+        <source>Delete %1?</source>
+        <translation type="unfinished">Vols suprimir %1?</translation>
     </message>
     <message>
         <location filename="../qml/ProjectsPage.qml" line="64" />
@@ -2760,42 +3065,62 @@
         <translation type="unfinished">Fora de línia</translation>
     </message>
     <message>
-        <location filename="../qml/ProjectsPage.qml" line="138" />
-        <source>No provider</source>
-        <translation type="unfinished">Cap proveïdor</translation>
+        <location filename="../qml/ProjectsPage.qml" line="174" />
+        <source>No %1</source>
+        <translation type="unfinished">No %1</translation>
     </message>
     <message>
-        <location filename="../qml/ProjectsPage.qml" line="169" />
-        <source>The project and all of its data will be permanently removed.</source>
-        <translation type="unfinished">El projecte i totes les seves dades s'eliminaran permanentment.</translation>
+        <location filename="../qml/ProjectsPage.qml" line="211" />
+        <source>Getting started</source>
+        <translation type="unfinished">Començant</translation>
     </message>
     <message>
-        <location filename="../qml/ProjectsPage.qml" line="170" />
+        <location filename="../qml/ProjectsPage.qml" line="264" />
+        <source>The %1 and all of its data will be permanently removed.</source>
+        <translation type="unfinished">El %1 i totes les seves dades s'eliminaran permanentment.</translation>
+    </message>
+    <message>
+        <location filename="../qml/ProjectsPage.qml" line="284" />
+        <source>Update %1?</source>
+        <translation type="unfinished">Actualitzar %1?</translation>
+    </message>
+    <message>
+        <location filename="../qml/ProjectsPage.qml" line="265" />
         <source>Yes, delete it</source>
         <translation type="unfinished">Sí, elimina-ho</translation>
     </message>
     <message>
-        <location filename="../qml/ProjectsPage.qml" line="175" />
+        <location filename="../qml/ProjectsPage.qml" line="185" />
+        <source>Scan QR code</source>
+        <translation type="unfinished">Escaneja el codi QR</translation>
+    </message>
+    <message>
+        <location filename="../qml/ProjectsPage.qml" line="187" />
+        <source>%1 or tap the %2 button below to add a %3</source>
+        <translation type="unfinished">%1 o toqueu el botó %2 de sota per afegir un %3</translation>
+    </message>
+    <message>
+        <location filename="../qml/ProjectsPage.qml" line="189" />
+        <source>%1 to add a %2</source>
+        <translation type="unfinished">%1 per afegir un %2</translation>
+    </message>
+    <message>
+        <location filename="../qml/ProjectsPage.qml" line="270" />
         <source>%1 deleted</source>
         <translation type="unfinished">%1 suprimit</translation>
     </message>
     <message>
-        <location filename="../qml/ProjectsPage.qml" line="189" />
-        <source>Update project?</source>
-        <translation type="unfinished">Actualitzar el projecte?</translation>
-    </message>
-    <message>
-        <location filename="../qml/ProjectsPage.qml" line="190" />
+        <location filename="../qml/ProjectsPage.qml" line="285" />
         <source>A new version is available.</source>
         <translation type="unfinished">Hi ha disponible una nova versió.</translation>
     </message>
     <message>
-        <location filename="../qml/ProjectsPage.qml" line="191" />
+        <location filename="../qml/ProjectsPage.qml" line="286" />
         <source>Yes, update now</source>
         <translation type="unfinished">Sí, actualitza ara</translation>
     </message>
     <message>
-        <location filename="../qml/ProjectsPage.qml" line="193" />
+        <location filename="../qml/ProjectsPage.qml" line="288" />
         <source>No, update later</source>
         <translation type="unfinished">No, actualitzeu més tard</translation>
     </message>
@@ -2809,19 +3134,302 @@
     </message>
 </context>
 <context>
+    <name>QKeychain::DeletePasswordJobPrivate</name>
+    <message>
+        <location filename="../lib/qtkeychain/keychain_android.cpp" line="173" />
+        <source>Could not open keystore</source>
+        <translation type="unfinished">No s'ha pogut obrir el magatzem de claus</translation>
+    </message>
+    <message>
+        <location filename="../lib/qtkeychain/keychain_android.cpp" line="179" />
+        <source>Could not remove private key from keystore</source>
+        <translation type="unfinished">No s'ha pogut eliminar la clau privada del magatzem de claus</translation>
+    </message>
+    <message>
+        <location filename="../lib/qtkeychain/keychain_unix.cpp" line="552" />
+        <location filename="../lib/qtkeychain/keychain_unix.cpp" line="560" />
+        <source>Unknown error</source>
+        <translation type="unfinished">Error desconegut</translation>
+    </message>
+    <message>
+        <location filename="../lib/qtkeychain/keychain_unix.cpp" line="578" />
+        <source>Could not open wallet: %1; %2</source>
+        <translation type="unfinished">No s'ha pogut obrir la cartera: %1; %2</translation>
+    </message>
+    <message>
+        <location filename="../lib/qtkeychain/keychain_win.cpp" line="104" />
+        <source>Password entry not found</source>
+        <translation type="unfinished">No s'ha trobat l'entrada de la contrasenya</translation>
+    </message>
+    <message>
+        <location filename="../lib/qtkeychain/keychain_win.cpp" line="108" />
+        <source>Could not decrypt data</source>
+        <translation type="unfinished">No s'han pogut desxifrar les dades</translation>
+    </message>
+</context>
+<context>
+    <name>QKeychain::JobPrivate</name>
+    <message>
+        <location filename="../lib/qtkeychain/keychain_unix.cpp" line="265" />
+        <source>Unknown error</source>
+        <translation type="unfinished">Error desconegut</translation>
+    </message>
+    <message>
+        <location filename="../lib/qtkeychain/keychain_unix.cpp" line="509" />
+        <source>Access to keychain denied</source>
+        <translation type="unfinished">Accés al clauer denegat</translation>
+    </message>
+</context>
+<context>
+    <name>QKeychain::PlainTextStore</name>
+    <message>
+        <location filename="../lib/qtkeychain/plaintextstore.cpp" line="65" />
+        <source>Could not store data in settings: access error</source>
+        <translation type="unfinished">No s'han pogut emmagatzemar les dades a la configuració: error d'accés</translation>
+    </message>
+    <message>
+        <location filename="../lib/qtkeychain/plaintextstore.cpp" line="67" />
+        <source>Could not store data in settings: format error</source>
+        <translation type="unfinished">No s'han pogut emmagatzemar les dades a la configuració: error de format</translation>
+    </message>
+    <message>
+        <location filename="../lib/qtkeychain/plaintextstore.cpp" line="85" />
+        <source>Could not delete data from settings: access error</source>
+        <translation type="unfinished">No s'han pogut suprimir les dades de la configuració: error d'accés</translation>
+    </message>
+    <message>
+        <location filename="../lib/qtkeychain/plaintextstore.cpp" line="87" />
+        <source>Could not delete data from settings: format error</source>
+        <translation type="unfinished">No s'han pogut suprimir les dades de la configuració: error de format</translation>
+    </message>
+    <message>
+        <location filename="../lib/qtkeychain/plaintextstore.cpp" line="104" />
+        <source>Entry not found</source>
+        <translation type="unfinished">No s'ha trobat l'entrada</translation>
+    </message>
+</context>
+<context>
+    <name>QKeychain::ReadPasswordJobPrivate</name>
+    <message>
+        <location filename="../lib/qtkeychain/keychain_android.cpp" line="52" />
+        <location filename="../lib/qtkeychain/keychain_unix.cpp" line="363" />
+        <source>Entry not found</source>
+        <translation type="unfinished">No s'ha trobat l'entrada</translation>
+    </message>
+    <message>
+        <location filename="../lib/qtkeychain/keychain_android.cpp" line="60" />
+        <source>Could not open keystore</source>
+        <translation type="unfinished">No s'ha pogut obrir el magatzem de claus</translation>
+    </message>
+    <message>
+        <location filename="../lib/qtkeychain/keychain_android.cpp" line="68" />
+        <source>Could not retrieve private key from keystore</source>
+        <translation type="unfinished">No s'ha pogut recuperar la clau privada del magatzem de claus</translation>
+    </message>
+    <message>
+        <location filename="../lib/qtkeychain/keychain_android.cpp" line="75" />
+        <source>Could not create decryption cipher</source>
+        <translation type="unfinished">No s'ha pogut crear el xifratge de desxifrat</translation>
+    </message>
+    <message>
+        <location filename="../lib/qtkeychain/keychain_unix.cpp" line="178" />
+        <source>D-Bus is not running</source>
+        <translation type="unfinished">D-Bus no funciona</translation>
+    </message>
+    <message>
+        <location filename="../lib/qtkeychain/keychain_unix.cpp" line="187" />
+        <location filename="../lib/qtkeychain/keychain_unix.cpp" line="197" />
+        <source>Unknown error</source>
+        <translation type="unfinished">Error desconegut</translation>
+    </message>
+    <message>
+        <location filename="../lib/qtkeychain/keychain_unix.cpp" line="286" />
+        <source>No keychain service available</source>
+        <translation type="unfinished">No hi ha servei de clauer disponible</translation>
+    </message>
+    <message>
+        <location filename="../lib/qtkeychain/keychain_unix.cpp" line="288" />
+        <source>Could not open wallet: %1; %2</source>
+        <translation type="unfinished">No s'ha pogut obrir la cartera: %1; %2</translation>
+    </message>
+    <message>
+        <location filename="../lib/qtkeychain/keychain_unix.cpp" line="333" />
+        <source>Access to keychain denied</source>
+        <translation type="unfinished">Accés al clauer denegat</translation>
+    </message>
+    <message>
+        <location filename="../lib/qtkeychain/keychain_unix.cpp" line="354" />
+        <source>Could not determine data type: %1; %2</source>
+        <translation type="unfinished">No s'ha pogut determinar el tipus de dades: %1; %2</translation>
+    </message>
+    <message>
+        <location filename="../lib/qtkeychain/keychain_unix.cpp" line="372" />
+        <source>Unsupported entry type 'Map'</source>
+        <translation type="unfinished">Tipus d'entrada "Mapa" no compatible</translation>
+    </message>
+    <message>
+        <location filename="../lib/qtkeychain/keychain_unix.cpp" line="375" />
+        <source>Unknown kwallet entry type '%1'</source>
+        <translation type="unfinished">Tipus d'entrada de kwallet desconegut "%1"</translation>
+    </message>
+    <message>
+        <location filename="../lib/qtkeychain/keychain_win.cpp" line="32" />
+        <source>Password entry not found</source>
+        <translation type="unfinished">No s'ha trobat l'entrada de la contrasenya</translation>
+    </message>
+    <message>
+        <location filename="../lib/qtkeychain/keychain_win.cpp" line="36" />
+        <location filename="../lib/qtkeychain/keychain_win.cpp" line="139" />
+        <source>Could not decrypt data</source>
+        <translation type="unfinished">No s'han pogut desxifrar les dades</translation>
+    </message>
+</context>
+<context>
+    <name>QKeychain::WritePasswordJobPrivate</name>
+    <message>
+        <location filename="../lib/qtkeychain/keychain_android.cpp" line="95" />
+        <source>Could not open keystore</source>
+        <translation type="unfinished">No s'ha pogut obrir el magatzem de claus</translation>
+    </message>
+    <message>
+        <location filename="../lib/qtkeychain/keychain_android.cpp" line="124" />
+        <source>Could not create private key generator</source>
+        <translation type="unfinished">No s'ha pogut crear el generador de claus privades</translation>
+    </message>
+    <message>
+        <location filename="../lib/qtkeychain/keychain_android.cpp" line="131" />
+        <source>Could not generate new private key</source>
+        <translation type="unfinished">No s'ha pogut generar una clau privada nova</translation>
+    </message>
+    <message>
+        <location filename="../lib/qtkeychain/keychain_android.cpp" line="139" />
+        <source>Could not retrieve private key from keystore</source>
+        <translation type="unfinished">No s'ha pogut recuperar la clau privada del magatzem de claus</translation>
+    </message>
+    <message>
+        <location filename="../lib/qtkeychain/keychain_android.cpp" line="147" />
+        <source>Could not create encryption cipher</source>
+        <translation type="unfinished">No s'ha pogut crear el xifratge de xifratge</translation>
+    </message>
+    <message>
+        <location filename="../lib/qtkeychain/keychain_android.cpp" line="155" />
+        <source>Could not encrypt data</source>
+        <translation type="unfinished">No s'han pogut xifrar les dades</translation>
+    </message>
+    <message>
+        <location filename="../lib/qtkeychain/keychain_unix.cpp" line="415" />
+        <source>D-Bus is not running</source>
+        <translation type="unfinished">D-Bus no funciona</translation>
+    </message>
+    <message>
+        <location filename="../lib/qtkeychain/keychain_unix.cpp" line="425" />
+        <location filename="../lib/qtkeychain/keychain_unix.cpp" line="452" />
+        <source>Unknown error</source>
+        <translation type="unfinished">Error desconegut</translation>
+    </message>
+    <message>
+        <location filename="../lib/qtkeychain/keychain_unix.cpp" line="468" />
+        <source>Could not open wallet: %1; %2</source>
+        <translation type="unfinished">No s'ha pogut obrir la cartera: %1; %2</translation>
+    </message>
+    <message>
+        <location filename="../lib/qtkeychain/keychain_win.cpp" line="78" />
+        <source>Credential size exceeds maximum size of %1</source>
+        <translation type="unfinished">La mida de la credencial supera la mida màxima de %1</translation>
+    </message>
+    <message>
+        <location filename="../lib/qtkeychain/keychain_win.cpp" line="87" />
+        <source>Credential key exceeds maximum size of %1</source>
+        <translation type="unfinished">La clau de credencial supera la mida màxima de %1</translation>
+    </message>
+    <message>
+        <location filename="../lib/qtkeychain/keychain_win.cpp" line="92" />
+        <source>Writing credentials failed: Win32 error code %1</source>
+        <translation type="unfinished">No s'han pogut escriure les credencials: codi d'error Win32 %1</translation>
+    </message>
+    <message>
+        <location filename="../lib/qtkeychain/keychain_win.cpp" line="162" />
+        <source>Encryption failed</source>
+        <translation type="unfinished">Ha fallat l'encriptació</translation>
+    </message>
+</context>
+<context>
+    <name>QObject</name>
+    <message>
+        <location filename="../lib/qtkeychain/keychain_unix.cpp" line="225" />
+        <source>Access to keychain denied</source>
+        <translation type="unfinished">Accés al clauer denegat</translation>
+    </message>
+    <message>
+        <location filename="../lib/qtkeychain/keychain_unix.cpp" line="227" />
+        <source>No keyring daemon</source>
+        <translation type="unfinished">Cap dimoni del clauer</translation>
+    </message>
+    <message>
+        <location filename="../lib/qtkeychain/keychain_unix.cpp" line="229" />
+        <source>Already unlocked</source>
+        <translation type="unfinished">Ja està desbloquejat</translation>
+    </message>
+    <message>
+        <location filename="../lib/qtkeychain/keychain_unix.cpp" line="231" />
+        <source>No such keyring</source>
+        <translation type="unfinished">No tal clauer</translation>
+    </message>
+    <message>
+        <location filename="../lib/qtkeychain/keychain_unix.cpp" line="233" />
+        <source>Bad arguments</source>
+        <translation type="unfinished">Mals arguments</translation>
+    </message>
+    <message>
+        <location filename="../lib/qtkeychain/keychain_unix.cpp" line="235" />
+        <source>I/O error</source>
+        <translation type="unfinished">Error d'E/S</translation>
+    </message>
+    <message>
+        <location filename="../lib/qtkeychain/keychain_unix.cpp" line="237" />
+        <source>Cancelled</source>
+        <translation type="unfinished">Cancel·lat</translation>
+    </message>
+    <message>
+        <location filename="../lib/qtkeychain/keychain_unix.cpp" line="239" />
+        <source>Keyring already exists</source>
+        <translation type="unfinished">El clauer ja existeix</translation>
+    </message>
+    <message>
+        <location filename="../lib/qtkeychain/keychain_unix.cpp" line="241" />
+        <source>No match</source>
+        <translation type="unfinished">No coincideix</translation>
+    </message>
+    <message>
+        <location filename="../lib/qtkeychain/keychain_unix.cpp" line="246" />
+        <source>Unknown error</source>
+        <translation type="unfinished">Error desconegut</translation>
+    </message>
+    <message>
+        <location filename="../lib/qtkeychain/libsecret.cpp" line="119" />
+        <source>Entry not found</source>
+        <translation type="unfinished">No s'ha trobat l'entrada</translation>
+    </message>
+</context>
+<context>
     <name>Record</name>
     <message>
-        <location filename="../cpp/Record.cpp" line="392" />
+        <location filename="../cpp/Record.cpp" line="397" />
         <source>Record</source>
         <translation type="unfinished">Registre</translation>
     </message>
     <message>
-        <location filename="../cpp/Record.cpp" line="680" />
+        <location filename="../cpp/Record.cpp" line="702" />
         <source>Records</source>
         <translation type="unfinished">Registres</translation>
     </message>
     <message>
-        <location filename="../cpp/Record.cpp" line="708" />
+        <location filename="../cpp/Record.cpp" line="730" />
+        <source>Value incorrect</source>
+        <translation type="unfinished">Valor incorrecte</translation>
+    </message>
+    <message>
+        <location filename="../cpp/Record.cpp" line="744" />
         <source>Value required</source>
         <translation type="unfinished">Valor requerit</translation>
     </message>
@@ -2829,12 +3437,12 @@
 <context>
     <name>RecordField</name>
     <message>
-        <location filename="../cpp/Field.cpp" line="320" />
+        <location filename="../cpp/Field.cpp" line="321" />
         <source>record</source>
         <translation type="unfinished">registre</translation>
     </message>
     <message>
-        <location filename="../cpp/Field.cpp" line="320" />
+        <location filename="../cpp/Field.cpp" line="321" />
         <source>records</source>
         <translation type="unfinished">registres</translation>
     </message>
@@ -2873,18 +3481,18 @@
     </message>
     <message>
         <location filename="../qml/SMART/RecoverDataPage.qml" line="73" />
-        <source>Data is ready for import from the desktop</source>
-        <translation type="unfinished">Les dades ja estan a punt per importar-les des de l'escriptori</translation>
+        <source>Data is ready for import from the desktop.</source>
+        <translation type="unfinished">Les dades ja estan a punt per importar-les des de l'escriptori.</translation>
+    </message>
+    <message>
+        <location filename="../qml/SMART/RecoverDataPage.qml" line="76" />
+        <source>An error occurred during data export.</source>
+        <translation type="unfinished">S'ha produït un error durant l'exportació de dades.</translation>
     </message>
     <message>
         <location filename="../qml/SMART/RecoverDataPage.qml" line="75" />
         <source>Error</source>
         <translation type="unfinished">Error</translation>
-    </message>
-    <message>
-        <location filename="../qml/SMART/RecoverDataPage.qml" line="76" />
-        <source>An error occurred during data export</source>
-        <translation type="unfinished">S'ha produït un error durant l'exportació de dades</translation>
     </message>
 </context>
 <context>
@@ -2898,7 +3506,7 @@
 <context>
     <name>SMARTConnector</name>
     <message>
-        <location filename="../cpp/SMART/SMARTConnector.cpp" line="105" />
+        <location filename="../cpp/SMART/SMARTConnector.cpp" line="114" />
         <source>has unexported data</source>
         <translation type="unfinished">té dades no exportades</translation>
     </message>
@@ -2908,36 +3516,44 @@
         <translation type="unfinished">requerit</translation>
     </message>
     <message>
-        <location filename="../cpp/SMART/SMARTConnector.cpp" line="171" />
+        <location filename="../cpp/SMART/SMARTConnector.cpp" line="184" />
         <source>Download failed</source>
         <translation type="unfinished">La baixada ha fallat</translation>
     </message>
     <message>
-        <location filename="../cpp/SMART/SMARTConnector.cpp" line="181" />
+        <location filename="../cpp/SMART/SMARTConnector.cpp" line="194" />
         <source>Download bad</source>
         <translation type="unfinished">Descarregar malament</translation>
     </message>
     <message>
-        <location filename="../cpp/SMART/SMARTConnector.cpp" line="339" />
+        <location filename="../cpp/SMART/SMARTConnector.cpp" line="327" />
         <source>Unexported data</source>
         <translation type="unfinished">Dades no exportades</translation>
     </message>
     <message>
-        <location filename="../cpp/SMART/SMARTConnector.cpp" line="355" />
-        <location filename="../cpp/SMART/SMARTConnector.cpp" line="551" />
+        <location filename="../cpp/SMART/SMARTConnector.cpp" line="343" />
         <source>Bad project file</source>
         <translation type="unfinished">Fitxer de projecte incorrecte</translation>
     </message>
     <message>
-        <location filename="../cpp/SMART/SMARTConnector.cpp" line="367" />
-        <location filename="../cpp/SMART/SMARTConnector.cpp" line="560" />
+        <location filename="../cpp/SMART/SMARTConnector.cpp" line="355" />
         <source>Cannot unpack project</source>
         <translation type="unfinished">No es pot desempaquetar el projecte</translation>
     </message>
     <message>
-        <location filename="../cpp/SMART/SMARTConnector.cpp" line="543" />
+        <location filename="../cpp/SMART/SMARTConnector.cpp" line="521" />
         <source>Unsent data</source>
         <translation type="unfinished">Dades no enviades</translation>
+    </message>
+    <message>
+        <location filename="../cpp/SMART/SMARTConnector.cpp" line="529" />
+        <source>Bad %1 file</source>
+        <translation type="unfinished">Fitxer %1 incorrecte</translation>
+    </message>
+    <message>
+        <location filename="../cpp/SMART/SMARTConnector.cpp" line="538" />
+        <source>Cannot unpack %1</source>
+        <translation type="unfinished">No es pot desempaquetar %1</translation>
     </message>
 </context>
 <context>
@@ -3323,7 +3939,7 @@
 <context>
     <name>Settings</name>
     <message>
-        <location filename="../cpp/Settings.cpp" line="90" />
+        <location filename="../cpp/Settings.cpp" line="151" />
         <source>Default</source>
         <translation type="unfinished">Per defecte</translation>
     </message>
@@ -3343,90 +3959,90 @@
         <translation type="unfinished">Ajustos del sistema</translation>
     </message>
     <message>
-        <location filename="../qml/EarthRanger/SettingsPage.qml" line="67" />
+        <location filename="../qml/EarthRanger/SettingsPage.qml" line="66" />
         <source>Last updated</source>
         <translation type="unfinished">Última actualització</translation>
     </message>
     <message>
-        <location filename="../qml/EarthRanger/SettingsPage.qml" line="84" />
+        <location filename="../qml/EarthRanger/SettingsPage.qml" line="83" />
         <source>Update</source>
         <translation type="unfinished">Actualització</translation>
     </message>
     <message>
-        <location filename="../qml/EarthRanger/SettingsPage.qml" line="120" />
+        <location filename="../qml/EarthRanger/SettingsPage.qml" line="119" />
         <source>Logged in as</source>
         <translation type="unfinished">Sessió iniciada com</translation>
     </message>
     <message>
-        <location filename="../qml/EarthRanger/SettingsPage.qml" line="120" />
+        <location filename="../qml/EarthRanger/SettingsPage.qml" line="119" />
         <source>Logged out</source>
         <translation type="unfinished">Desconnectat</translation>
     </message>
     <message>
-        <location filename="../qml/EarthRanger/SettingsPage.qml" line="135" />
+        <location filename="../qml/EarthRanger/SettingsPage.qml" line="134" />
         <source>Logout</source>
         <translation type="unfinished">Tancar sessió</translation>
     </message>
     <message>
-        <location filename="../qml/EarthRanger/SettingsPage.qml" line="135" />
+        <location filename="../qml/EarthRanger/SettingsPage.qml" line="134" />
         <source>Login</source>
         <translation type="unfinished">Iniciar Sessió</translation>
     </message>
     <message>
-        <location filename="../qml/EarthRanger/SettingsPage.qml" line="165" />
+        <location filename="../qml/EarthRanger/SettingsPage.qml" line="164" />
         <source>Reported by</source>
         <translation type="unfinished">Informat per</translation>
     </message>
     <message>
-        <location filename="../qml/EarthRanger/SettingsPage.qml" line="200" />
+        <location filename="../qml/EarthRanger/SettingsPage.qml" line="199" />
         <source>Merge categories</source>
         <translation type="unfinished">Combina categories</translation>
     </message>
     <message>
-        <location filename="../qml/EarthRanger/SettingsPage.qml" line="243" />
+        <location filename="../qml/EarthRanger/SettingsPage.qml" line="242" />
         <source>One page per question</source>
         <translation type="unfinished">Una pàgina per pregunta</translation>
     </message>
     <message>
-        <location filename="../qml/EarthRanger/SettingsPage.qml" line="268" />
+        <location filename="../qml/EarthRanger/SettingsPage.qml" line="267" />
         <source>Visible reports</source>
         <translation type="unfinished">Informes visibles</translation>
     </message>
     <message>
-        <location filename="../qml/EarthRanger/SettingsPage.qml" line="285" />
+        <location filename="../qml/EarthRanger/SettingsPage.qml" line="284" />
         <source>Logout?</source>
         <translation type="unfinished">Tancar sessió?</translation>
     </message>
     <message>
-        <location filename="../qml/EarthRanger/SettingsPage.qml" line="95" />
+        <location filename="../qml/EarthRanger/SettingsPage.qml" line="94" />
         <source>Offline</source>
         <translation type="unfinished">Fora de línia</translation>
     </message>
     <message>
-        <location filename="../qml/EarthRanger/SettingsPage.qml" line="175" />
+        <location filename="../qml/EarthRanger/SettingsPage.qml" line="174" />
         <source>Unknown</source>
         <translation type="unfinished">Desconegut</translation>
     </message>
     <message>
-        <location filename="../qml/SettingsPage.qml" line="111" />
+        <location filename="../qml/SettingsPage.qml" line="138" />
         <source>Collect as</source>
         <translation type="unfinished">Recull com</translation>
     </message>
     <message>
         <location filename="../qml/SMART/SettingsPage.qml" line="38" />
-        <location filename="../qml/SettingsPage.qml" line="154" />
+        <location filename="../qml/SettingsPage.qml" line="180" />
         <source>Language</source>
         <translation type="unfinished">Llenguatge</translation>
-    </message>
-    <message>
-        <location filename="../qml/SMART/SettingsPage.qml" line="135" />
-        <source>Change project</source>
-        <translation type="unfinished">Canvia projecte</translation>
     </message>
     <message>
         <location filename="../qml/SMART/SettingsPage.qml" line="113" />
         <source>Select routes</source>
         <translation type="unfinished">Seleccioneu rutes</translation>
+    </message>
+    <message>
+        <location filename="../qml/SMART/SettingsPage.qml" line="135" />
+        <source>Change %1</source>
+        <translation type="unfinished">Canvia %1</translation>
     </message>
     <message>
         <location filename="../qml/SMART/SettingsPage.qml" line="156" />
@@ -3450,23 +4066,23 @@
         <translation type="unfinished">No s'han trobat rutes</translation>
     </message>
     <message>
-        <location filename="../qml/SettingsPage.qml" line="232" />
+        <location filename="../qml/SettingsPage.qml" line="315" />
         <source>Toolbar captions</source>
         <translation type="unfinished">Subtítols de la barra d'eines</translation>
     </message>
     <message>
-        <location filename="../qml/SettingsPage.qml" line="258" />
+        <location filename="../qml/SettingsPage.qml" line="341" />
         <source>Metric units</source>
         <translation type="unfinished">Unitats mètriques</translation>
     </message>
     <message>
-        <location filename="../qml/SettingsPage.qml" line="285" />
+        <location filename="../qml/SettingsPage.qml" line="368" />
         <source>Full screen</source>
         <translation type="unfinished">Pantalla completa</translation>
     </message>
     <message>
         <location filename="../qml/SMART/SettingsPage.qml" line="60" />
-        <location filename="../qml/SettingsPage.qml" line="207" />
+        <location filename="../qml/SettingsPage.qml" line="290" />
         <source>Dark theme</source>
         <translation type="unfinished">Tema fosc</translation>
     </message>
@@ -3476,102 +4092,117 @@
         <translation type="unfinished">Sobre</translation>
     </message>
     <message>
-        <location filename="../qml/SettingsPage.qml" line="76" />
+        <location filename="../qml/SettingsPage.qml" line="104" />
         <source>Offline maps</source>
         <translation type="unfinished">Mapes fora de línia</translation>
     </message>
     <message>
-        <location filename="../qml/SettingsPage.qml" line="313" />
+        <location filename="../qml/SettingsPage.qml" line="232" />
+        <source>Auto launch</source>
+        <translation type="unfinished">Llançament automàtic</translation>
+    </message>
+    <message>
+        <location filename="../qml/SettingsPage.qml" line="255" />
+        <source></source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../qml/SettingsPage.qml" line="76" />
+        <source>Edit %1</source>
+        <translation type="unfinished">Edita %1</translation>
+    </message>
+    <message>
+        <location filename="../qml/SettingsPage.qml" line="396" />
         <source>Font size</source>
         <translation type="unfinished">Mida de la font</translation>
     </message>
     <message>
-        <location filename="../qml/SettingsPage.qml" line="346" />
+        <location filename="../qml/SettingsPage.qml" line="429" />
         <source>Coordinates</source>
         <translation type="unfinished">Coordenades</translation>
     </message>
     <message>
-        <location filename="../qml/SettingsPage.qml" line="356" />
+        <location filename="../qml/SettingsPage.qml" line="439" />
         <source>Decimal degrees</source>
         <translation type="unfinished">Graus decimals</translation>
     </message>
     <message>
-        <location filename="../qml/SettingsPage.qml" line="356" />
+        <location filename="../qml/SettingsPage.qml" line="439" />
         <source>Degrees minutes seconds</source>
         <translation type="unfinished">Graus minuts segons</translation>
     </message>
     <message>
-        <location filename="../qml/SettingsPage.qml" line="356" />
+        <location filename="../qml/SettingsPage.qml" line="439" />
         <source>Degrees decimal minutes</source>
         <translation type="unfinished">Graus minuts decimals</translation>
     </message>
     <message>
-        <location filename="../qml/SettingsPage.qml" line="383" />
+        <location filename="../qml/SettingsPage.qml" line="466" />
         <source>GPS accuracy</source>
         <translation type="unfinished">Precisió GPS</translation>
     </message>
     <message>
-        <location filename="../qml/SettingsPage.qml" line="383" />
+        <location filename="../qml/SettingsPage.qml" line="466" />
         <source>meters</source>
         <translation type="unfinished">metres</translation>
     </message>
     <message>
-        <location filename="../qml/SettingsPage.qml" line="429" />
+        <location filename="../qml/SettingsPage.qml" line="512" />
         <source>Simulate location</source>
         <translation type="unfinished">Simula la ubicació</translation>
     </message>
     <message>
-        <location filename="../qml/SettingsPage.qml" line="454" />
+        <location filename="../qml/SettingsPage.qml" line="537" />
         <source>Source file</source>
         <translation type="unfinished">Arxiu font</translation>
     </message>
     <message>
-        <location filename="../qml/SettingsPage.qml" line="510" />
+        <location filename="../qml/SettingsPage.qml" line="591" />
         <source>Upload requires WiFi</source>
         <translation type="unfinished">La càrrega requereix WiFi</translation>
     </message>
     <message>
-        <location filename="../qml/SettingsPage.qml" line="534" />
+        <location filename="../qml/SettingsPage.qml" line="615" />
         <source>Share bug report</source>
         <translation type="unfinished">Comparteix l'informe d'error</translation>
     </message>
     <message>
-        <location filename="../qml/SettingsPage.qml" line="542" />
+        <location filename="../qml/SettingsPage.qml" line="623" />
         <source>Share over email, text, etc.</source>
         <translation type="unfinished">Comparteix per correu electrònic, text, etc.</translation>
     </message>
     <message>
-        <location filename="../qml/SettingsPage.qml" line="571" />
+        <location filename="../qml/SettingsPage.qml" line="651" />
         <source>Save bug report</source>
         <translation type="unfinished">Desa l'informe d'error</translation>
     </message>
     <message>
-        <location filename="../qml/SettingsPage.qml" line="579" />
+        <location filename="../qml/SettingsPage.qml" line="659" />
         <source>Save to device for manual copy</source>
         <translation type="unfinished">Desa al dispositiu per a la còpia manual</translation>
     </message>
     <message>
-        <location filename="../qml/SettingsPage.qml" line="608" />
+        <location filename="../qml/SettingsPage.qml" line="687" />
         <source>Simulation source</source>
         <translation type="unfinished">Font de simulació</translation>
     </message>
     <message>
-        <location filename="../qml/SettingsPage.qml" line="617" />
+        <location filename="../qml/SettingsPage.qml" line="696" />
         <source>Generate track file using</source>
         <translation type="unfinished">Genera un fitxer de seguiment utilitzant</translation>
     </message>
     <message>
-        <location filename="../qml/SettingsPage.qml" line="624" />
+        <location filename="../qml/SettingsPage.qml" line="703" />
         <source>Copy to the Download folder</source>
         <translation type="unfinished">Copia a la carpeta de descàrrega</translation>
     </message>
     <message>
-        <location filename="../qml/SettingsPage.qml" line="631" />
+        <location filename="../qml/SettingsPage.qml" line="710" />
         <source>Restart</source>
         <translation type="unfinished">Reinicia</translation>
     </message>
     <message>
-        <location filename="../qml/EarthRanger/SettingsPage.qml" line="234" />
+        <location filename="../qml/EarthRanger/SettingsPage.qml" line="233" />
         <location filename="../qml/SMART/SettingsPage.qml" line="87" />
         <source>Page mode</source>
         <translation type="unfinished">Mode de pàgina</translation>
@@ -3618,12 +4249,12 @@
 <context>
     <name>Sighting</name>
     <message>
-        <location filename="../cpp/Sighting.cpp" line="810" />
+        <location filename="../cpp/Sighting.cpp" line="856" />
         <source>photo</source>
         <translation type="unfinished">foto</translation>
     </message>
     <message>
-        <location filename="../cpp/Sighting.cpp" line="810" />
+        <location filename="../cpp/Sighting.cpp" line="856" />
         <source>photos</source>
         <translation type="unfinished">fotografies</translation>
     </message>
@@ -3696,47 +4327,47 @@
         <translation type="unfinished">Grup</translation>
     </message>
     <message>
-        <location filename="../qml/SMART/SightingHomePage.qml" line="430" />
+        <location filename="../qml/SMART/SightingHomePage.qml" line="429" />
         <source>Create a new group</source>
         <translation type="unfinished">Crea un grup nou</translation>
     </message>
     <message>
-        <location filename="../qml/SMART/SightingHomePage.qml" line="459" />
+        <location filename="../qml/SMART/SightingHomePage.qml" line="458" />
         <source>Make observation</source>
         <translation type="unfinished">Fes observació</translation>
     </message>
     <message>
-        <location filename="../qml/SMART/SightingHomePage.qml" line="459" />
+        <location filename="../qml/SMART/SightingHomePage.qml" line="458" />
         <source>Add observation</source>
         <translation type="unfinished">Afegeix observació</translation>
     </message>
     <message>
-        <location filename="../qml/SMART/SightingHomePage.qml" line="511" />
+        <location filename="../qml/SMART/SightingHomePage.qml" line="510" />
         <source>Delete group?</source>
         <translation type="unfinished">Vols suprimir el grup?</translation>
     </message>
     <message>
-        <location filename="../qml/SMART/SightingHomePage.qml" line="512" />
+        <location filename="../qml/SMART/SightingHomePage.qml" line="511" />
         <source>Delete item?</source>
         <translation type="unfinished">Vols suprimir l'element?</translation>
     </message>
     <message>
-        <location filename="../qml/SMART/SightingHomePage.qml" line="524" />
+        <location filename="../qml/SMART/SightingHomePage.qml" line="523" />
         <source>Yes</source>
         <translation type="unfinished">Sí</translation>
     </message>
     <message>
-        <location filename="../qml/SMART/SightingHomePage.qml" line="548" />
+        <location filename="../qml/SMART/SightingHomePage.qml" line="547" />
         <source>No</source>
         <translation type="unfinished">No</translation>
     </message>
     <message>
-        <location filename="../qml/SMART/SightingHomePage.qml" line="626" />
+        <location filename="../qml/SMART/SightingHomePage.qml" line="625" />
         <source>Statistics</source>
         <translation type="unfinished">Estadístiques</translation>
     </message>
     <message>
-        <location filename="../qml/SMART/SightingHomePage.qml" line="640" />
+        <location filename="../qml/SMART/SightingHomePage.qml" line="639" />
         <source>Toggle dark theme</source>
         <translation type="unfinished">Commuta el tema fosc</translation>
     </message>
@@ -3810,7 +4441,7 @@
 <context>
     <name>SketchField</name>
     <message>
-        <location filename="../cpp/Field.cpp" line="1327" />
+        <location filename="../cpp/Field.cpp" line="1334" />
         <source>Yes</source>
         <translation type="unfinished">Sí</translation>
     </message>
@@ -3866,45 +4497,25 @@
         <translation type="unfinished">No hi ha dades noves</translation>
     </message>
     <message>
-        <location filename="../qml/Classic/StartPage.qml" line="142" />
+        <location filename="../qml/Classic/StartPage.qml" line="140" />
         <source>Share outstanding data?</source>
         <translation type="unfinished">Compartir dades destacades?</translation>
     </message>
     <message>
-        <location filename="../qml/Classic/StartPage.qml" line="143" />
+        <location filename="../qml/Classic/StartPage.qml" line="141" />
         <source>Yes, share it</source>
         <translation type="unfinished">Sí, comparteix-ho</translation>
     </message>
     <message>
-        <location filename="../qml/Classic/StartPage.qml" line="153" />
-        <location filename="../qml/SMART/StartPage.qml" line="111" />
+        <location filename="../qml/Classic/StartPage.qml" line="151" />
+        <location filename="../qml/SMART/StartPage.qml" line="112" />
         <source>Success</source>
         <translation type="unfinished">Èxit</translation>
     </message>
     <message>
-        <location filename="../qml/SMART/StartPage.qml" line="111" />
+        <location filename="../qml/SMART/StartPage.qml" line="112" />
         <source>Error</source>
         <translation type="unfinished">Error</translation>
-    </message>
-    <message>
-        <location filename="../qml/SMART/StartPage.qml" line="92" />
-        <source>All data has been uploaded</source>
-        <translation type="unfinished">S'han carregat totes les dades</translation>
-    </message>
-    <message>
-        <location filename="../qml/SMART/StartPage.qml" line="93" />
-        <source>Connection failed</source>
-        <translation type="unfinished">Connexió fallida</translation>
-    </message>
-    <message>
-        <location filename="../qml/SMART/StartPage.qml" line="100" />
-        <source>Data is ready for import from the desktop</source>
-        <translation type="unfinished">Les dades ja estan a punt per importar-les des de l'escriptori</translation>
-    </message>
-    <message>
-        <location filename="../qml/SMART/StartPage.qml" line="101" />
-        <source>Export may have failed</source>
-        <translation type="unfinished">Pot ser que l'exportació hagi fallat</translation>
     </message>
     <message>
         <location filename="../qml/SMART/StartPage.qml" line="43" />
@@ -3922,12 +4533,32 @@
         <translation type="unfinished">Informar l'incident</translation>
     </message>
     <message>
+        <location filename="../qml/SMART/StartPage.qml" line="92" />
+        <source>All data has been uploaded.</source>
+        <translation type="unfinished">S'han carregat totes les dades.</translation>
+    </message>
+    <message>
+        <location filename="../qml/SMART/StartPage.qml" line="93" />
+        <source>Connection failed. Please try again later.</source>
+        <translation type="unfinished">Connexió fallida. Siusplau, intenta-ho més tard.</translation>
+    </message>
+    <message>
+        <location filename="../qml/SMART/StartPage.qml" line="100" />
+        <source>Data is ready for import from the desktop.</source>
+        <translation type="unfinished">Les dades ja estan a punt per importar-les des de l'escriptori.</translation>
+    </message>
+    <message>
+        <location filename="../qml/SMART/StartPage.qml" line="101" />
+        <source>Export may have failed.</source>
+        <translation type="unfinished">Pot ser que l'exportació hagi fallat.</translation>
+    </message>
+    <message>
         <location filename="../qml/ODK/StartPage.qml" line="26" />
         <source>Submit</source>
         <translation type="unfinished">Presentar</translation>
     </message>
     <message>
-        <location filename="../qml/ODK/StartPage.qml" line="115" />
+        <location filename="../qml/ODK/StartPage.qml" line="113" />
         <source>Form error</source>
         <translation type="unfinished">Error de formulari</translation>
     </message>
@@ -3935,52 +4566,73 @@
 <context>
     <name>StartPageCollect</name>
     <message>
-        <location filename="../qml/SMART/StartPageCollect.qml" line="149" />
-        <source>All data has been uploaded</source>
-        <translation type="unfinished">S'han carregat totes les dades</translation>
-    </message>
-    <message>
-        <location filename="../qml/SMART/StartPageCollect.qml" line="150" />
-        <source>Connection failed</source>
-        <translation type="unfinished">Connexió fallida</translation>
-    </message>
-    <message>
-        <location filename="../qml/SMART/StartPageCollect.qml" line="23" />
+        <location filename="../qml/SMART/StartPageCollect.qml" line="117" />
         <source>Success</source>
         <translation type="unfinished">Èxit</translation>
     </message>
     <message>
-        <location filename="../qml/SMART/StartPageCollect.qml" line="23" />
+        <location filename="../qml/SMART/StartPageCollect.qml" line="117" />
         <source>Error</source>
         <translation type="unfinished">Error</translation>
     </message>
     <message>
-        <location filename="../qml/SMART/StartPageCollect.qml" line="101" />
+        <location filename="../qml/SMART/StartPageCollect.qml" line="59" />
         <source>Enter email or phone</source>
         <translation type="unfinished">Introduïu el correu electrònic o el telèfon</translation>
     </message>
     <message>
-        <location filename="../qml/SMART/StartPageCollect.qml" line="112" />
+        <location filename="../qml/SMART/StartPageCollect.qml" line="71" />
         <source>Start collecting</source>
         <translation type="unfinished">Comença a recollir</translation>
     </message>
     <message>
-        <location filename="../qml/SMART/StartPageCollect.qml" line="126" />
+        <location filename="../qml/SMART/StartPageCollect.qml" line="86" />
         <source>Upload data</source>
         <translation type="unfinished">Carregueu dades</translation>
+    </message>
+    <message>
+        <location filename="../qml/SMART/StartPageCollect.qml" line="113" />
+        <source>All data has been uploaded.</source>
+        <translation type="unfinished">S'han carregat totes les dades.</translation>
+    </message>
+    <message>
+        <location filename="../qml/SMART/StartPageCollect.qml" line="114" />
+        <source>Connection failed. Please try again later.</source>
+        <translation type="unfinished">Connexió fallida. Siusplau, intenta-ho més tard.</translation>
     </message>
 </context>
 <context>
     <name>SubmitButton</name>
     <message>
-        <location filename="../controls/imports/CyberTracker.1/SubmitButton.qml" line="94" />
+        <location filename="../controls/imports/CyberTracker.1/SubmitButton.qml" line="89" />
         <source>Upload failed</source>
         <translation type="unfinished">La càrrega ha fallat</translation>
     </message>
     <message>
-        <location filename="../controls/imports/CyberTracker.1/SubmitButton.qml" line="156" />
+        <location filename="../controls/imports/CyberTracker.1/SubmitButton.qml" line="151" />
         <source>Submit data?</source>
         <translation type="unfinished">Envieu dades?</translation>
+    </message>
+</context>
+<context>
+    <name>UnsupportedPage</name>
+    <message>
+        <location filename="../qml/Google/UnsupportedPage.qml" line="29" />
+        <source>Forms containing *File upload* questions are not currently supported.</source>
+        <translation type="unfinished">Actualment no s'admeten els formularis que contenen preguntes sobre la *càrrega de fitxers*.</translation>
+    </message>
+    <message>
+        <location filename="../qml/Google/UnsupportedPage.qml" line="39" />
+        <source>Remove the question and update the form to continue.</source>
+        <translation type="unfinished">Elimineu la pregunta i actualitzeu el formulari per continuar.</translation>
+    </message>
+</context>
+<context>
+    <name>UploadFileTask</name>
+    <message>
+        <location filename="../cpp/Google/GoogleProvider.cpp" line="131" />
+        <source>Incorrect %1 tag</source>
+        <translation type="unfinished">Etiqueta %1 incorrecta</translation>
     </message>
 </context>
 <context>
@@ -3997,8 +4649,8 @@
     </message>
     <message>
         <location filename="../controls/imports/CyberTracker.1/UsernamePage.qml" line="65" />
-        <source>Data will be tagged with this name. This setting applies to all projects.</source>
-        <translation type="unfinished">Les dades s'etiquetaran amb aquest nom. Aquesta configuració s'aplica a tots els projectes.</translation>
+        <source>Data will be tagged with this name. This setting applies to all %1.</source>
+        <translation type="unfinished">Les dades s'etiquetaran amb aquest nom. Aquesta configuració s'aplica a tots els %1.</translation>
     </message>
 </context>
 <context>
@@ -4020,7 +4672,7 @@
 <context>
     <name>Wizard</name>
     <message>
-        <location filename="../cpp/Wizard.cpp" line="431" />
+        <location filename="../cpp/Wizard.cpp" line="438" />
         <source>Form incomplete</source>
         <translation type="unfinished">Formulari incomplet</translation>
     </message>
@@ -4038,7 +4690,7 @@
         <translation type="unfinished">Avistaments guardats</translation>
     </message>
     <message>
-        <location filename="../controls/imports/CyberTracker.1/WizardOptionsPage.qml" line="102" />
+        <location filename="../controls/imports/CyberTracker.1/WizardOptionsPage.qml" line="26" />
         <source>Submit</source>
         <translation type="unfinished">Presentar</translation>
     </message>
@@ -4046,42 +4698,63 @@
 <context>
     <name>WizardPage</name>
     <message>
-        <location filename="../controls/imports/CyberTracker.1/WizardPage.qml" line="352" />
+        <location filename="../controls/imports/CyberTracker.1/WizardPage.qml" line="400" />
         <source>Yes</source>
         <translation type="unfinished">Sí</translation>
     </message>
     <message>
-        <location filename="../controls/imports/CyberTracker.1/WizardPage.qml" line="352" />
+        <location filename="../controls/imports/CyberTracker.1/WizardPage.qml" line="400" />
         <source>No</source>
         <translation type="unfinished">No</translation>
     </message>
     <message>
-        <location filename="../controls/imports/CyberTracker.1/WizardPage.qml" line="389" />
+        <location filename="../controls/imports/CyberTracker.1/WizardPage.qml" line="437" />
         <source>OK</source>
         <translation type="unfinished">D'acord</translation>
     </message>
     <message>
-        <location filename="../controls/imports/CyberTracker.1/WizardPage.qml" line="712" />
+        <location filename="../controls/imports/CyberTracker.1/WizardPage.qml" line="772" />
         <source>Unsaved data?</source>
         <translation type="unfinished">Dades no desades?</translation>
     </message>
     <message>
-        <location filename="../controls/imports/CyberTracker.1/WizardPage.qml" line="713" />
+        <location filename="../controls/imports/CyberTracker.1/WizardPage.qml" line="773" />
         <source>This sighting has not been saved.</source>
         <translation type="unfinished">Aquest avistament no s'ha desat.</translation>
     </message>
     <message>
-        <location filename="../controls/imports/CyberTracker.1/WizardPage.qml" line="714" />
+        <location filename="../controls/imports/CyberTracker.1/WizardPage.qml" line="774" />
         <source>Yes, discard it</source>
         <translation type="unfinished">Sí, descarta-ho</translation>
     </message>
     <message>
-        <location filename="../controls/imports/CyberTracker.1/WizardPage.qml" line="788" />
-        <source>Home</source>
-        <translation type="unfinished">Casa</translation>
+        <location filename="../controls/imports/CyberTracker.1/WizardPage.qml" line="798" />
+        <source>Change %1</source>
+        <translation type="unfinished">Canvia %1</translation>
     </message>
     <message>
-        <location filename="../controls/imports/CyberTracker.1/WizardPage.qml" line="963" />
+        <location filename="../controls/imports/CyberTracker.1/WizardPage.qml" line="799" />
+        <source>Update %1</source>
+        <translation type="unfinished">Actualitza %1</translation>
+    </message>
+    <message>
+        <location filename="../controls/imports/CyberTracker.1/WizardPage.qml" line="800" />
+        <source>Settings</source>
+        <translation type="unfinished">Configuració</translation>
+    </message>
+    <message>
+        <location filename="../controls/imports/CyberTracker.1/WizardPage.qml" line="801" />
+        <location filename="../controls/imports/CyberTracker.1/WizardPage.qml" line="922" />
+        <source>Home</source>
+        <translation type="unfinished">A casa</translation>
+    </message>
+    <message>
+        <location filename="../controls/imports/CyberTracker.1/WizardPage.qml" line="821" />
+        <source>Offline</source>
+        <translation type="unfinished">Fora de línia</translation>
+    </message>
+    <message>
+        <location filename="../controls/imports/CyberTracker.1/WizardPage.qml" line="1103" />
         <source>Error saving observation</source>
         <translation type="unfinished">S'ha produït un error en desar l'observació</translation>
     </message>

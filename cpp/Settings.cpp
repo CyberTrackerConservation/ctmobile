@@ -1,14 +1,56 @@
 #include "Settings.h"
+#include "keychain.h"
 
 Settings::Settings(QObject* parent): QObject(parent)
 {
     qFatalIf(true, "Singleton");
 }
 
-Settings::Settings(const QString& filePath, QObject* parent): QObject(parent)
+Settings::Settings(const QString& filePath, const QString& vaultName, QObject* parent): QObject(parent)
 {
     m_filePath = filePath;
     m_cache = Utils::variantMapFromJsonFile(m_filePath);
+
+//    constexpr char VAULT_SETTINGS[] = "vaultSettings";
+
+//    // Vault reader.
+//    m_vaultReadJob = new QKeychain::ReadPasswordJob(vaultName, this);
+//    m_vaultReadJob->setAutoDelete(true);
+//    m_vaultReadJob->setKey(VAULT_SETTINGS);
+
+//    connect(m_vaultReadJob, &QKeychain::ReadPasswordJob::finished, this, [&]()
+//    {
+//        if (m_vaultReadJob->error())
+//        {
+//            qDebug() << "Vault read failed: " << m_vaultReadJob->errorString();
+//            m_vaultCache.clear();
+//        }
+//        else
+//        {
+//            m_vaultCache = Utils::variantMapFromJson(m_vaultReadJob->textData().toLatin1());
+//        }
+//    });
+
+//    m_vaultReadJob->start();
+
+//    // Vault writer.
+//    m_vaultWriteJob = new QKeychain::WritePasswordJob(vaultName, this);
+//    m_vaultWriteJob->setAutoDelete(false);
+//    m_vaultWriteJob->setKey(VAULT_SETTINGS);
+
+//    connect(m_vaultWriteJob, &QKeychain::WritePasswordJob::finished, this, [&]()
+//    {
+//        if (m_vaultWriteJob->error())
+//        {
+//            qDebug() << "Vault write failed: " << m_vaultWriteJob->errorString();
+//        }
+//    });
+
+//    connect(this, &Settings::secureSettingChanged, this, [&]()
+//    {
+//        m_vaultWriteJob->setTextData(Utils::variantMapToString(m_vaultCache));
+//        m_vaultWriteJob->start();
+//    });
 }
 
 QVariant Settings::getSetting(const QString& name, const QVariant& defaultValue) const
@@ -28,6 +70,25 @@ void Settings::setSetting(const QString& name, const QVariant& value)
     }
 
     Utils::writeJsonToFile(m_filePath, Utils::variantMapToJson(m_cache));
+}
+
+QVariant Settings::getSecureSetting(const QString& name, const QVariant& defaultValue) const
+{
+    return m_vaultCache.value(name, defaultValue);
+}
+
+void Settings::setSecureSetting(const QString& name, const QVariant& value)
+{
+    if (!value.isValid())
+    {
+        m_vaultCache.remove(name);
+    }
+    else
+    {
+        m_vaultCache.insert(name, value);
+    }
+
+    emit secureSettingChanged();
 }
 
 int Settings::font10() const

@@ -55,7 +55,6 @@ ItemDelegate {
             source: "qrc:/icons/camera_alt.svg"
             size: Style.iconSize64
             opacity: 0.5
-            recolor: true
         }
     }
 

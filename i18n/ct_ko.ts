@@ -11,25 +11,25 @@
     <message>
         <location filename="../qml/AboutPage.qml" line="71" />
         <source>Powered by</source>
-        <translation type="unfinished">에 의해 구동</translation>
+        <translation type="unfinished">제공</translation>
     </message>
     <message>
-        <location filename="../qml/AboutPage.qml" line="109" />
+        <location filename="../qml/AboutPage.qml" line="107" />
         <source>Privacy statement</source>
         <translation type="unfinished">개인정보 보호정책</translation>
     </message>
     <message>
-        <location filename="../qml/AboutPage.qml" line="122" />
+        <location filename="../qml/AboutPage.qml" line="121" />
         <source>Software license</source>
         <translation type="unfinished">소프트웨어 라이선스</translation>
     </message>
     <message>
-        <location filename="../qml/AboutPage.qml" line="135" />
+        <location filename="../qml/AboutPage.qml" line="134" />
         <source>Support forum</source>
         <translation type="unfinished">지원 포럼</translation>
     </message>
     <message>
-        <location filename="../qml/AboutPage.qml" line="148" />
+        <location filename="../qml/AboutPage.qml" line="147" />
         <source>More resources</source>
         <translation type="unfinished">추가 리소스</translation>
     </message>
@@ -37,7 +37,7 @@
 <context>
     <name>AcknowledgeField</name>
     <message>
-        <location filename="../cpp/Field.cpp" line="704" />
+        <location filename="../cpp/Field.cpp" line="705" />
         <source>OK</source>
         <translation type="unfinished">확인</translation>
     </message>
@@ -45,156 +45,208 @@
 <context>
     <name>App</name>
     <message>
-        <location filename="../cpp/App.cpp" line="719" />
+        <location filename="../cpp/App.cpp" line="755" />
         <source>Accuracy</source>
-        <translation type="unfinished">정확성</translation>
+        <translation type="unfinished">정확도</translation>
     </message>
     <message>
-        <location filename="../cpp/App.cpp" line="864" />
-        <location filename="../cpp/App.cpp" line="920" />
-        <location filename="../cpp/App.cpp" line="934" />
+        <location filename="../cpp/App.cpp" line="899" />
+        <location filename="../cpp/App.cpp" line="953" />
         <source>Permission request</source>
         <translation type="unfinished">권한 요청</translation>
     </message>
     <message>
-        <location filename="../cpp/App.cpp" line="920" />
-        <source>This project requires access to some features of the device. Please allow these requests in order to proceed.</source>
-        <translation type="unfinished">이 프로젝트는 장치의 일부 기능에 대한 액세스 권한이 필요합니다. 계속하려면 이러한 요청을 허용하십시오.</translation>
-    </message>
-    <message>
-        <location filename="../cpp/App.cpp" line="934" />
-        <source>This project requires background GPS access. Please allow this request in order to proceed.</source>
-        <translation type="unfinished">이 프로젝트는 백그라운드 GPS 액세스가 필요합니다. 계속하려면 이 요청을 허용하십시오.</translation>
-    </message>
-    <message>
-        <location filename="../cpp/App.cpp" line="946" />
-        <source>Recording audio and video requires permission. Please allow the request in order to proceed.</source>
-        <translation type="unfinished">오디오 및 비디오를 녹음하려면 권한이 필요합니다. 계속하려면 요청을 허용하십시오.</translation>
-    </message>
-    <message>
-        <location filename="../cpp/App.cpp" line="951" />
-        <location filename="../cpp/App.cpp" line="952" />
+        <location filename="../cpp/App.cpp" line="1000" />
         <source>Access to GPS is required for this feature to work. Please allow the request in order to proceed.</source>
-        <translation type="unfinished">이 기능이 작동하려면 GPS에 액세스해야 합니다. 계속하려면 요청을 허용하십시오.</translation>
+        <translation type="unfinished">이 기능을 사용하려면 GPS에 액세스할 수 있어야 합니다. 계속하려면 요청을 허용해 주세요.</translation>
     </message>
     <message>
-        <location filename="../cpp/App.cpp" line="960" />
+        <location filename="../cpp/App.cpp" line="1012" />
         <source>Background access to GPS is required. Please allow the request in order to proceed.</source>
-        <translation type="unfinished">GPS에 대한 백그라운드 액세스가 필요합니다. 계속하려면 요청을 허용하십시오.</translation>
+        <translation type="unfinished">GPS에 대한 백그라운드 액세스가 필요합니다. 계속 진행하려면 요청을 허용해 주세요.</translation>
     </message>
     <message>
-        <location filename="../cpp/App.cpp" line="969" />
-        <location filename="../cpp/App.cpp" line="974" />
-        <source>Access to external storage is required for this feature to work. Please allow the request in order to proceed.</source>
-        <translation type="unfinished">이 기능이 작동하려면 외부 저장소에 액세스해야 합니다. 계속하려면 요청을 허용하십시오.</translation>
-    </message>
-    <message>
-        <location filename="../cpp/App.cpp" line="1002" />
+        <location filename="../cpp/App.cpp" line="1138" />
         <source>Battery level</source>
         <translation type="unfinished">배터리 잔량</translation>
     </message>
     <message>
-        <location filename="../cpp/App.cpp" line="1408" />
+        <location filename="../cpp/App.cpp" line="1562" />
         <source>Download failed</source>
         <translation type="unfinished">다운로드 실패</translation>
     </message>
     <message>
-        <location filename="../cpp/App.cpp" line="1465" />
+        <location filename="../cpp/App.cpp" line="1616" />
+        <source>Empty link</source>
+        <translation type="unfinished">빈 링크</translation>
+    </message>
+    <message>
+        <location filename="../cpp/App.cpp" line="1664" />
         <source>Bad link</source>
         <translation type="unfinished">잘못된 링크</translation>
     </message>
     <message>
-        <location filename="../cpp/App.cpp" line="1502" />
+        <location filename="../cpp/App.cpp" line="1701" />
         <source>Unknown command</source>
         <translation type="unfinished">알 수 없는 명령</translation>
     </message>
     <message>
-        <location filename="../cpp/App.cpp" line="1523" />
+        <location filename="../cpp/App.cpp" line="1722" />
         <source>Not an installable package</source>
         <translation type="unfinished">설치 가능한 패키지가 아닙니다.</translation>
     </message>
     <message>
-        <location filename="../cpp/App.cpp" line="1531" />
+        <location filename="../cpp/App.cpp" line="1730" />
         <source>Install successful</source>
-        <translation type="unfinished">성공적으로 설치</translation>
+        <translation type="unfinished">설치 성공</translation>
     </message>
     <message>
-        <location filename="../cpp/App.cpp" line="1691" />
+        <location filename="../cpp/App.cpp" line="1903" />
         <source>second</source>
-        <translation type="unfinished">초</translation>
+        <translation type="unfinished">second</translation>
     </message>
     <message>
-        <location filename="../cpp/App.cpp" line="1691" />
+        <location filename="../cpp/App.cpp" line="1903" />
         <source>seconds</source>
         <translation type="unfinished">초</translation>
     </message>
     <message>
-        <location filename="../cpp/App.cpp" line="1696" />
+        <location filename="../cpp/App.cpp" line="1908" />
         <source>minute</source>
         <translation type="unfinished">분</translation>
     </message>
     <message>
-        <location filename="../cpp/App.cpp" line="1696" />
+        <location filename="../cpp/App.cpp" line="1908" />
         <source>minutes</source>
         <translation type="unfinished">분</translation>
     </message>
     <message>
-        <location filename="../cpp/App.cpp" line="1701" />
+        <location filename="../cpp/App.cpp" line="1913" />
         <source>hour</source>
-        <translation type="unfinished">시</translation>
+        <translation type="unfinished">시간</translation>
     </message>
     <message>
-        <location filename="../cpp/App.cpp" line="1701" />
+        <location filename="../cpp/App.cpp" line="1913" />
         <source>hours</source>
         <translation type="unfinished">시간</translation>
     </message>
     <message>
-        <location filename="../cpp/App.cpp" line="1816" />
+        <location filename="../cpp/App.cpp" line="2028" />
         <source>Export missing</source>
         <translation type="unfinished">내보내기 누락</translation>
     </message>
     <message>
-        <location filename="../cpp/App.cpp" line="1824" />
+        <location filename="../cpp/App.cpp" line="2036" />
         <source>%1 deleted</source>
-        <translation type="unfinished">%1 삭제됨</translation>
+        <translation type="unfinished">1 삭제됨</translation>
     </message>
     <message>
-        <location filename="../cpp/App.cpp" line="1886" />
+        <location filename="../cpp/App.cpp" line="688" />
         <source>Project</source>
         <translation type="unfinished">프로젝트</translation>
     </message>
     <message>
-        <location filename="../cpp/App.cpp" line="1887" />
-        <source>Start date</source>
-        <translation type="unfinished">시작일</translation>
+        <location filename="../cpp/App.cpp" line="689" />
+        <source>Projects</source>
+        <translation type="unfinished">프로젝트</translation>
     </message>
     <message>
-        <location filename="../cpp/App.cpp" line="1888" />
+        <location filename="../cpp/App.cpp" line="690" />
+        <source>project</source>
+        <translation type="unfinished">프로젝트</translation>
+    </message>
+    <message>
+        <location filename="../cpp/App.cpp" line="691" />
+        <source>projects</source>
+        <translation type="unfinished">프로젝트</translation>
+    </message>
+    <message>
+        <location filename="../cpp/App.cpp" line="695" />
+        <source>Form</source>
+        <translation type="unfinished">양식</translation>
+    </message>
+    <message>
+        <location filename="../cpp/App.cpp" line="696" />
+        <source>Forms</source>
+        <translation type="unfinished">양식</translation>
+    </message>
+    <message>
+        <location filename="../cpp/App.cpp" line="697" />
+        <source>form</source>
+        <translation type="unfinished">form</translation>
+    </message>
+    <message>
+        <location filename="../cpp/App.cpp" line="698" />
+        <source>forms</source>
+        <translation type="unfinished">양식</translation>
+    </message>
+    <message>
+        <location filename="../cpp/App.cpp" line="702" />
+        <source>Survey</source>
+        <translation type="unfinished">설문 조사</translation>
+    </message>
+    <message>
+        <location filename="../cpp/App.cpp" line="703" />
+        <source>Surveys</source>
+        <translation type="unfinished">설문 조사</translation>
+    </message>
+    <message>
+        <location filename="../cpp/App.cpp" line="704" />
+        <source>survey</source>
+        <translation type="unfinished">설문 조사</translation>
+    </message>
+    <message>
+        <location filename="../cpp/App.cpp" line="705" />
+        <source>surveys</source>
+        <translation type="unfinished">설문 조사</translation>
+    </message>
+    <message>
+        <location filename="../cpp/App.cpp" line="953" />
+        <source>This %1 requires access to some features of the device. Please allow these requests in order to proceed.</source>
+        <translation type="unfinished">이 %1은(는) 장치의 일부 기능에 액세스해야 합니다. 계속하려면 이러한 요청을 허용하세요.</translation>
+    </message>
+    <message>
+        <location filename="../cpp/App.cpp" line="989" />
+        <source>Using the camera requires permission. Please allow the request in order to proceed.</source>
+        <translation type="unfinished">카메라를 사용하려면 허가가 필요합니다. 계속하려면 요청을 허용해 주세요.</translation>
+    </message>
+    <message>
+        <location filename="../cpp/App.cpp" line="994" />
+        <source>Recording audio requires permission. Please allow the request in order to proceed.</source>
+        <translation type="unfinished">오디오를 녹음하려면 권한이 필요합니다. 계속 진행하려면 요청을 허용해 주세요.</translation>
+    </message>
+    <message>
+        <location filename="../cpp/App.cpp" line="2099" />
+        <source>Start date</source>
+        <translation type="unfinished">시작 날짜</translation>
+    </message>
+    <message>
+        <location filename="../cpp/App.cpp" line="2100" />
         <source>Start time</source>
         <translation type="unfinished">시작 시간</translation>
     </message>
     <message>
-        <location filename="../cpp/App.cpp" line="1889" />
+        <location filename="../cpp/App.cpp" line="2101" />
         <source>Stop date</source>
         <translation type="unfinished">중지 날짜</translation>
     </message>
     <message>
-        <location filename="../cpp/App.cpp" line="1890" />
+        <location filename="../cpp/App.cpp" line="2102" />
         <source>Stop time</source>
         <translation type="unfinished">정지 시간</translation>
     </message>
     <message>
-        <location filename="../cpp/App.cpp" line="1891" />
+        <location filename="../cpp/App.cpp" line="2103" />
         <source>Sightings</source>
         <translation type="unfinished">목격</translation>
     </message>
     <message>
-        <location filename="../cpp/App.cpp" line="1892" />
+        <location filename="../cpp/App.cpp" line="2104" />
         <source>Locations</source>
         <translation type="unfinished">위치</translation>
     </message>
     <message>
-        <location filename="../cpp/App.cpp" line="1920" />
+        <location filename="../cpp/App.cpp" line="2132" />
         <source>Failed to load service template</source>
         <translation type="unfinished">서비스 템플릿을 로드하지 못했습니다.</translation>
     </message>
@@ -202,99 +254,159 @@
 <context>
     <name>AppMain</name>
     <message>
-        <location filename="../qml/AppMain.qml" line="52" />
-        <location filename="../qml/AppMain.qml" line="65" />
+        <location filename="../qml/AppMain.qml" line="53" />
+        <location filename="../qml/AppMain.qml" line="66" />
         <source>Choose a file</source>
         <translation type="unfinished">파일 선택</translation>
     </message>
     <message>
-        <location filename="../qml/AppMain.qml" line="57" />
+        <location filename="../qml/AppMain.qml" line="58" />
         <source>Image files</source>
         <translation type="unfinished">이미지 파일</translation>
     </message>
     <message>
-        <location filename="../qml/AppMain.qml" line="70" />
+        <location filename="../qml/AppMain.qml" line="71" />
         <source>Package files</source>
         <translation type="unfinished">패키지 파일</translation>
     </message>
     <message>
-        <location filename="../qml/AppMain.qml" line="82" />
+        <location filename="../qml/AppMain.qml" line="83" />
         <source>&amp;File</source>
         <translation type="unfinished">&amp;파일</translation>
     </message>
     <message>
-        <location filename="../qml/AppMain.qml" line="84" />
+        <location filename="../qml/AppMain.qml" line="85" />
         <source>Save &amp;As...</source>
-        <translation type="unfinished">다른 이름으로 저장...</translation>
+        <translation type="unfinished">저장 &amp;AS...</translation>
     </message>
     <message>
-        <location filename="../qml/AppMain.qml" line="91" />
+        <location filename="../qml/AppMain.qml" line="92" />
         <source>Install package</source>
         <translation type="unfinished">패키지 설치</translation>
     </message>
     <message>
-        <location filename="../qml/AppMain.qml" line="97" />
+        <location filename="../qml/AppMain.qml" line="98" />
         <source>Connect using clipboard link</source>
         <translation type="unfinished">클립보드 링크를 사용하여 연결</translation>
     </message>
     <message>
-        <location filename="../qml/AppMain.qml" line="104" />
+        <location filename="../qml/AppMain.qml" line="105" />
+        <source>Reset cache</source>
+        <translation type="unfinished">캐시 재설정</translation>
+    </message>
+    <message>
+        <location filename="../qml/AppMain.qml" line="112" />
         <source>&amp;Quit</source>
-        <translation type="unfinished">&amp;그만두다</translation>
+        <translation type="unfinished">&amp;Quit</translation>
     </message>
     <message>
-        <location filename="../qml/AppMain.qml" line="109" />
+        <location filename="../qml/AppMain.qml" line="117" />
         <source>&amp;Edit</source>
-        <translation type="unfinished">&amp;편집하다</translation>
+        <translation type="unfinished">&amp;편집</translation>
     </message>
     <message>
-        <location filename="../qml/AppMain.qml" line="111" />
+        <location filename="../qml/AppMain.qml" line="119" />
         <source>&amp;Copy to clipboard</source>
-        <translation type="unfinished">&amp;클립 보드에 복사</translation>
+        <translation type="unfinished">클립보드에 복사</translation>
     </message>
     <message>
-        <location filename="../qml/AppMain.qml" line="116" />
+        <location filename="../qml/AppMain.qml" line="124" />
         <source>&amp;Tools</source>
-        <translation type="unfinished">도구(&amp;T)</translation>
+        <translation type="unfinished">&amp;도구</translation>
     </message>
     <message>
-        <location filename="../qml/AppMain.qml" line="118" />
+        <location filename="../qml/AppMain.qml" line="126" />
         <source>Create ArcGIS location service</source>
         <translation type="unfinished">ArcGIS 위치 서비스 생성</translation>
     </message>
     <message>
-        <location filename="../qml/AppMain.qml" line="123" />
+        <location filename="../qml/AppMain.qml" line="131" />
         <source>&amp;Window</source>
-        <translation type="unfinished">&amp;창문</translation>
+        <translation type="unfinished">&amp;Window</translation>
     </message>
     <message>
-        <location filename="../qml/AppMain.qml" line="125" />
+        <location filename="../qml/AppMain.qml" line="133" />
         <source>Reset window size</source>
         <translation type="unfinished">창 크기 재설정</translation>
     </message>
     <message>
-        <location filename="../qml/AppMain.qml" line="133" />
+        <location filename="../qml/AppMain.qml" line="141" />
         <source>Toggle developer console</source>
-        <translation type="unfinished">개발자 콘솔 전환</translation>
+        <translation type="unfinished">개발자 콘솔 토글</translation>
     </message>
     <message>
-        <location filename="../qml/AppMain.qml" line="370" />
+        <location filename="../qml/AppMain.qml" line="408" />
         <source>Offline</source>
         <translation type="unfinished">오프라인</translation>
+    </message>
+    <message>
+        <location filename="../qml/AppMain.qml" line="432" />
+        <source>%1 detected</source>
+        <translation type="unfinished">1 감지됨</translation>
+    </message>
+    <message>
+        <location filename="../qml/AppMain.qml" line="433" />
+        <source>Use the %1 app to allow background activity for %2.</source>
+        <translation type="unfinished">1 앱을 사용하여 %2에 대한 백그라운드 활동을 허용합니다.</translation>
+    </message>
+    <message>
+        <location filename="../qml/AppMain.qml" line="434" />
+        <source>This is required to ensure that a proper track of your location is created.</source>
+        <translation type="unfinished">이는 내 위치를 올바르게 추적하기 위해 필요합니다.</translation>
+    </message>
+    <message>
+        <location filename="../qml/AppMain.qml" line="451" />
+        <source>Background location required</source>
+        <translation type="unfinished">배경 위치 필수</translation>
+    </message>
+    <message>
+        <location filename="../qml/AppMain.qml" line="471" />
+        <source>Location required</source>
+        <translation type="unfinished">필요한 위치</translation>
+    </message>
+    <message>
+        <location filename="../qml/AppMain.qml" line="472" />
+        <source>Permission to use your location is needed for mapping and data collection.</source>
+        <translation type="unfinished">매핑 및 데이터 수집을 위해서는 위치 사용 권한이 필요합니다.</translation>
+    </message>
+    <message>
+        <location filename="../qml/AppMain.qml" line="473" />
+        <source>Tap %1 below and allow it to be used.</source>
+        <translation type="unfinished">아래의 %1을 탭하고 사용을 허용합니다.</translation>
+    </message>
+    <message>
+        <location filename="../qml/AppMain.qml" line="453" />
+        <source>This %1 requires permission to capture location in the background. This is needed to ensure that a proper track of your location is created.</source>
+        <translation type="unfinished">이 %1에는 백그라운드에서 위치를 캡처할 수 있는 권한이 필요합니다. 이 권한은 사용자의 위치를 올바르게 추적하는 데 필요합니다.</translation>
+    </message>
+    <message>
+        <location filename="../qml/AppMain.qml" line="452" />
+        <source>Allow all the time</source>
+        <translation type="unfinished">항상 허용</translation>
+    </message>
+    <message>
+        <location filename="../qml/AppMain.qml" line="452" />
+        <source>You must select %1 on the next screen.</source>
+        <translation type="unfinished">다음 화면에서 %1을 선택해야 합니다.</translation>
+    </message>
+    <message>
+        <location filename="../qml/AppMain.qml" line="473" />
+        <source>OK</source>
+        <translation type="unfinished">확인</translation>
     </message>
 </context>
 <context>
     <name>AreaField</name>
     <message>
-        <location filename="../cpp/Field.cpp" line="881" />
+        <location filename="../cpp/Field.cpp" line="882" />
         <source>points</source>
-        <translation type="unfinished">포인트들</translation>
+        <translation type="unfinished">포인트</translation>
     </message>
 </context>
 <context>
     <name>AudioField</name>
     <message>
-        <location filename="../cpp/Field.cpp" line="1270" />
+        <location filename="../cpp/Field.cpp" line="1277" />
         <source>seconds</source>
         <translation type="unfinished">초</translation>
     </message>
@@ -304,7 +416,7 @@
     <message>
         <location filename="../qml/BootstrapAuthPage.qml" line="13" />
         <source>Connect</source>
-        <translation type="unfinished">연결하다</translation>
+        <translation type="unfinished">연결</translation>
     </message>
 </context>
 <context>
@@ -320,12 +432,22 @@
     <message>
         <location filename="../qml/BugReportPage.qml" line="94" />
         <source>Unknown error</source>
-        <translation type="unfinished">알수없는 오류</translation>
+        <translation type="unfinished">알 수 없는 오류</translation>
     </message>
     <message>
         <location filename="../qml/BugReportPage.qml" line="60" />
         <source>Report saved</source>
-        <translation type="unfinished">보고서 저장됨</translation>
+        <translation type="unfinished">보고서 저장</translation>
+    </message>
+    <message>
+        <location filename="../qml/BugReportPage.qml" line="16" />
+        <source>Share bug report</source>
+        <translation type="unfinished">버그 리포트 공유</translation>
+    </message>
+    <message>
+        <location filename="../qml/BugReportPage.qml" line="16" />
+        <source>Save bug report</source>
+        <translation type="unfinished">버그 리포트 저장</translation>
     </message>
     <message>
         <location filename="../qml/BugReportPage.qml" line="62" />
@@ -338,19 +460,9 @@
         <translation type="unfinished">문제 설명</translation>
     </message>
     <message>
-        <location filename="../qml/BugReportPage.qml" line="16" />
-        <source>Share report</source>
-        <translation type="unfinished">보고서 공유</translation>
-    </message>
-    <message>
-        <location filename="../qml/BugReportPage.qml" line="16" />
-        <source>Save report</source>
-        <translation type="unfinished">보고서 저장</translation>
-    </message>
-    <message>
         <location filename="../qml/BugReportPage.qml" line="40" />
         <source>Tap ✓ in the top right corner</source>
-        <translation type="unfinished">오른쪽 상단 모서리에 있는 ✓를 탭하세요.</translation>
+        <translation type="unfinished">오른쪽 상단 모서리에 있는 ✓를 탭합니다.</translation>
     </message>
     <message>
         <location filename="../qml/BugReportPage.qml" line="41" />
@@ -366,7 +478,7 @@
 <context>
     <name>CHost_Qt</name>
     <message>
-        <location filename="../lib/classic/Host/Qt/QtHost.cpp" line="1261" />
+        <location filename="../lib/classic/Host/Qt/QtHost.cpp" line="1266" />
         <source>Data exported</source>
         <translation type="unfinished">내보낸 데이터</translation>
     </message>
@@ -374,93 +486,93 @@
 <context>
     <name>CTOConnector</name>
     <message>
-        <location filename="../cpp/CTO/CTOConnector.cpp" line="82" />
-        <source>Failed to create project</source>
-        <translation type="unfinished">프로젝트 생성 실패</translation>
+        <location filename="../cpp/CTO/CTOConnector.cpp" line="87" />
+        <source>Failed to create %1</source>
+        <translation type="unfinished">1을(를) 만들지 못했습니다.</translation>
     </message>
     <message>
-        <location filename="../cpp/CTO/CTOConnector.cpp" line="135" />
+        <location filename="../cpp/CTO/CTOConnector.cpp" line="140" />
         <source>Logged out</source>
         <translation type="unfinished">로그아웃</translation>
     </message>
     <message>
-        <location filename="../cpp/CTO/CTOConnector.cpp" line="163" />
+        <location filename="../cpp/CTO/CTOConnector.cpp" line="153" />
+        <source>Unsent data</source>
+        <translation type="unfinished">전송되지 않은 데이터</translation>
+    </message>
+    <message>
+        <location filename="../cpp/CTO/CTOConnector.cpp" line="168" />
         <source>Form download failed</source>
         <translation type="unfinished">양식 다운로드 실패</translation>
     </message>
     <message>
-        <location filename="../cpp/CTO/CTOConnector.cpp" line="170" />
+        <location filename="../cpp/CTO/CTOConnector.cpp" line="175" />
         <source>Bad package</source>
-        <translation type="unfinished">잘못된 패키지</translation>
-    </message>
-    <message>
-        <location filename="../cpp/CTO/CTOConnector.cpp" line="177" />
-        <source>Failed to read form settings sheet</source>
-        <translation type="unfinished">양식 설정 시트를 읽지 못했습니다.</translation>
+        <translation type="unfinished">불량 패키지</translation>
     </message>
 </context>
 <context>
     <name>CheckField</name>
     <message>
-        <location filename="../cpp/Field.cpp" line="655" />
+        <location filename="../cpp/Field.cpp" line="656" />
         <source>Yes</source>
         <translation type="unfinished">예</translation>
     </message>
     <message>
-        <location filename="../cpp/Field.cpp" line="655" />
+        <location filename="../cpp/Field.cpp" line="656" />
         <source>No</source>
-        <translation type="unfinished">아니</translation>
+        <translation type="unfinished">아니요</translation>
     </message>
 </context>
 <context>
     <name>ClassicConnector</name>
     <message>
         <location filename="../cpp/Classic/ClassicConnector.cpp" line="77" />
-        <location filename="../cpp/Classic/ClassicConnector.cpp" line="510" />
-        <location filename="../cpp/Classic/ClassicConnector.cpp" line="550" />
+        <location filename="../cpp/Classic/ClassicConnector.cpp" line="517" />
+        <location filename="../cpp/Classic/ClassicConnector.cpp" line="557" />
         <source>Cannot create path</source>
-        <translation type="unfinished">경로를 생성할 수 없습니다</translation>
+        <translation type="unfinished">경로를 만들 수 없습니다.</translation>
     </message>
     <message>
         <location filename="../cpp/Classic/ClassicConnector.cpp" line="139" />
         <source>Server not found</source>
-        <translation type="unfinished">서버를 찾을 수 없습니다</translation>
+        <translation type="unfinished">서버를 찾을 수 없음</translation>
     </message>
     <message>
-        <location filename="../cpp/Classic/ClassicConnector.cpp" line="308" />
+        <location filename="../cpp/Classic/ClassicConnector.cpp" line="315" />
         <source>Not supported</source>
         <translation type="unfinished">지원되지 않음</translation>
     </message>
     <message>
-        <location filename="../cpp/Classic/ClassicConnector.cpp" line="323" />
+        <location filename="../cpp/Classic/ClassicConnector.cpp" line="330" />
         <source>Unsent data</source>
         <translation type="unfinished">전송되지 않은 데이터</translation>
     </message>
     <message>
-        <location filename="../cpp/Classic/ClassicConnector.cpp" line="330" />
+        <location filename="../cpp/Classic/ClassicConnector.cpp" line="337" />
         <source>Not found</source>
         <translation type="unfinished">찾을 수 없음</translation>
     </message>
     <message>
-        <location filename="../cpp/Classic/ClassicConnector.cpp" line="279" />
-        <location filename="../cpp/Classic/ClassicConnector.cpp" line="336" />
+        <location filename="../cpp/Classic/ClassicConnector.cpp" line="525" />
+        <source>Failed to read %1</source>
+        <translation type="unfinished">1을(를) 읽지 못했습니다.</translation>
+    </message>
+    <message>
+        <location filename="../cpp/Classic/ClassicConnector.cpp" line="286" />
+        <location filename="../cpp/Classic/ClassicConnector.cpp" line="343" />
         <source>DEF file corrupt</source>
         <translation type="unfinished">DEF 파일 손상</translation>
     </message>
     <message>
-        <location filename="../cpp/Classic/ClassicConnector.cpp" line="360" />
+        <location filename="../cpp/Classic/ClassicConnector.cpp" line="367" />
         <source>Download failed</source>
         <translation type="unfinished">다운로드 실패</translation>
     </message>
     <message>
-        <location filename="../cpp/Classic/ClassicConnector.cpp" line="369" />
+        <location filename="../cpp/Classic/ClassicConnector.cpp" line="376" />
         <source>Bad archive</source>
         <translation type="unfinished">잘못된 아카이브</translation>
-    </message>
-    <message>
-        <location filename="../cpp/Classic/ClassicConnector.cpp" line="518" />
-        <source>Failed to read classic project</source>
-        <translation type="unfinished">클래식 프로젝트를 읽지 못했습니다.</translation>
     </message>
 </context>
 <context>
@@ -468,12 +580,12 @@
     <message>
         <location filename="../qml/ComingSoonPage.qml" line="9" />
         <source>Coming soon</source>
-        <translation type="unfinished">출시 예정</translation>
+        <translation type="unfinished">곧 출시 예정</translation>
     </message>
     <message>
         <location filename="../qml/ComingSoonPage.qml" line="16" />
         <source>In progress, expected during 2020!</source>
-        <translation type="unfinished">진행 중, 2020년 예상!</translation>
+        <translation type="unfinished">진행 중, 2020년 중 예정!</translation>
     </message>
 </context>
 <context>
@@ -487,6 +599,44 @@
         <location filename="../controls/imports/CyberTracker.1/ConfirmPopup.qml" line="12" />
         <source>Cancel</source>
         <translation type="unfinished">취소</translation>
+    </message>
+</context>
+<context>
+    <name>ConnectClassicPage</name>
+    <message>
+        <location filename="../qml/Classic/ConnectClassicPage.qml" line="11" />
+        <source>Connect to</source>
+        <translation type="unfinished">연결 대상</translation>
+    </message>
+    <message>
+        <location filename="../qml/Classic/ConnectClassicPage.qml" line="26" />
+        <source>Desktop install</source>
+        <translation type="unfinished">데스크톱 설치</translation>
+    </message>
+    <message>
+        <location filename="../qml/Classic/ConnectClassicPage.qml" line="27" />
+        <source>Scan for %1 installed by CyberTracker desktop</source>
+        <translation type="unfinished">CyberTracker 데스크톱에 설치된 %1을 검색합니다.</translation>
+    </message>
+    <message>
+        <location filename="../qml/Classic/ConnectClassicPage.qml" line="41" />
+        <source>Web install</source>
+        <translation type="unfinished">웹 설치</translation>
+    </message>
+    <message>
+        <location filename="../qml/Classic/ConnectClassicPage.qml" line="42" />
+        <source>Install a %1 from the web. Requires a link from the %2 publisher.</source>
+        <translation type="unfinished">웹에서 %1을(를) 설치합니다. 2 게시자의 링크가 필요합니다.</translation>
+    </message>
+    <message>
+        <location filename="../qml/Classic/ConnectClassicPage.qml" line="53" />
+        <source>Samples</source>
+        <translation type="unfinished">샘플</translation>
+    </message>
+    <message>
+        <location filename="../qml/Classic/ConnectClassicPage.qml" line="54" />
+        <source>Install a sample to see CyberTracker in action. Saved data will not be kept.</source>
+        <translation type="unfinished">샘플을 설치하여 사이버트래커가 작동하는 모습을 확인하세요. 저장된 데이터는 보관되지 않습니다.</translation>
     </message>
 </context>
 <context>
@@ -519,7 +669,7 @@
     <message>
         <location filename="../qml/SMART/ConnectCollectPage.qml" line="146" />
         <source>No servers found</source>
-        <translation type="unfinished">서버를 찾을 수 없습니다.</translation>
+        <translation type="unfinished">서버를 찾을 수 없음</translation>
     </message>
     <message>
         <location filename="../qml/SMART/ConnectCollectPage.qml" line="166" />
@@ -538,7 +688,7 @@
     <message>
         <location filename="../qml/SMART/ConnectConnectPage.qml" line="21" />
         <source>Connect</source>
-        <translation type="unfinished">연결하다</translation>
+        <translation type="unfinished">연결</translation>
     </message>
     <message>
         <location filename="../qml/SMART/ConnectConnectPage.qml" line="44" />
@@ -566,23 +716,23 @@
     <message>
         <location filename="../qml/ConnectDropboxPage.qml" line="9" />
         <source>Connect to Dropbox</source>
-        <translation type="unfinished">드롭박스에 연결</translation>
+        <translation type="unfinished">Dropbox에 연결</translation>
     </message>
 </context>
 <context>
     <name>ConnectFormPage</name>
     <message>
-        <location filename="../qml/ConnectFormPage.qml" line="16" />
+        <location filename="../qml/ConnectFormPage.qml" line="17" />
         <source>Select forms</source>
         <translation type="unfinished">양식 선택</translation>
     </message>
     <message>
-        <location filename="../qml/ConnectFormPage.qml" line="34" />
+        <location filename="../qml/ConnectFormPage.qml" line="39" />
         <source>All</source>
         <translation type="unfinished">모두</translation>
     </message>
     <message>
-        <location filename="../qml/ConnectFormPage.qml" line="47" />
+        <location filename="../qml/ConnectFormPage.qml" line="52" />
         <source>None</source>
         <translation type="unfinished">없음</translation>
     </message>
@@ -591,8 +741,8 @@
     <name>ConnectKoBoPage</name>
     <message>
         <location filename="../qml/ODK/ConnectKoBoPage.qml" line="19" />
-        <source>Connect</source>
-        <translation type="unfinished">연결하다</translation>
+        <source>Connect to %1</source>
+        <translation type="unfinished">1에 연결</translation>
     </message>
     <message>
         <location filename="../qml/ODK/ConnectKoBoPage.qml" line="28" />
@@ -607,7 +757,7 @@
     <message>
         <location filename="../qml/ODK/ConnectKoBoPage.qml" line="30" />
         <source>Custom</source>
-        <translation type="unfinished">관습</translation>
+        <translation type="unfinished">사용자 지정</translation>
     </message>
     <message>
         <location filename="../qml/ODK/ConnectKoBoPage.qml" line="86" />
@@ -617,15 +767,15 @@
     <message>
         <location filename="../qml/ODK/ConnectKoBoPage.qml" line="99" />
         <source>Error retrieving form</source>
-        <translation type="unfinished">양식을 검색하는 동안 오류가 발생했습니다.</translation>
+        <translation type="unfinished">양식 검색 오류</translation>
     </message>
 </context>
 <context>
     <name>ConnectKoBoSharedPage</name>
     <message>
         <location filename="../qml/ODK/ConnectKoBoSharedPage.qml" line="24" />
-        <source>%1 Connect</source>
-        <translation type="unfinished">%1 연결</translation>
+        <source>Connect to %1</source>
+        <translation type="unfinished">1에 연결</translation>
     </message>
     <message>
         <location filename="../qml/ODK/ConnectKoBoSharedPage.qml" line="44" />
@@ -638,42 +788,42 @@
         <translation type="unfinished">템플릿에 %1 사용</translation>
     </message>
     <message>
-        <location filename="../qml/ODK/ConnectKoBoSharedPage.qml" line="73" />
+        <location filename="../qml/ODK/ConnectKoBoSharedPage.qml" line="74" />
         <source>Choose forms</source>
         <translation type="unfinished">양식 선택</translation>
     </message>
     <message>
-        <location filename="../qml/ODK/ConnectKoBoSharedPage.qml" line="109" />
+        <location filename="../qml/ODK/ConnectKoBoSharedPage.qml" line="110" />
         <source>Connection failed</source>
-        <translation type="unfinished">연결에 실패</translation>
+        <translation type="unfinished">연결 실패</translation>
     </message>
     <message>
-        <location filename="../qml/ODK/ConnectKoBoSharedPage.qml" line="141" />
+        <location filename="../qml/ODK/ConnectKoBoSharedPage.qml" line="142" />
         <source>No forms found</source>
         <translation type="unfinished">양식을 찾을 수 없습니다.</translation>
     </message>
     <message>
-        <location filename="../qml/ODK/ConnectKoBoSharedPage.qml" line="154" />
+        <location filename="../qml/ODK/ConnectKoBoSharedPage.qml" line="155" />
         <source>Error retrieving form</source>
-        <translation type="unfinished">양식을 검색하는 동안 오류가 발생했습니다.</translation>
+        <translation type="unfinished">양식 검색 오류</translation>
     </message>
 </context>
 <context>
     <name>ConnectODKCentralPage</name>
     <message>
         <location filename="../qml/ODK/ConnectODKCentralPage.qml" line="20" />
-        <source>Connect</source>
-        <translation type="unfinished">연결하다</translation>
+        <source>Connect to %1</source>
+        <translation type="unfinished">1에 연결</translation>
     </message>
     <message>
         <location filename="../qml/ODK/ConnectODKCentralPage.qml" line="40" />
-        <source>Select project</source>
-        <translation type="unfinished">프로젝트 선택</translation>
+        <source>Select %1</source>
+        <translation type="unfinished">1 선택</translation>
     </message>
     <message>
         <location filename="../qml/ODK/ConnectODKCentralPage.qml" line="97" />
-        <source>No projects found</source>
-        <translation type="unfinished">프로젝트를 찾을 수 없습니다.</translation>
+        <source>No %1 found</source>
+        <translation type="unfinished">찾을 수 없는 %1</translation>
     </message>
     <message>
         <location filename="../qml/ODK/ConnectODKCentralPage.qml" line="120" />
@@ -682,74 +832,92 @@
     </message>
 </context>
 <context>
+    <name>ConnectOnlinePage</name>
+    <message>
+        <location filename="../qml/Classic/ConnectOnlinePage.qml" line="13" />
+        <source>Connect to %1</source>
+        <translation type="unfinished">1에 연결</translation>
+    </message>
+    <message>
+        <location filename="../qml/Classic/ConnectOnlinePage.qml" line="47" />
+        <source>%1 from %2</source>
+        <translation type="unfinished">2에서 %1</translation>
+    </message>
+    <message>
+        <location filename="../qml/Classic/ConnectOnlinePage.qml" line="47" />
+        <source>Scan QR code</source>
+        <translation type="unfinished">QR코드 스캔</translation>
+    </message>
+    <message>
+        <location filename="../qml/Classic/ConnectOnlinePage.qml" line="73" />
+        <source>Getting started</source>
+        <translation type="unfinished">시작하기</translation>
+    </message>
+</context>
+<context>
     <name>ConnectPage</name>
     <message>
         <location filename="../qml/ConnectPage.qml" line="12" />
-        <location filename="../qml/SMART/ConnectPage.qml" line="43" />
+        <location filename="../qml/SMART/ConnectPage.qml" line="41" />
         <source>Connect</source>
-        <translation type="unfinished">연결하다</translation>
-    </message>
-    <message>
-        <location filename="../qml/Classic/ConnectPage.qml" line="26" />
-        <location filename="../qml/SMART/ConnectPage.qml" line="26" />
-        <source>Desktop install</source>
-        <translation type="unfinished">데스크탑 설치</translation>
-    </message>
-    <message>
-        <location filename="../qml/Classic/ConnectPage.qml" line="27" />
-        <source>Scan for projects installed by CyberTracker desktop</source>
-        <translation type="unfinished">CyberTracker 데스크탑에서 설치한 프로젝트 검색</translation>
-    </message>
-    <message>
-        <location filename="../qml/Classic/ConnectPage.qml" line="43" />
-        <source>Web install</source>
-        <translation type="unfinished">웹 설치</translation>
-    </message>
-    <message>
-        <location filename="../qml/Classic/ConnectPage.qml" line="44" />
-        <source>Install a project from a web source. Requires a web link from the project publisher.</source>
-        <translation type="unfinished">웹 소스에서 프로젝트를 설치합니다. 프로젝트 게시자의 웹 링크가 필요합니다.</translation>
-    </message>
-    <message>
-        <location filename="../qml/Classic/ConnectPage.qml" line="55" />
-        <source>Samples</source>
-        <translation type="unfinished">샘플</translation>
-    </message>
-    <message>
-        <location filename="../qml/Classic/ConnectPage.qml" line="56" />
-        <source>Install a sample to see CyberTracker in action. Saved data will not be kept.</source>
-        <translation type="unfinished">CyberTracker가 작동하는 모습을 보려면 샘플을 설치하십시오. 저장된 데이터는 보관되지 않습니다.</translation>
-    </message>
-    <message>
-        <location filename="../qml/EarthRanger/ConnectPage.qml" line="8" />
-        <location filename="../qml/Esri/ConnectPage.qml" line="19" />
-        <source>Connect to</source>
         <translation type="unfinished">연결</translation>
     </message>
     <message>
+        <location filename="../qml/SMART/ConnectPage.qml" line="26" />
+        <source>Desktop install</source>
+        <translation type="unfinished">데스크톱 설치</translation>
+    </message>
+    <message>
+        <location filename="../qml/SMART/ConnectPage.qml" line="42" />
+        <source>Add a %1 from SMART Connect</source>
+        <translation type="unfinished">SMART Connect에서 %1 추가</translation>
+    </message>
+    <message>
+        <location filename="../qml/SMART/ConnectPage.qml" line="54" />
+        <source>Add a %1 from SMART Collect</source>
+        <translation type="unfinished">SMART 수집에서 %1 추가</translation>
+    </message>
+    <message>
+        <location filename="../qml/EarthRanger/ConnectPage.qml" line="8" />
+        <source>Connect to</source>
+        <translation type="unfinished">연결 대상</translation>
+    </message>
+    <message>
+        <location filename="../qml/Google/ConnectPage.qml" line="47" />
+        <source>Scan QR code</source>
+        <translation type="unfinished">QR코드 스캔</translation>
+    </message>
+    <message>
+        <location filename="../qml/Google/ConnectPage.qml" line="47" />
+        <source>%1 from the %2 add-on for %3</source>
+        <translation type="unfinished">3에 대한 %2 추가 기능의 %1</translation>
+    </message>
+    <message>
+        <location filename="../qml/Google/ConnectPage.qml" line="73" />
+        <source>Getting started</source>
+        <translation type="unfinished">시작하기</translation>
+    </message>
+    <message>
         <location filename="../qml/SMART/ConnectPage.qml" line="27" />
-        <source>Scan for projects installed by SMART Desktop</source>
-        <translation type="unfinished">SMART Desktop에서 설치한 프로젝트 검색</translation>
+        <source>Scan for %1 installed by SMART Desktop</source>
+        <translation type="unfinished">스마트 데스크톱에 설치된 %1 검색</translation>
     </message>
     <message>
-        <location filename="../qml/SMART/ConnectPage.qml" line="44" />
-        <source>Install a project from SMART Connect</source>
-        <translation type="unfinished">SMART Connect에서 프로젝트 설치</translation>
-    </message>
-    <message>
-        <location filename="../qml/SMART/ConnectPage.qml" line="55" />
+        <location filename="../qml/SMART/ConnectPage.qml" line="53" />
         <source>Collect</source>
         <translation type="unfinished">수집</translation>
     </message>
     <message>
-        <location filename="../qml/SMART/ConnectPage.qml" line="56" />
-        <source>Install a project from SMART Collect</source>
-        <translation type="unfinished">SMART Collect에서 프로젝트 설치</translation>
+        <location filename="../qml/Esri/ConnectPage.qml" line="19" />
+        <location filename="../qml/Google/ConnectPage.qml" line="13" />
+        <location filename="../qml/SMART/ConnectPage.qml" line="11" />
+        <source>Connect to %1</source>
+        <translation type="unfinished">1에 연결</translation>
     </message>
     <message>
         <location filename="../qml/Esri/ConnectPage.qml" line="40" />
         <source>Select surveys</source>
-        <translation type="unfinished">설문조사 선택</translation>
+        <translation type="unfinished">설문 조사 선택</translation>
     </message>
     <message>
         <location filename="../qml/Esri/ConnectPage.qml" line="71" />
@@ -760,35 +928,45 @@
 <context>
     <name>ConnectPane</name>
     <message>
-        <location filename="../qml/ConnectPane.qml" line="101" />
+        <location filename="../qml/ConnectPane.qml" line="108" />
+        <source>Scan QR code</source>
+        <translation type="unfinished">QR코드 스캔</translation>
+    </message>
+    <message>
+        <location filename="../qml/ConnectPane.qml" line="109" />
+        <source>Scan QR code to install a %1</source>
+        <translation type="unfinished">QR 코드를 스캔하여 %1</translation>
+    </message>
+    <message>
+        <location filename="../qml/ConnectPane.qml" line="135" />
         <source>Coming soon...</source>
-        <translation type="unfinished">곧...</translation>
+        <translation type="unfinished">곧 출시 예정...</translation>
     </message>
 </context>
 <context>
     <name>ConnectPaneSM</name>
     <message>
-        <location filename="../qml/SMART/ConnectPaneSM.qml" line="35" />
-        <source>Scan for desktop projects</source>
-        <translation type="unfinished">데스크톱 프로젝트 스캔</translation>
+        <location filename="../qml/SMART/ConnectPaneSM.qml" line="36" />
+        <source>Scan for desktop %1</source>
+        <translation type="unfinished">데스크톱 %1 검색</translation>
     </message>
     <message>
-        <location filename="../qml/SMART/ConnectPaneSM.qml" line="53" />
-        <source>Connect to an online project</source>
-        <translation type="unfinished">온라인 프로젝트에 연결</translation>
+        <location filename="../qml/SMART/ConnectPaneSM.qml" line="52" />
+        <source>Connect to an online %1</source>
+        <translation type="unfinished">온라인 %1에 연결</translation>
     </message>
     <message>
-        <location filename="../qml/SMART/ConnectPaneSM.qml" line="65" />
-        <source>Connect to a community project</source>
-        <translation type="unfinished">커뮤니티 프로젝트에 연결</translation>
+        <location filename="../qml/SMART/ConnectPaneSM.qml" line="64" />
+        <source>Connect to a community %1</source>
+        <translation type="unfinished">커뮤니티에 연결 %1</translation>
     </message>
     <message>
-        <location filename="../qml/SMART/ConnectPaneSM.qml" line="73" />
+        <location filename="../qml/SMART/ConnectPaneSM.qml" line="72" />
         <source>Scan QR code</source>
-        <translation type="unfinished">QR 코드 스캔</translation>
+        <translation type="unfinished">QR코드 스캔</translation>
     </message>
     <message>
-        <location filename="../qml/SMART/ConnectPaneSM.qml" line="77" />
+        <location filename="../qml/SMART/ConnectPaneSM.qml" line="76" />
         <source>Install from a shared QR code</source>
         <translation type="unfinished">공유 QR 코드에서 설치</translation>
     </message>
@@ -796,9 +974,9 @@
 <context>
     <name>ConnectQRCodePage</name>
     <message>
-        <location filename="../qml/ConnectQRCodePage.qml" line="17" />
+        <location filename="../qml/ConnectQRCodePage.qml" line="18" />
         <source>Scan QR code</source>
-        <translation type="unfinished">QR 코드 스캔</translation>
+        <translation type="unfinished">QR코드 스캔</translation>
     </message>
 </context>
 <context>
@@ -829,12 +1007,12 @@
     <message>
         <location filename="../qml/Classic/ConnectSamplesPage.qml" line="19" />
         <source>Shows what data capture is like for simple cases</source>
-        <translation type="unfinished">간단한 경우에 대한 데이터 캡처 방법을 보여줍니다.</translation>
+        <translation type="unfinished">간단한 사례에 대한 데이터 캡처가 어떻게 이루어지는지 보여줍니다.</translation>
     </message>
     <message>
         <location filename="../qml/Classic/ConnectSamplesPage.qml" line="25" />
         <source>Shows recording notes, photos and audio</source>
-        <translation type="unfinished">녹음 메모, 사진 및 오디오 표시</translation>
+        <translation type="unfinished">녹음 노트, 사진, 오디오 표시</translation>
     </message>
     <message>
         <location filename="../qml/Classic/ConnectSamplesPage.qml" line="31" />
@@ -850,12 +1028,12 @@
         <translation type="unfinished">웹 설치</translation>
     </message>
     <message>
-        <location filename="../qml/Classic/ConnectWebInstallPage.qml" line="40" />
+        <location filename="../qml/Classic/ConnectWebInstallPage.qml" line="38" />
         <source>Enter web address</source>
         <translation type="unfinished">웹 주소 입력</translation>
     </message>
     <message>
-        <location filename="../qml/Classic/ConnectWebInstallPage.qml" line="45" />
+        <location filename="../qml/Classic/ConnectWebInstallPage.qml" line="43" />
         <source>Install</source>
         <translation type="unfinished">설치</translation>
     </message>
@@ -895,7 +1073,7 @@
     <message>
         <location filename="../qml/ConsoleWindow.qml" line="66" />
         <source>Clear</source>
-        <translation type="unfinished">분명한</translation>
+        <translation type="unfinished">지우기</translation>
     </message>
 </context>
 <context>
@@ -907,8 +1085,8 @@
     </message>
     <message>
         <location filename="../qml/CreateEsriServiceWindow.qml" line="46" />
-        <source>Create an ArcGIS Online hosted feature service which will receive location track data from Survey123 projects.</source>
-        <translation type="unfinished">Survey123 프로젝트에서 위치 추적 데이터를 수신할 ArcGIS Online 호스팅 피처 서비스를 생성합니다.</translation>
+        <source>Create an ArcGIS Online hosted feature service which will receive location track data from Survey123 %1.</source>
+        <translation type="unfinished">Survey123 %1에서 위치 추적 데이터를 수신할 ArcGIS Online 호스팅 기능 서비스를 만듭니다.</translation>
     </message>
     <message>
         <location filename="../qml/CreateEsriServiceWindow.qml" line="86" />
@@ -933,7 +1111,7 @@
     <message>
         <location filename="../qml/CreateEsriServiceWindow.qml" line="119" />
         <source>Click 'START' to create service</source>
-        <translation type="unfinished">서비스를 생성하려면 '시작'을 클릭하세요.</translation>
+        <translation type="unfinished">'시작'을 클릭하여 서비스를 생성합니다.</translation>
     </message>
     <message>
         <location filename="../qml/CreateEsriServiceWindow.qml" line="130" />
@@ -943,17 +1121,17 @@
     <message>
         <location filename="../qml/CreateEsriServiceWindow.qml" line="162" />
         <source>Success - service created</source>
-        <translation type="unfinished">성공 - 서비스 생성됨</translation>
+        <translation type="unfinished">성공 - 서비스 생성</translation>
     </message>
     <message>
         <location filename="../qml/CreateEsriServiceWindow.qml" line="170" />
         <source>Create a column named 'bind::ct:esriLocationServiceUrl' in the 'settings' sheet of the XlsForm and set it to the content below. Republish and install or update the form in CyberTracker.</source>
-        <translation type="unfinished">XlsForm의 'settings' 시트에 'bind::ct:esriLocationServiceUrl'이라는 컬럼을 생성하고 아래 내용으로 설정합니다. CyberTracker에서 양식을 다시 게시하고 설치하거나 업데이트하십시오.</translation>
+        <translation type="unfinished">XlsForm의 '설정' 시트에 'bind::ct:esriLocationServiceUrl'이라는 열을 생성하고 아래 내용으로 설정합니다. 사이버트래커에 양식을 다시 게시하고 설치 또는 업데이트합니다.</translation>
     </message>
     <message>
         <location filename="../qml/CreateEsriServiceWindow.qml" line="199" />
         <source>Copy to clipboard</source>
-        <translation type="unfinished">클립 보드에 복사</translation>
+        <translation type="unfinished">클립보드에 복사</translation>
     </message>
     <message>
         <location filename="../qml/CreateEsriServiceWindow.qml" line="223" />
@@ -963,7 +1141,7 @@
     <message>
         <location filename="../qml/CreateEsriServiceWindow.qml" line="234" />
         <source>Creating service...</source>
-        <translation type="unfinished">서비스 생성 중...</translation>
+        <translation type="unfinished">서비스 만들기...</translation>
     </message>
     <message>
         <location filename="../qml/CreateEsriServiceWindow.qml" line="243" />
@@ -975,8 +1153,8 @@
     <name>EarthRangerConnector</name>
     <message>
         <location filename="../cpp/EarthRanger/EarthRangerConnector.cpp" line="108" />
-        <source>Failed to create project</source>
-        <translation type="unfinished">프로젝트 생성 실패</translation>
+        <source>Failed to create %1</source>
+        <translation type="unfinished">1을(를) 만들지 못했습니다.</translation>
     </message>
     <message>
         <location filename="../cpp/EarthRanger/EarthRangerConnector.cpp" line="206" />
@@ -999,7 +1177,7 @@
     <message>
         <location filename="../cpp/EarthRanger/EarthRangerProvider.cpp" line="1202" />
         <source>Sighting</source>
-        <translation type="unfinished">목격</translation>
+        <translation type="unfinished">시력</translation>
     </message>
     <message>
         <location filename="../cpp/EarthRanger/EarthRangerProvider.cpp" line="1228" />
@@ -1014,12 +1192,12 @@
     <message>
         <location filename="../cpp/EarthRanger/EarthRangerProvider.cpp" line="1230" />
         <source>Notes</source>
-        <translation type="unfinished">메모</translation>
+        <translation type="unfinished">참고</translation>
     </message>
     <message>
         <location filename="../cpp/EarthRanger/EarthRangerProvider.cpp" line="1283" />
         <source>Editing report saved on</source>
-        <translation type="unfinished">에 저장된 보고서 수정 중</translation>
+        <translation type="unfinished">편집 보고서 저장 위치</translation>
     </message>
 </context>
 <context>
@@ -1037,74 +1215,74 @@
     <message>
         <location filename="../cpp/Element.cpp" line="296" />
         <source>No</source>
-        <translation type="unfinished">아니</translation>
+        <translation type="unfinished">아니요</translation>
     </message>
     <message>
         <location filename="../cpp/Element.cpp" line="297" />
         <source>Other</source>
-        <translation type="unfinished">다른</translation>
+        <translation type="unfinished">기타</translation>
+    </message>
+    <message>
+        <location filename="../cpp/Element.cpp" line="298" />
+        <source>Empty</source>
+        <translation type="unfinished">빈</translation>
     </message>
 </context>
 <context>
     <name>EsriConnector</name>
     <message>
-        <location filename="../cpp/Esri/EsriConnector.cpp" line="96" />
-        <source>Failed to create project</source>
-        <translation type="unfinished">프로젝트 생성 실패</translation>
-    </message>
-    <message>
-        <location filename="../cpp/Esri/EsriConnector.cpp" line="184" />
+        <location filename="../cpp/Esri/EsriConnector.cpp" line="185" />
         <source>Logged out</source>
         <translation type="unfinished">로그아웃</translation>
     </message>
     <message>
-        <location filename="../cpp/Esri/EsriConnector.cpp" line="290" />
+        <location filename="../cpp/Esri/EsriConnector.cpp" line="291" />
         <source>Form not found</source>
         <translation type="unfinished">양식을 찾을 수 없음</translation>
     </message>
     <message>
-        <location filename="../cpp/Esri/EsriConnector.cpp" line="157" />
-        <location filename="../cpp/Esri/EsriConnector.cpp" line="213" />
+        <location filename="../cpp/Esri/EsriConnector.cpp" line="158" />
+        <location filename="../cpp/Esri/EsriConnector.cpp" line="214" />
         <source>Could not retrieve survey</source>
         <translation type="unfinished">설문조사를 검색할 수 없습니다.</translation>
     </message>
     <message>
-        <location filename="../cpp/Esri/EsriConnector.cpp" line="201" />
+        <location filename="../cpp/Esri/EsriConnector.cpp" line="97" />
+        <source>Failed to create %1</source>
+        <translation type="unfinished">1을(를) 만들지 못했습니다.</translation>
+    </message>
+    <message>
+        <location filename="../cpp/Esri/EsriConnector.cpp" line="202" />
         <source>Login required</source>
         <translation type="unfinished">로그인 필요</translation>
     </message>
     <message>
-        <location filename="../cpp/Esri/EsriConnector.cpp" line="266" />
+        <location filename="../cpp/Esri/EsriConnector.cpp" line="267" />
         <source>Form download failed</source>
         <translation type="unfinished">양식 다운로드 실패</translation>
     </message>
     <message>
-        <location filename="../cpp/Esri/EsriConnector.cpp" line="273" />
+        <location filename="../cpp/Esri/EsriConnector.cpp" line="274" />
         <source>Bad form zip</source>
-        <translation type="unfinished">잘못된 형식의 지퍼</translation>
+        <translation type="unfinished">잘못된 양식 zip</translation>
     </message>
     <message>
-        <location filename="../cpp/Esri/EsriConnector.cpp" line="280" />
+        <location filename="../cpp/Esri/EsriConnector.cpp" line="281" />
         <source>Bad form</source>
-        <translation type="unfinished">잘못된 형태</translation>
+        <translation type="unfinished">나쁜 형태</translation>
     </message>
     <message>
-        <location filename="../cpp/Esri/EsriConnector.cpp" line="297" />
+        <location filename="../cpp/Esri/EsriConnector.cpp" line="298" />
         <source>Failed to copy form file</source>
         <translation type="unfinished">양식 파일을 복사하지 못했습니다.</translation>
-    </message>
-    <message>
-        <location filename="../cpp/Esri/EsriConnector.cpp" line="330" />
-        <source>Failed to read form settings sheet</source>
-        <translation type="unfinished">양식 설정 시트를 읽지 못했습니다.</translation>
     </message>
 </context>
 <context>
     <name>EsriMapView</name>
     <message>
-        <location filename="../controls/imports/CyberTracker.1/EsriMapView.qml" line="288" />
+        <location filename="../controls/imports/CyberTracker.1/EsriMapView.qml" line="275" />
         <source>Sighting</source>
-        <translation type="unfinished">목격</translation>
+        <translation type="unfinished">시력</translation>
     </message>
 </context>
 <context>
@@ -1125,7 +1303,7 @@
     <message>
         <location filename="../qml/ExportDetailsPage.qml" line="27" />
         <source>Share</source>
-        <translation type="unfinished">공유하다</translation>
+        <translation type="unfinished">공유</translation>
     </message>
     <message>
         <location filename="../qml/ExportDetailsPage.qml" line="43" />
@@ -1135,7 +1313,7 @@
     <message>
         <location filename="../qml/ExportDetailsPage.qml" line="44" />
         <source>This file will be permanently removed.</source>
-        <translation type="unfinished">이 파일은 영구적으로 제거됩니다.</translation>
+        <translation type="unfinished">이 파일은 영구적으로 삭제됩니다.</translation>
     </message>
     <message>
         <location filename="../qml/ExportDetailsPage.qml" line="45" />
@@ -1153,7 +1331,7 @@
     <message>
         <location filename="../qml/ExportsPage.qml" line="39" />
         <source>The files listed below are awaiting import. If the import is not working, click on a file and send it using another channel.</source>
-        <translation type="unfinished">아래 나열된 파일이 가져오기를 기다리고 있습니다. 가져오기가 작동하지 않으면 파일을 클릭하고 다른 채널을 사용하여 보내십시오.</translation>
+        <translation type="unfinished">아래 나열된 파일은 가져오기를 기다리고 있습니다. 가져오기가 작동하지 않으면 파일을 클릭하고 다른 채널을 사용하여 파일을 보내세요.</translation>
     </message>
     <message>
         <location filename="../qml/ExportsPage.qml" line="92" />
@@ -1164,17 +1342,17 @@
 <context>
     <name>FieldAudio</name>
     <message>
-        <location filename="../controls/imports/CyberTracker.1/FieldAudio.qml" line="113" />
+        <location filename="../controls/imports/CyberTracker.1/FieldAudio.qml" line="115" />
         <source>Delete the recording?</source>
-        <translation type="unfinished">녹음을 삭제하시겠습니까?</translation>
+        <translation type="unfinished">녹화를 삭제하시겠습니까?</translation>
     </message>
     <message>
-        <location filename="../controls/imports/CyberTracker.1/FieldAudio.qml" line="114" />
+        <location filename="../controls/imports/CyberTracker.1/FieldAudio.qml" line="116" />
         <source>Yes, delete it</source>
         <translation type="unfinished">예, 삭제</translation>
     </message>
     <message>
-        <location filename="../controls/imports/CyberTracker.1/FieldAudio.qml" line="163" />
+        <location filename="../controls/imports/CyberTracker.1/FieldAudio.qml" line="165" />
         <source>seconds</source>
         <translation type="unfinished">초</translation>
     </message>
@@ -1184,41 +1362,41 @@
     <message>
         <location filename="../controls/imports/CyberTracker.1/FieldBarcodePage.qml" line="10" />
         <source>Scan</source>
-        <translation type="unfinished">주사</translation>
+        <translation type="unfinished">스캔</translation>
     </message>
 </context>
 <context>
     <name>FieldBarcodePane</name>
     <message>
-        <location filename="../controls/imports/CyberTracker.1/FieldBarcodePane.qml" line="69" />
+        <location filename="../controls/imports/CyberTracker.1/FieldBarcodePane.qml" line="68" />
         <source>Clear code?</source>
         <translation type="unfinished">코드 지우기?</translation>
     </message>
     <message>
-        <location filename="../controls/imports/CyberTracker.1/FieldBarcodePane.qml" line="70" />
+        <location filename="../controls/imports/CyberTracker.1/FieldBarcodePane.qml" line="69" />
         <source>Yes, clear it</source>
-        <translation type="unfinished">예, 삭제</translation>
+        <translation type="unfinished">예, 지우기</translation>
     </message>
 </context>
 <context>
     <name>FieldCamera</name>
     <message>
-        <location filename="../controls/imports/CyberTracker.1/FieldCamera.qml" line="75" />
+        <location filename="../controls/imports/CyberTracker.1/FieldCamera.qml" line="77" />
         <source>Failed to copy</source>
         <translation type="unfinished">복사 실패</translation>
     </message>
     <message>
-        <location filename="../controls/imports/CyberTracker.1/FieldCamera.qml" line="245" />
+        <location filename="../controls/imports/CyberTracker.1/FieldCamera.qml" line="247" />
         <source>Delete the image?</source>
         <translation type="unfinished">이미지를 삭제하시겠습니까?</translation>
     </message>
     <message>
-        <location filename="../controls/imports/CyberTracker.1/FieldCamera.qml" line="246" />
+        <location filename="../controls/imports/CyberTracker.1/FieldCamera.qml" line="248" />
         <source>Yes, delete it</source>
         <translation type="unfinished">예, 삭제</translation>
     </message>
     <message>
-        <location filename="../controls/imports/CyberTracker.1/FieldCamera.qml" line="482" />
+        <location filename="../controls/imports/CyberTracker.1/FieldCamera.qml" line="484" />
         <source>Failed to move</source>
         <translation type="unfinished">이동 실패</translation>
     </message>
@@ -1234,12 +1412,12 @@
 <context>
     <name>FieldCameraPane</name>
     <message>
-        <location filename="../controls/imports/CyberTracker.1/FieldCameraPane.qml" line="69" />
+        <location filename="../controls/imports/CyberTracker.1/FieldCameraPane.qml" line="68" />
         <source>Delete the image?</source>
         <translation type="unfinished">이미지를 삭제하시겠습니까?</translation>
     </message>
     <message>
-        <location filename="../controls/imports/CyberTracker.1/FieldCameraPane.qml" line="70" />
+        <location filename="../controls/imports/CyberTracker.1/FieldCameraPane.qml" line="69" />
         <source>Yes, delete it</source>
         <translation type="unfinished">예, 삭제</translation>
     </message>
@@ -1255,34 +1433,34 @@
 <context>
     <name>FieldEditorDelegate</name>
     <message>
-        <location filename="../controls/imports/CyberTracker.1/FieldEditorDelegate.qml" line="183" />
+        <location filename="../controls/imports/CyberTracker.1/FieldEditorDelegate.qml" line="186" />
         <source>Location</source>
         <translation type="unfinished">위치</translation>
     </message>
     <message>
-        <location filename="../controls/imports/CyberTracker.1/FieldEditorDelegate.qml" line="199" />
+        <location filename="../controls/imports/CyberTracker.1/FieldEditorDelegate.qml" line="202" />
         <source>Waiting for time correction</source>
-        <translation type="unfinished">시간 수정을 기다리는 중</translation>
+        <translation type="unfinished">시간 수정 대기 중</translation>
     </message>
     <message>
-        <location filename="../controls/imports/CyberTracker.1/FieldEditorDelegate.qml" line="356" />
+        <location filename="../controls/imports/CyberTracker.1/FieldEditorDelegate.qml" line="369" />
         <source>Tap to scan</source>
         <translation type="unfinished">탭하여 스캔</translation>
     </message>
     <message>
-        <location filename="../controls/imports/CyberTracker.1/FieldEditorDelegate.qml" line="1034" />
+        <location filename="../controls/imports/CyberTracker.1/FieldEditorDelegate.qml" line="1047" />
         <source>Reset data?</source>
-        <translation type="unfinished">데이터를 재설정하시겠습니까?</translation>
+        <translation type="unfinished">데이터를 초기화하시겠습니까?</translation>
     </message>
     <message>
-        <location filename="../controls/imports/CyberTracker.1/FieldEditorDelegate.qml" line="1044" />
+        <location filename="../controls/imports/CyberTracker.1/FieldEditorDelegate.qml" line="1057" />
         <source>Yes</source>
         <translation type="unfinished">예</translation>
     </message>
     <message>
-        <location filename="../controls/imports/CyberTracker.1/FieldEditorDelegate.qml" line="1057" />
+        <location filename="../controls/imports/CyberTracker.1/FieldEditorDelegate.qml" line="1070" />
         <source>No</source>
-        <translation type="unfinished">아니</translation>
+        <translation type="unfinished">아니요</translation>
     </message>
 </context>
 <context>
@@ -1296,17 +1474,17 @@
 <context>
     <name>FieldFilePane</name>
     <message>
-        <location filename="../controls/imports/CyberTracker.1/FieldFilePane.qml" line="126" />
+        <location filename="../controls/imports/CyberTracker.1/FieldFilePane.qml" line="125" />
         <source>Clear file?</source>
-        <translation type="unfinished">파일을 지우시겠습니까?</translation>
+        <translation type="unfinished">파일 지우기?</translation>
     </message>
     <message>
-        <location filename="../controls/imports/CyberTracker.1/FieldFilePane.qml" line="127" />
+        <location filename="../controls/imports/CyberTracker.1/FieldFilePane.qml" line="126" />
         <source>The original will not be deleted.</source>
         <translation type="unfinished">원본은 삭제되지 않습니다.</translation>
     </message>
     <message>
-        <location filename="../controls/imports/CyberTracker.1/FieldFilePane.qml" line="128" />
+        <location filename="../controls/imports/CyberTracker.1/FieldFilePane.qml" line="127" />
         <source>Yes, remove it</source>
         <translation type="unfinished">예, 제거합니다.</translation>
     </message>
@@ -1318,7 +1496,7 @@
     <message>
         <location filename="../controls/imports/CyberTracker.1/FieldFilePane.qml" line="56" />
         <source>Preview not available</source>
-        <translation type="unfinished">미리보기 불가</translation>
+        <translation type="unfinished">미리 보기를 사용할 수 없습니다.</translation>
     </message>
 </context>
 <context>
@@ -1331,7 +1509,7 @@
     <message>
         <location filename="../controls/imports/CyberTracker.1/FieldLine.qml" line="36" />
         <source>Follow</source>
-        <translation type="unfinished">따르다</translation>
+        <translation type="unfinished">팔로우</translation>
     </message>
     <message>
         <location filename="../controls/imports/CyberTracker.1/FieldLine.qml" line="46" />
@@ -1341,7 +1519,7 @@
     <message>
         <location filename="../controls/imports/CyberTracker.1/FieldLine.qml" line="53" />
         <source>Remove</source>
-        <translation type="unfinished">제거하다</translation>
+        <translation type="unfinished">제거</translation>
     </message>
     <message>
         <location filename="../controls/imports/CyberTracker.1/FieldLine.qml" line="72" />
@@ -1351,12 +1529,12 @@
     <message>
         <location filename="../controls/imports/CyberTracker.1/FieldLine.qml" line="73" />
         <source>Yes, clear them</source>
-        <translation type="unfinished">예, 삭제</translation>
+        <translation type="unfinished">예, 지우기</translation>
     </message>
     <message>
         <location filename="../controls/imports/CyberTracker.1/FieldLine.qml" line="87" />
         <source>Tap</source>
-        <translation type="unfinished">수도꼭지</translation>
+        <translation type="unfinished">탭</translation>
     </message>
     <message>
         <location filename="../controls/imports/CyberTracker.1/FieldLine.qml" line="88" />
@@ -1383,7 +1561,7 @@
         <location filename="../controls/imports/CyberTracker.1/FieldLine.qml" line="265" />
         <location filename="../controls/imports/CyberTracker.1/FieldLine.qml" line="277" />
         <source>Pause</source>
-        <translation type="unfinished">정지시키다</translation>
+        <translation type="unfinished">일시 중지</translation>
     </message>
 </context>
 <context>
@@ -1391,28 +1569,28 @@
     <message>
         <location filename="../controls/imports/CyberTracker.1/FieldLinePage.qml" line="27" />
         <source>Line</source>
-        <translation type="unfinished">선</translation>
+        <translation type="unfinished">라인</translation>
     </message>
     <message>
         <location filename="../controls/imports/CyberTracker.1/FieldLinePage.qml" line="29" />
         <source>Area</source>
-        <translation type="unfinished">지역</translation>
+        <translation type="unfinished">Area</translation>
     </message>
 </context>
 <context>
     <name>FieldLinePane</name>
     <message>
-        <location filename="../controls/imports/CyberTracker.1/FieldLinePane.qml" line="92" />
+        <location filename="../controls/imports/CyberTracker.1/FieldLinePane.qml" line="91" />
         <source>Clear area?</source>
         <translation type="unfinished">구역이 비었나요?</translation>
     </message>
     <message>
-        <location filename="../controls/imports/CyberTracker.1/FieldLinePane.qml" line="92" />
+        <location filename="../controls/imports/CyberTracker.1/FieldLinePane.qml" line="91" />
         <source>Clear line?</source>
         <translation type="unfinished">선이 지워졌나요?</translation>
     </message>
     <message>
-        <location filename="../controls/imports/CyberTracker.1/FieldLinePane.qml" line="93" />
+        <location filename="../controls/imports/CyberTracker.1/FieldLinePane.qml" line="92" />
         <source>Yes, clear all points</source>
         <translation type="unfinished">예, 모든 포인트 클리어</translation>
     </message>
@@ -1423,6 +1601,14 @@
         <location filename="../controls/imports/CyberTracker.1/FieldListView.qml" line="33" />
         <source>Search</source>
         <translation type="unfinished">검색</translation>
+    </message>
+</context>
+<context>
+    <name>FieldListViewEditor</name>
+    <message>
+        <location filename="../controls/imports/CyberTracker.1/FieldListViewEditor.qml" line="85" />
+        <source>Value required</source>
+        <translation type="unfinished">필수 값</translation>
     </message>
 </context>
 <context>
@@ -1460,7 +1646,7 @@
     <message>
         <location filename="../controls/imports/CyberTracker.1/FieldLocationPane.qml" line="164" />
         <source>Accuracy</source>
-        <translation type="unfinished">정확성</translation>
+        <translation type="unfinished">정확도</translation>
     </message>
     <message>
         <location filename="../controls/imports/CyberTracker.1/FieldLocationPane.qml" line="182" />
@@ -1471,27 +1657,27 @@
 <context>
     <name>FieldRecordListView</name>
     <message>
-        <location filename="../controls/imports/CyberTracker.1/FieldRecordListView.qml" line="99" />
+        <location filename="../controls/imports/CyberTracker.1/FieldRecordListView.qml" line="101" />
         <source>Delete record?</source>
         <translation type="unfinished">기록을 삭제하시겠습니까?</translation>
     </message>
     <message>
-        <location filename="../controls/imports/CyberTracker.1/FieldRecordListView.qml" line="99" />
+        <location filename="../controls/imports/CyberTracker.1/FieldRecordListView.qml" line="101" />
         <source>Reset record?</source>
-        <translation type="unfinished">기록을 재설정하시겠습니까?</translation>
+        <translation type="unfinished">기록을 초기화하시겠습니까?</translation>
     </message>
     <message>
-        <location filename="../controls/imports/CyberTracker.1/FieldRecordListView.qml" line="109" />
+        <location filename="../controls/imports/CyberTracker.1/FieldRecordListView.qml" line="111" />
         <source>Yes</source>
         <translation type="unfinished">예</translation>
     </message>
     <message>
-        <location filename="../controls/imports/CyberTracker.1/FieldRecordListView.qml" line="126" />
+        <location filename="../controls/imports/CyberTracker.1/FieldRecordListView.qml" line="128" />
         <source>No</source>
-        <translation type="unfinished">아니</translation>
+        <translation type="unfinished">아니요</translation>
     </message>
     <message>
-        <location filename="../controls/imports/CyberTracker.1/FieldRecordListView.qml" line="159" />
+        <location filename="../controls/imports/CyberTracker.1/FieldRecordListView.qml" line="161" />
         <source>Add record</source>
         <translation type="unfinished">레코드 추가</translation>
     </message>
@@ -1499,9 +1685,9 @@
 <context>
     <name>FieldRecordNumberGridView</name>
     <message>
-        <location filename="../controls/imports/CyberTracker.1/FieldRecordNumberGridView.qml" line="199" />
-        <source>Group field not a number</source>
-        <translation type="unfinished">숫자가 아닌 그룹 필드</translation>
+        <location filename="../controls/imports/CyberTracker.1/FieldRecordNumberGridView.qml" line="201" />
+        <source>Value required</source>
+        <translation type="unfinished">필수 값</translation>
     </message>
 </context>
 <context>
@@ -1520,7 +1706,7 @@
 <context>
     <name>FileField</name>
     <message>
-        <location filename="../cpp/Field.cpp" line="1390" />
+        <location filename="../cpp/Field.cpp" line="1397" />
         <source>file</source>
         <translation type="unfinished">파일</translation>
     </message>
@@ -1528,80 +1714,80 @@
 <context>
     <name>Form</name>
     <message>
-        <location filename="../cpp/Form.cpp" line="26" />
+        <location filename="../cpp/Form.cpp" line="28" />
         <source>Track</source>
-        <translation type="unfinished">길</translation>
+        <translation type="unfinished">트랙</translation>
     </message>
     <message>
-        <location filename="../cpp/Form.cpp" line="28" />
+        <location filename="../cpp/Form.cpp" line="30" />
         <source>Location</source>
         <translation type="unfinished">위치</translation>
     </message>
     <message>
-        <location filename="../cpp/Form.cpp" line="1416" />
+        <location filename="../cpp/Form.cpp" line="1476" />
         <source>Missing track field or service</source>
         <translation type="unfinished">누락된 트랙 필드 또는 서비스</translation>
     </message>
     <message>
-        <location filename="../cpp/Form.cpp" line="1769" />
-        <source>CSV sighting export failed</source>
-        <translation type="unfinished">CSV 관찰 내보내기 실패</translation>
-    </message>
-    <message>
-        <location filename="../cpp/Form.cpp" line="1813" />
-        <source>CSV location export failed</source>
-        <translation type="unfinished">CSV 위치 내보내기 실패</translation>
-    </message>
-    <message>
         <location filename="../cpp/Form.cpp" line="1821" />
-        <source>No new data</source>
-        <translation type="unfinished">새로운 데이터 없음</translation>
+        <source>CSV sighting export failed</source>
+        <translation type="unfinished">CSV 목격 내보내기에 실패했습니다.</translation>
     </message>
     <message>
-        <location filename="../cpp/Form.cpp" line="1829" />
+        <location filename="../cpp/Form.cpp" line="1865" />
+        <source>CSV location export failed</source>
+        <translation type="unfinished">CSV 위치 내보내기에 실패했습니다.</translation>
+    </message>
+    <message>
+        <location filename="../cpp/Form.cpp" line="1873" />
+        <source>No new data</source>
+        <translation type="unfinished">새 데이터 없음</translation>
+    </message>
+    <message>
+        <location filename="../cpp/Form.cpp" line="1881" />
         <source>Failed to compress file</source>
-        <translation type="unfinished">파일 압축 실패</translation>
+        <translation type="unfinished">파일 압축에 실패했습니다.</translation>
     </message>
 </context>
 <context>
     <name>FormSettingsListView</name>
     <message>
-        <location filename="../controls/imports/CyberTracker.1/FormSettingsListView.qml" line="65" />
+        <location filename="../controls/imports/CyberTracker.1/FormSettingsListView.qml" line="64" />
         <source>Form version</source>
         <translation type="unfinished">양식 버전</translation>
     </message>
     <message>
-        <location filename="../controls/imports/CyberTracker.1/FormSettingsListView.qml" line="77" />
+        <location filename="../controls/imports/CyberTracker.1/FormSettingsListView.qml" line="76" />
         <source>Not specified</source>
-        <translation type="unfinished">명시되지 않은</translation>
+        <translation type="unfinished">지정되지 않음</translation>
     </message>
     <message>
-        <location filename="../controls/imports/CyberTracker.1/FormSettingsListView.qml" line="87" />
+        <location filename="../controls/imports/CyberTracker.1/FormSettingsListView.qml" line="86" />
         <source>Update</source>
         <translation type="unfinished">업데이트</translation>
     </message>
     <message>
-        <location filename="../controls/imports/CyberTracker.1/FormSettingsListView.qml" line="98" />
+        <location filename="../controls/imports/CyberTracker.1/FormSettingsListView.qml" line="97" />
         <source>Offline</source>
         <translation type="unfinished">오프라인</translation>
     </message>
     <message>
-        <location filename="../controls/imports/CyberTracker.1/FormSettingsListView.qml" line="123" />
+        <location filename="../controls/imports/CyberTracker.1/FormSettingsListView.qml" line="122" />
         <source>Logged in as</source>
-        <translation type="unfinished">다음으로 로그인했습니다.</translation>
+        <translation type="unfinished">다음 계정으로 로그인</translation>
     </message>
     <message>
-        <location filename="../controls/imports/CyberTracker.1/FormSettingsListView.qml" line="123" />
+        <location filename="../controls/imports/CyberTracker.1/FormSettingsListView.qml" line="122" />
         <source>Logged out</source>
         <translation type="unfinished">로그아웃</translation>
     </message>
     <message>
-        <location filename="../controls/imports/CyberTracker.1/FormSettingsListView.qml" line="139" />
+        <location filename="../controls/imports/CyberTracker.1/FormSettingsListView.qml" line="138" />
         <source>Logout</source>
-        <translation type="unfinished">로그 아웃</translation>
+        <translation type="unfinished">로그아웃</translation>
     </message>
     <message>
-        <location filename="../controls/imports/CyberTracker.1/FormSettingsListView.qml" line="139" />
+        <location filename="../controls/imports/CyberTracker.1/FormSettingsListView.qml" line="138" />
         <source>Login</source>
         <translation type="unfinished">로그인</translation>
     </message>
@@ -1611,46 +1797,52 @@
         <translation type="unfinished">언어</translation>
     </message>
     <message>
-        <location filename="../controls/imports/CyberTracker.1/FormSettingsListView.qml" line="192" />
+        <location filename="../controls/imports/CyberTracker.1/FormSettingsListView.qml" line="193" />
         <source>Immersive mode</source>
         <translation type="unfinished">몰입형 모드</translation>
     </message>
     <message>
-        <location filename="../controls/imports/CyberTracker.1/FormSettingsListView.qml" line="201" />
+        <location filename="../controls/imports/CyberTracker.1/FormSettingsListView.qml" line="202" />
         <source>Hide sighting home page</source>
-        <translation type="unfinished">목격 홈페이지 숨기기</translation>
+        <translation type="unfinished">목격하기 홈 페이지 숨기기</translation>
     </message>
     <message>
-        <location filename="../controls/imports/CyberTracker.1/FormSettingsListView.qml" line="238" />
+        <location filename="../controls/imports/CyberTracker.1/FormSettingsListView.qml" line="239" />
         <source>Page mode</source>
         <translation type="unfinished">페이지 모드</translation>
     </message>
     <message>
-        <location filename="../controls/imports/CyberTracker.1/FormSettingsListView.qml" line="247" />
+        <location filename="../controls/imports/CyberTracker.1/FormSettingsListView.qml" line="248" />
         <source>One page per question</source>
-        <translation type="unfinished">질문당 한 페이지</translation>
+        <translation type="unfinished">문제당 한 페이지</translation>
     </message>
     <message>
-        <location filename="../controls/imports/CyberTracker.1/FormSettingsListView.qml" line="332" />
+        <location filename="../controls/imports/CyberTracker.1/FormSettingsListView.qml" line="318" />
+        <location filename="../controls/imports/CyberTracker.1/FormSettingsListView.qml" line="384" />
+        <source>Custom interval</source>
+        <translation type="unfinished">사용자 지정 간격</translation>
+    </message>
+    <message>
+        <location filename="../controls/imports/CyberTracker.1/FormSettingsListView.qml" line="333" />
         <source>Autosend location</source>
-        <translation type="unfinished">위치 자동 전송</translation>
+        <translation type="unfinished">자동 전송 위치</translation>
     </message>
     <message>
-        <location filename="../controls/imports/CyberTracker.1/FormSettingsListView.qml" line="282" />
-        <location filename="../controls/imports/CyberTracker.1/FormSettingsListView.qml" line="343" />
-        <source>Off</source>
-        <translation type="unfinished">끄다</translation>
-    </message>
-    <message>
+        <location filename="../controls/imports/CyberTracker.1/FormSettingsListView.qml" line="283" />
         <location filename="../controls/imports/CyberTracker.1/FormSettingsListView.qml" line="344" />
-        <source>30 seconds</source>
-        <translation type="unfinished">30 초</translation>
+        <source>Off</source>
+        <translation type="unfinished">꺼짐</translation>
     </message>
     <message>
-        <location filename="../controls/imports/CyberTracker.1/FormSettingsListView.qml" line="284" />
         <location filename="../controls/imports/CyberTracker.1/FormSettingsListView.qml" line="345" />
+        <source>30 seconds</source>
+        <translation type="unfinished">30초</translation>
+    </message>
+    <message>
+        <location filename="../controls/imports/CyberTracker.1/FormSettingsListView.qml" line="285" />
+        <location filename="../controls/imports/CyberTracker.1/FormSettingsListView.qml" line="346" />
         <source>5 minutes</source>
-        <translation type="unfinished">5 분</translation>
+        <translation type="unfinished">5분</translation>
     </message>
     <message>
         <location filename="../controls/imports/CyberTracker.1/FormSettingsListView.qml" line="26" />
@@ -1658,43 +1850,37 @@
         <translation type="unfinished">시스템 설정</translation>
     </message>
     <message>
-        <location filename="../controls/imports/CyberTracker.1/FormSettingsListView.qml" line="271" />
+        <location filename="../controls/imports/CyberTracker.1/FormSettingsListView.qml" line="272" />
         <source>Auto-submit</source>
         <translation type="unfinished">자동 제출</translation>
     </message>
     <message>
-        <location filename="../controls/imports/CyberTracker.1/FormSettingsListView.qml" line="283" />
+        <location filename="../controls/imports/CyberTracker.1/FormSettingsListView.qml" line="284" />
         <source>On save</source>
         <translation type="unfinished">저장 시</translation>
     </message>
     <message>
-        <location filename="../controls/imports/CyberTracker.1/FormSettingsListView.qml" line="285" />
-        <location filename="../controls/imports/CyberTracker.1/FormSettingsListView.qml" line="346" />
-        <source>10 minutes</source>
-        <translation type="unfinished">10 분</translation>
-    </message>
-    <message>
         <location filename="../controls/imports/CyberTracker.1/FormSettingsListView.qml" line="286" />
         <location filename="../controls/imports/CyberTracker.1/FormSettingsListView.qml" line="347" />
-        <source>30 minutes</source>
-        <translation type="unfinished">30 분</translation>
+        <source>10 minutes</source>
+        <translation type="unfinished">10분</translation>
     </message>
     <message>
         <location filename="../controls/imports/CyberTracker.1/FormSettingsListView.qml" line="287" />
         <location filename="../controls/imports/CyberTracker.1/FormSettingsListView.qml" line="348" />
+        <source>30 minutes</source>
+        <translation type="unfinished">30분</translation>
+    </message>
+    <message>
+        <location filename="../controls/imports/CyberTracker.1/FormSettingsListView.qml" line="288" />
+        <location filename="../controls/imports/CyberTracker.1/FormSettingsListView.qml" line="349" />
         <source>1 hour</source>
-        <translation type="unfinished">1 시간</translation>
+        <translation type="unfinished">1시간</translation>
     </message>
     <message>
-        <location filename="../controls/imports/CyberTracker.1/FormSettingsListView.qml" line="317" />
-        <location filename="../controls/imports/CyberTracker.1/FormSettingsListView.qml" line="383" />
-        <source>Unknown interval</source>
-        <translation type="unfinished">알 수 없는 간격</translation>
-    </message>
-    <message>
-        <location filename="../controls/imports/CyberTracker.1/FormSettingsListView.qml" line="394" />
+        <location filename="../controls/imports/CyberTracker.1/FormSettingsListView.qml" line="395" />
         <source>Logout?</source>
-        <translation type="unfinished">로그 아웃?</translation>
+        <translation type="unfinished">로그아웃하시겠습니까?</translation>
     </message>
 </context>
 <context>
@@ -1716,32 +1902,32 @@
 <context>
     <name>FormSightingsListView</name>
     <message>
-        <location filename="../controls/imports/CyberTracker.1/FormSightingsListView.qml" line="129" />
+        <location filename="../controls/imports/CyberTracker.1/FormSightingsListView.qml" line="127" />
         <source>No data</source>
         <translation type="unfinished">데이터 없음</translation>
     </message>
     <message>
-        <location filename="../controls/imports/CyberTracker.1/FormSightingsListView.qml" line="147" />
+        <location filename="../controls/imports/CyberTracker.1/FormSightingsListView.qml" line="145" />
         <source>Continue editing</source>
-        <translation type="unfinished">계속 수정</translation>
+        <translation type="unfinished">편집 계속</translation>
     </message>
     <message>
-        <location filename="../controls/imports/CyberTracker.1/FormSightingsListView.qml" line="148" />
+        <location filename="../controls/imports/CyberTracker.1/FormSightingsListView.qml" line="146" />
         <source>Delete sighting</source>
         <translation type="unfinished">목격 삭제</translation>
     </message>
     <message>
-        <location filename="../controls/imports/CyberTracker.1/FormSightingsListView.qml" line="160" />
+        <location filename="../controls/imports/CyberTracker.1/FormSightingsListView.qml" line="158" />
         <source>Sighting deleted</source>
-        <translation type="unfinished">목격 삭제됨</translation>
+        <translation type="unfinished">시력 삭제됨</translation>
     </message>
     <message>
-        <location filename="../controls/imports/CyberTracker.1/FormSightingsListView.qml" line="173" />
+        <location filename="../controls/imports/CyberTracker.1/FormSightingsListView.qml" line="171" />
         <source>Submit data?</source>
         <translation type="unfinished">데이터를 제출하시겠습니까?</translation>
     </message>
     <message>
-        <location filename="../controls/imports/CyberTracker.1/FormSightingsListView.qml" line="188" />
+        <location filename="../controls/imports/CyberTracker.1/FormSightingsListView.qml" line="187" />
         <source>No supported in demo mode</source>
         <translation type="unfinished">데모 모드에서는 지원되지 않음</translation>
     </message>
@@ -1749,9 +1935,69 @@
 <context>
     <name>FormView</name>
     <message>
-        <location filename="../controls/imports/CyberTracker.1/FormView.qml" line="219" />
+        <location filename="../controls/imports/CyberTracker.1/FormView.qml" line="224" />
         <source>Bad username or password</source>
         <translation type="unfinished">잘못된 사용자 이름 또는 비밀번호</translation>
+    </message>
+</context>
+<context>
+    <name>GoogleConnector</name>
+    <message>
+        <location filename="../cpp/Google/GoogleConnector.cpp" line="51" />
+        <source>Failed to create %1</source>
+        <translation type="unfinished">1을(를) 만들지 못했습니다.</translation>
+    </message>
+    <message>
+        <location filename="../cpp/Google/GoogleConnector.cpp" line="89" />
+        <source>Unsent data</source>
+        <translation type="unfinished">전송되지 않은 데이터</translation>
+    </message>
+</context>
+<context>
+    <name>GoogleFormParser</name>
+    <message>
+        <location filename="../cpp/Google/GoogleFormParser.cpp" line="33" />
+        <source>Untitled form</source>
+        <translation type="unfinished">제목 없는 양식</translation>
+    </message>
+    <message>
+        <location filename="../cpp/Google/GoogleFormParser.cpp" line="156" />
+        <source>No questions</source>
+        <translation type="unfinished">질문 없음</translation>
+    </message>
+</context>
+<context>
+    <name>GoogleLoginButton</name>
+    <message>
+        <location filename="../controls/imports/CyberTracker.1/GoogleLoginButton.qml" line="34" />
+        <source>Sign in with Google</source>
+        <translation type="unfinished">Google로 로그인</translation>
+    </message>
+</context>
+<context>
+    <name>GoogleLoginItem</name>
+    <message>
+        <location filename="../controls/imports/CyberTracker.1/GoogleLoginItem.qml" line="34" />
+        <source>Requesting access...</source>
+        <translation type="unfinished">액세스 요청 중...</translation>
+    </message>
+    <message>
+        <location filename="../controls/imports/CyberTracker.1/GoogleLoginItem.qml" line="44" />
+        <source>Refreshing token...</source>
+        <translation type="unfinished">토큰 새로 고침 중...</translation>
+    </message>
+    <message>
+        <location filename="../controls/imports/CyberTracker.1/GoogleLoginItem.qml" line="116" />
+        <source>Login to a Google account. Form access is required to retrieve forms.</source>
+        <translation type="unfinished">Google 계정에 로그인합니다. 양식을 검색하려면 양식 액세스 권한이 필요합니다.</translation>
+    </message>
+</context>
+<context>
+    <name>GoogleProvider</name>
+    <message>
+        <location filename="../cpp/Google/GoogleProvider.cpp" line="211" />
+        <source>Missing %1 attribute</source>
+        <translation type="unfinished">누락된 %1 속성</translation>
     </message>
 </context>
 <context>
@@ -1769,7 +2015,7 @@
     <message>
         <location filename="../controls/imports/CyberTracker.1/GotoLocation.qml" line="103" />
         <source>Back</source>
-        <translation type="unfinished">뒤</translation>
+        <translation type="unfinished">뒤로</translation>
     </message>
     <message>
         <location filename="../controls/imports/CyberTracker.1/GotoLocation.qml" line="114" />
@@ -1800,11 +2046,16 @@
     <message>
         <location filename="../qml/SMART/HistoryPage.qml" line="58" />
         <source>Incidents</source>
-        <translation type="unfinished">사건</translation>
+        <translation type="unfinished">인시던트</translation>
     </message>
 </context>
 <context>
     <name>KoBoConnector</name>
+    <message>
+        <location filename="../cpp/KoBo/KoBoConnector.cpp" line="129" />
+        <source>Failed to create %1</source>
+        <translation type="unfinished">1을(를) 만들지 못했습니다.</translation>
+    </message>
     <message>
         <location filename="../cpp/KoBo/KoBoConnector.cpp" line="250" />
         <source>No deployment links</source>
@@ -1816,11 +2067,6 @@
         <translation type="unfinished">배포 URL 없음</translation>
     </message>
     <message>
-        <location filename="../cpp/KoBo/KoBoConnector.cpp" line="284" />
-        <source>Failed to read form settings sheet</source>
-        <translation type="unfinished">양식 설정 시트를 읽지 못했습니다.</translation>
-    </message>
-    <message>
         <location filename="../cpp/KoBo/KoBoConnector.cpp" line="351" />
         <source>Global server</source>
         <translation type="unfinished">글로벌 서버</translation>
@@ -1829,11 +2075,6 @@
         <location filename="../cpp/KoBo/KoBoConnector.cpp" line="355" />
         <source>Humanitarian server</source>
         <translation type="unfinished">인도주의 서버</translation>
-    </message>
-    <message>
-        <location filename="../cpp/KoBo/KoBoConnector.cpp" line="129" />
-        <source>Failed to create project</source>
-        <translation type="unfinished">프로젝트 생성 실패</translation>
     </message>
     <message>
         <location filename="../cpp/KoBo/KoBoConnector.cpp" line="189" />
@@ -1849,9 +2090,9 @@
 <context>
     <name>LineField</name>
     <message>
-        <location filename="../cpp/Field.cpp" line="815" />
+        <location filename="../cpp/Field.cpp" line="816" />
         <source>points</source>
-        <translation type="unfinished">포인트들</translation>
+        <translation type="unfinished">포인트</translation>
     </message>
 </context>
 <context>
@@ -1884,7 +2125,7 @@
     <message>
         <location filename="../controls/imports/CyberTracker.1/LocationData.qml" line="117" />
         <source>Accuracy</source>
-        <translation type="unfinished">정확성</translation>
+        <translation type="unfinished">정확도</translation>
     </message>
     <message>
         <location filename="../controls/imports/CyberTracker.1/LocationData.qml" line="135" />
@@ -1899,7 +2140,7 @@
     <message>
         <location filename="../controls/imports/CyberTracker.1/LocationData.qml" line="167" />
         <source>Off</source>
-        <translation type="unfinished">끄다</translation>
+        <translation type="unfinished">꺼짐</translation>
     </message>
 </context>
 <context>
@@ -1908,22 +2149,22 @@
         <location filename="../qml/SMART/LocationPage.qml" line="65" />
         <location filename="../qml/SMART/LocationPage.qml" line="77" />
         <source>Observation saved</source>
-        <translation type="unfinished">관찰이 저장됨</translation>
+        <translation type="unfinished">관찰 저장</translation>
     </message>
     <message>
         <location filename="../qml/SMART/LocationPage.qml" line="85" />
         <source>Incident saved</source>
-        <translation type="unfinished">인시던트가 저장됨</translation>
+        <translation type="unfinished">저장된 인시던트</translation>
     </message>
     <message>
         <location filename="../qml/SMART/LocationPage.qml" line="92" />
         <source>Survey paused</source>
-        <translation type="unfinished">설문조사 일시중지됨</translation>
+        <translation type="unfinished">설문 조사 일시 중지됨</translation>
     </message>
     <message>
         <location filename="../qml/SMART/LocationPage.qml" line="92" />
         <source>Patrol paused</source>
-        <translation type="unfinished">순찰 일시중지</translation>
+        <translation type="unfinished">순찰 일시 중지</translation>
     </message>
     <message>
         <location filename="../qml/SMART/LocationPage.qml" line="100" />
@@ -1938,7 +2179,7 @@
     <message>
         <location filename="../qml/SMART/LocationPage.qml" line="107" />
         <source>Survey resumed</source>
-        <translation type="unfinished">설문조사 재개됨</translation>
+        <translation type="unfinished">설문조사 재개</translation>
     </message>
     <message>
         <location filename="../qml/SMART/LocationPage.qml" line="107" />
@@ -1951,34 +2192,34 @@
         <translation type="unfinished">위치 획득</translation>
     </message>
     <message>
-        <location filename="../qml/SMART/LocationPage.qml" line="164" />
+        <location filename="../qml/SMART/LocationPage.qml" line="162" />
         <source>Waiting for time correction</source>
-        <translation type="unfinished">시간 수정을 기다리는 중</translation>
+        <translation type="unfinished">시간 수정 대기 중</translation>
     </message>
     <message>
-        <location filename="../qml/SMART/LocationPage.qml" line="177" />
+        <location filename="../qml/SMART/LocationPage.qml" line="175" />
         <source>Completing patrol</source>
         <translation type="unfinished">순찰 완료</translation>
     </message>
     <message>
-        <location filename="../qml/SMART/LocationPage.qml" line="177" />
+        <location filename="../qml/SMART/LocationPage.qml" line="175" />
         <source>Completing survey</source>
         <translation type="unfinished">설문조사 완료</translation>
     </message>
     <message>
-        <location filename="../qml/SMART/LocationPage.qml" line="196" />
+        <location filename="../qml/SMART/LocationPage.qml" line="201" />
         <source>Skip GPS</source>
         <translation type="unfinished">GPS 건너뛰기</translation>
     </message>
     <message>
         <location filename="../controls/imports/CyberTracker.1/LocationPage.qml" line="71" />
         <source>Point</source>
-        <translation type="unfinished">가리키다</translation>
+        <translation type="unfinished">포인트</translation>
     </message>
     <message>
         <location filename="../controls/imports/CyberTracker.1/LocationPage.qml" line="80" />
         <source>Manual</source>
-        <translation type="unfinished">수동</translation>
+        <translation type="unfinished">매뉴얼</translation>
     </message>
     <message>
         <location filename="../controls/imports/CyberTracker.1/LocationPage.qml" line="60" />
@@ -1989,7 +2230,7 @@
     <message>
         <location filename="../controls/imports/CyberTracker.1/LocationPage.qml" line="144" />
         <source>Decimal degrees</source>
-        <translation type="unfinished">십진법</translation>
+        <translation type="unfinished">소수점</translation>
     </message>
     <message>
         <location filename="../controls/imports/CyberTracker.1/LocationPage.qml" line="150" />
@@ -1999,7 +2240,7 @@
     <message>
         <location filename="../controls/imports/CyberTracker.1/LocationPage.qml" line="150" />
         <source>Easting</source>
-        <translation type="unfinished">동항</translation>
+        <translation type="unfinished">동경</translation>
     </message>
     <message>
         <location filename="../controls/imports/CyberTracker.1/LocationPage.qml" line="164" />
@@ -2009,20 +2250,20 @@
     <message>
         <location filename="../controls/imports/CyberTracker.1/LocationPage.qml" line="164" />
         <source>Northing</source>
-        <translation type="unfinished">북거</translation>
+        <translation type="unfinished">노싱</translation>
     </message>
     <message>
         <location filename="../controls/imports/CyberTracker.1/LocationPage.qml" line="178" />
         <source>Zone</source>
-        <translation type="unfinished">존</translation>
+        <translation type="unfinished">영역</translation>
     </message>
 </context>
 <context>
     <name>LocationPopup</name>
     <message>
-        <location filename="../controls/imports/CyberTracker.1/LocationPopup.qml" line="64" />
+        <location filename="../controls/imports/CyberTracker.1/LocationPopup.qml" line="67" />
         <source>Waiting for time correction</source>
-        <translation type="unfinished">시간 수정을 기다리는 중</translation>
+        <translation type="unfinished">시간 수정 대기 중</translation>
     </message>
 </context>
 <context>
@@ -2030,7 +2271,7 @@
     <message>
         <location filename="../cpp/Location.cpp" line="1121" />
         <source>Off</source>
-        <translation type="unfinished">끄다</translation>
+        <translation type="unfinished">꺼짐</translation>
     </message>
 </context>
 <context>
@@ -2038,35 +2279,35 @@
     <message>
         <location filename="../controls/imports/CyberTracker.1/LoginItem.qml" line="27" />
         <source>Bad server</source>
-        <translation type="unfinished">서버 불량</translation>
+        <translation type="unfinished">불량 서버</translation>
     </message>
     <message>
         <location filename="../controls/imports/CyberTracker.1/LoginItem.qml" line="28" />
         <source>Bad user name or password</source>
-        <translation type="unfinished">잘못된 사용자 이름 또는 암호</translation>
+        <translation type="unfinished">잘못된 사용자 이름 또는 비밀번호</translation>
     </message>
     <message>
-        <location filename="../controls/imports/CyberTracker.1/LoginItem.qml" line="117" />
+        <location filename="../controls/imports/CyberTracker.1/LoginItem.qml" line="124" />
         <source>Server</source>
-        <translation type="unfinished">섬기는 사람</translation>
+        <translation type="unfinished">서버</translation>
     </message>
     <message>
-        <location filename="../controls/imports/CyberTracker.1/LoginItem.qml" line="130" />
+        <location filename="../controls/imports/CyberTracker.1/LoginItem.qml" line="132" />
         <source>User name</source>
         <translation type="unfinished">사용자 이름</translation>
     </message>
     <message>
-        <location filename="../controls/imports/CyberTracker.1/LoginItem.qml" line="143" />
+        <location filename="../controls/imports/CyberTracker.1/LoginItem.qml" line="140" />
         <source>Password</source>
         <translation type="unfinished">비밀번호</translation>
     </message>
     <message>
-        <location filename="../controls/imports/CyberTracker.1/LoginItem.qml" line="148" />
+        <location filename="../controls/imports/CyberTracker.1/LoginItem.qml" line="146" />
         <source>Login</source>
         <translation type="unfinished">로그인</translation>
     </message>
     <message>
-        <location filename="../controls/imports/CyberTracker.1/LoginItem.qml" line="182" />
+        <location filename="../controls/imports/CyberTracker.1/LoginItem.qml" line="180" />
         <source>Skip and login later</source>
         <translation type="unfinished">건너뛰고 나중에 로그인</translation>
     </message>
@@ -2076,20 +2317,15 @@
     <message>
         <location filename="../qml/MainPage.qml" line="31" />
         <source>Connect</source>
-        <translation type="unfinished">연결하다</translation>
+        <translation type="unfinished">연결</translation>
     </message>
     <message>
-        <location filename="../qml/MainPage.qml" line="42" />
-        <source>Projects</source>
-        <translation type="unfinished">프로젝트</translation>
-    </message>
-    <message>
-        <location filename="../qml/MainPage.qml" line="51" />
+        <location filename="../qml/MainPage.qml" line="52" />
         <source>Map</source>
         <translation type="unfinished">지도</translation>
     </message>
     <message>
-        <location filename="../qml/MainPage.qml" line="61" />
+        <location filename="../qml/MainPage.qml" line="60" />
         <source>Settings</source>
         <translation type="unfinished">설정</translation>
     </message>
@@ -2099,17 +2335,17 @@
     <message>
         <location filename="../qml/MapInspectorPage.qml" line="75" />
         <source>Identify</source>
-        <translation type="unfinished">식별하다</translation>
+        <translation type="unfinished">식별</translation>
     </message>
     <message>
         <location filename="../qml/MapInspectorPage.qml" line="80" />
         <source>No selection</source>
-        <translation type="unfinished">선택 사항 없음</translation>
+        <translation type="unfinished">선택 없음</translation>
     </message>
     <message>
         <location filename="../qml/MapInspectorPage.qml" line="106" />
         <source>Set goto</source>
-        <translation type="unfinished">고토 설정</translation>
+        <translation type="unfinished">이동 설정</translation>
     </message>
     <message>
         <location filename="../qml/MapInspectorPage.qml" line="120" />
@@ -2119,7 +2355,7 @@
     <message>
         <location filename="../qml/MapInspectorPage.qml" line="130" />
         <source>Edit</source>
-        <translation type="unfinished">편집하다</translation>
+        <translation type="unfinished">편집</translation>
     </message>
     <message>
         <location filename="../qml/MapInspectorPage.qml" line="145" />
@@ -2129,7 +2365,7 @@
     <message>
         <location filename="../qml/MapInspectorPage.qml" line="92" />
         <source>Previous</source>
-        <translation type="unfinished">이전의</translation>
+        <translation type="unfinished">이전</translation>
     </message>
     <message>
         <location filename="../qml/MapInspectorPage.qml" line="99" />
@@ -2162,7 +2398,7 @@
     <message>
         <location filename="../cpp/MapLayerListModel.cpp" line="214" />
         <source>Humanitarian</source>
-        <translation type="unfinished">인도주의</translation>
+        <translation type="unfinished">인도주의적</translation>
     </message>
     <message>
         <location filename="../cpp/MapLayerListModel.cpp" line="217" />
@@ -2172,7 +2408,7 @@
     <message>
         <location filename="../cpp/MapLayerListModel.cpp" line="218" />
         <source>Streets</source>
-        <translation type="unfinished">시가</translation>
+        <translation type="unfinished">거리</translation>
     </message>
     <message>
         <location filename="../cpp/MapLayerListModel.cpp" line="219" />
@@ -2187,12 +2423,12 @@
     <message>
         <location filename="../cpp/MapLayerListModel.cpp" line="221" />
         <source>Imagery</source>
-        <translation type="unfinished">형상</translation>
+        <translation type="unfinished">이미지</translation>
     </message>
     <message>
         <location filename="../cpp/MapLayerListModel.cpp" line="222" />
         <source>Dark gray canvas</source>
-        <translation type="unfinished">다크 그레이 캔버스</translation>
+        <translation type="unfinished">짙은 회색 캔버스</translation>
     </message>
     <message>
         <location filename="../cpp/MapLayerListModel.cpp" line="223" />
@@ -2202,7 +2438,7 @@
     <message>
         <location filename="../cpp/MapLayerListModel.cpp" line="224" />
         <source>Light gray canvas</source>
-        <translation type="unfinished">라이트 그레이 캔버스</translation>
+        <translation type="unfinished">밝은 회색 캔버스</translation>
     </message>
     <message>
         <location filename="../cpp/MapLayerListModel.cpp" line="225" />
@@ -2243,17 +2479,17 @@
     <message>
         <location filename="../qml/MapsPage.qml" line="149" />
         <source>Follow</source>
-        <translation type="unfinished">따르다</translation>
+        <translation type="unfinished">팔로우</translation>
     </message>
     <message>
         <location filename="../qml/MapsPage.qml" line="161" />
         <source>Goto</source>
-        <translation type="unfinished">이동</translation>
+        <translation type="unfinished">Goto</translation>
     </message>
     <message>
         <location filename="../qml/MapsPage.qml" line="171" />
         <source>More</source>
-        <translation type="unfinished">더</translation>
+        <translation type="unfinished">자세히 보기</translation>
     </message>
     <message>
         <location filename="../qml/MapsPage.qml" line="187" />
@@ -2268,7 +2504,15 @@
     <message>
         <location filename="../qml/MapsPage.qml" line="189" />
         <source>Navigation</source>
-        <translation type="unfinished">항해</translation>
+        <translation type="unfinished">탐색</translation>
+    </message>
+</context>
+<context>
+    <name>MessagePopup</name>
+    <message>
+        <location filename="../controls/imports/CyberTracker.1/MessagePopup.qml" line="12" />
+        <source>OK</source>
+        <translation type="unfinished">확인</translation>
     </message>
 </context>
 <context>
@@ -2276,7 +2520,7 @@
     <message>
         <location filename="../qml/SMART/MetadataPage.qml" line="67" />
         <source>Survey started</source>
-        <translation type="unfinished">설문조사 시작됨</translation>
+        <translation type="unfinished">설문 조사 시작</translation>
     </message>
     <message>
         <location filename="../qml/SMART/MetadataPage.qml" line="67" />
@@ -2286,7 +2530,7 @@
     <message>
         <location filename="../qml/SMART/MetadataPage.qml" line="71" />
         <source>Survey resumed</source>
-        <translation type="unfinished">설문조사 재개됨</translation>
+        <translation type="unfinished">설문조사 재개</translation>
     </message>
     <message>
         <location filename="../qml/SMART/MetadataPage.qml" line="71" />
@@ -2296,12 +2540,12 @@
     <message>
         <location filename="../qml/SMART/MetadataPage.qml" line="75" />
         <source>Survey changed</source>
-        <translation type="unfinished">설문조사 변경됨</translation>
+        <translation type="unfinished">설문 조사 변경</translation>
     </message>
     <message>
         <location filename="../qml/SMART/MetadataPage.qml" line="75" />
         <source>Patrol changed</source>
-        <translation type="unfinished">순찰 변경됨</translation>
+        <translation type="unfinished">순찰 변경</translation>
     </message>
 </context>
 <context>
@@ -2309,12 +2553,12 @@
     <message>
         <location filename="../cpp/Native/NativeConnector.cpp" line="48" />
         <source>Install kind not found</source>
-        <translation type="unfinished">설치 종류를 찾을 수 없습니다</translation>
+        <translation type="unfinished">설치 종류를 찾을 수 없음</translation>
     </message>
     <message>
         <location filename="../cpp/Native/NativeConnector.cpp" line="63" />
         <source>Missing projectUid</source>
-        <translation type="unfinished">프로젝트 ID가 없습니다.</translation>
+        <translation type="unfinished">누락된 projectUid</translation>
     </message>
     <message>
         <location filename="../cpp/Native/NativeConnector.cpp" line="107" />
@@ -2325,17 +2569,17 @@
     <message>
         <location filename="../cpp/Native/NativeConnector.cpp" line="166" />
         <source>Bad package</source>
-        <translation type="unfinished">잘못된 패키지</translation>
+        <translation type="unfinished">불량 패키지</translation>
     </message>
     <message>
         <location filename="../cpp/Native/NativeConnector.cpp" line="172" />
         <source>Not a package</source>
-        <translation type="unfinished">패키지 아님</translation>
+        <translation type="unfinished">패키지가 아닙니다.</translation>
     </message>
     <message>
         <location filename="../cpp/Native/NativeConnector.cpp" line="179" />
-        <source>No project in package</source>
-        <translation type="unfinished">패키지에 프로젝트가 없습니다.</translation>
+        <source>No %1 in package</source>
+        <translation type="unfinished">패키지에 %1 없음</translation>
     </message>
     <message>
         <location filename="../cpp/Native/NativeConnector.cpp" line="158" />
@@ -2344,55 +2588,58 @@
     </message>
 </context>
 <context>
+    <name>OAuth2</name>
+    <message>
+        <location filename="../controls/OAuth2.cpp" line="134" />
+        <source>Timeout</source>
+        <translation type="unfinished">시간 초과</translation>
+    </message>
+</context>
+<context>
     <name>ODKConnector</name>
     <message>
         <location filename="../cpp/ODK/ODKConnector.cpp" line="114" />
-        <source>Failed to create project</source>
-        <translation type="unfinished">프로젝트 생성 실패</translation>
+        <source>Failed to create %1</source>
+        <translation type="unfinished">1을(를) 만들지 못했습니다.</translation>
     </message>
     <message>
         <location filename="../cpp/ODK/ODKConnector.cpp" line="245" />
         <source>Download failed</source>
         <translation type="unfinished">다운로드 실패</translation>
     </message>
-    <message>
-        <location filename="../cpp/ODK/ODKConnector.cpp" line="251" />
-        <source>Failed to read form settings sheet</source>
-        <translation type="unfinished">양식 설정 시트를 읽지 못했습니다.</translation>
-    </message>
 </context>
 <context>
     <name>OfflineMapManager</name>
     <message>
-        <location filename="../cpp/OfflineMap.cpp" line="442" />
-        <location filename="../cpp/OfflineMap.cpp" line="449" />
+        <location filename="../cpp/OfflineMap.cpp" line="450" />
+        <location filename="../cpp/OfflineMap.cpp" line="457" />
         <source>No a valid route file</source>
         <translation type="unfinished">유효한 경로 파일이 없습니다.</translation>
     </message>
     <message>
-        <location filename="../cpp/OfflineMap.cpp" line="468" />
-        <location filename="../cpp/OfflineMap.cpp" line="660" />
+        <location filename="../cpp/OfflineMap.cpp" line="476" />
+        <location filename="../cpp/OfflineMap.cpp" line="673" />
         <source>No maps found</source>
         <translation type="unfinished">지도를 찾을 수 없습니다.</translation>
     </message>
     <message>
-        <location filename="../cpp/OfflineMap.cpp" line="487" />
-        <location filename="../cpp/OfflineMap.cpp" line="678" />
+        <location filename="../cpp/OfflineMap.cpp" line="495" />
+        <location filename="../cpp/OfflineMap.cpp" line="692" />
         <source>Install failed</source>
         <translation type="unfinished">설치 실패</translation>
     </message>
     <message>
-        <location filename="../cpp/OfflineMap.cpp" line="522" />
+        <location filename="../cpp/OfflineMap.cpp" line="530" />
         <source>Up to date</source>
         <translation type="unfinished">최신 정보</translation>
     </message>
     <message>
-        <location filename="../cpp/OfflineMap.cpp" line="554" />
+        <location filename="../cpp/OfflineMap.cpp" line="562" />
         <source>Map download failed</source>
         <translation type="unfinished">지도 다운로드 실패</translation>
     </message>
     <message>
-        <location filename="../cpp/OfflineMap.cpp" line="568" />
+        <location filename="../cpp/OfflineMap.cpp" line="576" />
         <source>Invalid map format</source>
         <translation type="unfinished">잘못된 지도 형식</translation>
     </message>
@@ -2406,71 +2653,61 @@
     </message>
     <message>
         <location filename="../qml/OfflineMapPage.qml" line="22" />
-        <source>Move up</source>
-        <translation type="unfinished">위로 이동</translation>
-    </message>
-    <message>
-        <location filename="../qml/OfflineMapPage.qml" line="33" />
-        <source>Move down</source>
-        <translation type="unfinished">아래로 이동</translation>
-    </message>
-    <message>
-        <location filename="../qml/OfflineMapPage.qml" line="44" />
         <source>Share</source>
-        <translation type="unfinished">공유하다</translation>
+        <translation type="unfinished">공유</translation>
     </message>
     <message>
-        <location filename="../qml/OfflineMapPage.qml" line="50" />
+        <location filename="../qml/OfflineMapPage.qml" line="28" />
         <source>Packaging failed</source>
-        <translation type="unfinished">포장 실패</translation>
+        <translation type="unfinished">패키징 실패</translation>
     </message>
     <message>
-        <location filename="../qml/OfflineMapPage.qml" line="60" />
+        <location filename="../qml/OfflineMapPage.qml" line="38" />
         <source>Offline map</source>
         <translation type="unfinished">오프라인 지도</translation>
     </message>
     <message>
-        <location filename="../qml/OfflineMapPage.qml" line="65" />
+        <location filename="../qml/OfflineMapPage.qml" line="43" />
         <source>Delete</source>
         <translation type="unfinished">삭제</translation>
     </message>
     <message>
-        <location filename="../qml/OfflineMapPage.qml" line="74" />
+        <location filename="../qml/OfflineMapPage.qml" line="52" />
         <source>Add</source>
         <translation type="unfinished">추가</translation>
     </message>
     <message>
-        <location filename="../qml/OfflineMapPage.qml" line="93" />
+        <location filename="../qml/OfflineMapPage.qml" line="71" />
         <source>No layers</source>
         <translation type="unfinished">레이어 없음</translation>
     </message>
     <message>
-        <location filename="../qml/OfflineMapPage.qml" line="163" />
+        <location filename="../qml/OfflineMapPage.qml" line="172" />
         <source>Not a map package</source>
         <translation type="unfinished">지도 패키지가 아닙니다.</translation>
     </message>
     <message>
-        <location filename="../qml/OfflineMapPage.qml" line="182" />
+        <location filename="../qml/OfflineMapPage.qml" line="191" />
         <source>Save map package</source>
         <translation type="unfinished">지도 패키지 저장</translation>
     </message>
     <message>
-        <location filename="../qml/OfflineMapPage.qml" line="191" />
+        <location filename="../qml/OfflineMapPage.qml" line="200" />
         <source>Copied to clipboard</source>
-        <translation type="unfinished">클립보드에 복사됨</translation>
+        <translation type="unfinished">클립보드에 복사</translation>
     </message>
     <message>
-        <location filename="../qml/OfflineMapPage.qml" line="193" />
+        <location filename="../qml/OfflineMapPage.qml" line="202" />
         <source>Failed to save package</source>
         <translation type="unfinished">패키지를 저장하지 못했습니다.</translation>
     </message>
     <message>
-        <location filename="../qml/OfflineMapPage.qml" line="203" />
+        <location filename="../qml/OfflineMapPage.qml" line="212" />
         <source>Yes, delete it</source>
         <translation type="unfinished">예, 삭제</translation>
     </message>
     <message>
-        <location filename="../qml/OfflineMapPage.qml" line="211" />
+        <location filename="../qml/OfflineMapPage.qml" line="220" />
         <source>Delete layer?</source>
         <translation type="unfinished">레이어를 삭제하시겠습니까?</translation>
     </message>
@@ -2493,7 +2730,7 @@
     <message>
         <location filename="../qml/SMART/PatrolStatsPage.qml" line="76" />
         <source>Start date</source>
-        <translation type="unfinished">시작일</translation>
+        <translation type="unfinished">시작 날짜</translation>
     </message>
     <message>
         <location filename="../qml/SMART/PatrolStatsPage.qml" line="95" />
@@ -2519,7 +2756,7 @@
 <context>
     <name>PhotoField</name>
     <message>
-        <location filename="../cpp/Field.cpp" line="1188" />
+        <location filename="../cpp/Field.cpp" line="1195" />
         <source>Photos</source>
         <translation type="unfinished">사진</translation>
     </message>
@@ -2529,33 +2766,23 @@
     <message>
         <location filename="../cpp/Location.cpp" line="290" />
         <source>GPS outlier detected</source>
-        <translation type="unfinished">GPS 이상값 감지됨</translation>
+        <translation type="unfinished">GPS 이상값 감지</translation>
     </message>
 </context>
 <context>
     <name>ProjectChangePage</name>
     <message>
-        <location filename="../qml/SMART/ProjectChangePage.qml" line="9" />
-        <source>Change Project</source>
-        <translation type="unfinished">프로젝트 변경</translation>
+        <location filename="../qml/ProjectChangePage.qml" line="9" />
+        <source>Change %1</source>
+        <translation type="unfinished">변경 %1</translation>
     </message>
 </context>
 <context>
     <name>ProjectDetailsPage</name>
     <message>
-        <location filename="../qml/ProjectDetailsPage.qml" line="21" />
-        <source>Project details</source>
-        <translation type="unfinished">프로젝트 세부정보</translation>
-    </message>
-    <message>
         <location filename="../qml/ProjectDetailsPage.qml" line="26" />
         <source>Exported data</source>
         <translation type="unfinished">내보낸 데이터</translation>
-    </message>
-    <message>
-        <location filename="../qml/ProjectDetailsPage.qml" line="27" />
-        <source>Project data waiting for import</source>
-        <translation type="unfinished">가져오기를 기다리는 프로젝트 데이터</translation>
     </message>
     <message>
         <location filename="../qml/ProjectDetailsPage.qml" line="34" />
@@ -2563,19 +2790,9 @@
         <translation type="unfinished">QR 코드</translation>
     </message>
     <message>
-        <location filename="../qml/ProjectDetailsPage.qml" line="35" />
-        <source>Share a link to this project</source>
-        <translation type="unfinished">이 프로젝트에 대한 링크 공유</translation>
-    </message>
-    <message>
         <location filename="../qml/ProjectDetailsPage.qml" line="42" />
         <source>Send package</source>
         <translation type="unfinished">패키지 보내기</translation>
-    </message>
-    <message>
-        <location filename="../qml/ProjectDetailsPage.qml" line="43" />
-        <source>Share this project with others</source>
-        <translation type="unfinished">이 프로젝트를 다른 사람들과 공유</translation>
     </message>
     <message>
         <location filename="../qml/ProjectDetailsPage.qml" line="49" />
@@ -2588,29 +2805,89 @@
         <translation type="unfinished">업데이트 확인</translation>
     </message>
     <message>
+        <location filename="../qml/ProjectDetailsPage.qml" line="21" />
+        <source>%1 options</source>
+        <translation type="unfinished">1 옵션</translation>
+    </message>
+    <message>
+        <location filename="../qml/ProjectDetailsPage.qml" line="27" />
+        <source>%1 data waiting for import</source>
+        <translation type="unfinished">1 데이터 가져오기 대기 중</translation>
+    </message>
+    <message>
+        <location filename="../qml/ProjectDetailsPage.qml" line="35" />
+        <source>Share a link to this %1</source>
+        <translation type="unfinished">이 %1에 대한 링크 공유</translation>
+    </message>
+    <message>
+        <location filename="../qml/ProjectDetailsPage.qml" line="43" />
+        <source>Share this %1 with others</source>
+        <translation type="unfinished">이 %1을 다른 사람과 공유</translation>
+    </message>
+    <message>
         <location filename="../qml/ProjectDetailsPage.qml" line="56" />
-        <source>Reset project</source>
-        <translation type="unfinished">프로젝트 재설정</translation>
+        <source>Reset %1</source>
+        <translation type="unfinished">1 초기화</translation>
     </message>
     <message>
         <location filename="../qml/ProjectDetailsPage.qml" line="57" />
-        <source>Delete all project data</source>
-        <translation type="unfinished">모든 프로젝트 데이터 삭제</translation>
+        <source>Reset %1 state and data</source>
+        <translation type="unfinished">1 상태 및 데이터 재설정</translation>
     </message>
     <message>
         <location filename="../qml/ProjectDetailsPage.qml" line="63" />
-        <source>Delete project</source>
-        <translation type="unfinished">프로젝트 삭제</translation>
+        <source>Delete %1</source>
+        <translation type="unfinished">1 삭제</translation>
     </message>
     <message>
         <location filename="../qml/ProjectDetailsPage.qml" line="64" />
-        <source>Delete the project and all data</source>
-        <translation type="unfinished">프로젝트 및 모든 데이터 삭제</translation>
+        <source>Delete the %1 and all data</source>
+        <translation type="unfinished">1 및 모든 데이터 삭제</translation>
+    </message>
+    <message>
+        <location filename="../qml/ProjectDetailsPage.qml" line="208" />
+        <source>Reset %1?</source>
+        <translation type="unfinished">1을(를) 초기화하시겠습니까?</translation>
+    </message>
+    <message>
+        <location filename="../qml/ProjectDetailsPage.qml" line="209" />
+        <source>Data will be permanently removed from the device.</source>
+        <translation type="unfinished">데이터는 장치에서 영구적으로 삭제됩니다.</translation>
+    </message>
+    <message>
+        <location filename="../qml/ProjectDetailsPage.qml" line="213" />
+        <source>State only</source>
+        <translation type="unfinished">주 전용</translation>
+    </message>
+    <message>
+        <location filename="../qml/ProjectDetailsPage.qml" line="214" />
+        <source>State and data</source>
+        <translation type="unfinished">상태 및 데이터</translation>
+    </message>
+    <message>
+        <location filename="../qml/ProjectDetailsPage.qml" line="215" />
+        <source>Cancel</source>
+        <translation type="unfinished">취소</translation>
+    </message>
+    <message>
+        <location filename="../qml/ProjectDetailsPage.qml" line="223" />
+        <source>%1 state reset</source>
+        <translation type="unfinished">1 상태 재설정</translation>
+    </message>
+    <message>
+        <location filename="../qml/ProjectDetailsPage.qml" line="246" />
+        <source>Delete %1?</source>
+        <translation type="unfinished">1을 삭제하시겠습니까?</translation>
+    </message>
+    <message>
+        <location filename="../qml/ProjectDetailsPage.qml" line="247" />
+        <source>The %1 and all of its data will be permanently removed.</source>
+        <translation type="unfinished">1 및 해당 데이터가 모두 영구적으로 제거됩니다.</translation>
     </message>
     <message>
         <location filename="../qml/ProjectDetailsPage.qml" line="158" />
         <source>Packaging failed</source>
-        <translation type="unfinished">포장 실패</translation>
+        <translation type="unfinished">패키징 실패</translation>
     </message>
     <message>
         <location filename="../qml/ProjectDetailsPage.qml" line="184" />
@@ -2620,7 +2897,7 @@
     <message>
         <location filename="../qml/ProjectDetailsPage.qml" line="193" />
         <source>Copied to clipboard</source>
-        <translation type="unfinished">클립보드에 복사됨</translation>
+        <translation type="unfinished">클립보드에 복사</translation>
     </message>
     <message>
         <location filename="../qml/ProjectDetailsPage.qml" line="195" />
@@ -2628,121 +2905,149 @@
         <translation type="unfinished">패키지를 저장하지 못했습니다.</translation>
     </message>
     <message>
-        <location filename="../qml/ProjectDetailsPage.qml" line="207" />
-        <source>Reset project?</source>
-        <translation type="unfinished">프로젝트를 재설정하시겠습니까?</translation>
-    </message>
-    <message>
-        <location filename="../qml/ProjectDetailsPage.qml" line="208" />
-        <source>All project data will be permanently removed from the device.</source>
-        <translation type="unfinished">모든 프로젝트 데이터가 장치에서 영구적으로 제거됩니다.</translation>
-    </message>
-    <message>
-        <location filename="../qml/ProjectDetailsPage.qml" line="209" />
-        <source>Yes, reset it</source>
-        <translation type="unfinished">예, 재설정</translation>
-    </message>
-    <message>
-        <location filename="../qml/ProjectDetailsPage.qml" line="214" />
+        <location filename="../qml/ProjectDetailsPage.qml" line="229" />
         <source>%1 reset</source>
-        <translation type="unfinished">%1 재설정</translation>
+        <translation type="unfinished">1 재설정</translation>
     </message>
     <message>
-        <location filename="../qml/ProjectDetailsPage.qml" line="225" />
-        <source>Delete project?</source>
-        <translation type="unfinished">프로젝트를 삭제하시겠습니까?</translation>
-    </message>
-    <message>
-        <location filename="../qml/ProjectDetailsPage.qml" line="226" />
-        <source>The project and all of its data will be permanently removed.</source>
-        <translation type="unfinished">프로젝트와 모든 데이터가 영구적으로 제거됩니다.</translation>
-    </message>
-    <message>
-        <location filename="../qml/ProjectDetailsPage.qml" line="227" />
+        <location filename="../qml/ProjectDetailsPage.qml" line="248" />
         <source>Yes, delete it</source>
         <translation type="unfinished">예, 삭제</translation>
     </message>
     <message>
-        <location filename="../qml/ProjectDetailsPage.qml" line="232" />
+        <location filename="../qml/ProjectDetailsPage.qml" line="253" />
         <source>%1 deleted</source>
-        <translation type="unfinished">%1 삭제됨</translation>
+        <translation type="unfinished">1 삭제됨</translation>
     </message>
 </context>
 <context>
     <name>ProjectManager</name>
     <message>
-        <location filename="../cpp/Project.cpp" line="965" />
+        <location filename="../cpp/Project.cpp" line="1057" />
         <source>Failed to extract</source>
         <translation type="unfinished">추출 실패</translation>
     </message>
     <message>
-        <location filename="../cpp/Project.cpp" line="973" />
+        <location filename="../cpp/Project.cpp" line="1065" />
         <source>Invalid package</source>
         <translation type="unfinished">잘못된 패키지</translation>
     </message>
     <message>
-        <location filename="../cpp/Project.cpp" line="985" />
-        <source>Failed to initialize project</source>
-        <translation type="unfinished">프로젝트를 초기화하지 못했습니다.</translation>
+        <location filename="../cpp/Project.cpp" line="1077" />
+        <source>Failed to initialize %1</source>
+        <translation type="unfinished">1을(를) 초기화하지 못했습니다.</translation>
     </message>
     <message>
-        <location filename="../cpp/Project.cpp" line="1064" />
+        <location filename="../cpp/Project.cpp" line="1156" />
         <source>Already installed</source>
-        <translation type="unfinished">이미 설치되어있다</translation>
+        <translation type="unfinished">이미 설치됨</translation>
     </message>
     <message>
-        <location filename="../cpp/Project.cpp" line="1069" />
+        <location filename="../cpp/Project.cpp" line="1161" />
         <source>Nothing to do</source>
-        <translation type="unfinished">할 것이 없다</translation>
+        <translation type="unfinished">할 일 없음</translation>
     </message>
     <message>
-        <location filename="../cpp/Project.cpp" line="1088" />
+        <location filename="../cpp/Project.cpp" line="1180" />
         <source>File not found</source>
         <translation type="unfinished">파일을 찾을 수 없음</translation>
     </message>
     <message>
-        <location filename="../cpp/Project.cpp" line="1096" />
-        <source>Permissions not granted</source>
-        <translation type="unfinished">권한이 부여되지 않음</translation>
-    </message>
-    <message>
-        <location filename="../cpp/Project.cpp" line="1109" />
+        <location filename="../cpp/Project.cpp" line="1196" />
         <source>Bad definition format</source>
         <translation type="unfinished">잘못된 정의 형식</translation>
     </message>
     <message>
-        <location filename="../cpp/Project.cpp" line="1258" />
+        <location filename="../cpp/Project.cpp" line="1341" />
         <source>Update Complete</source>
         <translation type="unfinished">업데이트 완료</translation>
     </message>
     <message>
-        <location filename="../cpp/Project.cpp" line="1363" />
-        <source>Bad project file</source>
-        <translation type="unfinished">잘못된 프로젝트 파일</translation>
+        <location filename="../cpp/Project.cpp" line="1446" />
+        <source>Bad %1 file</source>
+        <translation type="unfinished">잘못된 %1 파일</translation>
     </message>
     <message>
-        <location filename="../cpp/Project.cpp" line="1368" />
+        <location filename="../cpp/Project.cpp" line="1451" />
         <source>Up to date</source>
         <translation type="unfinished">최신 정보</translation>
     </message>
     <message>
-        <location filename="../cpp/Project.cpp" line="1402" />
+        <location filename="../cpp/Project.cpp" line="1485" />
         <source>Update error</source>
         <translation type="unfinished">업데이트 오류</translation>
     </message>
 </context>
 <context>
-    <name>ProjectsPage</name>
+    <name>ProjectsEditPage</name>
     <message>
-        <location filename="../qml/ProjectsPage.qml" line="13" />
-        <source>Projects</source>
-        <translation type="unfinished">프로젝트</translation>
+        <location filename="../qml/ProjectsEditPage.qml" line="15" />
+        <source>Edit %1</source>
+        <translation type="unfinished">1 편집</translation>
     </message>
     <message>
+        <location filename="../qml/ProjectsEditPage.qml" line="22" />
+        <source>Options</source>
+        <translation type="unfinished">옵션</translation>
+    </message>
+    <message>
+        <location filename="../qml/ProjectsEditPage.qml" line="31" />
+        <source>Delete</source>
+        <translation type="unfinished">삭제</translation>
+    </message>
+    <message>
+        <location filename="../qml/ProjectsEditPage.qml" line="40" />
+        <source>Add</source>
+        <translation type="unfinished">추가</translation>
+    </message>
+    <message>
+        <location filename="../qml/ProjectsEditPage.qml" line="54" />
+        <source>No %1</source>
+        <translation type="unfinished">아니요 %1</translation>
+    </message>
+    <message>
+        <location filename="../qml/ProjectsEditPage.qml" line="173" />
+        <source>Save %1 package</source>
+        <translation type="unfinished">1 패키지 저장</translation>
+    </message>
+    <message>
+        <location filename="../qml/ProjectsEditPage.qml" line="196" />
+        <source>Delete %1?</source>
+        <translation type="unfinished">1을 삭제하시겠습니까?</translation>
+    </message>
+    <message>
+        <location filename="../qml/ProjectsEditPage.qml" line="197" />
+        <source>The %1 and all of its data will be permanently removed.</source>
+        <translation type="unfinished">1 및 해당 데이터가 모두 영구적으로 제거됩니다.</translation>
+    </message>
+    <message>
+        <location filename="../qml/ProjectsEditPage.qml" line="182" />
+        <source>Copied to clipboard</source>
+        <translation type="unfinished">클립보드에 복사</translation>
+    </message>
+    <message>
+        <location filename="../qml/ProjectsEditPage.qml" line="184" />
+        <source>Failed to save package</source>
+        <translation type="unfinished">패키지를 저장하지 못했습니다.</translation>
+    </message>
+    <message>
+        <location filename="../qml/ProjectsEditPage.qml" line="198" />
+        <source>Yes, delete it</source>
+        <translation type="unfinished">예, 삭제</translation>
+    </message>
+    <message>
+        <location filename="../qml/ProjectsEditPage.qml" line="205" />
+        <source>%1 deleted</source>
+        <translation type="unfinished">1 삭제됨</translation>
+    </message>
+</context>
+<context>
+    <name>ProjectsPage</name>
+    <message>
         <location filename="../qml/ProjectsPage.qml" line="54" />
-        <location filename="../qml/ProjectsPage.qml" line="168" />
-        <source>Delete project?</source>
-        <translation type="unfinished">프로젝트를 삭제하시겠습니까?</translation>
+        <location filename="../qml/ProjectsPage.qml" line="263" />
+        <source>Delete %1?</source>
+        <translation type="unfinished">1을 삭제하시겠습니까?</translation>
     </message>
     <message>
         <location filename="../qml/ProjectsPage.qml" line="64" />
@@ -2752,7 +3057,7 @@
     <message>
         <location filename="../qml/ProjectsPage.qml" line="77" />
         <source>No</source>
-        <translation type="unfinished">아니</translation>
+        <translation type="unfinished">아니요</translation>
     </message>
     <message>
         <location filename="../qml/ProjectsPage.qml" line="98" />
@@ -2760,42 +3065,62 @@
         <translation type="unfinished">오프라인</translation>
     </message>
     <message>
-        <location filename="../qml/ProjectsPage.qml" line="138" />
-        <source>No provider</source>
-        <translation type="unfinished">공급자 없음</translation>
+        <location filename="../qml/ProjectsPage.qml" line="174" />
+        <source>No %1</source>
+        <translation type="unfinished">아니요 %1</translation>
     </message>
     <message>
-        <location filename="../qml/ProjectsPage.qml" line="169" />
-        <source>The project and all of its data will be permanently removed.</source>
-        <translation type="unfinished">프로젝트와 모든 데이터가 영구적으로 제거됩니다.</translation>
+        <location filename="../qml/ProjectsPage.qml" line="211" />
+        <source>Getting started</source>
+        <translation type="unfinished">시작하기</translation>
     </message>
     <message>
-        <location filename="../qml/ProjectsPage.qml" line="170" />
+        <location filename="../qml/ProjectsPage.qml" line="264" />
+        <source>The %1 and all of its data will be permanently removed.</source>
+        <translation type="unfinished">1 및 해당 데이터가 모두 영구적으로 제거됩니다.</translation>
+    </message>
+    <message>
+        <location filename="../qml/ProjectsPage.qml" line="284" />
+        <source>Update %1?</source>
+        <translation type="unfinished">1 업데이트 하시겠습니까?</translation>
+    </message>
+    <message>
+        <location filename="../qml/ProjectsPage.qml" line="265" />
         <source>Yes, delete it</source>
         <translation type="unfinished">예, 삭제</translation>
     </message>
     <message>
-        <location filename="../qml/ProjectsPage.qml" line="175" />
-        <source>%1 deleted</source>
-        <translation type="unfinished">%1 삭제됨</translation>
+        <location filename="../qml/ProjectsPage.qml" line="185" />
+        <source>Scan QR code</source>
+        <translation type="unfinished">QR코드 스캔</translation>
+    </message>
+    <message>
+        <location filename="../qml/ProjectsPage.qml" line="187" />
+        <source>%1 or tap the %2 button below to add a %3</source>
+        <translation type="unfinished">1을 추가하거나 아래의 %2 버튼을 탭하여 %3을 추가합니다.</translation>
     </message>
     <message>
         <location filename="../qml/ProjectsPage.qml" line="189" />
-        <source>Update project?</source>
-        <translation type="unfinished">프로젝트를 업데이트하시겠습니까?</translation>
+        <source>%1 to add a %2</source>
+        <translation type="unfinished">1을 추가하려면 %2</translation>
     </message>
     <message>
-        <location filename="../qml/ProjectsPage.qml" line="190" />
+        <location filename="../qml/ProjectsPage.qml" line="270" />
+        <source>%1 deleted</source>
+        <translation type="unfinished">1 삭제됨</translation>
+    </message>
+    <message>
+        <location filename="../qml/ProjectsPage.qml" line="285" />
         <source>A new version is available.</source>
         <translation type="unfinished">새 버전을 사용할 수 있습니다.</translation>
     </message>
     <message>
-        <location filename="../qml/ProjectsPage.qml" line="191" />
+        <location filename="../qml/ProjectsPage.qml" line="286" />
         <source>Yes, update now</source>
-        <translation type="unfinished">예, 지금 업데이트하십시오.</translation>
+        <translation type="unfinished">예, 지금 업데이트</translation>
     </message>
     <message>
-        <location filename="../qml/ProjectsPage.qml" line="193" />
+        <location filename="../qml/ProjectsPage.qml" line="288" />
         <source>No, update later</source>
         <translation type="unfinished">아니요, 나중에 업데이트</translation>
     </message>
@@ -2809,32 +3134,315 @@
     </message>
 </context>
 <context>
+    <name>QKeychain::DeletePasswordJobPrivate</name>
+    <message>
+        <location filename="../lib/qtkeychain/keychain_android.cpp" line="173" />
+        <source>Could not open keystore</source>
+        <translation type="unfinished">키 저장소를 열 수 없습니다.</translation>
+    </message>
+    <message>
+        <location filename="../lib/qtkeychain/keychain_android.cpp" line="179" />
+        <source>Could not remove private key from keystore</source>
+        <translation type="unfinished">키 저장소에서 개인 키를 제거할 수 없습니다.</translation>
+    </message>
+    <message>
+        <location filename="../lib/qtkeychain/keychain_unix.cpp" line="552" />
+        <location filename="../lib/qtkeychain/keychain_unix.cpp" line="560" />
+        <source>Unknown error</source>
+        <translation type="unfinished">알 수 없는 오류</translation>
+    </message>
+    <message>
+        <location filename="../lib/qtkeychain/keychain_unix.cpp" line="578" />
+        <source>Could not open wallet: %1; %2</source>
+        <translation type="unfinished">지갑을 열 수 없습니다: %1; %2</translation>
+    </message>
+    <message>
+        <location filename="../lib/qtkeychain/keychain_win.cpp" line="104" />
+        <source>Password entry not found</source>
+        <translation type="unfinished">비밀번호 항목을 찾을 수 없습니다.</translation>
+    </message>
+    <message>
+        <location filename="../lib/qtkeychain/keychain_win.cpp" line="108" />
+        <source>Could not decrypt data</source>
+        <translation type="unfinished">데이터를 해독할 수 없음</translation>
+    </message>
+</context>
+<context>
+    <name>QKeychain::JobPrivate</name>
+    <message>
+        <location filename="../lib/qtkeychain/keychain_unix.cpp" line="265" />
+        <source>Unknown error</source>
+        <translation type="unfinished">알 수 없는 오류</translation>
+    </message>
+    <message>
+        <location filename="../lib/qtkeychain/keychain_unix.cpp" line="509" />
+        <source>Access to keychain denied</source>
+        <translation type="unfinished">키체인에 대한 액세스 거부</translation>
+    </message>
+</context>
+<context>
+    <name>QKeychain::PlainTextStore</name>
+    <message>
+        <location filename="../lib/qtkeychain/plaintextstore.cpp" line="65" />
+        <source>Could not store data in settings: access error</source>
+        <translation type="unfinished">설정에 데이터를 저장할 수 없음: 액세스 오류</translation>
+    </message>
+    <message>
+        <location filename="../lib/qtkeychain/plaintextstore.cpp" line="67" />
+        <source>Could not store data in settings: format error</source>
+        <translation type="unfinished">설정에 데이터를 저장할 수 없음: 형식 오류</translation>
+    </message>
+    <message>
+        <location filename="../lib/qtkeychain/plaintextstore.cpp" line="85" />
+        <source>Could not delete data from settings: access error</source>
+        <translation type="unfinished">설정에서 데이터를 삭제할 수 없음: 액세스 오류</translation>
+    </message>
+    <message>
+        <location filename="../lib/qtkeychain/plaintextstore.cpp" line="87" />
+        <source>Could not delete data from settings: format error</source>
+        <translation type="unfinished">설정에서 데이터를 삭제할 수 없음: 형식 오류</translation>
+    </message>
+    <message>
+        <location filename="../lib/qtkeychain/plaintextstore.cpp" line="104" />
+        <source>Entry not found</source>
+        <translation type="unfinished">항목을 찾을 수 없습니다.</translation>
+    </message>
+</context>
+<context>
+    <name>QKeychain::ReadPasswordJobPrivate</name>
+    <message>
+        <location filename="../lib/qtkeychain/keychain_android.cpp" line="52" />
+        <location filename="../lib/qtkeychain/keychain_unix.cpp" line="363" />
+        <source>Entry not found</source>
+        <translation type="unfinished">항목을 찾을 수 없습니다.</translation>
+    </message>
+    <message>
+        <location filename="../lib/qtkeychain/keychain_android.cpp" line="60" />
+        <source>Could not open keystore</source>
+        <translation type="unfinished">키 저장소를 열 수 없습니다.</translation>
+    </message>
+    <message>
+        <location filename="../lib/qtkeychain/keychain_android.cpp" line="68" />
+        <source>Could not retrieve private key from keystore</source>
+        <translation type="unfinished">키 저장소에서 개인 키를 검색할 수 없습니다.</translation>
+    </message>
+    <message>
+        <location filename="../lib/qtkeychain/keychain_android.cpp" line="75" />
+        <source>Could not create decryption cipher</source>
+        <translation type="unfinished">복호화 암호를 만들 수 없습니다.</translation>
+    </message>
+    <message>
+        <location filename="../lib/qtkeychain/keychain_unix.cpp" line="178" />
+        <source>D-Bus is not running</source>
+        <translation type="unfinished">D-Bus가 실행 중이 아닙니다.</translation>
+    </message>
+    <message>
+        <location filename="../lib/qtkeychain/keychain_unix.cpp" line="187" />
+        <location filename="../lib/qtkeychain/keychain_unix.cpp" line="197" />
+        <source>Unknown error</source>
+        <translation type="unfinished">알 수 없는 오류</translation>
+    </message>
+    <message>
+        <location filename="../lib/qtkeychain/keychain_unix.cpp" line="286" />
+        <source>No keychain service available</source>
+        <translation type="unfinished">사용 가능한 키체인 서비스 없음</translation>
+    </message>
+    <message>
+        <location filename="../lib/qtkeychain/keychain_unix.cpp" line="288" />
+        <source>Could not open wallet: %1; %2</source>
+        <translation type="unfinished">지갑을 열 수 없습니다: %1; %2</translation>
+    </message>
+    <message>
+        <location filename="../lib/qtkeychain/keychain_unix.cpp" line="333" />
+        <source>Access to keychain denied</source>
+        <translation type="unfinished">키체인에 대한 액세스 거부</translation>
+    </message>
+    <message>
+        <location filename="../lib/qtkeychain/keychain_unix.cpp" line="354" />
+        <source>Could not determine data type: %1; %2</source>
+        <translation type="unfinished">데이터 유형을 확인할 수 없습니다: %1; %2</translation>
+    </message>
+    <message>
+        <location filename="../lib/qtkeychain/keychain_unix.cpp" line="372" />
+        <source>Unsupported entry type 'Map'</source>
+        <translation type="unfinished">지원되지 않는 입력 유형 '지도'</translation>
+    </message>
+    <message>
+        <location filename="../lib/qtkeychain/keychain_unix.cpp" line="375" />
+        <source>Unknown kwallet entry type '%1'</source>
+        <translation type="unfinished">알 수 없는 지갑 항목 유형 '%1'</translation>
+    </message>
+    <message>
+        <location filename="../lib/qtkeychain/keychain_win.cpp" line="32" />
+        <source>Password entry not found</source>
+        <translation type="unfinished">비밀번호 항목을 찾을 수 없습니다.</translation>
+    </message>
+    <message>
+        <location filename="../lib/qtkeychain/keychain_win.cpp" line="36" />
+        <location filename="../lib/qtkeychain/keychain_win.cpp" line="139" />
+        <source>Could not decrypt data</source>
+        <translation type="unfinished">데이터를 해독할 수 없음</translation>
+    </message>
+</context>
+<context>
+    <name>QKeychain::WritePasswordJobPrivate</name>
+    <message>
+        <location filename="../lib/qtkeychain/keychain_android.cpp" line="95" />
+        <source>Could not open keystore</source>
+        <translation type="unfinished">키 저장소를 열 수 없습니다.</translation>
+    </message>
+    <message>
+        <location filename="../lib/qtkeychain/keychain_android.cpp" line="124" />
+        <source>Could not create private key generator</source>
+        <translation type="unfinished">개인 키 생성기를 만들 수 없습니다.</translation>
+    </message>
+    <message>
+        <location filename="../lib/qtkeychain/keychain_android.cpp" line="131" />
+        <source>Could not generate new private key</source>
+        <translation type="unfinished">새 개인 키를 생성할 수 없습니다.</translation>
+    </message>
+    <message>
+        <location filename="../lib/qtkeychain/keychain_android.cpp" line="139" />
+        <source>Could not retrieve private key from keystore</source>
+        <translation type="unfinished">키 저장소에서 개인 키를 검색할 수 없습니다.</translation>
+    </message>
+    <message>
+        <location filename="../lib/qtkeychain/keychain_android.cpp" line="147" />
+        <source>Could not create encryption cipher</source>
+        <translation type="unfinished">암호화 암호를 만들 수 없습니다.</translation>
+    </message>
+    <message>
+        <location filename="../lib/qtkeychain/keychain_android.cpp" line="155" />
+        <source>Could not encrypt data</source>
+        <translation type="unfinished">데이터를 암호화할 수 없음</translation>
+    </message>
+    <message>
+        <location filename="../lib/qtkeychain/keychain_unix.cpp" line="415" />
+        <source>D-Bus is not running</source>
+        <translation type="unfinished">D-Bus가 실행 중이 아닙니다.</translation>
+    </message>
+    <message>
+        <location filename="../lib/qtkeychain/keychain_unix.cpp" line="425" />
+        <location filename="../lib/qtkeychain/keychain_unix.cpp" line="452" />
+        <source>Unknown error</source>
+        <translation type="unfinished">알 수 없는 오류</translation>
+    </message>
+    <message>
+        <location filename="../lib/qtkeychain/keychain_unix.cpp" line="468" />
+        <source>Could not open wallet: %1; %2</source>
+        <translation type="unfinished">지갑을 열 수 없습니다: %1; %2</translation>
+    </message>
+    <message>
+        <location filename="../lib/qtkeychain/keychain_win.cpp" line="78" />
+        <source>Credential size exceeds maximum size of %1</source>
+        <translation type="unfinished">자격 증명 크기가 최대 크기인 %1을 초과합니다.</translation>
+    </message>
+    <message>
+        <location filename="../lib/qtkeychain/keychain_win.cpp" line="87" />
+        <source>Credential key exceeds maximum size of %1</source>
+        <translation type="unfinished">자격 증명 키가 최대 크기 %1을(를) 초과합니다.</translation>
+    </message>
+    <message>
+        <location filename="../lib/qtkeychain/keychain_win.cpp" line="92" />
+        <source>Writing credentials failed: Win32 error code %1</source>
+        <translation type="unfinished">자격 증명을 쓰지 못했습니다: Win32 오류 코드 %1</translation>
+    </message>
+    <message>
+        <location filename="../lib/qtkeychain/keychain_win.cpp" line="162" />
+        <source>Encryption failed</source>
+        <translation type="unfinished">암호화 실패</translation>
+    </message>
+</context>
+<context>
+    <name>QObject</name>
+    <message>
+        <location filename="../lib/qtkeychain/keychain_unix.cpp" line="225" />
+        <source>Access to keychain denied</source>
+        <translation type="unfinished">키체인에 대한 액세스 거부</translation>
+    </message>
+    <message>
+        <location filename="../lib/qtkeychain/keychain_unix.cpp" line="227" />
+        <source>No keyring daemon</source>
+        <translation type="unfinished">열쇠고리 데몬 없음</translation>
+    </message>
+    <message>
+        <location filename="../lib/qtkeychain/keychain_unix.cpp" line="229" />
+        <source>Already unlocked</source>
+        <translation type="unfinished">이미 잠금 해제됨</translation>
+    </message>
+    <message>
+        <location filename="../lib/qtkeychain/keychain_unix.cpp" line="231" />
+        <source>No such keyring</source>
+        <translation type="unfinished">그런 열쇠고리 없음</translation>
+    </message>
+    <message>
+        <location filename="../lib/qtkeychain/keychain_unix.cpp" line="233" />
+        <source>Bad arguments</source>
+        <translation type="unfinished">잘못된 인수</translation>
+    </message>
+    <message>
+        <location filename="../lib/qtkeychain/keychain_unix.cpp" line="235" />
+        <source>I/O error</source>
+        <translation type="unfinished">I/O 오류</translation>
+    </message>
+    <message>
+        <location filename="../lib/qtkeychain/keychain_unix.cpp" line="237" />
+        <source>Cancelled</source>
+        <translation type="unfinished">취소됨</translation>
+    </message>
+    <message>
+        <location filename="../lib/qtkeychain/keychain_unix.cpp" line="239" />
+        <source>Keyring already exists</source>
+        <translation type="unfinished">키링이 이미 존재합니다.</translation>
+    </message>
+    <message>
+        <location filename="../lib/qtkeychain/keychain_unix.cpp" line="241" />
+        <source>No match</source>
+        <translation type="unfinished">일치하지 않음</translation>
+    </message>
+    <message>
+        <location filename="../lib/qtkeychain/keychain_unix.cpp" line="246" />
+        <source>Unknown error</source>
+        <translation type="unfinished">알 수 없는 오류</translation>
+    </message>
+    <message>
+        <location filename="../lib/qtkeychain/libsecret.cpp" line="119" />
+        <source>Entry not found</source>
+        <translation type="unfinished">항목을 찾을 수 없습니다.</translation>
+    </message>
+</context>
+<context>
     <name>Record</name>
     <message>
-        <location filename="../cpp/Record.cpp" line="392" />
+        <location filename="../cpp/Record.cpp" line="397" />
         <source>Record</source>
         <translation type="unfinished">기록</translation>
     </message>
     <message>
-        <location filename="../cpp/Record.cpp" line="680" />
+        <location filename="../cpp/Record.cpp" line="702" />
         <source>Records</source>
         <translation type="unfinished">기록</translation>
     </message>
     <message>
-        <location filename="../cpp/Record.cpp" line="708" />
+        <location filename="../cpp/Record.cpp" line="730" />
+        <source>Value incorrect</source>
+        <translation type="unfinished">잘못된 값</translation>
+    </message>
+    <message>
+        <location filename="../cpp/Record.cpp" line="744" />
         <source>Value required</source>
-        <translation type="unfinished">필요한 값</translation>
+        <translation type="unfinished">필수 값</translation>
     </message>
 </context>
 <context>
     <name>RecordField</name>
     <message>
-        <location filename="../cpp/Field.cpp" line="320" />
+        <location filename="../cpp/Field.cpp" line="321" />
         <source>record</source>
         <translation type="unfinished">기록</translation>
     </message>
     <message>
-        <location filename="../cpp/Field.cpp" line="320" />
+        <location filename="../cpp/Field.cpp" line="321" />
         <source>records</source>
         <translation type="unfinished">기록</translation>
     </message>
@@ -2844,12 +3452,12 @@
     <message>
         <location filename="../qml/SMART/RecoverDataPage.qml" line="12" />
         <source>Recover Connect data</source>
-        <translation type="unfinished">연결 데이터 복구</translation>
+        <translation type="unfinished">Connect 데이터 복구</translation>
     </message>
     <message>
         <location filename="../qml/SMART/RecoverDataPage.qml" line="25" />
         <source>Use this option to recover data which cannot be uploaded. Once the data is recovered, it must be retrieved by importing from SMART desktop.</source>
-        <translation type="unfinished">이 옵션을 사용하여 업로드할 수 없는 데이터를 복구합니다. 데이터가 복구되면 SMART 데스크탑에서 가져와야 합니다.</translation>
+        <translation type="unfinished">업로드할 수 없는 데이터를 복구하려면 이 옵션을 사용합니다. 데이터가 복구되면 SMART 데스크톱에서 가져와서 검색해야 합니다.</translation>
     </message>
     <message>
         <location filename="../qml/SMART/RecoverDataPage.qml" line="44" />
@@ -2873,18 +3481,18 @@
     </message>
     <message>
         <location filename="../qml/SMART/RecoverDataPage.qml" line="73" />
-        <source>Data is ready for import from the desktop</source>
-        <translation type="unfinished">데스크탑에서 데이터를 가져올 준비가 되었습니다.</translation>
+        <source>Data is ready for import from the desktop.</source>
+        <translation type="unfinished">데스크톱에서 데이터를 가져올 준비가 되었습니다.</translation>
+    </message>
+    <message>
+        <location filename="../qml/SMART/RecoverDataPage.qml" line="76" />
+        <source>An error occurred during data export.</source>
+        <translation type="unfinished">데이터 내보내기 중에 오류가 발생했습니다.</translation>
     </message>
     <message>
         <location filename="../qml/SMART/RecoverDataPage.qml" line="75" />
         <source>Error</source>
         <translation type="unfinished">오류</translation>
-    </message>
-    <message>
-        <location filename="../qml/SMART/RecoverDataPage.qml" line="76" />
-        <source>An error occurred during data export</source>
-        <translation type="unfinished">데이터 내보내기 중 오류가 발생했습니다.</translation>
     </message>
 </context>
 <context>
@@ -2892,52 +3500,60 @@
     <message>
         <location filename="../qml/EarthRanger/ReportedByPage.qml" line="10" />
         <source>Reported by</source>
-        <translation type="unfinished">의해보고 된</translation>
+        <translation type="unfinished">보고자</translation>
     </message>
 </context>
 <context>
     <name>SMARTConnector</name>
     <message>
-        <location filename="../cpp/SMART/SMARTConnector.cpp" line="105" />
+        <location filename="../cpp/SMART/SMARTConnector.cpp" line="114" />
         <source>has unexported data</source>
-        <translation type="unfinished">내보내지 않은 데이터가 있습니다</translation>
+        <translation type="unfinished">내보내지 않은 데이터가 있습니다.</translation>
     </message>
     <message>
         <location filename="../cpp/SMART/SMARTConnector.cpp" line="14" />
         <source>required</source>
-        <translation type="unfinished">필수의</translation>
+        <translation type="unfinished">필수</translation>
     </message>
     <message>
-        <location filename="../cpp/SMART/SMARTConnector.cpp" line="171" />
+        <location filename="../cpp/SMART/SMARTConnector.cpp" line="184" />
         <source>Download failed</source>
         <translation type="unfinished">다운로드 실패</translation>
     </message>
     <message>
-        <location filename="../cpp/SMART/SMARTConnector.cpp" line="181" />
+        <location filename="../cpp/SMART/SMARTConnector.cpp" line="194" />
         <source>Download bad</source>
-        <translation type="unfinished">나쁜 다운로드</translation>
+        <translation type="unfinished">다운로드 불량</translation>
     </message>
     <message>
-        <location filename="../cpp/SMART/SMARTConnector.cpp" line="339" />
+        <location filename="../cpp/SMART/SMARTConnector.cpp" line="327" />
         <source>Unexported data</source>
         <translation type="unfinished">내보내지 않은 데이터</translation>
     </message>
     <message>
-        <location filename="../cpp/SMART/SMARTConnector.cpp" line="355" />
-        <location filename="../cpp/SMART/SMARTConnector.cpp" line="551" />
+        <location filename="../cpp/SMART/SMARTConnector.cpp" line="343" />
         <source>Bad project file</source>
         <translation type="unfinished">잘못된 프로젝트 파일</translation>
     </message>
     <message>
-        <location filename="../cpp/SMART/SMARTConnector.cpp" line="367" />
-        <location filename="../cpp/SMART/SMARTConnector.cpp" line="560" />
+        <location filename="../cpp/SMART/SMARTConnector.cpp" line="355" />
         <source>Cannot unpack project</source>
-        <translation type="unfinished">프로젝트의 압축을 풀 수 없습니다</translation>
+        <translation type="unfinished">프로젝트의 압축을 풀 수 없습니다.</translation>
     </message>
     <message>
-        <location filename="../cpp/SMART/SMARTConnector.cpp" line="543" />
+        <location filename="../cpp/SMART/SMARTConnector.cpp" line="521" />
         <source>Unsent data</source>
         <translation type="unfinished">전송되지 않은 데이터</translation>
+    </message>
+    <message>
+        <location filename="../cpp/SMART/SMARTConnector.cpp" line="529" />
+        <source>Bad %1 file</source>
+        <translation type="unfinished">잘못된 %1 파일</translation>
+    </message>
+    <message>
+        <location filename="../cpp/SMART/SMARTConnector.cpp" line="538" />
+        <source>Cannot unpack %1</source>
+        <translation type="unfinished">1의 압축을 풀 수 없습니다.</translation>
     </message>
 </context>
 <context>
@@ -2945,7 +3561,7 @@
     <message>
         <location filename="../cpp/SMART/SMARTProvider.cpp" line="3518" />
         <source>Incident</source>
-        <translation type="unfinished">사건</translation>
+        <translation type="unfinished">인시던트</translation>
     </message>
     <message>
         <location filename="../cpp/SMART/SMARTProvider.cpp" line="206" />
@@ -3012,7 +3628,7 @@
     <message>
         <location filename="../cpp/SMART/SMARTProvider.cpp" line="196" />
         <source>No</source>
-        <translation type="unfinished">아니</translation>
+        <translation type="unfinished">아니요</translation>
     </message>
     <message>
         <location filename="../cpp/SMART/SMARTProvider.cpp" line="199" />
@@ -3027,12 +3643,12 @@
     <message>
         <location filename="../cpp/SMART/SMARTProvider.cpp" line="218" />
         <source>On export</source>
-        <translation type="unfinished">수출시</translation>
+        <translation type="unfinished">내보내기 시</translation>
     </message>
     <message>
         <location filename="../cpp/SMART/SMARTProvider.cpp" line="222" />
         <source>Immediate</source>
-        <translation type="unfinished">즉각적인</translation>
+        <translation type="unfinished">즉시</translation>
     </message>
     <message>
         <location filename="../cpp/SMART/SMARTProvider.cpp" line="222" />
@@ -3043,7 +3659,7 @@
         <location filename="../cpp/SMART/SMARTProvider.cpp" line="227" />
         <location filename="../cpp/SMART/SMARTProvider.cpp" line="284" />
         <source>Off</source>
-        <translation type="unfinished">끄다</translation>
+        <translation type="unfinished">꺼짐</translation>
     </message>
     <message>
         <location filename="../cpp/SMART/SMARTProvider.cpp" line="236" />
@@ -3054,17 +3670,17 @@
     <message>
         <location filename="../cpp/SMART/SMARTProvider.cpp" line="240" />
         <source>Unknown</source>
-        <translation type="unfinished">알려지지 않은</translation>
+        <translation type="unfinished">알 수 없음</translation>
     </message>
     <message>
         <location filename="../cpp/SMART/SMARTProvider.cpp" line="244" />
         <source>Degrees minutes seconds</source>
-        <translation type="unfinished">도 분 초</translation>
+        <translation type="unfinished">학위 분 초</translation>
     </message>
     <message>
         <location filename="../cpp/SMART/SMARTProvider.cpp" line="247" />
         <source>Decimal degrees</source>
-        <translation type="unfinished">십진수</translation>
+        <translation type="unfinished">소수점</translation>
     </message>
     <message>
         <location filename="../cpp/SMART/SMARTProvider.cpp" line="250" />
@@ -3079,7 +3695,7 @@
     <message>
         <location filename="../cpp/SMART/SMARTProvider.cpp" line="268" />
         <source>Incidents</source>
-        <translation type="unfinished">사건</translation>
+        <translation type="unfinished">인시던트</translation>
     </message>
     <message>
         <location filename="../cpp/SMART/SMARTProvider.cpp" line="269" />
@@ -3094,7 +3710,7 @@
     <message>
         <location filename="../cpp/SMART/SMARTProvider.cpp" line="269" />
         <source>Desktop</source>
-        <translation type="unfinished">데스크탑</translation>
+        <translation type="unfinished">데스크톱</translation>
     </message>
     <message>
         <location filename="../cpp/SMART/SMARTProvider.cpp" line="270" />
@@ -3119,7 +3735,7 @@
     <message>
         <location filename="../cpp/SMART/SMARTProvider.cpp" line="277" />
         <source>Can pause</source>
-        <translation type="unfinished">일시중지 가능</translation>
+        <translation type="unfinished">일시 중지 가능</translation>
     </message>
     <message>
         <location filename="../cpp/SMART/SMARTProvider.cpp" line="278" />
@@ -3134,7 +3750,7 @@
     <message>
         <location filename="../cpp/SMART/SMARTProvider.cpp" line="281" />
         <source>Track timer</source>
-        <translation type="unfinished">추적 타이머</translation>
+        <translation type="unfinished">트랙 타이머</translation>
     </message>
     <message>
         <location filename="../cpp/SMART/SMARTProvider.cpp" line="282" />
@@ -3144,12 +3760,12 @@
     <message>
         <location filename="../cpp/SMART/SMARTProvider.cpp" line="283" />
         <source>Format</source>
-        <translation type="unfinished">체재</translation>
+        <translation type="unfinished">형식</translation>
     </message>
     <message>
         <location filename="../cpp/SMART/SMARTProvider.cpp" line="284" />
         <source>Skip button timeout</source>
-        <translation type="unfinished">버튼 시간 초과 건너뛰기</translation>
+        <translation type="unfinished">건너뛰기 버튼 시간 초과</translation>
     </message>
     <message>
         <location filename="../cpp/SMART/SMARTProvider.cpp" line="285" />
@@ -3159,7 +3775,7 @@
     <message>
         <location filename="../cpp/SMART/SMARTProvider.cpp" line="287" />
         <source>Maximum photos</source>
-        <translation type="unfinished">최대 사진 수</translation>
+        <translation type="unfinished">최대 사진</translation>
     </message>
     <message>
         <location filename="../cpp/SMART/SMARTProvider.cpp" line="288" />
@@ -3174,7 +3790,7 @@
     <message>
         <location filename="../cpp/SMART/SMARTProvider.cpp" line="291" />
         <source>Alerts</source>
-        <translation type="unfinished">경고</translation>
+        <translation type="unfinished">알림</translation>
     </message>
     <message>
         <location filename="../cpp/SMART/SMARTProvider.cpp" line="3656" />
@@ -3184,7 +3800,7 @@
     <message>
         <location filename="../cpp/SMART/SMARTProvider.cpp" line="3657" />
         <source>Is Armed</source>
-        <translation type="unfinished">무장하다</translation>
+        <translation type="unfinished">무장</translation>
     </message>
     <message>
         <location filename="../cpp/SMART/SMARTProvider.cpp" line="3658" />
@@ -3194,22 +3810,22 @@
     <message>
         <location filename="../cpp/SMART/SMARTProvider.cpp" line="3659" />
         <source>Station</source>
-        <translation type="unfinished">역</translation>
+        <translation type="unfinished">스테이션</translation>
     </message>
     <message>
         <location filename="../cpp/SMART/SMARTProvider.cpp" line="3660" />
         <source>Mandate</source>
-        <translation type="unfinished">위임</translation>
+        <translation type="unfinished">명령</translation>
     </message>
     <message>
         <location filename="../cpp/SMART/SMARTProvider.cpp" line="3661" />
         <source>Objective</source>
-        <translation type="unfinished">목적</translation>
+        <translation type="unfinished">목표</translation>
     </message>
     <message>
         <location filename="../cpp/SMART/SMARTProvider.cpp" line="3662" />
         <source>Comment</source>
-        <translation type="unfinished">논평</translation>
+        <translation type="unfinished">댓글</translation>
     </message>
     <message>
         <location filename="../cpp/SMART/SMARTProvider.cpp" line="3663" />
@@ -3224,12 +3840,12 @@
     <message>
         <location filename="../cpp/SMART/SMARTProvider.cpp" line="3665" />
         <source>Leader</source>
-        <translation type="unfinished">지도자</translation>
+        <translation type="unfinished">리더</translation>
     </message>
     <message>
         <location filename="../cpp/SMART/SMARTProvider.cpp" line="3666" />
         <source>Pilot</source>
-        <translation type="unfinished">조종사</translation>
+        <translation type="unfinished">파일럿</translation>
     </message>
     <message>
         <location filename="../cpp/SMART/SMARTProvider.cpp" line="3667" />
@@ -3255,24 +3871,24 @@
     <message>
         <location filename="../cpp/SMART/SMARTProvider.cpp" line="591" />
         <source>Paused</source>
-        <translation type="unfinished">일시중지됨</translation>
+        <translation type="unfinished">일시 중지됨</translation>
     </message>
     <message>
         <location filename="../cpp/SMART/SMARTProvider.cpp" line="591" />
         <source>Active</source>
-        <translation type="unfinished">활동적인</translation>
+        <translation type="unfinished">활성</translation>
     </message>
     <message>
         <location filename="../cpp/SMART/SMARTProvider.cpp" line="202" />
         <location filename="../cpp/SMART/SMARTProvider.cpp" line="3930" />
         <location filename="../cpp/SMART/SMARTProvider.cpp" line="3957" />
         <source>Survey</source>
-        <translation type="unfinished">조사</translation>
+        <translation type="unfinished">설문 조사</translation>
     </message>
     <message>
         <location filename="../cpp/SMART/SMARTProvider.cpp" line="3937" />
         <source>Start survey</source>
-        <translation type="unfinished">설문조사 시작</translation>
+        <translation type="unfinished">설문 조사 시작</translation>
     </message>
     <message>
         <location filename="../cpp/SMART/SMARTProvider.cpp" line="3937" />
@@ -3282,7 +3898,7 @@
     <message>
         <location filename="../cpp/SMART/SMARTProvider.cpp" line="3941" />
         <source>End survey</source>
-        <translation type="unfinished">설문 종료</translation>
+        <translation type="unfinished">설문조사 종료</translation>
     </message>
     <message>
         <location filename="../cpp/SMART/SMARTProvider.cpp" line="3941" />
@@ -3292,7 +3908,7 @@
     <message>
         <location filename="../cpp/SMART/SMARTProvider.cpp" line="3945" />
         <source>Pause survey</source>
-        <translation type="unfinished">설문조사 일시중지</translation>
+        <translation type="unfinished">설문 조사 일시 중지</translation>
     </message>
     <message>
         <location filename="../cpp/SMART/SMARTProvider.cpp" line="3945" />
@@ -3302,7 +3918,7 @@
     <message>
         <location filename="../cpp/SMART/SMARTProvider.cpp" line="3949" />
         <source>Resume survey</source>
-        <translation type="unfinished">설문 조사 재개</translation>
+        <translation type="unfinished">설문조사 재개</translation>
     </message>
     <message>
         <location filename="../cpp/SMART/SMARTProvider.cpp" line="3949" />
@@ -3323,9 +3939,9 @@
 <context>
     <name>Settings</name>
     <message>
-        <location filename="../cpp/Settings.cpp" line="90" />
+        <location filename="../cpp/Settings.cpp" line="151" />
         <source>Default</source>
-        <translation type="unfinished">기본</translation>
+        <translation type="unfinished">기본값</translation>
     </message>
 </context>
 <context>
@@ -3343,90 +3959,90 @@
         <translation type="unfinished">시스템 설정</translation>
     </message>
     <message>
-        <location filename="../qml/EarthRanger/SettingsPage.qml" line="67" />
+        <location filename="../qml/EarthRanger/SettingsPage.qml" line="66" />
         <source>Last updated</source>
         <translation type="unfinished">마지막 업데이트</translation>
     </message>
     <message>
-        <location filename="../qml/EarthRanger/SettingsPage.qml" line="84" />
+        <location filename="../qml/EarthRanger/SettingsPage.qml" line="83" />
         <source>Update</source>
         <translation type="unfinished">업데이트</translation>
     </message>
     <message>
-        <location filename="../qml/EarthRanger/SettingsPage.qml" line="120" />
+        <location filename="../qml/EarthRanger/SettingsPage.qml" line="119" />
         <source>Logged in as</source>
-        <translation type="unfinished">다음으로 로그인했습니다.</translation>
+        <translation type="unfinished">다음 계정으로 로그인</translation>
     </message>
     <message>
-        <location filename="../qml/EarthRanger/SettingsPage.qml" line="120" />
+        <location filename="../qml/EarthRanger/SettingsPage.qml" line="119" />
         <source>Logged out</source>
         <translation type="unfinished">로그아웃</translation>
     </message>
     <message>
-        <location filename="../qml/EarthRanger/SettingsPage.qml" line="135" />
+        <location filename="../qml/EarthRanger/SettingsPage.qml" line="134" />
         <source>Logout</source>
-        <translation type="unfinished">로그 아웃</translation>
+        <translation type="unfinished">로그아웃</translation>
     </message>
     <message>
-        <location filename="../qml/EarthRanger/SettingsPage.qml" line="135" />
+        <location filename="../qml/EarthRanger/SettingsPage.qml" line="134" />
         <source>Login</source>
         <translation type="unfinished">로그인</translation>
     </message>
     <message>
-        <location filename="../qml/EarthRanger/SettingsPage.qml" line="165" />
+        <location filename="../qml/EarthRanger/SettingsPage.qml" line="164" />
         <source>Reported by</source>
-        <translation type="unfinished">의해보고 된</translation>
+        <translation type="unfinished">보고자</translation>
     </message>
     <message>
-        <location filename="../qml/EarthRanger/SettingsPage.qml" line="200" />
+        <location filename="../qml/EarthRanger/SettingsPage.qml" line="199" />
         <source>Merge categories</source>
         <translation type="unfinished">카테고리 병합</translation>
     </message>
     <message>
-        <location filename="../qml/EarthRanger/SettingsPage.qml" line="243" />
+        <location filename="../qml/EarthRanger/SettingsPage.qml" line="242" />
         <source>One page per question</source>
-        <translation type="unfinished">질문당 한 페이지</translation>
+        <translation type="unfinished">문제당 한 페이지</translation>
     </message>
     <message>
-        <location filename="../qml/EarthRanger/SettingsPage.qml" line="268" />
+        <location filename="../qml/EarthRanger/SettingsPage.qml" line="267" />
         <source>Visible reports</source>
-        <translation type="unfinished">보이는 보고서</translation>
+        <translation type="unfinished">가시적 보고서</translation>
     </message>
     <message>
-        <location filename="../qml/EarthRanger/SettingsPage.qml" line="285" />
+        <location filename="../qml/EarthRanger/SettingsPage.qml" line="284" />
         <source>Logout?</source>
-        <translation type="unfinished">로그 아웃?</translation>
+        <translation type="unfinished">로그아웃하시겠습니까?</translation>
     </message>
     <message>
-        <location filename="../qml/EarthRanger/SettingsPage.qml" line="95" />
+        <location filename="../qml/EarthRanger/SettingsPage.qml" line="94" />
         <source>Offline</source>
         <translation type="unfinished">오프라인</translation>
     </message>
     <message>
-        <location filename="../qml/EarthRanger/SettingsPage.qml" line="175" />
+        <location filename="../qml/EarthRanger/SettingsPage.qml" line="174" />
         <source>Unknown</source>
-        <translation type="unfinished">알려지지 않은</translation>
+        <translation type="unfinished">알 수 없음</translation>
     </message>
     <message>
-        <location filename="../qml/SettingsPage.qml" line="111" />
+        <location filename="../qml/SettingsPage.qml" line="138" />
         <source>Collect as</source>
-        <translation type="unfinished">다음으로 수집</translation>
+        <translation type="unfinished">다른 이름으로 수집</translation>
     </message>
     <message>
         <location filename="../qml/SMART/SettingsPage.qml" line="38" />
-        <location filename="../qml/SettingsPage.qml" line="154" />
+        <location filename="../qml/SettingsPage.qml" line="180" />
         <source>Language</source>
         <translation type="unfinished">언어</translation>
-    </message>
-    <message>
-        <location filename="../qml/SMART/SettingsPage.qml" line="135" />
-        <source>Change project</source>
-        <translation type="unfinished">프로젝트 변경</translation>
     </message>
     <message>
         <location filename="../qml/SMART/SettingsPage.qml" line="113" />
         <source>Select routes</source>
         <translation type="unfinished">경로 선택</translation>
+    </message>
+    <message>
+        <location filename="../qml/SMART/SettingsPage.qml" line="135" />
+        <source>Change %1</source>
+        <translation type="unfinished">변경 %1</translation>
     </message>
     <message>
         <location filename="../qml/SMART/SettingsPage.qml" line="156" />
@@ -3442,31 +4058,31 @@
     <message>
         <location filename="../qml/SMART/SettingsPage.qml" line="202" />
         <source>Recover Connect data</source>
-        <translation type="unfinished">연결 데이터 복구</translation>
+        <translation type="unfinished">Connect 데이터 복구</translation>
     </message>
     <message>
         <location filename="../qml/SMART/SettingsPage.qml" line="227" />
         <source>No routes found</source>
-        <translation type="unfinished">경로를 찾을 수 없습니다</translation>
+        <translation type="unfinished">경로를 찾을 수 없음</translation>
     </message>
     <message>
-        <location filename="../qml/SettingsPage.qml" line="232" />
+        <location filename="../qml/SettingsPage.qml" line="315" />
         <source>Toolbar captions</source>
         <translation type="unfinished">도구 모음 캡션</translation>
     </message>
     <message>
-        <location filename="../qml/SettingsPage.qml" line="258" />
+        <location filename="../qml/SettingsPage.qml" line="341" />
         <source>Metric units</source>
         <translation type="unfinished">미터법 단위</translation>
     </message>
     <message>
-        <location filename="../qml/SettingsPage.qml" line="285" />
+        <location filename="../qml/SettingsPage.qml" line="368" />
         <source>Full screen</source>
         <translation type="unfinished">전체 화면</translation>
     </message>
     <message>
         <location filename="../qml/SMART/SettingsPage.qml" line="60" />
-        <location filename="../qml/SettingsPage.qml" line="207" />
+        <location filename="../qml/SettingsPage.qml" line="290" />
         <source>Dark theme</source>
         <translation type="unfinished">어두운 테마</translation>
     </message>
@@ -3476,102 +4092,117 @@
         <translation type="unfinished">정보</translation>
     </message>
     <message>
-        <location filename="../qml/SettingsPage.qml" line="76" />
+        <location filename="../qml/SettingsPage.qml" line="104" />
         <source>Offline maps</source>
         <translation type="unfinished">오프라인 지도</translation>
     </message>
     <message>
-        <location filename="../qml/SettingsPage.qml" line="313" />
+        <location filename="../qml/SettingsPage.qml" line="232" />
+        <source>Auto launch</source>
+        <translation type="unfinished">자동 실행</translation>
+    </message>
+    <message>
+        <location filename="../qml/SettingsPage.qml" line="255" />
+        <source></source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../qml/SettingsPage.qml" line="76" />
+        <source>Edit %1</source>
+        <translation type="unfinished">1 편집</translation>
+    </message>
+    <message>
+        <location filename="../qml/SettingsPage.qml" line="396" />
         <source>Font size</source>
         <translation type="unfinished">글꼴 크기</translation>
     </message>
     <message>
-        <location filename="../qml/SettingsPage.qml" line="346" />
+        <location filename="../qml/SettingsPage.qml" line="429" />
         <source>Coordinates</source>
         <translation type="unfinished">좌표</translation>
     </message>
     <message>
-        <location filename="../qml/SettingsPage.qml" line="356" />
+        <location filename="../qml/SettingsPage.qml" line="439" />
         <source>Decimal degrees</source>
-        <translation type="unfinished">십진법</translation>
+        <translation type="unfinished">소수점</translation>
     </message>
     <message>
-        <location filename="../qml/SettingsPage.qml" line="356" />
+        <location filename="../qml/SettingsPage.qml" line="439" />
         <source>Degrees minutes seconds</source>
-        <translation type="unfinished">도 분 초</translation>
+        <translation type="unfinished">학위 분 초</translation>
     </message>
     <message>
-        <location filename="../qml/SettingsPage.qml" line="356" />
+        <location filename="../qml/SettingsPage.qml" line="439" />
         <source>Degrees decimal minutes</source>
-        <translation type="unfinished">도 십진수 분</translation>
+        <translation type="unfinished">학위 십진수 분</translation>
     </message>
     <message>
-        <location filename="../qml/SettingsPage.qml" line="383" />
+        <location filename="../qml/SettingsPage.qml" line="466" />
         <source>GPS accuracy</source>
         <translation type="unfinished">GPS 정확도</translation>
     </message>
     <message>
-        <location filename="../qml/SettingsPage.qml" line="383" />
+        <location filename="../qml/SettingsPage.qml" line="466" />
         <source>meters</source>
         <translation type="unfinished">미터</translation>
     </message>
     <message>
-        <location filename="../qml/SettingsPage.qml" line="429" />
+        <location filename="../qml/SettingsPage.qml" line="512" />
         <source>Simulate location</source>
         <translation type="unfinished">위치 시뮬레이션</translation>
     </message>
     <message>
-        <location filename="../qml/SettingsPage.qml" line="454" />
+        <location filename="../qml/SettingsPage.qml" line="537" />
         <source>Source file</source>
         <translation type="unfinished">소스 파일</translation>
     </message>
     <message>
-        <location filename="../qml/SettingsPage.qml" line="510" />
+        <location filename="../qml/SettingsPage.qml" line="591" />
         <source>Upload requires WiFi</source>
-        <translation type="unfinished">업로드하려면 Wi-Fi가 필요합니다.</translation>
+        <translation type="unfinished">업로드 시 Wi-Fi 필요</translation>
     </message>
     <message>
-        <location filename="../qml/SettingsPage.qml" line="534" />
+        <location filename="../qml/SettingsPage.qml" line="615" />
         <source>Share bug report</source>
-        <translation type="unfinished">버그 보고서 공유</translation>
+        <translation type="unfinished">버그 리포트 공유</translation>
     </message>
     <message>
-        <location filename="../qml/SettingsPage.qml" line="542" />
+        <location filename="../qml/SettingsPage.qml" line="623" />
         <source>Share over email, text, etc.</source>
-        <translation type="unfinished">이메일, 문자 등을 통해 공유</translation>
+        <translation type="unfinished">이메일, 문자 등을 통해 공유하세요.</translation>
     </message>
     <message>
-        <location filename="../qml/SettingsPage.qml" line="571" />
+        <location filename="../qml/SettingsPage.qml" line="651" />
         <source>Save bug report</source>
-        <translation type="unfinished">버그 보고서 저장</translation>
+        <translation type="unfinished">버그 리포트 저장</translation>
     </message>
     <message>
-        <location filename="../qml/SettingsPage.qml" line="579" />
+        <location filename="../qml/SettingsPage.qml" line="659" />
         <source>Save to device for manual copy</source>
-        <translation type="unfinished">수동 복사를 위해 장치에 저장</translation>
+        <translation type="unfinished">수동 복사를 위해 기기에 저장</translation>
     </message>
     <message>
-        <location filename="../qml/SettingsPage.qml" line="608" />
+        <location filename="../qml/SettingsPage.qml" line="687" />
         <source>Simulation source</source>
         <translation type="unfinished">시뮬레이션 소스</translation>
     </message>
     <message>
-        <location filename="../qml/SettingsPage.qml" line="617" />
+        <location filename="../qml/SettingsPage.qml" line="696" />
         <source>Generate track file using</source>
         <translation type="unfinished">다음을 사용하여 트랙 파일 생성</translation>
     </message>
     <message>
-        <location filename="../qml/SettingsPage.qml" line="624" />
+        <location filename="../qml/SettingsPage.qml" line="703" />
         <source>Copy to the Download folder</source>
         <translation type="unfinished">다운로드 폴더에 복사</translation>
     </message>
     <message>
-        <location filename="../qml/SettingsPage.qml" line="631" />
+        <location filename="../qml/SettingsPage.qml" line="710" />
         <source>Restart</source>
-        <translation type="unfinished">재시작</translation>
+        <translation type="unfinished">다시 시작</translation>
     </message>
     <message>
-        <location filename="../qml/EarthRanger/SettingsPage.qml" line="234" />
+        <location filename="../qml/EarthRanger/SettingsPage.qml" line="233" />
         <location filename="../qml/SMART/SettingsPage.qml" line="87" />
         <source>Page mode</source>
         <translation type="unfinished">페이지 모드</translation>
@@ -3587,27 +4218,27 @@
     <message>
         <location filename="../qml/ShareProjectPage.qml" line="53" />
         <source>Share link</source>
-        <translation type="unfinished">링크 공유</translation>
+        <translation type="unfinished">공유 링크</translation>
     </message>
     <message>
         <location filename="../qml/ShareProjectPage.qml" line="60" />
         <source>Copied to clipboard</source>
-        <translation type="unfinished">클립보드에 복사됨</translation>
+        <translation type="unfinished">클립보드에 복사</translation>
     </message>
     <message>
         <location filename="../qml/ShareProjectPage.qml" line="69" />
         <source>Share QR code</source>
-        <translation type="unfinished">QR 코드 공유</translation>
+        <translation type="unfinished">QR코드 공유</translation>
     </message>
     <message>
         <location filename="../qml/ShareProjectPage.qml" line="87" />
         <source>Save QR code</source>
-        <translation type="unfinished">QR 코드 저장</translation>
+        <translation type="unfinished">QR코드 저장</translation>
     </message>
     <message>
         <location filename="../qml/ShareProjectPage.qml" line="95" />
         <source>QR code saved</source>
-        <translation type="unfinished">QR 코드 저장됨</translation>
+        <translation type="unfinished">QR코드 저장</translation>
     </message>
     <message>
         <location filename="../qml/ShareProjectPage.qml" line="97" />
@@ -3618,12 +4249,12 @@
 <context>
     <name>Sighting</name>
     <message>
-        <location filename="../cpp/Sighting.cpp" line="810" />
+        <location filename="../cpp/Sighting.cpp" line="856" />
         <source>photo</source>
         <translation type="unfinished">사진</translation>
     </message>
     <message>
-        <location filename="../cpp/Sighting.cpp" line="810" />
+        <location filename="../cpp/Sighting.cpp" line="856" />
         <source>photos</source>
         <translation type="unfinished">사진</translation>
     </message>
@@ -3633,7 +4264,7 @@
     <message>
         <location filename="../qml/SMART/SightingHomePage.qml" line="39" />
         <source>Discard incident?</source>
-        <translation type="unfinished">사건을 삭제하시겠습니까?</translation>
+        <translation type="unfinished">인시던트 삭제?</translation>
     </message>
     <message>
         <location filename="../qml/SMART/SightingHomePage.qml" line="53" />
@@ -3643,22 +4274,22 @@
     <message>
         <location filename="../qml/SMART/SightingHomePage.qml" line="53" />
         <source>End patrol?</source>
-        <translation type="unfinished">순찰을 종료하시겠습니까?</translation>
+        <translation type="unfinished">순찰 종료?</translation>
     </message>
     <message>
         <location filename="../qml/SMART/SightingHomePage.qml" line="63" />
         <source>Stop collecting?</source>
-        <translation type="unfinished">수집을 중지하시겠습니까?</translation>
+        <translation type="unfinished">수집을 중단하시겠습니까?</translation>
     </message>
     <message>
         <location filename="../qml/SMART/SightingHomePage.qml" line="99" />
         <source>Edit</source>
-        <translation type="unfinished">편집하다</translation>
+        <translation type="unfinished">편집</translation>
     </message>
     <message>
         <location filename="../qml/SMART/SightingHomePage.qml" line="201" />
         <source>Incident</source>
-        <translation type="unfinished">사건</translation>
+        <translation type="unfinished">인시던트</translation>
     </message>
     <message>
         <location filename="../qml/SMART/SightingHomePage.qml" line="173" />
@@ -3678,7 +4309,7 @@
     <message>
         <location filename="../qml/SMART/SightingHomePage.qml" line="209" />
         <source>Save</source>
-        <translation type="unfinished">구하다</translation>
+        <translation type="unfinished">저장</translation>
     </message>
     <message>
         <location filename="../qml/SMART/SightingHomePage.qml" line="262" />
@@ -3688,7 +4319,7 @@
     <message>
         <location filename="../qml/SMART/SightingHomePage.qml" line="275" />
         <source>Confirm</source>
-        <translation type="unfinished">확인하다</translation>
+        <translation type="unfinished">확인</translation>
     </message>
     <message>
         <location filename="../qml/SMART/SightingHomePage.qml" line="356" />
@@ -3696,47 +4327,47 @@
         <translation type="unfinished">그룹</translation>
     </message>
     <message>
-        <location filename="../qml/SMART/SightingHomePage.qml" line="430" />
+        <location filename="../qml/SMART/SightingHomePage.qml" line="429" />
         <source>Create a new group</source>
         <translation type="unfinished">새 그룹 만들기</translation>
     </message>
     <message>
-        <location filename="../qml/SMART/SightingHomePage.qml" line="459" />
+        <location filename="../qml/SMART/SightingHomePage.qml" line="458" />
         <source>Make observation</source>
-        <translation type="unfinished">관찰하다</translation>
+        <translation type="unfinished">관찰하기</translation>
     </message>
     <message>
-        <location filename="../qml/SMART/SightingHomePage.qml" line="459" />
+        <location filename="../qml/SMART/SightingHomePage.qml" line="458" />
         <source>Add observation</source>
         <translation type="unfinished">관찰 추가</translation>
     </message>
     <message>
-        <location filename="../qml/SMART/SightingHomePage.qml" line="511" />
+        <location filename="../qml/SMART/SightingHomePage.qml" line="510" />
         <source>Delete group?</source>
         <translation type="unfinished">그룹을 삭제하시겠습니까?</translation>
     </message>
     <message>
-        <location filename="../qml/SMART/SightingHomePage.qml" line="512" />
+        <location filename="../qml/SMART/SightingHomePage.qml" line="511" />
         <source>Delete item?</source>
         <translation type="unfinished">항목을 삭제하시겠습니까?</translation>
     </message>
     <message>
-        <location filename="../qml/SMART/SightingHomePage.qml" line="524" />
+        <location filename="../qml/SMART/SightingHomePage.qml" line="523" />
         <source>Yes</source>
         <translation type="unfinished">예</translation>
     </message>
     <message>
-        <location filename="../qml/SMART/SightingHomePage.qml" line="548" />
+        <location filename="../qml/SMART/SightingHomePage.qml" line="547" />
         <source>No</source>
-        <translation type="unfinished">아니</translation>
+        <translation type="unfinished">아니요</translation>
     </message>
     <message>
-        <location filename="../qml/SMART/SightingHomePage.qml" line="626" />
+        <location filename="../qml/SMART/SightingHomePage.qml" line="625" />
         <source>Statistics</source>
         <translation type="unfinished">통계</translation>
     </message>
     <message>
-        <location filename="../qml/SMART/SightingHomePage.qml" line="640" />
+        <location filename="../qml/SMART/SightingHomePage.qml" line="639" />
         <source>Toggle dark theme</source>
         <translation type="unfinished">어두운 테마 전환</translation>
     </message>
@@ -3746,12 +4377,12 @@
     <message>
         <location filename="../cpp/SightingListModel.cpp" line="74" />
         <source>Track</source>
-        <translation type="unfinished">길</translation>
+        <translation type="unfinished">트랙</translation>
     </message>
     <message>
         <location filename="../cpp/SightingListModel.cpp" line="75" />
         <source>points</source>
-        <translation type="unfinished">포인트들</translation>
+        <translation type="unfinished">포인트</translation>
     </message>
     <message>
         <location filename="../cpp/SightingListModel.cpp" line="162" />
@@ -3764,22 +4395,22 @@
     <message>
         <location filename="../qml/SightingPage.qml" line="16" />
         <source>Sighting</source>
-        <translation type="unfinished">목격</translation>
+        <translation type="unfinished">시력</translation>
     </message>
     <message>
         <location filename="../qml/SightingPage.qml" line="36" />
         <source>No sighting selected</source>
-        <translation type="unfinished">선택한 관찰이 없습니다.</translation>
+        <translation type="unfinished">선택된 목격 없음</translation>
     </message>
     <message>
         <location filename="../qml/SightingPage.qml" line="48" />
         <source>First</source>
-        <translation type="unfinished">첫 번째</translation>
+        <translation type="unfinished">먼저</translation>
     </message>
     <message>
         <location filename="../qml/SightingPage.qml" line="56" />
         <source>Previous</source>
-        <translation type="unfinished">이전의</translation>
+        <translation type="unfinished">이전</translation>
     </message>
     <message>
         <location filename="../qml/SightingPage.qml" line="63" />
@@ -3799,7 +4430,7 @@
     <message>
         <location filename="../qml/SightingPage.qml" line="89" />
         <source>Edit</source>
-        <translation type="unfinished">편집하다</translation>
+        <translation type="unfinished">편집</translation>
     </message>
     <message>
         <location filename="../qml/SightingPage.qml" line="104" />
@@ -3810,7 +4441,7 @@
 <context>
     <name>SketchField</name>
     <message>
-        <location filename="../cpp/Field.cpp" line="1327" />
+        <location filename="../cpp/Field.cpp" line="1334" />
         <source>Yes</source>
         <translation type="unfinished">예</translation>
     </message>
@@ -3820,12 +4451,12 @@
     <message>
         <location filename="../qml/EarthRanger/StartPage.qml" line="25" />
         <source>Sync</source>
-        <translation type="unfinished">동조</translation>
+        <translation type="unfinished">동기화</translation>
     </message>
     <message>
         <location filename="../qml/EarthRanger/StartPage.qml" line="33" />
         <source>Clear</source>
-        <translation type="unfinished">분명한</translation>
+        <translation type="unfinished">지우기</translation>
     </message>
     <message>
         <location filename="../qml/EarthRanger/StartPage.qml" line="39" />
@@ -3837,12 +4468,12 @@
     <message>
         <location filename="../qml/EarthRanger/StartPage.qml" line="102" />
         <source>Clear uploaded data?</source>
-        <translation type="unfinished">업로드된 데이터를 지우시겠습니까?</translation>
+        <translation type="unfinished">업로드한 데이터를 지우시겠습니까?</translation>
     </message>
     <message>
         <location filename="../qml/EarthRanger/StartPage.qml" line="103" />
         <source>Yes, clear it</source>
-        <translation type="unfinished">예, 삭제</translation>
+        <translation type="unfinished">예, 지우기</translation>
     </message>
     <message>
         <location filename="../qml/SMART/StartPage.qml" line="34" />
@@ -3853,7 +4484,7 @@
         <location filename="../qml/EarthRanger/StartPage.qml" line="45" />
         <location filename="../qml/ODK/StartPage.qml" line="39" />
         <source>New</source>
-        <translation type="unfinished">새로운</translation>
+        <translation type="unfinished">신규</translation>
     </message>
     <message>
         <location filename="../qml/EarthRanger/StartPage.qml" line="73" />
@@ -3863,48 +4494,28 @@
     <message>
         <location filename="../qml/Classic/StartPage.qml" line="122" />
         <source>No new data</source>
-        <translation type="unfinished">새로운 데이터 없음</translation>
+        <translation type="unfinished">새 데이터 없음</translation>
     </message>
     <message>
-        <location filename="../qml/Classic/StartPage.qml" line="142" />
+        <location filename="../qml/Classic/StartPage.qml" line="140" />
         <source>Share outstanding data?</source>
-        <translation type="unfinished">뛰어난 데이터를 공유하시겠습니까?</translation>
+        <translation type="unfinished">미결 데이터를 공유하시나요?</translation>
     </message>
     <message>
-        <location filename="../qml/Classic/StartPage.qml" line="143" />
+        <location filename="../qml/Classic/StartPage.qml" line="141" />
         <source>Yes, share it</source>
-        <translation type="unfinished">예, 공유합니다</translation>
+        <translation type="unfinished">예, 공유</translation>
     </message>
     <message>
-        <location filename="../qml/Classic/StartPage.qml" line="153" />
-        <location filename="../qml/SMART/StartPage.qml" line="111" />
+        <location filename="../qml/Classic/StartPage.qml" line="151" />
+        <location filename="../qml/SMART/StartPage.qml" line="112" />
         <source>Success</source>
         <translation type="unfinished">성공</translation>
     </message>
     <message>
-        <location filename="../qml/SMART/StartPage.qml" line="111" />
+        <location filename="../qml/SMART/StartPage.qml" line="112" />
         <source>Error</source>
         <translation type="unfinished">오류</translation>
-    </message>
-    <message>
-        <location filename="../qml/SMART/StartPage.qml" line="92" />
-        <source>All data has been uploaded</source>
-        <translation type="unfinished">모든 데이터가 업로드되었습니다</translation>
-    </message>
-    <message>
-        <location filename="../qml/SMART/StartPage.qml" line="93" />
-        <source>Connection failed</source>
-        <translation type="unfinished">연결에 실패</translation>
-    </message>
-    <message>
-        <location filename="../qml/SMART/StartPage.qml" line="100" />
-        <source>Data is ready for import from the desktop</source>
-        <translation type="unfinished">데스크탑에서 데이터를 가져올 준비가 되었습니다.</translation>
-    </message>
-    <message>
-        <location filename="../qml/SMART/StartPage.qml" line="101" />
-        <source>Export may have failed</source>
-        <translation type="unfinished">내보내기가 실패했을 수 있습니다.</translation>
     </message>
     <message>
         <location filename="../qml/SMART/StartPage.qml" line="43" />
@@ -3919,15 +4530,35 @@
     <message>
         <location filename="../qml/SMART/StartPage.qml" line="67" />
         <source>Report Incident</source>
-        <translation type="unfinished">사고 보고</translation>
+        <translation type="unfinished">인시던트 보고</translation>
+    </message>
+    <message>
+        <location filename="../qml/SMART/StartPage.qml" line="92" />
+        <source>All data has been uploaded.</source>
+        <translation type="unfinished">모든 데이터가 업로드되었습니다.</translation>
+    </message>
+    <message>
+        <location filename="../qml/SMART/StartPage.qml" line="93" />
+        <source>Connection failed. Please try again later.</source>
+        <translation type="unfinished">연결에 실패했습니다. 나중에 다시 시도하세요.</translation>
+    </message>
+    <message>
+        <location filename="../qml/SMART/StartPage.qml" line="100" />
+        <source>Data is ready for import from the desktop.</source>
+        <translation type="unfinished">데스크톱에서 데이터를 가져올 준비가 되었습니다.</translation>
+    </message>
+    <message>
+        <location filename="../qml/SMART/StartPage.qml" line="101" />
+        <source>Export may have failed.</source>
+        <translation type="unfinished">내보내기가 실패했을 수 있습니다.</translation>
     </message>
     <message>
         <location filename="../qml/ODK/StartPage.qml" line="26" />
         <source>Submit</source>
-        <translation type="unfinished">제출하다</translation>
+        <translation type="unfinished">제출</translation>
     </message>
     <message>
-        <location filename="../qml/ODK/StartPage.qml" line="115" />
+        <location filename="../qml/ODK/StartPage.qml" line="113" />
         <source>Form error</source>
         <translation type="unfinished">양식 오류</translation>
     </message>
@@ -3935,52 +4566,73 @@
 <context>
     <name>StartPageCollect</name>
     <message>
-        <location filename="../qml/SMART/StartPageCollect.qml" line="149" />
-        <source>All data has been uploaded</source>
-        <translation type="unfinished">모든 데이터가 업로드되었습니다</translation>
-    </message>
-    <message>
-        <location filename="../qml/SMART/StartPageCollect.qml" line="150" />
-        <source>Connection failed</source>
-        <translation type="unfinished">연결에 실패</translation>
-    </message>
-    <message>
-        <location filename="../qml/SMART/StartPageCollect.qml" line="23" />
+        <location filename="../qml/SMART/StartPageCollect.qml" line="117" />
         <source>Success</source>
         <translation type="unfinished">성공</translation>
     </message>
     <message>
-        <location filename="../qml/SMART/StartPageCollect.qml" line="23" />
+        <location filename="../qml/SMART/StartPageCollect.qml" line="117" />
         <source>Error</source>
         <translation type="unfinished">오류</translation>
     </message>
     <message>
-        <location filename="../qml/SMART/StartPageCollect.qml" line="101" />
+        <location filename="../qml/SMART/StartPageCollect.qml" line="59" />
         <source>Enter email or phone</source>
-        <translation type="unfinished">이메일 또는 전화 입력</translation>
+        <translation type="unfinished">이메일 또는 전화번호 입력</translation>
     </message>
     <message>
-        <location filename="../qml/SMART/StartPageCollect.qml" line="112" />
+        <location filename="../qml/SMART/StartPageCollect.qml" line="71" />
         <source>Start collecting</source>
         <translation type="unfinished">수집 시작</translation>
     </message>
     <message>
-        <location filename="../qml/SMART/StartPageCollect.qml" line="126" />
+        <location filename="../qml/SMART/StartPageCollect.qml" line="86" />
         <source>Upload data</source>
         <translation type="unfinished">데이터 업로드</translation>
+    </message>
+    <message>
+        <location filename="../qml/SMART/StartPageCollect.qml" line="113" />
+        <source>All data has been uploaded.</source>
+        <translation type="unfinished">모든 데이터가 업로드되었습니다.</translation>
+    </message>
+    <message>
+        <location filename="../qml/SMART/StartPageCollect.qml" line="114" />
+        <source>Connection failed. Please try again later.</source>
+        <translation type="unfinished">연결에 실패했습니다. 나중에 다시 시도하세요.</translation>
     </message>
 </context>
 <context>
     <name>SubmitButton</name>
     <message>
-        <location filename="../controls/imports/CyberTracker.1/SubmitButton.qml" line="94" />
+        <location filename="../controls/imports/CyberTracker.1/SubmitButton.qml" line="89" />
         <source>Upload failed</source>
         <translation type="unfinished">업로드 실패</translation>
     </message>
     <message>
-        <location filename="../controls/imports/CyberTracker.1/SubmitButton.qml" line="156" />
+        <location filename="../controls/imports/CyberTracker.1/SubmitButton.qml" line="151" />
         <source>Submit data?</source>
         <translation type="unfinished">데이터를 제출하시겠습니까?</translation>
+    </message>
+</context>
+<context>
+    <name>UnsupportedPage</name>
+    <message>
+        <location filename="../qml/Google/UnsupportedPage.qml" line="29" />
+        <source>Forms containing *File upload* questions are not currently supported.</source>
+        <translation type="unfinished">파일 업로드* 질문이 포함된 양식은 현재 지원되지 않습니다.</translation>
+    </message>
+    <message>
+        <location filename="../qml/Google/UnsupportedPage.qml" line="39" />
+        <source>Remove the question and update the form to continue.</source>
+        <translation type="unfinished">계속하려면 질문을 삭제하고 양식을 업데이트합니다.</translation>
+    </message>
+</context>
+<context>
+    <name>UploadFileTask</name>
+    <message>
+        <location filename="../cpp/Google/GoogleProvider.cpp" line="131" />
+        <source>Incorrect %1 tag</source>
+        <translation type="unfinished">잘못된 %1 태그</translation>
     </message>
 </context>
 <context>
@@ -3988,7 +4640,7 @@
     <message>
         <location filename="../controls/imports/CyberTracker.1/UsernamePage.qml" line="16" />
         <source>Collect as</source>
-        <translation type="unfinished">다음으로 수집</translation>
+        <translation type="unfinished">다른 이름으로 수집</translation>
     </message>
     <message>
         <location filename="../controls/imports/CyberTracker.1/UsernamePage.qml" line="42" />
@@ -3997,8 +4649,8 @@
     </message>
     <message>
         <location filename="../controls/imports/CyberTracker.1/UsernamePage.qml" line="65" />
-        <source>Data will be tagged with this name. This setting applies to all projects.</source>
-        <translation type="unfinished">데이터에 이 이름으로 태그가 지정됩니다. 이 설정은 모든 프로젝트에 적용됩니다.</translation>
+        <source>Data will be tagged with this name. This setting applies to all %1.</source>
+        <translation type="unfinished">데이터에 이 이름으로 태그가 지정됩니다. 이 설정은 모든 %1에 적용됩니다.</translation>
     </message>
 </context>
 <context>
@@ -4006,7 +4658,7 @@
     <message>
         <location filename="../qml/EarthRanger/VisibleReportsPage.qml" line="10" />
         <source>Visible reports</source>
-        <translation type="unfinished">보이는 보고서</translation>
+        <translation type="unfinished">가시적 보고서</translation>
     </message>
 </context>
 <context>
@@ -4014,15 +4666,15 @@
     <message>
         <location filename="../controls/imports/CyberTracker.1/WebView.qml" line="16" />
         <source>Browser unavailable</source>
-        <translation type="unfinished">브라우저를 사용할 수 없음</translation>
+        <translation type="unfinished">브라우저를 사용할 수 없습니다.</translation>
     </message>
 </context>
 <context>
     <name>Wizard</name>
     <message>
-        <location filename="../cpp/Wizard.cpp" line="431" />
+        <location filename="../cpp/Wizard.cpp" line="438" />
         <source>Form incomplete</source>
-        <translation type="unfinished">양식이 불완전합니다.</translation>
+        <translation type="unfinished">양식 불완전</translation>
     </message>
 </context>
 <context>
@@ -4035,55 +4687,76 @@
     <message>
         <location filename="../controls/imports/CyberTracker.1/WizardOptionsPage.qml" line="23" />
         <source>Saved sightings</source>
-        <translation type="unfinished">저장된 목격</translation>
+        <translation type="unfinished">저장된 목격담</translation>
     </message>
     <message>
-        <location filename="../controls/imports/CyberTracker.1/WizardOptionsPage.qml" line="102" />
+        <location filename="../controls/imports/CyberTracker.1/WizardOptionsPage.qml" line="26" />
         <source>Submit</source>
-        <translation type="unfinished">제출하다</translation>
+        <translation type="unfinished">제출</translation>
     </message>
 </context>
 <context>
     <name>WizardPage</name>
     <message>
-        <location filename="../controls/imports/CyberTracker.1/WizardPage.qml" line="352" />
+        <location filename="../controls/imports/CyberTracker.1/WizardPage.qml" line="400" />
         <source>Yes</source>
         <translation type="unfinished">예</translation>
     </message>
     <message>
-        <location filename="../controls/imports/CyberTracker.1/WizardPage.qml" line="352" />
+        <location filename="../controls/imports/CyberTracker.1/WizardPage.qml" line="400" />
         <source>No</source>
-        <translation type="unfinished">아니</translation>
+        <translation type="unfinished">아니요</translation>
     </message>
     <message>
-        <location filename="../controls/imports/CyberTracker.1/WizardPage.qml" line="389" />
+        <location filename="../controls/imports/CyberTracker.1/WizardPage.qml" line="437" />
         <source>OK</source>
         <translation type="unfinished">확인</translation>
     </message>
     <message>
-        <location filename="../controls/imports/CyberTracker.1/WizardPage.qml" line="712" />
+        <location filename="../controls/imports/CyberTracker.1/WizardPage.qml" line="772" />
         <source>Unsaved data?</source>
-        <translation type="unfinished">저장되지 않은 데이터?</translation>
+        <translation type="unfinished">저장하지 않은 데이터?</translation>
     </message>
     <message>
-        <location filename="../controls/imports/CyberTracker.1/WizardPage.qml" line="713" />
+        <location filename="../controls/imports/CyberTracker.1/WizardPage.qml" line="773" />
         <source>This sighting has not been saved.</source>
         <translation type="unfinished">이 목격은 저장되지 않았습니다.</translation>
     </message>
     <message>
-        <location filename="../controls/imports/CyberTracker.1/WizardPage.qml" line="714" />
+        <location filename="../controls/imports/CyberTracker.1/WizardPage.qml" line="774" />
         <source>Yes, discard it</source>
-        <translation type="unfinished">그래 버려</translation>
+        <translation type="unfinished">예, 삭제</translation>
     </message>
     <message>
-        <location filename="../controls/imports/CyberTracker.1/WizardPage.qml" line="788" />
+        <location filename="../controls/imports/CyberTracker.1/WizardPage.qml" line="798" />
+        <source>Change %1</source>
+        <translation type="unfinished">변경 %1</translation>
+    </message>
+    <message>
+        <location filename="../controls/imports/CyberTracker.1/WizardPage.qml" line="799" />
+        <source>Update %1</source>
+        <translation type="unfinished">1 업데이트</translation>
+    </message>
+    <message>
+        <location filename="../controls/imports/CyberTracker.1/WizardPage.qml" line="800" />
+        <source>Settings</source>
+        <translation type="unfinished">설정</translation>
+    </message>
+    <message>
+        <location filename="../controls/imports/CyberTracker.1/WizardPage.qml" line="801" />
+        <location filename="../controls/imports/CyberTracker.1/WizardPage.qml" line="922" />
         <source>Home</source>
-        <translation type="unfinished">집</translation>
+        <translation type="unfinished">홈</translation>
     </message>
     <message>
-        <location filename="../controls/imports/CyberTracker.1/WizardPage.qml" line="963" />
+        <location filename="../controls/imports/CyberTracker.1/WizardPage.qml" line="821" />
+        <source>Offline</source>
+        <translation type="unfinished">오프라인</translation>
+    </message>
+    <message>
+        <location filename="../controls/imports/CyberTracker.1/WizardPage.qml" line="1103" />
         <source>Error saving observation</source>
-        <translation type="unfinished">관찰을 저장하는 동안 오류가 발생했습니다.</translation>
+        <translation type="unfinished">관찰 저장 오류</translation>
     </message>
 </context>
 </TS>

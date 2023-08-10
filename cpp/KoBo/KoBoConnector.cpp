@@ -126,7 +126,7 @@ ApiResult KoBoConnector::bootstrap(const QVariantMap& params)
     
     if (!m_projectManager->init(projectUid, ODK_PROVIDER, QVariantMap(), KOBO_CONNECTOR, connectorParams))
     {
-        return Failure(tr("Failed to create project"));
+        return Failure(QString(tr("Failed to create %1")).arg(App::instance()->alias_project()));
     }
 
     m_projectManager->modify(projectUid, [&](Project* project)
@@ -281,7 +281,7 @@ ApiResult KoBoConnector::update(Project* project)
     auto formSettings = QVariantMap();
     if (!XlsFormParser::parseSettings(updateFolder + "/form.xlsx", &formSettings))
     {
-        return Failure(tr("Failed to read form settings sheet"));
+        qDebug() << "Failed to read form settings sheet";
     }
 
     // Download the media.
@@ -358,13 +358,6 @@ ApiResult KoBoConnector::update(Project* project)
     updateProject.set_icon(icon);
     updateProject.set_subtitle(subtitle);
     updateProject.set_colors(colors);
-
-    auto androidPermissions = QStringList();
-    androidPermissions << "CAMERA";
-    androidPermissions << "RECORD_AUDIO";
-    androidPermissions << "ACCESS_FINE_LOCATION";
-    androidPermissions << "ACCESS_COARSE_LOCATION";
-    updateProject.set_androidPermissions(androidPermissions);
 
     XlsFormParser::configureProject(&updateProject, formSettings);
 

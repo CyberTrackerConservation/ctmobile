@@ -6,6 +6,7 @@ class SquareImage : public QQuickPaintedItem
     Q_OBJECT
 
     QML_WRITABLE_AUTO_PROPERTY(int, size)
+    QML_WRITABLE_AUTO_PROPERTY(int, angle)
     QML_WRITABLE_AUTO_PROPERTY(QString, source)
 
 public:

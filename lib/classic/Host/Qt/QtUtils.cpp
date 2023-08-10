@@ -124,6 +124,7 @@ BOOL FxCheck(VOID *pData)
 VOID FxHardFault(const CHAR *pFile, int Line)
 {
     LogError("Fault in %s, Line %d", pFile, Line);
+    qDebug() << pFile << Line;
     qFatal(pFile);
 }
 
@@ -302,12 +303,8 @@ BOOL FxBuildFileList(const CHAR *pPath, const CHAR *pPattern, FXFILELIST *pFileL
         const QFileInfo &fileInfo = files.at(i);
         FXFILE newFile = {0};
 
-        newFile.FullPath = (CHAR *)MEM_ALLOC(fileInfo.absoluteFilePath().length() + 1);
-        strcpy(newFile.FullPath, fileInfo.absoluteFilePath().toStdString().c_str());
-
-        newFile.Name = (CHAR *)MEM_ALLOC(fileInfo.fileName().length() + 1);
-        strcpy(newFile.Name, fileInfo.fileName().toStdString().c_str());
-
+        newFile.FullPath = AllocString(fileInfo.absoluteFilePath().toStdString().c_str());
+        newFile.Name = AllocString(fileInfo.fileName().toStdString().c_str());
         newFile.Size = (UINT)fileInfo.size();
 
         const QDateTime &created = fileInfo.birthTime();

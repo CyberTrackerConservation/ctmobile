@@ -8,7 +8,7 @@ C.ContentPage {
     id: page
 
     header: C.PageHeader {
-        text: "SMART"
+        text: qsTr("Connect to %1").arg("SMART")
     }
 
     Flickable {
@@ -24,24 +24,22 @@ C.ContentPage {
             C.ListRowDelegate {
                 Layout.fillWidth: true
                 text: qsTr("Desktop install")
-                subText: qsTr("Scan for projects installed by SMART Desktop")
+                subText: qsTr("Scan for %1 installed by SMART Desktop").arg(App.alias_projects)
                 wrapSubText: true
                 iconSource: "qrc:/icons/monitor.svg"
                 iconOpacity: 0.5
                 iconColor: Material.foreground
                 visible: Qt.platform.os !== "ios"
                 onClicked: {
-                    if (App.requestPermissionReadExternalStorage() && App.requestPermissionWriteExternalStorage()) {
-                        busyCover.doWork = boostrapDesktop
-                        busyCover.start()
-                    }
+                    busyCover.doWork = boostrapDesktop
+                    busyCover.start()
                 }
             }
 
             C.ListRowDelegate {
                 Layout.fillWidth: true
                 text: qsTr("Connect")
-                subText: qsTr("Install a project from SMART Connect")
+                subText: qsTr("Add a %1 from SMART Connect").arg(App.alias_project)
                 wrapSubText: true
                 iconSource: "qrc:/icons/cellphone_wireless.svg"
                 iconOpacity: 0.5
@@ -53,7 +51,7 @@ C.ContentPage {
             C.ListRowDelegate {
                 Layout.fillWidth: true
                 text: qsTr("Collect")
-                subText: qsTr("Install a project from SMART Collect")
+                subText: qsTr("Add a %1 from SMART Collect").arg(App.alias_project)
                 wrapSubText: true
                 iconSource: "qrc:/icons/nature_people.svg"
                 iconOpacity: 0.5

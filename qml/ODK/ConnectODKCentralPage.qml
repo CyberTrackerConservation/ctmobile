@@ -17,7 +17,7 @@ C.ContentPage {
     }
 
     header: C.PageHeader {
-        text: "ODK Central " + qsTr("Connect")
+        text: qsTr("Connect to %1").arg("ODK Central")
     }
 
     C.LoginItem {
@@ -37,7 +37,7 @@ C.ContentPage {
 
         C.ContentPage {
             header: C.PageHeader {
-                text: qsTr("Select project")
+                text: qsTr("Select %1").arg(App.alias_project)
             }
 
             C.ListViewV {
@@ -94,7 +94,7 @@ C.ContentPage {
             }
         }
 
-        showError(qsTr("No projects found"))
+        showError(qsTr("No %1 found").arg(App.alias_projects))
     }
 
     function getForms() {

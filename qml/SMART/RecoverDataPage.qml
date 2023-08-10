@@ -16,9 +16,9 @@ C.ContentPage {
 
     Pane {
         anchors.fill: parent
-        padding: 12
+        padding: App.scaleByFontSize(12)
         contentItem: ColumnLayout {
-            spacing: 12
+            spacing: App.scaleByFontSize(12)
 
             Label {
                 Layout.fillWidth: true
@@ -70,10 +70,10 @@ C.ContentPage {
         let success = form.provider.recoverAndClearData()
         if (success) {
             messagePopup.title = qsTr("Success")
-            messagePopup.message = qsTr("Data is ready for import from the desktop")
+            messagePopup.message1 = qsTr("Data is ready for import from the desktop.")
         } else {
             messagePopup.title = qsTr("Error")
-            messagePopup.message = qsTr("An error occurred during data export")
+            messagePopup.message1 = qsTr("An error occurred during data export.")
         }
 
         messagePopup.open()

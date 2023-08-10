@@ -293,24 +293,24 @@ PositionInfoSource::PositionInfoSource(QObject* parent) : QGeoPositionInfoSource
                 }
             }
 
-            // Distance and time requirements.
+            // Time filter.
+            auto timeSinceLast = t - m_lastTimestamp + 1000;
+            if (timeSinceLast > 0 && timeSinceLast < m_source->updateInterval())
+            {
+                // On iOS, the update interval seems to always be 1 second. Suspect that this is because the Qt iOS GPS interface is a singleton.
+            #if !defined(Q_OS_IOS)
+                qDebug() << "GPS - Time filter used - timeSinceLast = " << timeSinceLast << " updateInterval = " << m_source->updateInterval();
+            #endif
+                return;
+            }
+
+            // Distance filter.
             if (m_distanceFilter > 0)
             {
                 auto distanceToLast = update.coordinate().distanceTo(m_lastUpdate.coordinate());
                 if (distanceToLast < m_distanceFilter)
                 {
                     qDebug() << "GPS - Distance filter used - distanceToLast = " << distanceToLast << " distanceFilter = " << m_distanceFilter;
-                    return;
-                }
-            }
-            else
-            {
-                auto timeSinceLast = t - m_lastTimestamp + 1000;
-                if (timeSinceLast > 0 && timeSinceLast < m_source->updateInterval())
-                {
-                    // On iOS, the update interval seems to always be 1 second.
-                    // Suspect that this is because the Qt iOS GPS interface is a singleton.
-                    qDebug() << "GPS - Time filter used - timeSinceLast = " << timeSinceLast << " updateInterval = " << m_source->updateInterval();
                     return;
                 }
             }
@@ -1006,7 +1006,7 @@ void LocationStreamer::loadState(const QVariantMap& map)
     updateDisplay();
 }
 
-QVariantMap LocationStreamer::saveState()
+QVariantMap LocationStreamer::saveState() const
 {
     return QVariantMap
     {

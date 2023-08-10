@@ -5,7 +5,7 @@ import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
 import android.os.IBinder;
-import android.support.v4.app.NotificationCompat;
+import androidx.core.app.NotificationCompat;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.util.Log;
@@ -35,6 +35,11 @@ public class LocationUpdateService extends Service
         }
 
         Context context = MainActivity.instance();
+        if (context == null)
+        {
+            return;
+        }
+
         PowerManager powerManager = (PowerManager) context.getSystemService(Context.POWER_SERVICE);
 
         m_wakeLock = powerManager.newWakeLock(PowerManager.PARTIAL_WAKE_LOCK | PowerManager.LOCATION_MODE_NO_CHANGE, "LocationUpdateService:WakeLock");
@@ -46,7 +51,10 @@ public class LocationUpdateService extends Service
     {
         Log.i(TAG, "onDestroy called");
 
-        m_wakeLock.release();
+        if (m_wakeLock != null)
+        {
+            m_wakeLock.release();
+        }
 
         super.onDestroy();
     }

@@ -32,7 +32,6 @@ Flickable {
 
                 C.SquareIcon {
                     source: "qrc:/icons/cogs.svg"
-                    recolor: true
                     opacity: 0.5
                 }
 
@@ -157,6 +156,7 @@ Flickable {
         ItemDelegate {
             Layout.fillWidth: true
             Layout.minimumHeight: C.Style.minRowHeight
+            visible: formLanguageComboBox.model.length > 0
 
             contentItem: RowLayout {
                 Label {
@@ -167,6 +167,7 @@ Flickable {
                 }
 
                 FormLanguageComboBox {
+                    id: formLanguageComboBox
                     Layout.fillWidth: true
                     Layout.fillHeight: true
                 }
@@ -314,7 +315,7 @@ Flickable {
                             }
                         }
 
-                        displayText = qsTr("Unknown interval")
+                        displayText = qsTr("Custom interval")
                     }
                 }
             }
@@ -380,7 +381,7 @@ Flickable {
                             }
                         }
 
-                        displayText = qsTr("Unknown interval")
+                        displayText = qsTr("Custom interval")
                     }
                 }
             }

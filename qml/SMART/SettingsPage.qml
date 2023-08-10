@@ -132,14 +132,14 @@ C.ContentPage {
                     Label {
                         Layout.fillWidth: true
                         font.pixelSize: page.fontSize
-                        text: qsTr("Change project")
+                        text: qsTr("Change %1").arg(App.alias_project)
                         wrapMode: Label.WordWrap
                     }
 
                     C.ChevronRight {}
                 }
 
-                onClicked: form.pushPage("qrc:/SMART/ProjectChangePage.qml")
+                onClicked: form.pushPage("qrc:/ProjectChangePage.qml")
 
                 C.HorizontalDivider {}
             }

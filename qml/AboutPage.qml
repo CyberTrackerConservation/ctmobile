@@ -29,10 +29,10 @@ C.ContentPage {
                 onClicked: Qt.openUrlExternally(App.config.webPageUrl)
                 contentItem: ColumnLayout {
                     Layout.fillWidth: true
-                    Image {
+                    C.SquareIcon {
                         Layout.alignment: Qt.AlignHCenter
                         source: App.config.logo
-                        sourceSize.height: 80
+                        size: App.scaleByFontSize(80)
                     }
 
                     Label {
@@ -78,19 +78,17 @@ C.ContentPage {
 
                         RowLayout {
                             Layout.alignment: Qt.AlignHCenter
-                            Image {
+                            C.SquareIcon {
                                 source: "qrc:/app/appicon.svg"
-                                sourceSize.width: 32
-                                sourceSize.height: 32
+                                size: C.Style.minRowHeight
                             }
-                            Image {
+                            C.SquareIcon {
                                 source: "qrc:/app/esrilogo.svg"
-                                sourceSize.height: 32
+                                size: C.Style.minRowHeight
                             }
-
-                            Image {
+                            C.SquareIcon {
                                 source: "qrc:/app/qtlogo.svg"
-                                sourceSize.height: 32
+                                size: C.Style.minRowHeight
                             }
                         }
                     }
@@ -115,6 +113,7 @@ C.ContentPage {
             ItemDelegate {
                 Layout.fillWidth: true
                 onClicked: Qt.openUrlExternally(App.config.licenseUrl)
+                visible: App.config.licenseUrl !== ""
                 contentItem: Label {
                     font.pixelSize: App.settings.font14
                     horizontalAlignment: Label.AlignHCenter

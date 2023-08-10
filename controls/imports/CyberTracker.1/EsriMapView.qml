@@ -35,16 +35,6 @@ Esri.MapView {
 
     Component.onCompleted: {
         internal.loadComplete = true
-
-        let locationSymbolSize = App.scaleByFontSize(40)
-        mapView.locationDisplay.acquiringSymbol = createPictureMarkerSymbol(":/map/acquiringSymbol.svg", locationSymbolSize)
-        mapView.locationDisplay.courseSymbol = createPictureMarkerSymbol(":/map/courseSymbol.svg", locationSymbolSize)
-        mapView.locationDisplay.defaultSymbol = createPictureMarkerSymbol(":/map/defaultSymbol.svg", locationSymbolSize)
-        mapView.locationDisplay.headingSymbol = createPictureMarkerSymbol(":/map/headingSymbol.svg", locationSymbolSize)
-        let locationSymbolScale = App.scaleByFontSize(2)
-        mapView.locationDisplay.accuracySymbol.outline.width *= locationSymbolScale
-        mapView.locationDisplay.pingAnimationSymbol.outline.width *= locationSymbolScale
-
         mapView.rebuild()
     }
 
@@ -121,27 +111,37 @@ Esri.MapView {
         }
     }
 
+    Connections {
+        target: mapView.locationDisplay
+
+        function onAutoPanModeChanged() {
+            if (!flagMode) {
+                App.settings.mapPanMode = mapView.locationDisplay.autoPanMode
+            }
+        }
+    }
+
     CircleButton {
         x: parent.width - implicitWidth
         y: parent.height - implicitHeight * 3 - 20
-        buttonOpacity: 0.75
-        buttonIcon.source: "qrc:/icons/plus.svg"
+        opacity: App.settings.darkTheme ? 1.0 : 0.75
+        icon.source: "qrc:/icons/plus.svg"
         onClicked: mapView.setViewpointScale(mapView.mapScale / 2)
     }
 
     CircleButton {
         x: parent.width - implicitWidth
         y: parent.height - implicitHeight * 2 - 24
-        buttonOpacity: 0.75
-        buttonIcon.source: "qrc:/icons/minus.svg"
+        opacity: App.settings.darkTheme ? 1.0 : 0.75
+        icon.source: "qrc:/icons/minus.svg"
         onClicked: mapView.setViewpointScale(mapView.mapScale * 2)
     }
 
     CircleButton {
         x: parent.width - implicitWidth
         y: parent.height - implicitHeight - 20
-        buttonOpacity: 0.75
-        buttonIcon.source: "qrc:/icons/north_direction.svg"
+        opacity: App.settings.darkTheme ? 1.0 : 0.75
+        icon.source: "qrc:/icons/north_direction.svg"
         rotation: -mapView.mapRotation
         //visible: (mapView.mapRotation > 0.001) && (mapView.mapRotation < 359.998)
         onClicked: {
@@ -183,25 +183,12 @@ Esri.MapView {
                     mapView.setViewpoint(viewpoint)
                 }
 
-                // Pan mode.
-                if (initialPanMode !== undefined) {
-                    mapView.locationDisplay.autoPanMode = initialPanMode
-
-                } else if (flagMode) {
-                    if (flagLocation === undefined) {
-                        mapView.locationDisplay.autoPanMode = Esri.Enums.LocationDisplayAutoPanModeRecenter
-                    } else {
-                        mapView.locationDisplay.autoPanMode = Esri.Enums.LocationDisplayAutoPanModeOff
-                    }
-
-                } else if (initialExtent !== undefined) {
-                    mapView.locationDisplay.autoPanMode = Esri.Enums.LocationDisplayAutoPanModeOff
-
+                // Prompt for permission as needed.
+                if (App.promptForLocation()) {
+                    popupRequestLocation.open({ callback: locationPermissionAcquired } )
                 } else {
-                    mapView.locationDisplay.autoPanMode = App.settings.mapPanMode
+                    locationPermissionAcquired()
                 }
-
-                mapView.locationDisplay.start()
             }
         }
     }
@@ -318,22 +305,21 @@ Esri.MapView {
         }
     }
 
-    locationDisplay {
-        dataSource: Esri.DefaultLocationDataSource {
-            compass: Compass {
-                id: compass
-                active: Qt.application.active
-            }
+    Loader {
+        id: dataSourceLoader
+        active: false
 
-            positionInfoSource: PositionSource {
-                active: mapView.forceLocationActive || Qt.application.active
-                name: App.positionInfoSourceName
-            }
-        }
+        sourceComponent: Component {
+            Esri.DefaultLocationDataSource {
+                compass: Compass {
+                    id: compass
+                    active: Qt.application.active
+                }
 
-        onAutoPanModeChanged: {
-            if (!flagMode) {
-                App.settings.mapPanMode = mapView.locationDisplay.autoPanMode
+                positionInfoSource: PositionSource {
+                    active: mapView.locationDisplay.started && (mapView.forceLocationActive || Qt.application.active)
+                    name: App.positionInfoSourceName
+                }
             }
         }
     }
@@ -588,5 +574,40 @@ Esri.MapView {
 
     function createPictureMarkerSymbol(svg, size) {
         return Esri.ArcGISRuntimeEnvironment.createObject("PictureMarkerSymbol", { url: App.renderSvgToPng(svg, size, size), width: size, height: size } )
+    }
+
+    function locationPermissionAcquired() {
+        // Location display symbols.
+        let locationSymbolSize = App.scaleByFontSize(40)
+        mapView.locationDisplay.acquiringSymbol = createPictureMarkerSymbol(":/map/acquiringSymbol.svg", locationSymbolSize)
+        mapView.locationDisplay.courseSymbol = createPictureMarkerSymbol(":/map/courseSymbol.svg", locationSymbolSize)
+        mapView.locationDisplay.defaultSymbol = createPictureMarkerSymbol(":/map/defaultSymbol.svg", locationSymbolSize)
+        mapView.locationDisplay.headingSymbol = createPictureMarkerSymbol(":/map/headingSymbol.svg", locationSymbolSize)
+        let locationSymbolScale = App.scaleByFontSize(2)
+        mapView.locationDisplay.accuracySymbol.outline.width *= locationSymbolScale
+        mapView.locationDisplay.pingAnimationSymbol.outline.width *= locationSymbolScale
+
+        // Pan mode.
+        if (initialPanMode !== undefined) {
+            mapView.locationDisplay.autoPanMode = initialPanMode
+
+        } else if (flagMode) {
+            if (flagLocation === undefined) {
+                mapView.locationDisplay.autoPanMode = Esri.Enums.LocationDisplayAutoPanModeRecenter
+            } else {
+                mapView.locationDisplay.autoPanMode = Esri.Enums.LocationDisplayAutoPanModeOff
+            }
+
+        } else if (initialExtent !== undefined) {
+            mapView.locationDisplay.autoPanMode = Esri.Enums.LocationDisplayAutoPanModeOff
+
+        } else {
+            mapView.locationDisplay.autoPanMode = App.settings.mapPanMode
+        }
+
+        // Create the data source and start.
+        dataSourceLoader.active = true
+        mapView.locationDisplay.dataSource = dataSourceLoader.item
+        mapView.locationDisplay.start()
     }
 }

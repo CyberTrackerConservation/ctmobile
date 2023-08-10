@@ -4,6 +4,29 @@
 namespace  {
 QThreadStorage<QPair<QSqlDatabase, int>> s_databases;
 bool s_preparedOnce = false;
+
+QMutex s_mutex(QMutex::Recursive);
+
+class Mutex
+{
+public:
+    Mutex()
+    {
+        if (s_mutex.tryLock())
+        {
+            return;
+        }
+
+        //qDebug() << "Lock contention";
+        s_mutex.lock();
+    }
+
+    ~Mutex()
+    {
+        s_mutex.unlock();
+    }
+};
+
 }
 
 Database::Database(QObject* parent): QObject(parent)
@@ -12,6 +35,7 @@ Database::Database(QObject* parent): QObject(parent)
 
 Database::Database(const QString& filePath, QObject* parent): QObject(parent)
 {
+    Mutex lock;
     m_filePath = filePath;
     m_connectionName = "ct_db_" + QString::number((quint64)QThread::currentThread(), 16);
 
@@ -87,6 +111,7 @@ Database::Database(const QString& filePath, QObject* parent): QObject(parent)
 
 Database::~Database()
 {
+    Mutex lock;
     auto db = s_databases.localData();
     qFatalIf(!db.first.isValid(), "Bad database reference 1");
     qFatalIf(db.second <= 0, "Bad database reference 2");
@@ -113,6 +138,7 @@ void Database::verifyThread() const
 
 void Database::compact()
 {
+    Mutex lock;
     verifyThread();
     auto query = QSqlQuery(m_db);
     auto success = query.prepare("VACUUM");
@@ -123,6 +149,7 @@ void Database::compact()
 
 void Database::addProject(const QString& projectUid)
 {
+    Mutex lock;
     verifyThread();
     auto query = QSqlQuery(m_db);
     auto success = query.prepare("SELECT EXISTS(SELECT 1 FROM projects WHERE (projectUid = (:projectUid)))");
@@ -145,6 +172,7 @@ void Database::addProject(const QString& projectUid)
 
 void Database::getProjects(QStringList* projectUidsOut) const
 {
+    Mutex lock;
     verifyThread();
     projectUidsOut->clear();
 
@@ -162,6 +190,7 @@ void Database::getProjects(QStringList* projectUidsOut) const
 
 void Database::removeProject(const QString& projectUid)
 {
+    Mutex lock;
     verifyThread();
     auto query = QSqlQuery(m_db);
     auto success = query.prepare("DELETE FROM projects WHERE (projectUid = (:projectUid))");
@@ -187,6 +216,7 @@ void Database::removeProject(const QString& projectUid)
 
 void Database::clearProjects()
 {
+    Mutex lock;
     verifyThread();
     auto query = QSqlQuery(m_db);
     auto success = query.prepare("DELETE FROM projects");
@@ -196,6 +226,7 @@ void Database::clearProjects()
 
 void Database::saveProject(const QString& projectUid, const QVariantMap& data)
 {
+    Mutex lock;
     verifyThread();
     auto query = QSqlQuery(m_db);
     auto success = query.prepare("UPDATE projects SET data = :data WHERE (projectUid = (:projectUid))");
@@ -208,6 +239,7 @@ void Database::saveProject(const QString& projectUid, const QVariantMap& data)
 
 void Database::loadProject(const QString& projectUid, QVariantMap* dataOut) const
 {
+    Mutex lock;
     verifyThread();
     dataOut->clear();
 
@@ -229,6 +261,7 @@ void Database::loadProject(const QString& projectUid, QVariantMap* dataOut) cons
 
 bool Database::hasSightings(const QString& projectUid, const QString& stateSpace, uint flags) const
 {
+    Mutex lock;
     verifyThread();
     auto query = QSqlQuery(m_db);
     auto success = false;
@@ -254,6 +287,7 @@ bool Database::hasSightings(const QString& projectUid, const QString& stateSpace
 
 void Database::saveSighting(const QString& projectUid, const QString& stateSpace, const QString& uid, uint flags, const QVariantMap& data, const QStringList& attachments)
 {
+    Mutex lock;
     verifyThread();
     auto query = QSqlQuery(m_db);
     auto success = query.prepare("SELECT EXISTS(SELECT 1 FROM sightings WHERE (projectUid = (:projectUid)) AND (uid = (:uid)))");
@@ -287,6 +321,7 @@ void Database::saveSighting(const QString& projectUid, const QString& stateSpace
 
 void Database::loadSighting(const QString& projectUid, const QString& uid, QVariantMap* dataOut, uint* flagsOut, QString* stateSpaceOut, QStringList* attachmentsOut) const
 {
+    Mutex lock;
     verifyThread();
     bool success;
 
@@ -326,6 +361,7 @@ void Database::loadSighting(const QString& projectUid, const QString& uid, QVari
 
 bool Database::testSighting(const QString& projectUid, const QString& uid) const
 {
+    Mutex lock;
     verifyThread();
     auto query = QSqlQuery(m_db);
     auto success = query.prepare("SELECT uid FROM sightings WHERE (projectUid = (:projectUid)) AND (uid = (:uid))");
@@ -341,7 +377,11 @@ bool Database::testSighting(const QString& projectUid, const QString& uid) const
 
 void Database::deleteSighting(const QString& projectUid, const QString& uid)
 {
+    Mutex lock;
     verifyThread();
+
+    qDebug() << "Delete sighting: " << projectUid << uid;
+
     // Delete existing sighting if it exists.
     auto query = QSqlQuery(m_db);
     auto success = query.prepare("DELETE FROM sightings WHERE (projectUid = (:projectUid)) AND (uid = (:uid))");
@@ -354,7 +394,11 @@ void Database::deleteSighting(const QString& projectUid, const QString& uid)
 
 void Database::deleteSightings(const QString& projectUid, const QString& stateSpace, uint flags)
 {
+    Mutex lock;
     verifyThread();
+
+    qDebug() << "Delete sightings: " << projectUid;
+
     auto query = QSqlQuery(m_db);
     auto success = query.prepare("DELETE FROM sightings WHERE (projectUid = (:projectUid)) AND (stateSpace = (:stateSpace)) AND (flags & (:flags) = (:flags))");
     qFatalIf(!success, "Failed to delete sightings 1");
@@ -367,6 +411,7 @@ void Database::deleteSightings(const QString& projectUid, const QString& stateSp
 
 void Database::enumSightings(const QString& projectUid, const QString& stateSpace, uint flagsAny, std::function<void(const QString& uid, uint flags, const QVariantMap& data, const QStringList& attachments)> callback) const
 {
+    Mutex lock;
     verifyThread();
 
     auto query = QSqlQuery(m_db);
@@ -406,7 +451,9 @@ void Database::enumSightings(const QString& projectUid, const QString& stateSpac
 
 void Database::enumSightings(const QString& projectUid, const QString& stateSpace, uint flagsOn, uint flagsOff, std::function<void(const QString& uid, uint flags, const QVariantMap& data, const QStringList& attachments)> callback) const
 {
+    Mutex lock;
     verifyThread();
+
     auto query = QSqlQuery(m_db);
     auto success = false;
     auto flagsSql = QString("(flags & (:flagsOn) = (:flagsOn)) AND (flags & (:flagsOff) = 0)");
@@ -445,6 +492,8 @@ void Database::enumSightings(const QString& projectUid, const QString& stateSpac
 
 void Database::getSightings(const QString& projectUid, const QString& stateSpace, uint flagsAny, QStringList* uidsOut) const
 {
+    Mutex lock;
+
     uidsOut->clear();
     enumSightings(projectUid, stateSpace, flagsAny, [&](const QString& uid, uint /*flags*/, const QVariantMap& /*data*/, const QStringList& /*attachments*/)
     {
@@ -454,6 +503,8 @@ void Database::getSightings(const QString& projectUid, const QString& stateSpace
 
 void Database::getSightings(const QString& projectUid, const QString& stateSpace, uint flagsOn, uint flagsOff, QStringList* uidsOut) const
 {
+    Mutex lock;
+
     uidsOut->clear();
     enumSightings(projectUid, stateSpace, flagsOn, flagsOff, [&](const QString& uid, uint /*flags*/, const QVariantMap& /*data*/, const QStringList& /*attachments*/)
     {
@@ -463,7 +514,9 @@ void Database::getSightings(const QString& projectUid, const QString& stateSpace
 
 uint Database::getSightingFlags(const QString& projectUid, const QString& uid) const
 {
+    Mutex lock;
     verifyThread();
+
     auto query = QSqlQuery(m_db);
     auto success = query.prepare("SELECT flags FROM sightings WHERE (projectUid = (:projectUid)) AND (uid = (:uid))");
     qFatalIf(!success, "Failed to get sighting flags 1");
@@ -479,7 +532,9 @@ uint Database::getSightingFlags(const QString& projectUid, const QString& uid) c
 
 void Database::setSightingFlags(const QString& projectUid, const QString& uid, uint flags, bool on)
 {
+    Mutex lock;
     verifyThread();
+
     auto query = QSqlQuery(m_db);
     auto success = false;
 
@@ -505,7 +560,9 @@ void Database::setSightingFlags(const QString& projectUid, const QString& uid, u
 
 void Database::setSightingFlags(const QString& projectUid, const QString& stateSpace, uint matchFlagsOn, uint matchFlagsOff, uint flags)
 {
+    Mutex lock;
     verifyThread();
+
     auto query = QSqlQuery(m_db);
     auto success = false;
     auto flagsSql = QString("(flags & (:flagsOn) = (:flagsOn)) AND (flags & (:flagsOff) = 0)");
@@ -525,7 +582,9 @@ void Database::setSightingFlags(const QString& projectUid, const QString& stateS
 
 void Database::setSightingFlagsAll(const QString& projectUid, uint flags, bool on)
 {
+    Mutex lock;
     verifyThread();
+
     auto query = QSqlQuery(m_db);
     auto success = false;
 
@@ -550,6 +609,7 @@ void Database::setSightingFlagsAll(const QString& projectUid, uint flags, bool o
 
 void Database::saveFormState(const QString& projectUid, const QString& stateSpace, const QVariantMap& data, const QStringList& attachments)
 {
+    Mutex lock;
     verifyThread();
 
     deleteFormState(projectUid, stateSpace);
@@ -567,6 +627,7 @@ void Database::saveFormState(const QString& projectUid, const QString& stateSpac
 
 void Database::loadFormState(const QString& projectUid, const QString& stateSpace, QVariantMap* dataOut, QStringList* attachmentsOut) const
 {
+    Mutex lock;
     verifyThread();
 
     if (dataOut)
@@ -604,6 +665,7 @@ void Database::loadFormState(const QString& projectUid, const QString& stateSpac
 
 void Database::deleteFormState(const QString& projectUid, const QString& stateSpace)
 {
+    Mutex lock;
     verifyThread();
 
     auto query = QSqlQuery(m_db);
@@ -626,7 +688,9 @@ void Database::deleteFormState(const QString& projectUid, const QString& stateSp
 
 void Database::addExport(const QString& exportUid, const QVariantMap& data)
 {
+    Mutex lock;
     verifyThread();
+
     removeExport(exportUid);
     auto query = QSqlQuery(m_db);
     auto success = query.prepare("INSERT INTO exports (exportUid, data) VALUES (:exportUid, :data)");
@@ -639,7 +703,9 @@ void Database::addExport(const QString& exportUid, const QVariantMap& data)
 
 void Database::getExports(QStringList* exportUidsOut) const
 {
+    Mutex lock;
     verifyThread();
+
     exportUidsOut->clear();
 
     auto query = QSqlQuery(m_db);
@@ -656,7 +722,9 @@ void Database::getExports(QStringList* exportUidsOut) const
 
 void Database::loadExport(const QString& exportUid, QVariantMap* dataOut) const
 {
+    Mutex lock;
     verifyThread();
+
     dataOut->clear();
 
     auto query = QSqlQuery(m_db);
@@ -677,7 +745,9 @@ void Database::loadExport(const QString& exportUid, QVariantMap* dataOut) const
 
 void Database::removeExport(const QString& exportUid)
 {
+    Mutex lock;
     verifyThread();
+
     auto query = QSqlQuery(m_db);
     auto success = query.prepare("DELETE FROM exports WHERE (exportUid = (:exportUid))");
     qFatalIf(!success, "Failed to remove export 1");
@@ -687,7 +757,9 @@ void Database::removeExport(const QString& exportUid)
 
 void Database::addTask(const QString& projectUid, const QString& uid, const QString& parentUid, const QVariantMap& input, int state)
 {
+    Mutex lock;
     verifyThread();
+
     auto query = QSqlQuery(m_db);
     auto success = query.prepare("INSERT INTO tasks (projectUid, uid, parentUid, input, output, state) VALUES (:projectUid, :uid, :parentUid, :input, :output, :state)");
     qFatalIf(!success, "Failed to save task 1");
@@ -703,7 +775,9 @@ void Database::addTask(const QString& projectUid, const QString& uid, const QStr
 
 void Database::getTasks(const QString& projectUid, int stateMask, QStringList* outUids, QStringList* outParentUids) const
 {
+    Mutex lock;
     verifyThread();
+
     outUids->clear();
 
     auto query = QSqlQuery(m_db);
@@ -735,7 +809,9 @@ void Database::getTasks(const QString& projectUid, int stateMask, QStringList* o
 
 void Database::getLastTask(const QString& projectUid, QString* outUid) const
 {
+    Mutex lock;
     verifyThread();
+
     outUid->clear();
 
     auto query = QSqlQuery(m_db);
@@ -755,8 +831,10 @@ void Database::getLastTask(const QString& projectUid, QString* outUid) const
 
 void Database::getTaskProperty(const QString& projectUid, const QString& uid, const QString& propertyName, QVariant* outValue) const
 {
+    Mutex lock;
     verifyThread();
-    bool success;
+
+    auto success = false;
 
     QSqlQuery query = QSqlQuery(m_db);
     success = query.prepare("SELECT " + propertyName + " FROM tasks WHERE (projectUid = (:projectUid)) AND (uid = (:uid))");
@@ -771,7 +849,9 @@ void Database::getTaskProperty(const QString& projectUid, const QString& uid, co
 
 void Database::getTaskProperty(const QString& projectUid, const QString& uid, const QString& propertyName, QVariantMap* outValue) const
 {
+    Mutex lock;
     verifyThread();
+
     auto query = QSqlQuery(m_db);
     auto success = query.prepare("SELECT " + propertyName + " FROM tasks WHERE (projectUid = (:projectUid)) AND (uid = (:uid))");
     qFatalIf(!success, "Failed to get tasks property map 1");
@@ -786,7 +866,9 @@ void Database::getTaskProperty(const QString& projectUid, const QString& uid, co
 
 void Database::setTaskProperty(const QString& projectUid, const QString& uid, const QString& propertyName, const QVariant& value)
 {
+    Mutex lock;
     verifyThread();
+
     auto query = QSqlQuery(m_db);
     auto success = query.prepare("UPDATE tasks SET " + propertyName + " = :value WHERE (projectUid = (:projectUid)) AND (uid = (:uid))");
     qFatalIf(!success, "Failed to set task property 1");
@@ -799,7 +881,9 @@ void Database::setTaskProperty(const QString& projectUid, const QString& uid, co
 
 void Database::setTaskProperty(const QString& projectUid, const QString& uid, const QString& propertyName, const QVariantMap& value)
 {
+    Mutex lock;
     verifyThread();
+
     auto query = QSqlQuery(m_db);
     auto success = query.prepare("UPDATE tasks SET " + propertyName + " = :value WHERE (projectUid = (:projectUid)) AND (uid = (:uid))");
     qFatalIf(!success, "Failed to set blob task property map 1");
@@ -812,7 +896,11 @@ void Database::setTaskProperty(const QString& projectUid, const QString& uid, co
 
 void Database::deleteTasks(const QString& projectUid, uint state)
 {
+    Mutex lock;
     verifyThread();
+
+    qDebug() << "Delete tasks: " << projectUid;
+
     auto query = QSqlQuery(m_db);
     auto success = query.prepare("DELETE FROM tasks WHERE (projectUid = (:projectUid)) AND (state & (:state) = (:state))");
     qFatalIf(!success, "Failed to delete tasks 1");
@@ -824,6 +912,7 @@ void Database::deleteTasks(const QString& projectUid, uint state)
 
 QStringList Database::getAttachments()
 {
+    Mutex lock;
     verifyThread();
 
     auto attachments = QStringList();

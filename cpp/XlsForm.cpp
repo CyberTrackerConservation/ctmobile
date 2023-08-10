@@ -2,7 +2,6 @@
 #include "App.h"
 
 constexpr char CT_PREFIX[] = "bind::ct:";
-constexpr int CT_PREFIX_LENGTH = 9;
 
 //=================================================================================================
 namespace
@@ -56,6 +55,31 @@ void XlsFormParser::configureProject(Project* project, const QVariantMap& settin
     {
         project->set_iconDark(params.value("iconDark").toString());
     }
+
+    auto saveParams = params.value("save").toMap();
+    if (saveParams.contains("trackFile"))
+    {
+        project->set_androidBackgroundLocation(true);
+    }
+
+    auto permissions = QStringList();
+    if (settings.value("requireCamera").toBool())
+    {
+        permissions.append("CAMERA");
+    }
+
+    if (settings.value("requireAudio").toBool())
+    {
+        permissions.append("RECORD_AUDIO");
+    }
+
+    if (settings.value("requireLocation").toBool() || project->androidBackgroundLocation() || !project->esriLocationServiceUrl().isEmpty())
+    {
+        permissions.append("ACCESS_FINE_LOCATION");
+        permissions.append("ACCESS_COARSE_LOCATION");
+    }
+
+    project->set_androidPermissions(permissions);
 }
 
 void XlsFormParser::configureProject(const QString& projectUid, const QVariantMap& settings)
@@ -122,7 +146,7 @@ bool XlsFormParser::parse(const QString& xlsxFilePath, const QString& targetFold
         qDebug() << "XLSForm parse error: " << errorStringOut;
         QFile::remove(targetFolder + "/Elements.qml.old");
         QFile::rename(targetFolder + "/Elements.qml", targetFolder + "/Elements.qml.old");
-        QFile::remove(targetFolder + "/Fields.qml");
+        QFile::remove(targetFolder + "/Fields.qml.old");
         QFile::rename(targetFolder + "/Fields.qml", targetFolder + "/Fields.qml.old");
     }
 
@@ -195,6 +219,9 @@ bool XlsFormParser::execute(const QString& xlsxFilePath, const QString& targetFo
     // Complete.
     settingsMap["languages"] = m_languages;
     settingsMap["requireUsername"] = m_requireUsername;
+    settingsMap["requireCamera"] = m_requireCamera;
+    settingsMap["requireAudio"] = m_requireAudio;
+    settingsMap["requireLocation"] = m_requireLocation;
 
     auto rootField = m_fieldManager.rootField();
     auto params = rootField->parameters();
@@ -283,60 +310,12 @@ QString XlsFormParser::findAsset(const QString& name) const
     return "";
 }
 
-QVariantMap XlsFormParser::parseCT(const QVariantMap& parameters, const QString& header, const QString& value)
+QString XlsFormParser::parseCTHeader(const QString& header)
 {
-    auto valueText = value.trimmed();
-    if (valueText.isEmpty())
-    {
-        return QVariantMap();
-    }
+    static int CT_PREFIX_LENGTH = QString(CT_PREFIX).length();
 
-    // Convert "TRUE", "FALSE", "YES", "NO" to lowercase boolean values.
-    auto fixups = QMap<QString, QString> { { "TRUE", "true" }, { "FALSE", "false" }, { "YES", "true" }, { "NO", "false" } };
-    valueText = fixups.value(valueText.toUpper(), valueText);
-
-    // Try a JSON type.
-    auto valueJson = "{ \"v\": " + valueText + " }";
-    auto v = QJsonDocument::fromJson(valueJson.toLatin1()).object().toVariantMap().value("v");
-    if (!v.isValid() || v.isNull())
-    {
-        // object, array, bool, integer and double failed -> must be text.
-        v = valueText;
-    }
-
-    auto attribute = header.right(header.length() - CT_PREFIX_LENGTH);
-
-    // 'parameters' must be an object.
-    if (attribute == "parameters")
-    {
-        return v.toMap();
-    }
-
-    // Check for full attribute value.
-    auto parts = attribute.split('.');
-
-    // attribute is full name.
-    if (parts.length() == 1)
-    {
-        return QVariantMap { { attribute, v } };
-    }
-
-    // attribute is a.b format, e.g. content.style.
-    if (parts.length() == 2)
-    {
-        auto mapName = parts.constFirst();
-        auto mapValue = parts.constLast();
-
-        auto result = parameters.value(mapName).toMap();
-        result[mapValue] = v;
-        return QVariantMap { { mapName, result } };
-    }
-
-    // Format not supported.
-    qDebug() << "Invalid attribute name: " << attribute;
-    return QVariantMap();
+    return header.right(header.length() - CT_PREFIX_LENGTH);
 }
-
 
 QVariantMap XlsFormParser::parseParameters(const QString& params) const
 {
@@ -378,7 +357,7 @@ QVariantMap XlsFormParser::settingsRowFromSheet(const xlnt::worksheet& sheet)
             if (header.startsWith(CT_PREFIX))
             {
                 auto parameters = result.value("parameters").toMap();
-                parameters.insert(parseCT(parameters, header, value));
+                Utils::insertParameter(&parameters, parseCTHeader(header), value);
                 result["parameters"] = parameters;
             }
             else
@@ -534,7 +513,7 @@ XlsFormParser::SurveyRow XlsFormParser::surveyRowFromSheet(const xlnt::worksheet
         }
         else if (header.startsWith(CT_PREFIX))
         {
-            result.parameters.insert(parseCT(result.parameters, header, value));
+            Utils::insertParameter(&result.parameters, parseCTHeader(header), value);
         }
     }
 
@@ -613,6 +592,22 @@ void XlsFormParser::processSurvey(const xlnt::worksheet& sheet, int* startRowInd
             auto f = new RecordField();
             f->set_uid(fieldUid);
 
+            // minCount.
+            auto isInt = false;
+            auto minCount = surveyRow.parameters["minCount"].toInt(&isInt);
+            if (isInt && minCount >= 0)
+            {
+                f->set_minCount(minCount);
+            }
+
+            // maxCount.
+            auto maxCount = surveyRow.parameters["maxCount"].toInt(&isInt);
+            if (isInt && maxCount > 0 && maxCount >= minCount)
+            {
+                f->set_maxCount(maxCount);
+            }
+
+            // repeatCount.
             auto repeatCount = surveyRow.repeatCount;
             if (!repeatCount.isEmpty())
             {
@@ -747,16 +742,19 @@ void XlsFormParser::processSurvey(const xlnt::worksheet& sheet, int* startRowInd
             f->set_allowManual(true);
             f->set_fixCount(surveyRow.parameters.value("fixCount", 4).toInt());
             field = f;
+            m_requireLocation = true;
         }
         else if (fieldType == "geotrace")
         {
             auto f = new LineField();
             field = f;
+            m_requireLocation = true;
         }
         else if (fieldType == "geoshape")
         {
             auto f = new AreaField();
             field = f;
+            m_requireLocation = true;
         }
         else if (fieldType == "date")
         {
@@ -796,12 +794,14 @@ void XlsFormParser::processSurvey(const xlnt::worksheet& sheet, int* startRowInd
                     f->set_resolutionY(maxPixels);
                 }
                 field = f;
+                m_requireCamera = true;
             }
         }
         else if (fieldType == "audio")
         {
             auto f = new AudioField();
             field = f;
+            m_requireAudio = true;
         }
         else if (fieldType == "file")
         {
@@ -818,6 +818,7 @@ void XlsFormParser::processSurvey(const xlnt::worksheet& sheet, int* startRowInd
             auto f = new StringField();
             f->set_barcode(true);
             field = f;
+            m_requireCamera = true;
         }
         else if (fieldType == "calculate")
         {
@@ -933,8 +934,18 @@ void XlsFormParser::processSurvey(const xlnt::worksheet& sheet, int* startRowInd
             constraintElement = new Element();
             constraintElement->set_uid(uniqueFieldUid + "/constraint");
             constraintElement->set_names(QJsonObject::fromVariantMap(surveyRow.constraintMessage));
-            nameElement->appendElement(constraintElement);
+            rootElement->appendElement(constraintElement);
             m_fieldElements.insert(constraintElement->uid(), constraintElement);
+        }
+
+        Element* requiredElement = nullptr;
+        if (!surveyRow.required.isEmpty() && !surveyRow.requiredMessage.isEmpty())
+        {
+            requiredElement = new Element();
+            requiredElement->set_uid(uniqueFieldUid + "/required");
+            requiredElement->set_names(QJsonObject::fromVariantMap(surveyRow.requiredMessage));
+            rootElement->appendElement(requiredElement);
+            m_fieldElements.insert(requiredElement->uid(), requiredElement);
         }
 
         field->set_uid(uniqueFieldUid);
@@ -944,6 +955,7 @@ void XlsFormParser::processSurvey(const xlnt::worksheet& sheet, int* startRowInd
         field->set_relevant(surveyRow.relevant);
         field->set_readonly(surveyRow.readonly == "true" || surveyRow.readonly == "yes");
         field->set_required(surveyRow.required == "true" || surveyRow.required == "yes");
+        field->set_requiredElementUid(requiredElement ? requiredElement->uid() : "");
         field->set_constraint(surveyRow.constraint);
         field->set_constraintElementUid(constraintElement ? constraintElement->uid() : "");
         field->set_hintElementUid(hintElement ? hintElement->uid() : "");

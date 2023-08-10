@@ -21,7 +21,7 @@ ContentPage {
 
         onItemClicked: {
             form.setFieldValue(recordUid, fieldUid, value)
-            form.popPage()
+            form.popPage(StackView.Immediate)
         }
     }
 }

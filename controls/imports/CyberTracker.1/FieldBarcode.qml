@@ -14,7 +14,10 @@ Item {
 
     signal tagFound(string tag)
 
-    Component.onCompleted: zxingFilter.active = true
+    Component.onCompleted: {
+        App.requestPermissionCamera()
+        zxingFilter.active = true
+    }
 
     C.FieldBinding {
         id: fieldBinding

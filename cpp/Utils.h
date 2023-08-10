@@ -80,6 +80,7 @@ namespace Utils
 
 QJsonDocument jsonDocumentFromFile(const QString& filePath);
 QVariantMap variantMapFromJsonFile(const QString& filePath);
+QVariantMap variantMapFromFileInZip(const QString& zipFilePath, const QString& jsonFileName);
 QByteArray variantMapToJson(const QVariantMap& map, QJsonDocument::JsonFormat format = QJsonDocument::Indented);
 QByteArray variantListToJson(const QVariantList& list, QJsonDocument::JsonFormat format = QJsonDocument::Indented);
 QString variantMapToString(const QVariantMap& map);
@@ -93,8 +94,8 @@ void writeJsonToFile(const QString& filePath, const QByteArray& data);
 void writeDataToFile(const QString& filePath, const QByteArray& data);
 bool compareFiles(const QString& filePath1, const QString& filePath2);
 bool compareVariantMaps(const QVariantMap& map1, const QVariantMap& map2);
-
 QVariant variantFromJSValue(const QVariant& value);
+void insertParameter(QVariantMap* params, const QString& name, const QString& value);
 
 QString unpackZip(const QString& targetPath, const QString& targetFolder, const QString& zipFilePath);
 
@@ -137,6 +138,7 @@ bool ensurePath(const QString& path, bool mediaScanOnSuccess = false);
 QString urlToLocalFile(const QString& filePathUrl);
 
 bool mediaScan(const QString& filePath);
+QString resolveContentUri(const QString& contentUri);
 
 void extractResource(const QString& resource, const QString& targetPath);
 bool copyPath(const QString& src, const QString& dst, const QStringList& excludes = QStringList());
@@ -179,6 +181,25 @@ struct HttpResponse
     static HttpResponse ErrorIf(bool condition, const QString& errorString)
     {
         return condition ? Error(errorString) : Success();
+    }
+
+    static HttpResponse fromReply(const QString& finalUrl, QNetworkReply* reply)
+    {
+        auto result = HttpResponse();
+        result.success = reply->error() == QNetworkReply::NoError;
+        result.status = reply->attribute(QNetworkRequest::HttpStatusCodeAttribute).toInt();
+        result.reason = reply->attribute(QNetworkRequest::HttpReasonPhraseAttribute).toString();
+        result.etag = reply->header(QNetworkRequest::ETagHeader).toString();
+        if (result.etag.isEmpty())
+        {
+            result.etag = reply->rawHeader("ETag");
+        }
+        result.location = reply->header(QNetworkRequest::LocationHeader).toString();
+        result.url = finalUrl;
+        result.errorString = reply->errorString();
+        result.data = reply->isOpen() ? QByteArray(reply->readAll()) : QByteArray();
+
+        return result;
     }
 
     QVariantMap toMap()
@@ -231,6 +252,14 @@ HttpResponse esriApplyEdits(QNetworkAccessManager* networkAccessManager, const Q
 
 QVariantMap esriLayerFromGeoJson(const QString& filename, double symbolScale, const QColor& outlineColor, QVariantList* paths);
 
+void googleSetCredentials(const QVariantMap& credentials);
+HttpResponse googleAcquireOAuthTokenFromCode(QNetworkAccessManager* networkAccessManager, const QString& code, QString* accessTokenOut, QString* refreshTokenOut);
+HttpResponse googleRefreshOAuthToken(QNetworkAccessManager* networkAccessManager, const QString& refreshToken, QString* accessTokenOut);
+HttpResponse googleFetchEmail(QNetworkAccessManager* networkAccessManager, const QString& accessToken, QString* emailOut);
+HttpResponse googleFetchForm(QNetworkAccessManager* networkAccessManager, const QString& formId, QVariantMap* contentOut);
+HttpResponse googleFetchFormVersion(QNetworkAccessManager* networkAccessManager, const QString& formId, QString* versionOut);
+HttpResponse googleUploadFile(QNetworkAccessManager* networkAccessManager, const QString& folderId, const QString& filePath, QString* urlOut);
+
 QString addBracesToUuid(const QString& uuid);
 QString encodeJsonStringLiteral(const QString& value);
 
@@ -239,7 +268,7 @@ bool renderMapMarker(const QString& url, const QString& targetFilePath, const QC
 
 QString renderSvgToPng(const QString& url, int width, int height);
 bool renderSvgToPngFile(const QString& url, const QString& targetFilePath, int width, int height);
-bool renderSquarePixmap(QPixmap* pixmap, const QString& filePath, int width, int height);
+bool renderSquarePixmap(QPixmap* pixmap, const QString& filePath, int width, int height, int angle = 0);
 QString renderPointsToSvg(const QVariantList& points, const QColor& color, int penWidth, bool fill = false);
 QString renderSketchToSvg(const QVariant& sketch, QColor penColor = Qt::black, int penWidth = 2);
 bool renderSketchToPng(const QVariant& sketch, const QString& filePath, QColor penColor = Qt::black, int penWidth = 2);
@@ -270,6 +299,7 @@ qint64 decodeTimestampMSecs(const QString& isoDateTime);
 qint64 timestampDeltaMs(const QString& startISODateTime, const QString& stopISODateTime);
 
 QMimeDatabase* mimeDatabase();
+QString detectFileSuffix(const QString& filePath);
 
 void enumFiles(const QString& folder, std::function<void(const QFileInfo& fileInfo)> callback);
 void enumFolders(const QString& folder, std::function<void(const QFileInfo& fileInfo)> callback);
@@ -484,6 +514,27 @@ public:
         auto content = QVariantMap();
         auto result = Utils::esriFetchSurveys(m_networkAccessManager, token, &content).toApiResult();
         result["content"] = content;
+
+        return result;
+    }
+
+    Q_INVOKABLE QVariantMap googleRefreshOAuthToken(const QString& refreshToken)
+    {
+        auto accessToken = QString();
+        auto response = Utils::googleRefreshOAuthToken(m_networkAccessManager, refreshToken, &accessToken);
+        auto result = response.toApiResult();
+        result["accessToken"] = accessToken;
+        result["refreshToken"] = refreshToken;
+        result["status"] = response.status;
+
+        return result;
+    }
+
+    Q_INVOKABLE QVariantMap googleFetchEmail(const QString& token)
+    {
+        auto email = QString();
+        auto result = Utils::googleFetchEmail(m_networkAccessManager, token, &email).toApiResult();
+        result["email"] = email;
 
         return result;
     }

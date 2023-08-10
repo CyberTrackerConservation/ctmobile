@@ -42,11 +42,9 @@ C.ContentPage {
             iconSource: modelData.iconId
             wrapSubText: true
             onClicked: {
-                if (App.requestPermissionReadExternalStorage() && App.requestPermissionWriteExternalStorage()) {
-                    busyCover.doWork = connectClassicSample
-                    busyCover.params = { sampleId: modelData.sampleId }
-                    busyCover.start()
-                }
+                busyCover.doWork = connectClassicSample
+                busyCover.params = { sampleId: modelData.sampleId }
+                busyCover.start()
             }
         }
     }

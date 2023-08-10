@@ -150,12 +150,10 @@ C.ContentPage {
         active: !page.instantGPS
         anchors.centerIn: parent
         compassVisible: false
-        width: parent.width * 2 / 3
-        height: parent.height * 2 / 3
+        width: Math.min(parent.width, parent.height) * 0.7
+        height: Math.min(parent.width, parent.height) * 0.7
         progressVisible: true
-        legendVisible: true
-        legendSpace: parent.height / 16
-        legendDepth: parent.height / 16
+        legendVisible: false
         satNumbersVisible: false
     }
 
@@ -183,18 +181,24 @@ C.ContentPage {
         wrapMode: Label.WordWrap
     }
 
-    RoundButton {
+    ToolButton {
         id: buttonSkip
-        radius: 0
+        icon.source: "qrc:/icons/edit_location_outline.svg"
+        icon.width: C.Style.toolButtonSize
+        icon.height: C.Style.toolButtonSize
         visible: skipVisible && !closeTimer.running && title.enabled && !labelWaitForTimeCorrection.visible
         enabled: !form.requireGPSTime || App.timeManager.corrected
         font.pixelSize: App.settings.font16
-        font.capitalization: Font.MixedCase
-        width: parent.width / 2
-        x: (parent.width - width) / 2
-        y: progressCircle.y + progressCircle.height + 8
+        font.capitalization: Font.AllUppercase
+        width: Math.max(implicitWidth, parent.width / 2)
+
+        anchors {
+            bottom: parent.bottom
+            bottomMargin: App.scaleByFontSize(16)
+            horizontalCenter: parent.horizontalCenter
+        }
+
         text: qsTr("Skip GPS")
-        Material.background: Material.accentColor
         onClicked: {
             if (form.provider.allowManualGPS) {
                 form.replaceLastPage("qrc:/imports/CyberTracker.1/FieldLocationPage.qml", {

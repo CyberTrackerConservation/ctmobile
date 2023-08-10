@@ -53,8 +53,8 @@ C.ContentPage {
                 id: grid
                 columns: 3
                 columnSpacing: 0
-                rowSpacing: 8
-                property var buttonWidth: (grid.width - 16) / 2
+                rowSpacing: App.scaleByFontSize(8)
+                property int buttonWidth: (grid.width - App.scaleByFontSize(16)) / 2
                 property var color: model.active ? (App.settings.darkTheme ? "lightsteelblue" : "steelblue") : Material.foreground
 
                 // Leg id

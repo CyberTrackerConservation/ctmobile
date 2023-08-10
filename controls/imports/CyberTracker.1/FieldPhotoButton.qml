@@ -11,6 +11,8 @@ ItemDelegate {
 
     property string recordUid
     property string fieldUid
+    property int photoIndex: 0
+    property string emptyIcon: "qrc:/icons/camera_alt.svg"
 
     C.FieldBinding {
         id: fieldBinding
@@ -24,25 +26,24 @@ ItemDelegate {
         Image {
             anchors.fill: parent
             fillMode: Image.PreserveAspectFit
-            source: buildPhotoModel()[0] !== "" ? App.getMediaFileUrl(buildPhotoModel()[0]) : ""
-            visible: buildPhotoModel()[0] !== ""
+            source: buildPhotoModel()[root.photoIndex] !== "" ? App.getMediaFileUrl(buildPhotoModel()[root.photoIndex]) : ""
+            visible: buildPhotoModel()[root.photoIndex] !== ""
             autoTransform: true
             cache: false
         }
 
         SquareIcon {
             anchors.centerIn: parent
-            visible: buildPhotoModel()[0] === ""
-            source: "qrc:/icons/camera_alt.svg"
+            visible: buildPhotoModel()[root.photoIndex] === ""
+            source: root.emptyIcon
             size: Style.iconSize48
             opacity: 0.5
-            recolor: true
         }
     }
 
     onClicked: {
         fieldBinding.setValue(buildPhotoModel())
-        form.pushPage(Qt.resolvedUrl("FieldCameraPage.qml"), { photoIndex: 0, recordUid: fieldBinding.recordUid, fieldUid: fieldBinding.fieldUid } )
+        form.pushPage(Qt.resolvedUrl("FieldCameraPage.qml"), { photoIndex: root.photoIndex, recordUid: fieldBinding.recordUid, fieldUid: fieldBinding.fieldUid } )
     }
 
     function buildPhotoModel() {

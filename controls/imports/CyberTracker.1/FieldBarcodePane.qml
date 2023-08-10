@@ -34,7 +34,7 @@ ItemDelegate {
             verticalAlignment: Label.AlignVCenter
         }
 
-        RoundButton {
+        ToolButton {
             anchors {
                 bottom: parent.bottom
                 horizontalCenter: parent.horizontalCenter
@@ -56,7 +56,6 @@ ItemDelegate {
             source: "qrc:/icons/qrcode_scan.svg"
             size: Style.iconSize64
             opacity: 0.5
-            recolor: true
         }
     }
 

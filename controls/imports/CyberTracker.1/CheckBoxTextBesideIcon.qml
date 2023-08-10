@@ -2,7 +2,7 @@ import QtQml 2.12
 import QtQuick 2.12
 import QtQuick.Controls.Material 2.12
 
-Row {
+Item {
     id: root
 
     property bool checked: false
@@ -11,52 +11,57 @@ Row {
     property alias font: label.font
 
     signal clicked(var checked)
-    spacing: 4
 
     QtObject {
         id: internal
-        property int checkSize: Math.min(root.width / 3 - root.spacing * 2, root.height)
+        property int checkSize: Math.min(root.width / 3 - row.spacing * 2, root.height)
     }
 
-    SquareIcon {
-        size: internal.checkSize
+    MouseArea {
+        anchors.fill: parent
+        onClicked: {
+            root.checked = !root.checked
+            root.clicked(root.checked)
+        }
+    }
+
+    Row {
+        id: row
+        width: root.width
         height: root.height
-        source: root.icon
-    }
+        spacing: App.scaleByFontSize(4)
 
-    Text {
-        id: label
-        width: root.width - (internal.checkSize + spacing) * 2
-        height: root.height
-        verticalAlignment: Image.AlignVCenter
-        elide: Text.ElideRight
-        clip: true
-        color: Material.foreground
-    }
-
-    Rectangle {
-        y: (root.height - internal.checkSize) / 2
-        width: internal.checkSize
-        height: internal.checkSize
-        color: "transparent"
-        border.color: Material.foreground
-        border.width: internal.checkSize * 0.1
-        opacity: 0.75
-
-        Rectangle {
-            x: (internal.checkSize - width) / 2
-            y: (internal.checkSize - width) / 2
-            width: internal.checkSize * 0.6
-            height: width
-            color: Material.foreground
-            visible: root.checked
+        SquareIcon {
+            size: internal.checkSize
+            height: root.height
+            source: root.icon
         }
 
-        MouseArea {
-            anchors.fill: parent
-            onClicked: {
-                root.checked = !root.checked
-                root.clicked(root.checked)
+        Text {
+            id: label
+            width: root.width - (internal.checkSize + row.spacing) * 2
+            height: root.height
+            verticalAlignment: Image.AlignVCenter
+            elide: Text.ElideRight
+            clip: true
+            color: Material.foreground
+        }
+
+        Rectangle {
+            y: (root.height - internal.checkSize) / 2
+            width: internal.checkSize
+            height: internal.checkSize
+            color: "transparent"
+            border.color: root.checked ? (colorHighlight || Style.colorHighlight) : Style.colorHighlight
+            border.width: internal.checkSize * 0.1
+
+            Rectangle {
+                x: (internal.checkSize - width) / 2
+                y: (internal.checkSize - width) / 2
+                width: internal.checkSize * 0.6
+                height: width
+                color: colorHighlight || Style.colorHighlight
+                visible: root.checked
             }
         }
     }

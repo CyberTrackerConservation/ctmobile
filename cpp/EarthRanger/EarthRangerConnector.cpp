@@ -105,7 +105,7 @@ ApiResult EarthRangerConnector::bootstrap(const QVariantMap& params)
 
     if (!m_projectManager->init(projectUid, EARTH_RANGER_PROVIDER, QVariantMap(), EARTH_RANGER_CONNECTOR, QVariantMap {{"server", server }}))
     {
-        return Failure(tr("Failed to create project"));
+        return Failure(QString(tr("Failed to create %1")).arg(App::instance()->alias_project()));
     }
 
     m_projectManager->modify(projectUid, [&](Project* project)
@@ -333,13 +333,7 @@ ApiResult EarthRangerConnector::update(Project* project)
         updateProject.set_subtitle(QUrl(server).host());
         updateProject.set_icon("qrc:/EarthRanger/logo.svg");
         updateProject.set_iconDark("qrc:/EarthRanger/logoDark.svg");
-
-        auto androidPermissions = QStringList();
-        androidPermissions << "CAMERA";
-        androidPermissions << "RECORD_AUDIO";
-        androidPermissions << "ACCESS_FINE_LOCATION";
-        androidPermissions << "ACCESS_COARSE_LOCATION";
-        updateProject.set_androidPermissions(androidPermissions);
+        updateProject.set_androidPermissions(QStringList { "CAMERA", "RECORD_AUDIO", "ACCESS_FINE_LOCATION", "ACCESS_COARSE_LOCATION" });
 
         auto colors = QVariantMap();
         colors["primary"] = "#5E4C40";

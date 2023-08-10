@@ -10,7 +10,7 @@ C.ContentPage {
     id: page
 
     header: C.PageHeader {
-        text: qsTr("Projects")
+        text: App.alias_Projects
         backVisible: false
     }
 
@@ -51,8 +51,8 @@ C.ContentPage {
                     anchors.fill: parent
 
                     Label {
-                        text: qsTr("Delete project?")
-                        leftPadding: 20
+                        text: qsTr("Delete %1?").arg(App.alias_project)
+                        leftPadding: App.scaleByFontSize(20)
                         font.pixelSize: App.settings.font16
                         fontSizeMode: Label.Fit
                         Layout.fillWidth: true
@@ -106,6 +106,8 @@ C.ContentPage {
             C.HorizontalDivider {}
 
             onClicked: {
+                popupConfirmDelete.close()
+
                 if (d.swipe.position !== 0) {
                     return
                 }
@@ -116,31 +118,16 @@ C.ContentPage {
 
                 internal.launchMutex = true
                 try {
-                    popupConfirmDelete.close()
-                    App.clearComponentCache()
-
-                    // Request permissions (for Android).
-                    if (!App.requestPermissions(modelData.uid)) {
-                        return
-                    }
-
-                    // Send telemetry.
-                    App.telemetry.aiSendEvent("projectStart", { "connector": modelData.connector, "telemetry": modelData.telemetry })
-
                     // Ask for update on launch.
                     if (modelData.hasUpdate && modelData.loggedIn && App.updateAllowed()) {
                         popupConfirmUpdate.open({ projectUid: modelData.uid, projectTitle: modelData.title })
                         return
                     }
 
-                    // Ensure valid provider.
-                    if (modelData.provider === "") {
-                        App.showError(qsTr("No provider"))
-                        return
-                    }
+                    // Send telemetry.
+                    App.telemetry.aiSendEvent("projectStart", { "connector": modelData.connector, "telemetry": modelData.telemetry })
 
-                    // Launch.
-                    appPageStack.push(FormViewUrl, { projectUid: modelData.uid })
+                    changeToProject(modelData.uid, StackView.PushTransition)
 
                 } finally {
                     internal.launchMutex = false
@@ -157,6 +144,119 @@ C.ContentPage {
         }
     }
 
+    Pane {
+        id: pane
+        anchors.fill: parent
+        visible: projectListModel.count === 0
+
+        Material.background: C.Style.colorContent
+        topPadding: flickable.contentHeight < parent.height ? (parent.height - flickable.contentHeight) / 2 : App.scaleByFontSize(8)
+        leftPadding: parent.width * 0.1
+        rightPadding: parent.width * 0.1
+
+        contentItem: Flickable {
+            id: flickable
+
+            flickableDirection: Flickable.VerticalFlick
+            contentHeight: column.height
+            contentWidth: column.width
+
+            ColumnLayout {
+                id: column
+                width: pane.width * 0.8
+                spacing: App.scaleByFontSize(16)
+                opacity: 0.5
+
+                Label {
+                    Layout.fillWidth: true
+                    font.pixelSize: App.settings.font18
+                    font.bold: true
+                    text: qsTr("No %1").arg(App.alias_projects)
+                    horizontalAlignment: Label.AlignHCenter
+                    wrapMode: Label.WordWrap
+                }
+
+                ItemDelegate {
+                    Layout.fillWidth: true
+                    contentItem: Label {
+                        font.pixelSize: App.settings.font18
+                        text: {
+                            let result = ""
+                            let scanQRCode = "**" + qsTr("Scan QR code") + "**"
+                            if (addButton.visible) {
+                                result = qsTr("%1 or tap the %2 button below to add a %3").arg(scanQRCode).arg("**+**").arg(App.alias_Project)
+                            } else if (scanButton.visible) {
+                                result = qsTr("%1 to add a %2").arg(scanQRCode).arg(App.alias_Project)
+                            }
+
+                            return result
+                        }
+                        textFormat: Label.MarkdownText
+                        horizontalAlignment: Label.AlignHCenter
+                        verticalAlignment: Label.AlignVCenter
+                        wrapMode: Label.WordWrap
+                        elide: Label.ElideRight
+                    }
+                    onClicked: {
+                        appPageStack.push("qrc:/ConnectQRCodePage.qml")
+                    }
+                }
+
+                ToolButton {
+                    Layout.alignment: Qt.AlignHCenter
+                    font.pixelSize: App.settings.font14
+                    icon.source: "qrc:/icons/help.svg"
+                    icon.width: C.Style.toolButtonSize
+                    icon.height: C.Style.toolButtonSize
+                    text: qsTr("Getting started")
+                    font.capitalization: Font.AllUppercase
+                    visible: App.config.helpUrl !== ""
+                    onClicked: Qt.openUrlExternally(App.config.helpUrl)
+                }
+            }
+        }
+    }
+
+    C.CircleButton {
+        id: addButton
+        anchors {
+            right: parent.right
+            rightMargin: App.scaleByFontSize(8)
+            bottom: listView.bottom
+            bottomMargin: App.scaleByFontSize(8)
+        }
+        icon.source: "qrc:/icons/plus.svg"
+        icon.width: C.Style.iconSize48
+        icon.height: C.Style.iconSize48
+        visible: !App.config.showConnectPage && (App.config.connectPane !== "")
+        onClicked: {
+            appPageStack.push("qrc:/ConnectPage.qml")
+        }
+    }
+
+    C.CircleButton {
+        id: scanButton
+        anchors {
+            right: parent.right
+            rightMargin: App.scaleByFontSize(8)
+            bottom: listView.bottom
+            bottomMargin: App.scaleByFontSize(8)
+        }
+        radius: width / 8
+        icon.source: "qrc:/icons/qrcode_scan.svg"
+        icon.width: C.Style.iconSize48
+        icon.height: C.Style.iconSize48
+        visible: !App.config.showConnectPage && (App.config.connectPane === "")
+        onClicked: {
+            if (appWindow.videoMode) {
+                App.runLinkOnClipboard()
+                return
+            }
+
+            appPageStack.push("qrc:/ConnectQRCodePage.qml")
+        }
+    }
+
     C.PopupLoader {
         id: popupConfirmDelete
 
@@ -165,8 +265,8 @@ C.ContentPage {
                 property string projectUid
                 property string projectTitle
 
-                text: qsTr("Delete project?")
-                subText: qsTr("The project and all of its data will be permanently removed.")
+                text: qsTr("Delete %1?").arg(App.alias_project)
+                subText: qsTr("The %1 and all of its data will be permanently removed.").arg(App.alias_project)
                 confirmText: qsTr("Yes, delete it")
                 confirmDelay: true
                 onConfirmed: {
@@ -186,7 +286,7 @@ C.ContentPage {
                 property string projectUid
                 property string projectTitle
 
-                text: qsTr("Update project?")
+                text: qsTr("Update %1?").arg(App.alias_project)
                 subText: qsTr("A new version is available.")
                 confirmText: qsTr("Yes, update now")
                 confirmDelay: false
@@ -197,7 +297,7 @@ C.ContentPage {
                 }
 
                 onCancel: {
-                    appPageStack.push(FormViewUrl, { projectUid: projectUid })
+                    changeToProject(projectUid, StackView.PushTransition)
                 }
             }
         }
@@ -208,6 +308,6 @@ C.ContentPage {
             App.projectManager.update(projectUid, true)
         }
 
-        appPageStack.push(FormViewUrl, { projectUid: projectUid })
+        changeToProject(projectUid, StackView.PushTransition)
     }
 }

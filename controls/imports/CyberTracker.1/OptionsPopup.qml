@@ -15,7 +15,6 @@ PopupBase {
 
     signal clicked(var index)
 
-    insets: -12
     width: parent.width * 0.75
 
     contentItem: ColumnLayout {
@@ -95,6 +94,8 @@ PopupBase {
                 Layout.fillWidth: true
                 delay: modelData.delay ? (App.desktopOS ? 500 : 1000) : 0
                 hoverEnabled: true
+                enabled: modelData.enabled === undefined || modelData.enabled === true
+                visible: modelData.visible === undefined || modelData.visible === true
 
                 background: Rectangle {
                     anchors.fill: delayButton
@@ -111,12 +112,6 @@ PopupBase {
 
                 contentItem: RowLayout {
                     width: parent.width
-                    SquareIcon {
-                        Layout.preferredWidth: Style.iconSize24
-                        source: modelData.icon
-                        recolor: true
-                        opacity: 0.5
-                    }
 
                     Label {
                         Layout.fillWidth: true
@@ -126,19 +121,17 @@ PopupBase {
                         wrapMode: Label.Wrap
                         verticalAlignment: Label.AlignVCenter
                     }
-                }
 
-                visible: modelData.visible === undefined || modelData.visible === true
-
-                onClicked: {
-                    if (!modelData.delay && popup.opened) {
-                        popup.close()
-                        popup.clicked(model.index)
+                    SquareIcon {
+                        Layout.preferredWidth: Style.iconSize24
+                        source: modelData.icon
+                        recolor: true
+                        opacity: 0.5
                     }
                 }
 
                 onActivated: {
-                    if (modelData.delay && popup.opened) {
+                    if (popup.opened) {
                         popup.close()
                         popup.clicked(model.index)
                     }

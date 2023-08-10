@@ -10,7 +10,7 @@ C.ContentPage {
 
     header: C.PageHeader {
         text: qsTr("Connect")
-        backVisible: false
+        backVisible: !App.config.showConnectPage
     }
 
     Loader {

@@ -21,8 +21,7 @@ allprojects {
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar', '*.aar'])
-    implementation "com.android.support:support-core-utils:27.1.0"
-    implementation "com.android.support:appcompat-v7:27.1.0"
+    implementation 'com.google.android.gms:play-services-auth:20.5.0'
 }
 
 android {
@@ -50,13 +49,18 @@ android {
         applicationId "org.cybertracker.mobile"
         compileSdkVersion 31
         minSdkVersion 22
-        targetSdkVersion 31
+        targetSdkVersion 33
         manifestPlaceholders = [
             appName: "CyberTracker",
             appIcon: "@drawable/ct_launcher",
             appRoundIcon: "@drawable/ct_launcher_round",
             appSplashScreen: "@drawable/ct_splashscreen",
-            homeIntentCategory: "android.intent.category.DEFAULT"
+            appLinkHost: "cybertrackerwiki.org",
+            appLinkPath1: "/applink",
+            appLinkPath2: "/applink-smart",
+            appLinkPath3: "/applink-rilla",
+            homeIntentCategory: "android.intent.category.DEFAULT",
+            extraPermission: "ACCESS_BACKGROUND_LOCATION"
         ]
         ndk.abiFilters 'armeabi-v7a','arm64-v8a'
     }
@@ -71,7 +75,12 @@ android {
                 appIcon: "@drawable/ct_launcher",
                 appRoundIcon: "@drawable/ct_launcher_round",
                 appSplashScreen: "@drawable/ct_splashscreen",
-                homeIntentCategory: "android.intent.category.DEFAULT"
+                appLinkHost: "cybertrackerwiki.org",
+                appLinkPath1: "/applink",
+                appLinkPath2: "/applink-smart",
+                appLinkPath3: "/applink-rilla",
+                homeIntentCategory: "android.intent.category.DEFAULT",
+                extraPermission: "ACCESS_BACKGROUND_LOCATION"
             ]
         }
 
@@ -83,7 +92,12 @@ android {
                 appIcon: "@drawable/sm_launcher",
                 appRoundIcon: "@drawable/sm_launcher_round",
                 appSplashScreen: "@drawable/sm_splashscreen",
-                homeIntentCategory: "android.intent.category.DEFAULT"
+                appLinkHost: "cybertrackerwiki.org",
+                appLinkPath1: "/applink-smart",
+                appLinkPath2: "/applink-smart",
+                appLinkPath3: "/applink-smart",
+                homeIntentCategory: "android.intent.category.DEFAULT",
+                extraPermission: "ACCESS_BACKGROUND_LOCATION"
             ]
         }
 
@@ -95,7 +109,29 @@ android {
                 appIcon: "@drawable/sm_launcher",
                 appRoundIcon: "@drawable/sm_launcher_round",
                 appSplashScreen: "@drawable/sm_splashscreen",
-                homeIntentCategory: "android.intent.category.HOME"
+                appLinkHost: "cybertrackerwiki.org",
+                appLinkPath1: "/applink-smart",
+                appLinkPath2: "/applink-smart",
+                appLinkPath3: "/applink-smart",
+                homeIntentCategory: "android.intent.category.HOME",
+                extraPermission: "ACCESS_BACKGROUND_LOCATION"
+            ]
+        }
+
+        gg {
+            dimension 'productSelect'
+            applicationIdSuffix ".gg"
+            manifestPlaceholders = [
+                appName: "Rilla Forms",
+                appIcon: "@drawable/gg_launcher",
+                appRoundIcon: "@drawable/gg_launcher_round",
+                appSplashScreen: "@drawable/gg_splashscreen",
+                appLinkHost: "cybertrackerwiki.org",
+                appLinkPath1: "/applink-rilla",
+                appLinkPath2: "/applink-rilla",
+                appLinkPath3: "/applink-rilla",
+                homeIntentCategory: "android.intent.category.DEFAULT",
+                extraPermission: "INTERNET"
             ]
         }
     }

@@ -139,6 +139,7 @@ public:
     virtual BOOL StopSound();
     virtual BOOL IsPlaying();
 
+    virtual BOOL RequestPermissionRecordAudio();;
     virtual BOOL StartRecording(CHAR *pFileNameNoExt, UINT Duration, UINT Frequency);
     virtual BOOL StopRecording();
     virtual BOOL PlayRecording(CHAR *pFileName);

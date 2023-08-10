@@ -13,7 +13,7 @@ C.ListViewH {
     property int imageSize: 48
     property bool highlightInvalid: false
 
-    spacing: 4
+    spacing: App.scaleByFontSize(4)
 
     C.FieldBinding {
         id: fieldBinding

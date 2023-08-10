@@ -5,9 +5,10 @@ import QtQuick.Controls.Material 2.12
 Page {
     id: root
 
-    property color colorGroove: Style.getColorGroove(Material.background)
+    property color colorGroove: Style.getColorGroove(Material.foreground)
     property color colorContent: Style.getColorContent(Material.background)
     property color colorFooter: Style.getColorToolbar(Material.background)
+    property color colorHighlight: Style.getColorHighlight(Material.foreground)
 
     Rectangle {
         x: -root.padding

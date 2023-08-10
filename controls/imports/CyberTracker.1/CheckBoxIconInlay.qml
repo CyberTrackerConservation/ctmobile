@@ -22,9 +22,8 @@ Item {
         width: internal.checkSize
         height: internal.checkSize
         color: "transparent"
-        border.color: root.checked ? Material.foreground : "transparent"
+        border.color: root.checked ? (colorHighlight || Style.colorHighlight) : "transparent"
         border.width: internal.checkSize * 0.1
-        opacity: 0.75
     }
 
     SquareIcon {

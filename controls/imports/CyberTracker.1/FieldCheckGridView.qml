@@ -104,7 +104,6 @@ GridViewV {
             C.CheckBoxTextOnly {
                 width: parent.width
                 height: parent.height
-                spacing: root.padding
                 font.pixelSize: root.fontSize
                 font.bold: root.fontBold
                 text: form.getElementName(modelData.uid)
@@ -119,7 +118,6 @@ GridViewV {
             C.CheckBoxTextBesideIcon {
                 width: parent.width
                 height: parent.height
-                spacing: root.padding
                 icon: form.getElementIcon(modelData.uid)
                 font.pixelSize: root.fontSize
                 font.bold: root.fontBold

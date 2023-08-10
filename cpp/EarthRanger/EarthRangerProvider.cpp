@@ -523,7 +523,7 @@ void EarthRangerProvider::parseEventTypes()
     {
         auto eventTypeObj = eventType.toObject();
         auto categoryObj = eventTypeObj.value("category").toObject();
-        auto categoryUid = categoryObj.value("value").toString();
+        auto categoryUid = "category." + categoryObj.value("value").toString();
         auto categoryName = categoryObj.value("display").toString();
         auto categoryFlag = categoryObj.value("flag").toString();
         auto permissions = categoryObj.value("permissions").toArray();
@@ -599,7 +599,7 @@ void EarthRangerProvider::parseEventTypes()
     {
         auto eventTypeObj = eventType.toObject();
         auto categoryObj = eventTypeObj.value("category").toObject();
-        auto categoryUid = categoryObj.value("value").toString();
+        auto categoryUid = "category." + categoryObj.value("value").toString();
 
         auto categoryElement = m_elementManager->getElement(categoryUid);
         if (categoryElement == nullptr)

@@ -27,7 +27,7 @@ C.Sketchpad {
         id: fieldBinding
     }
 
-    RoundButton {
+    ToolButton {
         anchors {
             bottom: parent.bottom
             horizontalCenter: parent.horizontalCenter

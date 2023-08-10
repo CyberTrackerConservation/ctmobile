@@ -17,7 +17,7 @@ Pane {
     Material.background: colorContent || Style.colorContent
     contentWidth: row.implicitWidth
     contentHeight: row.implicitHeight
-    padding: 10
+    padding: App.scaleByFontSize(10)
 
     C.FieldBinding {
         id: fieldBinding
@@ -56,8 +56,8 @@ Pane {
 
     Row {
         id: row
-        padding: 10
-        spacing: 10
+        padding: App.scaleByFontSize(10)
+        spacing: App.scaleByFontSize(10)
 
         Tumbler {
             id: hoursTumbler

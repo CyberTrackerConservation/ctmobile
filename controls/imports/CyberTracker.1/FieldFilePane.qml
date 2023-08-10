@@ -112,7 +112,6 @@ ItemDelegate {
             source: "qrc:/icons/file_plus_outline.svg"
             size: Style.iconSize64
             opacity: 0.5
-            recolor: true
         }
     }
 

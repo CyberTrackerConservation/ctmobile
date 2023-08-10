@@ -74,10 +74,10 @@ C.ListViewV {
         FieldStateMarker {
             recordUid: model.recordUid
             fieldUid: model.fieldUid
-            x: -d.padding + 4
-            y: -d.padding + 4
-            icon.width: 12
-            icon.height: 12
+            x: -d.padding + App.scaleByFontSize(2)
+            y: -d.padding + App.scaleByFontSize(2)
+            icon.width: App.scaleByFontSize(10)
+            icon.height: App.scaleByFontSize(10)
             icon.color: fieldName.color
         }
 
@@ -92,7 +92,7 @@ C.ListViewV {
 
             Column {
                 Layout.fillWidth: true
-                spacing: 4
+                spacing: App.scaleByFontSize(4)
                 height: fieldName.implicitHeight + fieldValue.implicitHeight
 
                 C.FieldName {

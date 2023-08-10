@@ -24,7 +24,9 @@ private:
     FieldManager m_fieldManager;
     QVariantList m_languages;
     bool m_requireUsername = false;
-    QVariantMap m_settings;
+    bool m_requireCamera = false;
+    bool m_requireAudio = false;
+    bool m_requireLocation = false;
     QHash<QString, bool> m_choices;
     QMap<QString, Element*> m_fieldElements;
     QTextDocument m_textDocument;
@@ -69,7 +71,7 @@ private:
 
     void parseStringToMap(const QString& header, const QString& value, QVariantMap* languagesOut, bool removeMarkdown);
     QString findAsset(const QString& name) const;
-    static QVariantMap parseCT(const QVariantMap& parameters, const QString& header, const QString& value);
+    static QString parseCTHeader(const QString& header);
     QVariantMap parseParameters(const QString& params) const;
     static QVariantMap settingsRowFromSheet(const xlnt::worksheet& sheet);
     SurveyRow surveyRowFromSheet(const xlnt::worksheet& sheet, const xlnt::cell_vector& row);

@@ -25,7 +25,7 @@ C.ContentPage {
 
         Pane {
             Layout.fillWidth: true
-            padding: 12
+            padding: App.scaleByFontSize(12)
 
             background: Rectangle {
                 anchors.fill: parent

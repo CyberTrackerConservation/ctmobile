@@ -131,7 +131,7 @@ C.ContentPage {
             width: gridView.cellWidth
             height: gridView.cellHeight
             highlighted: GridView.isCurrentItem
-            padding: 4
+            padding: App.scaleByFontSize(4)
             contentItem: ColumnLayout {
                 clip: true
                 C.SquareIcon {

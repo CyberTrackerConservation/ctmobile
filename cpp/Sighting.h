@@ -14,6 +14,7 @@ class Sighting: public QObject
 
     Q_PROPERTY (QString deviceId READ deviceId CONSTANT)
     Q_PROPERTY (QString username READ username CONSTANT)
+    Q_PROPERTY (QString sessionId READ sessionId CONSTANT)
     Q_PROPERTY (QString createTime READ createTime CONSTANT)
     Q_PROPERTY (QString updateTime READ updateTime CONSTANT)
     Q_PROPERTY (QVariantMap location READ locationMap CONSTANT)
@@ -58,6 +59,7 @@ public:
 
     QString deviceId() const;
     QString username() const;
+    QString sessionId() const;
     QString createTime() const;
     QString updateTime() const;
     QVariantMap locationMap() const;
@@ -87,6 +89,9 @@ public:
     void recalculate(FieldValueChange* fieldValueChange = nullptr);
     QVariant evaluate(const QString& expression, const QString& contextRecordUid, const QString& contextFieldUid, const QVariantMap* variables) const;
 
+    void snapDeviceId();
+    void snapUsername();
+    void snapSessionId();
     void snapCreateTime(const QString& now = QString());
     void snapUpdateTime(const QString& now = QString());
 
@@ -122,11 +127,12 @@ public:
     QString getTrackFileFieldUid(QString* formatOut = nullptr) const;
     QVariantList findSaveTargets(const QString& recordUid, const QString& fieldUid) const;
     QVariantMap findSnapLocation(const QString& recordUid, const QString& fieldUid) const;
-    QVariantMap findTrackSetting() const;
+    QVariantMap findTrackCommand() const;
 
 private:
     RecordManager* m_recordManager = nullptr;
     QString m_deviceId;
+    QString m_sessionId;
     QString m_username;
     QString m_createTime;
     QString m_updateTime;

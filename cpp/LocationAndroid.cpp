@@ -529,7 +529,7 @@ static void satelliteGpsUpdated(JNIEnv *env, jobject /*thiz*/, jobjectArray sate
 
     SatelliteInfoSourceAndroid *source = AndroidPositioning::idToSatSource()->value(androidClassKey);
     if (!source) {
-        qWarning("satelliteUpdated: source == 0");
+        //qWarning("satelliteUpdated: source == 0");
         return;
     }
 
@@ -547,7 +547,7 @@ static void satelliteGnssUpdated(JNIEnv *env, jobject /*thiz*/, jobject status, 
 
     SatelliteInfoSourceAndroid *source = AndroidPositioning::idToSatSource()->value(androidClassKey);
     if (!source) {
-        qWarning("satelliteUpdated: source == 0");
+        //qWarning("satelliteUpdated: source == 0");
         return;
     }
 

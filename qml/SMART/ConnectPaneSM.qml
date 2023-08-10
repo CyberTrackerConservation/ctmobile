@@ -9,10 +9,11 @@ Pane {
     id: pane
     anchors.fill: parent
 
+    Material.background: C.Style.colorContent
     contentWidth: flickable.contentWidth
     contentHeight: Math.min(height, flickable.contentHeight)
     leftPadding: (width - flickable.contentWidth) / 2
-    topPadding: flickable.contentHeight < pane.height ? (height - flickable.contentHeight) / 2 : 4
+    topPadding: flickable.contentHeight < pane.height ? (height - flickable.contentHeight) / 2 : App.scaleByFontSize(8)
 
     contentItem: Flickable {
         id: flickable
@@ -32,14 +33,12 @@ Pane {
                 divider: false
                 iconOpacity: 0.5
                 iconColor: Material.foreground
-                subText: qsTr("Scan for desktop projects")
+                subText: qsTr("Scan for desktop %1").arg(App.alias_projects)
                 wrapSubText: true
                 visible: Qt.platform.os !== "ios"
                 onClicked: {
-                    if (App.requestPermissionReadExternalStorage() && App.requestPermissionWriteExternalStorage()) {
-                        busyCover.doWork = bootstrapSMARTDesktop
-                        busyCover.start()
-                    }
+                    busyCover.doWork = bootstrapSMARTDesktop
+                    busyCover.start()
                 }
             }
 
@@ -50,7 +49,7 @@ Pane {
                 divider: false
                 iconOpacity: 0.5
                 iconColor: Material.foreground
-                subText: qsTr("Connect to an online project")
+                subText: qsTr("Connect to an online %1").arg(App.alias_project)
                 wrapSubText: true
                 onClicked: appPageStack.push("qrc:/SMART/ConnectConnectPage.qml")
             }
@@ -62,14 +61,14 @@ Pane {
                 divider: false
                 iconOpacity: 0.5
                 iconColor: Material.foreground
-                subText: qsTr("Connect to a community project")
+                subText: qsTr("Connect to a community %1").arg(App.alias_project)
                 wrapSubText: true
                 onClicked: appPageStack.push("qrc:/SMART/ConnectCollectPage.qml")
             }
 
             C.ListRowDelegate {
                 Layout.fillWidth: true
-                iconSource: "qrc:/icons/qrcode.svg"
+                iconSource: "qrc:/icons/qrcode_scan.svg"
                 text: qsTr("Scan QR code")
                 divider: false
                 iconOpacity: 0.5

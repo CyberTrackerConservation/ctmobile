@@ -7,7 +7,7 @@ GridLayout {
     id: grid
     columns: 3
     columnSpacing: 0
-    rowSpacing: 8
+    rowSpacing: App.scaleByFontSize(8)
 
     property int buttonWidth: (grid.width - 16) / 2
     property bool hasTimestamp: App.lastLocation.isValid

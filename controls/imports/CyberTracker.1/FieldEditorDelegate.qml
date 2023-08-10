@@ -32,7 +32,7 @@ SwipeDelegate {
 
         Component.onCompleted: {
             loadedItem.sourceComponent = getComponent()
-            hintButton.visible = fieldBinding.hint !== "" || fieldBinding.hintLink.toString() !== ""
+            hintButton.visible = fieldBinding.fieldType !== "StaticField" && (fieldBinding.hint !== "" || fieldBinding.hintLink.toString() !== "")
         }
     }
 
@@ -46,7 +46,7 @@ SwipeDelegate {
 
             Column {
                 Layout.fillWidth: true
-                spacing: 5 // default value for ColumnLayout
+                spacing: App.scaleByFontSize(5) // default value for ColumnLayout
                 height: recordsTitle.implicitHeight + recordsValue.implicitHeight
 
                 C.FieldName {
@@ -81,7 +81,6 @@ SwipeDelegate {
                 target: root
 
                 function onClicked() {
-
                     let recordUid = fieldBinding.field.group ? fieldBinding.value[0] : fieldBinding.recordUid
                     let fieldUid = fieldBinding.field.group ? "" : fieldBinding.fieldUid
 
@@ -104,7 +103,11 @@ SwipeDelegate {
                         }
                     }
 
-                    form.pushPage(Qt.resolvedUrl("FieldRecordEditorPage.qml"), { title: recordsTitle.text, recordUid: recordUid, fieldUid: fieldUid, highlightInvalid: root.highlightInvalid })
+                    if (fieldBinding.field.group) {
+                        form.pushPage(Qt.resolvedUrl("FieldRecordEditorPage.qml"), { title: recordsTitle.text, recordUid: recordUid, fieldUid: fieldUid, highlightInvalid: root.highlightInvalid })
+                    } else {
+                        form.pushPage(Qt.resolvedUrl("FieldRecordListViewPage.qml"), { title: recordsTitle.text, recordUid: recordUid, fieldUid: fieldUid, highlightInvalid: root.highlightInvalid })
+                    }
                 }
             }
 
@@ -159,7 +162,7 @@ SwipeDelegate {
 
             Column {
                 Layout.fillWidth: true
-                spacing: 5 // default value for ColumnLayout
+                spacing: App.scaleByFontSize(5) // default value for ColumnLayout
                 height: locationTitle.implicitHeight + locationValue.implicitHeight
 
                 C.FieldName {
@@ -312,6 +315,16 @@ SwipeDelegate {
                 source: fieldBinding.fieldIcon
                 size: root.minRowHeight
             }
+
+            Connections {
+                target: root
+
+                function onClicked() {
+                    if (fieldBinding.hint !== "" || fieldBinding.hintIcon.toString() !== "" || fieldBinding.hintLink.toString() !== "") {
+                        form.pushPage(Qt.resolvedUrl("HintPage.qml"), { title: fieldBinding.fieldName, elementUid: fieldBinding.field.hintElementUid, link: fieldBinding.hintLink })
+                    }
+                }
+            }
         }
     }
 
@@ -323,7 +336,7 @@ SwipeDelegate {
 
             Column {
                 Layout.fillWidth: true
-                spacing: 5 // default value for ColumnLayout
+                spacing: App.scaleByFontSize(5) // default value for ColumnLayout
                 height: stringTitle.implicitHeight + stringValue.implicitHeight
 
                 C.FieldName {
@@ -389,7 +402,7 @@ SwipeDelegate {
 
             Column {
                 Layout.fillWidth: true
-                spacing: 5 // default value for ColumnLayout
+                spacing: App.scaleByFontSize(5) // default value for ColumnLayout
                 height: listTitle.implicitHeight + likertMode ? likertRow.implicitHeight : listValue.implicitHeight
 
                 C.FieldName {
@@ -463,7 +476,7 @@ SwipeDelegate {
 
             Column {
                 Layout.fillWidth: true
-                spacing: 5 // default value for ColumnLayout
+                spacing: App.scaleByFontSize(5) // default value for ColumnLayout
                 height: checkListTitle.implicitHeight + checkListValue.implicitHeight
 
                 C.FieldName {
@@ -517,7 +530,7 @@ SwipeDelegate {
 
             Column {
                 Layout.fillWidth: true
-                spacing: 5 // default value for ColumnLayout
+                spacing: App.scaleByFontSize(5) // default value for ColumnLayout
                 height: numberListTitle.implicitHeight + numberListValue.implicitHeight
 
                 C.FieldName {
@@ -577,7 +590,7 @@ SwipeDelegate {
 
             Column {
                 Layout.fillWidth: true
-                spacing: 5 // default value for ColumnLayout
+                spacing: App.scaleByFontSize(5) // default value for ColumnLayout
                 height: numberTitle.implicitHeight + (numberValue.visible ? numberValue.implicitHeight : 0) + (numberEditor.visible ? numberEditor.implicitHeight : 0)
 
                 C.FieldName {
@@ -652,7 +665,7 @@ SwipeDelegate {
 
             Column {
                 Layout.fillWidth: true
-                spacing: 5 // default value for ColumnLayout
+                spacing: App.scaleByFontSize(5) // default value for ColumnLayout
                 height: photoTitle.implicitHeight + photoListView.implicitHeight
 
                 C.FieldName {
@@ -691,7 +704,7 @@ SwipeDelegate {
 
             Column {
                 Layout.fillWidth: true
-                spacing: 5 // default value for ColumnLayout
+                spacing: App.scaleByFontSize(5) // default value for ColumnLayout
                 height: audioTitle.implicitHeight + audioValue.implicitHeight
 
                 C.FieldName {
@@ -727,7 +740,7 @@ SwipeDelegate {
 
             Column {
                 Layout.fillWidth: true
-                spacing: 5 // default value for ColumnLayout
+                spacing: App.scaleByFontSize(5) // default value for ColumnLayout
                 height: stringTitle.implicitHeight + imageValue.implicitHeight
 
                 C.FieldName {
@@ -782,7 +795,7 @@ SwipeDelegate {
 
             Column {
                 Layout.fillWidth: true
-                spacing: 5 // default value for ColumnLayout
+                spacing: App.scaleByFontSize(5) // default value for ColumnLayout
                 height: fileTitle.implicitHeight + fileValue.implicitHeight
 
                 C.FieldName {
@@ -859,7 +872,7 @@ SwipeDelegate {
 
             Column {
                 Layout.fillWidth: true
-                spacing: 5 // default value for ColumnLayout
+                spacing: App.scaleByFontSize(5) // default value for ColumnLayout
                 height: stringTitle.implicitHeight + imageValue.implicitHeight
 
                 C.FieldName {
@@ -920,7 +933,7 @@ SwipeDelegate {
 
             Column {
                 Layout.fillWidth: true
-                spacing: 5 // default value for ColumnLayout
+                spacing: App.scaleByFontSize(5) // default value for ColumnLayout
                 height: dateTimeTitle.implicitHeight + dateTimeValue.implicitHeight
 
                 C.FieldName {
@@ -972,7 +985,7 @@ SwipeDelegate {
 
             Column {
                 Layout.fillWidth: true
-                spacing: 5 // default value for ColumnLayout
+                spacing: App.scaleByFontSize(5) // default value for ColumnLayout
                 height: calculateTitle.implicitHeight + calculateValue.implicitHeight
 
                 C.FieldName {
@@ -1032,7 +1045,7 @@ SwipeDelegate {
 
             Label {
                 text: qsTr("Reset data?")
-                leftPadding: 20
+                leftPadding: App.scaleByFontSize(20)
                 font.pixelSize: App.settings.font16
                 fontSizeMode: Label.Fit
                 Layout.fillWidth: true
@@ -1067,10 +1080,10 @@ SwipeDelegate {
     C.FieldStateMarker {
         recordUid: root.recordUid
         fieldUid: root.fieldUid
-        x: -root.padding + 4
-        y: -root.padding + 4
-        icon.width: 12
-        icon.height: 12
+        x: -root.padding + App.scaleByFontSize(2)
+        y: -root.padding + App.scaleByFontSize(2)
+        icon.width: App.scaleByFontSize(10)
+        icon.height: App.scaleByFontSize(10)
         icon.color: titleColor(fieldBinding)
         opacity: root.swipe.position === 0 ? 1.0 : 0
     }

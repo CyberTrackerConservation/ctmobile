@@ -9,26 +9,14 @@ PopupBase {
     id: popup
 
     property int fixCount: 4
+    property color color: Style.colorContent
 
     signal locationFound(var value)
 
     width: parent.width
     height: parent.height
 
-    ToolButton {
-        id: backButton
-        x: 4
-        y: 4
-        icon.source: Style.backIconSource
-        icon.width: Style.toolButtonSize
-        icon.height: Style.toolButtonSize
-        icon.color: Material.foreground
-        onClicked: {
-            positionSource.active = false
-            doneTimer.stop()
-            popup.close()
-        }
-    }
+    Binding { target: background; property: "color"; value: color }
 
     contentItem: Item {
         C.Skyplot {
@@ -37,13 +25,28 @@ PopupBase {
             id: skyplot
             active: true
             compassVisible: false
-            width: popup.width * 0.75
-            height: popup.height * 0.75
+            width: Math.min(popup.width, popup.height) * 0.7
+            height: Math.min(popup.width, popup.height) * 0.7
             progressVisible: true
-            legendVisible: true
-            legendSpace: popup.height / 16
-            legendDepth: popup.height / 16
+            legendVisible: false
             satNumbersVisible: false
+        }
+
+        ToolButton {
+            anchors {
+                bottom: parent.bottom
+                horizontalCenter: parent.horizontalCenter
+            }
+
+            icon.source: Style.cancelIconSource
+            icon.width: Style.toolButtonSize
+            icon.height: Style.toolButtonSize
+            icon.color: Material.foreground
+            onClicked: {
+                positionSource.active = false
+                doneTimer.stop()
+                popup.close()
+            }
         }
     }
 

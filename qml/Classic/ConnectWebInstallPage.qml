@@ -19,18 +19,16 @@ C.ContentPage {
     ColumnLayout {
         anchors.horizontalCenter: parent.horizontalCenter
         width: parent.width * 0.8
+        spacing: App.scaleByFontSize(4)
 
-        Item { height: 16 }
-        Image {
+        Item { height: parent.spacing }
+
+        C.SquareIcon {
             Layout.alignment: Qt.AlignHCenter
             source: "qrc:/Classic/logo.svg"
-            sourceSize.width: width
-            sourceSize.height: height
-            fillMode: Image.PreserveAspectFit
-            width: parent.width * 0.25
-            height: parent.width * 0.25
+            size: C.Style.iconSize64
         }
-        Item { height: 16 }
+
         TextField {
             id: server
             Layout.fillWidth: true
@@ -39,7 +37,7 @@ C.ContentPage {
             inputMethodHints: Qt.ImhUrlCharactersOnly
             placeholderText: qsTr("Enter web address")
         }
-        Item { height: 16 }
+
         C.ColorButton {
             Layout.fillWidth: true
             text: qsTr("Install")

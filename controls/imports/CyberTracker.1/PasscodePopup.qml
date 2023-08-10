@@ -27,13 +27,13 @@ PopupBase {
     property var digitColor   : dark ? Material.background : Material.color(Material.Grey, Material.Shade100)
     property var otherColor   : dark ? Material.color(Material.Grey, Material.ShadeA700) : Material.color(Material.Grey, Material.Shade300)
 
-    property var wspace: 2
-    property var keyW: width / 4
-    property var keyH: (height - displayH) / 4
-    property var displayW: width - wspace * 2
-    property var displayH: height / 5
-    property var digitFontPixelSize: keyH * 3 / 8
-    property var displayFontPixelSize: displayH * 3 / 8
+    property int wspace: 2
+    property int keyW: width / 4
+    property int keyH: (height - displayH) / 4
+    property int displayW: width - wspace * 2
+    property int displayH: height / 5
+    property int digitFontPixelSize: keyH * 3 / 8
+    property int displayFontPixelSize: displayH * 3 / 8
 
     function buttonClick(t) {
         var newText = userCode

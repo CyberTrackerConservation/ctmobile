@@ -295,6 +295,7 @@ QString ElementManager::getElementName(const QString& elementUid, const QString&
             { "tr:Yes",   tr("Yes")   },
             { "tr:No",    tr("No")    },
             { "tr:Other", tr("Other") },
+            { "tr:Empty", tr("Empty") },
         };
 
         return map.contains(name) ? map[name].toString() : name;
@@ -330,16 +331,22 @@ QUrl ElementManager::getElementIcon(const QString& elementUid, bool walkBack) co
 
     for (auto element = getElement(elementUid); element && element != rootElement(); element = element->parentElement())
     {
-        if (!element->icon().isEmpty())
+        auto icon = element->icon();
+        if (!icon.isEmpty())
         {
-            auto filePath = projectManager->getFilePath(projectUid, element->icon());
+            if (icon.startsWith("qrc:/"))
+            {
+                return QUrl(icon);
+            }
+
+            auto filePath = projectManager->getFilePath(projectUid, icon);
             if (QFile::exists(filePath))
             {
                 return QUrl::fromLocalFile(filePath);
             }
             else
             {
-                qDebug() << "Icon not found: " << element->icon();
+                qDebug() << "Icon not found: " << icon;
             }
         }
 

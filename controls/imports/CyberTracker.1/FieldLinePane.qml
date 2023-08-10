@@ -59,7 +59,7 @@ ItemDelegate {
             }
         }
 
-        RoundButton {
+        ToolButton {
             anchors {
                 bottom: parent.bottom
                 horizontalCenter: parent.horizontalCenter
@@ -81,7 +81,6 @@ ItemDelegate {
             source: internal.isArea ? "qrc:/icons/shape_polygon_plus.svg" : "qrc:/icons/vector_polyline_plus.svg"
             size: Style.iconSize64
             opacity: 0.5
-            recolor: true
         }
     }
 

@@ -363,7 +363,6 @@ C.ContentPage {
                     C.SquareIcon {
                         source: "qrc:/icons/add.svg"
                         opacity: 0.75
-                        recolor: true
                     }
 
                     Connections {
@@ -513,7 +512,7 @@ C.ContentPage {
                             default: return ""
                             }
                         }
-                        leftPadding: 20
+                        leftPadding: App.scaleByFontSize(20)
                         Layout.fillWidth: true
                         font.bold: model.fontBold
                         font.pixelSize: App.settings.font16
@@ -773,5 +772,4 @@ C.ContentPage {
 
         listView.model = recordModel
     }
-
 }

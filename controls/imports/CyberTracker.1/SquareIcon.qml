@@ -6,14 +6,16 @@ import CyberTracker 1.0 as C
 C.SquareImage  {
     id: root
 
-    property bool recolor: false
+    property bool recolor: source.toString().startsWith("qrc:/icons/")
+    property color color: Material.foreground
+
     size: Style.iconSize24
     visible: source !== ""
 
     layer {
         enabled: root.recolor
         effect: ColorOverlay {
-            color: Material.foreground
+            color: root.color
         }
     }
 }

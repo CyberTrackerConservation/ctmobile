@@ -156,6 +156,11 @@ BOOL CfxHost::IsPlaying()
     return FALSE;
 }
 
+BOOL CfxHost::RequestPermissionRecordAudio()
+{
+    return TRUE;
+}
+
 BOOL CfxHost::StartRecording(CHAR *pFileNameNoExt, UINT Duration, UINT Frequency)
 {
     return FALSE;

@@ -5,6 +5,7 @@
 #include <jlcompress.h>
 #include "Classic/ClassicConnector.h"
 #include "Native/NativeConnector.h"
+#include "SMART/SMARTConnector.h"
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // Project
@@ -92,6 +93,23 @@ void Project::setSetting(const QString& name, const QVariant& value)
     database->saveProject(m_uid, data);
 
     emit m_projectManager->projectSettingChanged(m_uid, name, value);
+}
+
+QVariant Project::getConnectorParam(const QString& name, const QVariant& defaultValue) const
+{
+    return m_connectorParams.value(name, defaultValue);
+}
+
+void Project::setConnectorParam(const QString& name, const QVariant& value)
+{
+    if (value.isValid())
+    {
+        m_connectorParams.insert(name, value);
+    }
+    else
+    {
+        m_connectorParams.remove("name");
+    }
 }
 
 QString Project::languageCode() const
@@ -229,6 +247,17 @@ QUrl Project::loginIcon() const
     return connector->icon();
 }
 
+bool Project::canLogin()
+{
+    auto connector = App::instance()->createConnectorPtr(m_connector);
+    if (!connector)
+    {
+        return true;
+    }
+
+    return connector->canLogin(this);
+}
+
 bool Project::loggedIn()
 {
     auto connector = App::instance()->createConnectorPtr(m_connector);
@@ -266,6 +295,23 @@ bool Project::login(const QString& server, const QString& username, const QStrin
     emit m_projectManager->projectLoggedInChanged(m_uid, result);
 
     return result;
+}
+
+void Project::login(const QString& username)
+{
+    auto connector = App::instance()->createConnectorPtr(m_connector);
+    if (!connector)
+    {
+        return;
+    }
+
+    // Update the user name.
+    set_username(username);
+
+    // Send a change.
+    auto loggedIn = connector->loggedIn(this);
+    emit loggedInChanged(loggedIn);
+    emit m_projectManager->projectLoggedInChanged(m_uid, loggedIn);
 }
 
 void Project::logout()
@@ -334,7 +380,7 @@ void UpdateScanTask::run()
     }
 
     // Check offline map update.
-    if (!project->offlineMapUrl().isEmpty())
+    if (!result.success && !project->offlineMapUrl().isEmpty())
     {
         result = App::instance()->offlineMapManager()->hasUpdate(&networkAccessManager, project->offlineMapUrl());
         if (!result.expected)
@@ -412,6 +458,14 @@ Project* ProjectManager::load(const QString& projectUid) const
         result->set_maps(QVariantList());
         result->saveToQmlFile(filePath);
     }
+
+    //
+    // Fixup due to not needing read and write storage and Android 12+.
+    //
+    auto androidPermissions = result->androidPermissions();
+    androidPermissions.removeOne("READ_EXTERNAL_STORAGE");
+    androidPermissions.removeOne("WRITE_EXTERNAL_STORAGE");
+    result->set_androidPermissions(androidPermissions);
 
     //
     // Fixup due to design change.
@@ -606,6 +660,7 @@ bool ProjectManager::exists(const QString& projectUid) const
 QList<std::shared_ptr<Project>> ProjectManager::buildList() const
 {
     auto projectList = QList<std::shared_ptr<Project>>();
+    auto orderList = App::instance()->settings()->projects();
 
     QDir projectDir(m_projectsPath);
     QStringList projectFolders = projectDir.entryList(QDir::NoDotAndDotDot | QDir::Dirs);
@@ -651,15 +706,45 @@ QList<std::shared_ptr<Project>> ProjectManager::buildList() const
         // This is a real project.
         m_database->addProject(projectUid);
         projectList.append(std::shared_ptr<Project>(project.release()));
+
+        if (!orderList.contains(projectUid))
+        {
+            orderList.append(projectUid);
+        }
     }
 
-    // Sort the list.
-    std::sort(projectList.begin(), projectList.end(), [](std::shared_ptr<Project> p1, std::shared_ptr<Project> p2) -> bool
+    // Sort by order list.
+    std::sort(projectList.begin(), projectList.end(), [&](const std::shared_ptr<Project>& p1, const std::shared_ptr<Project>& p2) -> bool
     {
-        return p1->provider() + p1->title() < p2->provider() + p2->title();
+        return orderList.indexOf(p1->uid()) < orderList.indexOf(p2->uid());
     });
 
+    orderList.clear();
+    for (auto projectIt = projectList.constBegin(); projectIt != projectList.constEnd(); projectIt++)
+    {
+        orderList.append(projectIt->get()->uid());
+    }
+
+    App::instance()->settings()->set_projects(orderList);
+
     return projectList;
+}
+
+void ProjectManager::moveProject(const QString& projectUid, int delta)
+{
+    auto projects = App::instance()->settings()->projects();
+    auto index = projects.indexOf(projectUid);
+
+    if (index == -1)
+    {
+        qDebug() << "Error bad index";
+        return;
+    }
+
+    projects.move(index, index + delta);
+    App::instance()->settings()->set_projects(projects);
+
+    emit projectsChanged();
 }
 
 int ProjectManager::count() const
@@ -714,7 +799,7 @@ QString ProjectManager::getShareUrl(const QString& projectUid, bool auth) const
         return QString();
     }
 
-    return QString("%1?%2").arg(App::instance()->config()["appLinkUrl"].toString(), m_appLink->encode(data));
+    return QString("%1?x=%2").arg(App::instance()->config()["appLinkUrls"].toStringList().constFirst(), m_appLink->encode(data));
 }
 
 QString ProjectManager::createQRCode(const QString& projectUid, bool auth, int size) const
@@ -957,6 +1042,13 @@ ApiResult ProjectManager::installPackage(const QString& filePath)
     pauseUpdateScan();
     auto resumeUpdateScanOnExit = qScopeGuard([&] { resumeUpdateScan(); });
 
+    // Detect SMART package.
+    auto smartProject = Utils::variantMapFromFileInZip(filePath, "project.json");
+    if (smartProject.contains("smart_version"))
+    {
+        return App::instance()->createConnectorPtr(SMART_CONNECTOR)->bootstrap(QVariantMap {{"filePath", filePath }});
+    }
+
     // Unpack zip to package path.
     auto packagePath = Utils::unpackZip(App::instance()->tempPath(), "Package", filePath);
 
@@ -982,7 +1074,7 @@ ApiResult ProjectManager::installPackage(const QString& filePath)
         // Initialize the project and Project.qml file.
         if (!init(projectUid, "", QVariantMap(), "", QVariantMap()))
         {
-            return ApiResult::Error(tr("Failed to initialize project"));
+            return ApiResult::Error(QString(tr("Failed to initialize %1")).arg(App::instance()->alias_project()));
         }
 
         projectAdded = true;
@@ -1091,11 +1183,6 @@ QVariantMap ProjectManager::webInstall(const QString& webUpdateUrl)
     // Classic - def file is text format.
     if (QString(defGet.data).startsWith("3."))
     {
-        if (!App::instance()->requestPermissionReadExternalStorage() || !App::instance()->requestPermissionWriteExternalStorage())
-        {
-            return ApiResult::ErrorMap(tr("Permissions not granted"));
-        }
-
         return bootstrap(CLASSIC_CONNECTOR, QVariantMap {{ "webUpdateUrl", finalWebUpdateUrl }});
     }
 
@@ -1221,10 +1308,6 @@ void ProjectManager::resumeUpdateScan()
 bool ProjectManager::canLogin(const QString& projectUid) const
 {
     auto project = loadPtr(projectUid);
-    if (!project->loggedIn())
-    {
-        return false;
-    }
 
     // Override for webUpdateUrl.
     auto connector = project->webUpdateUrl().isEmpty() ? project->connector() : NATIVE_CONNECTOR;
@@ -1360,7 +1443,7 @@ QVariantMap ProjectManager::updateAll(const QString& filterConnectorName, const 
             }
             else
             {
-                updateResult = ApiResult::Error(tr("Bad project file"));
+                updateResult = ApiResult::Error(QString(tr("Bad %1 file")).arg(App::instance()->alias_project()));
             }
         }
 
@@ -1447,7 +1530,7 @@ void ProjectManager::startUpdateScanner()
 {
     connect(&m_updateScanTimer, &QTimer::timeout, this, [&]()
     {
-        m_updateScanTimer.setInterval(40000);   // Next interval.
+        m_updateScanTimer.setInterval(App::instance()->desktopOS() ? 10000 : 40000);   // Next interval.
 
         if (m_blockUpdateScanCounter == 0)
         {

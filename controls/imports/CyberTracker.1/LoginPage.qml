@@ -18,8 +18,9 @@ ContentPage {
     property alias skipAllowed: loginItem.skipAllowed
 
     signal loginClicked(var provider, var server, var username, var password)
+    signal loggedIn(var username)
     signal skipClicked()
-    signal backClicked
+    signal backClicked()
 
     header: PageHeader {
         id: pageHeader

@@ -9,7 +9,10 @@ import CyberTracker 1.0 as C
 ContentPage {
     id: page
 
-    property var backClicked: undefined
+    property var canHome: () => { return true; }
+    property var canBack: () => { return true; }
+    property var canNext: () => { return true; }
+    property var canSave: () => { return true; }
 
     QtObject {
         id: internal
@@ -27,14 +30,15 @@ ContentPage {
             recordUid = form.wizard.lastPageRecordUid
             fieldUid = form.wizard.lastPageFieldUid
 
-            internal.headerParams = form.getFieldParameter(recordUid, fieldUid, "header")
-            internal.contentParams = form.getFieldParameter(recordUid, fieldUid, "content")
-            internal.footerParams = form.getFieldParameter(recordUid, fieldUid, "footer")
+            internal.headerParams = form.getFieldParameter(recordUid, fieldUid, "header", {})
+            internal.contentParams = form.getFieldParameter(recordUid, fieldUid, "content", {})
+            internal.footerParams = form.getFieldParameter(recordUid, fieldUid, "footer", {})
             internal.autoNext = form.getFieldParameter(recordUid, fieldUid, "autoNext", false)
             internal.hasStyle = getParam(internal.contentParams, "style") !== undefined
 
             contentPane.padding = getParam(internal.contentParams, "frameWidth", App.scaleByFontSize(16))
             page.colorContent = getParamColor(internal.contentParams, "color", page.colorContent)
+            page.colorHighlight = getParamColor(internal.contentParams, "colorHighlight", page.colorHighlight)
             page.colorFooter = getParamColor(internal.footerParams, "color", page.colorFooter)
 
             createPart(headerLoader, headerComponent, "header")
@@ -89,7 +93,7 @@ ContentPage {
                 width: parent.width
                 height: {
                     if (staticField) {
-                        return parent.height
+                        return hintLabel.height
                     }
 
                     if (acknowledgeField) {
@@ -140,8 +144,17 @@ ContentPage {
             }
 
             Component.onCompleted: {
-                hintLabel.text = fieldBinding.hint
-                hintBlock.visible = fieldBinding.hint !== ""
+                let hint = fieldBinding.hint
+
+                // Decode hints for records.
+                if (fieldBinding.fieldUid === "") {
+                    let recordUid = form.getParentRecordUid(fieldBinding.recordUid)
+                    let fieldUid = form.getRecordFieldUid(fieldBinding.recordUid)
+                    hint = form.getFieldHint(recordUid, fieldUid);
+                }
+
+                hintLabel.text = hint
+                hintBlock.visible = hint !== ""
 
                 if (fieldBinding.fieldUid === "") {
                     if (internal.hasStyle) {
@@ -190,7 +203,13 @@ ContentPage {
                     break
 
                 case "StaticField":
-                    innerLoader.sourceComponent = staticFieldComponent
+                    if (fieldBinding.hintLink.toString() !== "") {
+                        innerLoader.sourceComponent = staticFieldWebComponent
+                    } else if (fieldBinding.hintIcon.toString() !== "") {
+                        innerLoader.sourceComponent = staticFieldImageComponent
+                    } else {
+                        innerLoader.sourceComponent = staticFieldComponent
+                    }
                     break
 
                 case "StringField":
@@ -218,7 +237,14 @@ ContentPage {
                     break
 
                 case "PhotoField":
-                    innerLoader.sourceComponent = fieldBinding.field.parameters.embed ? photoFieldEmbedComponent : photoFieldComponent
+                    if (fieldBinding.field.maxCount > 1) {
+                        innerLoader.sourceComponent = photoFieldGridComponent
+                    } else if (fieldBinding.field.parameters.embed) {
+                        innerLoader.sourceComponent = photoFieldEmbedComponent
+                    } else {
+                        innerLoader.sourceComponent = photoFieldComponent
+                    }
+
                     break
 
                 case "AudioField":
@@ -268,7 +294,29 @@ ContentPage {
 
         Control {
             anchors.fill: parent
-            padding: 16
+            padding: App.scaleByFontSize(16)
+        }
+    }
+
+    Component {
+        id: staticFieldImageComponent
+
+        Image {
+            anchors.fill: parent
+            source: fieldBinding.hintIcon
+            fillMode: Image.PreserveAspectFit
+        }
+    }
+
+    Component {
+        id: staticFieldWebComponent
+
+        C.WebView {
+            id: webView
+            anchors.fill: parent
+            Component.onCompleted: {
+                webView.url = fieldBinding.hintLink
+            }
         }
     }
 
@@ -441,13 +489,13 @@ ContentPage {
             }
 
             Component.onCompleted: {
-                page.backClicked = () => {
+                page.canBack = () => {
                     if (listElementUid === fieldBinding.field.listElementUid) {
-                        form.wizard.back()
-                        return
+                        return true
                     }
 
                     listElementUid = form.getElement(listElementUid).parentElement.uid
+                    return false
                 }
             }
         }
@@ -614,7 +662,7 @@ ContentPage {
 
         Control {
             anchors.fill: parent
-            padding: 8
+            padding: App.scaleByFontSize(8)
 
             contentItem: Label {
                 text: fieldBinding.displayValue
@@ -661,6 +709,18 @@ ContentPage {
         id: photoGridComponent
 
         FieldRecordPhotoGridView {
+            anchors.fill: parent
+            recordUid: fieldBinding.recordUid
+            fieldUid: fieldBinding.fieldUid
+            params: internal.contentParams
+            sideBorder: contentPane.padding > 0
+        }
+    }
+
+    Component {
+        id: photoFieldGridComponent
+
+        FieldPhotoGridView {
             anchors.fill: parent
             recordUid: fieldBinding.recordUid
             fieldUid: fieldBinding.fieldUid
@@ -720,6 +780,61 @@ ContentPage {
         }
     }
 
+    C.PopupLoader {
+        id: popupImmersiveHome
+
+        popupComponent: Component {
+            C.OptionsPopup {
+                icon: {
+                    let homeIcon = getParam(internal.footerParams, "homeIcon")
+                    if (homeIcon !== undefined && homeIcon !== "") {
+                        return App.projectManager.getFileUrl(form.projectUid, homeIcon)
+                    }
+
+                    return "qrc:/icons/home.svg"
+                }
+
+                model: [
+                    { text: qsTr("Change %1").arg(App.alias_project), icon: "qrc:/icons/clipboard_multiple_outline.svg" },
+                    { text: qsTr("Update %1").arg(App.alias_project), icon: "qrc:/icons/autorenew.svg", visible: form.project.loggedIn && App.projectManager.canUpdate(form.project.uid) },
+                    { text: qsTr("Settings"), icon: "qrc:/icons/settings_outline.svg" },
+                    { text: qsTr("Home"), icon: C.Style.homeIconSource }
+                ]
+
+                onClicked: function (index) {
+                    switch (index) {
+                    case 0:
+                        form.pushPage("qrc:/ProjectChangePage.qml")
+                        break
+
+                    case 1:
+                        if (Utils.networkAvailable()) {
+                            busyCover.doWork = () => {
+                                let result = App.projectManager.update(form.project.uid)
+                                if (result.success) {
+                                    changeToProject(form.projectUid)
+                                }
+                            }
+
+                            busyCover.start()
+                        } else {
+                            showToast(qsTr("Offline"));
+                        }
+                        break
+
+                    case 2:
+                        form.pushPage("qrc:/imports/CyberTracker.1/FormSettingsPage.qml")
+                        break
+
+                    case 3:
+                        form.wizard.home()
+                        break
+                    }
+                }
+            }
+        }
+    }
+
     // Save.
     QtObject {
         id: saveState
@@ -738,7 +853,6 @@ ContentPage {
                 property var saveTargets: ([])
 
                 width: page.width * 0.80
-                insets: -12
 
                 contentItem: ColumnLayout {
                     width: saveTargetPopup.width
@@ -775,34 +889,56 @@ ContentPage {
 
                         model: saveTargetPopup.saveTargets
 
-                        ItemDelegate {
+                        DelayButton {
+                            id: delayButton
+
+                            property color highlightColor: Utils.changeAlpha(Material.foreground, 64)
+
                             Layout.fillWidth: true
+                            delay: modelData.delay ? (App.desktopOS ? 500 : 1000) : 0
+                            hoverEnabled: true
+
+                            background: Rectangle {
+                                anchors.fill: delayButton
+                                color: delayButton.hovered && delayButton.progress === 0 ? delayButton.highlightColor : "transparent"
+                                opacity: 0.5
+
+                                Rectangle {
+                                    height: parent.height
+                                    width: parent.width * delayButton.progress
+                                    color: modelData.delay ? Material.accent : delayButton.highlightColor
+                                    visible: delayButton.progress > 0
+                                }
+                            }
 
                             contentItem: RowLayout {
+                                width: parent.width
                                 Item {
                                     height: Style.iconSize48
                                 }
 
                                 Label {
                                     Layout.fillWidth: true
-                                    text: modelData.elementUid ? form.getElementName(modelData.elementUid) : qsTr("Home")
+                                    text: modelData.elementUid !== "" ? form.getElementName(modelData.elementUid) : qsTr("Home")
                                     font.pixelSize: App.settings.font18
                                     wrapMode: Label.Wrap
                                     elide: Label.ElideRight
                                 }
 
                                 SquareIcon {
-                                    source: modelData.elementUid ? form.getElementIcon(modelData.elementUid) : Style.homeIconSource
+                                    source: modelData.elementUid !== "" ? form.getElementIcon(modelData.elementUid) : Style.homeIconSource
                                     size: Style.iconSize48
-                                    recolor: !modelData.elementUid
-                                    opacity: modelData.elementUid ? 1.0 : 0.5
+                                    recolor: modelData.elementUid === ""
+                                    opacity: modelData.elementUid === "" ? 0.5 : 1.0
                                 }
                             }
 
-                            onClicked: {
-                                popupSaveTarget.close()
-                                page.setSaveTarget(modelData.fieldUid)
-                                page.saveContinue()
+                            onActivated: {
+                                if (saveTargetPopup.opened) {
+                                    saveTargetPopup.close()
+                                    page.setSaveTarget(modelData)
+                                    page.saveContinue()
+                                }
                             }
 
                             HorizontalDivider {}
@@ -822,7 +958,7 @@ ContentPage {
                 property string fieldUid
 
                 fixCount: form.getField(fieldUid).fixCount
-
+                color: page.colorContent
                 onLocationFound: function (value) {
                     form.setFieldValue(recordUid, fieldUid, value)
                     page.saveContinue()
@@ -886,8 +1022,12 @@ ContentPage {
         form.replaceLastPage(form.wizard.pageUrl, {}, transition)
     }
 
-    function setSaveTarget(fieldUid) {
-        saveState.targetFieldUid = fieldUid
+    function setSaveTarget(selectedItem) {
+        saveState.targetFieldUid = selectedItem.fieldUid
+
+        if (selectedItem.outputFieldUid !== "") {
+            form.setFieldValue(form.sighting.rootRecordUid, selectedItem.outputFieldUid, selectedItem.elementUid)
+        }
     }
 
     function saveStart() {
@@ -970,9 +1110,9 @@ ContentPage {
 //    FieldStateMarker {
 //        recordUid: fieldBinding.recordUid
 //        fieldUid: fieldBinding.fieldUid
-//        x: -page.padding - 12
-//        y: -page.padding - 12
-//        icon.width: 16
-//        icon.height: 16
+//        x: -page.padding - App.scaleByFontSize(2)
+//        y: -page.padding - App.scaleByFontSize(2)
+//        icon.width: App.scaleByFontSize(10)
+//        icon.height: App.scaleByFontSize(10)
 //    }
 }

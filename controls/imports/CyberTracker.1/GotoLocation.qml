@@ -5,7 +5,7 @@ import QtQuick.Controls.Material 2.12
 import QtGraphicalEffects 1.0
 
 RowLayout {
-    spacing: 8
+    spacing: App.scaleByFontSize(8)
 
     Item {
         width: 96

@@ -51,6 +51,11 @@ namespace
         return result;
     }
 
+    QString formSessionId(const Sighting* s)
+    {
+        return qobject_cast<Form*>(s->parent())->sessionId();
+    }
+
     bool formImmersive(const Sighting* s)
     {
         return qobject_cast<Form*>(s->parent())->project()->immersive();
@@ -107,7 +112,7 @@ void Sighting::reset()
     m_wizardRules.clear();
     m_wizardPageStack.clear();
 
-    m_deviceId = m_username = "";
+    m_deviceId = m_sessionId = m_username = "";
     m_createTime = m_updateTime = "";
     m_trackFile.clear();
 }
@@ -134,12 +139,17 @@ bool Sighting::isValid()
 
 QString Sighting::deviceId() const
 {
-    return !m_deviceId.isEmpty() ? m_deviceId : App::instance()->settings()->deviceId();
+    return m_deviceId;
 }
 
 QString Sighting::username() const
 {
-    return !m_username.isEmpty() ? m_username : formUsername(this);
+    return m_username;
+}
+
+QString Sighting::sessionId() const
+{
+    return m_sessionId;
 }
 
 QString Sighting::createTime() const
@@ -197,6 +207,21 @@ void Sighting::set_wizardPageStack(const QVariantList& value)
     m_wizardPageStack = value;
 }
 
+void Sighting::snapDeviceId()
+{
+    m_deviceId = App::instance()->settings()->deviceId();
+}
+
+void Sighting::snapUsername()
+{
+    m_username = formUsername(this);
+}
+
+void Sighting::snapSessionId()
+{
+    m_sessionId = formSessionId(this);
+}
+
 void Sighting::snapCreateTime(const QString& now)
 {
     m_createTime = now.isEmpty() ? timeManager()->currentDateTimeISO() : now;
@@ -214,8 +239,9 @@ QVariantMap Sighting::save(QStringList* attachmentsOut) const
     return QVariantMap
     {
         { "version", 1 },
-        { "deviceId", deviceId() },
-        { "username", username() },
+        { "deviceId", m_deviceId },
+        { "username", m_username },
+        { "sessionId", m_sessionId },
         { "createTime", m_createTime },
         { "updateTime", m_updateTime },
         { "variables", m_variables },
@@ -236,8 +262,9 @@ QVariantMap Sighting::saveForExport(QStringList* attachmentsOut) const
     return QVariantMap
     {
         { "version", 1 },
-        { "deviceId", deviceId() },
-        { "username", username() },
+        { "deviceId", m_deviceId },
+        { "username", m_username },
+        { "sessionId", m_sessionId },
         { "createTime", m_createTime },
         { "updateTime", m_updateTime },
         { "variables", m_variables },
@@ -259,6 +286,7 @@ void Sighting::load(const QVariantMap& data)
 
     m_deviceId = data.value("deviceId").toString();
     m_username = data.value("username").toString();
+    m_sessionId = data.value("sessionId").toString();
 
     // Handle legacy time format.
     auto legacyTime = [&](const QVariant& t) -> QString
@@ -581,10 +609,11 @@ QVariantMap Sighting::symbols() const
     return QVariantMap
     {
         { "version", fieldManager(this)->rootField()->version() },
+        { "deviceId", m_deviceId },
+        { "sessionId", m_sessionId },
+        { "username", m_username },
         { "createTime", m_createTime },
         { "updateTime", m_updateTime },
-        { "deviceId", deviceId() },
-        { "username", username() },
         { "wizardMode", formWizardMode(this) }
     };
 }
@@ -661,14 +690,31 @@ void Sighting::regenerateUids()
     }
 
     // Reset the timestamps.
+    m_deviceId = m_sessionId = m_username = "";
     m_createTime = m_updateTime = "";
     m_trackFile.clear();
 }
 
 void Sighting::recalculate(FieldValueChange* fieldValueChange)
 {
-    auto emitChanges = this->receivers(SIGNAL(recalculated(const FieldValueChanges&, const FieldValueChanges&))) > 0;
+    // Snap current system state.
+    if (m_deviceId.isEmpty())
+    {
+        snapDeviceId();
+    }
 
+    if (m_sessionId.isEmpty())
+    {
+        snapSessionId();
+    }
+
+    if (m_username.isEmpty())
+    {
+        snapUsername();
+    }
+
+    // Calculate.
+    auto emitChanges = this->receivers(SIGNAL(recalculated(const FieldValueChanges&, const FieldValueChanges&))) > 0;
     auto fieldValueChanges = FieldValueChanges();
     if (fieldValueChange)
     {
@@ -1010,7 +1056,7 @@ QVariantMap Sighting::findSnapLocation(const QString& /*recordUid*/, const QStri
     };
 }
 
-QVariantList Sighting::findSaveTargets(const QString& /*recordUid*/, const QString& fieldUid) const
+QVariantList Sighting::findSaveTargets(const QString& recordUid, const QString& fieldUid) const
 {
     auto result = QVariantList();
 
@@ -1021,8 +1067,50 @@ QVariantList Sighting::findSaveTargets(const QString& /*recordUid*/, const QStri
         return result;
     }
 
+    // Find the output field: can be empty.
+    auto outputFieldUid = QString();
+    m_recordManager->rootRecord()->recordField()->enumFields([&](BaseField* field)
+    {
+        // Already found.
+        if (!outputFieldUid.isEmpty())
+        {
+            return;
+        }
+
+        // Must be 'select_one saveTargets'.
+        if (field->listElementUid() != "saveTarget")
+        {
+            return;
+        }
+
+        if (qobject_cast<StringField*>(field) == nullptr)
+        {
+            qDebug() << "saveTarget output field is not a select_one field: " << field->uid();
+            return;
+        }
+
+        // Must be visible.
+        if (!field->hidden())
+        {
+            qDebug() << "saveTarget output field must be hidden: " << field->uid();
+            return;
+        }
+
+        // Found.
+        outputFieldUid = field->uid();
+        qDebug() << "Found saveTarget output field: " << outputFieldUid;
+    });
+
     // Build a list of possible targets and drill into groups.
     auto possibleTargets = QStringList();
+
+    // Stop field is the current page, if empty it means a group.
+    auto stopFieldUid = fieldUid;
+    if (stopFieldUid.isEmpty())
+    {
+        stopFieldUid = getRecord(recordUid)->recordFieldUid();
+    }
+
     std::function<void(Record* record)> appendPossibleTargets = [&](Record* record)
     {
         record->enumFieldValues([&](const FieldValue& fieldValue, bool* stopOut)
@@ -1039,7 +1127,7 @@ QVariantList Sighting::findSaveTargets(const QString& /*recordUid*/, const QStri
                 }
             }
 
-            *stopOut = Utils::compareLastPathComponents(fieldUid, fieldValue.fieldUid());
+            *stopOut = Utils::compareLastPathComponents(stopFieldUid, fieldValue.fieldUid());
         });
     };
 
@@ -1063,37 +1151,38 @@ QVariantList Sighting::findSaveTargets(const QString& /*recordUid*/, const QStri
             continue;
         }
 
-        result.append(QVariantMap {{ "elementUid", targetElementUid }, { "fieldUid", targetFieldUid }});
+        result.append(QVariantMap {{ "elementUid", targetElementUid }, { "fieldUid", targetFieldUid }, { "delay", target.value("delay", false).toBool() }, { "outputFieldUid", outputFieldUid }});
     }
 
     // In the non-immersive case, add an option to go home.
+    // WizardPage.qml understands an empty field and element as 'Home'.
     if (!formImmersive(this) && !result.isEmpty())
     {
-        result.append(QVariantMap {{ "name", "Home" }, { "fieldUid", "" }});
+        result.append(QVariantMap {{ "elementUid", "" }, { "fieldUid", "" }, { "delay", false }, { "outputFieldUid", outputFieldUid }});
     }
 
     return result;
 }
 
-QVariantMap Sighting::findTrackSetting() const
+QVariantMap Sighting::findTrackCommand() const
 {
-    auto trackSettings = getFieldParameter(rootRecordUid(), "", "save.track").toList();
+    auto trackCommands = getFieldParameter(rootRecordUid(), "", "save.track").toList();
 
     auto vars = variables();
 
     // Find the first matching track condition.
-    for (auto trackSettingIt = trackSettings.constBegin(); trackSettingIt != trackSettings.constEnd(); trackSettingIt++)
+    for (auto trackCommandIt = trackCommands.constBegin(); trackCommandIt != trackCommands.constEnd(); trackCommandIt++)
     {
-        auto trackSetting = trackSettingIt->toMap();
-        auto condition = trackSetting.value("condition").toString();
+        auto trackCommand = trackCommandIt->toMap();
+        auto condition = trackCommand.value("condition").toString();
 
         if (!condition.isEmpty() && !evaluate(condition, rootRecordUid(), "", &vars).toBool())
         {
             continue;
         }
 
-        qDebug() << "save.track match: " << trackSetting;
-        return trackSetting;
+        qDebug() << "save.track match: " << trackCommand;
+        return trackCommand;
     }
 
     return QVariantMap();

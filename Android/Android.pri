@@ -30,6 +30,7 @@ DISTFILES += \
 
 OTHER_FILES += \
     $$ANDROID_PACKAGE_SOURCE_DIR/build.gradle \
+    $$ANDROID_PACKAGE_SOURCE_DIR/src/org/cybertracker/mobile/LinkActivity.java \
     $$ANDROID_PACKAGE_SOURCE_DIR/src/org/cybertracker/mobile/MainActivity.java \
     $$ANDROID_PACKAGE_SOURCE_DIR/src/org/cybertracker/mobile/LocationUpdateService.java \
     $$ANDROID_PACKAGE_SOURCE_DIR/src/org/cybertracker/mobile/LocationWakeupService.java \
@@ -92,6 +93,27 @@ OTHER_FILES += \
     $$ANDROID_PACKAGE_SOURCE_DIR/res/drawable-xxxhdpi/sm_launcher.png \
     $$ANDROID_PACKAGE_SOURCE_DIR/res/drawable-xxxhdpi/sm_launcher_foreground.png \
     $$ANDROID_PACKAGE_SOURCE_DIR/res/drawable-xxxhdpi/sm_launcher_round.png \
+
+# GG.
+OTHER_FILES += \
+$$ANDROID_PACKAGE_SOURCE_DIR/res/drawable/gg_splashscreen.xml \
+$$ANDROID_PACKAGE_SOURCE_DIR/res/drawable-anydpi-v26/gg_launcher.xml \
+$$ANDROID_PACKAGE_SOURCE_DIR/res/drawable-anydpi-v26/gg_launcher_round.xml \
+$$ANDROID_PACKAGE_SOURCE_DIR/res/drawable-hdpi/gg_launcher.png \
+$$ANDROID_PACKAGE_SOURCE_DIR/res/drawable-hdpi/gg_launcher_foreground.png \
+$$ANDROID_PACKAGE_SOURCE_DIR/res/drawable-hdpi/gg_launcher_round.png \
+$$ANDROID_PACKAGE_SOURCE_DIR/res/drawable-mdpi/gg_launcher.png \
+$$ANDROID_PACKAGE_SOURCE_DIR/res/drawable-mdpi/gg_launcher_foreground.png \
+$$ANDROID_PACKAGE_SOURCE_DIR/res/drawable-mdpi/gg_launcher_round.png \
+$$ANDROID_PACKAGE_SOURCE_DIR/res/drawable-xhdpi/gg_launcher.png \
+$$ANDROID_PACKAGE_SOURCE_DIR/res/drawable-xhdpi/gg_launcher_foreground.png \
+$$ANDROID_PACKAGE_SOURCE_DIR/res/drawable-xhdpi/gg_launcher_round.png \
+$$ANDROID_PACKAGE_SOURCE_DIR/res/drawable-xxhdpi/gg_launcher.png \
+$$ANDROID_PACKAGE_SOURCE_DIR/res/drawable-xxhdpi/gg_launcher_foreground.png \
+$$ANDROID_PACKAGE_SOURCE_DIR/res/drawable-xxhdpi/gg_launcher_round.png \
+$$ANDROID_PACKAGE_SOURCE_DIR/res/drawable-xxxhdpi/gg_launcher.png \
+$$ANDROID_PACKAGE_SOURCE_DIR/res/drawable-xxxhdpi/gg_launcher_foreground.png \
+$$ANDROID_PACKAGE_SOURCE_DIR/res/drawable-xxxhdpi/gg_launcher_round.png \
 
 # OpenSSL.
 include ($$ANDROID_PACKAGE_SOURCE_DIR/android_openssl/openssl.pri)

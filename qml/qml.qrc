@@ -20,12 +20,15 @@
         <file>MapLayersPage.qml</file>
         <file>MapsPage.qml</file>
         <file>OfflineMapPage.qml</file>
+        <file>ProjectChangePage.qml</file>
         <file>ProjectDetailsPage.qml</file>
+        <file>ProjectsEditPage.qml</file>
         <file>ProjectsPage.qml</file>
         <file>SettingsPage.qml</file>
         <file>ShareProjectPage.qml</file>
         <file>SightingPage.qml</file>
-        <file>Classic/ConnectPage.qml</file>
+        <file>Classic/ConnectClassicPage.qml</file>
+        <file>Classic/ConnectOnlinePage.qml</file>
         <file>Classic/ConnectSamplesPage.qml</file>
         <file>Classic/ConnectWebInstallPage.qml</file>
         <file>Classic/StartPage.qml</file>
@@ -37,6 +40,8 @@
         <file>EarthRanger/StartPage.qml</file>
         <file>EarthRanger/VisibleReportsPage.qml</file>
         <file>Esri/ConnectPage.qml</file>
+        <file>Google/ConnectPage.qml</file>
+        <file>Google/UnsupportedPage.qml</file>
         <file>ODK/ConnectODKCentralPage.qml</file>
         <file>ODK/ConnectKoBoPage.qml</file>
         <file>ODK/ConnectKoBoSharedPage.qml</file>
@@ -58,7 +63,6 @@
         <file>SMART/ModelPage.qml</file>
         <file>SMART/HistoryPage.qml</file>
         <file>SMART/PatrolStatsPage.qml</file>
-        <file>SMART/ProjectChangePage.qml</file>
         <file>SMART/RecoverDataPage.qml</file>
         <file>SMART/SettingsPage.qml</file>
         <file>SMART/SightingHomePage.qml</file>

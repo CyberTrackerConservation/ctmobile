@@ -21,6 +21,9 @@ ContentPage {
 
             case 1:
                 return qsTr("Saved sightings")
+
+            case 2:
+                return qsTr("Submit")
             }
 
             return "??"
@@ -55,6 +58,15 @@ ContentPage {
             checked: stackLayout.currentIndex === 1
             icon.source: checked ? "qrc:/icons/file_multiple.svg" : "qrc:/icons/file_multiple_outline.svg"
             onClicked: stackLayout.currentIndex = 1
+        }
+
+        // Submit
+        C.FooterButton {
+            ButtonGroup.group: buttonGroup
+            checkable: true
+            checked: stackLayout.currentIndex === 2
+            icon.source: "qrc:/icons/upload_multiple.svg"
+            onClicked: stackLayout.currentIndex = 2
         }
     }
 
@@ -91,23 +103,14 @@ ContentPage {
             onClicked: function (sighting, index) {
                 form.pushFormPage({ projectUid: form.project.uid, stateSpace: form.stateSpace, editSightingUid: sighting.rootRecordUid })
             }
+        }
 
-            RoundButton {
-                id: submitButton
-                anchors.horizontalCenter: parent.horizontalCenter
-                anchors.bottom: parent.bottom
-                anchors.bottomMargin: 8
-                width: Math.max(implicitWidth, page.width / 3)
-                radius: 0
-                text: qsTr("Submit")
-                enabled: sightingsListView.canSubmit
-                font.pixelSize: App.settings.font14
-                font.bold: true
-                font.capitalization: Font.MixedCase
-                display: RoundButton.TextBesideIcon
-                icon.source: "qrc:/icons/upload_multiple.svg"
-                Material.background: Material.accentColor
-                onClicked: sightingsListView.submit()
+        Item {
+            Layout.fillWidth: true
+            Layout.fillHeight: true
+
+            SubmitButton {
+                anchors.centerIn: parent
             }
         }
     }

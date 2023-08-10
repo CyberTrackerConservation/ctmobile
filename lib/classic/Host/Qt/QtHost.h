@@ -128,6 +128,7 @@ public:
     BOOL StopSound();
     BOOL IsSoundPlaying();
 
+    BOOL RequestPermissionRecordAudio();
     BOOL StartRecording(CHAR *pFileNameNoExt, UINT Duration, UINT Frequency);
     BOOL StopRecording();
     BOOL PlayRecording(CHAR *pFileName);

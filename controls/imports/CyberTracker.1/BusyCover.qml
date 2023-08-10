@@ -61,10 +61,21 @@ Popup {
         repeat: false
         running: false
         onTriggered: {
-            busyCover.doWork()
-            busyCover.doWork = undefined
-            busyIndicator.running = false
-            busyCover.close()
+            for (;;) {
+                let worker = busyCover.doWork
+                if (worker === undefined) {
+                    return
+                }
+
+                worker()
+
+                if (busyCover.doWork === worker) {
+                    busyCover.doWork = undefined
+                    busyIndicator.running = false
+                    busyCover.close()
+                    return
+                }
+            }
         }
     }
 

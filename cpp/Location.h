@@ -205,7 +205,7 @@ public:
     ~LocationStreamer();
 
     void loadState(const QVariantMap& map);
-    QVariantMap saveState();
+    QVariantMap saveState() const;
 
     void pushUpdate(Location* update);
 

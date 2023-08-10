@@ -36,7 +36,6 @@ C.ContentPage {
 
                     C.SquareIcon {
                         source: "qrc:/icons/cogs.svg"
-                        recolor: true
                         opacity: 0.5
                     }
 

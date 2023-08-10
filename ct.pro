@@ -4,7 +4,7 @@ TARGET = CyberTracker
 CONFIG += c++11
 CONFIG += plugin static
 
-QT += core gui opengl network positioning sensors qml quick xml sql websockets concurrent multimedia
+QT += core gui opengl network networkauth positioning sensors qml quick xml sql websockets concurrent multimedia
 
 #-------------------------------------------------------------------------------
 
@@ -89,6 +89,10 @@ HEADERS += \
     cpp/Esri/pch.h \
     cpp/Esri/EsriConnector.h \
     cpp/Esri/EsriProvider.h \
+    cpp/Google/GoogleConnector.h \
+    cpp/Google/GoogleFormParser.h \
+    cpp/Google/GoogleProvider.h \
+    cpp/Google/pch.h \
     cpp/KoBo/pch.h \
     cpp/KoBo/KoBoConnector.h \
     cpp/Native/pch.h \
@@ -136,6 +140,7 @@ SOURCES += \
     cpp/TrackFile.cpp \
     cpp/Utils.cpp \
     cpp/UtilsEsri.cpp \
+    cpp/UtilsGoogle.cpp \
     cpp/VariantListModel.cpp \
     cpp/WaveFileRecorder.cpp \
     cpp/Wizard.cpp \
@@ -147,6 +152,9 @@ SOURCES += \
     cpp/EarthRanger/EarthRangerProvider.cpp \
     cpp/Esri/EsriConnector.cpp \
     cpp/Esri/EsriProvider.cpp \
+    cpp/Google/GoogleConnector.cpp \
+    cpp/Google/GoogleFormParser.cpp \
+    cpp/Google/GoogleProvider.cpp \
     cpp/KoBo/KoBoConnector.cpp \
     cpp/Native/NativeConnector.cpp \
     cpp/Native/NativeProvider.cpp \
@@ -162,6 +170,7 @@ lupdate_only {
         $$PWD/qml/CTO/*.qml \
         $$PWD/qml/EarthRanger/*.qml \
         $$PWD/qml/Esri/*.qml \
+        $$PWD/qml/Google/*.qml \
         $$PWD/qml/KoBo/*.qml \
         $$PWD/qml/ODK/*.qml \
         $$PWD/qml/SMART/*.qml \
@@ -189,20 +198,29 @@ include ($$PWD/Platforms.pri)
 
 TRANSLATIONS = \
     i18n/ct_af.ts \
+    i18n/ct_ak.ts \
     i18n/ct_am.ts \
     i18n/ct_ar.ts \
+    i18n/ct_as.ts \
+    i18n/ct_ay.ts \
     i18n/ct_az.ts \
     i18n/ct_be.ts \
     i18n/ct_bg.ts \
+    i18n/ct_bho.ts \
+    i18n/ct_bm.ts \
     i18n/ct_bn.ts \
     i18n/ct_bs.ts \
     i18n/ct_ca.ts \
     i18n/ct_ceb.ts \
+    i18n/ct_ckb.ts \
     i18n/ct_co.ts \
     i18n/ct_cs.ts \
     i18n/ct_cy.ts \
     i18n/ct_da.ts \
     i18n/ct_de.ts \
+    i18n/ct_doi.ts \
+    i18n/ct_dv.ts \
+    i18n/ct_ee.ts \
     i18n/ct_el.ts \
     i18n/ct_en.ts \
     i18n/ct_eo.ts \
@@ -216,6 +234,8 @@ TRANSLATIONS = \
     i18n/ct_ga.ts \
     i18n/ct_gd.ts \
     i18n/ct_gl.ts \
+    i18n/ct_gn.ts \
+    i18n/ct_gom.ts \
     i18n/ct_gu.ts \
     i18n/ct_ha.ts \
     i18n/ct_haw.ts \
@@ -228,28 +248,36 @@ TRANSLATIONS = \
     i18n/ct_id.ts \
     i18n/ct_ig.ts \
     i18n/ct_iku.ts \
+    i18n/ct_ilo.ts \
     i18n/ct_is.ts \
     i18n/ct_it.ts \
     i18n/ct_iw.ts \
     i18n/ct_ja.ts \
+    i18n/ct_jv.ts \
     i18n/ct_jw.ts \
     i18n/ct_ka.ts \
     i18n/ct_kk.ts \
     i18n/ct_km.ts \
     i18n/ct_kn.ts \
     i18n/ct_ko.ts \
+    i18n/ct_kri.ts \
     i18n/ct_ku.ts \
     i18n/ct_ky.ts \
     i18n/ct_la.ts \
     i18n/ct_lb.ts \
+    i18n/ct_lg.ts \
+    i18n/ct_ln.ts \
     i18n/ct_lo.ts \
     i18n/ct_lt.ts \
+    i18n/ct_lus.ts \
     i18n/ct_lv.ts \
+    i18n/ct_mai.ts \
     i18n/ct_mg.ts \
     i18n/ct_mi.ts \
     i18n/ct_mk.ts \
     i18n/ct_ml.ts \
     i18n/ct_mn.ts \
+    i18n/ct_mni-Mtei.ts \
     i18n/ct_mr.ts \
     i18n/ct_ms.ts \
     i18n/ct_mt.ts \
@@ -257,14 +285,20 @@ TRANSLATIONS = \
     i18n/ct_ne.ts \
     i18n/ct_nl.ts \
     i18n/ct_no.ts \
+    i18n/ct_nso.ts \
     i18n/ct_ny.ts \
+    i18n/ct_om.ts \
+    i18n/ct_or.ts \
     i18n/ct_pa.ts \
     i18n/ct_pl.ts \
     i18n/ct_prs.ts \
     i18n/ct_ps.ts \
     i18n/ct_pt.ts \
+    i18n/ct_qu.ts \
     i18n/ct_ro.ts \
     i18n/ct_ru.ts \
+    i18n/ct_rw.ts \
+    i18n/ct_sa.ts \
     i18n/ct_sd.ts \
     i18n/ct_si.ts \
     i18n/ct_sk.ts \
@@ -282,8 +316,13 @@ TRANSLATIONS = \
     i18n/ct_te.ts \
     i18n/ct_tg.ts \
     i18n/ct_th.ts \
+    i18n/ct_tk.ts \
+    i18n/ct_ti.ts \
     i18n/ct_tl.ts \
     i18n/ct_tr.ts \
+    i18n/ct_ts.ts \
+    i18n/ct_tt.ts \
+    i18n/ct_ug.ts \
     i18n/ct_uk.ts \
     i18n/ct_ur.ts \
     i18n/ct_uz.ts \

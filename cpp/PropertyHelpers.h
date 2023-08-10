@@ -206,3 +206,20 @@ public:
             } \
         } \
     private: \
+
+#define QML_SECURE_SETTING(type, name, defaultValue) \
+    protected: \
+        Q_PROPERTY (type name READ name WRITE set_##name NOTIFY name##Changed) \
+    Q_SIGNALS: \
+        void name##Changed(); \
+    public: \
+        type name() const { \
+            return variantType<type>::toType(getSecureSetting(#name, defaultValue)); \
+        } \
+        void set_##name(type value) { \
+            if (!variantType<type>::equals(value, name())) { \
+                setSecureSetting(#name, value); \
+                emit name##Changed(); \
+            } \
+        } \
+    private: \

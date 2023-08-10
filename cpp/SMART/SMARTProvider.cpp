@@ -1515,6 +1515,15 @@ bool SMARTProvider::exportDataInternal(int maxFileSizeBytes, const std::function
     return true;
 }
 
+bool SMARTProvider::hasUploadData() const
+{
+    auto workPath = App::instance()->workPath() + "/Upload_" + m_project->uid();
+    qFatalIf(!Utils::ensurePath(workPath), "Failed to create upload folder");
+    auto fileInfos = QDir(workPath).entryInfoList(QDir::Files, QDir::Time);
+    
+    return !fileInfos.isEmpty();
+}
+
 bool SMARTProvider::uploadData()
 {
     // Create a working path.

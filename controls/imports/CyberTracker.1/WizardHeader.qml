@@ -17,6 +17,8 @@ PageHeader {
             visible = false
             height = 0
         }
+
+        root.fontBold = getParam(params, "fontBold", false)
     }
 
     color: getParamColor(params, "color", Material.primary)

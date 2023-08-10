@@ -267,10 +267,17 @@ struct Packages
 
     Layer* getLayer(const QString& layerId)
     {
-        auto filename = QFileInfo(layerId).fileName();
+        auto fileInfo = QFileInfo(layerId);
+        auto packageId = fileInfo.path();
+        auto filename = fileInfo.fileName();
 
         for (auto packageIt = packages.constKeyValueBegin(); packageIt != packages.constKeyValueEnd(); packageIt++)
         {
+            if (packageId != packageIt->first)
+            {
+                continue;
+            }
+
             auto layer = packageIt->second->getLayer(filename);
             if (layer)
             {
@@ -322,6 +329,7 @@ void OfflineMapManager::installLegacyGotos()
         if (fileInfo.suffix().toLower() == "json")
         {
             auto geoJsonFilePath = gotoFolder + "/" + fileInfo.completeBaseName() + ".geojson";
+            QFile::remove(geoJsonFilePath);
             QFile::rename(fileInfo.filePath(), geoJsonFilePath);
             installPackage(geoJsonFilePath);
         }
@@ -363,10 +371,8 @@ void OfflineMapManager::garbageCollect()
 
 bool OfflineMapManager::canInstallPackage(const QString& filePath) const
 {
-    auto fileInfo = QFileInfo(filePath);
-
     // Look for regular map file.
-    auto suffix = fileInfo.suffix().toLower();
+    auto suffix = Utils::detectFileSuffix(Utils::resolveContentUri(filePath));
     if (Utils::isMapLayerSuffix(suffix))
     {
         return true;
@@ -421,8 +427,10 @@ ApiResult OfflineMapManager::installPackage(const QString& filePath, QString* pa
     // Cleanup on exit.
     auto cleanupStagingOnExit = qScopeGuard([&] { QDir(stagingFolder).removeRecursively(); });
 
+    auto suffix = Utils::detectFileSuffix(Utils::resolveContentUri(filePath));
+
     // Extract ZIP or copy map to the staging folder.
-    if (filePath.endsWith(".zip", Qt::CaseInsensitive))
+    if (suffix == "zip")
     {
         JlCompress::extractDir(filePath, stagingFolder);
     }
@@ -517,7 +525,7 @@ ApiResult OfflineMapManager::hasUpdate(QNetworkAccessManager* networkAccessManag
     auto packageETag = packageUid.isEmpty() ? QString() : s_packages->getPackage(packageUid)->etag;
 
     // Up to date.
-    if (packageETag == response.etag)
+    if (!packageUid.isEmpty() && packageETag == response.etag)
     {
         return ApiResult::Expected(tr("Up to date"));
     }
@@ -624,6 +632,11 @@ ApiResult OfflineMapManager::installProjectMaps(const QString& path, const QVari
             auto sourceFilePath = path + "/" + file;
             auto targetFilePath = QString("%1/%2.%3").arg(stagingFolder, name, QFileInfo(file).suffix());
             QFile::copy(sourceFilePath, targetFilePath);
+
+            auto title = map.value("title", name).toString();
+            auto layers = QVariantList { QVariantMap {{ "filename", file }, { "name", title }, { "active", true }, { "opacity", 1.0 }}};
+            Utils::writeJsonToFile(QString("%1/layers.json").arg(stagingFolder), Utils::variantListToJson(layers));
+
             cleanupFiles.append(sourceFilePath);
 
             continue;
@@ -663,19 +676,21 @@ ApiResult OfflineMapManager::installProjectMaps(const QString& path, const QVari
     auto packageUid = Utils::computeFolderHash(stagingFolder);
     auto targetFolder = m_packagesPath + "/" + packageUid;
 
-    // Check if already installed: note this recovers from partial install.
-    if (QDir(targetFolder).exists() && Utils::computeFolderHash(targetFolder) == packageUid)
+    // Overwrite if already exists.
+    if (QDir(targetFolder).exists())
     {
-        return ApiResult::Expected("Already installed");
+        Utils::copyPath(stagingFolder, targetFolder);
     }
-
     // Install the staging folder.
-    QDir(targetFolder).removeRecursively();
-    if (!QDir().rename(stagingFolder, targetFolder))
+    else
     {
-        if (!Utils::copyPath(stagingFolder, targetFolder))
+        QDir(targetFolder).removeRecursively();
+        if (!QDir().rename(stagingFolder, targetFolder))
         {
-            return ApiResult::Error(tr("Install failed"));
+            if (!Utils::copyPath(stagingFolder, targetFolder))
+            {
+                return ApiResult::Error(tr("Install failed"));
+            }
         }
     }
 
@@ -772,6 +787,8 @@ void OfflineMapManager::deleteLayer(const QString& layerId)
     s_packages->save();
 
     emit layersChanged();
+
+    garbageCollect();
 }
 
 QString OfflineMapManager::getLayerName(const QString& layerId) const

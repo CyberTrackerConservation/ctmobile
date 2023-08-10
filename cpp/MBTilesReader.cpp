@@ -24,6 +24,8 @@ void MBTilesReader::reset()
 
 QString MBTilesReader::getQml(const QString& filePath)
 {
+    qFatalIf(!Utils::ensurePath(m_cachePath), "Failed to create map tiles path");
+
     // Cleanup previous instances.
     close(filePath);
 

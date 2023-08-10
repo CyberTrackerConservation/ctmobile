@@ -36,7 +36,8 @@ QVariantMap EsriConnector::getShareData(Project* project, bool auth) const
     else
     {
         result.insert("username", project->username());
-        result.insert("accessToken", project->accessToken());
+        result.insert("accessToken", "?");
+        result.insert("refreshToken", project->refreshToken());
     }
 
     return result;
@@ -93,7 +94,7 @@ ApiResult EsriConnector::bootstrap(const QVariantMap& params)
 
     if (!m_projectManager->init(projectUid, ESRI_PROVIDER, QVariantMap(), ESRI_CONNECTOR, QVariantMap {{ "surveyId", surveyId }}))
     {
-        return Failure(tr("Failed to create project"));
+        return Failure(QString(tr("Failed to create %1")).arg(App::instance()->alias_project()));
     }
 
     m_projectManager->modify(projectUid, [&](Project* project)
@@ -316,18 +317,11 @@ ApiResult EsriConnector::update(Project *project)
     updateProject.set_icon(thumbnail.isEmpty() ? "qrc:/Esri/Survey123.svg" : thumbnail);
     updateProject.set_defaultWizardMode(true);
 
-    QStringList androidPermissions = QStringList();
-    androidPermissions << "CAMERA";
-    androidPermissions << "RECORD_AUDIO";
-    androidPermissions << "ACCESS_FINE_LOCATION";
-    androidPermissions << "ACCESS_COARSE_LOCATION";
-    updateProject.set_androidPermissions(androidPermissions);
-
     // Apply form global configuration.
     auto settings = QVariantMap();
     if (!XlsFormParser::parseSettings(formFilePath, &settings))
     {
-        return Failure(tr("Failed to read form settings sheet"));
+        qDebug() << "Failed to read form settings sheet";
     }
 
     XlsFormParser::configureProject(&updateProject, settings);
@@ -344,6 +338,7 @@ ApiResult EsriConnector::update(Project *project)
         }
 
         updateProject.set_esriLocationServiceState(esriLocationServiceState);
+        updateProject.set_androidBackgroundLocation(true);
     }
     else
     {

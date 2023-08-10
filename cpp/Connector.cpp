@@ -27,7 +27,7 @@ QVariantMap Connector::getShareData(Project* /*project*/, bool /*auth*/) const
     return QVariantMap();
 }
 
-bool Connector::canLogin(Project* project) const
+bool Connector::canLogin(Project* /*project*/) const
 {
     return false;
 }

@@ -19,28 +19,6 @@ C.ContentPage {
         spacing: 0
 
         C.FooterButton {
-            text: qsTr("Move up")
-            icon.source: "qrc:/icons/chevron_up.svg"
-            enabled: listView.currentIndex > 0
-            onClicked: {
-                let index = listView.currentIndex
-                App.offlineMapManager.moveLayer(layerListModel.get(index).id, -1)
-                listView.currentIndex = index - 1
-            }
-        }
-
-        C.FooterButton {
-            text: qsTr("Move down")
-            icon.source: "qrc:/icons/chevron_down.svg"
-            enabled: listView.currentIndex >= 0 && listView.currentIndex < layerListModel.count - 1
-            onClicked: {
-                let index = listView.currentIndex
-                App.offlineMapManager.moveLayer(layerListModel.get(index).id, 1)
-                listView.currentIndex = index + 1
-            }
-        }
-
-        C.FooterButton {
             text: qsTr("Share")
             icon.source: "qrc:/icons/share_variant_outline.svg"
             enabled: listView.currentIndex !== -1
@@ -108,31 +86,62 @@ C.ContentPage {
         model: layerListModel
 
         delegate: C.HighlightDelegate {
+            id: d
             width: ListView.view.width
             highlighted: ListView.isCurrentItem
 
             contentItem: RowLayout {
                 C.SquareIcon {
+                    size: C.Style.iconSize48
                     source: modelData.vector ? "qrc:/icons/vector_polyline.svg" : "qrc:/icons/checkerboard.svg"
                     opacity: 0.5
-                    recolor: true
                 }
 
                 ColumnLayout {
+                    Layout.fillWidth: true
+                    Layout.fillHeight: true
+
                     Label {
                         Layout.fillWidth: true
                         wrapMode: Label.WordWrap
                         text: modelData.name
-                        font.pixelSize: App.settings.font16
+                        font.pixelSize: App.settings.font18
                         elide: Label.ElideRight
                     }
 
                     Label {
                         Layout.fillWidth: true
                         text: modelData.timestamp
-                        font.pixelSize: App.settings.font10
+                        font.pixelSize: App.settings.font12
                         opacity: 0.5
                         elide: Label.ElideRight
+                    }
+                }
+
+
+                ToolButton {
+                    width: C.Style.toolButtonSize
+                    height: C.Style.toolButtonSize
+                    icon.source: "qrc:/icons/chevron_up.svg"
+                    visible: d.highlighted
+                    enabled: listView.currentIndex > 0
+                    onClicked: {
+                        let index = listView.currentIndex
+                        App.offlineMapManager.moveLayer(layerListModel.get(index).id, -1)
+                        listView.currentIndex = index - 1
+                    }
+                }
+
+                ToolButton {
+                    width: C.Style.toolButtonSize
+                    height: C.Style.toolButtonSize
+                    enabled: listView.currentIndex >= 0 && listView.currentIndex < layerListModel.count - 1
+                    icon.source: "qrc:/icons/chevron_down.svg"
+                    visible: d.highlighted
+                    onClicked: {
+                        let index = listView.currentIndex
+                        App.offlineMapManager.moveLayer(layerListModel.get(index).id, 1)
+                        listView.currentIndex = index + 1
                     }
                 }
             }

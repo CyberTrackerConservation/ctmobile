@@ -29,6 +29,8 @@ Item {
     }
 
     Component.onCompleted: {
+        App.requestPermissionCamera()
+
         confirmDelete = getFilename() !== ""
 
         if (Qt.platform.os !== "windows") {

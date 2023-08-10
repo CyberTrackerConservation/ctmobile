@@ -27,6 +27,7 @@ class BaseField: public QObject
     QML_WRITABLE_AUTO_PROPERTY (bool, hidden)
     QML_WRITABLE_AUTO_PROPERTY (bool, readonly)
     QML_WRITABLE_AUTO_PROPERTY (QVariant, required)
+    QML_WRITABLE_AUTO_PROPERTY (QString, requiredElementUid)
     QML_WRITABLE_AUTO_PROPERTY (QString, relevant)
     QML_WRITABLE_AUTO_PROPERTY (QString, constraint)
     QML_WRITABLE_AUTO_PROPERTY (QString, constraintElementUid)
@@ -288,6 +289,7 @@ class DateField: public BaseField
 {
     Q_OBJECT
 
+    QML_WRITABLE_AUTO_PROPERTY (bool, hideYear)
     QML_WRITABLE_AUTO_PROPERTY (QString, minDate)
     QML_WRITABLE_AUTO_PROPERTY (QString, maxDate)
 
@@ -310,6 +312,7 @@ class DateTimeField: public BaseField
 {
     Q_OBJECT
 
+    QML_WRITABLE_AUTO_PROPERTY (bool, hideYear)
     QML_WRITABLE_AUTO_PROPERTY (QString, minDate)
     QML_WRITABLE_AUTO_PROPERTY (QString, maxDate)
 

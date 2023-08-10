@@ -49,7 +49,6 @@ C.ContentPage {
 
                     C.SquareIcon {
                         source: "qrc:/icons/info.svg"
-                        recolor: true
                         opacity: 0.5
                     }
 
@@ -70,6 +69,35 @@ C.ContentPage {
             ItemDelegate {
                 Layout.fillWidth: true
                 Layout.minimumHeight: C.Style.minRowHeight
+                visible: typeof(formPageStack) === "undefined"
+                contentItem: RowLayout {
+                    Label {
+                        Layout.fillWidth: true
+                        text: qsTr("Edit %1").arg(App.alias_projects)
+                        font.pixelSize: App.settings.font14
+                        font.capitalization: Font.MixedCase
+                        font.bold: false
+                        wrapMode: Label.WordWrap
+                    }
+
+                    C.SquareIcon {
+                        source: "qrc:/icons/clipboard_multiple_outline.svg"
+                        opacity: 0.5
+                    }
+
+                    C.ChevronRight {}
+                }
+
+                onClicked: {
+                    appPageStack.push("qrc:/ProjectsEditPage.qml")
+                }
+
+                C.HorizontalDivider {}
+            }
+
+            ItemDelegate {
+                Layout.fillWidth: true
+                Layout.minimumHeight: C.Style.minRowHeight
                 contentItem: RowLayout {
                     Label {
                         Layout.fillWidth: true
@@ -82,7 +110,6 @@ C.ContentPage {
 
                     C.SquareIcon {
                         source: "qrc:/icons/map_plus.svg"
-                        recolor: true
                         opacity: 0.5
                     }
 
@@ -127,7 +154,6 @@ C.ContentPage {
 
                     C.SquareIcon {
                         source: "qrc:/icons/account.svg"
-                        recolor: true
                         opacity: 0.5
                     }
 
@@ -172,9 +198,9 @@ C.ContentPage {
                             var modelArray = []
                             var modelIndex = 0
                             let languageCode = App.settings.languageCode
-                            for (var i = 0; i < languages.length; i++) {
-                                var n = languages[i].name
-                                var nn = languages[i].nativeName
+                            for (let i = 0; i < languages.length; i++) {
+                                let n = languages[i].name
+                                let nn = languages[i].nativeName
                                 modelArray.push(n === nn ? n : n + " (" + nn + ")")
 
                                 if (languages[i].code === languageCode) {
@@ -190,6 +216,63 @@ C.ContentPage {
                             width: comboLanguage.width
                             font.pixelSize: App.settings.font14
                             text: modelData
+                        }
+                    }
+                }
+
+                C.HorizontalDivider {}
+            }
+
+            ItemDelegate {
+                Layout.fillWidth: true
+                Layout.minimumHeight: C.Style.minRowHeight
+                contentItem: RowLayout {
+                    Label {
+                        Layout.preferredWidth: page.width / 3
+                        text: qsTr("Auto launch")
+                        font.pixelSize: App.settings.font14
+                        wrapMode: Label.WordWrap
+                    }
+
+                    ComboBox {
+                        id: comboAutoLaunch
+                        Layout.fillWidth: true
+                        Layout.fillHeight: true
+                        font.pixelSize: App.settings.font14
+
+                        onActivated: {
+                            if (index !== -1) {
+                                let project = model[index]
+                                App.settings.autoLaunchProjectUid = project.uid
+                                displayText = project.title
+                            }
+                        }
+
+                        C.ProjectListModel {
+                            id: projectListModel
+
+                            onChanged: {
+                                let modelArr = [{uid: "", title: "" }]
+                                let index = -1
+
+                                for (let i = 0; i < count; i++) {
+                                    let project = get(i)
+                                    modelArr.push({ uid: project.uid, title: project.title })
+                                    if (project.uid === App.settings.autoLaunchProjectUid) {
+                                        index = i
+                                    }
+                                }
+
+                                comboAutoLaunch.model = modelArr
+                                comboAutoLaunch.currentIndex = index
+                                comboAutoLaunch.displayText = index === -1 ? "" : get(index).title
+                            }
+                        }
+
+                        delegate: ItemDelegate {
+                            width: comboAutoLaunch.width
+                            font.pixelSize: App.settings.font14
+                            text: modelData.title
                         }
                     }
                 }
@@ -376,7 +459,7 @@ C.ContentPage {
                 Layout.fillWidth: true
                 Layout.minimumHeight: C.Style.minRowHeight
                 contentItem: RowLayout {
-                    spacing: 4
+                    spacing: App.scaleByFontSize(4)
 
                     Label {
                         Layout.fillWidth: true
@@ -462,9 +545,7 @@ C.ContentPage {
                         icon.width: C.Style.toolButtonSize
                         icon.height: C.Style.toolButtonSize
                         onClicked: {
-                            if (App.requestPermissionReadExternalStorage()) {
-                                simulationSourcePopup.open()
-                            }
+                            simulationSourcePopup.open()
                         }
                     }
 
@@ -548,7 +629,6 @@ C.ContentPage {
 
                     C.SquareIcon {
                         source: "qrc:/icons/share_variant.svg"
-                        recolor: true
                         opacity: 0.5
                     }
                 }
@@ -585,7 +665,6 @@ C.ContentPage {
 
                     C.SquareIcon {
                         source: "qrc:/icons/usb.svg"
-                        recolor: true
                         opacity: 0.5
                     }
                 }
@@ -636,10 +715,6 @@ C.ContentPage {
     }
 
     function pushBugReportPage(useSharingOnMobile) {
-        if (!App.requestPermissionReadExternalStorage()) {
-            return
-        }
-
         if (typeof(formPageStack) !== "undefined") {
             form.pushPage("qrc:/BugReportPage.qml", { useSharingOnMobile: useSharingOnMobile })
         } else {

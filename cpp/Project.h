@@ -68,6 +68,7 @@ class Project: public QObject
     Q_PROPERTY (QUrl displayIcon READ displayIcon CONSTANT)
 
     Q_PROPERTY (QUrl loginIcon READ loginIcon CONSTANT)
+    Q_PROPERTY (bool canLogin READ canLogin CONSTANT)
     Q_PROPERTY (bool loggedIn READ loggedIn NOTIFY loggedInChanged)
 
 public:
@@ -78,6 +79,9 @@ public:
     QVariant getSetting(const QString& name, const QVariant& defaultValue = QVariant()) const;
     void setSetting(const QString& name, const QVariant& value = QVariant());
 
+    QVariant getConnectorParam(const QString& name, const QVariant& defaultValue = QVariant()) const;
+    void setConnectorParam(const QString& name, const QVariant& value);
+
     QString languageCode() const;
 
     QVariantMap save(bool keepAuth) const;
@@ -87,9 +91,11 @@ public:
     QUrl displayIcon() const;
 
     QUrl loginIcon() const;
+    bool canLogin();
     bool loggedIn();
 
     Q_INVOKABLE bool login(const QString& server, const QString& username, const QString& password);
+    Q_INVOKABLE void login(const QString& username);
     Q_INVOKABLE void logout();
 
 signals:
@@ -147,6 +153,7 @@ public:
     Q_INVOKABLE void reset(const QString& projectUid, bool keepData = false);
     Q_INVOKABLE void remove(const QString& projectUid);
 
+    Q_INVOKABLE void moveProject(const QString& projectUid, int delta);
     Q_INVOKABLE int count() const;
 
     Q_INVOKABLE bool canShareLink(const QString& projectUid) const;

@@ -22,6 +22,7 @@ public:
         TitleVisibleRole,
         ValidRole,
         ConstraintMessageRole,
+        RequiredMessageRole,
     };
 
     FieldListModel(QObject* parent = nullptr);

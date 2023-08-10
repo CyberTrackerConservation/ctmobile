@@ -28,9 +28,4 @@ public:
 
     bool canSubmitData() const override;
     void submitData() override;
-
-private:
-    Element* parseLabel(Element* parentElement, const QString& fieldUid, const QVariant& label);
-    void parseForm(const QVariantMap& formMap, RecordField* recordField, const QVariantMap& fieldMap);
-    void parseField(const QVariantMap& formMap, RecordField* recordField, const QString& uid, const QString& type, const QVariantMap& fieldMap, const QVariantMap& fieldBind);
 };

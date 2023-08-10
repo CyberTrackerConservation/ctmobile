@@ -26,7 +26,7 @@ Item {
 
         ItemDelegate {
             Layout.fillWidth: true
-            padding: 6 // Same as HorizontalDivider.
+            padding: App.scaleByFontSize(6) // Same as HorizontalDivider.
             contentItem: TextField {
                 id: searchFilter
                 Layout.fillWidth: true

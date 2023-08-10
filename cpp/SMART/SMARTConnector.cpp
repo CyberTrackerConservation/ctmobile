@@ -46,12 +46,21 @@ QVariantMap SMARTConnector::getShareData(Project* project, bool /*auth*/) const
     };
 }
 
-ApiResult SMARTConnector::bootstrapOffline()
+ApiResult SMARTConnector::bootstrapOffline(const QString& zipFilePath)
 {
     auto smart6Detected = false;
 
-    // Build a list of candidates.
-    auto zipFiles = Utils::searchStandardFolders("*.zip");
+    auto zipFiles = QStringList();
+    if (zipFilePath.isEmpty())
+    {
+        // Build a list of candidates.
+        zipFiles = Utils::searchStandardFolders("*.zip");
+    }
+    else
+    {
+        // Candidate provided.
+        zipFiles.append(zipFilePath);
+    }
 
     // Build list of existing projects.
     auto projects = m_projectManager->buildList();
@@ -129,8 +138,12 @@ ApiResult SMARTConnector::bootstrapOffline()
         }
 
         // Update successful: remove the zip: we own it now.
-        QFile::remove(zipFile);
-        Utils::mediaScan(zipFile);
+        // Only remove if retrieved via a scan so as to avoid trying to install the same packages.
+        if (zipFilePath.isEmpty())
+        {
+            QFile::remove(zipFile);
+            Utils::mediaScan(zipFile);
+        }
     }
 
     return Success(smart6Detected ? m_smart7Required : "");
@@ -221,7 +234,14 @@ ApiResult SMARTConnector::bootstrapConnect(const QVariantMap& params)
 
 ApiResult SMARTConnector::bootstrap(const QVariantMap& params)
 {
-    return params.isEmpty() ? bootstrapOffline() : bootstrapConnect(params);
+    if (params.isEmpty() || params.contains("filePath"))
+    {
+        return bootstrapOffline(params.value("filePath").toString());
+    }
+    else
+    {
+        return bootstrapConnect(params);
+    }
 }
 
 ApiResult SMARTConnector::hasUpdate(QNetworkAccessManager* networkAccessManager, Project* project)
@@ -255,70 +275,38 @@ bool SMARTConnector::canUpdate(Project* project) const
     return project->connectorParams().contains("status_url");
 }
 
-bool SMARTConnector::getZipMetadata(const QString& zipFile, QVariantMap* outMetadata, int* smartVersionOut)
+bool SMARTConnector::getZipMetadata(const QString& zipFilePath, QVariantMap* outMetadata, int* smartVersionOut)
 {
-    QuaZip zip(zipFile);
-    if (!zip.open(QuaZip::mdUnzip))
+    // Load project.json.
+    auto projectJson = Utils::variantMapFromFileInZip(zipFilePath, "project.json");
+    if (projectJson.isEmpty())
     {
         return false;
     }
-
-    // Load project.json
-    zip.setCurrentFile("project.json", QuaZip::csInsensitive);
-    if (!zip.hasCurrentFile())
-    {
-        return false;
-    }
-
-    QuaZipFile projectFile(&zip);
-    if (!projectFile.open(QIODevice::ReadOnly))
-    {
-        qDebug() << "Bad project.json";
-        return false;
-    }
-
-    QJsonParseError jsonErrorCode;
-    auto projectJson = QJsonDocument::fromJson(projectFile.readAll(), &jsonErrorCode);
-    if (jsonErrorCode.error != QJsonParseError::NoError)
-    {
-        qDebug() << "Bad project.json";
-        return false;
-    }
-
-    *outMetadata = projectJson.object().toVariantMap();
 
     // Must have these fields to be considered a valid SMART zip.
-    if (!outMetadata->contains("creation_date") ||
-        !outMetadata->contains("projectName") ||
-        !outMetadata->contains("metadata"))
+    if (!projectJson.contains("creation_date") || !projectJson.contains("projectName") || !projectJson.contains("metadata"))
     {
         qDebug() << "Missing fields from project.json";
         return false;
     }
 
     // Load ct_profile.json.
-    zip.setCurrentFile("ct_profile.json", QuaZip::csInsensitive);
-    if (!zip.hasCurrentFile())
-    {
-        return false;
-    }
-
-    QuaZipFile profileFile(&zip);
-    if (!profileFile.open(QIODevice::ReadOnly))
+    auto profileJson = Utils::variantMapFromFileInZip(zipFilePath, "ct_profile.json");
+    if (profileJson.isEmpty())
     {
         qDebug() << "Missing ct_profile.json";
         return false;
     }
 
-    auto profileJson = QJsonDocument::fromJson(profileFile.readAll(), &jsonErrorCode);
-    if (jsonErrorCode.error != QJsonParseError::NoError)
+    // Return metadata.
+    if (outMetadata)
     {
-        qDebug() << "Bad ct_profile.json";
-        return false;
+        *outMetadata = projectJson;
+        outMetadata->insert("profile", profileJson);
     }
 
-    outMetadata->insert("profile", profileJson.object().toVariantMap());
-
+    // Return version.
     if (smartVersionOut)
     {
         *smartVersionOut = qFloor(outMetadata->value("smart_version", 6.00).toDouble() * 100);
@@ -449,7 +437,8 @@ ApiResult SMARTConnector::updateOffline(Project* project)
         else if (mapFileInfo.isFile())
         {
             auto mapItem = QVariantMap();
-            mapItem.insert("name", "SMART map");
+            mapItem.insert("name", mapFileInfo.baseName());
+            mapItem.insert("title", project->title());
             mapItem.insert("file", mapSource);
             mapList.append(mapItem);
         }
@@ -482,21 +471,10 @@ ApiResult SMARTConnector::updateOffline(Project* project)
     project->set_kioskModePin(QString::number(profile.value("EXIT_PIN").toInt()));
 
     // Permissions.
-    auto androidPermissions = QStringList();
-    androidPermissions << "CAMERA";
-    androidPermissions << "RECORD_AUDIO";
-    androidPermissions << "ACCESS_FINE_LOCATION";
-    androidPermissions << "ACCESS_COARSE_LOCATION";
+    project->set_androidPermissions(QStringList { "CAMERA", "RECORD_AUDIO", "ACCESS_FINE_LOCATION", "ACCESS_COARSE_LOCATION" });
 
-    auto connectorMode = connectorParams.value("mode").toString();
-    if (connectorMode == "Offline" || connectorMode == "Connect")
-    {
-        androidPermissions << "WRITE_EXTERNAL_STORAGE";
-        androidPermissions << "READ_EXTERNAL_STORAGE";
-    }
-    project->set_androidPermissions(androidPermissions);
-
-    if (connectorMode != "Collect")
+    // Background GPS for patrols and surveys.
+    if (QFile::exists(updateFolder + "/patrol_metadata.json") || QFile::exists(updateFolder + "/survey_metadata.json"))
     {
         project->set_androidBackgroundLocation(true);
         project->set_androidDisableBatterySaver(true);
@@ -548,7 +526,7 @@ ApiResult SMARTConnector::updateConnect(Project* project)
     auto zipFilePath = App::instance()->downloadFile(downloadUrl);
     if (zipFilePath.isEmpty())
     {
-        return Failure(tr("Bad project file"));
+        return Failure(QString(tr("Bad %1 file")).arg(App::instance()->alias_project()));
     }
 
     auto zipMetadata = QVariantMap();
@@ -557,7 +535,7 @@ ApiResult SMARTConnector::updateConnect(Project* project)
     if (!success)
     {
         QFile::remove(zipFilePath);
-        return Failure(tr("Cannot unpack project"));
+        return Failure(QString(tr("Cannot unpack %1")).arg(App::instance()->alias_project()));
     }
 
     if (smartVersion < 700)

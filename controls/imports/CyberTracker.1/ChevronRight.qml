@@ -4,7 +4,6 @@ import QtGraphicalEffects 1.0
 
 SquareIcon {
     source: "qrc:/icons/chevron_right.svg"
-    recolor: true
 
     opacity: {
         for (let p = this; p !== null; p = p.parent) {

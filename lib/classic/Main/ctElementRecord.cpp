@@ -276,6 +276,12 @@ VOID CctControl_ElementRecord::OnRecordClick(CfxControl *pSender, VOID *pParams)
         return;
     }
 
+    if (!GetHost(this)->RequestPermissionRecordAudio())
+    {
+        GetSession(this)->ShowMessage("Recording disabled");
+        return;
+    }
+
     if (_caption != NULL)
     {
         if (_confirmReplace)
@@ -383,7 +389,6 @@ VOID CctControl_ElementRecord::OnPaint(CfxCanvas *pCanvas, FXRECT *pRect)
         pCanvas->FillRect(pRect);
     }
 
-    CfxHost *host = GetHost(this);
     BOOL isPlaying = (_playStartTickCount != 0);
     BOOL isRecording = (_recordStartTickCount != 0);
 

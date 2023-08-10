@@ -138,6 +138,9 @@ App::App(QGuiApplication* guiApplication, QQmlApplicationEngine* qmlEngine, cons
 
     setBatteryState(100, false);
 
+    m_config = config;
+    m_dpi = (int)(qApp->screens()[0]->logicalDotsPerInch());
+
     // Load languages.
     // Generated using "translator -l languages.json"
     m_languages = Utils::variantListFromJsonFile(":/languages.json");
@@ -182,15 +185,13 @@ App::App(QGuiApplication* guiApplication, QQmlApplicationEngine* qmlEngine, cons
     m_workPath = QDir::cleanPath(m_rootPath + "/Work");
     qFatalIf(!Utils::ensurePath(m_workPath), "Failed to create work path");
 
-    // Map tile cache.
+    // Map tile cache: created by MBTilesReader.
     m_mapTileCachePath = QDir::cleanPath(m_cachePath + "/MapTiles");
-    qFatalIf(!Utils::ensurePath(m_mapTileCachePath), "Failed to create map tile cache path");
     m_mbTilesReader = new MBTilesReader(this);
     m_mbTilesReader->set_cachePath(m_mapTileCachePath);
 
-    // Map markers cache.
+    // Map markers cache: created when rendered.
     m_mapMarkerCachePath = QDir::cleanPath(m_cachePath + "/MapMarkers");
-    qFatalIf(!Utils::ensurePath(m_mapMarkerCachePath), "Failed to create map tile cache path");
 
     // Goto path.
     m_gotoPath = QDir::cleanPath(m_rootPath + "/Goto");
@@ -223,7 +224,7 @@ App::App(QGuiApplication* guiApplication, QQmlApplicationEngine* qmlEngine, cons
     m_networkAccessManager->setTransferTimeout(60000); // 60s timeout.
 
     // Settings.
-    m_settings = new Settings(m_rootPath + "/Settings.json", this);
+    m_settings = new Settings(m_rootPath + "/Settings.json", m_config["title"].toString(), this);
 
     // Backup the database if the build changes.
     if (m_settings->buildString() != m_buildString)
@@ -290,13 +291,14 @@ App::App(QGuiApplication* guiApplication, QQmlApplicationEngine* qmlEngine, cons
 
     m_positionInfoSourceName = "ct_gps";
 
-    // Setup config.
-    m_config = config;
-    m_dpi = (int)(qApp->screens()[0]->logicalDotsPerInch());
-
+    // Setup alarm timer.
     m_alarmTimer.setSingleShot(true);
     m_alarmTimer.setTimerType(Qt::VeryCoarseTimer);
     connect(&m_alarmTimer, &QTimer::timeout, this, &App::processAlarms);
+
+    // Google credentials.
+    m_googleCredentials = m_config["googleCredentials"].toMap()[desktopOS() ? "desktop" : "mobile"].toMap();
+    Utils::googleSetCredentials(m_googleCredentials);
 
     // Telemetry.
     m_telemetry = new Telemetry(this);
@@ -341,6 +343,15 @@ App::App(QGuiApplication* guiApplication, QQmlApplicationEngine* qmlEngine, cons
     QDesktopServices::setUrlHandler("https", this, "launchUrl");
     QDesktopServices::setUrlHandler("file", this, "launchUrl");
 #endif
+
+    // Detect device cache clear.
+    if (!QFile::exists(m_cachePath + "/cache.json"))
+    {
+        clearDeviceCache();
+    }
+
+    // Update language settings.
+    languageCodeChanged();
 }
 
 App::~App()
@@ -640,24 +651,21 @@ void App::languageCodeChanged()
 {
     auto code = m_settings->languageCode();
 
-    // Redirect "system" to current code.
-    if (code == "system")
+    // Redirect to approximations.
+    auto redirects = QMap<QString, QString>
     {
-        code = QLocale::system().name();
-    }
+        { "system", QLocale::system().name() },
+        { "prs", "fa" },
+    };
 
-    // Redirect for Qt locale: these languages are not known to Qt, so redirect to approximations.
-    auto knownCode = code;
-    if (knownCode == "prs")
-    {
-        knownCode = "fa";
-    }
-    else if (knownCode == "iku")
-    {
-        knownCode = QLocale::system().name();
-    }
+    code = redirects.contains(code) ? redirects[code] : code;
 
-    m_locale = QLocale(knownCode);
+    m_locale = QLocale(code);
+    if (m_locale == QLocale::c())
+    {
+        qDebug() << "Using system locale: " << code;
+        m_locale = QLocale::system();
+    }
 
     // Load the language file.
     if (m_translator.load(":/i18n/ct_" + code))
@@ -665,9 +673,37 @@ void App::languageCodeChanged()
         qApp->installTranslator(&m_translator);
         m_qmlEngine->retranslate();
     }
+    else
+    {
+        qDebug() << "ERROR: Failed to load translation for: " << code;
+    }
 
     // Refresh the battery text.
     setBatteryState(m_batteryLevel, m_batteryCharging);
+
+    // Aliases.
+    auto projectAlias = m_config.value("projectAlias", "form").toString();
+    if (projectAlias == "project")
+    {
+        update_alias_Project(tr("Project"));
+        update_alias_Projects(tr("Projects"));
+        update_alias_project(tr("project"));
+        update_alias_projects(tr("projects"));
+    }
+    else if (projectAlias == "form")
+    {
+        update_alias_Project(tr("Form"));
+        update_alias_Projects(tr("Forms"));
+        update_alias_project(tr("form"));
+        update_alias_projects(tr("forms"));
+    }
+    else if (projectAlias == "survey")
+    {
+        update_alias_Project(tr("Survey"));
+        update_alias_Projects(tr("Surveys"));
+        update_alias_project(tr("survey"));
+        update_alias_projects(tr("surveys"));
+    }
 }
 
 void App::simulateGPSChanged()
@@ -854,16 +890,13 @@ bool App::requestPermission(const QString& permission, const QString& rationale)
     QtAndroid::PermissionResult request = QtAndroid::checkPermission(androidPermission);
     if (request == QtAndroid::PermissionResult::Denied)
     {
-        QtAndroid::requestPermissionsSync(QStringList() <<  androidPermission);
+        QtAndroid::requestPermissionsSync(QStringList { androidPermission });
         request = QtAndroid::checkPermission(androidPermission);
 
         if (request == QtAndroid::PermissionResult::Denied)
         {
-            if (QtAndroid::shouldShowRequestPermissionRationale(androidPermission))
-            {
-                emit showMessageBox(tr("Permission request"), rationale);
-            }
-
+            qDebug() << "Permission denied: " << permission;
+            emit showMessageBox(tr("Permission request"), rationale);
             result = false;
         }
    }
@@ -889,13 +922,14 @@ bool App::requestPermissions(const QString& projectUid)
     }
 
     auto permissions = project->androidPermissions();
+    permissions.removeOne("CAMERA");
+    permissions.removeOne("RECORD_AUDIO");
 
     // Build a list of permissions that have not been granted.
     auto androidPermissions = QStringList();
     for (auto permission: permissions)
     {
         auto androidPermission = "android.permission." + permission;
-
         QtAndroid::PermissionResult request = QtAndroid::checkPermission(androidPermission);
         if (request == QtAndroid::PermissionResult::Denied)
         {
@@ -915,11 +949,8 @@ bool App::requestPermissions(const QString& projectUid)
 
             if (request == QtAndroid::PermissionResult::Denied)
             {
-                if (QtAndroid::shouldShowRequestPermissionRationale(androidPermission))
-                {
-                    emit showMessageBox(tr("Permission request"), tr("This project requires access to some features of the device. Please allow these requests in order to proceed."));
-                }
-
+                qDebug() << "Permission denied: " << androidPermission;
+                emit showMessageBox(tr("Permission request"), QString(tr("This %1 requires access to some features of the device. Please allow these requests in order to proceed.")).arg(alias_project()));
                 result = false;
                 break;
             }
@@ -929,10 +960,6 @@ bool App::requestPermissions(const QString& projectUid)
     if (result && project->androidBackgroundLocation())
     {
         result = requestPermissionBackgroundLocation();
-        if (!result)
-        {
-            emit showMessageBox(tr("Permission request"), tr("This project requires background GPS access. Please allow this request in order to proceed."));
-        }
     }
 #else
     Q_UNUSED(projectUid)
@@ -941,15 +968,40 @@ bool App::requestPermissions(const QString& projectUid)
    return result;
 }
 
+bool App::hasPermission(const QString& permission) const
+{
+#if defined(Q_OS_ANDROID)
+   auto androidPermission = "android.permission." + permission;
+   QtAndroid::PermissionResult request = QtAndroid::checkPermission(androidPermission);
+   if (request == QtAndroid::PermissionResult::Denied)
+   {
+        return false;
+   }
+#else
+   Q_UNUSED(permission)
+#endif
+
+   return true;
+}
+
+bool App::requestPermissionCamera()
+{
+   return requestPermission("CAMERA", tr("Using the camera requires permission. Please allow the request in order to proceed."));
+}
+
 bool App::requestPermissionRecordAudio()
 {
-    return requestPermission("RECORD_AUDIO", tr("Recording audio and video requires permission. Please allow the request in order to proceed."));
+    return requestPermission("RECORD_AUDIO", tr("Recording audio requires permission. Please allow the request in order to proceed."));
 }
 
 bool App::requestPermissionLocation()
 {
-    return requestPermission("ACCESS_FINE_LOCATION", tr("Access to GPS is required for this feature to work. Please allow the request in order to proceed.")) &&
-           requestPermission("ACCESS_COARSE_LOCATION", tr("Access to GPS is required for this feature to work. Please allow the request in order to proceed."));
+#if defined(Q_OS_ANDROID)
+    auto message = tr("Access to GPS is required for this feature to work. Please allow the request in order to proceed.");
+    return requestPermission("ACCESS_FINE_LOCATION", message) && requestPermission("ACCESS_COARSE_LOCATION", message);
+#else
+    return true;
+#endif
 }
 
 bool App::requestPermissionBackgroundLocation()
@@ -964,14 +1016,98 @@ bool App::requestPermissionBackgroundLocation()
     return true;
 }
 
-bool App::requestPermissionReadExternalStorage()
+bool App::promptForLocation(const QString& projectUid) const
 {
-    return requestPermission("READ_EXTERNAL_STORAGE", tr("Access to external storage is required for this feature to work. Please allow the request in order to proceed."));
+#if defined(Q_OS_ANDROID)
+    if (hasPermission("ACCESS_COARSE_LOCATION") && hasPermission("ACCESS_FINE_LOCATION"))
+    {
+        return false;
+    }
+
+    if (projectUid.isEmpty())
+    {
+        return true;
+    }
+
+    auto project = m_projectManager->loadPtr(projectUid);
+    auto permissions = project->androidPermissions();
+    if (permissions.contains("ACCESS_COARSE_LOCATION") || permissions.contains("ACCESS_FINE_LOCATION") || project->androidBackgroundLocation())
+    {
+        return true;
+    }
+#else
+    Q_UNUSED(projectUid)
+#endif
+
+    return false;
 }
 
-bool App::requestPermissionWriteExternalStorage()
+bool App::promptForBackgroundLocation(const QString& projectUid) const
 {
-    return requestPermission("WRITE_EXTERNAL_STORAGE", tr("Access to external storage is required for this feature to work. Please allow the request in order to proceed."));
+#if defined(Q_OS_ANDROID)
+    if (QtAndroid::androidSdkVersion() < 29)
+    {
+        return false;
+    }
+
+    if (hasPermission("ACCESS_BACKGROUND_LOCATION"))
+    {
+        return false;
+    }
+
+    if (projectUid.isEmpty())
+    {
+        return true;
+    }
+
+    auto project = m_projectManager->loadPtr(projectUid);
+    if (project->androidBackgroundLocation())
+    {
+        return true;
+    }
+#else
+    Q_UNUSED(projectUid)
+#endif
+
+    return false;
+}
+
+bool App::promptForBlackviewMessage(const QString& projectUid) const
+{
+#if defined(Q_OS_ANDROID)
+    if (QtAndroid::androidSdkVersion() < 31)
+    {
+        return false;
+    }
+
+    if (m_settings->blackviewMessageShown())
+    {
+        return false;
+    }
+
+    auto manufacturer = QtAndroid::androidActivity().callObjectMethod("getManufacturer", "()Ljava/lang/String;").toString();
+    if (manufacturer != "Blackview")
+    {
+        return false;
+    }
+
+    if (projectUid.isEmpty())
+    {
+        return true;
+    }
+
+    auto project = m_projectManager->loadPtr(projectUid);
+    if (project->androidBackgroundLocation())
+    {
+        return true;
+    }
+
+    return false;
+
+#else
+    Q_UNUSED(projectUid)
+    return false;
+#endif
 }
 
 bool App::getActive()
@@ -1036,7 +1172,7 @@ QString App::downloadFile(const QString& url, const QString& username, const QSt
     QFile file(result);
     if (!file.open(QIODevice::WriteOnly))
     {
-        qDebug() << "Failed to open SMART temp zip file";
+        qDebug() << "Failed to create temp zip file: " << result;
         return QString();
     }
 
@@ -1103,8 +1239,13 @@ QString App::downloadFile(const QString& url, const QString& username, const QSt
         return QString();
     }
 
-    // Keep the suffix from the original name.
+    // Pick up a good suffix.
     auto suffix = QFileInfo(finalUrl).suffix();
+    if (suffix.isEmpty() || suffix.length() > 4)
+    {
+        suffix = Utils::detectFileSuffix(result);
+    }
+
     if (!suffix.isEmpty())
     {
         auto newName = result + "." + suffix;
@@ -1238,7 +1379,7 @@ void App::garbageCollectMedia() const
     }
 }
 
-QString App::deviceImei()
+QString App::deviceImei() const
 {
 #if defined(Q_OS_ANDROID)
     return QtAndroid::androidActivity().callObjectMethod("getImei", "()Ljava/lang/String;").toString();
@@ -1247,7 +1388,7 @@ QString App::deviceImei()
 #endif
 }
 
-bool App::wifiConnected()
+bool App::wifiConnected() const
 {
 #if defined(Q_OS_ANDROID)
     return QtAndroid::androidActivity().callMethod<jboolean>("getWifiConnected", "()Z");
@@ -1303,7 +1444,7 @@ void App::snapScreenshotToClipboard()
         static auto s_snapshotIndex = 0;
         static auto s_mainIndex = 0;
 
-        auto path = m_tempPath + "/Snapsots";
+        auto path = m_tempPath + "/Snapshots";
         qFatalIf(!Utils::ensurePath(path), "Bad path");
 
         auto size = s_snapshotSizes[s_snapshotIndex];
@@ -1369,8 +1510,19 @@ void App::runLinkOnClipboard()
 {
 #if defined(Q_OS_WIN) || defined(Q_OS_MACOS)
     auto text = QApplication::clipboard()->text();
-    if (text.startsWith("https://cybertrackerwiki.org/", Qt::CaseInsensitive) ||
-        text.endsWith(".zip", Qt::CaseInsensitive))
+
+    auto prefixes = m_config["appLinkUrls"].toStringList();
+    auto isAppLink = false;
+    for (auto it = prefixes.constBegin(); it != prefixes.constEnd(); it++)
+    {
+        if (text.startsWith(*it, Qt::CaseInsensitive))
+        {
+            isAppLink = true;
+            break;
+        }
+    }
+
+    if (isAppLink || text.endsWith(".zip", Qt::CaseInsensitive))
     {
         setCommandLine(text);
     }
@@ -1385,6 +1537,8 @@ void App::runQRCode(const QString& tag)
 QVariantMap App::runCommandLine(const QString& customCommandLine)
 {
     auto commandLine = customCommandLine.isEmpty() ? m_commandLine : customCommandLine;
+
+    qDebug() << "Command line: " << commandLine;
 
     // Success if nothing to do.
     if (commandLine.isEmpty())
@@ -1426,11 +1580,13 @@ QVariantMap App::runCommandLine(const QString& customCommandLine)
     }
 
     // Applinks.
-    auto prefixes = QStringList
+    auto prefixes = m_config["appLinkUrls"].toStringList();
+
+    // Sort by longest first since we will be removing the beginning part.
+    std::sort(prefixes.begin(), prefixes.end(), [](const QString &s1, const QString &s2)
     {
-        "https://cybertrackerwiki.org/applink-smart",
-        "https://cybertrackerwiki.org/applink",
-    };
+        return s2.size() < s1.size();
+    });
 
     auto isAppLink = false;
     for (auto it = prefixes.constBegin(); it != prefixes.constEnd(); it++)
@@ -1453,9 +1609,52 @@ QVariantMap App::runCommandLine(const QString& customCommandLine)
         return ApiResult::SuccessMap();
     }
 
+    if (commandLine.isEmpty() || commandLine == "/")
+    {
+        if (desktopOS())
+        {
+            return ApiResult::ErrorMap(tr("Empty link"));
+        }
+
+        return ApiResult::SuccessMap();
+    }
+
+//    // For Google Auth.
+//    if (commandLine.startsWith("/?auth="))
+//    {
+//        auto code = commandLine.remove(0, 7).trimmed();
+//        if (code.isEmpty())
+//        {
+//            return ApiResult::ErrorMap(tr("Missing code"));
+//        }
+
+//        auto accessToken = QString();
+//        auto refreshToken = QString();
+
+//        auto response = Utils::googleAcquireOAuthTokenFromCode(m_networkAccessManager, code, &accessToken, &refreshToken);
+//        if (!response.success)
+//        {
+//            return response.toApiResult();
+//        }
+
+//        m_settings->set_googleAccessToken(accessToken);
+//        m_settings->set_googleRefreshToken(refreshToken);
+
+//        auto result = ApiResult::SuccessMap();
+//        result["googleConnect"] = true;
+//        return result;
+//    }
+
     if (commandLine.startsWith('?', Qt::CaseInsensitive))
     {
+        // Remove "?".
         commandLine.remove(0, 1);
+
+        // Allow "x=" to overcome WhatsApp breaking up the URL.
+        if (commandLine.startsWith("x="))
+        {
+            commandLine.remove(0, 2);
+        }
 
         auto params = m_appLink->decode(commandLine);
 
@@ -1541,6 +1740,19 @@ QVariantMap App::installPackage(const QString& filePathUrl, bool showToasts)
     }
 
     return result.toMap();
+}
+
+void App::clearDeviceCache()
+{
+    qFatalIf(m_cachePath.isEmpty(), "Not initialized yet");
+
+    QDir(m_cachePath).removeRecursively();
+    qFatalIf(!Utils::ensurePath(m_cachePath), "Failed to create cache");
+    qFatalIf(!Utils::ensurePath(m_tempPath), "Failed to create temp path");
+
+    Utils::writeJsonToFile(m_cachePath + "/cache.json" , "{}");
+    m_settings->set_autoLaunchProjectUid("");
+    m_settings->set_blackviewMessageShown(false);
 }
 
 void App::clearComponentCache()
@@ -1883,7 +2095,7 @@ QVariantList App::buildExportFilesModel(const QString& projectUid, const QString
 
         fileInfo["model"] = QVariantList
         {
-            QVariantMap {{ "name", tr("Project") }, { "value", fileInfo["projectTitle"] } },
+            QVariantMap {{ "name", alias_Project() }, { "value", fileInfo["projectTitle"] } },
             QVariantMap {{ "name", tr("Start date") }, { "value", formatDate(startTime.date()) } },
             QVariantMap {{ "name", tr("Start time") }, { "value", formatTime(startTime.time()) } },
             QVariantMap {{ "name", tr("Stop date") }, { "value", formatDate(stopTime.date()) } },
@@ -1955,6 +2167,8 @@ QString App::renderMapMarker(const QString& url, const QColor& color, int size) 
         return filePath;
     }
 
+    qFatalIf(!Utils::ensurePath(m_mapMarkerCachePath), "Failed to create map tile cache path");
+
     if (!Utils::renderMapMarker(url, filePath, color, darkTheme ? Qt::white : Qt::black, size, size))
     {
         qDebug() << "Failed to render svg: " << url;
@@ -1973,6 +2187,8 @@ QString App::renderMapCallout(const QString& url, int size) const
     {
         return filePath;
     }
+
+    qFatalIf(!Utils::ensurePath(m_mapMarkerCachePath), "Failed to create map tile cache path");
 
     auto color = darkTheme ? Qt::black : Qt::white;
     auto outlineColor = darkTheme ? Qt::white : Qt::black;

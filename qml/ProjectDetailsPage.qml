@@ -18,13 +18,13 @@ C.ContentPage {
     }
 
     header: C.PageHeader {
-        text: qsTr("Project details")
+        text: qsTr("%1 options").arg(App.alias_Project)
     }
 
     property var options: ([
         {
             text: qsTr("Exported data"),
-            subText: qsTr("Project data waiting for import"),
+            subText: qsTr("%1 data waiting for import").arg(App.alias_Project),
             icon: "qrc:/icons/tray_full.svg",
             enabled: App.projectManager.canExportData(project.uid),
             chevronRight: true,
@@ -32,7 +32,7 @@ C.ContentPage {
         },
         {
             text: qsTr("QR code"),
-            subText: qsTr("Share a link to this project"),
+            subText: qsTr("Share a link to this %1").arg(App.alias_project),
             icon: "qrc:/icons/qrcode.svg",
             enabled: App.projectManager.canShareLink(project.uid),
             chevronRight: true,
@@ -40,7 +40,7 @@ C.ContentPage {
         },
         {
             text: qsTr("Send package"),
-            subText: qsTr("Share this project with others"),
+            subText: qsTr("Share this %1 with others").arg(App.alias_project),
             icon: "qrc:/icons/share_variant_outline.svg",
             enabled: App.projectManager.canSharePackage(project.uid),
             handler: "sharePackage"
@@ -53,15 +53,15 @@ C.ContentPage {
             handler: "updateProject"
         },
         {
-            text: qsTr("Reset project"),
-            subText: qsTr("Delete all project data"),
+            text: qsTr("Reset %1").arg(App.alias_project),
+            subText: qsTr("Reset %1 state and data").arg(App.alias_project),
             icon: "qrc:/icons/clipboard_remove_outline.svg",
             enabled: true,
             handler: "resetProject"
         },
         {
-            text: qsTr("Delete project"),
-            subText: qsTr("Delete the project and all data"),
+            text: qsTr("Delete %1").arg(App.alias_project),
+            subText: qsTr("Delete the %1 and all data").arg(App.alias_project),
             icon: "qrc:/icons/delete_outline.svg",
             enabled: true,
             handler: "deleteProject"
@@ -82,7 +82,7 @@ C.ContentPage {
 
             Item {
                 Layout.fillWidth: true
-                height: 84
+                height: page.project.displayIcon.toString() !== "" ? 84 : 8
 
                 Image {
                     anchors.centerIn: parent
@@ -203,15 +203,36 @@ C.ContentPage {
         id: popupConfirmReset
 
         popupComponent: Component {
-            C.ConfirmPopup {
-                text: qsTr("Reset project?")
-                subText: qsTr("All project data will be permanently removed from the device.")
-                confirmText: qsTr("Yes, reset it")
-                confirmDelay: true
-                onConfirmed: {
-                    App.backupDatabase("Project reset: " + project.uid)
-                    App.projectManager.reset(project.uid)
-                    showToast(qsTr("%1 reset").arg("'" + project.title + "'"))
+            C.OptionsPopup {
+                id: popupConfirmReset2
+                text: qsTr("Reset %1?").arg(App.alias_project)
+                subText: qsTr("Data will be permanently removed from the device.")
+                icon: "qrc:/icons/alert_circle_outline.svg"
+
+                model: [
+                    { text: qsTr("State only"), icon: "qrc:/icons/ok.svg", delay: true },
+                    { text: qsTr("State and data"), icon: "qrc:/icons/ok.svg", delay: true },
+                    { text: qsTr("Cancel"), icon: "qrc:/icons/cancel.svg" }
+                ]
+
+                onClicked: function (index) {
+                    switch (index) {
+                    case 0:
+                        App.backupDatabase("Project state reset: " + project.uid)
+                        App.projectManager.reset(project.uid, true)
+                        showToast(qsTr("%1 state reset").arg("'" + project.title + "'"))
+                        break
+
+                    case 1:
+                        App.backupDatabase("Project reset: " + project.uid)
+                        App.projectManager.reset(project.uid)
+                        showToast(qsTr("%1 reset").arg("'" + project.title + "'"))
+                        break
+
+                    case 2:
+                        popupConfirmReset2.cancel()
+                        break
+                    }
                 }
             }
         }
@@ -222,8 +243,8 @@ C.ContentPage {
 
         popupComponent: Component {
             C.ConfirmPopup {
-                text: qsTr("Delete project?")
-                subText: qsTr("The project and all of its data will be permanently removed.")
+                text: qsTr("Delete %1?").arg(App.alias_project)
+                subText: qsTr("The %1 and all of its data will be permanently removed.").arg(App.alias_project)
                 confirmText: qsTr("Yes, delete it")
                 confirmDelay: true
                 onConfirmed: {

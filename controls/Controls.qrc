@@ -56,6 +56,7 @@
         <file>imports/CyberTracker.1/FieldName.qml</file>
         <file>imports/CyberTracker.1/FieldNumberListViewPage.qml</file>
         <file>imports/CyberTracker.1/FieldPhotoButton.qml</file>
+        <file>imports/CyberTracker.1/FieldPhotoGridView.qml</file>
         <file>imports/CyberTracker.1/FieldPhotoListView.qml</file>
         <file>imports/CyberTracker.1/FieldRange.qml</file>
         <file>imports/CyberTracker.1/FieldRangePage.qml</file>
@@ -80,6 +81,8 @@
         <file>imports/CyberTracker.1/FormSightingsListView.qml</file>
         <file>imports/CyberTracker.1/FormView.qml</file>
         <file>imports/CyberTracker.1/FormWizardPage.qml</file>
+        <file>imports/CyberTracker.1/GoogleLoginButton.qml</file>
+        <file>imports/CyberTracker.1/GoogleLoginItem.qml</file>
         <file>imports/CyberTracker.1/GotoLocation.qml</file>
         <file>imports/CyberTracker.1/GridFrameDelegate.qml</file>
         <file>imports/CyberTracker.1/GridViewV.qml</file>

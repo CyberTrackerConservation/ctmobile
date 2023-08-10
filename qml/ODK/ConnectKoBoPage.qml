@@ -16,7 +16,7 @@ C.ContentPage {
     }
 
     header: C.PageHeader {
-        text: "KoBoToolbox " + qsTr("Connect")
+        text: qsTr("Connect to %1").arg("KoBoToolbox")
     }
 
     C.LoginItem {

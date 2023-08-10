@@ -40,8 +40,10 @@ RowLayout {
             value.filename = Utils.generateUuid() + ".wav"
             fieldBinding.setValue(value)
 
-            recorder.start(App.getMediaFilePath(value.filename), fieldBinding.field.sampleRate)
-            updateState()
+            if (App.requestPermissionRecordAudio()) {
+                recorder.start(App.getMediaFilePath(value.filename), fieldBinding.field.sampleRate)
+                updateState()
+            }            
         }
     }
 

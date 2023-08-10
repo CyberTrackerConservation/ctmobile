@@ -118,7 +118,7 @@ GridViewV {
         }
 
         // Add the "+" button.
-        if (recordField.dynamic && (recordField.maxCount === 0 || recordUids < recordField.maxCount)) {
+        if (recordField.dynamic && (recordField.maxCount === 0 || recordUids.length < recordField.maxCount)) {
             result.push({ fieldUid: photoField.uid })
         }
 

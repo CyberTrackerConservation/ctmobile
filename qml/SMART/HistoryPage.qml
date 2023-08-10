@@ -93,6 +93,7 @@ C.ContentPage {
             C.FormSightingsListView {
                 id: listViewCollect
                 anchors.fill: parent
+                groupExported: false
                 onClicked: function (sighting, index) {
                     pushSightingPage(model, index)
                 }
@@ -110,6 +111,7 @@ C.ContentPage {
             C.FormSightingsListView {
                 id: listViewPatrol
                 anchors.fill: parent
+                groupExported: false
                 onClicked: function (sighting, index) {
                     pushSightingPage(model, index)
                 }
@@ -127,6 +129,7 @@ C.ContentPage {
             C.FormSightingsListView {
                 id: listViewIncident
                 anchors.fill: parent
+                groupExported: false
                 onClicked: function (sighting, index) {
                     pushSightingPage(model, index)
                 }

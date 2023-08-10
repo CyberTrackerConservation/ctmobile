@@ -11,6 +11,7 @@ QML_IMPORT_PATH += $$PWD/imports
 
 HEADERS += \
     $$PWD/ControlsPlugin.h \
+    $$PWD/OAuth2.h \
     $$PWD/Skyplot.h \
     $$PWD/Sketchpad.h \
     $$PWD/SquareImage.h \
@@ -18,6 +19,7 @@ HEADERS += \
 
 SOURCES += \
     $$PWD/ControlsPlugin.cpp \
+    $$PWD/OAuth2.cpp \
     $$PWD/Skyplot.cpp \
     $$PWD/Sketchpad.cpp \
     $$PWD/SquareImage.cpp \

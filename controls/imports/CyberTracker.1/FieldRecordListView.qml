@@ -29,6 +29,8 @@ C.ListViewV {
         id: swipeDelegate
         width: ListView.view.width
 
+        Binding { target: background; property: "color"; value: colorContent || Style.colorContent }
+
         contentItem: RowLayout {
             Item { height: Style.minRowHeight }
             ColumnLayout {
@@ -97,7 +99,7 @@ C.ListViewV {
 
                 Label {
                     text: fieldBinding.field.dynamic ? qsTr("Delete record?") : qsTr("Reset record?")
-                    leftPadding: 20
+                    leftPadding: App.scaleByFontSize(20)
                     font.pixelSize: App.settings.font16
                     fontSizeMode: Label.Fit
                     Layout.fillWidth: true

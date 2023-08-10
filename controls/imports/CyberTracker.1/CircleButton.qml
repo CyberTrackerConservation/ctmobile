@@ -2,37 +2,26 @@ import QtQuick 2.12
 import QtQuick.Controls 2.12
 import QtQuick.Controls.Material 2.12
 
-Item {
+RoundButton {
     id: root
 
-    property alias buttonOpacity: button.opacity
-    property alias buttonIcon: button.icon
-    property alias buttonCheckable: button.checkable
-    property alias buttonChecked: button.checked
-    property alias buttonEnabled: button.enabled
+    property bool outline: true
 
-    signal clicked()
+    icon.width: Style.toolButtonSize
+    icon.height: Style.toolButtonSize
+    icon.color: Material.foreground
 
-    implicitWidth: button.implicitWidth
-    implicitHeight: button.implicitHeight
-
-    RoundButton {
-        id: button
-        anchors.fill: parent
-        icon.color: enabled ? Material.primary : Style.colorGroove
-        icon.width: Style.toolButtonSize
-        icon.height: Style.toolButtonSize
-        onClicked: root.clicked()
-    }
+    radius: (implicitWidth - leftInset * 2) / 2
 
     Rectangle {
-        x: button.leftInset
-        y: button.topInset
-        width: button.implicitWidth - button.leftInset * 2
-        height: button.implicitHeight - button.topInset * 2
-        radius: (button.implicitWidth - button.leftInset * 2) / 2
+        x: root.leftInset
+        y: root.topInset
+        width: root.implicitWidth - root.leftInset * 2
+        height: root.implicitHeight - root.topInset * 2
+        radius: root.radius
         color: "transparent"
-        border.color: button.icon.color
+        border.color: root.icon.color
         border.width: 1
+        visible: root.outline
     }
 }

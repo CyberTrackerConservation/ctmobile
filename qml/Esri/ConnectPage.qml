@@ -16,7 +16,7 @@ C.ContentPage {
     }
 
     header: C.PageHeader {
-        text: qsTr("Connect to") + " ESRI"
+        text: qsTr("Connect to %1").arg("ESRI")
     }
 
     C.LoginItem {

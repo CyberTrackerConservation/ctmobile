@@ -10,6 +10,7 @@ ListViewV {
     id: root
 
     property alias canSubmit: sightingListModel.canSubmit
+    property alias groupExported: sightingListModel.groupExported
     property bool showNoData: true
 
     signal clicked(var sighting, int index)
@@ -32,7 +33,7 @@ ListViewV {
             SquareIcon {
                 size: Style.minRowHeight
                 source: modelData.summaryIcon || ""
-                recolor: modelData.summaryIcon !== undefined && modelData.summaryIcon.startsWith("qrc:/")
+                recolor: modelData.summaryIcon !== undefined && modelData.summaryIcon.startsWith("qrc:/icons/")
                 opacity: recolor ? 0.5 : 1.0
             }
 
@@ -58,14 +59,13 @@ ListViewV {
                 }
 
                 RowLayout {
-                    spacing: 6
+                    spacing: App.scaleByFontSize(6)
                     Layout.fillWidth: true
                     C.SquareIcon {
                         visible: modelData.readonly === true
                         size: updateDate.height * 1.2
                         source: "qrc:/icons/edit_off.svg"
                         opacity: 0.8
-                        recolor: true
                     }
                     Label {
                         id: updateDate
@@ -80,9 +80,8 @@ ListViewV {
             }
 
             SquareIcon {
-                recolor: true
-                opacity: 0.5
                 source: modelData.statusIcon
+                opacity: 0.5
             }
         }
 
@@ -171,6 +170,7 @@ ListViewV {
             C.ConfirmPopup {
                 icon: "qrc:/icons/upload_multiple.svg"
                 text: qsTr("Submit data?")
+                confirmDelay: false
                 onConfirmed: {
                     form.submitData()
                 }

@@ -20,6 +20,7 @@ class Form: public QQuickItem
     QML_READONLY_AUTO_PROPERTY (int, depth)
     QML_READONLY_AUTO_PROPERTY (bool, connected)
     QML_READONLY_AUTO_PROPERTY (bool, editing)
+    QML_READONLY_AUTO_PROPERTY (QString, sessionId)
 
     QML_READONLY_AUTO_PROPERTY (Database*, database)
     QML_READONLY_AUTO_PROPERTY (TimeManager*, timeManager)
@@ -102,6 +103,8 @@ public:
     Q_INVOKABLE void prevSighting();
     Q_INVOKABLE void nextSighting();
 
+    Q_INVOKABLE void newSessionId();
+
     Q_INVOKABLE void snapCreateTime();
     Q_INVOKABLE void snapUpdateTime();
 
@@ -143,6 +146,7 @@ public:
     Q_INVOKABLE QUrl getFieldHintIcon(const QString& fieldUid) const;
     Q_INVOKABLE QUrl getFieldHintLink(const QString& fieldUid) const;
     Q_INVOKABLE QString getFieldConstraintMessage(const QString& recordUid, const QString& fieldUid) const;
+    Q_INVOKABLE QString getFieldRequiredMessage(const QString& recordUid, const QString& fieldUid) const;
 
     // Records.
     Q_INVOKABLE QString getRecordName(const QString& recordUid) const;
@@ -200,6 +204,8 @@ public:
     // Commands to execute on sighting save.
     Q_INVOKABLE QVariantMap getSaveCommands(const QString& recordUid, const QString& fieldUid) const;
     Q_INVOKABLE void applyTrackCommand();
+    Q_INVOKABLE void startTrackStreamer(int updateIntervalSeconds = 0, int distanceFilterMeters = 0);
+    Q_INVOKABLE void stopTrackStreamer();
 
     // Enable or disable immersive mode.
     Q_INVOKABLE void setImmersive(bool value);
@@ -214,7 +220,7 @@ public:
     Q_INVOKABLE int getPendingUploadCount() const;
 
     // Persist state.
-    Q_INVOKABLE void saveState();
+    Q_INVOKABLE void saveState() const;
 
     // Evaluator.
     Q_INVOKABLE QVariant evaluate(const QString& expression, const QString& contextRecordUid, const QString& contextFieldUid, const QVariantMap& variables = QVariantMap()) const;
@@ -236,6 +242,7 @@ private:
     bool m_recalculating = false;
     QString m_submitAlarmId;
 
+    void resetSessionId();
     void loadState(bool formChanged);
     QVariant providerAsVariant();
     Record* getRecord(const QString& recordUid = QString()) const;

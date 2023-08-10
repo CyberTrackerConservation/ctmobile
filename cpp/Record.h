@@ -45,6 +45,7 @@ class FieldValue: public QObject
     Q_PROPERTY (QString hint READ hint CONSTANT)
     Q_PROPERTY (QString displayValue READ displayValue CONSTANT)
     Q_PROPERTY (QString constraintMessage READ constraintMessage CONSTANT)
+    Q_PROPERTY (QString requiredMessage READ requiredMessage CONSTANT)
 
     Q_PROPERTY (bool isRelevant READ isRelevant CONSTANT)
     Q_PROPERTY (bool isVisible READ isVisible CONSTANT)
@@ -76,6 +77,7 @@ public:
     QString hint() const;
     QString displayValue() const;
     QString constraintMessage() const;
+    QString requiredMessage() const;
 
     bool isRelevant() const;
     bool isVisible() const;
@@ -181,6 +183,7 @@ public:
     QString getFieldName(const QString& fieldUid) const;
     QString getFieldHint(const QString& fieldUid) const;
     QString getFieldConstraintMessage(const QString& fieldUid) const;
+    QString getFieldRequiredMessage(const QString& fieldUid) const;
     QString getFieldDisplayValue(const QString& fieldUid, const QString& defaultValue = QString()) const;
 
 private:

@@ -27,7 +27,6 @@ ContentPage {
             size: parent.width * 0.2
             source: "qrc:/icons/account.svg"
             opacity: 0.5
-            recolor: true
         }
 
         TextField {
@@ -39,6 +38,7 @@ ContentPage {
 
         ColorButton {
             Layout.fillWidth: true
+            Layout.preferredHeight: Style.minRowHeight
             text: qsTr("Set name")
             font.pixelSize: App.settings.font12
             font.bold: true
@@ -62,7 +62,7 @@ ContentPage {
             Layout.fillWidth: true
             font.pixelSize: App.settings.font14
             wrapMode: Label.WordWrap
-            text: qsTr("Data will be tagged with this name. This setting applies to all projects.")
+            text: qsTr("Data will be tagged with this name. This setting applies to all %1.").arg(App.alias_projects)
             opacity: 0.5
         }
     }

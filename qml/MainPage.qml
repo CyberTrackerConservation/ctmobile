@@ -34,26 +34,25 @@ C.ContentPage {
             checked: stackLayout.currentIndex === 0
             icon.source: checked ? "qrc:/icons/view_grid_plus.svg" : "qrc:/icons/view_grid_plus_outline.svg"
             onClicked: stackLayout.currentIndex = 0
+            visible: App.config.showConnectPage
         }
 
         C.FooterButton {
             id: projectsButton
             ButtonGroup.group: buttonGroup
-            text: qsTr("Projects")
+            text: App.alias_Projects
             checkable: true
             checked: stackLayout.currentIndex === 1
             icon.source: checked ? "qrc:/icons/clipboard_multiple.svg" : "qrc:/icons/clipboard_multiple_outline.svg"
             onClicked: stackLayout.currentIndex = 1
-            enabled: page.projectCount > 0
+            enabled: !App.config.showConnectPage || (page.projectCount > 0)
         }
 
         C.FooterButton {
             text: qsTr("Map")
             icon.source: C.Style.mapIconSource
             onClicked: {
-                if (App.requestPermissionLocation()) {
-                    appPageStack.push("qrc:/MapsPage.qml", StackView.Immediate)
-                }
+                appPageStack.push("qrc:/MapsPage.qml", StackView.Immediate)
             }
         }
 
@@ -74,7 +73,7 @@ C.ContentPage {
 
         Component.onCompleted: {
             page.projectCount = App.projectManager.count()
-            currentIndex = page.projectCount === 0 ? 0 : 1
+            currentIndex = App.config.showConnectPage && page.projectCount === 0 ? 0 : 1
         }
 
         onCurrentIndexChanged: {
@@ -98,7 +97,10 @@ C.ContentPage {
 
         function onProjectsChanged() {
             page.projectCount = App.projectManager.count()
-            if (stackLayout.currentIndex === 0 && page.projectCount !== 0) {
+
+            if (!App.config.showConnectPage) {
+                stackLayout.currentIndex = 1
+            } else if (stackLayout.currentIndex === 0 && page.projectCount !== 0) {
                 stackLayout.currentIndex = 1
             } else if (stackLayout.currentIndex === 1 && page.projectCount === 0) {
                 stackLayout.currentIndex = 0

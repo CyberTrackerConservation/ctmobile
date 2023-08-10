@@ -49,7 +49,7 @@ C.ContentPage {
 
             enabled: {
                 Globals.patrolChangeCount
-                return form.hasData() && !form.provider.patrolStarted
+                return (form.provider.hasUploadData() || form.hasData()) && !form.provider.patrolStarted
             }
         }
 
@@ -89,27 +89,28 @@ C.ContentPage {
 
     function completeUpload() {
         let success = form.provider.manualUpload ? form.provider.uploadData() : App.taskManager.waitForTasks(form.project.uid)
-        let successMessage = qsTr("All data has been uploaded")
-        let failureMessage = qsTr("Connection failed")
+        let successMessage = qsTr("All data has been uploaded.")
+        let failureMessage = qsTr("Connection failed. Please try again later.")
 
-        reportExportResult(success, successMessage, failureMessage)
+        reportExportResult(success, "qrc:/icons/cloud_done.svg", successMessage, "qrc:/icons/cloud_off_outline.svg", failureMessage)
     }
 
     function completeExport() {
         let success = form.provider.exportData()
-        let successMessage = qsTr("Data is ready for import from the desktop")
-        let failureMessage = qsTr("Export may have failed")
+        let successMessage = qsTr("Data is ready for import from the desktop.")
+        let failureMessage = qsTr("Export may have failed.")
 
-        reportExportResult(success, successMessage, failureMessage)
+        reportExportResult(success, "qrc:/icons/check_circle.svg", successMessage, "qrc:/icons/close_circle_outline.svg", failureMessage)
     }
 
-    function reportExportResult(success, successMessage, failureMessage) {
+    function reportExportResult(success, successIcon, successMessage, failureIcon, failureMessage) {
         if (success) {
             form.provider.clearCompletedData()
         }
 
+        popupExportComplete.icon = success ? successIcon : failureIcon
         popupExportComplete.title = success ? qsTr("Success") : qsTr("Error")
-        popupExportComplete.message = success ? successMessage : failureMessage
+        popupExportComplete.message1 = success ? successMessage : failureMessage
         popupExportComplete.open()
 
         Globals.patrolChangeCount++

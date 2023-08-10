@@ -13,7 +13,7 @@ C.ContentPage {
     QtObject {
         id: internal
         property string reportId
-        property string headerTitle: page.useSharingOnMobile ? qsTr("Share report") : qsTr("Save report")
+        property string headerTitle: page.useSharingOnMobile ? qsTr("Share bug report") : qsTr("Save bug report")
     }
 
     header: C.PageHeader {
@@ -76,7 +76,7 @@ C.ContentPage {
         id: popupReportComplete
 
         title: qsTr("Success")
-        message: {
+        message1: {
             let result = internal.reportId
             let i = result.indexOf("/Android/data/")
             if (i !== -1) {

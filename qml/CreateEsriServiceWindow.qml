@@ -43,7 +43,7 @@ Window {
 
             Label {
                 Layout.fillWidth: true
-                text: qsTr("Create an ArcGIS Online hosted feature service which will receive location track data from Survey123 projects.")
+                text: qsTr("Create an ArcGIS Online hosted feature service which will receive location track data from Survey123 %1.").arg(App.alias_projects)
                 font.pixelSize: App.settings.font14
                 wrapMode: Label.WordWrap
             }
@@ -155,7 +155,7 @@ Window {
         height: window.height
         anchors.centerIn: parent
         contentItem: ColumnLayout {
-            spacing: 8
+            spacing: App.scaleByFontSize(8)
 
             Label {
                 Layout.alignment: Qt.AlignHCenter
