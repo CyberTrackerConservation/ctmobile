@@ -1,9 +1,7 @@
-import QtQuick 2.12
-import QtQuick.Controls 2.12
-import QtQuick.Layouts 1.12
-import QtQuick.Controls.Material 2.12
-import QtGraphicalEffects 1.0
-import CyberTracker 1.0 as C
+import QtQuick
+import QtQuick.Controls.Material
+import QtQuick.Layouts
+import CyberTracker as C
 
 C.ContentPage {
     header: C.PageHeader {
@@ -32,8 +30,8 @@ C.ContentPage {
 
                 C.SquareIcon {
                     Layout.alignment: Qt.AlignRight
-                    visible: modelData.uid === form.project.reportedBy || modelData.uid === form.project.reportedByDefault
-                    source: modelData.uid === form.project.reportedBy ? "qrc:/icons/ok.svg" : "qrc:/icons/account.svg"
+                    visible: modelData.uid === form.project.reportedBy
+                    source: "qrc:/icons/ok.svg"
                 }
             }
 

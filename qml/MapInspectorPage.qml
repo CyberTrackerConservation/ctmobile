@@ -1,35 +1,27 @@
-import QtQml 2.12
-import QtQuick 2.12
-import QtQuick.Controls 2.12
-import QtQuick.Layouts 1.12
-import QtQuick.Controls.Material 2.12
-import CyberTracker 1.0 as C
+import QtQuick
+import QtQuick.Controls.Material
+import QtQuick.Layouts
+import CyberTracker as C
 
 C.ContentPage {
     id: page
 
     property var inspectList: []
-    property int currentIndex: 0
-    property var currentItem: ({})
 
-    property var forms: ({})
+    QtObject {
+        id: internal
+        property var currentItem: ({})
+        property int currentIndex: 0
+    }
 
     Component.onCompleted: {
         page.rebuild(0)
     }
 
-    Connections {
-        target: listViewSighting.sightingForm
-
-        function onSightingSaved(sightingUid) {
-            rebuild(0)
-        }
-    }
-
-    C.FormSightingListView {
+    C.SightingListView {
         id: listViewSighting
         anchors.fill: parent
-        visible: page.currentItem.overlayId === "sighting"
+        visible: internal.currentItem.overlayId === "sighting"
     }
 
     ColumnLayout {
@@ -41,7 +33,7 @@ C.ContentPage {
         ItemDelegate {
             Layout.fillWidth: true
             contentItem: Label {
-                text: page.currentItem.source
+                text: internal.currentItem.source
                 font.pixelSize: App.settings.font18
                 horizontalAlignment: Label.AlignHCenter
             }
@@ -51,7 +43,7 @@ C.ContentPage {
             Layout.fillWidth: true
             contentItem: Label {
                 text: {
-                    var location = page.currentItem.path[page.currentItem.pathIndex]
+                    var location = internal.currentItem.path[internal.currentItem.pathIndex]
                     return location === undefined ? "" : App.getLocationText(location[0], location[1])
                 }
                 font.pixelSize: App.settings.font16
@@ -62,17 +54,48 @@ C.ContentPage {
         ItemDelegate {
             Layout.fillWidth: true
             contentItem: Label {
-                text: page.currentItem.name
+                text: internal.currentItem.name
                 font.pixelSize: App.settings.font16
                 horizontalAlignment: Label.AlignHCenter
             }
+            visible: internal.currentItem.name !== undefined && internal.currentItem.name !== ""
         }
 
-        visible: page.currentItem.overlayId !== "sighting"
+        Repeater {
+            model: {
+                var props = internal.currentItem.properties
+                if (props === undefined || props === "") return []
+                try { return JSON.parse(props) } catch(e) { return [] }
+            }
+
+            ItemDelegate {
+                Layout.fillWidth: true
+                contentItem: RowLayout {
+                    Label {
+                        Layout.fillWidth: true
+                        Layout.preferredWidth: 1
+                        text: modelData.name
+                        font.pixelSize: App.settings.font14
+                        wrapMode: Label.WordWrap
+                        elide: Label.ElideRight
+                    }
+                    Label {
+                        Layout.fillWidth: true
+                        Layout.preferredWidth: 1
+                        text: modelData.value
+                        font.pixelSize: App.settings.font14
+                        wrapMode: Label.WordWrap
+                        elide: Label.ElideRight
+                    }
+                }
+            }
+        }
+
+        visible: internal.currentItem.overlayId !== "sighting"
     }
 
     header: C.PageHeader {
-        text: qsTr("Identify") + " - " + currentItem.name
+        text: qsTr("Identify") + " - " + (internal.currentItem.name || internal.currentItem.source || "")
     }
 
     Label {
@@ -91,14 +114,14 @@ C.ContentPage {
         C.FooterButton {
             text: qsTr("Previous")
             icon.source: "qrc:/icons/chevron_left.svg"
-            enabled: page.currentIndex > 0
+            enabled: internal.currentIndex > 0
             onClicked: rebuild(-1)
         }
 
         C.FooterButton {
             text: qsTr("Next")
             icon.source: "qrc:/icons/chevron_right.svg"
-            enabled: page.currentIndex < page.inspectList.length - 1
+            enabled: internal.currentIndex < page.inspectList.length - 1
             onClicked: rebuild(+1)
         }
 
@@ -106,12 +129,8 @@ C.ContentPage {
             text: qsTr("Set goto")
             icon.source: "qrc:/icons/arrow_goto.svg"
             onClicked: {
-                App.gotoManager.setTarget(page.currentItem.name, page.currentItem.path, page.currentItem.pathIndex)
-                if (typeof(formPageStack) !== "undefined") {
-                    form.popPage()
-                } else {
-                    appPageStack.pop()
-                }
+                App.gotoManager.setTarget(internal.currentItem.name, internal.currentItem.path, internal.currentItem.pathIndex)
+                popPageImmediate(page)
             }
         }
 
@@ -119,7 +138,7 @@ C.ContentPage {
             id: deleteButton
             text: qsTr("Delete")
             icon.source: "qrc:/icons/delete_outline.svg"
-            visible: form.supportSightingDelete
+            visible: form && form.connected
             onClicked: {
                 confirmDelete.open()
             }
@@ -129,10 +148,9 @@ C.ContentPage {
             id: editButton
             text: qsTr("Edit")
             icon.source: "qrc:/icons/pencil_outline.svg"
-            visible: form.supportSightingEdit
+            visible: form && form.connected
             onClicked: {
-                form.saveState()
-                form.pushFormPage({ projectUid: form.project.uid, stateSpace: listViewSighting.sightingForm.stateSpace, editSightingUid: listViewSighting.sightingUid })
+                form.editSighting(internal.currentItem.stateSpace, internal.currentItem.sightingUid)
             }
         }
     }
@@ -144,33 +162,27 @@ C.ContentPage {
             C.ConfirmPopup {
                 text: qsTr("Delete sighting?")
                 onConfirmed: {
-                    form.removeSighting(listViewSighting.sightingUid)
-                    form.popPage()
+                    App.deleteSighting(internal.currentItem.projectUid, internal.currentItem.sightingUid, true)
+                    popPageImmediate(page)
                 }
             }
         }
     }
 
     function rebuild(indexDelta) {
-        currentIndex += indexDelta
-        if (currentIndex < 0 || currentIndex >= inspectList.length) {
+        internal.currentIndex += indexDelta
+        if (internal.currentIndex < 0 || internal.currentIndex >= inspectList.length) {
             console.log("Error bad index")
             return
         }
 
-        currentItem = inspectList[currentIndex]
+        internal.currentItem = inspectList[internal.currentIndex]
 
-        switch (currentItem.overlayId) {
+        switch (internal.currentItem.overlayId) {
         case "sighting":
-            if (forms[currentItem.stateSpace] === undefined) {
-                forms[currentItem.stateSpace] = App.createForm(form.project.uid, currentItem.stateSpace, true, page)
-            }
-
-            listViewSighting.sightingForm = forms[currentItem.stateSpace]
-            listViewSighting.sightingUid = ""   // Ensure change event
-            listViewSighting.sightingUid = currentItem.sightingUid
-
-            deleteButton.enabled = editButton.enabled = listViewSighting.sightingForm.canEditSighting(currentItem.sightingUid)
+            listViewSighting.sightingUid = internal.currentItem.sightingUid
+            editButton.enabled = internal.currentItem.canEdit
+            deleteButton.enabled = internal.currentItem.canDelete
             break
 
         case "gotoPoints":

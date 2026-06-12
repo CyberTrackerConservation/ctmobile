@@ -1,9 +1,7 @@
-import QtQml 2.12
-import QtQuick 2.12
-import QtQuick.Controls 2.12
-import QtQuick.Layouts 1.12
-import QtQuick.Controls.Material 2.12
-import CyberTracker 1.0 as C
+import QtQuick
+import QtQuick.Controls.Material
+import QtQuick.Layouts
+import CyberTracker as C
 
 C.ContentPage {
     id: page
@@ -39,18 +37,16 @@ C.ContentPage {
         }
 
         Item {
-            height: 8
-        }
-
-        Rectangle {
-            Layout.fillWidth: true
-            height: 1
-            color: C.Style.colorGroove
+            height: App.scaleByFontSize(8)
         }
 
         C.FormLanguageComboBox {
             Layout.fillWidth: true
             Layout.preferredHeight: C.Style.minRowHeight
+        }
+
+        Item {
+            height: App.scaleByFontSize(4)
         }
 
         TextField {
@@ -63,17 +59,23 @@ C.ContentPage {
             text: form.provider.collectUser
         }
 
+        Item {
+            height: App.scaleByFontSize(4)
+        }
+
         C.ColorButton {
             id: startButton
             Layout.fillWidth: true
-            Layout.preferredHeight: Style.minRowHeight
+            Layout.preferredHeight: C.Style.minRowHeight
             Layout.alignment: Qt.AlignHCenter
             text: qsTr("Start collecting")
             font.capitalization: Font.MixedCase
             color: Material.accent
             font.pixelSize: App.settings.font16
             onClicked: {
-                form.provider.setCollectUser(userId.text.trim())
+                let reportedBy = userId.text.trim()
+                form.project.reportedBy = reportedBy
+                form.provider.setCollectUser(reportedBy)
                 form.pushFormPage({ projectUid: form.project.uid, stateSpace: Globals.formSpaceCollect })
             }
             enabled: userId.text.trim() !== ""
@@ -81,7 +83,7 @@ C.ContentPage {
 
         C.ColorButton {
             Layout.fillWidth: true
-            Layout.preferredHeight: Style.minRowHeight
+            Layout.preferredHeight: C.Style.minRowHeight
             Layout.alignment: Qt.AlignHCenter
             text: qsTr("Upload data")
             font.capitalization: Font.MixedCase
@@ -104,8 +106,7 @@ C.ContentPage {
     }
 
     function completeData() {
-        let success = App.taskManager.waitForTasks(form.project.uid)
-
+        let success = App.uploadQueue.waitForQueue(form.project.uid)
         if (success) {
             form.provider.clearCompletedData()
         }

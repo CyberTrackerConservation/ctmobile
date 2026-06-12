@@ -1,8 +1,7 @@
-import QtQuick 2.12
-import QtQuick.Layouts 1.12
-import QtQuick.Controls 2.12
-import QtQuick.Controls.Material 2.12
-import CyberTracker 1.0 as C
+import QtQuick
+import QtQuick.Layouts
+import QtQuick.Controls.Material
+import CyberTracker as C
 
 C.ContentPage {
     id: page
@@ -15,7 +14,7 @@ C.ContentPage {
         anchors.fill: parent
         model: [
             {
-                text: "Simple",
+                text: "Simple demo",
                 subText: qsTr("Shows what data capture is like for simple cases"),
                 iconId: "qrc:/Classic/Simple.png",
                 sampleId: "Simple"

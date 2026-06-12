@@ -1,13 +1,10 @@
-import QtQml 2.12
-import QtQuick 2.12
-import QtQuick.Layouts 1.12
-import QtQuick.Controls 2.12
-import Esri.ArcGISRuntime 100.15 as Esri
-import QtQuick.Controls.Material 2.12
-import QtLocation 5.12
-import QtSensors 5.12
-import QtPositioning 5.12
-import CyberTracker 1.0 as C
+import QtQuick
+import QtQuick.Layouts
+import QtQuick.Controls.Material
+import QtLocation
+import QtSensors
+import QtPositioning
+import CyberTracker as C
 
 C.ContentPage {
     id: page
@@ -15,6 +12,10 @@ C.ContentPage {
 
     readonly property string mapActiveLayers: "mapActiveLayers"
     readonly property var overlayHeader: pageHeader
+
+    Component.onCompleted: {
+        App.offlineMapManager.checkForUpdates()
+    }
 
     C.EsriMapView {
         id: mapView
@@ -25,11 +26,13 @@ C.ContentPage {
             bottom: parent.bottom
         }
 
-        onInspectClicked: {
-            if (typeof(formPageStack) !== "undefined") {
-                form.pushPage("qrc:/MapInspectorPage.qml", { inspectList: inspectList })
-            } else {
-                appPageStack.push("qrc:/MapInspectorPage.qml", { inspectList: inspectList })
+        onInspectClicked: function (inspectList) {
+            pushPageImmediate(page, "qrc:/MapInspectorPage.qml", { inspectList: inspectList })
+        }
+
+        onLongPress: (x, y) => {
+            if (App.offlineMapManager.hasLookupLayers()) {
+                pushPageImmediate(page, "qrc:/PlacePage.qml", { locationX: x, locationY: y })
             }
         }
     }
@@ -37,7 +40,7 @@ C.ContentPage {
     // Translucent header.
     Rectangle {
         anchors.fill: pageHeader
-        opacity: 0.5
+        opacity: 0.8
         color: App.settings.darkTheme ? "black" : "white"
     }
 
@@ -73,11 +76,7 @@ C.ContentPage {
                 icon.height: C.Style.toolButtonSize
                 icon.color: pageHeader.textColor
                 onClicked: {
-                    if (typeof(formPageStack) !== "undefined") {
-                        form.popPage()
-                    } else {
-                        appPageStack.pop()
-                    }
+                    popPageDefault(page)
                 }
             }
 
@@ -109,6 +108,18 @@ C.ContentPage {
         }
     }
 
+    // BUGBUG: Should not be needed
+    Connections {
+        target: App.settings
+
+        function onMapPanModeChanged() {
+            let mapPanMode = App.settings.mapPanMode
+            buttonPan.checked = mapPanMode === C.MapController.AutoPanModeOff
+            buttonFollow.checked = mapPanMode === C.MapController.AutoPanModeRecenter
+            buttonFollowNav.checked = mapPanMode === C.MapController.AutoPanModeNavigation
+        }
+    }
+
     // Footer.
     footer: RowLayout {
         spacing: 0
@@ -120,11 +131,7 @@ C.ContentPage {
             text: qsTr("Layers")
             separatorRight: true
             onClicked: {
-                if (typeof(formPageStack) !== "undefined") {
-                    form.pushPage("qrc:/MapLayersPage.qml", {})
-                } else {
-                    appPageStack.push("qrc:/MapLayersPage.qml", {}, StackView.Immediate)
-                }
+                pushPageImmediate(page, "qrc:/MapLayersPage.qml")
             }
         }
 
@@ -132,11 +139,11 @@ C.ContentPage {
             id: buttonPan
             ButtonGroup.group: buttonGroup
             checkable: true
-            checked: App.settings.mapPanMode === Esri.Enums.LocationDisplayAutoPanModeOff
+            checked: App.settings.mapPanMode === C.MapController.AutoPanModeOff
             icon.source: "qrc:/icons/pan.svg"
             text: qsTr("Pan")
             onClicked: {
-                mapView.locationDisplay.autoPanMode = Esri.Enums.LocationDisplayAutoPanModeOff
+                mapView.autoPanMode = C.MapController.AutoPanModeOff
             }
         }
 
@@ -144,11 +151,11 @@ C.ContentPage {
             id: buttonFollow
             ButtonGroup.group: buttonGroup
             checkable: true
-            checked: App.settings.mapPanMode === Esri.Enums.LocationDisplayAutoPanModeRecenter
+            checked: App.settings.mapPanMode === C.MapController.AutoPanModeRecenter
             icon.source: checked ? "qrc:/icons/gps_fixed.svg" : "qrc:/icons/gps_not_fixed.svg"
             text: qsTr("Follow")
             onClicked: {
-                mapView.locationDisplay.autoPanMode = Esri.Enums.LocationDisplayAutoPanModeRecenter
+                mapView.autoPanMode = C.MapController.AutoPanModeRecenter
             }
         }
 
@@ -156,11 +163,11 @@ C.ContentPage {
             id: buttonFollowNav
             ButtonGroup.group: buttonGroup
             checkable: true
-            checked: App.settings.mapPanMode === Esri.Enums.LocationDisplayAutoPanModeNavigation
+            checked: App.settings.mapPanMode === C.MapController.AutoPanModeNavigation
             icon.source: checked ? "qrc:/icons/navigation2.svg" : "qrc:/icons/navigation2_empty.svg"
             text: qsTr("Goto")
             onClicked: {
-                mapView.locationDisplay.autoPanMode = Esri.Enums.LocationDisplayAutoPanModeNavigation
+                mapView.autoPanMode = C.MapController.AutoPanModeNavigation
                 setMoreDataPageIndex(2)
             }
         }
@@ -186,10 +193,20 @@ C.ContentPage {
                 model: [
                     { text: qsTr("Data"), icon: "qrc:/icons/data_list.svg" },
                     { text: qsTr("Compass"), icon: "qrc:/icons/compass_outline.svg" },
-                    { text: qsTr("Navigation"), icon: "qrc:/icons/navigation2_empty.svg" }
+                    { text: qsTr("Navigation"), icon: "qrc:/icons/navigation2_empty.svg" },
+                    { text: qsTr("Place lookup"), icon: "qrc:/icons/map_search_outline.svg", visible: App.offlineMapManager.hasLookupLayers() }
                 ]
 
                 onClicked: function (index) {
+                    if (index === 3) {
+                        if (!App.lastLocationRecent ) {
+                            App.showToast(qsTr("No recent location"))
+                        } else {
+                            pushPageImmediate(page, "qrc:/PlacePage.qml", { locationX: App.lastLocation.x, locationY: App.lastLocation.y })
+                        }
+                        return
+                    }
+
                     setMoreDataPageIndex(index)
                     App.settings.mapMoreDataVisible = true
                 }
@@ -208,7 +225,7 @@ C.ContentPage {
         Rectangle {
             anchors.fill: parent
             color: Material.theme !== Material.Dark ? "#FFFFFF" : "#000000"
-            opacity: 0.5
+            opacity: 0.8
         }
 
         PageIndicator {
@@ -217,7 +234,7 @@ C.ContentPage {
             currentIndex: moreDataSwipeView.currentIndex
             y: 0
             anchors.horizontalCenter: parent.horizontalCenter
-            opacity: 0.5
+            opacity: 0.8
         }
 
         SwipeView {

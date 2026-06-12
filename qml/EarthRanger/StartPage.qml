@@ -1,10 +1,7 @@
-import QtQml 2.12
-import QtQuick 2.12
-import QtQuick.Controls 2.12
-import QtQuick.Layouts 1.12
-import QtGraphicalEffects 1.0
-import QtQuick.Controls.Material 2.12
-import CyberTracker 1.0 as C
+import QtQuick
+import QtQuick.Controls.Material
+import QtQuick.Layouts
+import CyberTracker as C
 
 C.ContentPage {
     id: page
@@ -22,14 +19,7 @@ C.ContentPage {
         spacing: 0
 
         C.FooterButton {
-            text: qsTr("Sync")
-            enabled: listView.model.count !== 0
-            icon.source: "qrc:/icons/autorenew.svg"
-            onClicked: App.taskManager.resumePausedTasks(form.project.uid)
-        }
-
-        C.FooterButton {
-            enabled: listView.model.count !== 0
+            enabled: listView.count !== 0
             text: qsTr("Clear")
             icon.source: "qrc:/icons/delete_outline.svg"
             onClicked: confirmClear.open()
@@ -63,10 +53,13 @@ C.ContentPage {
         }
     }
 
-    C.FormSightingsListView {
+    C.SightingsListView {
         id: listView
         anchors.fill: parent
         showNoData: false
+        active: true
+        filter.projectUid: form.project.uid
+        filter.stateSpace: form.stateSpace
 
         onClicked: function (sighting, index) {
             if (sighting.readonly) {
@@ -75,14 +68,15 @@ C.ContentPage {
             }
 
             listView.currentIndex = index
-            form.loadSighting(sighting.rootRecordUid)
-            form.setPageStack([form.getPageStack()[0]])
+            let pageStack = [form.getPageStack()[0]]
+            form.loadSighting(sighting.sightingUid)
+            form.setPageStack(pageStack)
             let reportUid = form.getFieldValue("reportUid")
 
             if (form.project.wizardMode) {
-                form.pushWizardIndexPage(sighting.rootRecordUid, { fieldUids: form.getElement(reportUid).fieldUids, header: form.getElementName(reportUid), banner: form.provider.banner() })
+                form.pushWizardIndexPage(sighting.sightingUid, { fieldUids: form.getElement(reportUid).fieldUids, header: form.getElementName(reportUid), banner: form.provider.banner() })
             } else {
-                form.pushPage("qrc:/EarthRanger/AttributesPage.qml", { elementUid: reportUid, banner: form.provider.banner() })
+                form.pushPage("qrc:/EarthRanger/AttributesPage.qml")
             }
         }
     }
@@ -93,17 +87,14 @@ C.ContentPage {
         }
     }
 
-    function getReportElementUid(sighting) {
-        return sighting.records[0].fieldValues["reportUid"]
-    }
-
     C.ConfirmPopup {
         id: confirmClear
         text: qsTr("Clear uploaded data?")
         confirmText: qsTr("Yes, clear it")
         onConfirmed: {
-            App.taskManager.waitForTasks(form.project.uid)
-            form.removeUploadedSightings()
+            App.uploadQueue.waitForQueue(form.project.uid)
+            form.deleteUploadedSightings()
+            form.newSessionId()
         }
     }
 }

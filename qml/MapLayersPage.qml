@@ -1,14 +1,13 @@
-import QtQml 2.12
-import QtQuick 2.12
-import QtQuick.Controls 2.12
-import QtQuick.Layouts 1.12
-import QtQuick.Controls.Material 2.12
-import CyberTracker 1.0 as C
+import QtQuick
+import QtQuick.Controls.Material
+import QtQuick.Layouts
+import CyberTracker as C
 
 C.ContentPage {
     id: page
 
     property bool configMode: false
+    property bool hideDataLayers: false
 
     header: C.PageHeader {
         id: title
@@ -17,6 +16,7 @@ C.ContentPage {
 
     C.MapLayerListModel {
         id: layerListModel
+        addDataLayers: !page.hideDataLayers
     }
 
     ButtonGroup {
@@ -46,17 +46,13 @@ C.ContentPage {
                     }
 
                     ToolButton {
-                        icon.source: "qrc:/icons/settings.svg"
+                        icon.source: modelData.configIcon
                         icon.width: C.Style.toolButtonSize
                         icon.height: C.Style.toolButtonSize
                         opacity: 0.5
-                        visible: modelData.config || false
+                        visible: modelData.configIcon !== ""
                         onClicked: {
-                            if (typeof(formPageStack) !== "undefined") {
-                                form.pushPage("qrc:/OfflineMapPage.qml", {})
-                            } else {
-                                appPageStack.push("qrc:/OfflineMapPage.qml", {}, StackView.Immediate)
-                            }
+                            pushPageImmediate(page, modelData.configPage)
                         }
                     }
                 }
@@ -66,6 +62,7 @@ C.ContentPage {
                 id: layerComponent
                 RowLayout {
                     Switch {
+                        scale: C.Style.switchScale
                         checked: modelData.checked === true
                         onCheckedChanged: {
                             if (modelData.checked !== checked) {
@@ -132,9 +129,8 @@ C.ContentPage {
                 case "title":
                     return titleComponent.createObject(d)
 
-                case "form":
+                case "data":
                 case "goto":
-                case "project":
                 case "offline":
                     return layerComponent.createObject(d)
 

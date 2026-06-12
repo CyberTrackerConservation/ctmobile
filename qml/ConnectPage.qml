@@ -1,9 +1,7 @@
-import QtQml 2.12
-import QtQuick 2.12
-import QtQuick.Controls 2.12
-import QtQuick.Layouts 1.12
-import QtQuick.Controls.Material 2.12
-import CyberTracker 1.0 as C
+import QtQuick
+import QtQuick.Controls.Material
+import QtQuick.Layouts
+import CyberTracker as C
 
 C.ContentPage {
     id: page
@@ -14,8 +12,8 @@ C.ContentPage {
     }
 
     Loader {
-        id: loader
         anchors.fill: parent
+        clip: true
         source: App.config.connectPane
     }
 }

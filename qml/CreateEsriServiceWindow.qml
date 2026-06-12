@@ -1,10 +1,9 @@
-import QtQml 2.12
-import QtQuick 2.12
-import QtQuick.Controls 2.12
-import QtQuick.Window 2.15
-import QtQuick.Layouts 1.15
-import Qt.labs.settings 1.0 as Labs
-import CyberTracker 1.0 as C
+import QtCore
+import QtQuick
+import QtQuick.Controls.Material
+import QtQuick.Window
+import QtQuick.Layouts
+import CyberTracker as C
 
 Window {
     id: window
@@ -23,8 +22,8 @@ Window {
     minimumHeight: pane.implicitHeight
     maximumHeight: pane.implicitHeight
 
-    Labs.Settings {
-        fileName: App.iniPath
+    Settings {
+        location: App.iniUrl
         category: "CreateEsriService"
         property alias username: username.text
         property alias password: password.text
@@ -80,6 +79,7 @@ Window {
                 font.pixelSize: App.settings.font14
                 echoMode: TextInput.Password
                 placeholderText: "ArcGIS Online password"
+                inputMethodHints: Qt.ImhHiddenText | Qt.ImhNoAutoUppercase | Qt.ImhNoPredictiveText | Qt.ImhSensitiveData
             }
 
             Label {

@@ -1,9 +1,7 @@
-import QtQuick 2.12
-import QtQuick.Controls 2.12
-import QtQuick.Layouts 1.12
-import QtQuick.Controls.Material 2.12
-import QtGraphicalEffects 1.0
-import CyberTracker 1.0 as C
+import QtQuick
+import QtQuick.Controls.Material
+import QtQuick.Layouts
+import CyberTracker as C
 
 C.ContentPage {
     id: page
@@ -114,22 +112,19 @@ C.ContentPage {
     }
 
     Connections {
-        target: App
+        target: App.exportFile
 
-        function onExportFilesChanged() {
+        function onChanged() {
             rebuild()
         }
     }
 
     function rebuild() {
-        listView.model = App.buildExportFilesModel(projectUid)
+        App.exportFile.syncWithDownloads()
+        listView.model = App.exportFile.buildModel(projectUid)
     }
 
     function showDetails() {
-        if (typeof(formPageStack) !== "undefined") {
-            form.pushPage(Qt.resolvedUrl("ExportDetailsPage.qml"), { fileInfo: internal.selectedInfo })
-        } else {
-            appPageStack.push(Qt.resolvedUrl("ExportDetailsPage.qml"), { fileInfo: internal.selectedInfo })
-        }
+        pushPageImmediate(page, Qt.resolvedUrl("ExportDetailsPage.qml"), { fileInfo: internal.selectedInfo })
     }
 }

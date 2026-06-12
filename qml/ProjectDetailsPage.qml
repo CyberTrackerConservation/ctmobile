@@ -1,20 +1,21 @@
-import QtQml 2.12
-import QtQuick 2.12
-import QtQuick.Controls 2.12
-import QtQuick.Layouts 1.12
-import QtQuick.Controls.Material 2.12
-import QtQuick.Dialogs 1.2
-import Qt.labs.settings 1.0 as Labs
-import CyberTracker 1.0 as C
+import QtCore
+import QtQuick
+import QtQuick.Controls.Material
+import QtQuick.Layouts
+import QtQuick.Dialogs
+import CyberTracker as C
 
 C.ContentPage {
     id: page
 
     property var project
+    property string projectTitle
 
     Component.onCompleted: {
         // Clone so changes to the caller model do not affect us.
         page.project = App.projectManager.load(page.project.uid)
+        // Title references languageCode which requires the project be valid.
+        page.projectTitle = page.project.title
     }
 
     header: C.PageHeader {
@@ -82,12 +83,12 @@ C.ContentPage {
 
             Item {
                 Layout.fillWidth: true
-                height: page.project.displayIcon.toString() !== "" ? 84 : 8
+                height: App.scaleByFontSize(8) + (page.project.displayIcon !== "" ? C.Style.iconSize48 : 0)
 
                 Image {
                     anchors.centerIn: parent
-                    height: 64
-                    sourceSize.height: 64
+                    height: C.Style.iconSize48
+                    sourceSize.height: C.Style.iconSize48
                     source: page.project.displayIcon
                 }
             }
@@ -97,7 +98,7 @@ C.ContentPage {
                 font.pixelSize: App.settings.font18
                 font.bold: true
                 wrapMode: Label.WordWrap
-                text: project ? project.title : ""
+                text: projectTitle
                 horizontalAlignment: Qt.AlignHCenter
             }
 
@@ -122,6 +123,8 @@ C.ContentPage {
                     onClicked: page[modelData.handler]()
                 }
             }
+
+            C.FooterSpacer {}
         }
     }
 
@@ -153,7 +156,7 @@ C.ContentPage {
 
     // Helpers.
     function createPackage() {
-        let packageFile = App.projectManager.createPackage(project.uid, true, true, false)
+        let packageFile = App.projectManager.createPackage(App.timeManager.makeUniqueFilename("Project.zip"), project.uid, true, true, false)
         if (packageFile === "") {
             showError(qsTr("Packaging failed"))
             return
@@ -165,13 +168,13 @@ C.ContentPage {
             return
         }
 
-        App.sendFile(packageFile, project.title)
+        App.sendFile(packageFile, projectTitle)
     }
 
-    Labs.Settings {
-        fileName: App.iniPath
+    Settings {
+        location: App.iniUrl
         category: "PackageFileDialog"
-        property alias fileDialogPackageFolder: fileDialogPackage.folder
+        property alias fileDialogPackageFolder: fileDialogPackage.currentFolder
     }
 
     // Dialogs.
@@ -182,11 +185,11 @@ C.ContentPage {
 
         defaultSuffix: "zip"
         title: qsTr("Save package")
-        folder: shortcuts.desktop
+        currentFolder: StandardPaths.writableLocation(StandardPaths.DesktopLocation)
         nameFilters: [ "CyberTracker packages (*.zip)" ]
-        selectExisting: false
+        fileMode: FileDialog.SaveFile
         onAccepted: {
-            let targetFile = Utils.urlToLocalFile(fileDialogPackage.fileUrl)
+            let targetFile = Utils.urlToLocalFile(fileDialogPackage.selectedFile)
             let success = Utils.copyFile(packageFile, targetFile)
             if (success) {
                 App.copyToClipboard(targetFile)
@@ -218,19 +221,21 @@ C.ContentPage {
                 onClicked: function (index) {
                     switch (index) {
                     case 0:
+                        App.auditAdd(projectTitle, "Project reset state")
                         App.backupDatabase("Project state reset: " + project.uid)
                         App.projectManager.reset(project.uid, true)
-                        showToast(qsTr("%1 state reset").arg("'" + project.title + "'"))
+                        showToast(qsTr("%1 state reset").arg("'" + projectTitle + "'"))
                         break
 
                     case 1:
+                        App.auditAdd(projectTitle, "Project reset")
                         App.backupDatabase("Project reset: " + project.uid)
                         App.projectManager.reset(project.uid)
-                        showToast(qsTr("%1 reset").arg("'" + project.title + "'"))
+                        showToast(qsTr("%1 reset").arg("'" + projectTitle + "'"))
                         break
 
                     case 2:
-                        popupConfirmReset2.cancel()
+                        popupConfirmReset2.close()
                         break
                     }
                 }
@@ -250,8 +255,8 @@ C.ContentPage {
                 onConfirmed: {
                     App.backupDatabase("Project delete: " + project.uid)
                     App.projectManager.remove(project.uid)
-                    showToast(qsTr("%1 deleted").arg("'" + project.title + "'"))
-                    appPageStack.pop()
+                    showToast(qsTr("%1 deleted").arg("'" + projectTitle + "'"))
+                    popPageImmediate(page)
                 }
             }
         }
@@ -260,7 +265,7 @@ C.ContentPage {
     Connections {
         target: App.projectManager
 
-        function onProjectUpdateComplete(projectUid, result) {
+        function onProjectUpdated(projectUid, result) {
             if (projectUid === page.project.uid) {
                 page.project = App.projectManager.load(projectUid)
             }

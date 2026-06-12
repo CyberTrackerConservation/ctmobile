@@ -1,14 +1,13 @@
-import QtQml 2.12
-import QtQuick 2.12
-import QtQuick.Layouts 1.12
-import QtQuick.Controls 2.12
-import QtQuick.Controls.Material 2.12
-import CyberTracker 1.0 as C
+import QtQuick
+import QtQuick.Layouts
+import QtQuick.Controls.Material
+import CyberTracker as C
 
 C.ContentPage {
     id: page
 
     property var forms: []
+    property var setFormSelected
     property var getFormName
     property var getFormSubText
     property var connectForms
@@ -39,8 +38,8 @@ C.ContentPage {
             text: qsTr("All")
             icon.source: "qrc:/icons/checkbox_multiple_marked.svg"
             onClicked: {
-                for (let i = 0; i < internal.forms.length; i++) {
-                    page.forms[i].__selected = true
+                for (let i = 0; i < page.forms.length; i++) {
+                    setSelected(i, true)
                 }
 
                 formsListView.model = page.forms
@@ -52,8 +51,8 @@ C.ContentPage {
             text: qsTr("None")
             icon.source: "qrc:/icons/checkbox_multiple_blank_outline.svg"
             onClicked: {
-                for (let i = 0; i < internal.forms.length; i++) {
-                    page.forms[i].__selected = false
+                for (let i = 0; i < forms.length; i++) {
+                    setSelected(i, false)
                 }
 
                 formsListView.model = page.forms
@@ -73,10 +72,17 @@ C.ContentPage {
             checked: modelData.__selected === true
             checkable: true
             onCheckedChanged: {
-                page.forms[model.index].__selected = checked
+                setSelected(model.index, checked)
                 formsPageHeader.menuEnabled = getAnySelected()
             }
         }
+    }
+
+    function setSelected(formIndex, selected) {
+        page.setFormSelected(formIndex, selected)
+        let f = page.forms[formIndex]
+        f.__selected = selected
+        page.forms[formIndex] = f
     }
 
     function getAnySelected() {

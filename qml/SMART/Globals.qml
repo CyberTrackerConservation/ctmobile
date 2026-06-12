@@ -1,6 +1,6 @@
 pragma Singleton
 
-import QtQuick 2.12
+import QtQuick
 
 Item {
     // Must match with SMARTProvider.cpp.
@@ -13,14 +13,17 @@ Item {
     readonly property string modelIncidentGroupListFieldUid: "GroupList"
     readonly property string modelIncidentRecordFieldUid: "IncidentRecord"
     readonly property string modelIncidentGroupFieldUid: "SMART_SightingGroupId"
-    readonly property string modelIncidentTypeFieldUid: "SMART_ObservationType"
+    readonly property string modelObservationTypeFieldUid: "SMART_ObservationType"
     readonly property string modelObserverFieldUid: "SMART_Observer"
+    readonly property string modelIncidentTypeFieldUid: "SMART_IncidentType"
     readonly property string modelCollectUserFieldUid: "SMART_CollectUser"
     readonly property string modelPatrolLegDistance: "SMART_PatrolLegDistance"
 
     readonly property string formSpacePatrol: "Patrol"
     readonly property string formSpaceIncident: "Incident"
     readonly property string formSpaceCollect: "Collect"
+
+    readonly property string metadataValues: "MetadataValues"
 
     // For PAUSE/RESUME caption changes across forms.
     property int patrolChangeCount: 0

@@ -1,18 +1,24 @@
-import QtQuick 2.12
-import QtQuick.Controls 2.12
-import CyberTracker 1.0 as C
+import QtQuick
+import QtQuick.Controls.Material
+import CyberTracker as C
 
 C.ContentPage {
     id: page
 
     header: C.PageHeader {
         text: form.project.title
-
-        menuIcon: "qrc:/icons/check.svg"
+        menuIcon: form.editing ? C.Style.okIconSource : C.Style.checkIconSource
         menuVisible: true
 
         onMenuClicked: {
             if (!listView.validate()) {
+                return
+            }
+
+            if (form.editing) {
+                form.saveSighting()
+                form.markSightingCompleted()
+                form.popPagesToParent()
                 return
             }
 
@@ -23,7 +29,13 @@ C.ContentPage {
         }
 
         formBack: false
+        backIcon: form.editing ? C.Style.cancelIconSource : C.Style.homeIconSource
         onBackClicked: {
+            if (form.editing) {
+                form.popPagesToParent()
+                return
+            }
+
             form.saveSighting()
             form.popPage(StackView.Immediate)
         }
@@ -31,6 +43,7 @@ C.ContentPage {
 
     C.FieldListViewEditor {
         id: listView
+        anchors.fill: parent
         recordUid: form.rootRecordUid
     }
 }

@@ -1,9 +1,8 @@
-import QtQml 2.12
-import QtQuick 2.12
-import QtQuick.Controls 2.12
-import QtQuick.Window 2.15
-import Qt.labs.settings 1.0 as Labs
-import CyberTracker 1.0 as C
+import QtCore
+import QtQuick
+import QtQuick.Controls.Material
+import QtQuick.Window
+import CyberTracker as C
 
 Window {
     id: window
@@ -14,8 +13,8 @@ Window {
     visible: true
     title: qsTr("Developer console")
 
-    Labs.Settings {
-        fileName: App.iniPath
+    Settings {
+        location: App.iniUrl
         category: "ConsoleWindow"
         property alias x: window.x
         property alias y: window.y
@@ -23,7 +22,6 @@ Window {
         property alias height: window.height
         property alias visibility: window.visibility
     }
-
 
     Flickable {
         id: flickable
@@ -69,14 +67,14 @@ Window {
         }
     }
 
-    onVisibilityChanged: {
+    onVisibilityChanged: function(visibility) {
         if (visibility === Window.Minimized) {
             close()
         }
     }
 
     Connections {
-        target: App
+        target: Log
 
         function onConsoleMessage(t) {
             textEdit.append(t)

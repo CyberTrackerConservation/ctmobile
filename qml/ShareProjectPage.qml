@@ -1,11 +1,9 @@
-import QtQml 2.12
-import QtQuick 2.12
-import QtQuick.Layouts 1.12
-import QtQuick.Controls 2.12
-import QtQuick.Controls.Material 2.12
-import QtGraphicalEffects 1.0
-import QtQuick.Dialogs 1.2
-import CyberTracker 1.0 as C
+import QtCore
+import QtQuick
+import QtQuick.Layouts
+import QtQuick.Controls.Material
+import QtQuick.Dialogs
+import CyberTracker as C
 
 C.ContentPage {
     id: page
@@ -40,6 +38,7 @@ C.ContentPage {
 
             checked: true
             Layout.alignment: Qt.AlignHCenter
+            scale: C.Style.switchScale
             text: qsTr("Require login")
             font.pixelSize: App.settings.font14
             visible: App.projectManager.canShareAuth(project.uid)
@@ -85,12 +84,12 @@ C.ContentPage {
 
         defaultSuffix: "png"
         title: qsTr("Save QR code")
-        folder: shortcuts.desktop
+        currentFolder: StandardPaths.writableLocation(StandardPaths.DesktopLocation)
         nameFilters: [ "PNG files (*.png)" ]
-        selectExisting: false
+        fileMode: FileDialog.SaveFile
         onAccepted: {
             let qrCodeFile = App.projectManager.createQRCode(project.uid, authSwitch.checked)
-            let success = Utils.copyFile(qrCodeFile, Utils.urlToLocalFile(fileDialogQRCode.fileUrl))
+            let success = Utils.copyFile(qrCodeFile, Utils.urlToLocalFile(fileDialogQRCode.selectedFile))
             if (success) {
                 showToast(qsTr("QR code saved"))
             } else {

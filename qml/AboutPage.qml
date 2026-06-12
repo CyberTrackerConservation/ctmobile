@@ -1,10 +1,7 @@
-import QtQml 2.12
-import QtQuick 2.12
-import QtQuick.Layouts 1.12
-import QtQuick.Controls 2.12
-import QtQuick.Controls.Material 2.12
-import QtGraphicalEffects 1.0
-import CyberTracker 1.0 as C
+import QtQuick
+import QtQuick.Layouts
+import QtQuick.Controls.Material
+import CyberTracker as C
 
 C.ContentPage {
     id: page
@@ -26,7 +23,6 @@ C.ContentPage {
 
             ItemDelegate {
                 Layout.fillWidth: true
-                onClicked: Qt.openUrlExternally(App.config.webPageUrl)
                 contentItem: ColumnLayout {
                     Layout.fillWidth: true
                     C.SquareIcon {
@@ -39,7 +35,6 @@ C.ContentPage {
                         Layout.fillWidth: true
                         text: App.config.title
                         font.pixelSize: App.settings.font14
-                        font.preferShaping: !text.includes("Cy") // Hack to fix iOS bug
                         font.bold: true
                         horizontalAlignment: Text.AlignHCenter
                     }
@@ -48,7 +43,6 @@ C.ContentPage {
                         Layout.fillWidth: true
                         text: "<html><style type=\"text/css\"></style><a href=\"" + App.config.webPageUrl + "\">" + App.config.webPageTitle + "</a></html>"
                         font.pixelSize: App.settings.font12
-                        font.preferShaping: !text.includes("Cy") // Hack to fix iOS bug
                         horizontalAlignment: Text.AlignHCenter
                     }
 
@@ -71,7 +65,6 @@ C.ContentPage {
                             text: qsTr("Powered by") + " CyberTracker, ArcGIS & Qt"
                             font.pixelSize: App.settings.font12
                             font.bold: true
-                            font.preferShaping: !text.includes("Cy") // Hack to fix iOS bug
                             horizontalAlignment: Text.AlignHCenter
                             wrapMode: Label.WordWrap
                         }
@@ -81,15 +74,53 @@ C.ContentPage {
                             C.SquareIcon {
                                 source: "qrc:/app/appicon.svg"
                                 size: C.Style.minRowHeight
+                                clickable: true
+                                onClicked: {
+                                    Qt.openUrlExternally("https://cybertracker.org")
+                                }
                             }
                             C.SquareIcon {
                                 source: "qrc:/app/esrilogo.svg"
                                 size: C.Style.minRowHeight
+                                clickable: true
+                                onClicked: {
+                                    Qt.openUrlExternally("https://esri.com")
+                                }
                             }
                             C.SquareIcon {
                                 source: "qrc:/app/qtlogo.svg"
                                 size: C.Style.minRowHeight
+                                clickable: true
+                                onClicked: {
+                                    Qt.openUrlExternally("https://qt.io")
+                                }
                             }
+                        }
+                    }
+
+                    ColumnLayout {
+                        width: parent.width
+
+                        Item {
+                            implicitHeight: 8
+                        }
+
+                        Label {
+                            Layout.fillWidth: true
+                            text: qsTr("Device Identifier")
+                            font.pixelSize: App.settings.font12
+                            font.bold: true
+                            horizontalAlignment: Text.AlignHCenter
+                            wrapMode: Label.WordWrap
+                        }
+
+                        Label {
+                            Layout.fillWidth: true
+                            text: App.settings.deviceId
+                            font.pixelSize: App.settings.font12
+                            horizontalAlignment: Text.AlignHCenter
+                            wrapMode: Label.Fit
+                            opacity: 0.5
                         }
                     }
                 }
@@ -149,6 +180,8 @@ C.ContentPage {
 
                 C.HorizontalDivider {}
             }
+
+            C.FooterSpacer {}
         }
     }
 }

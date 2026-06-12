@@ -1,9 +1,7 @@
-import QtQml 2.12
-import QtQuick 2.12
-import QtQuick.Controls 2.12
-import QtQuick.Layouts 1.12
-import QtQuick.Controls.Material 2.12
-import CyberTracker 1.0 as C
+import QtQuick
+import QtQuick.Controls.Material
+import QtQuick.Layouts
+import CyberTracker as C
 
 C.ContentPage {
     id: page
@@ -38,7 +36,6 @@ C.ContentPage {
         }
 
         C.FooterButton {
-            id: projectsButton
             ButtonGroup.group: buttonGroup
             text: App.alias_Projects
             checkable: true
@@ -46,6 +43,16 @@ C.ContentPage {
             icon.source: checked ? "qrc:/icons/clipboard_multiple.svg" : "qrc:/icons/clipboard_multiple_outline.svg"
             onClicked: stackLayout.currentIndex = 1
             enabled: !App.config.showConnectPage || (page.projectCount > 0)
+        }
+
+        C.FooterButton {
+            ButtonGroup.group: buttonGroup
+            text: qsTr("Data")
+            checkable: true
+            checked: stackLayout.currentIndex === 2
+            icon.source: checked ? "qrc:/icons/archive.svg" : "qrc:/icons/archive_outline.svg"
+            onClicked: stackLayout.currentIndex = 2
+            visible: App.settings.archiveSupport && App.settings.archiveData
         }
 
         C.FooterButton {
@@ -60,9 +67,9 @@ C.ContentPage {
             text: qsTr("Settings")
             ButtonGroup.group: buttonGroup
             checkable: true
-            checked: stackLayout.currentIndex === 2
+            checked: stackLayout.currentIndex === 3
             icon.source: checked ? "qrc:/icons/settings.svg" : "qrc:/icons/settings_outline.svg"
-            onClicked: stackLayout.currentIndex = 2
+            onClicked: stackLayout.currentIndex = 3
         }
     }
 
@@ -86,6 +93,10 @@ C.ContentPage {
         }
 
         ProjectsPage {
+        }
+
+        ArchivesPage {
+            active: stackLayout.currentIndex === 2
         }
 
         SettingsPage {

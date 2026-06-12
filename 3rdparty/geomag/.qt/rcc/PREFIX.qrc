@@ -1,0 +1,6 @@
+<RCC>
+  <qresource prefix="/">
+    <file alias="WMM.COF">D:/github/ct/lib/geomag/WMM.COF</file>
+  </qresource>
+</RCC>
+

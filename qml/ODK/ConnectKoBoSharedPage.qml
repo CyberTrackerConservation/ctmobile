@@ -1,9 +1,7 @@
-import QtQml 2.12
-import QtQuick 2.12
-import QtQuick.Layouts 1.12
-import QtQuick.Controls 2.12
-import QtQuick.Controls.Material 2.12
-import CyberTracker 1.0 as C
+import QtQuick
+import QtQuick.Layouts
+import QtQuick.Controls.Material
+import CyberTracker as C
 import ".."
 
 C.ContentPage {
@@ -90,6 +88,7 @@ C.ContentPage {
 
         ConnectFormPage {
             forms: internal.forms
+            setFormSelected: function(index, value) { internal.forms[index].__selected = value }
             getFormName: function(form) { return form.name; }
             getFormSubText: function(form) { return App.formatDateTime(form.date_modified); }
             connectForms: page.connectForms
@@ -111,32 +110,10 @@ C.ContentPage {
     }
 
     function getForms() {
-        let response = Utils.httpGetWithToken(internal.account.server + "/api/v2/assets/?q=asset_type%3Asurvey", internal.token, "Token")
-
-        if (response.status === 200) {
-            let result = JSON.parse(response.data)
-            if (result.results !== undefined && result.results.length > 0) {
-                let items = result.results
-                let forms = []
-                for (let i = 0; i < items.length; i++) {
-                    let item = items[i]
-                    if (!item.deployment__active) {
-                        continue
-                    }
-
-                    if (item.owner__username.toLowerCase() !== internal.landscape.toLowerCase()) {
-                        continue
-                    }
-
-                    forms.push(item)
-                }
-
-                if (forms.length > 0) {
-                    internal.forms = forms
-                    appPageStack.push(formsPage)
-                    return
-                }
-            }
+        internal.forms = Utils.getKoBoForms(internal.account.server, internal.token, internal.landscape)
+        if (internal.forms.length > 0) {
+            appPageStack.push(formsPage)
+            return
         }
 
         showError(qsTr("No forms found"))
@@ -144,24 +121,16 @@ C.ContentPage {
 
     function connectForms() {
         for (let i = 0; i < internal.forms.length; i++) {
-            let form = internal.forms[i]
-            if (form.__selected !== true) {
+            let kform = internal.forms[i]
+            if (kform.__selected !== true) {
                 continue
             }
-
-            let response = Utils.httpGetWithToken(internal.account.server + "/api/v2/assets/" + form.uid + "/", internal.token, "Token")
-
-            if (response.status !== 200) {
-                showError(qsTr("Error retrieving form"))
-                return
-            }
-
-            let formObj = JSON.parse(response.data)
 
             let params = {
                 account: page.accountName,
                 token: internal.token,
-                formId: formObj.uid
+                formId: kform.uid,
+                formhubUuid: kform.formhubUuid
             }
 
             let result = App.projectManager.bootstrap("KoBo", params, false)

@@ -57,6 +57,11 @@ Properties/
 .gradle/
 
 # Exclusions
-!build/
-!build/*
+build/
+build/*
 .vscode/settings.json
+Android/.project
+Android/.settings/org.eclipse.buildship.core.prefs
+.DS_Store
+
+moc_*.cpp_parameters

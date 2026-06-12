@@ -1,9 +1,7 @@
-import QtQml 2.12
-import QtQuick 2.12
-import QtQuick.Layouts 1.12
-import QtQuick.Controls 2.12
-import QtQuick.Controls.Material 2.12
-import CyberTracker 1.0 as C
+import QtQuick
+import QtQuick.Layouts
+import QtQuick.Controls.Material
+import CyberTracker as C
 import ".."
 
 C.ContentPage {
@@ -40,7 +38,7 @@ C.ContentPage {
                     source: "qrc:/app/appicon.svg"
                 }
 
-                ItemDelegate {
+                Button {
                     Layout.fillWidth: true
                     contentItem: Label {
                         font.pixelSize: App.settings.font18
@@ -52,7 +50,7 @@ C.ContentPage {
                         elide: Label.ElideRight
                     }
                     onClicked: {
-                        appPageStack.push("qrc:/ConnectQRCodePage.qml")
+                        pushConnectQRCodePage()
                     }
                 }
 
@@ -65,7 +63,6 @@ C.ContentPage {
                 ToolButton {
                     id: b1
                     Layout.alignment: Qt.AlignHCenter
-                    Layout.preferredWidth: Math.max(b1.implicitWidth, b2.implicitWidth)
                     font.pixelSize: App.settings.font14
                     icon.source: "qrc:/icons/help.svg"
                     icon.width: C.Style.toolButtonSize

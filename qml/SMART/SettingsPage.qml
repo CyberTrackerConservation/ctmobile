@@ -1,9 +1,7 @@
-import QtQuick 2.12
-import QtQuick.Controls 2.12
-import QtQuick.Layouts 1.12
-import QtQuick.Controls.Material 2.12
-import QtGraphicalEffects 1.0
-import CyberTracker 1.0 as C
+import QtQuick
+import QtQuick.Controls.Material
+import QtQuick.Layouts
+import CyberTracker as C
 
 C.ContentPage {
     id: page
@@ -57,7 +55,7 @@ C.ContentPage {
                     spacing: 0
                     Label {
                         Layout.fillWidth: true
-                        text: qsTr("Dark theme")
+                        text: qsTr("Dark mode")
                         font.pixelSize: page.fontSize
                         wrapMode: Label.WordWrap
                     }
@@ -65,6 +63,7 @@ C.ContentPage {
                     Switch {
                         id: checkTheme
                         Layout.alignment: Qt.AlignRight
+                        scale: C.Style.switchScale
                         font.pixelSize: page.fontSize
                         checked: App.settings.darkTheme
                         onCheckedChanged: {
@@ -89,6 +88,7 @@ C.ContentPage {
                     }
 
                     Switch {
+                        scale: C.Style.switchScale
                         checked: form.project.wizardMode
                         onCheckedChanged: {
                             form.project.wizardMode = checked
@@ -103,8 +103,9 @@ C.ContentPage {
                 id: selectRoutes
                 Layout.fillWidth: true
                 Layout.minimumHeight: C.Style.minRowHeight
-
-                enabled: form.project.connectorParams.navigation_url !== undefined && form.project.connectorParams.api_key !== undefined
+                Component.onCompleted: {
+                    enabled = form.project.connectorParams.navigation_url !== undefined && form.project.accessToken !== ""
+                }
                 contentItem: RowLayout {
                     Label {
                         Layout.fillWidth: true
@@ -145,7 +146,6 @@ C.ContentPage {
             }
 
             ItemDelegate {
-                id: showExports
                 Layout.fillWidth: true
                 Layout.minimumHeight: C.Style.minRowHeight
 
@@ -173,6 +173,26 @@ C.ContentPage {
                     Label {
                         Layout.fillWidth: true
                         font.pixelSize: page.fontSize
+                        text: qsTr("Upload queue")
+                        wrapMode: Label.WordWrap
+                    }
+
+                    C.ChevronRight {}
+                }
+
+                onClicked: form.pushPage("qrc:/UploadQueuePage.qml")
+
+                C.HorizontalDivider {}
+            }
+
+            ItemDelegate {
+                Layout.fillWidth: true
+                Layout.minimumHeight: C.Style.minRowHeight
+
+                contentItem: RowLayout {
+                    Label {
+                        Layout.fillWidth: true
+                        font.pixelSize: page.fontSize
                         text: qsTr("Configuration")
                         wrapMode: Label.WordWrap
                     }
@@ -180,7 +200,7 @@ C.ContentPage {
                     C.ChevronRight {}
                 }
 
-                onClicked: form.pushPage("qrc:/imports/CyberTracker.1/DetailsPage.qml", { title: qsTr("Configuration"), model: form.provider.buildConfigModel() } )
+                onClicked: form.pushPage("qrc:/imports/CyberTracker/DetailsPage.qml", { title: qsTr("Configuration"), model: form.provider.buildConfigModel() } )
 
                 C.HorizontalDivider {}
             }
@@ -210,11 +230,13 @@ C.ContentPage {
 
                 C.HorizontalDivider {}
             }
+
+            C.FooterSpacer {}
         }
     }
 
     function getRoutes() {
-        var response = Utils.httpGet(form.project.connectorParams.navigation_url + "?api_key=" + form.project.connectorParams.api_key)
+        var response = Utils.httpGet(form.project.connectorParams.navigation_url + "?api_key=" + form.project.accessToken)
 
         switch (response.status) {
         case 200:

@@ -1,12 +1,11 @@
-import QtQml 2.12
-import QtQuick 2.12
-import QtQuick.Controls 2.12
-import QtQuick.Layouts 1.12
-import QtQuick.Dialogs 1.2
-import Qt.labs.settings 1.0 as Labs
-import QtMultimedia 5.12
-import QtQuick.Controls.Material 2.12
-import CyberTracker 1.0 as C
+import QtCore
+import QtQuick
+import QtQuick.Controls.Material
+import QtQuick.Layouts
+import QtQuick.Dialogs
+import Qt.labs.platform as Labs
+import QtMultimedia
+import CyberTracker as C
 
 C.ContentPage {
     id: page
@@ -23,7 +22,18 @@ C.ContentPage {
             icon.source: "qrc:/icons/share_variant_outline.svg"
             enabled: listView.currentIndex !== -1
             onClicked: {
-                let packageFile = App.offlineMapManager.createPackage(layerListModel.get(listView.currentIndex).id)
+                let layer = layerListModel.get(listView.currentIndex)
+                let shareUrl = App.offlineMapManager.getShareUrl(layer.id)
+
+                if (shareUrl !== "") {
+                    pushPageImmediate(page, "qrc:/ShareUrlPage.qml", {
+                        title: layer.name,
+                        url: shareUrl,
+                    })
+                    return
+                }
+
+                let packageFile = App.offlineMapManager.createPackage(layer.id)
                 if (packageFile === "") {
                     showError(qsTr("Packaging failed"))
                     return
@@ -55,14 +65,23 @@ C.ContentPage {
                 fileDialog.show()
             }
         }
+
+        C.FooterButton {
+            text: qsTr("Update")
+            icon.source: "qrc:/icons/autorenew.svg"
+            enabled: App.offlineMapManager.hasUpdateableMaps
+            highlight: App.offlineMapManager.updatesAvailable
+            onClicked: {
+                appWindow.updateMaps()
+            }
+        }
     }
 
     C.MapLayerListModel {
         id: layerListModel
         addTypeHeaders: false
         addBaseLayers: false
-        addFormLayers: false
-        addProjectLayers: false
+        addDataLayers: false
         addOfflineLayers: true
     }
 
@@ -111,7 +130,7 @@ C.ContentPage {
 
                     Label {
                         Layout.fillWidth: true
-                        text: modelData.timestamp
+                        text: modelData.timestamp ? modelData.timestamp : ""
                         font.pixelSize: App.settings.font12
                         opacity: 0.5
                         elide: Label.ElideRight
@@ -124,7 +143,12 @@ C.ContentPage {
                     height: C.Style.toolButtonSize
                     icon.source: "qrc:/icons/chevron_up.svg"
                     visible: d.highlighted
-                    enabled: listView.currentIndex > 0
+                    enabled: {
+                        let i = listView.currentIndex
+                        if (i <= 0 || layerListModel.count < 2) return false
+                        // The model partitions vectors above rasters; don't let the move cross that boundary.
+                        return layerListModel.get(i - 1).vector === layerListModel.get(i).vector
+                    }
                     onClicked: {
                         let index = listView.currentIndex
                         App.offlineMapManager.moveLayer(layerListModel.get(index).id, -1)
@@ -135,9 +159,13 @@ C.ContentPage {
                 ToolButton {
                     width: C.Style.toolButtonSize
                     height: C.Style.toolButtonSize
-                    enabled: listView.currentIndex >= 0 && listView.currentIndex < layerListModel.count - 1
                     icon.source: "qrc:/icons/chevron_down.svg"
                     visible: d.highlighted
+                    enabled: {
+                        let i = listView.currentIndex
+                        if (i < 0 || i >= layerListModel.count - 1) return false
+                        return layerListModel.get(i + 1).vector === layerListModel.get(i).vector
+                    }
                     onClicked: {
                         let index = listView.currentIndex
                         App.offlineMapManager.moveLayer(layerListModel.get(index).id, 1)
@@ -154,26 +182,29 @@ C.ContentPage {
         }
     }
 
-    Labs.Settings {
-        fileName: App.iniPath
+    Settings {
+        location: App.iniUrl
         category: "OfflineMapsDialog"
         property alias fileDialogFolder: fileDialog.folder
-        property alias fileDialogPackageFolder: fileDialogPackage.folder
+        property alias fileDialogPackageFolder: fileDialogPackage.currentFolder
     }
 
-    FileDialog {
+    Labs.FileDialog {
         id: fileDialog
 
-        folder: shortcuts.home
+        folder: StandardPaths.writableLocation(StandardPaths.HomeLocation)
         nameFilters: [ "Offline maps (*.zip *.tpk *.vtpk *.mbtiles *.kml *.geojson)" ]
         onAccepted: {
-            let filePath = Utils.urlToLocalFile(fileDialog.fileUrl)
-            if (!App.offlineMapManager.canInstallPackage(filePath)) {
-                showError(qsTr("Not a map package"))
-                return
-            }
+            let filePath = App.copyContent(fileDialog.file, App.workPath)
+            if (filePath !== "") {
+                if (App.offlineMapManager.canInstallPackage(filePath)) {
+                    App.installPackage(filePath, true)
+                } else {
+                    showError(qsTr("Not a map package"))
+                }
 
-            App.installPackage(fileDialog.fileUrl, true)
+                Utils.removeFile(filePath)
+            }
         }
 
         function show() {
@@ -189,11 +220,11 @@ C.ContentPage {
 
         defaultSuffix: "zip"
         title: qsTr("Save map package")
-        folder: shortcuts.desktop
+        currentFolder: StandardPaths.writableLocation(StandardPaths.DesktopLocation)
         nameFilters: [ "CyberTracker map packages (*.zip)" ]
-        selectExisting: false
+        fileMode: FileDialog.SaveFile
         onAccepted: {
-            let targetFile = Utils.urlToLocalFile(fileDialogPackage.fileUrl)
+            let targetFile = Utils.urlToLocalFile(fileDialogPackage.selectedFile)
             let success = Utils.copyFile(packageFile, targetFile)
             if (success) {
                 App.copyToClipboard(targetFile)
@@ -206,19 +237,42 @@ C.ContentPage {
         }
     }
 
-    C.ConfirmPopup {
+    C.OptionsPopup {
         id: confirmDelete
+
         property string layerId
-        confirmText: qsTr("Yes, delete it")
-        onConfirmed: {
-            listView.currentIndex = -1
-            App.offlineMapManager.deleteLayer(layerId)
-            layerId = ""
+        property string packageId
+        property bool packageHasMultipleLayers: false
+
+        text: qsTr("Delete?")
+        icon: "qrc:/icons/alert_circle_outline.svg"
+
+        model: [
+            { text: qsTr("Delete layer"), icon: "qrc:/icons/delete_outline.svg", delay: true },
+            { text: qsTr("Delete package"), icon: "qrc:/icons/delete_outline.svg", delay: true,
+              visible: confirmDelete.packageHasMultipleLayers },
+            { text: qsTr("Cancel"), icon: "qrc:/icons/cancel.svg" },
+        ]
+
+        onClicked: function (index) {
+            switch (index) {
+            case 0:
+                listView.currentIndex = -1
+                App.offlineMapManager.deleteLayer(confirmDelete.layerId)
+                break
+            case 1:
+                listView.currentIndex = -1
+                App.offlineMapManager.deleteLayersByPackageId(confirmDelete.packageId)
+                break
+            }
+            confirmDelete.layerId = ""
+            confirmDelete.packageId = ""
         }
 
         function show(layer) {
-            text = qsTr("Delete layer?")
-            layerId = layer.id
+            confirmDelete.layerId = layer.id
+            confirmDelete.packageId = App.offlineMapManager.getLayerPackageId(layer.id)
+            confirmDelete.packageHasMultipleLayers = App.offlineMapManager.getPackageLayerCount(confirmDelete.packageId) > 1
             open()
         }
     }

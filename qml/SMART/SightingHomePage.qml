@@ -1,10 +1,7 @@
-import QtQml 2.12
-import QtQuick 2.12
-import QtQuick.Controls 2.12
-import QtQuick.Layouts 1.12
-import QtGraphicalEffects 1.0
-import QtQuick.Controls.Material 2.12
-import CyberTracker 1.0 as C
+import QtQuick
+import QtQuick.Controls.Material
+import QtQuick.Layouts
+import CyberTracker as C
 
 C.ContentPage {
     id: page
@@ -30,6 +27,32 @@ C.ContentPage {
         }
 
         rebuildListModel()
+    }
+
+    Connections {
+        target: form
+
+        // Capture telemetry when the user saves a sighting that contains
+        // more than one observation, or more than one group (when group UI
+        // is in use). The fields are still populated for the just-saved
+        // sighting at the moment this signal fires.
+        function onSightingSaved(sightingUid) {
+            let recordUids = form.getFieldValue(Globals.modelIncidentRecordFieldUid, [])
+            if (recordUids.length > 1) {
+                /// More than one observation has been recorded at one time on the sighting home page.
+                /// @category Actions
+                /// @docs https://cybertrackerwiki.org/smart/user-manual/8#871-adding-observations
+                form.setUsage("hasMultipleObservations", true)
+            }
+
+            if (form.provider.useGroupUI && internal.groupList.length > 1) {
+                /// When incident group UI is enabled, more than one group is used. Incident group UI lets users create one-level deep groups of observations that all occur at the same location. Only relevant when useGroupUI is true.
+                /// @category Actions
+                /// @normalizeWhen useGroupUI
+                /// @docs https://cybertrackerwiki.org/smart/user-manual/#6511-incident-group-ui
+                form.setUsage("hasMultipleGroups", true)
+            }
+        }
     }
 
     C.PopupLoader {
@@ -86,22 +109,8 @@ C.ContentPage {
     }
 
     header: C.PageHeader {
-        topText: {
-            let result = ""
-
-            if (form.provider.surveyMode && form.provider.samplingUnits) {
-                let samplingUnitUid = form.getFieldValue(form.rootRecordUid, Globals.modelSamplingUnitFieldUid)
-                let samplingUnitText = form.getElementName(samplingUnitUid)
-                result = "[" + samplingUnitText + "]";
-            }
-
-            if (form.editing) {
-                result = result + " (" + qsTr("Edit") + ") "
-            }
-
-            return result
-        }
-
+        id: pageHeader
+        topText: buildTopText()
         text: form.project.title
 
         menuVisible: Qt.platform.os !== "ios"
@@ -119,7 +128,7 @@ C.ContentPage {
                 return C.Style.backIconSource
 
             case SightingHomePage.BackButtonType.TrackRate:
-                return form.trackStreamer.rateIcon
+                return App.locationLogger.stateIcon
 
             default:
                 console.log("Error: unknown button type - " + backButtonType)
@@ -127,13 +136,15 @@ C.ContentPage {
             }
         }
 
-        onBackClicked: {
+        onBackClicked: function (androidBack) {
             if (backButtonType === SightingHomePage.BackButtonType.None) {
                 return
             }
 
             if (backButtonType === SightingHomePage.BackButtonType.TrackRate) {
-                App.showToast(form.trackStreamer.rateFullText)
+                if (!androidBack) {
+                    App.showToast(form.trackStreamer.rateFullText)
+                }
                 return
             }
 
@@ -173,7 +184,7 @@ C.ContentPage {
             text: qsTr("History")
             icon.source: "qrc:/icons/history.svg"
             onClicked: form.pushPage("qrc:/SMART/HistoryPage.qml")
-            visible: !form.editing && !form.provider.incidentForm
+            visible: !form.editing && !form.provider.incidentForm && form.provider.allowHistory
         }
 
         C.FooterButton {
@@ -215,15 +226,18 @@ C.ContentPage {
             onClicked: {
                 // Highlight fields that are required but not specified.
                 if ((form.provider.instantGPS && (form.getFieldValue(Globals.modelLocationFieldUid) === undefined)) ||
-                    (form.provider.useObserver && (form.getFieldValue(Globals.modelObserverFieldUid) === undefined))) {
+                    (form.provider.useObserver && (form.getFieldValue(Globals.modelObserverFieldUid) === undefined)) ||
+                    (form.provider.useIncidentType && (form.getFieldValue(Globals.modelIncidentTypeFieldUid) === undefined))) {
                     instantGPSEditor.highlightInvalid = true
                     observerIdEditor.highlightInvalid = true
+                    incidentTypeEditor.highlightInvalid = true
                     return
                 }
 
                 // Disable highlighting for the next sighting.
                 instantGPSEditor.highlightInvalid = false
                 observerIdEditor.highlightInvalid = false
+                incidentTypeEditor.highlightInvalid = false
 
                 deleteIncompleteRecords()
 
@@ -303,6 +317,16 @@ C.ContentPage {
         }
 
         C.FieldEditorDelegate {
+            id: incidentTypeEditor
+            Layout.fillWidth: true
+            recordUid: form.rootRecordUid
+            fieldUid: Globals.modelIncidentTypeFieldUid
+            visible: form.provider.useIncidentType
+            enabled: !form.editing
+            C.HorizontalDivider { height: 2 }
+        }
+
+        C.FieldEditorDelegate {
             id: instantGPSEditor
             Layout.fillWidth: true
             autoLocation: false
@@ -361,7 +385,7 @@ C.ContentPage {
                     }
 
                     C.SquareIcon {
-                        source: "qrc:/icons/add.svg"
+                        source: "qrc:/icons/plus.svg"
                         opacity: 0.75
                     }
 
@@ -449,7 +473,7 @@ C.ContentPage {
             }
 
             Component {
-                 id: newSightingDelegateComponent
+                id: newSightingDelegateComponent
                 RowLayout {
                     Label {
                         Layout.alignment: Qt.AlignHCenter
@@ -474,7 +498,6 @@ C.ContentPage {
             contentItem: Loader {
                 Binding { target: background; property: "color"; value: colorContent || Style.colorContent }
                 width: swipeDelegate.width - swipeDelegate.leftPadding - swipeDelegate.rightPadding
-                height: item.height
                 sourceComponent: {
                     switch (model.delegate) {
                     case "group":
@@ -619,6 +642,25 @@ C.ContentPage {
 
                     ItemDelegate {
                         Layout.fillWidth: true
+                        visible: App.offlineMapManager.hasLookupLayers()
+                        icon.source: "qrc:/icons/map_search_outline.svg"
+                        icon.width: C.Style.iconSize24
+                        icon.height: C.Style.iconSize24
+                        text: qsTr("Place lookup")
+                        onClicked: {
+                            popupPatrol.close()
+                            if (!App.lastLocationRecent ) {
+                                App.showToast(qsTr("No recent location"))
+                            } else {
+                                pushPageImmediate(page, "qrc:/PlacePage.qml", { locationX: App.lastLocation.x, locationY: App.lastLocation.y })
+                            }
+                        }
+
+                        C.HorizontalDivider {}
+                    }
+
+                    ItemDelegate {
+                        Layout.fillWidth: true
                         icon.source: "qrc:/icons/finance.svg"
                         icon.width: C.Style.iconSize24
                         icon.height: C.Style.iconSize24
@@ -636,7 +678,7 @@ C.ContentPage {
                         icon.width: C.Style.iconSize24
                         icon.height: C.Style.iconSize24
                         icon.source: "qrc:/icons/theme_light_dark.svg"
-                        text: qsTr("Toggle dark theme")
+                        text: qsTr("Toggle dark mode")
 
                         onClicked: {
                             popupPatrol.close()
@@ -662,16 +704,16 @@ C.ContentPage {
             }
         }
 
-        function onRecordComplete(recordUid) {
-            let parentRecordUid = form.getParentRecordUid(recordUid)
-            if (parentRecordUid === form.rootRecordUid) {
-                rebuildListModel()
-            }
-        }
-
         function onFieldValueChanged(recordUid, fieldUid, oldValue, newValue) {
+            if (fieldUid === Globals.modelSamplingUnitFieldUid) {
+                pageHeader.topText = buildTopText()
+            }
+
             if (fieldUid === Globals.modelTreeFieldUid) {
                 rebuildListModel()
+                if (oldValue === undefined && newValue !== undefined) {
+                    scrollToBottom()
+                }
             }
         }
     }
@@ -696,7 +738,13 @@ C.ContentPage {
         deleteIncompleteRecords()
         let newRecordUid = form.newRecord(form.rootRecordUid, Globals.modelIncidentRecordFieldUid)
         form.setFieldValue(newRecordUid, Globals.modelIncidentGroupFieldUid, groupUid)
-        form.pushPage("qrc:/SMART/ModelPage.qml", { recordUid: newRecordUid })
+
+        let treeInfo = form.getElementTreeInfo(Globals.modelTreeElementUid)
+        if (treeInfo.leafHasChildren) {
+            form.pushPage("qrc:/SMART/ModelPage.qml", { recordUid: newRecordUid, listElementUid: treeInfo.leafElementUid })
+        } else {
+            form.pushPage("qrc:/SMART/AttributesPage.qml", { title: form.getElementName(treeInfo.leafElementUid), recordUid: newRecordUid, elementUid: treeInfo.leafElementUid } )
+        }
     }
 
     function deleteGroup(groupIndex, groupUid) {
@@ -728,6 +776,26 @@ C.ContentPage {
                 deleteRecord(recordUid)
             }
         }
+    }
+
+    function buildTopText() {
+        let result = ""
+
+        if (form.provider.surveyMode && form.provider.samplingUnits) {
+            let samplingUnitUid = form.getFieldValue(form.rootRecordUid, Globals.modelSamplingUnitFieldUid)
+            let samplingUnitText = form.getElementName(samplingUnitUid)
+            result = "[" + samplingUnitText + "]";
+        }
+
+        if (form.editing) {
+            result += " (" + qsTr("Edit") + ") "
+        }
+
+        return result
+    }
+
+    function scrollToBottom() {
+        Qt.callLater(() => listView.positionViewAtEnd())
     }
 
     function rebuildListModel() {

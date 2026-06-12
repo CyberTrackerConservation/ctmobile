@@ -1,0 +1,197 @@
+buildscript {
+    repositories {
+        google()
+        mavenCentral()
+    }
+
+    dependencies {
+        classpath 'com.android.tools.build:gradle:8.6.0'
+    }
+}
+
+repositories {
+    google()
+    mavenCentral()
+}
+
+apply plugin: 'com.android.application'
+
+dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.jar', '*.aar'])
+    implementation 'androidx.appcompat:appcompat:1.6.1'
+    implementation 'androidx.security:security-crypto:1.0.0'
+    implementation 'com.google.android.material:material:1.10.0'
+    implementation 'com.google.android.play:review:2.0.2'
+}
+
+android {
+    namespace androidPackageName
+    compileSdkVersion androidCompileSdkVersion
+    buildToolsVersion androidBuildToolsVersion
+    ndkVersion androidNdkVersion
+
+    buildFeatures {
+        buildConfig true
+    }
+
+    // Extract native libraries from the APK
+    packagingOptions.jniLibs.useLegacyPackaging true
+
+    sourceSets {
+        main {
+            manifest.srcFile 'AndroidManifest.xml'
+            java.srcDirs = [qtAndroidDir + '/src', 'src', 'java']
+            aidl.srcDirs = [qtAndroidDir + '/src', 'src', 'aidl']
+            res.srcDirs = [qtAndroidDir + '/res', 'res/ct']
+            resources.srcDirs = ['src']
+            renderscript.srcDirs = ['src']
+            assets.srcDirs = ['assets']
+            jniLibs.srcDirs = ['libs']
+        }
+
+        ct {
+            res.srcDirs = [qtAndroidDir + '/res', '/res', 'res/ct']
+        }
+
+        sm {
+            res.srcDirs = [qtAndroidDir + '/res', '/res', 'res/sm']
+        }
+ 
+        smk {
+            res.srcDirs = [qtAndroidDir + '/res', '/res', 'res/sm']
+        }
+
+        gg {
+            res.srcDirs = [qtAndroidDir + '/res', '/res', 'res/gg']
+        }
+    }
+
+    tasks.withType(JavaCompile) {
+        options.incremental = true
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+
+    packagingOptions {
+        // generic
+        exclude 'lib/*/*_qmltooling_*'
+        exclude 'lib/*/*_Controls_Fusion_*'
+        exclude 'lib/*/*_Controls_Imagine_*'
+        exclude 'lib/*/*_Controls_Universal_*'
+        // app specific
+        exclude 'lib/*/*_imageformats_qgif_*'
+        exclude 'lib/*/*_imageformats_qico_*'
+        exclude 'lib/*/*_imageformats_qicns_*'
+        exclude 'lib/*/*_imageformats_qtga_*'
+        exclude 'lib/*/*_imageformats_qtiff_*'
+        exclude 'lib/*/*_imageformats_qwbmp_*'
+        exclude 'lib/*/*_imageformats_qwebp_*'
+    }
+
+    lintOptions {
+        abortOnError false
+    }
+
+    // Do not compress Qt binary resources file
+    aaptOptions {
+        noCompress 'rcc'
+    }
+
+    defaultConfig {
+        applicationId "org.cybertracker.mobile"
+        minSdkVersion qtMinSdkVersion
+        targetSdkVersion qtTargetSdkVersion
+        manifestPlaceholders = [
+            appName: "CyberTracker",
+            appLinkHost: "cybertrackerwiki.org",
+            appLinkPath1: "/applink",
+            appLinkPath2: "/applink-smart",
+            appLinkPath3: "/applink-rilla",
+            homeIntentCategory: "android.intent.category.DEFAULT",
+            backgroundLocationPermission: "ACCESS_BACKGROUND_LOCATION",
+            foregroundServicePermission: "FOREGROUND_SERVICE",
+            foregroundServiceLocationPermission: "FOREGROUND_SERVICE_LOCATION"
+        ]
+        ndk.abiFilters qtTargetAbiList.split(",")
+    }
+
+    flavorDimensions 'productSelect'
+    productFlavors {
+        ct {
+            dimension 'productSelect'
+            applicationIdSuffix ".ct"
+            manifestPlaceholders = [
+                appName: "CyberTracker",
+                appLinkHost: "cybertrackerwiki.org",
+                appLinkPath1: "/applink",
+                appLinkPath2: "/applink-smart",
+                appLinkPath3: "/applink-rilla",
+                homeIntentCategory: "android.intent.category.DEFAULT",
+                backgroundLocationPermission: "ACCESS_BACKGROUND_LOCATION",
+                foregroundServicePermission: "FOREGROUND_SERVICE",
+                foregroundServiceLocationPermission: "FOREGROUND_SERVICE_LOCATION"
+            ]
+        }
+
+        sm {
+            dimension 'productSelect'
+            applicationIdSuffix ".sm"
+            manifestPlaceholders = [
+                appName: "SMART Mobile",
+                appLinkHost: "cybertrackerwiki.org",
+                appLinkPath1: "/applink-smart",
+                appLinkPath2: "/applink-smart",
+                appLinkPath3: "/applink-smart",
+                homeIntentCategory: "android.intent.category.DEFAULT",
+                backgroundLocationPermission: "ACCESS_BACKGROUND_LOCATION",
+                foregroundServicePermission: "FOREGROUND_SERVICE",
+                foregroundServiceLocationPermission: "FOREGROUND_SERVICE_LOCATION"
+            ]
+        }
+
+        smk {
+            dimension 'productSelect'
+            applicationIdSuffix ".smk"
+            manifestPlaceholders = [
+                appName: "SMART Mobile (K)",
+                appLinkHost: "cybertrackerwiki.org",
+                appLinkPath1: "/applink-smart",
+                appLinkPath2: "/applink-smart",
+                appLinkPath3: "/applink-smart",
+                homeIntentCategory: "android.intent.category.HOME",
+                backgroundLocationPermission: "ACCESS_BACKGROUND_LOCATION",
+                foregroundServicePermission: "FOREGROUND_SERVICE",
+                foregroundServiceLocationPermission: "FOREGROUND_SERVICE_LOCATION"
+            ]
+        }
+
+        gg {
+            dimension 'productSelect'
+            applicationIdSuffix ".gg"
+            manifestPlaceholders = [
+                appName: "Rilla Forms",
+                appLinkHost: "cybertrackerwiki.org",
+                appLinkPath1: "/applink-rilla",
+                appLinkPath2: "/applink-rilla",
+                appLinkPath3: "/applink-rilla",
+                homeIntentCategory: "android.intent.category.DEFAULT",
+                backgroundLocationPermission: "INTERNET",
+                foregroundServicePermission: "INTERNET",
+                foregroundServiceLocationPermission: "INTERNET"
+            ]
+        }
+    }
+
+    // packagingOptions {
+    //     exclude 'lib/*/*Basic*'
+    //     exclude 'lib/*/*Fusion*'
+    //     exclude 'lib/*/*Imagine*'
+    //     exclude 'lib/*/*Universal*'
+    //     exclude 'lib/*/*FluentWinUI3*'
+    //     exclude 'lib/*/*Widgets*'
+    //     exclude 'lib/*/*ShaderTools*'
+    // }    
+}

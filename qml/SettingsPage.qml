@@ -1,10 +1,7 @@
-import QtQml 2.12
-import QtQuick 2.12
-import QtQuick.Layouts 1.12
-import QtQuick.Controls 2.12
-import QtQuick.Controls.Material 2.12
-import QtGraphicalEffects 1.0
-import CyberTracker 1.0 as C
+import QtQuick
+import QtQuick.Layouts
+import QtQuick.Controls.Material
+import CyberTracker as C
 
 C.ContentPage {
     id: page
@@ -56,11 +53,65 @@ C.ContentPage {
                 }
 
                 onClicked: {
-                    if (typeof(formPageStack) !== "undefined") {
-                        form.pushPage("qrc:/AboutPage.qml")
-                    } else {
-                        appPageStack.push("qrc:/AboutPage.qml")
+                    pushPageImmediate(page, "qrc:/AboutPage.qml")
+                }
+
+                C.HorizontalDivider {}
+            }
+
+            ItemDelegate {
+                Layout.fillWidth: true
+                Layout.minimumHeight: C.Style.minRowHeight
+                visible: App.settings.archiveSupport
+                contentItem: RowLayout {
+                    Label {
+                        Layout.fillWidth: true
+                        text: qsTr("Upload queue")
+                        font.pixelSize: App.settings.font14
+                        font.capitalization: Font.MixedCase
+                        font.bold: false
+                        wrapMode: Label.WordWrap
                     }
+
+                    C.SquareIcon {
+                        source: "qrc:/icons/tray_full.svg"
+                        opacity: 0.5
+                    }
+
+                    C.ChevronRight {}
+                }
+
+                onClicked: {
+                    pushPageImmediate(page, "qrc:/UploadQueuePage.qml")
+                }
+
+                C.HorizontalDivider {}
+            }
+
+            ItemDelegate {
+                Layout.fillWidth: true
+                Layout.minimumHeight: C.Style.minRowHeight
+                visible: App.settings.archiveSupport
+                contentItem: RowLayout {
+                    Label {
+                        Layout.fillWidth: true
+                        text: qsTr("Data archive")
+                        font.pixelSize: App.settings.font14
+                        font.capitalization: Font.MixedCase
+                        font.bold: false
+                        wrapMode: Label.WordWrap
+                    }
+
+                    C.SquareIcon {
+                        source: "qrc:/icons/archive_outline.svg"
+                        opacity: 0.5
+                    }
+
+                    C.ChevronRight {}
+                }
+
+                onClicked: {
+                    pushPageImmediate(page, "qrc:/ArchiveConfigPage.qml")
                 }
 
                 C.HorizontalDivider {}
@@ -89,7 +140,7 @@ C.ContentPage {
                 }
 
                 onClicked: {
-                    appPageStack.push("qrc:/ProjectsEditPage.qml")
+                    pushPageImmediate(page, "qrc:/ProjectsEditPage.qml")
                 }
 
                 C.HorizontalDivider {}
@@ -117,11 +168,46 @@ C.ContentPage {
                 }
 
                 onClicked: {
-                    if (typeof(formPageStack) !== "undefined") {
-                        form.pushPage("qrc:/OfflineMapPage.qml")
-                    } else {
-                        appPageStack.push("qrc:/OfflineMapPage.qml")
+                    pushPageImmediate(page, "qrc:/OfflineMapPage.qml")
+                }
+
+                C.HorizontalDivider {}
+            }
+
+            ItemDelegate {
+                Layout.fillWidth: true
+                Layout.minimumHeight: C.Style.minRowHeight
+                contentItem: RowLayout {
+                    ColumnLayout {
+                        Label {
+                            Layout.fillWidth: true
+                            text: qsTr("Map projection")
+                            font.pixelSize: App.settings.font14
+                            font.capitalization: Font.MixedCase
+                            font.bold: false
+                            wrapMode: Label.WordWrap
+                        }
+
+                        Label {
+                            Layout.fillWidth: true
+                            text: App.translateText(App.settings.projection.d)
+                            font.pixelSize: App.settings.font12
+                            font.capitalization: Font.MixedCase
+                            wrapMode: Label.WordWrap
+                            opacity: 0.5
+                        }
                     }
+
+                    C.SquareIcon {
+                        source: "qrc:/icons/earth_box.svg"
+                        opacity: 0.5
+                    }
+
+                    C.ChevronRight {}
+                }
+
+                onClicked: {
+                    pushPageImmediate(page, "qrc:/ProjectionPage.qml")
                 }
 
                 C.HorizontalDivider {}
@@ -161,11 +247,7 @@ C.ContentPage {
                 }
 
                 onClicked: {
-                    if (typeof(formPageStack) !== "undefined") {
-                        form.pushPage("qrc:/imports/CyberTracker.1/UsernamePage.qml", { required: form.project.username === "" })
-                    } else {
-                        appPageStack.push("qrc:/imports/CyberTracker.1/UsernamePage.qml")
-                    }
+                    pushPageImmediate(page, "qrc:/imports/CyberTracker/UsernamePage.qml", { required: (typeof(formPageStack) !== "undefined") && form.project.username === "" })
                 }
 
                 C.HorizontalDivider {}
@@ -188,8 +270,8 @@ C.ContentPage {
                         Layout.fillHeight: true
                         font.pixelSize: App.settings.font14
 
-                        onActivated: {
-                            if (index != -1) {
+                        onActivated: function (index) {
+                            if (index !== -1) {
                                 App.settings.languageCode = languages[index].code
                             }
                         }
@@ -240,7 +322,7 @@ C.ContentPage {
                         Layout.fillHeight: true
                         font.pixelSize: App.settings.font14
 
-                        onActivated: {
+                        onActivated: function (index) {
                             if (index !== -1) {
                                 let project = model[index]
                                 App.settings.autoLaunchProjectUid = project.uid
@@ -287,7 +369,7 @@ C.ContentPage {
                     spacing: 0
                     Label {
                         Layout.fillWidth: true
-                        text: qsTr("Dark theme")
+                        text: qsTr("Dark mode")
                         font.pixelSize: App.settings.font14
                         wrapMode: Label.WordWrap
                     }
@@ -295,9 +377,52 @@ C.ContentPage {
                     Switch {
                         id: checkTheme
                         Layout.alignment: Qt.AlignRight
+                        scale: C.Style.switchScale
                         checked: App.settings.darkTheme
                         onCheckedChanged: {
                             App.settings.darkTheme = checkTheme.checked
+                        }
+                    }
+                }
+
+                C.HorizontalDivider {}
+            }
+
+            ItemDelegate {
+                Layout.fillWidth: true
+                Layout.minimumHeight: C.Style.minRowHeight
+                contentItem: RowLayout {
+                    Label {
+                        Layout.preferredWidth: page.width / 3
+                        text: qsTr("Theme")
+                        font.pixelSize: App.settings.font14
+                        wrapMode: Label.WordWrap
+                    }
+
+                    ComboBox {
+                        id: comboTheme
+                        Layout.fillWidth: true
+                        Layout.fillHeight: true
+                        font.pixelSize: App.settings.font14
+                        model: C.Style.themes
+                        currentIndex: {
+                            var current = App.settings.theme || App.config.defaultTheme || ""
+                            for (var i = 0; i < C.Style.themes.length; ++i) {
+                                if (C.Style.themes[i].name === current) return i
+                            }
+                            return -1
+                        }
+                        displayText: currentIndex === -1 ? "" : C.Style.themeTitle(C.Style.themes[currentIndex].name)
+                        onActivated: function (index) {
+                            if (index !== -1) {
+                                App.settings.theme = C.Style.themes[index].name
+                            }
+                        }
+
+                        delegate: ItemDelegate {
+                            width: comboTheme.width
+                            font.pixelSize: App.settings.font14
+                            text: C.Style.themeTitle(modelData.name)
                         }
                     }
                 }
@@ -320,9 +445,38 @@ C.ContentPage {
                     Switch {
                         id: checkFooterText
                         Layout.alignment: Qt.AlignRight
+                        scale: C.Style.switchScale
                         checked: App.settings.footerText
                         onCheckedChanged: {
                             App.settings.footerText = checkFooterText.checked
+                        }
+                    }
+                }
+
+                C.HorizontalDivider {}
+            }
+
+            ItemDelegate {
+                Layout.fillWidth: true
+                Layout.minimumHeight: C.Style.minRowHeight
+                visible: App.config.allowUnits
+                contentItem: RowLayout {
+                    spacing: 0
+
+                    Label {
+                        Layout.fillWidth: true
+                        text: qsTr("Metric units")
+                        font.pixelSize: App.settings.font14
+                        wrapMode: Label.WordWrap
+                    }
+
+                    Switch {
+                        id: checkMetricUnits
+                        Layout.alignment: Qt.AlignRight
+                        scale: C.Style.switchScale
+                        checked: App.settings.metricUnits
+                        onCheckedChanged: {
+                            App.settings.metricUnits = checkMetricUnits.checked
                         }
                     }
                 }
@@ -338,17 +492,46 @@ C.ContentPage {
 
                     Label {
                         Layout.fillWidth: true
-                        text: qsTr("Metric units")
+                        text: qsTr("AI form filler")
                         font.pixelSize: App.settings.font14
                         wrapMode: Label.WordWrap
                     }
 
                     Switch {
-                        id: checkMetricUnits
+                        id: checkFormFiller
                         Layout.alignment: Qt.AlignRight
-                        checked: App.settings.metricUnits
+                        scale: C.Style.switchScale
+                        checked: App.settings.formFiller
                         onCheckedChanged: {
-                            App.settings.metricUnits = checkMetricUnits.checked
+                            App.settings.formFiller = checkFormFiller.checked
+                        }
+                    }
+                }
+
+                C.HorizontalDivider {}
+            }
+
+            ItemDelegate {
+                Layout.fillWidth: true
+                Layout.minimumHeight: C.Style.minRowHeight
+                visible: Qt.platform.os === "android"
+                contentItem: RowLayout {
+                    spacing: 0
+
+                    Label {
+                        Layout.fillWidth: true
+                        text: qsTr("Require Bluetooth for audio recording")
+                        font.pixelSize: App.settings.font14
+                        wrapMode: Label.WordWrap
+                    }
+
+                    Switch {
+                        id: bluetoothAudio
+                        Layout.alignment: Qt.AlignRight
+                        scale: C.Style.switchScale
+                        checked: App.settings.bluetoothAudio
+                        onCheckedChanged: {
+                            App.settings.bluetoothAudio = bluetoothAudio.checked
                         }
                     }
                 }
@@ -373,6 +556,7 @@ C.ContentPage {
                     Switch {
                         id: checkFullScreen
                         Layout.alignment: Qt.AlignRight
+                        scale: C.Style.switchScale
                         checked: App.settings.fullScreen
                         onCheckedChanged: {
                             appWindow.visibility = checkFullScreen.checked ? ApplicationWindow.FullScreen : ApplicationWindow.AutomaticVisibility
@@ -389,8 +573,8 @@ C.ContentPage {
                 Layout.minimumHeight: C.Style.minRowHeight
                 contentItem: RowLayout {
                     id: fontSizeRow
-                    property var modelStrings: ["100%", "125%", "150%", "175%", "200%"]
-                    property var modelNumbers: [100, 125, 150, 175, 200]
+                    property var modelStrings: ["100%", "115%", "125%", "150%", "175%", "200%"]
+                    property var modelNumbers: [100, 115, 125, 150, 175, 200]
                     Label {
                         Layout.preferredWidth: page.width / 3
                         text: qsTr("Font size")
@@ -405,47 +589,14 @@ C.ContentPage {
                         font.pixelSize: App.settings.font14
                         model: fontSizeRow.modelStrings
                         currentIndex: fontSizeRow.modelNumbers.indexOf(App.settings.fontSize)
-                        onActivated: if (index != -1) {
-                            App.settings.fontSize = fontSizeRow.modelNumbers[index]
-                        }
-
-                        delegate: ItemDelegate {
-                            width: comboFontSize.width
-                            font.pixelSize: App.settings.font14
-                            text: modelData
-                        }
-                    }
-                }
-
-                C.HorizontalDivider {}
-            }
-
-            ItemDelegate {
-                Layout.fillWidth: true
-                Layout.minimumHeight: C.Style.minRowHeight
-                contentItem: RowLayout {
-                    Label {
-                        Layout.preferredWidth: page.width / 3
-                        text: qsTr("Coordinates")
-                        font.pixelSize: App.settings.font14
-                        wrapMode: Label.WordWrap
-                    }
-
-                    ComboBox {
-                        id: comboCoordinates
-                        Layout.fillWidth: true
-                        Layout.fillHeight: true
-                        font.pixelSize: App.settings.font14
-                        model: [ qsTr("Decimal degrees"), qsTr("Degrees minutes seconds"), qsTr("Degrees decimal minutes"), "UTM"]
-                        currentIndex: App.settings.coordinateFormat
-                        onActivated: {
-                            if (index != -1) {
-                                App.settings.coordinateFormat = index
+                        onActivated: function (index) {
+                            if (index !== -1) {
+                                App.settings.fontSize = fontSizeRow.modelNumbers[index]
                             }
                         }
 
                         delegate: ItemDelegate {
-                            width: comboCoordinates.width
+                            width: comboFontSize.width
                             font.pixelSize: App.settings.font14
                             text: modelData
                         }
@@ -517,6 +668,7 @@ C.ContentPage {
                     Switch {
                         id: checkSimulateGPS
                         Layout.alignment: Qt.AlignRight
+                        scale: C.Style.switchScale
                         checked: App.settings.simulateGPS
                         onCheckedChanged: {
                             App.settings.simulateGPS = checkSimulateGPS.checked
@@ -562,16 +714,19 @@ C.ContentPage {
                                 return model.indexOf(App.settings.simulateGPSFilename)
                             }
                         }
-                        onActivated: {
-                            if (index != -1) {
+                        onActivated: function (index) {
+                            if (index !== -1) {
                                 App.settings.simulateGPSFilename = index === 0 ? "" : model[index]
                             }
                         }
 
                         delegate: ItemDelegate {
                             width: comboSimulateGPSFilename.width
-                            font.pixelSize: App.settings.font14
-                            text: modelData
+                            contentItem: Label {
+                                font.pixelSize: App.settings.font14
+                                fontSizeMode: Label.Fit
+                                text: modelData
+                            }
                         }
                     }
                 }
@@ -596,9 +751,37 @@ C.ContentPage {
                     Switch {
                         id: checkUploadRequiresWiFi
                         Layout.alignment: Qt.AlignRight
+                        scale: C.Style.switchScale
                         checked: App.settings.uploadRequiresWiFi
                         onCheckedChanged: {
                             App.settings.uploadRequiresWiFi = checkUploadRequiresWiFi.checked
+                        }
+                    }
+                }
+
+                C.HorizontalDivider {}
+            }
+
+            ItemDelegate {
+                Layout.fillWidth: true
+                Layout.minimumHeight: C.Style.minRowHeight
+                contentItem: RowLayout {
+                    spacing: 0
+
+                    Label {
+                        Layout.fillWidth: true
+                        text: qsTr("Copy photos to gallery")
+                        font.pixelSize: App.settings.font14
+                        wrapMode: Label.WordWrap
+                    }
+
+                    Switch {
+                        id: checkReplicateMedia
+                        Layout.alignment: Qt.AlignRight
+                        scale: C.Style.switchScale
+                        checked: App.settings.replicateMedia
+                        onCheckedChanged: {
+                            App.settings.replicateMedia = checkReplicateMedia.checked
                         }
                     }
                 }
@@ -675,6 +858,37 @@ C.ContentPage {
 
                 C.HorizontalDivider {}
             }
+
+            ItemDelegate {
+                Layout.fillWidth: true
+                Layout.minimumHeight: C.Style.minRowHeight
+                visible: App.settings.archiveSupport
+                contentItem: RowLayout {
+                    Label {
+                        Layout.fillWidth: true
+                        text: qsTr("Activity log")
+                        font.pixelSize: App.settings.font14
+                        font.capitalization: Font.MixedCase
+                        font.bold: false
+                        wrapMode: Label.WordWrap
+                    }
+
+                    C.SquareIcon {
+                        source: "qrc:/icons/clipboard_text_outline.svg"
+                        opacity: 0.5
+                    }
+
+                    C.ChevronRight {}
+                }
+
+                onClicked: {
+                    pushPageImmediate(page, "qrc:/AuditPage.qml")
+                }
+
+                C.HorizontalDivider {}
+            }
+
+            C.FooterSpacer {}
         }
     }
 
@@ -715,10 +929,6 @@ C.ContentPage {
     }
 
     function pushBugReportPage(useSharingOnMobile) {
-        if (typeof(formPageStack) !== "undefined") {
-            form.pushPage("qrc:/BugReportPage.qml", { useSharingOnMobile: useSharingOnMobile })
-        } else {
-            appPageStack.push("qrc:/BugReportPage.qml", { useSharingOnMobile: useSharingOnMobile })
-        }
+        pushPageImmediate(this, "qrc:/BugReportPage.qml", { useSharingOnMobile: useSharingOnMobile })
     }
 }

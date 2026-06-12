@@ -1,9 +1,7 @@
-import QtQml 2.12
-import QtQuick 2.12
-import QtQuick.Controls 2.12
-import QtQuick.Layouts 1.12
-import QtQuick.Controls.Material 2.12
-import CyberTracker 1.0 as C
+import QtQuick
+import QtQuick.Controls.Material
+import QtQuick.Layouts
+import CyberTracker as C
 
 C.ContentPage {
     header: C.PageHeader {
@@ -118,6 +116,7 @@ C.ContentPage {
                 Switch {
                     id: checkBox
                     Layout.alignment: Qt.AlignRight
+                    scale: C.Style.switchScale
                     checked: {
                         listView.checkedChange
                         return listView.visibleReports[modelData.elementUid]

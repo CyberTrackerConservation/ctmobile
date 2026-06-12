@@ -1,18 +1,15 @@
-import QtQml 2.12
-import QtQuick 2.12
-import QtQuick.Controls 2.12
-import QtSensors 5.12
-import QtPositioning 5.12
-import QtMultimedia 5.12
-import QtQuick.Window 2.12
-import QtWebView 1.1
-import QtQuick.Layouts 1.12
-import Qt.labs.platform 1.0 as Labs
-import Qt.labs.settings 1.0 as Labs
-import Esri.ArcGISRuntime 100.15
-import QtQuick.Controls.Material 2.12
-import QtQuick.Dialogs 1.2 as Dialogs
-import CyberTracker 1.0 as C
+import QtCore
+import QtQuick
+import QtQuick.Controls.Material
+import QtSensors
+import QtPositioning
+import QtMultimedia
+import QtQuick.Window
+import QtWebView
+import QtQuick.Layouts
+import QtQuick.Dialogs as Dialogs
+import CyberTracker as C
+import CyberTracker.Classic
 
 ApplicationWindow {
     id: appWindow
@@ -23,128 +20,37 @@ ApplicationWindow {
     property int popupCount: 0
     property bool frameless: videoMode
 
-    flags: frameless ? Qt.FramelessWindowHint | Qt.Window : Qt.Window
+    flags: {
+        if (App.desktopOS) {
+            return Qt.Window | (frameless ? Qt.FramelessWindowHint : 0)
+        }
+
+        return Qt.Window | Qt.MaximizeUsingFullscreenGeometryHint
+    }
 
     width: 480
     height: 640
+    visible: true
 
-    Labs.Settings {
-        fileName: App.iniPath
-        category: "AppWindow"
-        property alias saveAsDialogFolder: saveAsDialog.folder
-        property alias installPackageDialogFolder: installPackageDialog.folder
-        property alias x: appWindow.x
-        property alias y: appWindow.y
-        property alias width: appWindow.width
-        property alias height: appWindow.height
-        property alias consoleVisible: consoleWindowLoader.active
-    }
-
-    Material.theme: C.Style.darkTheme ? Material.Dark : Material.Light
+    Material.theme: App.settings.darkTheme ? Material.Dark : Material.Light
     Material.primary: C.Style.colorPrimary
     Material.accent: C.Style.colorAccent
 
     // Menu.
     Loader {
         id: desktopMenuLoader
-        sourceComponent: App.desktopOS && !frameless ? desktopMenu : undefined
+        active: App.desktopOS && !frameless
+        source: "AppMainDesktop.qml"
     }
 
-    Dialogs.FileDialog {
-        id: saveAsDialog
-        title: qsTr("Choose a file")
-        folder: shortcuts.pictures
-        selectExisting: false
-        selectMultiple: false
-        selectFolder: false
-        nameFilters: [qsTr("Image files") + " (*.png)"]
-        onAccepted: {
-            App.snapScreenshotToFile(saveAsDialog.fileUrl)
-        }
-    }
-
-    Dialogs.FileDialog {
-        id: installPackageDialog
-        title: qsTr("Choose a file")
-        folder: shortcuts.desktop
-        selectExisting: true
-        selectMultiple: false
-        selectFolder: false
-        nameFilters: [qsTr("Package files") + " (*.zip)"]
-        onAccepted: {
-            App.installPackage(installPackageDialog.fileUrl)
-        }
-    }
-
-    Component {
-        id: desktopMenu
-
-        Labs.MenuBar {
-
-            Labs.Menu {
-                title: qsTr("&File")
-                Labs.MenuItem {
-                    text: qsTr("Save &As...")
-                    onTriggered: {
-                        saveAsDialog.open()
-                    }
-                }
-                Labs.MenuSeparator { }
-                Labs.MenuItem {
-                    text: qsTr("Install package")
-                    onTriggered: {
-                        installPackageDialog.open()
-                    }
-                }
-                Labs.MenuItem {
-                    text: qsTr("Connect using clipboard link")
-                    onTriggered: {
-                        App.runLinkOnClipboard()
-                    }
-                }
-                Labs.MenuSeparator { }
-                Labs.MenuItem {
-                    text: qsTr("Reset cache")
-                    onTriggered: {
-                        App.clearDeviceCache()
-                    }
-                }
-                Labs.MenuSeparator { }
-                Labs.MenuItem {
-                    text: qsTr("&Quit")
-                    onTriggered: Qt.quit()
-                }
-            }
-            Labs.Menu {
-                title: qsTr("&Edit")
-                Labs.MenuItem {
-                    text: qsTr("&Copy to clipboard")
-                    onTriggered: App.snapScreenshotToClipboard()
-                }
-            }
-            Labs.Menu {
-                title: qsTr("&Tools")
-                Labs.MenuItem {
-                    text: qsTr("Create ArcGIS location service")
-                    onTriggered: createEsriServiceWindowLoader.active = true
-                }
-            }
-            Labs.Menu {
-                title: qsTr("&Window")
-                Labs.MenuItem {
-                    text: qsTr("Reset window size")
-                    onTriggered: {
-                        consoleWindowLoader.active = false
-                        appWindow.setGeometry(appWindow.x, appWindow.y, 480, 640)
-                    }
-                }
-                Labs.MenuSeparator { }
-                Labs.MenuItem {
-                    text: qsTr("Toggle developer console")
-                    onTriggered: consoleWindowLoader.active = !consoleWindowLoader.active
-                }
-            }
-        }
+    Settings {
+        id: settings
+        location: App.iniUrl
+        category: "AppWindow"
+        property alias x: appWindow.x
+        property alias y: appWindow.y
+        property alias width: appWindow.width
+        property alias height: appWindow.height
     }
 
     // Message popup.
@@ -164,7 +70,7 @@ ApplicationWindow {
     }
 
     // Handle Android back button.
-    onClosing: {
+    onClosing: function(close) {
         if (Qt.platform.os !== "android") {
             return
         }
@@ -177,11 +83,21 @@ ApplicationWindow {
                 return
             }
 
-            Qt.quit()
+            if (!App.kioskMode)
+            {
+                App.backToHomeScreen()
+            }
+
             return
         }
 
         App.backPressed()
+    }
+
+    Rectangle {
+        anchors.fill: parent
+        color: "black"
+        visible: !videoMode
     }
 
     Rectangle {
@@ -226,16 +142,33 @@ ApplicationWindow {
 
             bottomMargin: {
                 if (!Qt.inputMethod.visible) {
-                    return 0
+                    if (App.settings.fullScreen) {
+                        return 0
+                    }
+
+                    return parent.SafeArea.margins.bottom
+                }
+
+                // Older Android (API < 30) reports the keyboard via SafeArea
+                // insets, so the manual math below is not needed.
+                if (Qt.platform.os === "android" && Utils.androidSdkVersion() < 30) {
+                    return parent.SafeArea.margins.bottom
                 }
 
                 let keyboardHeight = Qt.inputMethod.keyboardRectangle.height
-                if (Qt.platform.os !== "ios") {
+
+                if (Qt.platform.os === "android") {
                     // Adjust if the keyboard is not at the bottom.
                     keyboardHeight += (appWindow.height * Screen.devicePixelRatio - Qt.inputMethod.keyboardRectangle.bottom)
 
                     // Scale to screen coordinates.
                     keyboardHeight /= Screen.devicePixelRatio
+
+                    keyboardHeight += parent.SafeArea.margins.bottom
+                }
+
+                if (Qt.platform.os === "ios") {
+                    keyboardHeight += parent.SafeArea.margins.bottom
                 }
 
                 return keyboardHeight
@@ -247,7 +180,9 @@ ApplicationWindow {
         }
 
         Component.onCompleted: {
-            visible = App.settings.autoLaunchProjectUid === ""
+            visible = !App.projectManager.exists(App.settings.autoLaunchProjectUid)
+
+            App.garbageCollectStreamers()
 
             if (videoMode) {
                 appWindow.x = 2200
@@ -262,6 +197,45 @@ ApplicationWindow {
                 height = 800
             }
         }
+
+        function pushPageDefault(page, params = ({})) {
+            appPageStack.push(page, params)
+        }
+
+        function pushPageImmediate(page, params = ({})) {
+            appPageStack.push(page, params, StackView.Immediate)
+        }
+
+        function popPageDefault() {
+            appPageStack.pop()
+        }
+
+        function popPageImmediate() {
+            appPageStack.pop(StackView.Immediate)
+        }
+    }
+
+    function pushPageDefault(context, page, params = ({})) {
+        App.parentStackView(context).pushPageDefault(page, params)
+    }
+
+    function pushPageImmediate(context, page, params = ({})) {
+        App.parentStackView(context).pushPageImmediate(page, params, StackView.Immediate)
+    }
+
+    function popPageDefault(context) {
+        App.parentStackView(context).popPageDefault()
+    }
+
+    function popPageImmediate(context) {
+        let pageStack = App.parentStackView(context)
+        pageStack.popPageImmediate()
+        pageStack.currentItem.x = 0
+        pageStack.currentItem.opacity = 1.0
+    }
+
+    function setProjectColors(item) {
+        // Stub fallback to simplify callers.
     }
 
     Connections {
@@ -290,11 +264,33 @@ ApplicationWindow {
         id: popupToast
     }
 
+    function showTrackFile(context, filename, summary) {
+        let points = App.trackFileToPoints(filename)
+        if (points.length === 0) {
+            showError(qsTr("Bad track file"))
+            return
+        }
+
+        let params = {
+            title: qsTr("Track"),
+            footerText: summary,
+            hideDataLayers: true,
+            mode: C.MapController.ModeField,
+            initialPanMode: C.MapController.AutoPanModeOff,
+            initialExtent: Utils.computeExtent(points),
+            fieldValue: { fieldType: "TrackFile", fieldValue: points },
+        }
+
+        pushPageImmediate(context, "qrc:/imports/CyberTracker/EsriMapViewPage.qml", params)
+    }
+
     Timer {
         id: popToRootTimer
         interval: 10
         onTriggered: {
-            appPageStack.pop(null)
+            appPageStack.pop(null, StackView.Immediate)
+            appPageStack.currentItem.x = 0
+            appPageStack.currentItem.opacity = 1.0
             appPageStackList = [appPageStackList[0]]
         }
     }
@@ -303,31 +299,44 @@ ApplicationWindow {
         popToRootTimer.start()
     }
 
+    Connections {
+        target: App
+        
+        function onPermissionGranted(callback) {
+            if (callback !== undefined) {
+                callback()
+            }
+        }
+    }
+
     function changeToProject(projectUid, transition = StackView.Immediate) {
-        App.clearComponentCache()
+        let callback = () => changeToProject(projectUid, transition)
 
         if (App.promptForLocation(projectUid)) {
-            popupRequestLocation.open({ callback: () => { changeToProject(projectUid, transition) } })
+            popupRequestLocation.open({ callback: callback })
             return
         }
 
         if (App.promptForBackgroundLocation(projectUid)) {
-            popupRequestBackgroundLocation.open({ projectUid: projectUid, transition: transition })
+            popupRequestBackgroundLocation.open({ callback: callback })
             return
         }
 
-        if (!App.requestPermissions(projectUid)) {
+        if (App.promptForCamera(projectUid)) {
+            App.requestPermissionCamera(callback)
             return
         }
 
-        if (App.promptForBlackviewMessage(projectUid)) {
-            App.settings.blackviewMessageShown = true
-            popupBlackviewMessage.open({ projectUid: projectUid, transition: transition })
+        if (App.promptForMicrophone(projectUid)) {
+            App.requestPermissionMicrophone(callback)
             return
         }
 
+        App.clearComponentCache()
         appPageStack.visible = false
-        appPageStack.pop(null)
+        appPageStack.pop(null, StackView.Immediate)
+        appPageStack.currentItem.x = 0
+        appPageStack.currentItem.opacity = 1.0
         appPageStackList = [appPageStackList[0]]
 
         try {
@@ -336,6 +345,10 @@ ApplicationWindow {
         finally {
             appPageStack.visible = true
         }
+    }
+
+    function pushConnectQRCodePage() {
+        App.requestPermissionCamera(() => { appPageStack.push("qrc:/ConnectQRCodePage.qml") })
     }
 
     function sortCompareByName(a, b) {
@@ -368,27 +381,9 @@ ApplicationWindow {
             }
 
             let projectUid = App.settings.autoLaunchProjectUid
-            if (projectUid !== "") {
+            if (App.projectManager.exists(projectUid)) {
                 changeToProject(projectUid)
             }
-        }
-    }
-
-    // Console window.
-    Loader {
-        id: consoleWindowLoader
-        active: false
-        sourceComponent: ConsoleWindow {
-            onClosing: consoleWindowLoader.active = false
-        }
-    }
-
-    // Create ESRI Service window.
-    Loader {
-        id: createEsriServiceWindowLoader
-        active: false
-        sourceComponent: CreateEsriServiceWindow {
-            onClosing: createEsriServiceWindowLoader.active = false
         }
     }
 
@@ -400,7 +395,9 @@ ApplicationWindow {
                 return
             }
 
-            appPageStack.pop(null)
+            appPageStack.pop(null, StackView.Immediate)
+            appPageStack.currentItem.x = 0
+            appPageStack.currentItem.opacity = 1.0
             appPageStackList = [appPageStackList[0]]
             busyCover.doWork = runCommandLine
             busyCover.start()
@@ -422,6 +419,10 @@ ApplicationWindow {
             appPageStackList.pop()
             appPageStack.pop()
         }
+
+        function onChangeToProject(projectUid) {
+            changeToProject(projectUid, StackView.Immediate)
+        }
     }
 
     function runCommandLine() {
@@ -441,6 +442,16 @@ ApplicationWindow {
             return
         }
 
+        if (result.webhook === true) {
+            confirmSetWebhook.open(({ params: result.params }))
+            return
+        }
+
+        if (result.setGoto === true) {
+            appPageStack.push("qrc:/MapsPage.qml", StackView.Immediate)
+            return
+        }
+
         let projectUid = App.projectManager.lastNewProjectUid
         if (result.launch === true && projectUid !== "" && App.projectManager.exists(projectUid)) {
             changeToProject(projectUid)
@@ -457,6 +468,51 @@ ApplicationWindow {
         showError(qsTr("Offline"));
     }
 
+    // Once-per-session guard for the auto-popup that prompts when offline maps have updates.
+    property bool offlineMapsUpdatePopupShown: false
+
+    function updateMaps() {
+        if (Utils.networkAvailable()) {
+            busyCover.doWork = () => App.offlineMapManager.updateAll()
+            busyCover.start()
+            return
+        }
+
+        showError(qsTr("Offline"))
+    }
+
+    Connections {
+        target: App.offlineMapManager
+
+        function onUpdatesAvailableChanged() {
+            if (offlineMapsUpdatePopupShown) {
+                return
+            }
+
+            if (!App.offlineMapManager.updatesAvailable) {
+                return
+            }
+
+            offlineMapsUpdatePopupShown = true
+            popupOfflineMapsUpdate.open()
+        }
+    }
+
+    C.PopupLoader {
+        id: popupOfflineMapsUpdate
+
+        popupComponent: Component {
+            C.ConfirmPopup {
+                icon: "qrc:/icons/autorenew.svg"
+                text: qsTr("Offline maps update available")
+                confirmText: qsTr("Update now")
+                onConfirmed: {
+                    updateMaps()
+                }
+            }
+        }
+    }
+
     C.BusyCover {
         id: busyCover
     }
@@ -470,40 +526,18 @@ ApplicationWindow {
     }
 
     C.PopupLoader {
-        id: popupBlackviewMessage
-
-        popupComponent: Component {
-            C.MessagePopup {
-                property string projectUid: ""
-                property int transition: StackView.Immediate
-
-                icon: "qrc:/icons/alert_outline.svg"
-                title: qsTr("%1 detected").arg("Blackview")
-                message1: qsTr("Use the %1 app to allow background activity for %2.").arg("**'System Manager'**").arg(App.config.title)
-                message2: qsTr("This is required to ensure that a proper track of your location is created.").arg(App.alias_project)
-                onClicked: {
-                    changeToProject(projectUid, transition)
-                }
-            }
-        }
-    }
-
-    C.PopupLoader {
         id: popupRequestBackgroundLocation
 
         popupComponent: Component {
             C.MessagePopup {
-                property string projectUid: ""
-                property int transition: StackView.Immediate
+                property var callback
 
                 icon: "qrc:/icons/map_marker_multiple_outline.svg"
                 title: qsTr("Background location required")
                 message1: qsTr("You must select %1 on the next screen.").arg("**'" + qsTr("Allow all the time") + "'**")
-                message2: qsTr("This %1 requires permission to capture location in the background. This is needed to ensure that a proper track of your location is created.").arg(App.alias_project)
+                message2: qsTr("This app collects your location in the background so it can create an accurate track for mapping and field reporting. Location may be collected even when the app is closed or you are not actively using it.")
                 onClicked: function (index) {
-                    if (App.requestPermissionBackgroundLocation(projectUid)) {
-                        changeToProject(projectUid, transition)
-                    }
+                    App.requestPermissionBackgroundLocation(callback)
                 }
             }
         }
@@ -514,15 +548,31 @@ ApplicationWindow {
 
         popupComponent: Component {
             C.MessagePopup {
-                property var callback: undefined
+                property var callback
 
                 icon: "qrc:/icons/map_marker.svg"
                 title: qsTr("Location required")
-                message1: qsTr("Permission to use your location is needed for mapping and data collection.")
+                message1: qsTr("This app uses your precise location to show where you are on the map and to record location points during data collection. Location is accessed only while you are actively using the app.")
                 message2: qsTr("Tap %1 below and allow it to be used.").arg("**" + qsTr("OK") + "**")
                 onClicked: function (index) {
-                    if (App.requestPermissionLocation() && callback !== undefined) {
-                        callback()
+                    App.requestPermissionLocation(callback)
+                }
+            }
+        }
+    }
+
+    C.PopupLoader {
+        id: confirmSetWebhook
+        popupComponent: Component {
+            C.ConfirmPopup {
+                property var params
+                text: qsTr("Install webhook")
+                subText: qsTr("Data will be shared with %1").arg("'" + params.entity + "'")
+                confirmText: qsTr("Yes, share my data")
+                onConfirmed: {
+                    App.settings.webhookUrl = params.url.trim()
+                    if (App.settings.webhookUrl !== "") {
+                        showToast(qsTr("Webhook installed"))
                     }
                 }
             }

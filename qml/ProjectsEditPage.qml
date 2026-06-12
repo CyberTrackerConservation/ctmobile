@@ -1,12 +1,11 @@
-import QtQml 2.12
-import QtQuick 2.12
-import QtQuick.Controls 2.12
-import QtQuick.Layouts 1.12
-import QtQuick.Dialogs 1.2
-import Qt.labs.settings 1.0 as Labs
-import QtMultimedia 5.12
-import QtQuick.Controls.Material 2.12
-import CyberTracker 1.0 as C
+import QtCore
+import QtQuick
+import QtQuick.Controls.Material
+import QtQuick.Layouts
+import QtQuick.Dialogs
+import Qt.labs.platform as Labs
+import QtMultimedia
+import CyberTracker as C
 
 C.ContentPage {
     id: page
@@ -142,20 +141,23 @@ C.ContentPage {
         }
     }
 
-    Labs.Settings {
-        fileName: App.iniPath
+    Settings {
+        location: App.iniUrl
         category: "ProjectsDialog"
         property alias fileDialogFolder: fileDialog.folder
-        property alias fileDialogPackageFolder: fileDialogPackage.folder
+        property alias fileDialogPackageFolder: fileDialogPackage.currentFolder
     }
 
-    FileDialog {
+    Labs.FileDialog {
         id: fileDialog
-
-        folder: shortcuts.home
+        folder: StandardPaths.writableLocation(StandardPaths.HomeLocation)
         nameFilters: [ "Project packages (*.zip)" ]
         onAccepted: {
-            App.installPackage(fileDialog.fileUrl, true)
+            let filePath = App.copyContent(fileDialog.file, App.workPath)
+            if (filePath !== "") {
+                App.installPackage(filePath, true)
+                Utils.removeFile(filePath)
+            }
         }
 
         function show() {
@@ -171,11 +173,11 @@ C.ContentPage {
 
         defaultSuffix: "zip"
         title: qsTr("Save %1 package").arg(App.alias_project)
-        folder: shortcuts.desktop
+        currentFolder: StandardPaths.writableLocation(StandardPaths.DesktopLocation)
         nameFilters: [ "CyberTracker project packages (*.zip)" ]
-        selectExisting: false
+        fileMode: FileDialog.SaveFile
         onAccepted: {
-            let targetFile = Utils.urlToLocalFile(fileDialogPackage.fileUrl)
+            let targetFile = Utils.urlToLocalFile(fileDialogPackage.selectedFile)
             let success = Utils.copyFile(packageFile, targetFile)
             if (success) {
                 App.copyToClipboard(targetFile)

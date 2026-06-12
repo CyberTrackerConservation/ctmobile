@@ -1,13 +1,12 @@
-import QtQuick 2.12
-import QtQuick.Controls 2.12
-import QtQuick.Controls.Material 2.12
-import CyberTracker 1.0 as C
+import QtQuick
+import QtQuick.Controls.Material
+import CyberTracker as C
 
 C.ContentPage {
     id: page
 
-    property string elementUid
-    property string banner: ""
+    property string elementUid: form.getFieldValue("reportUid")
+    property string banner: form.isSightingCompleted(form.rootRecordUid) ? form.provider.banner() : ""
 
     Component.onCompleted: {
         if (page.banner !== "") {
@@ -24,6 +23,12 @@ C.ContentPage {
             if (listView.validate()) {
                 let f = form
                 f.saveSighting()
+                f.markSightingCompleted()
+                if (f.editing) {
+                    f.popPagesToParent()
+                    return
+                }
+
                 f.popPagesToStart()
                 f.newSighting()
             }
@@ -32,7 +37,7 @@ C.ContentPage {
 
     C.FieldListViewEditor {
         id: listView
-
+        anchors.fill: parent
         recordUid: form.rootRecordUid
         filterElementUid: page.elementUid
 

@@ -1,10 +1,7 @@
-import QtQml 2.12
-import QtQuick 2.12
-import QtQuick.Controls 2.12
-import QtQuick.Layouts 1.12
-import QtGraphicalEffects 1.0
-import QtQuick.Controls.Material 2.12
-import CyberTracker 1.0 as C
+import QtQuick
+import QtQuick.Controls.Material
+import QtQuick.Layouts
+import CyberTracker as C
 
 C.ContentPage {
     id: page
@@ -14,7 +11,7 @@ C.ContentPage {
         menuIcon: "qrc:/icons/settings.svg"
         menuVisible: true
         onMenuClicked: {
-            form.pushPage("qrc:/imports/CyberTracker.1/FormSettingsPage.qml")
+            form.pushPage("qrc:/imports/CyberTracker/FormSettingsPage.qml")
         }
     }
 
@@ -24,7 +21,7 @@ C.ContentPage {
 
         C.FooterButton {
             text: qsTr("Submit")
-            enabled: listView.canSubmit
+            enabled: listView.canSubmitData
             icon.source: "qrc:/icons/upload_multiple.svg"
             onClicked: listView.submit()
         }
@@ -61,9 +58,8 @@ C.ContentPage {
         recolor: false
     }
 
-    C.FormSightingsListView {
+    C.SightingsListView {
         id: listView
-
         anchors {
             left: parent.left
             right: parent.right
@@ -71,9 +67,17 @@ C.ContentPage {
             bottom: locationTrackingState.visible ? locationTrackingState.top : parent.bottom
         }
 
+        active: true
         showNoData: false
+        filter.projectUid: form.project.uid
+        filter.stateSpace: form.stateSpace
 
         onClicked: function (sighting, index) {
+            if (sighting.trackOnly) {
+                showTrackFile(page, sighting.trackFileName, sighting.trackFileSummary)
+                return
+            }
+
             editSighting(sighting)
         }
     }
@@ -87,24 +91,71 @@ C.ContentPage {
             bottom: parent.bottom
         }
 
-        visible: form.trackStreamer.running || form.pointStreamer.running
+        visible: form.connected ? (form.trackStreamer.running || form.pointStreamer.running || form.allowUserTrackChange) : false
 
         Rectangle {
             Layout.fillWidth: true
-            height: 2
+            height: App.scaleByFontSize(2)
             color: Material.theme === Material.Dark ? "#FFFFFF" : "#000000"
             opacity: 0.125
         }
 
-        Button {
+        RowLayout {
+            Layout.fillHeight: true
             Layout.fillWidth: true
-            enabled: false
-            flat: true
-            display: Button.TextBesideIcon
-            font.capitalization: Font.MixedCase
-            font.pixelSize: App.settings.font14
-            icon.source: form.trackStreamer.running ? form.trackStreamer.rateIcon : form.pointStreamer.rateIcon
-            text: form.trackStreamer.running ? form.trackStreamer.rateFullText : form.pointStreamer.rateFullText
+            spacing: 0
+
+            Item {
+                Layout.preferredWidth: 0
+                Layout.preferredHeight: Math.max(1.25, C.Style.switchScale) * checkLocationStreamingEnabled.height * C.Style.switchScale
+            }
+
+            Switch {
+                id: checkLocationStreamingEnabled
+                Layout.alignment: Qt.AlignVCenter
+                Layout.leftMargin: App.scaleByFontSize(4) * C.Style.switchScale
+                scale: C.Style.switchScale
+                visible: form.allowUserTrackChange
+                checked: form.project.locationStreamingEnabled
+                onCheckedChanged: {
+                    form.project.locationStreamingEnabled = checked
+                }
+            }
+
+            Item {
+                Layout.preferredWidth: checkLocationStreamingEnabled.width
+                Layout.preferredHeight: checkLocationStreamingEnabled.height
+                visible: !checkLocationStreamingEnabled.visible
+            }
+
+            Label {
+                Layout.fillWidth: true
+                verticalAlignment: Qt.AlignVCenter
+                horizontalAlignment: Qt.AlignHCenter
+                font.pixelSize: App.settings.font14
+                elide: Text.ElideRight
+                text: {
+                    if (form.trackStreamer.running || form.pointStreamer.running) {
+                        return form.trackStreamer.running ? form.trackStreamer.rateFullText : form.pointStreamer.rateFullText
+                    } else {
+                        return qsTr("Location stopped")
+                    }
+                }
+                opacity: 0.5
+            }
+
+            C.SquareIcon {
+                id: streamerStateIcon
+                Layout.alignment: Qt.AlignVCenter
+                Layout.preferredWidth: checkLocationStreamingEnabled.width
+                size: C.Style.iconSize24
+                source: form.trackStreamer.running || form.pointStreamer.running ? App.locationLogger.stateIcon : "qrc:/icons/gps_off.svg"
+                opacity: 0.5
+            }
+        }
+
+        Item {
+            height: App.scaleByFontSize(2)
         }
     }
 
@@ -115,8 +166,16 @@ C.ContentPage {
     }
 
     function editSighting(sighting) {
-        form.loadSighting(sighting.rootRecordUid)
-        form.setPageStack([{ pageUrl: form.startPage}])
+        form.loadSighting(sighting.sightingUid)
+
+        // Resume the wizard where we left off.
+        if (form.project.wizardMode && form.sighting.wizardRecordUid !== "" && form.sighting.wizardPageStack.length > 0) {
+            form.pushWizardPage(form.sighting.wizardRecordUid, {})
+            return
+        }
+
+        // Restart the wizard or page mode from the index.
+        form.setPageStack([{ pageUrl: form.startPage }])
 
         form.wizard.reset()
         if (form.project.wizardMode) {

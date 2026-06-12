@@ -1,10 +1,7 @@
-import QtQml 2.12
-import QtQuick 2.12
-import QtQuick.Controls 2.12
-import QtQuick.Layouts 1.12
-import QtQuick.Controls.Material 2.12
-import QtQuick.Dialogs 1.2
-import CyberTracker 1.0 as C
+import QtQuick
+import QtQuick.Controls.Material
+import QtQuick.Layouts
+import CyberTracker as C
 
 C.ContentPage {
     id: page
@@ -29,11 +26,12 @@ C.ContentPage {
             id: projectListModel
         }
 
-        currentIndex: -1
-
-        ButtonGroup {
-            buttons: listView.contentItem.children
+        footer: Item {
+            width: parent.width
+            height: C.Style.iconSize64
         }
+
+        currentIndex: -1
 
         delegate: SwipeDelegate {
             id: d
@@ -85,21 +83,66 @@ C.ContentPage {
             }
 
             contentItem: C.ListRow {
+                property bool hasUpdate: modelData.hasUpdate && modelData.loggedIn
+                property bool hasAnnouncements: modelData.announcements.length > 0
                 iconSource: {
                     let result = App.settings.darkTheme && modelData.iconDark !== "" ? modelData.iconDark : modelData.icon
                     return result !== "" ? App.projectManager.getFileUrl(modelData.uid, result) : ""
                 }
                 text: modelData.title
                 subText: modelData.subtitle
-                toolButton: modelData.hasUpdate && modelData.loggedIn
-                toolButtonIconSource: "qrc:/icons/autorenew.svg"
+                toolButtonVisible: hasUpdate || hasAnnouncements
+                toolButtonIconSource: hasUpdate ? "qrc:/icons/autorenew.svg" : "qrc:/icons/message_alert_outline.svg"
                 onToolButtonClicked: {
-                    if (!App.updateAllowed()) {
-                        showError(qsTr("Offline"))
+                    if (hasUpdate) {
+                        if (!App.updateAllowed()) {
+                            showError(qsTr("Offline"))
+                            return
+                        }
+
+                        appWindow.updateProject(modelData.uid)
                         return
                     }
 
-                    appWindow.updateProject(modelData.uid)
+                    if (hasAnnouncements) {
+                        popupAnnouncements.open({ announcements: modelData.announcements, announcementIndex: 0 })
+                        return
+                    }
+                }
+            }
+
+            Rectangle {
+                id: redDot
+                color: modelData.hasStreamers ? "transparent" : "orange"
+                x: App.scaleByFontSize(4)
+                y: x
+                radius: modelData.hasStreamers ? width / 2 : 0
+                width: parent.height / 8
+                height: width
+                visible: {
+                    if (d.swipe.position !== 0) {
+                        return false
+                    }
+
+                    if (App.settings.patrolProjectUid === modelData.uid) {
+                        return true
+                    }
+
+                    if (modelData.hasStreamers) {
+                        return true
+                    }
+
+                    return false
+                }
+
+                Timer {
+                    interval: 750
+                    running: redDot.visible && modelData && modelData.hasStreamers
+                    repeat: true
+                    onTriggered: {
+                        var c = App.locationLogger.stateColor
+                        redDot.color = Qt.rgba(c.r, c.g, c.b, redDot.color.a ^ 1)
+                    }
                 }
             }
 
@@ -125,7 +168,10 @@ C.ContentPage {
                     }
 
                     // Send telemetry.
-                    App.telemetry.aiSendEvent("projectStart", { "connector": modelData.connector, "telemetry": modelData.telemetry })
+                    App.telemetry.aiSendEvent("projectStart", { "connector": modelData.connector, "telemetry": modelData.telemetry, "title": modelData.title, "subtitle": modelData.subtitle, "usage": App.telemetry.getUsage(modelData.uid) })
+
+                    // Log to event log.
+                    App.auditAdd(modelData.title, qsTr("Open %1").arg(App.alias_Project))
 
                     changeToProject(modelData.uid, StackView.PushTransition)
 
@@ -198,7 +244,7 @@ C.ContentPage {
                         elide: Label.ElideRight
                     }
                     onClicked: {
-                        appPageStack.push("qrc:/ConnectQRCodePage.qml")
+                        pushConnectQRCodePage()
                     }
                 }
 
@@ -217,43 +263,43 @@ C.ContentPage {
         }
     }
 
-    C.CircleButton {
-        id: addButton
+    RowLayout {
         anchors {
             right: parent.right
             rightMargin: App.scaleByFontSize(8)
             bottom: listView.bottom
             bottomMargin: App.scaleByFontSize(8)
         }
-        icon.source: "qrc:/icons/plus.svg"
-        icon.width: C.Style.iconSize48
-        icon.height: C.Style.iconSize48
-        visible: !App.config.showConnectPage && (App.config.connectPane !== "")
-        onClicked: {
-            appPageStack.push("qrc:/ConnectPage.qml")
-        }
-    }
 
-    C.CircleButton {
-        id: scanButton
-        anchors {
-            right: parent.right
-            rightMargin: App.scaleByFontSize(8)
-            bottom: listView.bottom
-            bottomMargin: App.scaleByFontSize(8)
-        }
-        radius: width / 8
-        icon.source: "qrc:/icons/qrcode_scan.svg"
-        icon.width: C.Style.iconSize48
-        icon.height: C.Style.iconSize48
-        visible: !App.config.showConnectPage && (App.config.connectPane === "")
-        onClicked: {
-            if (appWindow.videoMode) {
-                App.runLinkOnClipboard()
-                return
+        C.CircleButton {
+            id: scanButton
+            radius: width / 12
+            text: qsTr("Scan") + " "
+            font.pixelSize: App.settings.font14
+            font.capitalization: Font.MixedCase
+            icon.source: "qrc:/icons/qrcode.svg"
+            icon.width: C.Style.iconSize40
+            icon.height: C.Style.iconSize40
+            visible: App.config.showScanButton
+            onClicked: {
+                if (appWindow.videoMode) {
+                    App.runLinkOnClipboard()
+                    return
+                }
+
+                pushConnectQRCodePage()
             }
+        }
 
-            appPageStack.push("qrc:/ConnectQRCodePage.qml")
+        C.CircleButton {
+            id: addButton
+            icon.source: "qrc:/icons/plus.svg"
+            icon.width: C.Style.iconSize40
+            icon.height: C.Style.iconSize40
+            visible: !App.config.showConnectPage && (App.config.connectPane !== "")
+            onClicked: {
+                appPageStack.push("qrc:/ConnectPage.qml")
+            }
         }
     }
 
@@ -298,6 +344,29 @@ C.ContentPage {
 
                 onCancel: {
                     changeToProject(projectUid, StackView.PushTransition)
+                }
+            }
+        }
+    }
+
+    C.PopupLoader {
+        id: popupAnnouncements
+
+        popupComponent: Component {
+            C.MessagePopup {
+                property var announcements: []
+                property int announcementIndex: 0
+
+                icon: "qrc:/icons/message_alert_outline.svg"
+                title: qsTr("Annoucement")
+                message1: announcements[announcementIndex].message
+                message2: " "
+                buttons: [{ icon: "qrc:/icons/chevron_right.svg", text: qsTr("Next"), enabled: announcementIndex < announcements.length - 1 },
+                          { icon: "qrc:/icons/ok.svg", text: qsTr("OK") }]
+                onClicked: (index) => {
+                    if (index === 0) {
+                        popupAnnouncements.open({ announcements: announcements, announcementIndex: announcementIndex + 1 })
+                    }
                 }
             }
         }

@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple Computer//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CFBundleInfoDictionaryVersion</key>
+	<string>6.0</string>
+
+	<key>CFBundlePackageType</key>
+	<string>APPL</string>
+
+	<key>CFBundleDisplayName</key>
+	<string>${PRODUCT_DISPLAY_NAME}</string>
+	<key>LSApplicationCategoryType</key>
+    <string>${PRODUCT_CATEGORY}</string>
+	<key>NSHumanReadableCopyright</key>
+	<string>${PRODUCT_COPYRIGHT}</string>
+
+	<key>CFBundleName</key>
+	<string>${PRODUCT_NAME}</string>
+	<key>CFBundleIdentifier</key>
+	<string>${PRODUCT_BUNDLE_IDENTIFIER}</string>
+	<key>CFBundleExecutable</key>
+	<string>${MACOSX_BUNDLE_EXECUTABLE_NAME}</string>
+
+	<key>CFBundleVersion</key>
+	<string>${PRODUCT_BUILD_NUMBER}</string>
+	<key>CFBundleShortVersionString</key>
+	<string>${PRODUCT_VERSION_STRING}</string>
+
+	<key>CFBundleIconName</key>
+	<string>AppIcon</string>
+	<key>UILaunchStoryboardName</key>
+    <string>LaunchScreen</string>
+
+	<key>LSMinimumSystemVersion</key>
+	<string>15.0</string>
+
+	<key>CFBundleDevelopmentRegion</key>
+	<string>English</string>
+
+	<key>NSSupportsAutomaticGraphicsSwitching</key>
+	<true/>
+
+	<key>LSSupportsOpeningDocumentsInPlace</key>
+	<true/>
+
+	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
+	<string>This project requires permission to capture location in the background. This is needed to ensure that a proper track of your location is created.</string>
+
+	<key>NSBluetoothAlwaysUsageDescription</key>
+	<string>App would like to access Bluetooth</string>
+
+	<key>NSCameraUsageDescription</key>
+	<string>Access to the camera is needed to capture photos for observations</string>
+
+	<key>NSLocationWhenInUseUsageDescription</key>
+	<string>Access to location is needed to use maps and to capture geo-referenced data</string>
+
+	<key>NSMicrophoneUsageDescription</key>
+	<string>Access to the microphone is needed to record audio for observations.</string>
+
+	<key>NSPhotoLibraryAddUsageDescription</key>
+	<string>App would like to save images taken with camera.</string>
+
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>App would like to access the library.</string>
+
+	<key>UIBackgroundModes</key>
+	<array>
+		<string>location</string>
+	</array>
+
+	<key>UIFileSharingEnabled</key>
+	<false/>
+
+	<key>UIRequiresFullScreen</key>
+	<true/>
+
+	<key>UIRequiresPersistentWiFi</key>
+	<string>NO</string>
+
+	<key>LSRequiresIPhoneOS</key>
+	<true/>
+
+	<key>UISupportedInterfaceOrientations</key>
+	<array>
+		<string>UIInterfaceOrientationPortrait</string>
+		<string>UIInterfaceOrientationPortraitUpsideDown</string>
+		<string>UIInterfaceOrientationLandscapeLeft</string>
+		<string>UIInterfaceOrientationLandscapeRight</string>
+	</array>
+	<key>UISupportedInterfaceOrientations~ipad</key>
+	<array>
+		<string>UIInterfaceOrientationPortrait</string>
+		<string>UIInterfaceOrientationPortraitUpsideDown</string>
+		<string>UIInterfaceOrientationLandscapeLeft</string>
+		<string>UIInterfaceOrientationLandscapeRight</string>
+	</array>
+
+	<key>UTExportedTypeDeclarations</key>
+	<array>
+		<dict>
+			<key>UTTypeConformsTo</key>
+			<array>
+				<string>public.data</string>
+				<string>public.archive</string>
+			</array>
+			<key>UTTypeDescription</key>
+			<string>CTX file</string>
+			<key>UTTypeIdentifier</key>
+			<string>org.cybertracker.ctx</string>
+			<key>UTTypeTagSpecification</key>
+			<dict>
+				<key>public.filename-extension</key>
+				<array>
+					<string>ctx</string>
+					<string>CTX</string>
+				</array>
+			</dict>
+		</dict>
+	</array>
+</dict>
+</plist>

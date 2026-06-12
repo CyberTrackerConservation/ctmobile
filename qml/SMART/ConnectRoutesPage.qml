@@ -1,8 +1,7 @@
-import QtQml 2.12
-import QtQuick 2.12
-import QtQuick.Layouts 1.12
-import QtQuick.Controls 2.12
-import CyberTracker 1.0 as C
+import QtQuick
+import QtQuick.Layouts
+import QtQuick.Controls.Material
+import CyberTracker as C
 
 C.ContentPage {
     id: page
@@ -27,17 +26,21 @@ C.ContentPage {
             checkable: true
             text: modelData.name
             subText: App.formatDateTime(modelData.uploadedDate)
-            onCheckedChanged: page.routes[model.index].checked = checked
+            onCheckedChanged: {
+                page.routes = JSON.parse(JSON.stringify(page.routes))
+                page.routes[model.index].checked = checked
+            }
         }
     }
 
     function connectRoutes() {
         let connectorParams = form.project.connectorParams
+        let api_key = form.project.accessToken
         let connectedCount = 0
         for (let i = 0; i < page.routes.length; i++) {
             let route = page.routes[i]
             if (route.checked === true) {
-                let zipUrl = connectorParams.navigation_url + "/" + route.uuid + "?api_key=" + connectorParams.api_key
+                let zipUrl = connectorParams.navigation_url + "/" + route.uuid + "?api_key=" + api_key
                 let zipFile = App.downloadFile(zipUrl)
                 if (zipFile !== "") {
                     if (App.installPackage(zipFile, false).success) {
@@ -51,6 +54,6 @@ C.ContentPage {
 
         showToast(connectedCount + " " + (connectedCount === 1 ? qsTr("route installed") : qsTr("routes installed")))
 
-        form.popPage()
+        popPageImmediate(page)
     }
 }

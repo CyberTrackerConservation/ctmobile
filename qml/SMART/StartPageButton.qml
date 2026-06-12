@@ -1,7 +1,6 @@
-import QtQuick 2.12
-import QtQuick.Controls 2.12
-import QtGraphicalEffects 1.0
-import QtQuick.Controls.Material 2.12
+import QtQuick
+import QtQuick.Controls.Material
+import CyberTracker as C
 
 ToolButton {
     id: button
@@ -29,11 +28,9 @@ ToolButton {
                 width: 55
             }
 
-            layer {
-                enabled: true
-                effect: ColorOverlay {
-                    color: App.settings.darkTheme ? Utils.lighter(Material.primary) : Material.primary
-                }
+            layer.enabled: true
+            layer.effect: C.SimpleColorOverlay {
+                color: App.settings.darkTheme ? Utils.lighter(Material.primary) : Material.primary
             }
         }
 

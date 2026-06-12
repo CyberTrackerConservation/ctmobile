@@ -1,11 +1,9 @@
-import QtQml 2.12
-import QtQuick 2.12
-import QtQuick.Controls 2.12
-import QtQuick.Layouts 1.12
-import QtQuick.Controls.Material 2.12
+import QtQuick
+import QtQuick.Controls.Material
+import QtQuick.Layouts
 import QtLocation 5.12
-import QtPositioning 5.12
-import CyberTracker 1.0 as C
+import QtPositioning
+import CyberTracker as C
 
 C.ContentPage {
     id: page
@@ -37,10 +35,8 @@ C.ContentPage {
             return
         }
 
-        if (!form.provider.patrolForm || (form.provider.getProfileValue("WAYPOINT_TIMER") > 45)) {
-            positionMax = form.provider.getProfileValue("SIGHTING_FIX_COUNT", 1)
-        }
-
+        // Number of readings to take for GPS warmup - bypass if the track is running.
+        positionMax = App.lastLocationRecent ? 1 : form.provider.getProfileValue("SIGHTING_FIX_COUNT", 1)
         lastFix = { x: 0.0, y: 0.0, spatialReference: { wkid: 4326 } }
 
         progressCircle.progressPercent = 0
@@ -53,12 +49,14 @@ C.ContentPage {
 
     function success(locationValue) {
         header.enabled = false
+        form.resetControlState(form.rootRecordUid, "", Globals.metadataValues) // Reset metadata backup state.
         form.setFieldValue(Globals.modelLocationFieldUid, locationValue)
         form.snapCreateTime()
+        form.provider.snapLegDistance()
 
         switch (page.tag) {
         case "collectSighting":
-            form.setFieldValue(Globals.modelIncidentTypeFieldUid, "Observation")
+            form.setFieldValue(Globals.modelObservationTypeFieldUid, "Observation")
             form.setFieldValue(Globals.modelCollectUserFieldUid, form.provider.collectUser)
             form.saveSighting()
             form.newSighting(false)
@@ -66,7 +64,7 @@ C.ContentPage {
             break
 
         case "patrolSighting":
-            form.setFieldValue(Globals.modelIncidentTypeFieldUid, "Observation")
+            form.setFieldValue(Globals.modelObservationTypeFieldUid, "Observation")
             form.saveSighting()
             form.resetFieldValue(Globals.modelIncidentGroupListFieldUid)
             form.resetFieldValue(Globals.modelIncidentRecordFieldUid)
@@ -79,10 +77,17 @@ C.ContentPage {
 
         case "independentIncident":
             if (form.provider.incidentStarted) {
-                form.setFieldValue(Globals.modelIncidentTypeFieldUid, "Observation")
+                form.setFieldValue(Globals.modelObservationTypeFieldUid, "Observation")
                 form.saveSighting()
                 form.provider.stopIncident()
                 showToast(qsTr("Incident saved"))
+            }
+            break
+
+        case "startPatrol":
+            if (!form.provider.patrolStarted && !form.provider.patrolPaused) {
+                form.provider.startPatrol()
+                showToast(form.provider.surveyMode ? qsTr("Survey started") : qsTr("Patrol started"))
             }
             break
 
@@ -107,6 +112,13 @@ C.ContentPage {
                 showToast(form.provider.surveyMode ? qsTr("Survey resumed") : qsTr("Patrol resumed"))
             }
             break
+
+        case "changePatrol":
+            if (form.provider.patrolStarted && !form.provider.patrolPaused) {
+                form.provider.changePatrol()
+                showToast(form.provider.surveyMode ? qsTr("Survey changed") : qsTr("Patrol changed"))
+            }
+            break
         }
 
         Globals.patrolChangeCount++
@@ -115,14 +127,22 @@ C.ContentPage {
     function close() {
         switch (page.tag) {
         case "collectSighting":
-            form.popPage(StackView.Immediate)
+            popPageImmediate(page)
             break
 
         case "patrolSighting":
-            form.popPage(StackView.Immediate)
+            popPageImmediate(page)
             break
 
         case "independentIncident":
+            form.popPagesToParent()
+            break
+
+        case "startPatrol":
+            form.replaceLastPage("qrc:/SMART/SightingHomePage.qml")
+            break
+
+        case "stopPatrol":
             form.popPagesToParent()
             break
 
@@ -130,12 +150,12 @@ C.ContentPage {
             form.popPagesToParent()
             break
 
-        case "stopPatrol":
-            form.popPagesToParent()
-            break
-
         case "resumePatrol":
             form.replaceLastPage("qrc:/SMART/SightingHomePage.qml")
+            break
+
+        case "changePatrol":
+            popPageImmediate(page)
             break
         }
     }
@@ -201,7 +221,7 @@ C.ContentPage {
         text: qsTr("Skip GPS")
         onClicked: {
             if (form.provider.allowManualGPS) {
-                form.replaceLastPage("qrc:/imports/CyberTracker.1/FieldLocationPage.qml", {
+                form.replaceLastPage("qrc:/imports/CyberTracker/FieldLocationPage.qml", {
                     replacePageOnConfirmUrl: "qrc:/SMART/LocationPage.qml",
                     replacePageOnConfirmParams: { tag: page.tag },
                     recordUid: form.rootRecordUid,

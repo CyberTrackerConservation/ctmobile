@@ -1,9 +1,9 @@
-import QtQuick 2.12
-import QtQuick.Layouts 1.12
-import QtQuick.Controls 2.12
-import QtQuick.Dialogs 1.2
-import QtQuick.Controls.Material 2.12
-import CyberTracker 1.0 as C
+import QtCore
+import QtQuick
+import QtQuick.Layouts
+import QtQuick.Controls.Material
+import QtQuick.Dialogs
+import CyberTracker as C
 
 C.ContentPage {
     id: page
@@ -35,15 +35,22 @@ C.ContentPage {
         focus: true
         font.pixelSize: App.settings.font17
         wrapMode: Text.Wrap
-        placeholderText: {
-            var line1 = qsTr("Describe the issue")
-            var line2 = qsTr("Tap ✓ in the top right corner")
-            var line3 = qsTr("Send the file")
-            return "1." + line1 + "\n\r" + "2." + line2 + "\n\r" + "3." + line3
-        }
-
-        placeholderTextColor: Material.color(Material.Grey)
         inputMethodHints: Qt.ImhNoPredictiveText
+
+        Label {
+            font.pixelSize: App.settings.font17
+            anchors.fill: parent
+            horizontalAlignment: Qt.AlignHCenter
+            verticalAlignment: Qt.AlignVCenter
+            text: {
+                var line1 = qsTr("Describe the issue")
+                var line2 = qsTr("Tap ✓ in the top right corner")
+                var line3 = qsTr("Send the file")
+                return line1 + "\n\r" + line2 + "\n\r" + line3
+            }
+            visible: description.text === ""
+            color: Material.color(Material.Grey)
+        }
     }
 
     FileDialog {
@@ -51,11 +58,11 @@ C.ContentPage {
 
         defaultSuffix: "zip"
         title: internal.headerTitle
-        folder: shortcuts.desktop
+        currentFolder: StandardPaths.writableLocation(StandardPaths.DesktopLocation)
         nameFilters: [ "Zip files (*.zip)" ]
-        selectExisting: false
+        fileMode: FileDialog.SaveFile
         onAccepted: {
-            let success = Utils.copyFile(internal.reportId, Utils.urlToLocalFile(fileDialog.fileUrl))
+            let success = Utils.copyFile(internal.reportId, Utils.urlToLocalFile(fileDialog.selectedFile))
             if (success) {
                 showToast(qsTr("Report saved"))
             } else {
@@ -63,12 +70,12 @@ C.ContentPage {
             }
 
             Utils.removeFile(internal.reportId)
-            appPageStack.pop()
+            popPageImmediate(page)
         }
 
         onRejected: {
             Utils.removeFile(internal.reportId)
-            appPageStack.pop()
+            popPageImmediate(page)
         }
     }
 
@@ -76,16 +83,10 @@ C.ContentPage {
         id: popupReportComplete
 
         title: qsTr("Success")
-        message1: {
-            let result = internal.reportId
-            let i = result.indexOf("/Android/data/")
-            if (i !== -1) {
-                result = result.slice(i, result.length)
-            }
-            return result
+        message1: qsTr("Download/BugReports")
+        onClicked: {
+            popPageImmediate(page)
         }
-
-        onClicked: appPageStack.pop()
     }
 
     function createReport() {
@@ -102,11 +103,14 @@ C.ContentPage {
 
         if (page.useSharingOnMobile) {
             App.sendFile(internal.reportId, "Bug report")
-            appPageStack.pop()
+            popPageImmediate(page)
             return
         }
 
-        popupReportComplete.open()
+        if (App.copyToDownload(internal.reportId, "BugReports") !== "") {
+            popupReportComplete.open()
+        } else {
+            showError(qsTr("Failed to copy bug report"))
+        }
     }
 }
-

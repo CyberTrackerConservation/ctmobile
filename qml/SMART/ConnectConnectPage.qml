@@ -1,8 +1,8 @@
-import QtQml 2.12
-import QtQuick 2.12
-import QtQuick.Layouts 1.12
-import QtQuick.Controls 2.12
-import CyberTracker 1.0 as C
+import QtQuick
+import QtQuick.Layouts
+import QtQuick.Controls.Material
+import CyberTracker as C
+import ".."
 
 C.ContentPage {
     id: page
@@ -12,9 +12,6 @@ C.ContentPage {
 
         property var server
         property var packages
-        property var selectedPackage
-        property var routes
-        property var selectedProject
     }
 
     header: C.PageHeader {
@@ -26,7 +23,6 @@ C.ContentPage {
         anchors.fill: parent
         iconSource: App.settings.darkTheme ? "qrc:/SMART/logoDark.svg" : "qrc:/SMART/logo.svg"
         provider: "SMART"
-        //server: "https://connect7.refractions.net:8443"
         cacheKey: "SMARTConnect"
 
         onLoginClicked: {
@@ -39,55 +35,13 @@ C.ContentPage {
     Component {
         id: packagesPage
 
-        C.ContentPage {
-            header: C.PageHeader {
-                text: qsTr("Select package")
-            }
-
-            C.ListViewV {
-                anchors.fill: parent
-                model: internal.packages
-                delegate: C.ListRowDelegate {
-                    width: ListView.view.width
-                    text: modelData.name
-                    subText: App.formatDateTime(modelData.uploadedDate)
-                    onClicked: {
-                        internal.selectedPackage = modelData
-                        busyCover.doWork = connectPackage
-                        busyCover.start()
-                    }
-                }
-            }
-        }
-    }
-
-    Component {
-        id: routesPage
-
-        C.ContentPage {
-            header: C.PageHeader {
-                text: qsTr("Select routes")
-                menuIcon: "qrc:/icons/check.svg"
-                menuVisible: true
-                onMenuClicked: {
-                    busyCover.doWork = connectRoutes
-                    busyCover.start()
-                }
-            }
-
-            C.ListViewV {
-                property var selectedPackage
-                anchors.fill: parent
-
-                model: internal.routes
-                delegate: C.ListRowDelegate {
-                    width: ListView.view.width
-                    checkable: true
-                    text: modelData.name
-                    subText: App.formatDateTime(modelData.uploadedDate)
-                    onCheckedChanged: internal.routes[model.index].checked = checked
-                }
-            }
+        ConnectFormPage {
+            title: qsTr("Select packages")
+            forms: internal.packages
+            setFormSelected: function(index, value) { internal.packages[index].__selected = value }
+            getFormName: function(form) { return form.name; }
+            getFormSubText: function(form) { return App.formatDateTime(form.uploadedDate); }
+            connectForms: page.connectPackages
         }
     }
 
@@ -115,63 +69,66 @@ C.ContentPage {
         }
     }
 
-    function connectPackage() {
-        let params = {
-            server: internal.server + "/" + internal.selectedPackage.uuid,
-            username: loginItem.username,
-            password: loginItem.password
-        }
+    function connectPackages() {
+        for (let i = 0; i < internal.packages.length; i++) {
+            let p = internal.packages[i]
+            if (p.__selected !== true) {
+                continue
+            }
 
-        let result = App.projectManager.bootstrap("SMART", params)
-        if (!result.success) {
-            return
-        }
+            let params = {
+                server: internal.server + "/" + p.uuid,
+                username: loginItem.username,
+                password: loginItem.password
+            }
 
-        internal.selectedProject = App.projectManager.load("SMART_" + internal.selectedPackage.uuid)
+            let result = App.projectManager.bootstrap("SMART", params)
+            if (!result.success) {
+                return
+            }
 
-        if (getRoutes()) {
-            return
+            let project = App.projectManager.load("SMART_" + p.uuid)
+
+            if (!getRoutes(project)) {
+                App.showError(qsTr("Error installing routes"))
+                return
+            }
         }
 
         postPopToRoot()
     }
 
-    function getRoutes() {
-        let project = internal.selectedProject
-        var response = Utils.httpGet(project.connectorParams.navigation_url + "?api_key=" + project.connectorParams.api_key)
+    function getRoutes(project) {
+        let navigationUrl = project.connectorParams.navigation_url
+        if (navigationUrl === undefined || navigationUrl === "") {
+            return true
+        }
+
+        let response = Utils.httpGet(navigationUrl + "?api_key=" + project.accessToken)
+        let routes = []
 
         switch (response.status) {
         case 200:
-            internal.routes = JSON.parse(response.data)
-            if (internal.routes.length > 0) {
-                internal.routes.sort(sortCompareByName)
-                appPageStack.push(routesPage)
-                return true
-            }
+            routes = JSON.parse(response.data)
             break
         default:
             console.log("Failed to get navigation packages: " + response.status)
-            break
+            return false
         }
 
-        return false
-    }
+        let api_key = project.accessToken
+        for (let i = 0; i < routes.length; i++) {
+            let route = routes[i]
 
-    function connectRoutes() {
-        let connectorParams = internal.selectedProject.connectorParams
-        for (let i = 0; i < internal.routes.length; i++) {
-            let route = internal.routes[i]
-            if (route.checked === true) {
-                let zipUrl = connectorParams.navigation_url + "/" + route.uuid + "?api_key=" + connectorParams.api_key
-                let zipFile = App.downloadFile(zipUrl)
-                if (zipFile !== "") {
-                    App.installPackage(zipFile, false)
-                } else {
-                    console.log("Bootstrap route: " + route.uuid)
-                }
+            let zipUrl = navigationUrl + "/" + route.uuid + "?api_key=" + api_key
+            let zipFile = App.downloadFile(zipUrl)
+            if (zipFile !== "") {
+                App.installPackage(zipFile, false)
+            } else {
+                console.log("Bootstrap route: " + route.uuid)
             }
         }
 
-        postPopToRoot()
+        return true
     }
 }

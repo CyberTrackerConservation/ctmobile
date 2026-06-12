@@ -1,9 +1,7 @@
-import QtQml 2.12
-import QtQuick 2.12
-import QtQuick.Controls 2.12
-import QtQuick.Layouts 1.12
-import QtQuick.Controls.Material 2.12
-import CyberTracker 1.0 as C
+import QtQuick
+import QtQuick.Controls.Material
+import QtQuick.Layouts
+import CyberTracker as C
 
 Pane {
     id: pane
@@ -11,6 +9,7 @@ Pane {
     contentWidth: width
     contentHeight: height
     Material.background: C.Style.colorContent
+    clip: true
 
     ListModel {
         id: connectors
@@ -47,7 +46,7 @@ Pane {
         ListElement {
             name: "Google Forms"
             subText: "https://rillaforms.com"
-            icon: "qrc:/Google/logo.svg"
+            icon: "qrc:/Google/forms.svg"
             page: "qrc:/Google/ConnectPage.qml"
         }
 
@@ -92,6 +91,7 @@ Pane {
     Flickable {
         id: root
         anchors.fill: parent
+        clip: true
 
         flickableDirection: Flickable.VerticalFlick
         contentHeight: column.height
@@ -101,20 +101,6 @@ Pane {
             id: column
             width: root.width
             spacing: 0
-
-            C.ListRowDelegate {
-                Layout.fillWidth: true
-                iconSource: "qrc:/icons/qrcode_scan.svg"
-                text: qsTr("Scan QR code")
-                subText: qsTr("Scan QR code to install a %1").arg(App.alias_Project)
-                iconOpacity: 0.5
-                iconColor: Material.foreground
-                wrapSubText: true
-                chevronRight: true
-                onClicked: {
-                    appPageStack.push("qrc:/ConnectQRCodePage.qml")
-                }
-            }
 
             Repeater {
                 Layout.fillWidth: true
@@ -130,13 +116,19 @@ Pane {
 
                     onClicked: {
                         if (model.page !== undefined) {
-                            appPageStack.push(model.page, { accountName: model.account })
+                            let params = {}
+                            if (model.account !== "") {
+                                params.accountName = model.account
+                            }
+                            appPageStack.push(model.page, params)
                         } else {
                             showToast(qsTr("Coming soon..."))
                         }
                     }
                 }
             }
+
+            C.FooterSpacer {}
         }
     }
 }

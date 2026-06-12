@@ -1,9 +1,7 @@
-import QtQml 2.12
-import QtQuick 2.12
-import QtQuick.Controls 2.12
-import QtQuick.Layouts 1.12
-import QtQuick.Controls.Material 2.12
-import CyberTracker 1.0 as C
+import QtQuick
+import QtQuick.Controls.Material
+import QtQuick.Layouts
+import CyberTracker as C
 
 C.ContentPage {
     id: page
@@ -19,10 +17,13 @@ C.ContentPage {
         }
     }
 
-    footer: RowLayout {
+    RowLayout {
         id: buttonRow
         spacing: 0
         visible: !form.editing
+        anchors.left: parent.left
+        anchors.right: parent.right
+        anchors.bottom: parent.bottom
 
         ButtonGroup { id: buttonGroup }
 
@@ -32,7 +33,7 @@ C.ContentPage {
             count += form.provider.hasIncident ? 1 : 0
             count += form.provider.hasPatrol ? 1 : 0
 
-            page.footer.visible = count > 1
+            buttonRow.visible = count > 1
         }
 
         C.FooterButton {
@@ -65,7 +66,10 @@ C.ContentPage {
 
     StackLayout {
         id: stackLayout
-        anchors.fill: parent
+        anchors.left: parent.left
+        anchors.top: parent.top
+        anchors.right: parent.right
+        anchors.bottom: buttonRow.visible ? buttonRow.top : parent.bottom
         property bool loadComplete: false
         Component.onCompleted: {
             let defaultIndex = 0
@@ -83,56 +87,42 @@ C.ContentPage {
 
         clip: true
 
-        C.Form {
-            id: formCollect
-            projectUid: form.provider.hasCollect ? form.project.uid : ""
-            stateSpace: Globals.formSpaceCollect
+        C.SightingsListView {
+            id: listViewCollect
             width: parent.width
             height: parent.height
+            filter.projectUid: form.project.uid
+            filter.stateSpace: Globals.formSpaceCollect
+            active: form.provider.hasCollect
 
-            C.FormSightingsListView {
-                id: listViewCollect
-                anchors.fill: parent
-                groupExported: false
-                onClicked: function (sighting, index) {
-                    pushSightingPage(model, index)
-                }
+            onClicked: function (sighting, index) {
+                pushSightingPage(model, index)
             }
         }
 
-        C.Form {
-            id: formPatrol
-            projectUid: form.provider.hasPatrol ? form.project.uid : ""
-            stateSpace: Globals.formSpacePatrol
-            readonly: true
+        C.SightingsListView {
+            id: listViewPatrol
             width: parent.width
             height: parent.height
+            filter.projectUid: form.project.uid
+            filter.stateSpace: Globals.formSpacePatrol
+            active: form.provider.hasPatrol
 
-            C.FormSightingsListView {
-                id: listViewPatrol
-                anchors.fill: parent
-                groupExported: false
-                onClicked: function (sighting, index) {
-                    pushSightingPage(model, index)
-                }
+            onClicked: function (sighting, index) {
+                pushSightingPage(model, index)
             }
         }
 
-        C.Form {
-            id: formIncident
-            projectUid: form.provider.hasIncident ? form.project.uid : ""
-            stateSpace: Globals.formSpaceIncident
-            readonly: true
+        C.SightingsListView {
+            id: listViewIncident
             width: parent.width
             height: parent.height
+            filter.projectUid: form.project.uid
+            filter.stateSpace: Globals.formSpaceIncident
+            active: form.provider.hasIncident
 
-            C.FormSightingsListView {
-                id: listViewIncident
-                anchors.fill: parent
-                groupExported: false
-                onClicked: function (sighting, index) {
-                    pushSightingPage(model, index)
-                }
+            onClicked: function (sighting, index) {
+                pushSightingPage(model, index)
             }
         }
     }
@@ -152,9 +142,9 @@ C.ContentPage {
         var sightingList = []
         for (var i = 0; i < model.count; i++) {
             var sighting = model.get(i)
-            sightingList.push( { createTime: sighting.createTime, stateSpace: sighting.stateSpace, sightingUid: sighting.rootRecordUid } )
+            sightingList.push( { createTime: sighting.createTime, projectUid: form.project.uid, stateSpace: sighting.stateSpace, sightingUid: sighting.sightingUid, canEdit: sighting.canEdit, canDelete: sighting.canDelete } )
         }
 
-        form.pushPage("qrc:/SightingPage.qml", { sightingList: sightingList, currentIndex: index })
+        form.pushPage("qrc:/SMART/SightingPage.qml", { sightingList: sightingList, currentIndex: index })
     }
 }

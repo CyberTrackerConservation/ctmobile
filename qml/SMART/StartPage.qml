@@ -1,9 +1,7 @@
-import QtQml 2.12
-import QtQuick 2.12
-import QtQuick.Controls 2.12
-import QtQuick.Layouts 1.12
-import QtQuick.Controls.Material 2.12
-import CyberTracker 1.0 as C
+import QtQuick
+import QtQuick.Controls.Material
+import QtQuick.Layouts
+import CyberTracker as C
 
 C.ContentPage {
     id: page
@@ -40,11 +38,14 @@ C.ContentPage {
             id: exportDataButton
             width: parent.width / parent.columns
             height: parent.height / parent.rows
-            title: qsTr("Export data")
+            title: form.provider.hasDataServer ? qsTr("Upload data") : qsTr("Export data")
             image: "qrc:/icons/export.svg"
             onClicked: {
-                busyCover.doWork = form.provider.hasDataServer ? completeUpload : completeExport
-                busyCover.start()
+                if (form.provider.hasDataServer) {
+                    popupConfirmUpload.open()
+                } else {
+                    popupConfirmExport.open()
+                }
             }
 
             enabled: {
@@ -58,6 +59,7 @@ C.ContentPage {
             height: parent.height / parent.rows
             title: qsTr("History")
             image: "qrc:/icons/history.svg"
+            enabled: form.provider.allowHistory
             onClicked: form.pushPage("qrc:/SMART/HistoryPage.qml")
         }
 
@@ -78,8 +80,54 @@ C.ContentPage {
                 return form.provider.getSightingTypeText(form.provider.patrolStarted ? "ResumePatrol" : "NewPatrol")
             }
             image: form.provider.patrolStarted ? "qrc:/icons/step_forward.svg" : "qrc:/icons/play.svg"
-            onClicked: form.pushFormPage({ projectUid: form.project.uid, stateSpace: Globals.formSpacePatrol })
+            onClicked: {
+                if (App.settings.patrolProjectUid !== "" && App.settings.patrolProjectUid !== form.project.uid) {                    
+                    let patrolProject = App.projectManager.load(App.settings.patrolProjectUid)
+                    if (patrolProject) {
+                        showError(qsTr("%1 already started - %2").arg(form.provider.getPatrolText()).arg(patrolProject.title))
+                        return
+                    }
+                }
+
+                form.pushFormPage({ projectUid: form.project.uid, stateSpace: Globals.formSpacePatrol })
+            }
             enabled: form.provider.hasPatrol
+        }
+    }
+
+    C.PopupLoader {
+        id: popupConfirmExport
+
+        popupComponent: Component {
+            C.ConfirmPopup {
+                text: qsTr("Export data?")
+                subText: qsTr("Exported data can no longer be changed.")
+                confirmText: qsTr("Yes, export it")
+                confirmDelay: false
+                onConfirmed: {
+                    busyCover.doWork = completeExport
+                    busyCover.start()
+                }
+            }
+        }
+    }
+
+    C.PopupLoader {
+        id: popupConfirmUpload
+
+        popupComponent: Component {
+            C.ConfirmPopup {
+                text: qsTr("Upload data?")
+                subText: form.provider.manualUpload ?
+                    qsTr("Uploaded data can no longer be changed.") :
+                    qsTr("Ensure all data is uploaded")
+                confirmText: qsTr("Yes, upload it")
+                confirmDelay: false
+                onConfirmed: {
+                    busyCover.doWork = completeUpload
+                    busyCover.start()
+                }
+            }
         }
     }
 
@@ -88,7 +136,13 @@ C.ContentPage {
     }
 
     function completeUpload() {
-        let success = form.provider.manualUpload ? form.provider.uploadData() : App.taskManager.waitForTasks(form.project.uid)
+        let success = false
+        if (form.provider.manualUpload) {
+            success = form.provider.uploadData()
+        } else {
+            success = App.uploadQueue.waitForQueue(form.project.uid)
+        }
+
         let successMessage = qsTr("All data has been uploaded.")
         let failureMessage = qsTr("Connection failed. Please try again later.")
 
